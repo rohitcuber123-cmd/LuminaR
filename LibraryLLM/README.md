@@ -1,48 +1,97 @@
-# LuminaR Library
+# LuminaR
 
-LuminaR is a library-management application with a React/TypeScript web client and Python APIs for circulation, catalogue search, recommendations, a knowledge graph, and book/document question answering.
+## Intelligent Library Search, RAG, and Recommendations
 
-## Main components
+LuminaR is a library management and discovery platform. It combines library workflows with semantic search, retrieval-augmented generation (RAG), recommendations, and a catalogue knowledge graph.
 
-- `frontend/`: React 19, TypeScript, Vite, Tailwind CSS; development server on port 5173.
-- `backend/`: FastAPI core API on port 8002; authentication, catalogue, borrowing, returns, reservations, renewals, fines, reading lists, and administration use MongoDB and local catalogue metadata.
-- `search/`: semantic catalogue search API on port 8003, with SentenceTransformers, FAISS/HNSW, optional lexical ranking, and a CrossEncoder reranker.
-- `recommendation/`: recommendation API on port 8004.
-- `rag/`: RAG and private document API on port 8005, using MiniLM embeddings, FAISS, a CrossEncoder, and Qwen2.5-3B-Instruct. The assistant routes are installed in this service.
-- `knowledge_graph/`: catalogue relationship/recommendation graph.
-- `data_pipeline/`, `scripts/`, `datasets/training/`, and `tests/`: ingestion, index building, model training/evaluation, reporting, and automated tests.
+## Features
+
+- Search a catalogue using natural-language queries and semantic retrieval.
+- Ask questions about indexed books and uploaded documents using RAG.
+- Discover related books through recommendations and catalogue relationships.
+- Support library-scoped inventory and availability using a library ID. The default ID is `LIB001`.
+- Manage accounts, borrowing, returns, reservations, renewals, fines, reading lists, and staff operations.
+- Provide staff tools for inventory import and administrative activity.
+
+The code supports library IDs in inventory and search flows. Configure and verify authorization across all services before using the platform for multiple independent institutions.
+
+## Technology
+
+| Area | Technologies |
+|---|---|
+| Frontend | React, TypeScript, Vite, Tailwind CSS |
+| APIs | Python, FastAPI, Pydantic |
+| Application data | MongoDB; local SQLite and DuckDB assets are also used by some modules and tools |
+| Semantic search | SentenceTransformers, FAISS HNSW, CrossEncoder reranking |
+| RAG | FAISS retrieval, MiniLM embeddings, CrossEncoder reranking, Qwen2.5-3B-Instruct |
+| Testing | pytest, Node.js test runner, Testing Library |
+
+## Project Structure
+
+```text
+.
+├── assistant/       # Assistant orchestration and service integration
+├── backend/         # Core library API, routes, services, and database access
+├── data_pipeline/   # Catalogue, embedding, and index preparation
+├── datasets/        # Local catalogue, search, and training data assets
+├── docs/            # Operational and technical documentation
+├── frontend/        # React and TypeScript client
+├── knowledge_graph/ # Catalogue relationship graph
+├── rag/             # Book and document retrieval and generation
+├── recommendation/  # Recommendation API
+├── reports/         # Evaluation reports and preserved results
+├── scripts/         # Build, audit, benchmark, and validation tools
+├── search/          # Semantic and lexical search API
+├── tests/           # Python tests
+├── .env.example
+├── requirements.txt
+└── README.md
+```
 
 ## Requirements
 
-- Python 3.11 or newer and the packages in `requirements.txt`.
-- Node.js compatible with Vite 8 and npm.
-- MongoDB for accounts, circulation, inventory, and activity data.
-- Local catalogue databases, search indexes, RAG indexes, and model files. The current source expects these at repository-relative paths in most services and at fixed `D:\SDC\LibraryLLM\...` paths in `backend/database/` and some older pipeline scripts.
-- Enough RAM/disk and a compatible accelerator for the Qwen RAG service; CPU use is possible but model startup and inference are resource intensive.
+- Python 3.11 or later
+- Node.js and npm compatible with Vite 8
+- MongoDB
+- Local search, catalogue, and RAG data assets
+- Local model files for services configured to load models offline
 
-## Configure and install
+The search and RAG services need substantial memory and disk space. GPU acceleration is supported where available; CPU inference may be slow.
 
-From the repository root, copy `.env.example` to `.env` and set a private, random `JWT_SECRET_KEY`, your MongoDB connection, and optional Brevo/cache settings. Never commit `.env`.
+## Setup
+
+From the repository root, create and activate a Python environment, then install the backend dependencies:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
+```
+
+Create a local environment file from the example and set the required values:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Set a private random `JWT_SECRET_KEY` and a valid `MONGO_URI`. Brevo email settings and the private document cache key are optional. Do not commit `.env` or put server secrets in frontend environment variables.
+
+Install frontend dependencies:
+
+```powershell
 cd frontend
 npm ci
 ```
 
-The `.env.example` lists supported core settings. `frontend/.env.example` documents the optional library selector and API proxy configuration. Do not put server secrets in frontend environment variables.
+## Data and Model Assets
 
-## Required data and model assets
+Large databases, catalogues, vector indexes, embedding files, model checkpoints, and local caches are excluded from Git. The current working environment contains these assets, but a fresh clone does not include them. Obtain or build the assets required by each service before starting it.
 
-The working development copy includes very large catalogues, databases, embedding matrices, vector indexes, training outputs, and local Hugging Face cache files. These are intentionally excluded by `.gitignore`; the current app cannot provide full catalogue search, the graph, or book-level RAG without the corresponding assets. Arrange a trusted download or reproducible build process for the specific files needed by each service before running it. Files above GitHub's regular file limit require Git LFS if they are within its per-file limit; multi-gigabyte files should use an external artifact/data store. Do not upload private documents or local databases containing user records.
+Several services load models in offline mode and expect indexes at specific paths. Some older database and pipeline files also contain absolute Windows paths. A clone in a different location may need local path configuration before those parts can run. Large files should be distributed through an artifact or data store; files larger than Git LFS's per-file limit cannot be stored there.
 
-The existing SQLite/DuckDB paths include absolute Windows paths. A fresh clone on another machine needs its data assets placed at the expected paths or those paths updated before core/metadata services can use them.
+## Run Locally
 
-## Run locally
-
-Start MongoDB and make sure the required catalogue, index, and model assets are available. In separate terminals, from the repository root:
+Start MongoDB and make sure the required data and model assets are available. Run each API in a separate terminal from the repository root:
 
 ```powershell
 python -m uvicorn backend.main:app --host 127.0.0.1 --port 8002
@@ -51,15 +100,33 @@ python -m uvicorn recommendation.api:app --host 127.0.0.1 --port 8004
 python -m uvicorn rag.api:app --host 127.0.0.1 --port 8005
 ```
 
-Then run the web client:
+In another terminal, start the frontend:
 
 ```powershell
 cd frontend
 npm run dev
 ```
 
-Vite proxies `/api`, `/search-api`, `/recommendation-api`, and `/rag-api` to those local services. The RAG service loads model/index assets at startup, so it will fail to start when those assets are missing.
+The Vite development server runs on port `5173` and proxies requests to the local APIs. The RAG service loads its models and indexes during startup, so it will not start if required assets are missing.
 
-## Tests and useful documentation
+## Tests
 
-Run frontend checks with `cd frontend; npm test` and `npm run build`. Run Python tests from the repository root with `python -m pytest`. Some integration and live-service checks require MongoDB, local model/index data, or email configuration. See `docs/`, `STAFF_AUTH.md`, and the reports under `reports/` and `datasets/training/reports/` for feature and evaluation details.
+From the repository root, run the Python suite:
+
+```powershell
+python -m pytest
+```
+
+For frontend tests and a production build:
+
+```powershell
+cd frontend
+npm test
+npm run build
+```
+
+Some integration tests require MongoDB, local model/index assets, or external service configuration.
+
+## Documentation
+
+See `docs/`, `STAFF_AUTH.md`, and the reports under `reports/` and `datasets/training/reports/` for implementation details and evaluation results.

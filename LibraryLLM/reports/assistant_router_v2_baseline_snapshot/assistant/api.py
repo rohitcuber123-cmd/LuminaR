@@ -93,15 +93,6 @@ def install_assistant(app, engine, rag_ask, rag_request):
             'sdpa_flash_enabled': torch.backends.cuda.flash_sdp_enabled(),
             'sdpa_mem_efficient_enabled': torch.backends.cuda.mem_efficient_sdp_enabled(),
             'model_resident_id': id(engine.llm.model), 'pid': os.getpid()}
-        if os.getenv('ASSISTANT_ROUTER_V2_HARDWARE_AUDIT') == '1':
-            # Explicit local experiment observation; no second model or tensors
-            # retained, and no changes to RAG generation or device placement.
-            runtime['model_footprint_bytes'] = engine.llm.model.get_memory_footprint()
-            if torch.cuda.is_available():
-                free, total = torch.cuda.mem_get_info(engine.llm.model.device)
-                runtime.update(cuda_free_bytes=free, cuda_total_bytes=total,
-                    cuda_allocated_bytes=torch.cuda.memory_allocated(engine.llm.model.device),
-                    cuda_reserved_bytes=torch.cuda.memory_reserved(engine.llm.model.device))
         try:
             Path(os.environ['ASSISTANT_PROFILE_PATH'] + '.runtime.json').write_text(json.dumps(runtime, indent=2))
         except OSError:

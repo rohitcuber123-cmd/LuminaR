@@ -1,0 +1,97 @@
+{
+  "suites": {
+    "assistant": {
+      "tests": 409,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 409
+    },
+    "security": {
+      "tests": 125,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 10,
+      "passed": 115
+    },
+    "admin": {
+      "tests": 76,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 76
+    },
+    "notifications": {
+      "tests": 51,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 51
+    },
+    "renewal": {
+      "tests": 40,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 40
+    },
+    "graph": {
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 12
+    }
+  },
+  "frozen_source_files_checked": 117,
+  "frozen_source_changes": [],
+  "frontend_tests": {
+    "passed": 85,
+    "failed": 0
+  },
+  "build": {
+    "status": "PASS",
+    "log": "assistant_semantic_router_build.log"
+  },
+  "lint": {
+    "status": "PASS_WITH_WARNINGS",
+    "warnings": 19,
+    "log": "assistant_semantic_router_lint.log"
+  },
+  "total_passed": 703,
+  "total_skipped": 10,
+  "skipped_reason": "10 dynamic book integration tests require explicitly prepared isolated MongoDB validation records and real full-text/FAISS assets.",
+  "changed_assistant_sources": [
+    "assistant/contextual.py",
+    "assistant/kg_routing.py",
+    "assistant/orchestrator.py",
+    "assistant/qwen.py",
+    "assistant/routing.py",
+    "assistant/schemas.py",
+    "assistant/state.py",
+    "assistant/semantic.py"
+  ],
+  "changed_tests": [
+    "tests/test_assistant_backend.py",
+    "tests/test_assistant_kg.py",
+    "tests/test_assistant_latency.py",
+    "tests/test_assistant_part3.py",
+    "tests/test_assistant_part3_repair.py",
+    "tests/test_assistant_selected_context.py",
+    "tests/test_assistant_semantic_router.py",
+    "tests/test_document_rag_latency.py"
+  ],
+  "added_evaluation_script": "scripts/evaluate_assistant_semantics.py",
+  "preserved_assistant_tools": true,
+  "added_http_check_script": "scripts/check_assistant_semantic_http.py",
+  "normal_service_http": {
+    "passed": 7,
+    "total": 10,
+    "required_chain_passed": 6,
+    "required_chain_total": 6,
+    "additional_chain_passed": 1,
+    "additional_chain_total": 4,
+    "structured_compare_zero_qwen": true
+  },
+  "status": "PARTIAL: regressions/build pass; broad real-model language evaluation and additional HTTP chain fail full acceptance"
+}

@@ -89,16 +89,13 @@ class ProfileMiddleware:
             profile['total_ms'] = (perf_counter() - start) * 1000
             profile['qwen_call_count'] = len(profile['qwen_calls'])
             profile['route_resolution_ms'] = profile['stages_ms'].get('intent_routing', 0) + profile['stages_ms'].get('intent_parsing', 0)
-            profile['qwen_intent_calls'] = sum(c['stage'] in ('intent', 'repair', 'semantic_retry') for c in profile['qwen_calls'])
+            profile['qwen_intent_calls'] = sum(c['stage'] in ('intent', 'repair') for c in profile['qwen_calls'])
             profile['qwen_response_calls'] = sum(c['stage'] == 'response' for c in profile['qwen_calls'])
             profile['tool_ms'] = profile['stages_ms'].get('tool_execution', 0)
             for stage, name in [('intent', 'qwen_intent_generation'), ('response', 'qwen_response_generation'),
                                 ('rag', 'qwen_rag_generation')]:
                 profile['stages_ms'][name] = sum(c.get('generation_ms', 0) for c in profile['qwen_calls']
-                                                if c['stage'] == stage or stage == 'intent' and c['stage'] in ('repair','semantic_retry'))
-            if profile.get('router_v2'):
-                profile['router_v2'].update(tool_ms=profile['tool_ms'],total_ms=profile['total_ms'],
-                    qwen_calls=profile['qwen_call_count'])
+                                                if c['stage'] == stage or stage == 'intent' and c['stage'] == 'repair')
             path = os.getenv('ASSISTANT_PROFILE_PATH')
             if path:
                 # Opt-in local development sink; payload contains numeric metrics only.
