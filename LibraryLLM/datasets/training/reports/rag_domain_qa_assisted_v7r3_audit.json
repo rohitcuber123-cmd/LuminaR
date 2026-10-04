@@ -1,0 +1,66 @@
+{
+  "version": "v7r3",
+  "source_audit_all": true,
+  "auto_checked": 3,
+  "plausible": 1,
+  "obvious_error": 2,
+  "ambiguous": 0,
+  "obvious_semantic_error_rate": 0.6666666666666666,
+  "error_classes": {
+    "BAD_CATEGORY": 1,
+    "ANSWER_SELECTION_ERROR": 1
+  },
+  "systematic_failure_class": false,
+  "review_packet_gate_passed": false,
+  "test_leakage": 0,
+  "evaluation_span_leakage": 0,
+  "source_hashes_valid": true,
+  "human_review_status": "NOT_REVIEWED",
+  "review_packet_rows": 0,
+  "engineering_decisions": [
+    {
+      "candidate_id": "AQA7R3-012-1",
+      "label": "PLAUSIBLE_FOR_HUMAN_REVIEW",
+      "error_class": null,
+      "reason": "The selected evidence explicitly identifies the guns brought from Woolwich and Chatham to cover Kingston."
+    },
+    {
+      "candidate_id": "AQA7R3-032-2",
+      "label": "OBVIOUS_SEMANTIC_ERROR",
+      "error_class": "BAD_CATEGORY",
+      "reason": "The question asks for direct speaker identification, but Stage A labeled the fact EVENT."
+    },
+    {
+      "candidate_id": "AQA7R3-034-2",
+      "label": "OBVIOUS_SEMANTIC_ERROR",
+      "error_class": "ANSWER_SELECTION_ERROR",
+      "reason": "The answer span includes 'ago' before 'in London'; a WHERE question requires the location, not the trailing time word. OTHER_EXPLICIT let this wrong type escape deterministic checks."
+    }
+  ],
+  "generation_summary": {
+    "stage_a_raw_selections": 79,
+    "reason_ANSWER_SPAN_INCOMPLETE": 21,
+    "reason_NONCONTIGUOUS_EVIDENCE_UNITS": 14,
+    "stage_a_valid_facts": 37,
+    "stage_b_calls": 37,
+    "deterministic_passes": 19,
+    "judge_UNCERTAIN": 15,
+    "judge_semantic_uncertain": 12,
+    "reason_QUESTION_CONTAINS_ANSWER": 7,
+    "judge_SUPPORTED": 3,
+    "AUTO_CHECKED": 3,
+    "question_repairs_attempted": 10,
+    "reason_QUESTION_UNRESOLVED_REFERENT": 12,
+    "reason_QUESTION_LENGTH_OR_FORMAT": 2,
+    "reason_ANSWER_SPAN_PUNCTUATION_ONLY": 5,
+    "reason_INVALID_ANSWER_WORD_ID": 1,
+    "judge_invalid_json": 2,
+    "reason_CONTEXT_ONLY_NAMED_REFERENCE": 2,
+    "question_repairs_accepted": 1,
+    "judge_support_unit_outside_evidence": 1,
+    "reason_INVALID_EVIDENCE_UNIT_ID": 1,
+    "judge_UNSUPPORTED": 1
+  },
+  "gate_status": "A. V7R3 IMPLEMENTATION CONTRACT FAILED — FIX PIPELINE",
+  "contract_gap": "OTHER_EXPLICIT answer type permitted incompatible WH answers and incomplete spans; EVENT category mismatch also escaped deterministic checks"
+}

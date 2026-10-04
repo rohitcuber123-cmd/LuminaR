@@ -1,0 +1,82 @@
+{
+  "collection": "notifications",
+  "document": {
+    "notification_id": "UUID hex string",
+    "user_id": "canonical immutable recipient integer",
+    "type": "ADMIN_MESSAGE | DUE_SOON | DUE_TODAY | OVERDUE",
+    "title": "plain text; Admin <=120 characters",
+    "message": "plain text; Admin <=1000 characters",
+    "created_at": "UTC datetime",
+    "read_at": "UTC datetime or null",
+    "source": "ADMIN | SYSTEM",
+    "source_ref": {
+      "loan_id": "integer for reminders",
+      "work_id": "string for reminders",
+      "due_date": "normalized UTC ISO due version for reminders"
+    },
+    "priority": "NORMAL",
+    "dedupe_key": "required unique string",
+    "created_by_user_id": "canonical Admin ID or null for SYSTEM"
+  },
+  "indexes": [
+    {
+      "v": 2,
+      "key": {
+        "_id": 1
+      },
+      "name": "_id_"
+    },
+    {
+      "v": 2,
+      "key": {
+        "notification_id": 1
+      },
+      "name": "notification_id_1",
+      "unique": true
+    },
+    {
+      "v": 2,
+      "key": {
+        "dedupe_key": 1
+      },
+      "name": "dedupe_key_1",
+      "unique": true
+    },
+    {
+      "v": 2,
+      "key": {
+        "user_id": 1,
+        "created_at": -1,
+        "notification_id": -1
+      },
+      "name": "user_id_1_created_at_-1_notification_id_-1"
+    },
+    {
+      "v": 2,
+      "key": {
+        "user_id": 1,
+        "read_at": 1
+      },
+      "name": "user_id_1_read_at_1"
+    },
+    {
+      "v": 2,
+      "key": {
+        "created_by_user_id": 1,
+        "created_at": -1
+      },
+      "name": "created_by_user_id_1_created_at_-1"
+    },
+    {
+      "v": 2,
+      "key": {
+        "source": 1,
+        "created_at": -1,
+        "notification_id": -1
+      },
+      "name": "source_1_created_at_-1_notification_id_-1"
+    }
+  ],
+  "public_owner_projection": "notification_id,type,title,message,created_at,read_at,source,source_ref,priority; recipient/sender/dedupe omitted",
+  "retention": "Indefinite in V1; no TTL/delete API; later reviewed archival policy."
+}

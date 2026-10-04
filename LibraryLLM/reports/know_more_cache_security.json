@@ -1,0 +1,220 @@
+{
+  "live_http_checks": [
+    {
+      "check": "small:unauth_export",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "check": "small:other_account_get",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "check": "small:same_account_other_session",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "check": "small:cross_account_restore",
+      "status": 400,
+      "expected": 400,
+      "pass": true
+    },
+    {
+      "check": "small:cross_account_inspect",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "small:restore_twice",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "small:logout_purge",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "small:revoked_session_denied",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "check": "small:other_session_survives",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "medium:unauth_export",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "check": "medium:other_account_get",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "check": "medium:same_account_other_session",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "check": "medium:cross_account_restore",
+      "status": 400,
+      "expected": 400,
+      "pass": true
+    },
+    {
+      "check": "medium:cross_account_inspect",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "medium:restore_twice",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "medium:logout_purge",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "medium:revoked_session_denied",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "check": "medium:other_session_survives",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "large:unauth_export",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "check": "large:other_account_get",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "check": "large:same_account_other_session",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "check": "large:cross_account_restore",
+      "status": 400,
+      "expected": 400,
+      "pass": true
+    },
+    {
+      "check": "large:cross_account_inspect",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "large:restore_twice",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "large:logout_purge",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "check": "large:revoked_session_denied",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "check": "large:other_session_survives",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "disposable_accounts_removed": true,
+  "browser_flow": {
+    "first_upload_document_id": "doc_70dca1ba03ff40b2a6924dd1925b2659",
+    "first_restore_document_id": "doc_f1247763b46349359069fa5f7e21195d",
+    "new_document_id": true,
+    "first_logout_registry_empty": true,
+    "first_logout_directory_absent": true,
+    "second_restore_document_id": "doc_8faacb8be34346d4bfab0f920e6be208",
+    "second_restore_id_unique": true,
+    "restored_current_session_active": true,
+    "second_restore_artifacts": [
+      "chunks.json",
+      "runtime.faiss",
+      "vectors.npy"
+    ],
+    "browser_storage": {
+      "backend": "opfs",
+      "account_cache_count": 1,
+      "copies": [
+        {
+          "bytes": 3554,
+          "read_ms": 5.300000000046566,
+          "store_ms": 18.70000000006985,
+          "blob_has_document_sample": false,
+          "blob_has_filename": false,
+          "bookkeeping_has_filename": false,
+          "ciphertext_container_verified": true,
+          "opted_in": true
+        }
+      ]
+    },
+    "account_b": {
+      "backend": "opfs",
+      "account_cache_count": 0,
+      "copies": [],
+      "other_account_restore_attempts": [
+        {
+          "status": 400,
+          "rejected": true
+        }
+      ]
+    },
+    "a_cache_hidden_from_b": true,
+    "browser_answer_matches_original": true,
+    "browser_source_matches_original": true,
+    "answer_verdict": "UNSUPPORTED",
+    "answer_text": "The checked passages do not provide information about what Role-Based Access Control entails.",
+    "note": "The tiny UI smoke-test PDF produced the same existing UNSUPPORTED response before and after restore. All three richer benchmark PDFs produced identical SUPPORTED answers.",
+    "second_logout_registry_empty": true,
+    "second_logout_directory_absent": true,
+    "disposable_device_copy_removed": true,
+    "disposable_accounts_removed": true
+  }
+}

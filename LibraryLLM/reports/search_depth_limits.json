@@ -1,0 +1,113 @@
+{
+  "caps": [
+    {
+      "location": "search/api.py SearchRequest.top_k, search/luminar_search.py search default",
+      "before": 10,
+      "after": 10,
+      "meaning": "API output default; maximum50, no10 truncation"
+    },
+    {
+      "location": "search/luminar_search.py FINAL_TOP_K",
+      "before": 10,
+      "after": "removed unused constant",
+      "meaning": "unused; not bottleneck"
+    },
+    {
+      "location": "frontend/src/lib/api.ts searchBooks default",
+      "before": 10,
+      "after": 10,
+      "meaning": "UI/API output default"
+    },
+    {
+      "location": "frontend/src/pages/SearchPage.tsx",
+      "before": 12,
+      "after": 10,
+      "meaning": "visible page size; new offset continuation"
+    },
+    {
+      "location": "recommendation/api.py GET and seeded POST",
+      "before": 10,
+      "after": 10,
+      "meaning": "default page output; max50"
+    },
+    {
+      "location": "frontend/src/components/ForYou.tsx RECOMMENDATION_LIMIT",
+      "before": 12,
+      "after": 10,
+      "meaning": "visible page size; new continuation"
+    },
+    {
+      "location": "assistant/orchestrator.py DEFAULT_PAGE_SIZE; assistant/state.py; assistant/schemas.py requested_result_count",
+      "before": 10,
+      "after": 10,
+      "meaning": "assistant display default; schema maximum20"
+    },
+    {
+      "location": "recommendation/recommendation_service.py CANDIDATE_COUNT",
+      "before": 50,
+      "after": 50,
+      "meaning": "internal Search candidate request"
+    },
+    {
+      "location": "assistant/orchestrator.py result_page Search",
+      "before": 50,
+      "after": 50,
+      "meaning": "retained Search pool"
+    },
+    {
+      "location": "assistant/orchestrator.py personalized continuation",
+      "before": "offset+page_size+1, up to50",
+      "after": "one request50 then retained IDs",
+      "meaning": "stable pool for SHOW_MORE"
+    },
+    {
+      "location": "assistant/orchestrator.py seed fusion",
+      "before": "50 per seed; fused cap200",
+      "after": "unchanged",
+      "meaning": "existing RRF, k60; no new algorithm"
+    },
+    {
+      "location": "recommendation/recommendation_service.py profile query limit10",
+      "before": 10,
+      "after": 10,
+      "meaning": "interest text inputs; not result depth"
+    },
+    {
+      "location": "search/api.py history and recommendation/api.py feedback",
+      "before": "50 default,100/200 max",
+      "after": "unchanged",
+      "meaning": "history/feedback records; not result depth"
+    }
+  ],
+  "before": {
+    "public_default": 10,
+    "public_maximum": 50,
+    "ui_search": 12,
+    "ui_recommendation": 12,
+    "semantic_fetch": "max(50, top_k*2); adaptive retry up to1000 for missing Mongo rows",
+    "crossencoder_viable_depth": 50,
+    "recommendation_candidate_request": 50,
+    "offset_supported": false
+  },
+  "after": {
+    "public_default": 10,
+    "public_maximum": 50,
+    "semantic_min_valid": 50,
+    "semantic_initial_fetch": 100,
+    "semantic_max_fetch": 1000,
+    "crossencoder_viable_depth": 50,
+    "ranked_pool": 50,
+    "ui_search": 10,
+    "ui_recommendation": 10,
+    "offset_minimum": 0,
+    "offset_plus_limit_maximum": 50,
+    "legacy_top_k_supported": true,
+    "explicit_limit_precedence": true,
+    "ttl_seconds": 180,
+    "max_cache_entries_per_worker": 128,
+    "recommendation_candidates": 50,
+    "assistant_multi_seed_fused_maximum": 200
+  },
+  "no_model_or_index_changes": true,
+  "no_recommendation_weight_changes": true
+}

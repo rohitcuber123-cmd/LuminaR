@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="10" skipped="0" tests="21" time="12.186" timestamp="2026-09-24T15:51:47.342761+05:30" hostname="Rohit-pc"><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_motivation" time="0.007" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_negated_motivation" time="0.002" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_regret" time="0.003" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_consequence" time="0.003" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_reaction" time="0.002" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_relationship" time="0.002" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_1" time="0.003"><failure message="AssertionError: assert 'FACTUAL' in ['MOTIVATION', 'NEGATED_MOTIVATION', 'REACTION']">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E5D10&gt;
+
+    def test_intent_adversarial_1(llm):
+        # "Why does Victor fear creating another creature?"
+        # Should not be REGRET (has 'regret' in regex? No, 'fear' is not in regex).
+        # Might trigger MOTIVATION ("why does Victor... create"). But it's actually NEGATED_MOTIVATION or MOTIVATION depending on interpretation.
+        res = llm.analyze_intent("Why does Victor fear creating another creature?")
+        # We just assert it doesn't crash and returns a valid intent
+&gt;       assert res["intent"] in ["MOTIVATION", "NEGATED_MOTIVATION", "REACTION"]
+E       AssertionError: assert 'FACTUAL' in ['MOTIVATION', 'NEGATED_MOTIVATION', 'REACTION']
+
+tests\test_intent_adversarial.py:18: AssertionError</failure></testcase><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_2" time="0.002" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_3" time="0.002" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_4" time="0.002"><failure message="AssertionError: assert 'FACTUAL' in ['CONSEQUENCE', 'REACTION']">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E5D10&gt;
+
+    def test_intent_adversarial_4(llm):
+        # "What happens immediately after Victor first sees the creature?"
+        # Collision between CONSEQUENCE ("what happens after") and REACTION ("when Victor first sees").
+        res = llm.analyze_intent("What happens immediately after Victor first sees the creature?")
+&gt;       assert res["intent"] in ["CONSEQUENCE", "REACTION"]
+E       AssertionError: assert 'FACTUAL' in ['CONSEQUENCE', 'REACTION']
+
+tests\test_intent_adversarial.py:37: AssertionError</failure></testcase><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_5" time="0.002" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_6" time="0.002" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_7" time="0.003"><failure message="AssertionError: assert 'FACTUAL' == 'NEGATED_MOTIVATION'&#10;  &#10;  - NEGATED_MOTIVATION&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E5D10&gt;
+
+    def test_intent_adversarial_7(llm):
+        # "Why doesn't the creature forgive Victor?"
+        res = llm.analyze_intent("Why doesn't the creature forgive Victor?")
+&gt;       assert res["intent"] == "NEGATED_MOTIVATION"
+E       AssertionError: assert 'FACTUAL' == 'NEGATED_MOTIVATION'
+E         
+E         - NEGATED_MOTIVATION
+E         + FACTUAL
+
+tests\test_intent_adversarial.py:54: AssertionError</failure></testcase><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_8" time="0.002" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_9" time="0.003"><failure message="AssertionError: assert 'FACTUAL' == 'MOTIVATION'&#10;  &#10;  - MOTIVATION&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E5D10&gt;
+
+    def test_intent_adversarial_9(llm):
+        # "Why might Jonathan have wanted to leave the castle?"
+        res = llm.analyze_intent("Why might Jonathan have wanted to leave the castle?")
+&gt;       assert res["intent"] == "MOTIVATION"
+E       AssertionError: assert 'FACTUAL' == 'MOTIVATION'
+E         
+E         - MOTIVATION
+E         + FACTUAL
+
+tests\test_intent_adversarial.py:66: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_motivation" time="0.003"><failure message="AssertionError: assert 'FACTUAL' == 'MOTIVATION'&#10;  &#10;  - MOTIVATION&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E7B50&gt;
+
+    def test_intent_generalization_motivation(llm):
+        # Q1: "Why does Victor create the creature?"
+        res = llm.analyze_intent("What drives Victor to bring the creature to life?")
+&gt;       assert res["intent"] == "MOTIVATION"
+E       AssertionError: assert 'FACTUAL' == 'MOTIVATION'
+E         
+E         - MOTIVATION
+E         + FACTUAL
+
+tests\test_intent_generalization.py:16: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_negated_motivation" time="0.002"><failure message="AssertionError: assert 'FACTUAL' == 'NEGATED_MOTIVATION'&#10;  &#10;  - NEGATED_MOTIVATION&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E7B50&gt;
+
+    def test_intent_generalization_negated_motivation(llm):
+        # Q2: "Why doesn't Victor create another creature?"
+        res = llm.analyze_intent("What prevents Victor from making a second creature?")
+&gt;       assert res["intent"] == "NEGATED_MOTIVATION"
+E       AssertionError: assert 'FACTUAL' == 'NEGATED_MOTIVATION'
+E         
+E         - NEGATED_MOTIVATION
+E         + FACTUAL
+
+tests\test_intent_generalization.py:46: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_regret" time="0.003"><failure message="AssertionError: assert 'FACTUAL' == 'REGRET'&#10;  &#10;  - REGRET&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E7B50&gt;
+
+    def test_intent_generalization_regret(llm):
+        # Q5: "Why does Victor regret creating the creature?"
+        res = llm.analyze_intent("What makes Victor remorseful about his creation?")
+&gt;       assert res["intent"] == "REGRET"
+E       AssertionError: assert 'FACTUAL' == 'REGRET'
+E         
+E         - REGRET
+E         + FACTUAL
+
+tests\test_intent_generalization.py:67: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_consequence" time="0.003"><failure message="AssertionError: assert 'FACTUAL' == 'CONSEQUENCE'&#10;  &#10;  - CONSEQUENCE&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E7B50&gt;
+
+    def test_intent_generalization_consequence(llm):
+        # Q7: "What happens after Victor creates the creature?"
+        res = llm.analyze_intent("What immediately follows the creature's creation?")
+&gt;       assert res["intent"] == "CONSEQUENCE"
+E       AssertionError: assert 'FACTUAL' == 'CONSEQUENCE'
+E         
+E         - CONSEQUENCE
+E         + FACTUAL
+
+tests\test_intent_generalization.py:83: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_reaction" time="0.002"><failure message="AssertionError: assert 'FACTUAL' == 'REACTION'&#10;  &#10;  - REACTION&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E7B50&gt;
+
+    def test_intent_generalization_reaction(llm):
+        # Q8: "What happens when Victor first sees the creature alive?"
+        res = llm.analyze_intent("How does Victor react upon witnessing the creature awaken?")
+&gt;       assert res["intent"] == "REACTION"
+E       AssertionError: assert 'FACTUAL' == 'REACTION'
+E         
+E         - REACTION
+E         + FACTUAL
+
+tests\test_intent_generalization.py:99: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_relationship" time="0.002"><failure message="AssertionError: assert 'FACTUAL' == 'RELATIONSHIP'&#10;  &#10;  - RELATIONSHIP&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000025DBD4E7B50&gt;
+
+    def test_intent_generalization_relationship(llm):
+        # Q9: "Who is Victor's father?"
+        res = llm.analyze_intent("Who is Alphonse in relation to Victor?")
+        assert res["intent"] in ["RELATIONSHIP", "FACTUAL"]
+    
+        res = llm.analyze_intent("Can you tell me the name of Victor Frankenstein's dad?")
+        assert res["intent"] in ["RELATIONSHIP", "FACTUAL"]
+    
+        # Q10: "Who is Elizabeth to Victor?"
+        res = llm.analyze_intent("How are Elizabeth and Victor related?")
+&gt;       assert res["intent"] == "RELATIONSHIP"
+E       AssertionError: assert 'FACTUAL' == 'RELATIONSHIP'
+E         
+E         - RELATIONSHIP
+E         + FACTUAL
+
+tests\test_intent_generalization.py:114: AssertionError</failure></testcase></testsuite></testsuites>

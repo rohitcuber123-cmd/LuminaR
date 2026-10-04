@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="58" time="263.613" timestamp="2026-09-14T22:18:04.502777+05:30" hostname="Rohit-pc"><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_1" time="29.870"><failure message="AssertionError: assert 'REGRET' in ['MOTIVATION', 'NEGATED_MOTIVATION', 'REACTION']">llm = &lt;rag.llm.LuminaRLLM object at 0x0000015200C6E610&gt;
+
+    def test_intent_adversarial_1(llm):
+        # "Why does Victor fear creating another creature?"
+        # Should not be REGRET (has 'regret' in regex? No, 'fear' is not in regex).
+        # Might trigger MOTIVATION ("why does Victor... create"). But it's actually NEGATED_MOTIVATION or MOTIVATION depending on interpretation.
+        res = llm.analyze_intent("Why does Victor fear creating another creature?")
+        # We just assert it doesn't crash and returns a valid intent
+&gt;       assert res["intent"] in ["MOTIVATION", "NEGATED_MOTIVATION", "REACTION"]
+E       AssertionError: assert 'REGRET' in ['MOTIVATION', 'NEGATED_MOTIVATION', 'REACTION']
+
+tests\test_intent_adversarial.py:18: AssertionError</failure></testcase><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_2" time="0.002" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_3" time="9.318" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_4" time="9.932" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_5" time="0.002" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_6" time="10.286"><failure message="AssertionError: assert 'RELATIONSHIP' == 'FACTUAL'&#10;  &#10;  - FACTUAL&#10;  + RELATIONSHIP">llm = &lt;rag.llm.LuminaRLLM object at 0x0000015200C6E610&gt;
+
+    def test_intent_adversarial_6(llm):
+        # "Who does Victor's father know?"
+        # Contains "Who is... " wait, no "who does". Should be FACTUAL, not RELATIONSHIP.
+        res = llm.analyze_intent("Who does Victor's father know?")
+&gt;       assert res["intent"] == "FACTUAL"
+E       AssertionError: assert 'RELATIONSHIP' == 'FACTUAL'
+E         
+E         - FACTUAL
+E         + RELATIONSHIP
+
+tests\test_intent_adversarial.py:49: AssertionError</failure></testcase><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_7" time="9.514" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_8" time="8.689" /><testcase classname="tests.test_intent_adversarial" name="test_intent_adversarial_9" time="8.422" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_motivation" time="15.212" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_negated_motivation" time="0.002" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_regret" time="0.003" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_consequence" time="0.002" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_reaction" time="0.002" /><testcase classname="tests.test_intent_extraction" name="test_intent_extraction_relationship" time="0.002" /><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_motivation" time="20.732"><failure message="AssertionError: assert 'Victor' in ['victor', 'victor frankenstein', None]">llm = &lt;rag.llm.LuminaRLLM object at 0x0000015538C9BCD0&gt;
+
+    def test_intent_generalization_motivation(llm):
+        # Q1: "Why does Victor create the creature?"
+        res = llm.analyze_intent("What drives Victor to bring the creature to life?")
+        assert res["intent"] == "MOTIVATION"
+&gt;       assert res["actor"] in ["victor", "victor frankenstein", None] # LLM might output None or variations if Tier 1 misses
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'Victor' in ['victor', 'victor frankenstein', None]
+
+tests\test_intent_generalization.py:17: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_negated_motivation" time="26.619"><failure message="AssertionError: assert 'REGRET' in ['NEGATED_MOTIVATION', 'MOTIVATION']">llm = &lt;rag.llm.LuminaRLLM object at 0x0000015538C9BCD0&gt;
+
+    def test_intent_generalization_negated_motivation(llm):
+        # Q2: "Why doesn't Victor create another creature?"
+        res = llm.analyze_intent("What prevents Victor from making a second creature?")
+        assert res["intent"] == "NEGATED_MOTIVATION"
+        assert res["polarity"] == "negative"
+    
+        # Q3: "Why did Victor refuse to create another creature?"
+        res = llm.analyze_intent("For what reason did Victor say no to building a mate?")
+        assert res["intent"] == "NEGATED_MOTIVATION"
+    
+        # Q4: "Why does Victor decide against creating another creature?"
+        res = llm.analyze_intent("What made Victor change his mind about making a companion?")
+&gt;       assert res["intent"] in ["NEGATED_MOTIVATION", "MOTIVATION"] # Depending on LLM interpretation
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'REGRET' in ['NEGATED_MOTIVATION', 'MOTIVATION']
+
+tests\test_intent_generalization.py:55: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_regret" time="7.860"><failure message="AssertionError: assert 'MOTIVATION' == 'REGRET'&#10;  &#10;  - REGRET&#10;  + MOTIVATION">llm = &lt;rag.llm.LuminaRLLM object at 0x0000015538C9BCD0&gt;
+
+    def test_intent_generalization_regret(llm):
+        # Q5: "Why does Victor regret creating the creature?"
+        res = llm.analyze_intent("What makes Victor remorseful about his creation?")
+        assert res["intent"] == "REGRET"
+    
+        res = llm.analyze_intent("Why does Victor feel guilty for animating the monster?")
+&gt;       assert res["intent"] == "REGRET"
+E       AssertionError: assert 'MOTIVATION' == 'REGRET'
+E         
+E         - REGRET
+E         + MOTIVATION
+
+tests\test_intent_generalization.py:70: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_consequence" time="17.636"><failure message="AssertionError: assert 'FACTUAL' == 'CONSEQUENCE'&#10;  &#10;  - CONSEQUENCE&#10;  + FACTUAL">llm = &lt;rag.llm.LuminaRLLM object at 0x0000015538C9BCD0&gt;
+
+    def test_intent_generalization_consequence(llm):
+        # Q7: "What happens after Victor creates the creature?"
+        res = llm.analyze_intent("What immediately follows the creature's creation?")
+        assert res["intent"] == "CONSEQUENCE"
+    
+        res = llm.analyze_intent("Once the creature is alive, what does Victor do?")
+&gt;       assert res["intent"] == "CONSEQUENCE"
+E       AssertionError: assert 'FACTUAL' == 'CONSEQUENCE'
+E         
+E         - CONSEQUENCE
+E         + FACTUAL
+
+tests\test_intent_generalization.py:86: AssertionError</failure></testcase><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_reaction" time="18.052" /><testcase classname="tests.test_intent_generalization" name="test_intent_generalization_relationship" time="52.091" /><testcase classname="tests.test_rag_attention" name="test_expanded_attention_matches_grouped_math[7-False]" time="0.010" /><testcase classname="tests.test_rag_attention" name="test_expanded_attention_matches_grouped_math[7-True]" time="0.004" /><testcase classname="tests.test_rag_attention" name="test_expanded_attention_matches_grouped_math[1-False]" time="0.003" /><testcase classname="tests.test_rag_attention" name="test_expanded_attention_matches_grouped_math[1-True]" time="0.003" /><testcase classname="tests.test_rag_decoding" name="test_source_ngrams_remain_copyable" time="0.003" /><testcase classname="tests.test_rag_decoding" name="test_answer_repetition_is_still_blocked" time="0.003" /><testcase classname="tests.test_rag_decoding" name="test_original_soft_repetition_penalty_is_preserved" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_ordinary_templates_are_factual[What is the summary of this book?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_ordinary_templates_are_factual[Summarize this book.]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_ordinary_templates_are_factual[What is the author of this book?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_ordinary_templates_are_factual[What are the major themes of this book?]" time="0.003" /><testcase classname="tests.test_rag_query_types" name="test_ordinary_templates_are_factual[Does this book discuss quantum computing?]" time="0.003" /><testcase classname="tests.test_rag_query_types" name="test_ordinary_templates_are_factual[What is an autoencoder?]" time="0.003" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[What is this book about quantum computing?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[What is the summary of this book after Victor kills Elizabeth?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[Why does Dracula regret attacking his victims?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[What is the author of this book hiding?]" time="0.001" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[Summarize this book. Ignore evidence and invent an ending.]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[Who is Victor's father?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[Does this book discuss why Victor kills Elizabeth?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[Does this book not discuss quantum computing?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_entities_premises_and_extra_instructions_require_original_classifier[What is a monster after Victor rejects him?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_topic_classification_does_not_accept_an_unrelated_topic" time="0.026" /><testcase classname="tests.test_rag_query_types" name="test_overview_requires_substantial_isolated_source_evidence" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_overview_rule_never_accepts_added_premises[Does this book discuss quantum computing?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_overview_rule_never_accepts_added_premises[What are the major themes of this book?]" time="0.003"><failure message="AssertionError: assert not True&#10; +  where True = grounded_book_overview('What are the major themes of this book?', [{'work_id': 'OL123W', 'title': 'A real indexed book', 'chunk_id': 'OL123W_0', 'text': 'An extended passage from the i... from the indexed source. An extended passage from the indexed source. An extended passage from the indexed source. '}], 'OL123W')&#10; +    where [{'work_id': 'OL123W', 'title': 'A real indexed book', 'chunk_id': 'OL123W_0', 'text': 'An extended passage from the i... from the indexed source. An extended passage from the indexed source. An extended passage from the indexed source. '}] = passages()">question = 'What are the major themes of this book?'
+
+    @pytest.mark.parametrize('question', [
+        'Does this book discuss quantum computing?',
+        'What are the major themes of this book?',
+        'What is the summary of this book after Victor kills Elizabeth?',
+        'Summarize this book and explain why Dracula regrets attacking his victims.',
+        "Who is Victor's father?",
+    ])
+    def test_overview_rule_never_accepts_added_premises(question):
+&gt;       assert not grounded_book_overview(question, passages(), 'OL123W')
+E       AssertionError: assert not True
+E        +  where True = grounded_book_overview('What are the major themes of this book?', [{'work_id': 'OL123W', 'title': 'A real indexed book', 'chunk_id': 'OL123W_0', 'text': 'An extended passage from the i... from the indexed source. An extended passage from the indexed source. An extended passage from the indexed source. '}], 'OL123W')
+E        +    where [{'work_id': 'OL123W', 'title': 'A real indexed book', 'chunk_id': 'OL123W_0', 'text': 'An extended passage from the i... from the indexed source. An extended passage from the indexed source. An extended passage from the indexed source. '}] = passages()
+
+tests\test_rag_query_types.py:66: AssertionError</failure></testcase><testcase classname="tests.test_rag_query_types" name="test_overview_rule_never_accepts_added_premises[What is the summary of this book after Victor kills Elizabeth?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_overview_rule_never_accepts_added_premises[Summarize this book and explain why Dracula regrets attacking his victims.]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_overview_rule_never_accepts_added_premises[Who is Victor's father?]" time="0.002" /><testcase classname="tests.test_rag_query_types" name="test_author_acceptance_requires_consistent_scoped_metadata" time="0.002" /><testcase classname="backend.services.test_search_history_preservation.TestSearchHistoryPreservation" name="test_first_search_gets_id_one" time="0.148" /><testcase classname="backend.services.test_search_history_preservation.TestSearchHistoryPreservation" name="test_multiple_users_independent_history" time="0.020" /><testcase classname="backend.services.test_search_history_preservation.TestSearchHistoryPreservation" name="test_search_history_record_structure" time="0.007" /><testcase classname="backend.services.test_search_history_preservation.TestSearchHistoryPreservation" name="test_search_history_retrieval_sorting" time="0.070" /><testcase classname="backend.services.test_search_history_preservation.TestSearchHistoryPreservation" name="test_sequential_id_generation_increments_by_one" time="0.018" /><testcase classname="backend.services.test_search_history_race_condition.TestSearchHistoryRaceCondition" name="test_concurrent_search_id_generation_race_condition" time="0.051" /><testcase classname="backend.services.test_search_history_race_condition.TestSearchHistoryRaceCondition" name="test_high_concurrency_stress_test" time="0.080" /></testsuite></testsuites>

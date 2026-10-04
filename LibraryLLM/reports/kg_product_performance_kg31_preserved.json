@@ -1,0 +1,5537 @@
+{
+  "created_at": "2026-10-02T18:24:57.216027+00:00",
+  "graph": {
+    "version": "kg1-2-metadata-cosine-v1",
+    "source": "Mongo books: projected public metadata only",
+    "source_count": 5000000,
+    "books": 5000000,
+    "edges": 29406707,
+    "features": {
+      "author": 2454492,
+      "subject": 975785
+    },
+    "missing_authors": 60151,
+    "missing_subjects": 257541,
+    "isolated_books": 1211,
+    "skipped_books": 0,
+    "created_at": "2026-10-02T17:00:36.932421+00:00",
+    "catalogue_hash": "50559012605f6fe3aba1fbc36f3f943c24563bb0a88fc60ac6a14df90fb3e904",
+    "build_seconds": 882.8079306,
+    "schema": {
+      "nodes": [
+        "Book",
+        "Author name",
+        "Subject label"
+      ],
+      "edges": [
+        "AUTHORED_BY",
+        "HAS_SUBJECT"
+      ]
+    },
+    "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+    "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+    "scope": "full catalogue"
+  },
+  "cases": [
+    {
+      "category": "finance",
+      "work_id": "OL2010879W",
+      "title": "Rich Dad, Poor Dad",
+      "first_observed_ms": 271.20129999821074,
+      "warm_ms": [
+        245.1456999988295,
+        250.23910000163596,
+        268.53059999848483
+      ],
+      "results": 10,
+      "candidate_count": 28816,
+      "largest_returned_reason_degree": 5930,
+      "metadata_availability_correct": true,
+      "reason_paths_source_verified": true,
+      "recommendations": [
+        {
+          "work_id": "OL21654512W",
+          "title": "El juego del dinero : por qué los inversionistas lentos pierden y el dinero rápido gana! / Who Took My Money?",
+          "authors": [
+            "Robert T. Kiyosaki",
+            "Sharon L. Lechter"
+          ],
+          "subjects": [
+            "Investments",
+            "Personal Finance",
+            "Finanzas personales",
+            "Inversiones",
+            "Investissements",
+            "Materiales en español"
+          ],
+          "book_id": 3130984,
+          "average_rating": 5.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.6104926721917691,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:b6fe6bde43c4022952f27d0aba28af82fb176dd8c238364830ff3c13cb6266d4",
+                "OL21654512W"
+              ],
+              "kind": "author",
+              "label": "Sharon L. Lechter",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 33,
+              "contribution": 0.23435643627492175,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                },
+                {
+                  "work_id": "OL21654512W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL21654512W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.191320823072518,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL21654512W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:c0f2f7926a5128945b41ab25c1a6094ce53c26a5232a3630be53b01c7d12cb73",
+                "OL21654512W"
+              ],
+              "kind": "subject",
+              "label": "Inversiones",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 50,
+              "contribution": 0.05496352483842772,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Inversiones"
+                },
+                {
+                  "work_id": "OL21654512W",
+                  "field": "subjects",
+                  "value": "Inversiones"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:8deba68b18a2812631d9656ea02fcebabfb2fcada1578b6b263df11fb9a427c9",
+                "OL21654512W"
+              ],
+              "kind": "subject",
+              "label": "Finanzas personales",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 93,
+              "contribution": 0.04971487327733222,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finanzas personales"
+                },
+                {
+                  "work_id": "OL21654512W",
+                  "field": "subjects",
+                  "value": "Finanzas personales"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:d818eb8017acf8e6779a5014def83af003d541c7c78e3d1407e184d24560354a",
+                "OL21654512W"
+              ],
+              "kind": "subject",
+              "label": "Investissements",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 537,
+              "contribution": 0.0361875479297292,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investissements"
+                },
+                {
+                  "work_id": "OL21654512W",
+                  "field": "subjects",
+                  "value": "Investissements"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:61108514445dc5a3d61c81143f57fc213d1feeaf861f90594866145966fdc4f9",
+                "OL21654512W"
+              ],
+              "kind": "subject",
+              "label": "Personal Finance",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 4299,
+              "contribution": 0.02286911770145657,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                },
+                {
+                  "work_id": "OL21654512W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL21654512W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.021080349097383672,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL21654512W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL2010877W",
+          "title": "Rich Dad, Poor Dad 2 (Rich Dad)",
+          "authors": [
+            "Robert T. Kiyosaki",
+            "Sharon L. Lechter"
+          ],
+          "subjects": [
+            "Finance, personal",
+            "Investments",
+            "Rich people",
+            "Personal Finance",
+            "Financial security"
+          ],
+          "book_id": 349891,
+          "average_rating": 3.655,
+          "rating_count": 29,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.6057882957097478,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:b6fe6bde43c4022952f27d0aba28af82fb176dd8c238364830ff3c13cb6266d4",
+                "OL2010877W"
+              ],
+              "kind": "author",
+              "label": "Sharon L. Lechter",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 33,
+              "contribution": 0.2503239804254436,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                },
+                {
+                  "work_id": "OL2010877W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL2010877W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.20435619661669027,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL2010877W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:3e71e2c618c7b77790722eb5030023a45937a11441ba69edf4ba1fd4935a0079",
+                "OL2010877W"
+              ],
+              "kind": "subject",
+              "label": "Financial security",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 182,
+              "contribution": 0.04731430764800949,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Financial security"
+                },
+                {
+                  "work_id": "OL2010877W",
+                  "field": "subjects",
+                  "value": "Financial security"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:7b1f2a5a08d4e12fb14f9d1324f487d969cf049241f4a500866cba4729c73b80",
+                "OL2010877W"
+              ],
+              "kind": "subject",
+              "label": "Rich people",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1452,
+              "contribution": 0.03144771077740372,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Rich people"
+                },
+                {
+                  "work_id": "OL2010877W",
+                  "field": "subjects",
+                  "value": "Rich people"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:184f17753830cccba0e51b9c71c5efd73413690beb93346efd185f659a4ddebd",
+                "OL2010877W"
+              ],
+              "kind": "subject",
+              "label": "Finance, personal",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 3666,
+              "contribution": 0.0254021987154013,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                },
+                {
+                  "work_id": "OL2010877W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:61108514445dc5a3d61c81143f57fc213d1feeaf861f90594866145966fdc4f9",
+                "OL2010877W"
+              ],
+              "kind": "subject",
+              "label": "Personal Finance",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 4299,
+              "contribution": 0.024427272674222577,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                },
+                {
+                  "work_id": "OL2010877W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL2010877W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.02251662885257684,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL2010877W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL2010894W",
+          "title": "Rich dad's guide to investing",
+          "authors": [
+            "Robert T. Kiyosaki",
+            "Sharon L. Lechter"
+          ],
+          "subjects": [
+            "Business",
+            "Finance, Personal",
+            "Finanzas personales",
+            "Handbooks, manuals",
+            "Handbooks, manuals, etc",
+            "Inversiones",
+            "Investments",
+            "Nonfiction",
+            "Personal Finance"
+          ],
+          "book_id": 4453075,
+          "average_rating": 4.231,
+          "rating_count": 13,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.5917511529483986,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:b6fe6bde43c4022952f27d0aba28af82fb176dd8c238364830ff3c13cb6266d4",
+                "OL2010894W"
+              ],
+              "kind": "author",
+              "label": "Sharon L. Lechter",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 33,
+              "contribution": 0.23187378429539898,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                },
+                {
+                  "work_id": "OL2010894W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL2010894W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.18929406832374843,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL2010894W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:c0f2f7926a5128945b41ab25c1a6094ce53c26a5232a3630be53b01c7d12cb73",
+                "OL2010894W"
+              ],
+              "kind": "subject",
+              "label": "Inversiones",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 50,
+              "contribution": 0.054381269424791046,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Inversiones"
+                },
+                {
+                  "work_id": "OL2010894W",
+                  "field": "subjects",
+                  "value": "Inversiones"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:8deba68b18a2812631d9656ea02fcebabfb2fcada1578b6b263df11fb9a427c9",
+                "OL2010894W"
+              ],
+              "kind": "subject",
+              "label": "Finanzas personales",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 93,
+              "contribution": 0.049188219388428975,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finanzas personales"
+                },
+                {
+                  "work_id": "OL2010894W",
+                  "field": "subjects",
+                  "value": "Finanzas personales"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:184f17753830cccba0e51b9c71c5efd73413690beb93346efd185f659a4ddebd",
+                "OL2010894W"
+              ],
+              "kind": "subject",
+              "label": "Finance, personal",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 3666,
+              "contribution": 0.023529922844599892,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                },
+                {
+                  "work_id": "OL2010894W",
+                  "field": "subjects",
+                  "value": "Finance, Personal"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:61108514445dc5a3d61c81143f57fc213d1feeaf861f90594866145966fdc4f9",
+                "OL2010894W"
+              ],
+              "kind": "subject",
+              "label": "Personal Finance",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 4299,
+              "contribution": 0.02262685398882332,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                },
+                {
+                  "work_id": "OL2010894W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL2010894W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.02085703468260798,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL2010894W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL25087779W",
+          "title": "What the Rich Teach Their Kids about Money",
+          "authors": [
+            "Robert T. Kiyosaki",
+            "Sharon L. Lechter"
+          ],
+          "subjects": [
+            "Finance, personal",
+            "Investments",
+            "Rich people"
+          ],
+          "book_id": 3655509,
+          "average_rating": 4.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.5687875258336736,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:b6fe6bde43c4022952f27d0aba28af82fb176dd8c238364830ff3c13cb6266d4",
+                "OL25087779W"
+              ],
+              "kind": "author",
+              "label": "Sharon L. Lechter",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 33,
+              "contribution": 0.26660805764849654,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                },
+                {
+                  "work_id": "OL25087779W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL25087779W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.21764997726471216,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL25087779W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:7b1f2a5a08d4e12fb14f9d1324f487d969cf049241f4a500866cba4729c73b80",
+                "OL25087779W"
+              ],
+              "kind": "subject",
+              "label": "Rich people",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1452,
+              "contribution": 0.033493447465982776,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Rich people"
+                },
+                {
+                  "work_id": "OL25087779W",
+                  "field": "subjects",
+                  "value": "Rich people"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:184f17753830cccba0e51b9c71c5efd73413690beb93346efd185f659a4ddebd",
+                "OL25087779W"
+              ],
+              "kind": "subject",
+              "label": "Finance, personal",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 3666,
+              "contribution": 0.027054662713512468,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                },
+                {
+                  "work_id": "OL25087779W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL25087779W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.02398138074096969,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL25087779W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL25725793W",
+          "title": "Rich Dad's Success Stories",
+          "authors": [
+            "Sharon L. Lechter",
+            "Robert T. Kiyosaki"
+          ],
+          "subjects": [
+            "Finance, personal",
+            "Investments"
+          ],
+          "book_id": 342196,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.5517867291156752,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:b6fe6bde43c4022952f27d0aba28af82fb176dd8c238364830ff3c13cb6266d4",
+                "OL25725793W"
+              ],
+              "kind": "author",
+              "label": "Sharon L. Lechter",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 33,
+              "contribution": 0.27482237153517997,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                },
+                {
+                  "work_id": "OL25725793W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL25725793W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.22435587072663823,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL25725793W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:184f17753830cccba0e51b9c71c5efd73413690beb93346efd185f659a4ddebd",
+                "OL25725793W"
+              ],
+              "kind": "subject",
+              "label": "Finance, personal",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 3666,
+              "contribution": 0.027888229011497893,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                },
+                {
+                  "work_id": "OL25725793W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL25725793W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.02472025784235913,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL25725793W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL15090498W",
+          "title": "Queremos que seas rico (Why We Want You to Be Rich)",
+          "authors": [
+            "Robert T. Kiyosaki"
+          ],
+          "subjects": [
+            "Rich people",
+            "Wealth",
+            "Ricos",
+            "Riqueza",
+            "Personal Finance",
+            "Finanzas personales",
+            "Inversiones",
+            "Investments"
+          ],
+          "book_id": 3182035,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.5516952875819366,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL15090498W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.212997128185827,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL15090498W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:a2fb9caa296a25d917a5ad303f0561b1919ded43696fa88e197affceb49c2463",
+                "OL15090498W"
+              ],
+              "kind": "subject",
+              "label": "Ricos",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 7,
+              "contribution": 0.08068185241685233,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Ricos"
+                },
+                {
+                  "work_id": "OL15090498W",
+                  "field": "subjects",
+                  "value": "Ricos"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:c0f2f7926a5128945b41ab25c1a6094ce53c26a5232a3630be53b01c7d12cb73",
+                "OL15090498W"
+              ],
+              "kind": "subject",
+              "label": "Inversiones",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 50,
+              "contribution": 0.061190793336269735,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Inversiones"
+                },
+                {
+                  "work_id": "OL15090498W",
+                  "field": "subjects",
+                  "value": "Inversiones"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:053f99c56bdbdd2f266f7336f10f6a33426b88d7ce7d9745e67d780c55dddc52",
+                "OL15090498W"
+              ],
+              "kind": "subject",
+              "label": "Riqueza",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 58,
+              "contribution": 0.05977173666944109,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Riqueza"
+                },
+                {
+                  "work_id": "OL15090498W",
+                  "field": "subjects",
+                  "value": "Riqueza"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:8deba68b18a2812631d9656ea02fcebabfb2fcada1578b6b263df11fb9a427c9",
+                "OL15090498W"
+              ],
+              "kind": "subject",
+              "label": "Finanzas personales",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 93,
+              "contribution": 0.055347478994382054,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finanzas personales"
+                },
+                {
+                  "work_id": "OL15090498W",
+                  "field": "subjects",
+                  "value": "Finanzas personales"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:7b1f2a5a08d4e12fb14f9d1324f487d969cf049241f4a500866cba4729c73b80",
+                "OL15090498W"
+              ],
+              "kind": "subject",
+              "label": "Rich people",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1452,
+              "contribution": 0.03277743564668794,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Rich people"
+                },
+                {
+                  "work_id": "OL15090498W",
+                  "field": "subjects",
+                  "value": "Rich people"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:61108514445dc5a3d61c81143f57fc213d1feeaf861f90594866145966fdc4f9",
+                "OL15090498W"
+              ],
+              "kind": "subject",
+              "label": "Personal Finance",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 4299,
+              "contribution": 0.025460147600910078,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                },
+                {
+                  "work_id": "OL15090498W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL15090498W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.023468714731566403,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL15090498W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL9205115W",
+          "title": "富爸爸, 提早享受財富",
+          "authors": [
+            "Sharon L. Lechter",
+            "Robert T. Kiyosaki"
+          ],
+          "subjects": [
+            "Personal Finance",
+            "Investments"
+          ],
+          "book_id": 4612367,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.551251299901639,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:b6fe6bde43c4022952f27d0aba28af82fb176dd8c238364830ff3c13cb6266d4",
+                "OL9205115W"
+              ],
+              "kind": "author",
+              "label": "Sharon L. Lechter",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 33,
+              "contribution": 0.275089305919583,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                },
+                {
+                  "work_id": "OL9205115W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL9205115W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.224573787106244,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL9205115W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:61108514445dc5a3d61c81143f57fc213d1feeaf861f90594866145966fdc4f9",
+                "OL9205115W"
+              ],
+              "kind": "subject",
+              "label": "Personal Finance",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 4299,
+              "contribution": 0.026843938299637545,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                },
+                {
+                  "work_id": "OL9205115W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL9205115W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.024744268576174476,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL9205115W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL2010891W",
+          "title": "Rich dad's cashflow quadrant",
+          "authors": [
+            "Robert T. Kiyosaki"
+          ],
+          "subjects": [
+            "Finance, Personal",
+            "Financial security",
+            "Investments",
+            "Personal Finance",
+            "Rich people",
+            "Finances personnelles",
+            "Investissements",
+            "Riches"
+          ],
+          "book_id": 4019521,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.5474556636025417,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL2010891W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.2261308089343807,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:2d5f24e66f8b9071ff133d419e8f926fca38e3de63330c21d1497f4462b1a3f2",
+                "OL2010891W"
+              ],
+              "kind": "subject",
+              "label": "Riches",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 82,
+              "contribution": 0.059997690581559675,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Riches"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "subjects",
+                  "value": "Riches"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:3e71e2c618c7b77790722eb5030023a45937a11441ba69edf4ba1fd4935a0079",
+                "OL2010891W"
+              ],
+              "kind": "subject",
+              "label": "Financial security",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 182,
+              "contribution": 0.052355753531090676,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Financial security"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "subjects",
+                  "value": "Financial security"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:61058a3a6742d39a0a93a50d7457901d7ba7174dcd2ecce84bf4fff3072b3864",
+                "OL2010891W"
+              ],
+              "kind": "subject",
+              "label": "Finances personnelles",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 203,
+              "contribution": 0.05134642176324517,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finances personnelles"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "subjects",
+                  "value": "Finances personnelles"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:d818eb8017acf8e6779a5014def83af003d541c7c78e3d1407e184d24560354a",
+                "OL2010891W"
+              ],
+              "kind": "subject",
+              "label": "Investissements",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 537,
+              "contribution": 0.04277171379092185,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investissements"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "subjects",
+                  "value": "Investissements"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:7b1f2a5a08d4e12fb14f9d1324f487d969cf049241f4a500866cba4729c73b80",
+                "OL2010891W"
+              ],
+              "kind": "subject",
+              "label": "Rich people",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1452,
+              "contribution": 0.03479853508218967,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Rich people"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "subjects",
+                  "value": "Rich people"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:184f17753830cccba0e51b9c71c5efd73413690beb93346efd185f659a4ddebd",
+                "OL2010891W"
+              ],
+              "kind": "subject",
+              "label": "Finance, personal",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 3666,
+              "contribution": 0.02810886011447934,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "subjects",
+                  "value": "Finance, Personal"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:61108514445dc5a3d61c81143f57fc213d1feeaf861f90594866145966fdc4f9",
+                "OL2010891W"
+              ],
+              "kind": "subject",
+              "label": "Personal Finance",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 4299,
+              "contribution": 0.02703005351114225,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL2010891W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.024915826293532443,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL2010891W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL29408406W",
+          "title": "Rich Dad's Cashflow Quadrant",
+          "authors": [
+            "Robert T. Kiyosaki",
+            "Sharon L. Lechter"
+          ],
+          "subjects": [
+            "Finance, personal"
+          ],
+          "book_id": 2785362,
+          "average_rating": 5.0,
+          "rating_count": 2,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.539284974953358,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:b6fe6bde43c4022952f27d0aba28af82fb176dd8c238364830ff3c13cb6266d4",
+                "OL29408406W"
+              ],
+              "kind": "author",
+              "label": "Sharon L. Lechter",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 33,
+              "contribution": 0.28119332916761713,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                },
+                {
+                  "work_id": "OL29408406W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:985a2464afed86d0af95d6f3894eae1daeb815a4a0ac6fc09b81aedc48e23115",
+                "OL29408406W"
+              ],
+              "kind": "author",
+              "label": "Robert T. Kiyosaki",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 117,
+              "contribution": 0.22955690927020156,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                },
+                {
+                  "work_id": "OL29408406W",
+                  "field": "authors",
+                  "value": "Robert T. Kiyosaki"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:184f17753830cccba0e51b9c71c5efd73413690beb93346efd185f659a4ddebd",
+                "OL29408406W"
+              ],
+              "kind": "subject",
+              "label": "Finance, personal",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 3666,
+              "contribution": 0.02853473651553933,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                },
+                {
+                  "work_id": "OL29408406W",
+                  "field": "subjects",
+                  "value": "Finance, personal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL17414124W",
+          "title": "Gua Para Invertir En Qu Invierten Los Ricos A Diferencia De Las Clases Media Y Pobre",
+          "authors": [
+            "Sharon L. Lechter"
+          ],
+          "subjects": [
+            "Investments",
+            "Personal Finance",
+            "Inversiones",
+            "Hacienda privada",
+            "Finanzas personales"
+          ],
+          "book_id": 3307158,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.5367105147985679,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL2010879W",
+                "author:b6fe6bde43c4022952f27d0aba28af82fb176dd8c238364830ff3c13cb6266d4",
+                "OL17414124W"
+              ],
+              "kind": "author",
+              "label": "Sharon L. Lechter",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 33,
+              "contribution": 0.28254214012207834,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                },
+                {
+                  "work_id": "OL17414124W",
+                  "field": "authors",
+                  "value": "Sharon L. Lechter"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:234c94d94fbb4b97cc8f6680107348d325d79b6916f486f037ab63fa6ff3c963",
+                "OL17414124W"
+              ],
+              "kind": "subject",
+              "label": "Hacienda privada",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 22,
+              "contribution": 0.0749813393117604,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Hacienda privada"
+                },
+                {
+                  "work_id": "OL17414124W",
+                  "field": "subjects",
+                  "value": "Hacienda privada"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:c0f2f7926a5128945b41ab25c1a6094ce53c26a5232a3630be53b01c7d12cb73",
+                "OL17414124W"
+              ],
+              "kind": "subject",
+              "label": "Inversiones",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 50,
+              "contribution": 0.06626449942379575,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Inversiones"
+                },
+                {
+                  "work_id": "OL17414124W",
+                  "field": "subjects",
+                  "value": "Inversiones"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:8deba68b18a2812631d9656ea02fcebabfb2fcada1578b6b263df11fb9a427c9",
+                "OL17414124W"
+              ],
+              "kind": "subject",
+              "label": "Finanzas personales",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 93,
+              "contribution": 0.05993667984948137,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Finanzas personales"
+                },
+                {
+                  "work_id": "OL17414124W",
+                  "field": "subjects",
+                  "value": "Finanzas personales"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:61108514445dc5a3d61c81143f57fc213d1feeaf861f90594866145966fdc4f9",
+                "OL17414124W"
+              ],
+              "kind": "subject",
+              "label": "Personal Finance",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 4299,
+              "contribution": 0.027571205471367214,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                },
+                {
+                  "work_id": "OL17414124W",
+                  "field": "subjects",
+                  "value": "Personal Finance"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL2010879W",
+                "subject:6a0632fdb7b4e5794f9c304194886ed2250f73747dc956f6606e167950d47383",
+                "OL17414124W"
+              ],
+              "kind": "subject",
+              "label": "Investments",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 5930,
+              "contribution": 0.025414650620084803,
+              "provenance": [
+                {
+                  "work_id": "OL2010879W",
+                  "field": "subjects",
+                  "value": "Investments"
+                },
+                {
+                  "work_id": "OL17414124W",
+                  "field": "subjects",
+                  "value": "Investments"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "reason_types": [
+        "author",
+        "subject"
+      ]
+    },
+    {
+      "category": "fiction/literature",
+      "work_id": "OL11359361W",
+      "title": "Dracula",
+      "first_observed_ms": 341.59340000041993,
+      "warm_ms": [
+        348.730899997463,
+        334.9831000014092,
+        338.08800000406336
+      ],
+      "results": 10,
+      "candidate_count": 73056,
+      "largest_returned_reason_degree": 66171,
+      "metadata_availability_correct": true,
+      "reason_paths_source_verified": true,
+      "recommendations": [
+        {
+          "work_id": "OL11359365W",
+          "title": "Goodbye Piccadilly",
+          "authors": [
+            "Tom Barling"
+          ],
+          "subjects": [
+            "Fiction in English"
+          ],
+          "book_id": 2334309,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.9844797790484192,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "author:300fb555d22bc9dafd4d8814bd8036bbed396a23d3d534f6abe7a9d95b01993f",
+                "OL11359365W"
+              ],
+              "kind": "author",
+              "label": "Tom Barling",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 6,
+              "contribution": 0.9252272912735431,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                },
+                {
+                  "work_id": "OL11359365W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL11359361W",
+                "subject:396567212893cc35dce27dd1cd1c230d7d8b8d3dd8ca8135283220313eb5786a",
+                "OL11359365W"
+              ],
+              "kind": "subject",
+              "label": "Fiction in English",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 8925,
+              "contribution": 0.059252487774876204,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "subjects",
+                  "value": "Fiction in English"
+                },
+                {
+                  "work_id": "OL11359365W",
+                  "field": "subjects",
+                  "value": "Fiction in English"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL11359366W",
+          "title": "The Olympic sleeper",
+          "authors": [
+            "Tom Barling"
+          ],
+          "subjects": [
+            "Fiction in English"
+          ],
+          "book_id": 3957041,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.9844797790484192,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "author:300fb555d22bc9dafd4d8814bd8036bbed396a23d3d534f6abe7a9d95b01993f",
+                "OL11359366W"
+              ],
+              "kind": "author",
+              "label": "Tom Barling",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 6,
+              "contribution": 0.9252272912735431,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                },
+                {
+                  "work_id": "OL11359366W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL11359361W",
+                "subject:396567212893cc35dce27dd1cd1c230d7d8b8d3dd8ca8135283220313eb5786a",
+                "OL11359366W"
+              ],
+              "kind": "subject",
+              "label": "Fiction in English",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 8925,
+              "contribution": 0.059252487774876204,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "subjects",
+                  "value": "Fiction in English"
+                },
+                {
+                  "work_id": "OL11359366W",
+                  "field": "subjects",
+                  "value": "Fiction in English"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL11359367W",
+          "title": "The sirens of autumn",
+          "authors": [
+            "Tom Barling"
+          ],
+          "subjects": [
+            "Fiction, general"
+          ],
+          "book_id": 1186790,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.9703953441393466,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "author:300fb555d22bc9dafd4d8814bd8036bbed396a23d3d534f6abe7a9d95b01993f",
+                "OL11359367W"
+              ],
+              "kind": "author",
+              "label": "Tom Barling",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 6,
+              "contribution": 0.9386561516228245,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                },
+                {
+                  "work_id": "OL11359367W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL11359361W",
+                "subject:e8364fc0984cf6d0ad97ffaf9ebf664d17d5e5ca109fc81225d4a354f75792e8",
+                "OL11359367W"
+              ],
+              "kind": "subject",
+              "label": "Fiction, general",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 66171,
+              "contribution": 0.031739192516522165,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "subjects",
+                  "value": "Fiction, general"
+                },
+                {
+                  "work_id": "OL11359367W",
+                  "field": "subjects",
+                  "value": "Fiction, general"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL8348642W",
+          "title": "Smoke",
+          "authors": [
+            "Tom Barling"
+          ],
+          "subjects": [
+            "Fiction, action & adventure"
+          ],
+          "book_id": 1549258,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.926924515212639,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "author:300fb555d22bc9dafd4d8814bd8036bbed396a23d3d534f6abe7a9d95b01993f",
+                "OL8348642W"
+              ],
+              "kind": "author",
+              "label": "Tom Barling",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 6,
+              "contribution": 0.926924515212639,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                },
+                {
+                  "work_id": "OL8348642W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL11359368W",
+          "title": "Terminate with prejudice",
+          "authors": [
+            "Tom Barling"
+          ],
+          "subjects": [
+            "Fiction in English 1945- Texts"
+          ],
+          "book_id": 753481,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.8756515151713534,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "author:300fb555d22bc9dafd4d8814bd8036bbed396a23d3d534f6abe7a9d95b01993f",
+                "OL11359368W"
+              ],
+              "kind": "author",
+              "label": "Tom Barling",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 6,
+              "contribution": 0.8756515151713534,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                },
+                {
+                  "work_id": "OL11359368W",
+                  "field": "authors",
+                  "value": "Tom Barling"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL17032152W",
+          "title": "Claudius the god and his wife Messalina",
+          "authors": [],
+          "subjects": [
+            "Fiction in English"
+          ],
+          "book_id": 972772,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.24152199914848194,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "subject:396567212893cc35dce27dd1cd1c230d7d8b8d3dd8ca8135283220313eb5786a",
+                "OL17032152W"
+              ],
+              "kind": "subject",
+              "label": "Fiction in English",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 8925,
+              "contribution": 0.24152199914848194,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "subjects",
+                  "value": "Fiction in English"
+                },
+                {
+                  "work_id": "OL17032152W",
+                  "field": "subjects",
+                  "value": "Fiction in English"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL17930387W",
+          "title": "Dark as the Grave Wherein My Friend Is Laid",
+          "authors": [],
+          "subjects": [
+            "Fiction in English"
+          ],
+          "book_id": 1712938,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.24152199914848194,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "subject:396567212893cc35dce27dd1cd1c230d7d8b8d3dd8ca8135283220313eb5786a",
+                "OL17930387W"
+              ],
+              "kind": "subject",
+              "label": "Fiction in English",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 8925,
+              "contribution": 0.24152199914848194,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "subjects",
+                  "value": "Fiction in English"
+                },
+                {
+                  "work_id": "OL17930387W",
+                  "field": "subjects",
+                  "value": "Fiction in English"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL15673682W",
+          "title": "To Err is Human...",
+          "authors": [],
+          "subjects": [
+            "Fiction, general"
+          ],
+          "book_id": 116464,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.17549804741015068,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "subject:e8364fc0984cf6d0ad97ffaf9ebf664d17d5e5ca109fc81225d4a354f75792e8",
+                "OL15673682W"
+              ],
+              "kind": "subject",
+              "label": "Fiction, general",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 66171,
+              "contribution": 0.17549804741015068,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "subjects",
+                  "value": "Fiction, general"
+                },
+                {
+                  "work_id": "OL15673682W",
+                  "field": "subjects",
+                  "value": "Fiction, general"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL20100601W",
+          "title": "Darkness Within (Lords of Avalon, #3)",
+          "authors": [],
+          "subjects": [
+            "Fiction, general"
+          ],
+          "book_id": 839472,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.17549804741015068,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "subject:e8364fc0984cf6d0ad97ffaf9ebf664d17d5e5ca109fc81225d4a354f75792e8",
+                "OL20100601W"
+              ],
+              "kind": "subject",
+              "label": "Fiction, general",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 66171,
+              "contribution": 0.17549804741015068,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "subjects",
+                  "value": "Fiction, general"
+                },
+                {
+                  "work_id": "OL20100601W",
+                  "field": "subjects",
+                  "value": "Fiction, general"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL31514992W",
+          "title": "Worlds of Weird",
+          "authors": [],
+          "subjects": [
+            "Fiction, general"
+          ],
+          "book_id": 871306,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.17549804741015068,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL11359361W",
+                "subject:e8364fc0984cf6d0ad97ffaf9ebf664d17d5e5ca109fc81225d4a354f75792e8",
+                "OL31514992W"
+              ],
+              "kind": "subject",
+              "label": "Fiction, general",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 66171,
+              "contribution": 0.17549804741015068,
+              "provenance": [
+                {
+                  "work_id": "OL11359361W",
+                  "field": "subjects",
+                  "value": "Fiction, general"
+                },
+                {
+                  "work_id": "OL31514992W",
+                  "field": "subjects",
+                  "value": "Fiction, general"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "reason_types": [
+        "author",
+        "subject"
+      ]
+    },
+    {
+      "category": "technical",
+      "work_id": "OL19545719W",
+      "title": "Fundamentals of Deep Learning",
+      "first_observed_ms": 394.23149999493035,
+      "warm_ms": [
+        393.6567999990075,
+        387.1123999997508,
+        396.6098000018974
+      ],
+      "results": 10,
+      "candidate_count": 74507,
+      "largest_returned_reason_degree": 58961,
+      "metadata_availability_correct": true,
+      "reason_paths_source_verified": true,
+      "recommendations": [
+        {
+          "work_id": "OL19543741W",
+          "title": "Deep Learning: A Practitioner's Approach",
+          "authors": [
+            "Adam Gibson",
+            "Josh Patterson"
+          ],
+          "subjects": [
+            "Neural networks (Computer science)",
+            "Open source software",
+            "Machine learning",
+            "Artificial intelligence",
+            "Computer Neural Networks",
+            "Apprentissage automatique",
+            "Intelligence artificielle",
+            "Réseaux neuronaux (Informatique)",
+            "COMPUTERS",
+            "General"
+          ],
+          "book_id": 2853973,
+          "average_rating": 3.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.31969850004101735,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0977a53e806f4b8bd60ea69c51897ad4f49188e0703e056f53a5babb06c622bd",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "Computer Neural Networks",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 100,
+              "contribution": 0.05359088739384626,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:a5fe718792435ee5fd2f97b81cbb5f8e24c41a740517c1f13911a42bd73560e7",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "Réseaux neuronaux (Informatique)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 110,
+              "contribution": 0.0527374836903581,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:5aecf7ab358ed7ccbf04184862dd99dd4d568d82c97755390879864263b8a1a0",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "Apprentissage automatique",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 136,
+              "contribution": 0.050859794715797595,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dd882975dc879b308d2838ec8c35771979b0903aed6f19236a32594aff572bde",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "Intelligence artificielle",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 500,
+              "contribution": 0.04004186187944733,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dcaa8e5ecb8d70ad4ededfab010e9ac8894d61070d561e97e84cd68d6f1ff0c9",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "Machine learning",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1037,
+              "contribution": 0.034531153425136324,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0815bea431fd03254040d66101c332aa9babed146c36a9f37b6aeb340ce91447",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "Neural networks (Computer science)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1046,
+              "contribution": 0.03446828844526112,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:803b3eb2b6af027151950019f2d5ede506a6636a9eafd262b27c23e3f834056f",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "Artificial intelligence",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 6877,
+              "contribution": 0.02212878153271866,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:af589d758d9c544e5ec0e62034b1e1ab08d2e1ddccfb82b049b303586d99f13f",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "COMPUTERS",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 10057,
+              "contribution": 0.019967917062990198,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "COMPUTERS"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "COMPUTERS"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0feae16d55365acf07fe9f909834361ba6ee606854746539230bdc84a6a24cee",
+                "OL19543741W"
+              ],
+              "kind": "subject",
+              "label": "General",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 58961,
+              "contribution": 0.01137233189546176,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "General"
+                },
+                {
+                  "work_id": "OL19543741W",
+                  "field": "subjects",
+                  "value": "General"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL2640191W",
+          "title": "Machine Learning",
+          "authors": [
+            "Tom M. Mitchell"
+          ],
+          "subjects": [
+            "Computer algorithms",
+            "Machine learning",
+            "Artificial Intelligence",
+            "Algorithms",
+            "Algorithmes",
+            "Apprentissage automatique",
+            "Künstliche Intelligenz",
+            "Maschinelles Lernen",
+            "Machine-learning",
+            "Algoritmen",
+            "Intelligence artificielle",
+            "Apprentissage, Psychologie de l'"
+          ],
+          "book_id": 2540211,
+          "average_rating": 4.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.29573731144451304,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:729dbc6c7244074c7212a1a8f46a48ace9d39dbd8ce829662f3b33c352e5da78",
+                "OL2640191W"
+              ],
+              "kind": "subject",
+              "label": "Maschinelles Lernen",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 37,
+              "contribution": 0.07168383656841634,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Maschinelles Lernen"
+                },
+                {
+                  "work_id": "OL2640191W",
+                  "field": "subjects",
+                  "value": "Maschinelles Lernen"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:5aecf7ab358ed7ccbf04184862dd99dd4d568d82c97755390879864263b8a1a0",
+                "OL2640191W"
+              ],
+              "kind": "subject",
+              "label": "Apprentissage automatique",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 136,
+              "contribution": 0.058026997235192126,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                },
+                {
+                  "work_id": "OL2640191W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:77da35f4b70f65fa830e066ddda4be2c5adcb3e85f3eaa87df213748d5b1aef4",
+                "OL2640191W"
+              ],
+              "kind": "subject",
+              "label": "Künstliche Intelligenz",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 172,
+              "contribution": 0.055697387068045466,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Künstliche Intelligenz"
+                },
+                {
+                  "work_id": "OL2640191W",
+                  "field": "subjects",
+                  "value": "Künstliche Intelligenz"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dd882975dc879b308d2838ec8c35771979b0903aed6f19236a32594aff572bde",
+                "OL2640191W"
+              ],
+              "kind": "subject",
+              "label": "Intelligence artificielle",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 500,
+              "contribution": 0.045684592742741226,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                },
+                {
+                  "work_id": "OL2640191W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dcaa8e5ecb8d70ad4ededfab010e9ac8894d61070d561e97e84cd68d6f1ff0c9",
+                "OL2640191W"
+              ],
+              "kind": "subject",
+              "label": "Machine learning",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1037,
+              "contribution": 0.03939731089213378,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                },
+                {
+                  "work_id": "OL2640191W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:803b3eb2b6af027151950019f2d5ede506a6636a9eafd262b27c23e3f834056f",
+                "OL2640191W"
+              ],
+              "kind": "subject",
+              "label": "Artificial intelligence",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 6877,
+              "contribution": 0.025247186937984074,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                },
+                {
+                  "work_id": "OL2640191W",
+                  "field": "subjects",
+                  "value": "Artificial Intelligence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL8948523W",
+          "title": "Bayesian artificial intelligence",
+          "authors": [
+            "Kevin B. Korb"
+          ],
+          "subjects": [
+            "Bayesian statistical decision theory",
+            "Data processing",
+            "Machine learning",
+            "Neural networks (Computer science)",
+            "Computer Neural Networks",
+            "Théorie de la décision bayésienne",
+            "Informatique",
+            "Apprentissage automatique",
+            "Réseaux neuronaux (Informatique)"
+          ],
+          "book_id": 1161353,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.27934754787070193,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0977a53e806f4b8bd60ea69c51897ad4f49188e0703e056f53a5babb06c622bd",
+                "OL8948523W"
+              ],
+              "kind": "subject",
+              "label": "Computer Neural Networks",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 100,
+              "contribution": 0.06618613254666389,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                },
+                {
+                  "work_id": "OL8948523W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:a5fe718792435ee5fd2f97b81cbb5f8e24c41a740517c1f13911a42bd73560e7",
+                "OL8948523W"
+              ],
+              "kind": "subject",
+              "label": "Réseaux neuronaux (Informatique)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 110,
+              "contribution": 0.06513215689181465,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                },
+                {
+                  "work_id": "OL8948523W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:5aecf7ab358ed7ccbf04184862dd99dd4d568d82c97755390879864263b8a1a0",
+                "OL8948523W"
+              ],
+              "kind": "subject",
+              "label": "Apprentissage automatique",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 136,
+              "contribution": 0.0628131624247452,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                },
+                {
+                  "work_id": "OL8948523W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dcaa8e5ecb8d70ad4ededfab010e9ac8894d61070d561e97e84cd68d6f1ff0c9",
+                "OL8948523W"
+              ],
+              "kind": "subject",
+              "label": "Machine learning",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1037,
+              "contribution": 0.04264686794209901,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                },
+                {
+                  "work_id": "OL8948523W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0815bea431fd03254040d66101c332aa9babed146c36a9f37b6aeb340ce91447",
+                "OL8948523W"
+              ],
+              "kind": "subject",
+              "label": "Neural networks (Computer science)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1046,
+              "contribution": 0.042569228065379196,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                },
+                {
+                  "work_id": "OL8948523W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL16692661W",
+          "title": "Bayesian artificial intelligence",
+          "authors": [
+            "Kevin B. Korb"
+          ],
+          "subjects": [
+            "Neural networks (Computer science)",
+            "Data processing",
+            "BUSINESS & ECONOMICS / Statistics",
+            "Bayesian statistical decision theory",
+            "COMPUTERS / General",
+            "COMPUTERS / Software Development & Engineering / Systems Analysis & Design",
+            "Machine learning",
+            "Artificial intelligence",
+            "Bayes Theorem",
+            "Statistics at Topic",
+            "Computer Neural Networks",
+            "Théorie de la décision bayésienne",
+            "Informatique",
+            "Apprentissage automatique",
+            "Réseaux neuronaux (Informatique)",
+            "Théorème de Bayes",
+            "Intelligence artificielle",
+            "MATHEMATICS",
+            "Applied",
+            "Probability & Statistics",
+            "General"
+          ],
+          "book_id": 4031390,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.2788244100002417,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0977a53e806f4b8bd60ea69c51897ad4f49188e0703e056f53a5babb06c622bd",
+                "OL16692661W"
+              ],
+              "kind": "subject",
+              "label": "Computer Neural Networks",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 100,
+              "contribution": 0.049852929289080875,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                },
+                {
+                  "work_id": "OL16692661W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:a5fe718792435ee5fd2f97b81cbb5f8e24c41a740517c1f13911a42bd73560e7",
+                "OL16692661W"
+              ],
+              "kind": "subject",
+              "label": "Réseaux neuronaux (Informatique)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 110,
+              "contribution": 0.04905905039373121,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                },
+                {
+                  "work_id": "OL16692661W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:5aecf7ab358ed7ccbf04184862dd99dd4d568d82c97755390879864263b8a1a0",
+                "OL16692661W"
+              ],
+              "kind": "subject",
+              "label": "Apprentissage automatique",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 136,
+              "contribution": 0.047312330004727156,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                },
+                {
+                  "work_id": "OL16692661W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dd882975dc879b308d2838ec8c35771979b0903aed6f19236a32594aff572bde",
+                "OL16692661W"
+              ],
+              "kind": "subject",
+              "label": "Intelligence artificielle",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 500,
+              "contribution": 0.037248946713811106,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                },
+                {
+                  "work_id": "OL16692661W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dcaa8e5ecb8d70ad4ededfab010e9ac8894d61070d561e97e84cd68d6f1ff0c9",
+                "OL16692661W"
+              ],
+              "kind": "subject",
+              "label": "Machine learning",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1037,
+              "contribution": 0.032122609527294343,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                },
+                {
+                  "work_id": "OL16692661W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0815bea431fd03254040d66101c332aa9babed146c36a9f37b6aeb340ce91447",
+                "OL16692661W"
+              ],
+              "kind": "subject",
+              "label": "Neural networks (Computer science)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1046,
+              "contribution": 0.032064129372385806,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                },
+                {
+                  "work_id": "OL16692661W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:803b3eb2b6af027151950019f2d5ede506a6636a9eafd262b27c23e3f834056f",
+                "OL16692661W"
+              ],
+              "kind": "subject",
+              "label": "Artificial intelligence",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 6877,
+              "contribution": 0.020585301618476628,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                },
+                {
+                  "work_id": "OL16692661W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0feae16d55365acf07fe9f909834361ba6ee606854746539230bdc84a6a24cee",
+                "OL16692661W"
+              ],
+              "kind": "subject",
+              "label": "General",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 58961,
+              "contribution": 0.010579113080734604,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "General"
+                },
+                {
+                  "work_id": "OL16692661W",
+                  "field": "subjects",
+                  "value": "General"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL21349080W",
+          "title": "Recent Advances in Artificial Neural Networks",
+          "authors": [
+            "L. C. Jain"
+          ],
+          "subjects": [
+            "Neural networks (computer science)",
+            "Computer Neural Networks",
+            "Réseaux neuronaux (Informatique)",
+            "COMPUTERS",
+            "General"
+          ],
+          "book_id": 2812325,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.27794490949174966,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0977a53e806f4b8bd60ea69c51897ad4f49188e0703e056f53a5babb06c622bd",
+                "OL21349080W"
+              ],
+              "kind": "subject",
+              "label": "Computer Neural Networks",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 100,
+              "contribution": 0.08653178726810161,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                },
+                {
+                  "work_id": "OL21349080W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:a5fe718792435ee5fd2f97b81cbb5f8e24c41a740517c1f13911a42bd73560e7",
+                "OL21349080W"
+              ],
+              "kind": "subject",
+              "label": "Réseaux neuronaux (Informatique)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 110,
+              "contribution": 0.08515381889856631,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                },
+                {
+                  "work_id": "OL21349080W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0815bea431fd03254040d66101c332aa9babed146c36a9f37b6aeb340ce91447",
+                "OL21349080W"
+              ],
+              "kind": "subject",
+              "label": "Neural networks (Computer science)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1046,
+              "contribution": 0.05565503294098069,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                },
+                {
+                  "work_id": "OL21349080W",
+                  "field": "subjects",
+                  "value": "Neural networks (computer science)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:af589d758d9c544e5ec0e62034b1e1ab08d2e1ddccfb82b049b303586d99f13f",
+                "OL21349080W"
+              ],
+              "kind": "subject",
+              "label": "COMPUTERS",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 10057,
+              "contribution": 0.032241667109997714,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "COMPUTERS"
+                },
+                {
+                  "work_id": "OL21349080W",
+                  "field": "subjects",
+                  "value": "COMPUTERS"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0feae16d55365acf07fe9f909834361ba6ee606854746539230bdc84a6a24cee",
+                "OL21349080W"
+              ],
+              "kind": "subject",
+              "label": "General",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 58961,
+              "contribution": 0.01836260327410332,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "General"
+                },
+                {
+                  "work_id": "OL21349080W",
+                  "field": "subjects",
+                  "value": "General"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL16353913W",
+          "title": "Computational models of learning",
+          "authors": [
+            "Leonard Bolc"
+          ],
+          "subjects": [
+            "Artificial intelligence",
+            "Machine learning",
+            "Apprentissage automatique",
+            "Soft Computing",
+            "Maschinelles Lernen",
+            "Kunstliche Intelligenz",
+            "Machine-learning",
+            "Lernen",
+            "Intelligence artificielle"
+          ],
+          "book_id": 83485,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.258655218491396,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:729dbc6c7244074c7212a1a8f46a48ace9d39dbd8ce829662f3b33c352e5da78",
+                "OL16353913W"
+              ],
+              "kind": "subject",
+              "label": "Maschinelles Lernen",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 37,
+              "contribution": 0.07724297721751394,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Maschinelles Lernen"
+                },
+                {
+                  "work_id": "OL16353913W",
+                  "field": "subjects",
+                  "value": "Maschinelles Lernen"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:5aecf7ab358ed7ccbf04184862dd99dd4d568d82c97755390879864263b8a1a0",
+                "OL16353913W"
+              ],
+              "kind": "subject",
+              "label": "Apprentissage automatique",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 136,
+              "contribution": 0.06252703873014412,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                },
+                {
+                  "work_id": "OL16353913W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dd882975dc879b308d2838ec8c35771979b0903aed6f19236a32594aff572bde",
+                "OL16353913W"
+              ],
+              "kind": "subject",
+              "label": "Intelligence artificielle",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 500,
+              "contribution": 0.049227470589565885,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                },
+                {
+                  "work_id": "OL16353913W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dcaa8e5ecb8d70ad4ededfab010e9ac8894d61070d561e97e84cd68d6f1ff0c9",
+                "OL16353913W"
+              ],
+              "kind": "subject",
+              "label": "Machine learning",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1037,
+              "contribution": 0.04245260484583511,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                },
+                {
+                  "work_id": "OL16353913W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:803b3eb2b6af027151950019f2d5ede506a6636a9eafd262b27c23e3f834056f",
+                "OL16353913W"
+              ],
+              "kind": "subject",
+              "label": "Artificial intelligence",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 6877,
+              "contribution": 0.027205127108336953,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                },
+                {
+                  "work_id": "OL16353913W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL19546318W",
+          "title": "Building Machine Learning Projects with TensorFlow",
+          "authors": [
+            "Rodolfo Bonnin"
+          ],
+          "subjects": [
+            "Machine learning",
+            "Artificial intelligence",
+            "Python (computer program language)",
+            "Apprentissage automatique",
+            "Intelligence artificielle",
+            "COMPUTERS",
+            "General"
+          ],
+          "book_id": 4990198,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.24514319617792268,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:5aecf7ab358ed7ccbf04184862dd99dd4d568d82c97755390879864263b8a1a0",
+                "OL19546318W"
+              ],
+              "kind": "subject",
+              "label": "Apprentissage automatique",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 136,
+              "contribution": 0.06969147213875969,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                },
+                {
+                  "work_id": "OL19546318W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dd882975dc879b308d2838ec8c35771979b0903aed6f19236a32594aff572bde",
+                "OL19546318W"
+              ],
+              "kind": "subject",
+              "label": "Intelligence artificielle",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 500,
+              "contribution": 0.054868021334910824,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                },
+                {
+                  "work_id": "OL19546318W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dcaa8e5ecb8d70ad4ededfab010e9ac8894d61070d561e97e84cd68d6f1ff0c9",
+                "OL19546318W"
+              ],
+              "kind": "subject",
+              "label": "Machine learning",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1037,
+              "contribution": 0.0473168822307423,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                },
+                {
+                  "work_id": "OL19546318W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:803b3eb2b6af027151950019f2d5ede506a6636a9eafd262b27c23e3f834056f",
+                "OL19546318W"
+              ],
+              "kind": "subject",
+              "label": "Artificial intelligence",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 6877,
+              "contribution": 0.030322327690660983,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                },
+                {
+                  "work_id": "OL19546318W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:af589d758d9c544e5ec0e62034b1e1ab08d2e1ddccfb82b049b303586d99f13f",
+                "OL19546318W"
+              ],
+              "kind": "subject",
+              "label": "COMPUTERS",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 10057,
+              "contribution": 0.027361367528921654,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "COMPUTERS"
+                },
+                {
+                  "work_id": "OL19546318W",
+                  "field": "subjects",
+                  "value": "COMPUTERS"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0feae16d55365acf07fe9f909834361ba6ee606854746539230bdc84a6a24cee",
+                "OL19546318W"
+              ],
+              "kind": "subject",
+              "label": "General",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 58961,
+              "contribution": 0.015583125253927254,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "General"
+                },
+                {
+                  "work_id": "OL19546318W",
+                  "field": "subjects",
+                  "value": "General"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL19543288W",
+          "title": "Hands-On Machine Learning with Scikit-Learn and TensorFlow",
+          "authors": [
+            "Aurélien Géron"
+          ],
+          "subjects": [
+            "Artificial intelligence",
+            "Machine learning",
+            "Python (Computer program language)",
+            "Apprentissage automatique",
+            "Python (Langage de programmation)",
+            "COMPUTERS",
+            "Cybernetics",
+            "Machine Theory",
+            "Künstliche intelligenz",
+            "Maschinelles lernen",
+            "Automatische klassifikation",
+            "Python 3.0",
+            "Q325.5 .g47 2017",
+            "006.31"
+          ],
+          "book_id": 2472071,
+          "average_rating": 5.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.24045101577216954,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:729dbc6c7244074c7212a1a8f46a48ace9d39dbd8ce829662f3b33c352e5da78",
+                "OL19543288W"
+              ],
+              "kind": "subject",
+              "label": "Maschinelles Lernen",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 37,
+              "contribution": 0.06317547595456932,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Maschinelles Lernen"
+                },
+                {
+                  "work_id": "OL19543288W",
+                  "field": "subjects",
+                  "value": "Maschinelles lernen"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:5aecf7ab358ed7ccbf04184862dd99dd4d568d82c97755390879864263b8a1a0",
+                "OL19543288W"
+              ],
+              "kind": "subject",
+              "label": "Apprentissage automatique",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 136,
+              "contribution": 0.05113960613769543,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                },
+                {
+                  "work_id": "OL19543288W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:77da35f4b70f65fa830e066ddda4be2c5adcb3e85f3eaa87df213748d5b1aef4",
+                "OL19543288W"
+              ],
+              "kind": "subject",
+              "label": "Künstliche Intelligenz",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 172,
+              "contribution": 0.04908650409763332,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Künstliche Intelligenz"
+                },
+                {
+                  "work_id": "OL19543288W",
+                  "field": "subjects",
+                  "value": "Künstliche intelligenz"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dcaa8e5ecb8d70ad4ededfab010e9ac8894d61070d561e97e84cd68d6f1ff0c9",
+                "OL19543288W"
+              ],
+              "kind": "subject",
+              "label": "Machine learning",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1037,
+              "contribution": 0.03472113081678038,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                },
+                {
+                  "work_id": "OL19543288W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:803b3eb2b6af027151950019f2d5ede506a6636a9eafd262b27c23e3f834056f",
+                "OL19543288W"
+              ],
+              "kind": "subject",
+              "label": "Artificial intelligence",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 6877,
+              "contribution": 0.0222505257485602,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                },
+                {
+                  "work_id": "OL19543288W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:af589d758d9c544e5ec0e62034b1e1ab08d2e1ddccfb82b049b303586d99f13f",
+                "OL19543288W"
+              ],
+              "kind": "subject",
+              "label": "COMPUTERS",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 10057,
+              "contribution": 0.02007777301693092,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "COMPUTERS"
+                },
+                {
+                  "work_id": "OL19543288W",
+                  "field": "subjects",
+                  "value": "COMPUTERS"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL19420941W",
+          "title": "Machine learning",
+          "authors": [
+            "Jaime G. Carbonell",
+            "Tom M. Mitchell",
+            "Ryszard Stanislaw Michalski"
+          ],
+          "subjects": [
+            "Artificial intelligence",
+            "Machine learning",
+            "Apprentissage automatique",
+            "Intelligence artificielle",
+            "Künstliche Intelligenz",
+            "Maschinelles Lernen",
+            "Machine-learning"
+          ],
+          "book_id": 4198704,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.24038325920829715,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:729dbc6c7244074c7212a1a8f46a48ace9d39dbd8ce829662f3b33c352e5da78",
+                "OL19420941W"
+              ],
+              "kind": "subject",
+              "label": "Maschinelles Lernen",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 37,
+              "contribution": 0.05826655481076783,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Maschinelles Lernen"
+                },
+                {
+                  "work_id": "OL19420941W",
+                  "field": "subjects",
+                  "value": "Maschinelles Lernen"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:5aecf7ab358ed7ccbf04184862dd99dd4d568d82c97755390879864263b8a1a0",
+                "OL19420941W"
+              ],
+              "kind": "subject",
+              "label": "Apprentissage automatique",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 136,
+              "contribution": 0.047165907640583336,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                },
+                {
+                  "work_id": "OL19420941W",
+                  "field": "subjects",
+                  "value": "Apprentissage automatique"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:77da35f4b70f65fa830e066ddda4be2c5adcb3e85f3eaa87df213748d5b1aef4",
+                "OL19420941W"
+              ],
+              "kind": "subject",
+              "label": "Künstliche Intelligenz",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 172,
+              "contribution": 0.04527233769525512,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Künstliche Intelligenz"
+                },
+                {
+                  "work_id": "OL19420941W",
+                  "field": "subjects",
+                  "value": "Künstliche Intelligenz"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dd882975dc879b308d2838ec8c35771979b0903aed6f19236a32594aff572bde",
+                "OL19420941W"
+              ],
+              "kind": "subject",
+              "label": "Intelligence artificielle",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 500,
+              "contribution": 0.03713366854342384,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                },
+                {
+                  "work_id": "OL19420941W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dcaa8e5ecb8d70ad4ededfab010e9ac8894d61070d561e97e84cd68d6f1ff0c9",
+                "OL19420941W"
+              ],
+              "kind": "subject",
+              "label": "Machine learning",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1037,
+              "contribution": 0.032023196363136386,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                },
+                {
+                  "work_id": "OL19420941W",
+                  "field": "subjects",
+                  "value": "Machine learning"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:803b3eb2b6af027151950019f2d5ede506a6636a9eafd262b27c23e3f834056f",
+                "OL19420941W"
+              ],
+              "kind": "subject",
+              "label": "Artificial intelligence",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 6877,
+              "contribution": 0.02052159415513061,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                },
+                {
+                  "work_id": "OL19420941W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL2038460W",
+          "title": "Darwin among the machines",
+          "authors": [
+            "George Dyson"
+          ],
+          "subjects": [
+            "Philosophy",
+            "Artificial intelligence",
+            "Artificial life",
+            "Evolution",
+            "Neural networks (Computer science)",
+            "Teleology",
+            "Life",
+            "Long Now Manual for Civilization",
+            "Inteligencia artificial",
+            "Künstliche Intelligenz",
+            "Réseaux neuronaux (Informatique)",
+            "Vie artificielle",
+            "Neural Networks (Computer)",
+            "Intelligence artificielle",
+            "History",
+            "Biological Evolution",
+            "Künstliche Evolution",
+            "Künstliches Leben",
+            "Kunstmatige intelligentie",
+            "Evolutie",
+            "Neurale netwerken",
+            "Computer Neural Networks"
+          ],
+          "book_id": 3563000,
+          "average_rating": 4.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.23366395753021357,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0977a53e806f4b8bd60ea69c51897ad4f49188e0703e056f53a5babb06c622bd",
+                "OL2038460W"
+              ],
+              "kind": "subject",
+              "label": "Computer Neural Networks",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 100,
+              "contribution": 0.049733889773402366,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                },
+                {
+                  "work_id": "OL2038460W",
+                  "field": "subjects",
+                  "value": "Computer Neural Networks"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:a5fe718792435ee5fd2f97b81cbb5f8e24c41a740517c1f13911a42bd73560e7",
+                "OL2038460W"
+              ],
+              "kind": "subject",
+              "label": "Réseaux neuronaux (Informatique)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 110,
+              "contribution": 0.048941906513084735,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                },
+                {
+                  "work_id": "OL2038460W",
+                  "field": "subjects",
+                  "value": "Réseaux neuronaux (Informatique)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:77da35f4b70f65fa830e066ddda4be2c5adcb3e85f3eaa87df213748d5b1aef4",
+                "OL2038460W"
+              ],
+              "kind": "subject",
+              "label": "Künstliche Intelligenz",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 172,
+              "contribution": 0.04530444413161698,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Künstliche Intelligenz"
+                },
+                {
+                  "work_id": "OL2038460W",
+                  "field": "subjects",
+                  "value": "Künstliche Intelligenz"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:dd882975dc879b308d2838ec8c35771979b0903aed6f19236a32594aff572bde",
+                "OL2038460W"
+              ],
+              "kind": "subject",
+              "label": "Intelligence artificielle",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 500,
+              "contribution": 0.03716000316245759,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                },
+                {
+                  "work_id": "OL2038460W",
+                  "field": "subjects",
+                  "value": "Intelligence artificielle"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:0815bea431fd03254040d66101c332aa9babed146c36a9f37b6aeb340ce91447",
+                "OL2038460W"
+              ],
+              "kind": "subject",
+              "label": "Neural networks (Computer science)",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 1046,
+              "contribution": 0.0319875661997584,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                },
+                {
+                  "work_id": "OL2038460W",
+                  "field": "subjects",
+                  "value": "Neural networks (Computer science)"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL19545719W",
+                "subject:803b3eb2b6af027151950019f2d5ede506a6636a9eafd262b27c23e3f834056f",
+                "OL2038460W"
+              ],
+              "kind": "subject",
+              "label": "Artificial intelligence",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 6877,
+              "contribution": 0.020536147749893503,
+              "provenance": [
+                {
+                  "work_id": "OL19545719W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                },
+                {
+                  "work_id": "OL2038460W",
+                  "field": "subjects",
+                  "value": "Artificial intelligence"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "reason_types": [
+        "subject"
+      ]
+    },
+    {
+      "category": "no authors",
+      "work_id": "OL24712944W",
+      "title": "Discover exteme fighting machines",
+      "first_observed_ms": 36.07979999651434,
+      "warm_ms": [
+        34.49959999852581,
+        34.95959999418119,
+        35.16049999598181
+      ],
+      "results": 10,
+      "candidate_count": 1376,
+      "largest_returned_reason_degree": 608,
+      "metadata_availability_correct": true,
+      "reason_paths_source_verified": true,
+      "recommendations": [
+        {
+          "work_id": "OL23548606W",
+          "title": "Türk havacılık tarihi",
+          "authors": [],
+          "subjects": [
+            "Military Aeronautics",
+            "History"
+          ],
+          "book_id": 1605993,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.4349865661729455,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:192bd3ffa2a5d6a8c1767dbd219fd763ba0b09efa920af2945390467cbb3c964",
+                "OL23548606W"
+              ],
+              "kind": "subject",
+              "label": "Military Aeronautics",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 559,
+              "contribution": 0.4349865661729455,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Military Aeronautics"
+                },
+                {
+                  "work_id": "OL23548606W",
+                  "field": "subjects",
+                  "value": "Military Aeronautics"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL27964434W",
+          "title": "The illustrated directory of fighting aircraft of World War II",
+          "authors": [
+            "Bill Gunston"
+          ],
+          "subjects": [
+            "Fighter planes",
+            "History",
+            "World War, 1939-1945",
+            "Military Airplanes",
+            "Guerre mondiale, 1939-1945",
+            "Avions militaires",
+            "Military aircraft"
+          ],
+          "book_id": 3500273,
+          "average_rating": 5.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.34942683601512764,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:cc9056e11820fcc9f5da3db7cffea25d91822c8b7ada882d8c0adefccdc44c9b",
+                "OL27964434W"
+              ],
+              "kind": "subject",
+              "label": "Military aircraft",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 30,
+              "contribution": 0.21920052372360682,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Military aircraft"
+                },
+                {
+                  "work_id": "OL27964434W",
+                  "field": "subjects",
+                  "value": "Military aircraft"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:8cb8777fdf0adae4f705cfceb72cea2dfe03f54c48b9137e8846ebc8c7978482",
+                "OL27964434W"
+              ],
+              "kind": "subject",
+              "label": "Fighter planes",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 608,
+              "contribution": 0.13022631229152082,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                },
+                {
+                  "work_id": "OL27964434W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL8356226W",
+          "title": "B-17 Flying Fortress",
+          "authors": [
+            "Michael O'Leary"
+          ],
+          "subjects": [
+            "B-17 bomber",
+            "Bombers",
+            "Military aircraft",
+            "B-seventeen bomber"
+          ],
+          "book_id": 926348,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.3427104463657289,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:cc9056e11820fcc9f5da3db7cffea25d91822c8b7ada882d8c0adefccdc44c9b",
+                "OL8356226W"
+              ],
+              "kind": "subject",
+              "label": "Military aircraft",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 30,
+              "contribution": 0.2006358879318646,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Military aircraft"
+                },
+                {
+                  "work_id": "OL8356226W",
+                  "field": "subjects",
+                  "value": "Military aircraft"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:b315f7c418b68b3ae262c96ef163d2e56d20358d3fef4dbe5c9fb6dfd4ce336a",
+                "OL8356226W"
+              ],
+              "kind": "subject",
+              "label": "Bombers",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 242,
+              "contribution": 0.1420745584338643,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                },
+                {
+                  "work_id": "OL8356226W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL15023016W",
+          "title": "The World's Great Bombers",
+          "authors": [
+            "Chant, Christopher."
+          ],
+          "subjects": [
+            "Bombers",
+            "Military Aeronautics"
+          ],
+          "book_id": 810223,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.33895643909486606,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:b315f7c418b68b3ae262c96ef163d2e56d20358d3fef4dbe5c9fb6dfd4ce336a",
+                "OL15023016W"
+              ],
+              "kind": "subject",
+              "label": "Bombers",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 242,
+              "contribution": 0.1829140647109247,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                },
+                {
+                  "work_id": "OL15023016W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:192bd3ffa2a5d6a8c1767dbd219fd763ba0b09efa920af2945390467cbb3c964",
+                "OL15023016W"
+              ],
+              "kind": "subject",
+              "label": "Military Aeronautics",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 559,
+              "contribution": 0.15604237438394133,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Military Aeronautics"
+                },
+                {
+                  "work_id": "OL15023016W",
+                  "field": "subjects",
+                  "value": "Military Aeronautics"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL24286494W",
+          "title": "An illustrated guide to modern fighters and attack aircraft",
+          "authors": [
+            "Bill Gunston"
+          ],
+          "subjects": [
+            "Fighter planes",
+            "Bombers",
+            "Airplanes, military"
+          ],
+          "book_id": 1351348,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.33588941289746693,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:b315f7c418b68b3ae262c96ef163d2e56d20358d3fef4dbe5c9fb6dfd4ce336a",
+                "OL24286494W"
+              ],
+              "kind": "subject",
+              "label": "Bombers",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 242,
+              "contribution": 0.18265025795815562,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                },
+                {
+                  "work_id": "OL24286494W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:8cb8777fdf0adae4f705cfceb72cea2dfe03f54c48b9137e8846ebc8c7978482",
+                "OL24286494W"
+              ],
+              "kind": "subject",
+              "label": "Fighter planes",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 608,
+              "contribution": 0.1532391549393113,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                },
+                {
+                  "work_id": "OL24286494W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL18919224W",
+          "title": "The illustrated encyclopedia of dog breeds",
+          "authors": [
+            "Christopher Chant"
+          ],
+          "subjects": [
+            "Dog breeds",
+            "Military Airplanes",
+            "Fighter planes",
+            "Avions militaires",
+            "Military aircraft"
+          ],
+          "book_id": 2968953,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.3336718137189866,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:cc9056e11820fcc9f5da3db7cffea25d91822c8b7ada882d8c0adefccdc44c9b",
+                "OL18919224W"
+              ],
+              "kind": "subject",
+              "label": "Military aircraft",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 30,
+              "contribution": 0.20931716966306835,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Military aircraft"
+                },
+                {
+                  "work_id": "OL18919224W",
+                  "field": "subjects",
+                  "value": "Military aircraft"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:8cb8777fdf0adae4f705cfceb72cea2dfe03f54c48b9137e8846ebc8c7978482",
+                "OL18919224W"
+              ],
+              "kind": "subject",
+              "label": "Fighter planes",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 608,
+              "contribution": 0.12435464405591823,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                },
+                {
+                  "work_id": "OL18919224W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL17877854W",
+          "title": "The world encyclopedia of bombers ; an illustrated A-Z directory of bomber aircraft",
+          "authors": [
+            "Francis Crosby"
+          ],
+          "subjects": [
+            "Bombers",
+            "Encyclopedias",
+            "Fighter planes",
+            "History"
+          ],
+          "book_id": 1088592,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.31023087232182384,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:b315f7c418b68b3ae262c96ef163d2e56d20358d3fef4dbe5c9fb6dfd4ce336a",
+                "OL17877854W"
+              ],
+              "kind": "subject",
+              "label": "Bombers",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 242,
+              "contribution": 0.168697632852935,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                },
+                {
+                  "work_id": "OL17877854W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:8cb8777fdf0adae4f705cfceb72cea2dfe03f54c48b9137e8846ebc8c7978482",
+                "OL17877854W"
+              ],
+              "kind": "subject",
+              "label": "Fighter planes",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 608,
+              "contribution": 0.14153323946888885,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                },
+                {
+                  "work_id": "OL17877854W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL11880454W",
+          "title": "Stealth",
+          "authors": [
+            "Doug Richardson"
+          ],
+          "subjects": [
+            "Stealth aircraft",
+            "Bombers",
+            "Health/Fitness",
+            "Non-Classifiable",
+            "Military Aircraft",
+            "B-2 bomber",
+            "Aircraft--Stealth"
+          ],
+          "book_id": 1081883,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.3069987919210709,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:cc9056e11820fcc9f5da3db7cffea25d91822c8b7ada882d8c0adefccdc44c9b",
+                "OL11880454W"
+              ],
+              "kind": "subject",
+              "label": "Military aircraft",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 30,
+              "contribution": 0.17972891070078947,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Military aircraft"
+                },
+                {
+                  "work_id": "OL11880454W",
+                  "field": "subjects",
+                  "value": "Military Aircraft"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:b315f7c418b68b3ae262c96ef163d2e56d20358d3fef4dbe5c9fb6dfd4ce336a",
+                "OL11880454W"
+              ],
+              "kind": "subject",
+              "label": "Bombers",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 242,
+              "contribution": 0.1272698812202814,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                },
+                {
+                  "work_id": "OL11880454W",
+                  "field": "subjects",
+                  "value": "Bombers"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL21771383W",
+          "title": "Fighter pilots",
+          "authors": [
+            "Jon E. Lewis"
+          ],
+          "subjects": [
+            "Fighter pilots",
+            "Military Aeronautics",
+            "Fighter planes",
+            "History"
+          ],
+          "book_id": 224175,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.3048917578008614,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:192bd3ffa2a5d6a8c1767dbd219fd763ba0b09efa920af2945390467cbb3c964",
+                "OL21771383W"
+              ],
+              "kind": "subject",
+              "label": "Military Aeronautics",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 559,
+              "contribution": 0.1537175918393557,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Military Aeronautics"
+                },
+                {
+                  "work_id": "OL21771383W",
+                  "field": "subjects",
+                  "value": "Military Aeronautics"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:8cb8777fdf0adae4f705cfceb72cea2dfe03f54c48b9137e8846ebc8c7978482",
+                "OL21771383W"
+              ],
+              "kind": "subject",
+              "label": "Fighter planes",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 608,
+              "contribution": 0.15117416596150568,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                },
+                {
+                  "work_id": "OL21771383W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL15079299W",
+          "title": "Famous Air Force fighters",
+          "authors": [
+            "George Sullivan"
+          ],
+          "subjects": [
+            "History",
+            "Fighter planes",
+            "Juvenile literature",
+            "Military Aeronautics",
+            "United States. Air Force",
+            "Airplanes",
+            "United States"
+          ],
+          "book_id": 4310940,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.30059423003783253,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:192bd3ffa2a5d6a8c1767dbd219fd763ba0b09efa920af2945390467cbb3c964",
+                "OL15079299W"
+              ],
+              "kind": "subject",
+              "label": "Military Aeronautics",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 559,
+              "contribution": 0.15155090283680472,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Military Aeronautics"
+                },
+                {
+                  "work_id": "OL15079299W",
+                  "field": "subjects",
+                  "value": "Military Aeronautics"
+                }
+              ]
+            },
+            {
+              "nodes": [
+                "OL24712944W",
+                "subject:8cb8777fdf0adae4f705cfceb72cea2dfe03f54c48b9137e8846ebc8c7978482",
+                "OL15079299W"
+              ],
+              "kind": "subject",
+              "label": "Fighter planes",
+              "predicates": [
+                "HAS_SUBJECT",
+                "HAS_SUBJECT"
+              ],
+              "catalogue_degree": 608,
+              "contribution": 0.1490433272010278,
+              "provenance": [
+                {
+                  "work_id": "OL24712944W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                },
+                {
+                  "work_id": "OL15079299W",
+                  "field": "subjects",
+                  "value": "Fighter planes"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "reason_types": [
+        "subject"
+      ]
+    },
+    {
+      "category": "no subjects",
+      "work_id": "OL25339037W",
+      "title": "Write It All Down",
+      "first_observed_ms": 16.060199995990843,
+      "warm_ms": [
+        15.057500000693835,
+        15.24230000359239,
+        16.329500002029818
+      ],
+      "results": 4,
+      "candidate_count": 4,
+      "largest_returned_reason_degree": 5,
+      "metadata_availability_correct": true,
+      "reason_paths_source_verified": true,
+      "recommendations": [
+        {
+          "work_id": "OL25766657W",
+          "title": "Everyone Is Still Alive",
+          "authors": [
+            "Cathy Rentzenbrink"
+          ],
+          "subjects": [
+            "English literature"
+          ],
+          "book_id": 3136558,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.9764274280677125,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL25339037W",
+                "author:e942307b162d7975b4dfe9240a224a4dd1134cf41a0c1081a8451a8690350d9f",
+                "OL25766657W"
+              ],
+              "kind": "author",
+              "label": "Cathy Rentzenbrink",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 5,
+              "contribution": 0.9764274280677125,
+              "provenance": [
+                {
+                  "work_id": "OL25339037W",
+                  "field": "authors",
+                  "value": "Cathy Rentzenbrink"
+                },
+                {
+                  "work_id": "OL25766657W",
+                  "field": "authors",
+                  "value": "Cathy Rentzenbrink"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL20863576W",
+          "title": "Dear Reader",
+          "authors": [
+            "Cathy Rentzenbrink"
+          ],
+          "subjects": [
+            "Written communication"
+          ],
+          "book_id": 4642834,
+          "average_rating": 4.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.951509013483323,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL25339037W",
+                "author:e942307b162d7975b4dfe9240a224a4dd1134cf41a0c1081a8451a8690350d9f",
+                "OL20863576W"
+              ],
+              "kind": "author",
+              "label": "Cathy Rentzenbrink",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 5,
+              "contribution": 0.951509013483323,
+              "provenance": [
+                {
+                  "work_id": "OL25339037W",
+                  "field": "authors",
+                  "value": "Cathy Rentzenbrink"
+                },
+                {
+                  "work_id": "OL20863576W",
+                  "field": "authors",
+                  "value": "Cathy Rentzenbrink"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL20523229W",
+          "title": "A Manual for Heartache",
+          "authors": [
+            "Cathy Rentzenbrink"
+          ],
+          "subjects": [
+            "Grief",
+            "Adjustment (psychology)",
+            "Motivation (psychology)",
+            "Family",
+            "Families"
+          ],
+          "book_id": 4154924,
+          "average_rating": 4.0,
+          "rating_count": 1,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.8506107038114565,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL25339037W",
+                "author:e942307b162d7975b4dfe9240a224a4dd1134cf41a0c1081a8451a8690350d9f",
+                "OL20523229W"
+              ],
+              "kind": "author",
+              "label": "Cathy Rentzenbrink",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 5,
+              "contribution": 0.8506107038114565,
+              "provenance": [
+                {
+                  "work_id": "OL25339037W",
+                  "field": "authors",
+                  "value": "Cathy Rentzenbrink"
+                },
+                {
+                  "work_id": "OL20523229W",
+                  "field": "authors",
+                  "value": "Cathy Rentzenbrink"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "work_id": "OL20698950W",
+          "title": "The Last Act of Love",
+          "authors": [
+            "Cathy Rentzenbrink"
+          ],
+          "subjects": [
+            "Death",
+            "Patients",
+            "Traffic accident victims",
+            "Psychological aspects",
+            "Brothers",
+            "Families",
+            "Brothers and sisters",
+            "Family",
+            "Bereavement",
+            "Adjustment (Psychology)",
+            "Brain",
+            "Case studies",
+            "Biography",
+            "Family relationships",
+            "Wounds and injuries",
+            "Patient refusal of treatment",
+            "Care",
+            "Brain damage, patients",
+            "Grief"
+          ],
+          "book_id": 1561229,
+          "average_rating": 0.0,
+          "rating_count": 0,
+          "shelf_location": null,
+          "available_copies": 1,
+          "total_copies": 1,
+          "availability_source": "catalogue",
+          "score": 0.6222843292045013,
+          "reason_paths": [
+            {
+              "nodes": [
+                "OL25339037W",
+                "author:e942307b162d7975b4dfe9240a224a4dd1134cf41a0c1081a8451a8690350d9f",
+                "OL20698950W"
+              ],
+              "kind": "author",
+              "label": "Cathy Rentzenbrink",
+              "predicates": [
+                "AUTHORED_BY",
+                "AUTHORED_BY"
+              ],
+              "catalogue_degree": 5,
+              "contribution": 0.6222843292045013,
+              "provenance": [
+                {
+                  "work_id": "OL25339037W",
+                  "field": "authors",
+                  "value": "Cathy Rentzenbrink"
+                },
+                {
+                  "work_id": "OL20698950W",
+                  "field": "authors",
+                  "value": "Cathy Rentzenbrink"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "reason_types": [
+        "author"
+      ]
+    },
+    {
+      "category": "isolated",
+      "work_id": "OL23058018W",
+      "title": "Metodologi penelitian agama",
+      "first_observed_ms": 12.03700000041863,
+      "warm_ms": [
+        10.490199994819704,
+        9.94150000042282,
+        10.400299994216766
+      ],
+      "results": 0,
+      "candidate_count": 0,
+      "largest_returned_reason_degree": 0,
+      "metadata_availability_correct": true,
+      "reason_paths_source_verified": true,
+      "recommendations": [],
+      "reason_types": []
+    }
+  ],
+  "method": "Actual authenticated loopback Core API; first observed request plus three warm requests per seed. Not a process-cold benchmark. Live Core book metadata validated outside timed intervals.",
+  "qwen_worker_running_required": false,
+  "assistant_live_core_probe": {
+    "method": "Real assistant orchestrator and HTTP adapters calling live Core; forbidden Qwen/recommender/RAG sentinels. Not a live port-8005 request.",
+    "intent": "MORE_LIKE_THIS",
+    "elapsed_ms": 405.34950000437675,
+    "books": 10,
+    "calls": [
+      {
+        "method": "GET",
+        "path": "/kg/books/OL19545719W/more-like-this"
+      }
+    ],
+    "qwen_calls": 0,
+    "existing_recommender_calls": 0
+  },
+  "warm_summary": {
+    "requests": 18,
+    "median_ms": 140.15309999740566,
+    "p95_ms": 393.6567999990075,
+    "max_ms": 396.6098000018974
+  },
+  "read_only_state_unchanged": true,
+  "browser_evidence": {
+    "report": "kg31_browser_checks.json",
+    "technical_automation_wall_ms": 865,
+    "refresh_automation_wall_ms": 809,
+    "caveat": "Cua click-to-visible durations include automation overhead; six flows are observed samples, not a statistically established browser p95."
+  }
+}

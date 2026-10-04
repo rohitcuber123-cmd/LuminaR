@@ -1,0 +1,327 @@
+[
+  {
+    "step": "login",
+    "status": 200
+  },
+  {
+    "step": "new_book_capability",
+    "status": 200,
+    "body": {
+      "book_id": 4979745,
+      "work_id": "OL2772007W",
+      "title": "The Yellow Wallpaper",
+      "authors": "Charlotte Perkins Gilman",
+      "subjects": "Fiction, Psychological fiction",
+      "description": "Public-domain short story, supplied from Project Gutenberg ebook 1952.",
+      "average_rating": 0,
+      "rating_count": 0,
+      "reading_log_count": 0,
+      "shelf_location": null,
+      "total_copies": 1,
+      "available_copies": 1,
+      "created_at": "2026-09-14T16:55:32.304000",
+      "readable": true,
+      "rag_available": true
+    }
+  },
+  {
+    "step": "before_borrow",
+    "status": 200,
+    "body": {
+      "count": 0,
+      "books": []
+    }
+  },
+  {
+    "step": "borrow",
+    "status": 200,
+    "body": {
+      "message": "Book issued successfully",
+      "issue": {
+        "issue_id": 2,
+        "user_id": 1,
+        "book_id": 4979745,
+        "work_id": "OL2772007W",
+        "title": "The Yellow Wallpaper",
+        "inventory_source": "catalogue",
+        "library_id": "LIB001",
+        "issued_at": "2026-09-14T17:04:20.929992+00:00",
+        "due_date": "2026-09-28T17:04:20.929992+00:00",
+        "returned_at": null,
+        "status": "ISSUED",
+        "fine_amount": 0
+      }
+    }
+  },
+  {
+    "step": "after_borrow",
+    "status": 200,
+    "body": {
+      "count": 1,
+      "books": [
+        {
+          "work_id": "OL2772007W",
+          "title": "The Yellow Wallpaper",
+          "authors": [
+            "Charlotte Perkins Gilman"
+          ],
+          "readable": true,
+          "rag_available": true,
+          "borrowed": true
+        }
+      ]
+    }
+  },
+  {
+    "step": "book_rag",
+    "status": 200,
+    "body": {
+      "question": "What is the central conflict in this story?",
+      "depth": "concise",
+      "work_id": "OL2772007W",
+      "answer": "The central conflict in this story is the narrator's struggle against the oppressive wallpaper, which appears to be controlling and threatening her psychologically.",
+      "sources": [
+        {
+          "filename": "OL2772007W.txt",
+          "page": null,
+          "chapter": "Unknown",
+          "chunk_id": "OL2772007W_000005",
+          "work_id": "OL2772007W",
+          "title": "The Yellow Wallpaper",
+          "author": "Charlotte Perkins Gilman",
+          "rerank_score": -9.313502311706543,
+          "rank": 1,
+          "normalized_rerank_score": 0.889776857623607,
+          "evidence_score": 0.48333333333333334,
+          "faiss_norm": 1.0,
+          "actor_alignment": 1.0,
+          "event_alignment": 0.0,
+          "local_causal_score": 0.0,
+          "speaker_score": 1.0,
+          "first_person_narrative": 1.0,
+          "directional_subject_alignment": 0.5,
+          "temporal_phase_alignment": 0.5,
+          "motivation_strength": 0.0,
+          "consequence_strength": 0.0,
+          "motivation_priority": 0.0,
+          "redundancy_penalty": 0.0,
+          "final_context_score": 0.6827663906204154,
+          "evidence_signals": [
+            "first person narrative: inferred",
+            "term overlap: story",
+            "local alignment: 1.00",
+            "speaker proximity: present"
+          ]
+        },
+        {
+          "filename": "OL2772007W.txt",
+          "page": null,
+          "chapter": "Unknown",
+          "chunk_id": "OL2772007W_000009",
+          "work_id": "OL2772007W",
+          "title": "The Yellow Wallpaper",
+          "author": "Charlotte Perkins Gilman",
+          "rerank_score": -9.197935104370117,
+          "rank": 2,
+          "normalized_rerank_score": 0.9804806558044563,
+          "evidence_score": 0.48333333333333334,
+          "faiss_norm": 0.6982223326143779,
+          "actor_alignment": 1.0,
+          "event_alignment": 0.0,
+          "local_causal_score": 0.0,
+          "speaker_score": 1.0,
+          "first_person_narrative": 1.0,
+          "directional_subject_alignment": 0.5,
+          "temporal_phase_alignment": 0.5,
+          "motivation_strength": 0.0,
+          "consequence_strength": 0.0,
+          "motivation_priority": 0.0,
+          "redundancy_penalty": 0.06229508196721312,
+          "final_context_score": 0.6024157979996139,
+          "evidence_signals": [
+            "first person narrative: inferred",
+            "term overlap: story",
+            "local alignment: 1.00",
+            "speaker proximity: present"
+          ]
+        },
+        {
+          "filename": "OL2772007W.txt",
+          "page": null,
+          "chapter": "Unknown",
+          "chunk_id": "OL2772007W_000012",
+          "work_id": "OL2772007W",
+          "title": "The Yellow Wallpaper",
+          "author": "Charlotte Perkins Gilman",
+          "rerank_score": -9.173065185546875,
+          "rank": 3,
+          "normalized_rerank_score": 1.0,
+          "evidence_score": 0.48333333333333334,
+          "faiss_norm": 0.5969758012503482,
+          "actor_alignment": 1.0,
+          "event_alignment": 0.0,
+          "local_causal_score": 0.0,
+          "speaker_score": 1.0,
+          "first_person_narrative": 1.0,
+          "directional_subject_alignment": 0.5,
+          "temporal_phase_alignment": 0.5,
+          "motivation_strength": 0.0,
+          "consequence_strength": 0.0,
+          "motivation_priority": 0.0,
+          "redundancy_penalty": 0.06567567567567567,
+          "final_context_score": 0.5897040278452099,
+          "evidence_signals": [
+            "first person narrative: inferred",
+            "term overlap: story",
+            "local alignment: 1.00",
+            "speaker proximity: present"
+          ]
+        },
+        {
+          "filename": "OL2772007W.txt",
+          "page": null,
+          "chapter": "Unknown",
+          "chunk_id": "OL2772007W_000004",
+          "work_id": "OL2772007W",
+          "title": "The Yellow Wallpaper",
+          "author": "Charlotte Perkins Gilman",
+          "rerank_score": -9.205968856811523,
+          "rank": 4,
+          "normalized_rerank_score": 0.974175304339495,
+          "evidence_score": 0.48333333333333334,
+          "faiss_norm": 0.5779699304811783,
+          "actor_alignment": 1.0,
+          "event_alignment": 0.5,
+          "local_causal_score": 0.0,
+          "speaker_score": 0.0,
+          "first_person_narrative": 0.0,
+          "directional_subject_alignment": 0.5,
+          "temporal_phase_alignment": 0.5,
+          "motivation_strength": 0.0,
+          "consequence_strength": 0.0,
+          "motivation_priority": 0.0,
+          "redundancy_penalty": 0.07718832891246684,
+          "final_context_score": 0.5675930852948918,
+          "evidence_signals": [
+            "term overlap: story",
+            "local alignment: 1.00"
+          ]
+        }
+      ],
+      "intent_data": {
+        "intent": "FACTUAL",
+        "actor": "story",
+        "action": "is central conflict",
+        "target": "story",
+        "polarity": "positive",
+        "temporal_relation": null,
+        "question_focus": null,
+        "tier_used": "Tier 2"
+      },
+      "verdict": "SUPPORTED",
+      "fast_filter_decision": "NEEDS_LLM_VALIDATION",
+      "fast_filter_signals": {
+        "actor_score": 0.5,
+        "target_score": 0.0,
+        "event_score": 0.0,
+        "polarity_aligned": true,
+        "polarity_mismatch": false,
+        "temporal_aligned": true,
+        "temporal_conflict": false,
+        "relationship_check_passed": true,
+        "direction_inverted": false,
+        "actor_in_evidence": true,
+        "target_in_evidence": false,
+        "event_terms_found": 0,
+        "event_terms_total": 2,
+        "negation_in_query": false,
+        "negation_in_evidence": true,
+        "evidence_confirms_action": false,
+        "mere_lexical_cooccurrence": true
+      },
+      "fast_filter_reasons": [
+        "actor 'story' not literal but first-person narration detected",
+        "target 'story' absent from evidence",
+        "action 'is central conflict' terms absent from evidence",
+        "NEEDS_LLM_VALIDATION: ambiguous signals"
+      ],
+      "retrieval": {
+        "stage_timing_ms": {
+          "candidate_merge": 0.021699999706470408,
+          "preprocessing": 0.006399999620043673,
+          "embedding": 13.75,
+          "faiss": 5.22,
+          "reranking": 58.31,
+          "evidence": 143.27,
+          "total": 220.55
+        },
+        "candidate_count": 13,
+        "context_count": 4,
+        "context_characters": 11982
+      },
+      "timing_ms": {
+        "response": 0.03,
+        "intent_analysis": 10646.57,
+        "retrieval": 220.84,
+        "fast_filter": 5.13,
+        "validation": 3188.21,
+        "generation": 4254.75,
+        "total": 18321.48
+      },
+      "profile": {
+        "llm_calls": [
+          {
+            "input_tokens": 440,
+            "generated_tokens": 58,
+            "max_new_tokens": 400,
+            "generation_ms": 10629.301699999814,
+            "tokens_per_second": 5.456614332435499
+          },
+          {
+            "input_tokens": 2353,
+            "generated_tokens": 20,
+            "max_new_tokens": 160,
+            "generation_ms": 3172.3163999999997,
+            "tokens_per_second": 6.304541375507185
+          },
+          {
+            "input_tokens": 3618,
+            "generated_tokens": 27,
+            "max_new_tokens": 300,
+            "generation_ms": 4238.7447000000975,
+            "tokens_per_second": 6.369810382776622
+          }
+        ],
+        "queue_ms": 0.004999999873689376,
+        "structured_tokenizer_setup_ms": 3.117800000381976,
+        "structured_tokenizer_setup_calls": 2,
+        "intent_ms": 10646.562200000062,
+        "intent_calls": 1,
+        "context_ms": 3.467500000169821,
+        "context_calls": 1,
+        "validator_ms": 3188.192699999945,
+        "validator_calls": 1,
+        "prompt_ms": 0.19459999975879327,
+        "prompt_calls": 1,
+        "total_ms": 18321.62840000001
+      }
+    }
+  },
+  {
+    "step": "unauthorized_book_rag",
+    "status": 401,
+    "body": "{\"detail\":\"Sign in and borrow this book to use Know More.\"}"
+  },
+  {
+    "step": "return",
+    "status": 200
+  },
+  {
+    "step": "after_return",
+    "status": 200,
+    "body": {
+      "count": 0,
+      "books": []
+    }
+  }
+]

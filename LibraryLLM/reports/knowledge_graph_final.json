@@ -1,0 +1,140 @@
+{
+  "created_at": "2026-10-02T17:17:00.663535+00:00",
+  "status": "KG1–KG3 complete; KG4 deferred",
+  "snapshot": {
+    "version": "kg1-2-metadata-cosine-v1",
+    "source": "Mongo books: projected public metadata only",
+    "source_count": 5000000,
+    "books": 5000000,
+    "edges": 29406707,
+    "features": {
+      "author": 2454492,
+      "subject": 975785
+    },
+    "missing_authors": 60151,
+    "missing_subjects": 257541,
+    "isolated_books": 1211,
+    "skipped_books": 0,
+    "created_at": "2026-10-02T17:00:36.932421+00:00",
+    "catalogue_hash": "50559012605f6fe3aba1fbc36f3f943c24563bb0a88fc60ac6a14df90fb3e904",
+    "build_seconds": 882.8079306,
+    "schema": {
+      "nodes": [
+        "Book",
+        "Author name",
+        "Subject label"
+      ],
+      "edges": [
+        "AUTHORED_BY",
+        "HAS_SUBJECT"
+      ]
+    },
+    "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+    "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+    "scope": "full catalogue"
+  },
+  "database_bytes": 5871624192,
+  "summary": {
+    "existing": {
+      "nonempty_seed_coverage": 1,
+      "full_k_seed_coverage": 1,
+      "unique_recommended_books": 400,
+      "catalogue_coverage": 8e-05,
+      "mean_subject_diversity": 0.7864711361223169,
+      "latency_median_ms": 426.05065000316245,
+      "latency_max_ms": 860.8214999985648
+    },
+    "kg": {
+      "nonempty_seed_coverage": 0.95,
+      "full_k_seed_coverage": 0.875,
+      "unique_recommended_books": 356,
+      "catalogue_coverage": 7.12e-05,
+      "mean_subject_diversity": 0.7195733621412059,
+      "latency_median_ms": 289.2489499972726,
+      "latency_max_ms": 2596.644000004744
+    },
+    "paired_seeds": 40,
+    "failed_seeds": 0,
+    "mean_overlap_at_k": 0.14,
+    "mean_jaccard": 0.0636734606123151,
+    "seeds_with_kg_only_candidates": 0.925,
+    "paired_diversity_seeds": 36,
+    "paired_subject_diversity_delta_mean": -0.057198904521261675
+  },
+  "integrity": {
+    "baseline_files": 1208,
+    "unchanged": 1204,
+    "changed_vs_previous_pre_document_latency_baseline": [
+      "backend/main.py",
+      "frontend/src/App.tsx",
+      "frontend/src/components/Header.tsx",
+      "rag/api.py"
+    ],
+    "missing": [],
+    "previous_document_latency_installation_only": true,
+    "kg_existing_file_edits": [
+      "backend/main.py",
+      "frontend/src/App.tsx",
+      "frontend/src/components/Header.tsx"
+    ],
+    "previous_reports_unchanged": true,
+    "recommendation_search_assistant_sources_unchanged": true,
+    "reason_paths_checked": 758,
+    "reason_path_validity": 1.0,
+    "account_circulation_feedback_writes_by_evaluation": false,
+    "evaluation_state_digests_unchanged": true
+  },
+  "browser_checks": {
+    "route": "http://127.0.0.1:5173/experimental/kg",
+    "authenticated_normal_reader": true,
+    "real_seed": "OL19545719W",
+    "recommendations": 10,
+    "connected_candidates": 74507,
+    "comparison_visible": {
+      "shared_books": 2,
+      "overlap_percent": 20,
+      "kg_only_books": 8,
+      "existing_subject_diversity_rounded": 0.76,
+      "kg_subject_diversity_rounded": 0.78
+    },
+    "checks": [
+      "subject-node inspection",
+      "book-node inspection using Enter",
+      "subject filter hides/restores subject nodes",
+      "expanded paths show contributions and both source-field values",
+      "zoom controls",
+      "existing header/footer/assistant overlay present"
+    ],
+    "console_errors": [],
+    "responsive_checks": [
+      {
+        "requested_width": 390,
+        "observed_dom_client_width": 469,
+        "observed_dom_scroll_width": 469
+      },
+      {
+        "requested_width": 1280,
+        "observed_dom_client_width": 1581,
+        "observed_dom_scroll_width": 1581
+      },
+      {
+        "viewport_override_reset": true,
+        "observed_dom_client_width": 1192,
+        "observed_dom_scroll_width": 1192
+      }
+    ],
+    "viewport_note": "Browser reporting differs from requested override sizes; tested rendered narrow and wide layouts, without claiming exact device emulation. The map intentionally scrolls within its own container.",
+    "screenshot": "reports/kg_graph_preview.png"
+  },
+  "tests": {
+    "backend_passed": 401,
+    "backend_existing_skipped": 10,
+    "kg_backend_included": 12,
+    "frontend_regression_passed": 111,
+    "kg_frontend_passed": 5,
+    "independent_frontend_passed": 5,
+    "production_build": "PASS",
+    "lint": "PASS with 18 existing warnings"
+  },
+  "kg4_decision": "DEFERRED: paired diversity decline exceeds 0.05; independent relevance/reader-utility evidence is absent."
+}

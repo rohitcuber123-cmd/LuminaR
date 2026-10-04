@@ -1,0 +1,31 @@
+# LuminaR domain-QA V4 quality gate — 2026-09-28
+
+**EXPERIMENTAL ONLY — DRAFT EVALUATION LABELS. Training gate CLOSED.**
+
+**Decision B. EXTRACTOR COVERAGE STILL TOO LOW OR PRECISION REGRESSED — REVISE AGAIN.** The 30-chunk probe emitted 27 HIGH propositions, but only 13 passed the unchanged v2/v3 structural and semantic validator. Source inspection rejected another 6 of those 13, leaving 7 clean. The required zero-error probe gate failed, so the independent 100-chunk pilot and review packet were not run. No candidate is human REVIEWED.
+
+## V3 baseline and V4 MEDIUM analysis (items 1–4, 19)
+
+V3's 20-chunk probe produced 5 clean HIGH and 10 MEDIUM. Its 50-chunk pilot produced 5 AUTO_VALIDATED, 15 MEDIUM, and 4 source-overlap duplicates. All five pilot HIGH had already appeared in the probe; the independent review threshold of 10 was not met. V4 analyzed all 15 v3 MEDIUM records before adding rules. The overlapping reason counts were: ATTRIBUTE_COMPLEMENT_UNSAFE 10, ONE_WORD_STATE_REQUIRES_FULL_STATE_SLOT 1, CLAUSE_TOO_COMPLEX 1, V2_TIME_FORM_UNSUPPORTED 1, AMBIGUOUS_SUBJECT 1, PRONOUN_UNRESOLVED 1, and V2_CAUSAL_MARKER_UNSUPPORTED 2. The [analysis](rag_domain_qa_v4_medium_analysis.md) groups these by relation and surface clause. One complete named state, “Filby became pensive,” gained a HIGH V4 formulation; the other 14 remained unsafe under the unchanged validator. No MEDIUM record was silently relabeled as HIGH.
+
+## Rules and contracts (items 5–18)
+
+The new [experimental V4 extractor](/D:/SDC/LibraryLLM/scripts/rag_domain_qa_v4.py) retains the closed v3 relation enum and v3/v2 validation. It added role and complete state-change ATTRIBUTE patterns; possessive/appositive ENTITY_RELATION; named-object ACTION with local context anchor; quote-attributed STATEMENT; numeric/day TEMPORAL_AT; explicit motion LOCATION_FROM/TO/AT; explicit because-CAUSE; named desired-action MOTIVATION; and named-recipient INSTRUCTION verbs. Specific extractors run before generic ones. Existing v3 HIGH candidates remain available through a preserved v3 path. V4 HIGH candidates must provide relation-specific source slots, exact answer offsets, and the unchanged v3/v2 checks. Training value is classified separately from extraction confidence: relation and question complexity yield HIGH/MEDIUM/LOW values, but never grant validation. New V4 patterns require explicit named participants and retain v3's narrow local pronoun guard. Clause segmentation remains v3's offset-preserving sentence and semicolon/colon segmentation; no syntactic parser or broad coreference was introduced.
+
+The probe exposed unsafe implementations of that design: the quote path treated capitalized sentence starters and forms of address as named topics; the ACTION context pattern absorbed a coordinated second action; and many short quote fragments failed v2 answer quality. These are **failures to repair**, not validated coverage. No v2 validator rule was relaxed.
+
+## 30-chunk mechanics probe and audit (items 20–23, 28–38)
+
+Seed 42 selected 30 distinct TRAIN chunks across 12 books, at most 3 per book. The [authoritative source-range manifest](../manifests/rag_domain_qa_v4_probe_ranges.json) has SHA-256 `f195ab4c7213b4fa147941b250f3c4891edd8305aa4c5a0469525ea7329e7276`. The frozen corpus/labels control excluded TEST works and accepted evaluation spans before selection. The [probe](rag_domain_qa_v4_probe.json) recorded 271 sentences, 340 clauses, 111 can-match cues, 30 relation matches, 27 HIGH, 2 MEDIUM, 1 duplicate removed, 13 AUTO_VALIDATED, and 14 HIGH validator failures. There were no separate LOW emissions.
+
+Every HIGH proposition was inspected against its source in the [27-row audit](rag_domain_qa_v4_probe_audit.md): 7 clean, 20 rejected. Fourteen quote fragments failed `ANSWER_TOO_VAGUE` in the unchanged validator. Six more passed automation but failed semantic inspection: one ACTION question conflated a second action with its context, four STATEMENT questions used a non-entity as the named topic, and one quote depended on an unresolved preceding pledge. The observed wrong-role count is 0; action-context drift 1; unsupported statement-topic count 4; unresolved discourse referent 1; answer-quality/slot-sufficiency failures 14; location/temporal direction errors 0; invented causes 0; unsupported causal failures 0; answer-type validator mismatches 0; TEST leakage 0; evaluation-span leakage 0. These counts describe only the selected probe, not corpus-wide error rates.
+
+AUTO_VALIDATED by relation before source inspection: STATEMENT 5, ATTRIBUTE 2, LOCATION_TO 1, LOCATION_FROM 1, ENTITY_RELATION 1, INSTRUCTION 1, MOTIVATION 1, ACTION 1. Training-value labels across the 29 retained propositions: HIGH 17, MEDIUM 6, LOW 6. Validation is not a measure of training value. The clean-on-inspection count is 7, so it must not be reported as 13 reviewed items. Human review status remains **NOT REVIEWED**.
+
+## Gated work and integrity (items 24–27, 39–45)
+
+The probe gate required at least 8 HIGH, all HIGH passing structural/source validation, and zero obvious semantic errors. It failed both the validator and semantic criteria. The seed-73 100-chunk pilot was **not selected or run**; source-range disjointness and independent AUTO_VALIDATED yield are therefore **not applicable**, not assumed. No pilot per-relation yield exists. No V4 review Markdown/CSV was rendered; review-packet row count is 0. No final hard negatives, model C/D training, production/evaluation edits, or full rebuild occurred.
+
+The focused v2/v3/v4 suite passed **70 tests, 0 failed**. Files added for this attempt: `scripts/analyze_rag_domain_qa_v3_medium.py`, `scripts/rag_domain_qa_v4.py`, `scripts/probe_rag_domain_qa_v4.py`, `scripts/audit_rag_domain_qa_v4.py`, `tests/test_rag_domain_qa_v4_extractor.py`, the V4 analysis/probe/audit reports, and the source-range manifest. A read-only check against the saved 64-file production SHA-256 snapshot found **0 changed files**. V1/v2/v3 production and evaluator code remained unchanged.
+
+The next revision must remove unsupported quote topics and fragmentary utterances and constrain ACTION context to a single action, then run a **new versioned probe**. The failed V4 probe cannot authorize the independent pilot or human-review packet.

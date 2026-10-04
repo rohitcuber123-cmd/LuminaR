@@ -1,0 +1,257 @@
+{
+  "required_scenarios_passed": true,
+  "cases": [
+    {
+      "case": "search_ai",
+      "passed": true,
+      "latency_ms": 51523,
+      "book_count": 10
+    },
+    {
+      "case": "compare_two_selected",
+      "passed": true,
+      "latency_ms": 41596,
+      "missing_fields": [
+        "page_count"
+      ]
+    },
+    {
+      "case": "recommend_multiple",
+      "passed": true,
+      "latency_ms": 62519,
+      "book_count": 10
+    },
+    {
+      "case": "recommend_default",
+      "passed": true,
+      "latency_ms": 26432,
+      "book_count": 10
+    },
+    {
+      "case": "recommend_one",
+      "passed": true,
+      "latency_ms": 37369,
+      "book_count": 10
+    },
+    {
+      "case": "ambiguous_title_clarification",
+      "passed": true,
+      "latency_ms": 20523,
+      "choice_count": 6
+    },
+    {
+      "case": "clarification_choice_continues",
+      "passed": true,
+      "latency_ms": 37427,
+      "book_count": 10
+    },
+    {
+      "case": "recommend_explicit_title_author",
+      "passed": true,
+      "latency_ms": 45072,
+      "book_count": 1
+    },
+    {
+      "case": "search_science_fiction",
+      "passed": true,
+      "latency_ms": 50968,
+      "book_count": 10
+    },
+    {
+      "case": "second_result_availability",
+      "passed": true,
+      "latency_ms": 20827
+    },
+    {
+      "case": "typed_recommend_with_two_selected",
+      "passed": true,
+      "latency_ms": 46158,
+      "book_count": 10
+    },
+    {
+      "case": "current_user_fees",
+      "passed": true,
+      "latency_ms": 18254
+    },
+    {
+      "case": "reservation_proposal",
+      "passed": true,
+      "latency_ms": 33572,
+      "enabled": false
+    },
+    {
+      "case": "disabled_confirmation",
+      "passed": true,
+      "latency_ms": 495
+    },
+    {
+      "case": "cancel_pending_action",
+      "passed": true,
+      "latency_ms": 575
+    },
+    {
+      "case": "uploaded_document_rag",
+      "passed": true,
+      "latency_ms": 49953,
+      "verdict": "NOT_SUPPORTED",
+      "source_count": 7
+    },
+    {
+      "case": "help_phrase_routed_to_search",
+      "passed": false,
+      "latency_ms": 26624,
+      "note": "Backend interpreted the usage-help wording as SEARCH_BOOKS; frontend rendered actual search data."
+    },
+    {
+      "case": "general_help_fresh_conversation",
+      "passed": true,
+      "latency_ms": 23612,
+      "intent": "GENERAL_LIBRARY_HELP"
+    },
+    {
+      "case": "book_detail_page_context",
+      "passed": true,
+      "latency_ms": 16241,
+      "intent": "CHECK_AVAILABILITY"
+    }
+  ],
+  "turns": [
+    {
+      "latency_ms": 51523,
+      "intent": "SEARCH_BOOKS",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 41596,
+      "intent": "COMPARE_BOOKS",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 62519,
+      "intent": "RECOMMEND_FROM_SELECTION",
+      "recommendation_mode": "MULTI_SELECTED_BOOKS"
+    },
+    {
+      "latency_ms": 26432,
+      "intent": "RECOMMEND_BOOKS",
+      "recommendation_mode": "PERSONALIZED_EXISTING_FORMULA"
+    },
+    {
+      "latency_ms": 37369,
+      "intent": "RECOMMEND_FROM_BOOK",
+      "recommendation_mode": "SINGLE_SELECTED_BOOK"
+    },
+    {
+      "latency_ms": 20523,
+      "intent": "CLARIFICATION",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 37427,
+      "intent": "RECOMMEND_FROM_BOOK",
+      "recommendation_mode": "SINGLE_SELECTED_BOOK"
+    },
+    {
+      "latency_ms": 45072,
+      "intent": "RECOMMEND_FROM_BOOK",
+      "recommendation_mode": "EXPLICIT_BOOK_SEED"
+    },
+    {
+      "latency_ms": 50968,
+      "intent": "SEARCH_BOOKS",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 20827,
+      "intent": "CHECK_AVAILABILITY",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 46158,
+      "intent": "RECOMMEND_FROM_SELECTION",
+      "recommendation_mode": "MULTI_SELECTED_BOOKS"
+    },
+    {
+      "latency_ms": 18254,
+      "intent": "USER_FEES",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 33572,
+      "intent": "RESERVE_BOOK",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 495,
+      "intent": "RESERVE_BOOK",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 575,
+      "intent": "RESERVE_BOOK",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 49953,
+      "intent": "DOCUMENT_QUESTION",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 26624,
+      "intent": "SEARCH_BOOKS",
+      "recommendation_mode": null
+    },
+    {
+      "latency_ms": 31256,
+      "intent": "SEARCH_BOOKS",
+      "recommendation_mode": null
+    }
+  ],
+  "console_warnings_or_errors": [],
+  "viewport_checks": [
+    {
+      "width": 1366,
+      "height": 768,
+      "passed": true
+    },
+    {
+      "width": 375,
+      "height": 812,
+      "passed": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "passed": true
+    }
+  ],
+  "backend_services": "Operator services reused; no additional Qwen process started.",
+  "required_cases": [
+    "search_ai",
+    "compare_two_selected",
+    "recommend_multiple",
+    "recommend_default",
+    "recommend_one",
+    "recommend_explicit_title_author",
+    "second_result_availability",
+    "typed_recommend_with_two_selected",
+    "current_user_fees",
+    "reservation_proposal",
+    "disabled_confirmation",
+    "uploaded_document_rag",
+    "ambiguous_title_clarification"
+  ],
+  "exploratory_routing_note": "Two general-style prompts within an existing search conversation returned SEARCH_BOOKS (26.624s and 31.256s). The fresh-conversation general-help case returned GENERAL_LIBRARY_HELP (23.612s). No backend prompts were changed.",
+  "frontend_only_checks": [
+    "native Enter selection on detail card",
+    "four-selection limit and fifth rejection",
+    "client navigation retains history",
+    "logout clears private turns",
+    "mobile/tablet no drawer overflow"
+  ]
+}

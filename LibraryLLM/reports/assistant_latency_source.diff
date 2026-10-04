@@ -1,0 +1,503 @@
+--- before/assistant/api.py
++++ after/assistant/api.py
+@@ -2,9 +2,13 @@
+ import asyncio
+ import logging
+ import os
++from time import perf_counter
++import json
++from pathlib import Path
+ 
+ from fastapi import APIRouter, Depends, HTTPException
+ from fastapi.security import HTTPAuthorizationCredentials
++from fastapi.routing import APIRoute
+ import httpx
+ from starlette.concurrency import run_in_threadpool
+ 
+@@ -14,14 +18,30 @@
+ from assistant.state import ConversationStore
+ from assistant.tools import AssistantTools, ToolFailure
+ from backend.dependencies import get_current_user, security
++from assistant.profiling import ProfileMiddleware, current, observe_model, timed
++
++
++class ProfileRoute(APIRoute):
++    def get_route_handler(self):
++        original = super().get_route_handler()
++        async def measured(request):
++            result = await original(request)
++            profile = current.get()
++            if profile is not None and 'handler_finished' in profile:
++                profile['stages_ms']['response_serialization'] = (
++                    perf_counter() - profile.pop('handler_finished')) * 1000
++            return result
++        return measured
+ 
+ 
+ def install_assistant(app, engine, rag_ask, rag_request):
++    observe_model(engine.llm)
++    app.add_middleware(ProfileMiddleware)
+     gateway = QwenGateway(engine.llm, engine.inference_lock,
+                           timeout=float(os.getenv('ASSISTANT_QWEN_TIMEOUT', '60')))
+     orchestrator = AssistantOrchestrator(gateway, ConversationStore())
+     app.state.assistant = orchestrator
+-    router = APIRouter(prefix='/assistant', tags=['Assistant'])
++    router = APIRouter(prefix='/assistant', tags=['Assistant'], route_class=ProfileRoute)
+ 
+     @router.post('/chat', response_model=AssistantResponse)
+     async def chat(request: AssistantRequest,
+@@ -44,10 +64,39 @@
+         async with httpx.AsyncClient(timeout=httpx.Timeout(40, connect=3),
+                                      limits=httpx.Limits(max_connections=20)) as client:
+             tools = AssistantTools(client, f'Bearer {credentials.credentials}', rag_callback)
+-            return await orchestrator.chat(request, str(current_user['sub']), tools)
++            result = await orchestrator.chat(request, str(current_user['sub']), tools)
++        profile = current.get()
++        if profile is not None:
++            profile['handler_finished'] = perf_counter()
++            try:
++                import psutil
++                import torch
++                profile['memory'] = {'process_rss_mb': psutil.Process().memory_info().rss / 1048576,
++                    'cuda_allocated_mb': torch.cuda.memory_allocated() / 1048576,
++                    'cuda_reserved_mb': torch.cuda.memory_reserved() / 1048576}
++            except ImportError:
++                pass
++            # Memory observation is handler work, not response serialization.
++            profile['handler_finished'] = perf_counter()
++        return result
+ 
+     app.include_router(router)
+     app.router.add_event_handler('shutdown', gateway.close)
++    if os.getenv('ASSISTANT_PROFILE_PATH') and getattr(engine.llm, 'model', None) is not None:
++        import torch
++        import transformers
++        runtime = {'attention_backend': engine.llm.model.config._attn_implementation,
++            'torch': torch.__version__, 'transformers': transformers.__version__,
++            'cuda': torch.version.cuda, 'device': str(engine.llm.model.device),
++            'gpu': torch.cuda.get_device_name() if torch.cuda.is_available() else None,
++            'flash_available': torch.backends.cuda.is_flash_attention_available(),
++            'sdpa_flash_enabled': torch.backends.cuda.flash_sdp_enabled(),
++            'sdpa_mem_efficient_enabled': torch.backends.cuda.mem_efficient_sdp_enabled(),
++            'model_resident_id': id(engine.llm.model), 'pid': os.getpid()}
++        try:
++            Path(os.environ['ASSISTANT_PROFILE_PATH'] + '.runtime.json').write_text(json.dumps(runtime, indent=2))
++        except OSError:
++            pass
+     logger = logging.getLogger('luminar.assistant')
+     logger.setLevel(logging.INFO)
+     if not logger.handlers:
+--- before/assistant/orchestrator.py
++++ after/assistant/orchestrator.py
+@@ -11,6 +11,8 @@
+                                Book, Clarification, Comparison, Intent, PendingAction,
+                                RecommendationMode)
+ from assistant.tools import ToolFailure
++from assistant.profiling import measured, timed
++from assistant.routing import FastRouteError, fast_route, needs_prose
+ 
+ LOG = logging.getLogger('luminar.assistant')
+ RECOMMEND = {Intent.RECOMMEND_BOOKS, Intent.RECOMMEND_FROM_BOOK, Intent.RECOMMEND_FROM_SELECTION}
+@@ -67,37 +69,43 @@
+             state.touched = monotonic()
+             response = AssistantResponse(conversation_id=state.conversation_id)
+             try:
+-                if request.action or request.pending_action_id:
++                if request.action in {'CONFIRM_ACTION', 'CANCEL_ACTION'} or request.pending_action_id:
+                     await self.confirm(request, state, tools, response)
+                     return response
+-                parsed = await self.qwen.parse(request.message, {
++                with timed('intent_routing'):
++                    fast = fast_route(request)
++                routing_request = request
++                if fast:
++                    parsed, routing_request = fast
++                else:
++                    parsed = await self.qwen.parse(request.message, {
+                     'selected_work_ids': request.selected_work_ids,
+                     'recent_work_ids': state.recent_result_work_ids or request.recent_work_ids,
+                     'last_comparison_work_ids': state.last_comparison_work_ids,
+                     'last_recommendation_work_ids': state.last_recommendation_work_ids,
+                     'page_context': request.page_context.model_dump(),
+                     'last_intent': state.last_intent,
+-                })
++                    })
+                 # Generic recommendations require no preferences or entity
+                 # clarification. This guarantees the mandated zero/one/many modes.
+                 generic_recommend = re.fullmatch(
+                     r'(?:please\s+)?(?:recommend(?:\s+(?:me\s+)?(?:something|books?|a book|something to read))?'
+                     r'|what should i read(?: next)?|give me (?:some )?recommendations)[.!?]*',
+                     request.message.strip().casefold())
+-                if generic_recommend:
++                if generic_recommend and not request.action:
+                     parsed = parsed.model_copy(update={'intent': Intent.RECOMMEND_BOOKS,
+                         'clarification_needed': False, 'reference': 'none', 'ordinal_references': [],
+                         'mentioned_titles': [], 'mentioned_authors': [], 'resolved_work_ids': [],
+                         'unsupported_filters': [], 'filters': type(parsed.filters)()})
+                 ordinals = explicit_ordinals(request.message)
+-                if ordinals:
++                if ordinals and not request.action:
+                     parsed = parsed.model_copy(update={'ordinal_references': ordinals})
+                 # A literal availability question overrides stale comparison
+                 # context. Mixed comparison questions retain Qwen's extraction.
+                 availability_question = re.fullmatch(
+                     r'(?:is|are)\s+.+\s+available(?:\s+(?:now|today))?[?.!]*',
+                     request.message.strip().casefold())
+-                if availability_question and not re.search(
++                if availability_question and not request.action and not re.search(
+                     r'\b(shorter|longer|compare|beginner|similar|recommend)\b', request.message.casefold()):
+                     parsed = parsed.model_copy(update={'intent': Intent.CHECK_AVAILABILITY,
+                                                        'clarification_needed': False, 'unsupported_filters': []})
+@@ -118,8 +126,9 @@
+                 if parsed.unsupported_filters:
+                     raise NeedsClarification('These catalogue filters are unavailable: '
+                                              + ', '.join(parsed.unsupported_filters) + '.')
+-                await self.route(request, parsed, state, tools, response)
+-                if not response.rag:
++                with timed('tool_execution'):
++                    await self.route(routing_request, parsed, state, tools, response)
++                if not response.rag and needs_prose(request, response.intent, parsed):
+                     try:
+                         response.message = await self.qwen.respond(request.message, response)
+                     except QwenUnavailable as exc:
+@@ -138,7 +147,7 @@
+                 if response.intent == Intent.COMPARE_BOOKS:
+                     state.last_comparison_work_ids = ids
+                 state.last_intent = response.intent
+-            except NeedsClarification as exc:
++            except (NeedsClarification, FastRouteError) as exc:
+                 response.intent = Intent.CLARIFICATION
+                 response.clarification = Clarification(reason=exc.reason, choices=exc.choices)
+                 response.message = exc.reason
+@@ -192,7 +201,18 @@
+                                 + '. Verified metadata and availability are shown below.')
+         elif response.intent in RECOMMEND | {Intent.SEARCH_BOOKS} and not response.books:
+             response.message = 'The service returned no matching books for this request.'
+-
++        elif not response.message and response.intent == Intent.SEARCH_BOOKS:
++            response.message = f'I found {len(response.books)} matching books.'
++        elif not response.message and response.intent in RECOMMEND:
++            response.message = ('Here are recommendations based on your selected books.'
++                if len(response.seed_work_ids) > 1 else 'Here are books related to your selected book.'
++                if response.seed_work_ids else 'Here are your recommendations.')
++        elif not response.message and response.comparison:
++            response.message = 'Compare verified catalogue metadata and availability below.'
++        elif not response.message and response.intent == Intent.BOOK_DETAILS:
++            response.message = 'Verified book details are shown below.'
++
++    @measured('entity_resolution')
+     async def resolve(self, request, parsed, state, tools, optional=False):
+         selected = list(dict.fromkeys(request.selected_work_ids))
+         # Qwen may reference only IDs actually supplied by the user/context.
+@@ -375,7 +395,7 @@
+ 
+     async def confirm(self, request, state, tools, response):
+         pending = state.pending
+-        if not request.action or not request.pending_action_id:
++        if request.action not in {'CONFIRM_ACTION', 'CANCEL_ACTION'} or not request.pending_action_id:
+             raise NeedsClarification('Confirmation requires both action and pending_action_id.')
+         if not pending or pending.action_id != request.pending_action_id or monotonic() > state.pending_deadline:
+             raise NeedsClarification('This action is invalid, expired or already consumed. Request it again.')
+--- before/assistant/qwen.py
++++ after/assistant/qwen.py
+@@ -5,6 +5,8 @@
+ import logging
+ from threading import BoundedSemaphore
+ from time import perf_counter
++from contextvars import copy_context
++from assistant.profiling import generation_stage, measured, timed
+ 
+ from assistant.schemas import AssistantIntent, Intent
+ 
+@@ -52,6 +54,7 @@
+ 
+         def run():
+             acquired = False
++            stage_token = generation_stage.set(stage)
+             try:
+                 acquired = self.inference_lock.acquire(timeout=self.timeout)
+                 if not acquired:
+@@ -63,9 +66,11 @@
+                 if acquired:
+                     self.inference_lock.release()
+                 self.slot.release()
++                generation_stage.reset(stage_token)
+ 
+         started = perf_counter()
+-        future = asyncio.wrap_future(self.executor.submit(run))
++        context = copy_context()
++        future = asyncio.wrap_future(self.executor.submit(context.run, run))
+         # Retrieve late exceptions after timeout, without logging user content.
+         future.add_done_callback(lambda f: f.exception() if not f.cancelled() else None)
+         try:
+@@ -76,6 +81,7 @@
+         finally:
+             LOG.info('qwen stage=%s latency_ms=%.1f', stage, (perf_counter()-started)*1000)
+ 
++    @measured('intent_parsing')
+     async def parse(self, message, context):
+         prompt = (
+             'Context: You are the LuminaR library assistant intent extractor. '
+@@ -105,7 +111,8 @@
+         for attempt in range(2):
+             raw = await self.generate(prompt, AssistantDecodingSchema, 'intent' if not attempt else 'repair')
+             try:
+-                parsed = AssistantIntent.model_validate_json(raw.strip())
++                with timed('intent_json_validation'):
++                    parsed = AssistantIntent.model_validate_json(raw.strip())
+                 # Confidence is advisory. Concrete entity validation and the
+                 # explicit clarification flag govern routing; no confidence
+                 # value can authorize a mutation.
+--- before/assistant/schemas.py
++++ after/assistant/schemas.py
+@@ -1,7 +1,8 @@
+ from enum import Enum
+ from typing import Annotated, Any, Literal
+ 
+-from pydantic import BaseModel, ConfigDict, Field, StringConstraints
++from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
++from assistant.profiling import timed
+ 
+ WorkID = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1,
+                                          max_length=128, pattern=r'^[A-Za-z0-9_-]+$')]
+@@ -30,6 +31,8 @@
+ 
+ 
+ class AssistantAction(str, Enum):
++    RECOMMEND = 'RECOMMEND'
++    AVAILABLE_NOW = 'AVAILABLE_NOW'
+     VIEW_BOOK = 'VIEW_BOOK'
+     SELECT_BOOK = 'SELECT_BOOK'
+     UNSELECT_BOOK = 'UNSELECT_BOOK'
+@@ -87,13 +90,22 @@
+ 
+ 
+ class AssistantRequest(StrictModel):
++    @model_validator(mode='wrap')
++    @classmethod
++    def profile_validation(cls, value, handler):
++        with timed('request_validation'):
++            return handler(value)
++
+     message: str = Field(min_length=1, max_length=4000)
+     conversation_id: str | None = Field(default=None, min_length=1, max_length=64)
+     selected_work_ids: list[WorkID] = Field(default_factory=list, max_length=4)
+     recent_work_ids: list[WorkID] = Field(default_factory=list, max_length=20)
+     page_context: PageContext = Field(default_factory=PageContext)
+     pending_action_id: str | None = Field(default=None, min_length=1, max_length=64)
+-    action: Literal['CONFIRM_ACTION', 'CANCEL_ACTION'] | None = None
++    action: Literal['CONFIRM_ACTION', 'CANCEL_ACTION', 'COMPARE', 'RECOMMEND',
++                    'RECOMMEND_SIMILAR', 'RECOMMEND_FROM_SELECTION', 'CHECK_AVAILABILITY',
++                    'AVAILABLE_NOW', 'USER_LOANS', 'USER_FEES', 'USER_RESERVATIONS',
++                    'BOOK_CONTENT_QUESTION', 'DOCUMENT_QUESTION'] | None = None
+ 
+ 
+ class Book(BaseModel):
+--- before/assistant/tools.py
++++ after/assistant/tools.py
+@@ -8,6 +8,7 @@
+ import httpx
+ 
+ from assistant.schemas import AssistantError, Book, Intent
++from assistant.profiling import current, measured, timed
+ 
+ LOG = logging.getLogger('luminar.assistant')
+ 
+@@ -44,6 +45,12 @@
+         except (httpx.HTTPError, ValueError, TypeError) as exc:
+             raise ToolFailure(service) from exc
+         finally:
++            profile = current.get()
++            if profile is not None:
++                stage = (service if service != 'core' else
++                         'core_metadata' if path.startswith(('/books/', '/assistant/catalogue/')) else 'account_service')
++                elapsed = (perf_counter()-started)*1000
++                profile['stages_ms'][stage] = profile['stages_ms'].get(stage, 0) + elapsed
+             LOG.info('tool service=%s method=%s latency_ms=%.1f', service, method,
+                      (perf_counter()-started)*1000)
+ 
+@@ -78,6 +85,7 @@
+         except ValueError as exc:
+             raise ToolFailure('core', 'INVALID_CATALOGUE_RESULT') from exc
+ 
++    @measured('core_metadata_wall')
+     async def books(self, work_ids: list[str]) -> list[Book]:
+         return list(await asyncio.gather(*(self.book(wid) for wid in dict.fromkeys(work_ids))))
+ 
+@@ -90,9 +98,10 @@
+ class AssistantAvailabilityTool:
+     def availability(self, book: Book):
+         from assistant.schemas import Availability
+-        return Availability(work_id=book.work_id, available_copies=book.available_copies,
+-                            total_copies=book.total_copies,
+-                            available=book.available_copies > 0 if book.available_copies is not None else None)
++        with timed('availability'):
++            return Availability(work_id=book.work_id, available_copies=book.available_copies,
++                                total_copies=book.total_copies,
++                                available=book.available_copies > 0 if book.available_copies is not None else None)
+ 
+ 
+ class AssistantRecommendationTool:
+@@ -149,6 +158,7 @@
+     def __init__(self, callback: Callable[..., Awaitable[dict]]):
+         self.callback = callback
+ 
++    @measured('rag_routing')
+     async def ask(self, message, work_id=None, document_id=None):
+         return await self.callback(message, work_id=work_id, document_id=document_id)
+ 
+--- before/frontend/src/components/AIChatWidget.tsx
++++ after/frontend/src/components/AIChatWidget.tsx
+@@ -3,11 +3,11 @@
+ import { MessageCircle, Search, Send, Sparkles, X, BookOpen } from 'lucide-react'
+ import { useAssistantStore } from '../store/useAssistantStore'
+ import { useAuthStore } from '../store/useAuthStore'
+-import { recommendLabel } from '../lib/assistant'
++import { recommendLabel, recommendAction } from '../lib/assistant'
+ import type { AssistantAction, AssistantBook, AssistantPageContext } from '../lib/assistantTypes'
+ import { AssistantTurn } from './assistant/AssistantTurn'
+ 
+-export function SelectedBooksTray({ onSend, busy }: { onSend: (message: string) => void; busy: boolean }) {
++export function SelectedBooksTray({ onSend, busy }: { onSend: (message: string, options?: Parameters<ReturnType<typeof useAssistantStore.getState>['send']>[2]) => void; busy: boolean }) {
+   const { selected, unselect, clearSelection, selectionNotice } = useAssistantStore()
+   if (!selected.length && !selectionNotice) return null
+   return <section aria-label="Selected books" className="mb-3 border border-line bg-panel p-2.5">
+@@ -18,8 +18,8 @@
+       <button className="assistant-icon-button" aria-label={`Remove ${book.title || book.work_id} from selection`} onClick={() => unselect(book.work_id)}><X size={12} /></button>
+     </li>)}</ul>
+     <div className="mt-2 flex flex-wrap gap-2">
+-      {selected.length >= 2 && <button disabled={busy} className="assistant-button" onClick={() => onSend('Compare these books')}>Compare with AI</button>}
+-      {!!selected.length && <button disabled={busy} className="assistant-button" onClick={() => onSend('Recommend')}>{recommendLabel(selected.length)}</button>}
++      {selected.length >= 2 && <button disabled={busy} className="assistant-button" onClick={() => onSend('Compare these books', { action: 'COMPARE' })}>Compare with AI</button>}
++      {!!selected.length && <button disabled={busy} className="assistant-button" onClick={() => onSend('Recommend', { action: recommendAction(selected.length) })}>{recommendLabel(selected.length)}</button>}
+     </div>
+     {selectionNotice && <p role="status" className="mt-2 text-xs text-brand">{selectionNotice}</p>}
+   </section>
+@@ -59,12 +59,14 @@
+       case 'UNSELECT_BOOK': if (id) state.unselect(id); break
+       case 'COMPARE':
+         if (book && !state.select(book)) break
+-        if (useAssistantStore.getState().selected.length >= 2) send('Compare these books')
++        if (useAssistantStore.getState().selected.length >= 2) send('Compare these books', { action: 'COMPARE' })
+         else inputRef.current?.focus()
+         break
+-      case 'RECOMMEND_SIMILAR': if (id) send('Recommend', { selected_work_ids: [id] }); break
+-      case 'RECOMMEND_FROM_SELECTION': send('Recommend'); break
+-      case 'CHECK_AVAILABILITY': if (id) send('Is this book available?', { selected_work_ids: [id] }); break
++      case 'RECOMMEND_SIMILAR': if (id) send('Recommend', { action: 'RECOMMEND_SIMILAR', selected_work_ids: [id] }); break
++      case 'RECOMMEND_FROM_SELECTION': send('Recommend', { action: 'RECOMMEND_FROM_SELECTION' }); break
++      case 'CHECK_AVAILABILITY': if (id) send('Is this book available?', { action: 'CHECK_AVAILABILITY', selected_work_ids: [id] }); break
++      case 'RECOMMEND': send('Recommend', { action: 'RECOMMEND' }); break
++      case 'AVAILABLE_NOW': send('Show me books available now.', { action: 'AVAILABLE_NOW' }); break
+       case 'BORROW': case 'RESERVE': case 'RETURN':
+         if (id) send(`${action.type.toLowerCase()} this book`, { selected_work_ids: [id] })
+         break
+@@ -99,8 +101,8 @@
+       <div className="shrink-0 border-t border-line bg-paper p-3">
+         <div className="mb-3 flex flex-wrap gap-2" aria-label="Quick actions">
+           <button className="assistant-button inline-flex items-center gap-1" onClick={() => { setInput('Find books about '); inputRef.current?.focus() }}><Search size={12} />Find a book</button>
+-          <button disabled={state.busy || !authenticated} className="assistant-button inline-flex items-center gap-1" onClick={() => send('Recommend')}><Sparkles size={12} />{recommendLabel(state.selected.length)}</button>
+-          <button disabled={state.busy || !authenticated} className="assistant-button inline-flex items-center gap-1" onClick={() => send('Show me books available now.')}><BookOpen size={12} />Available now</button>
++          <button disabled={state.busy || !authenticated} className="assistant-button inline-flex items-center gap-1" onClick={() => send('Recommend', { action: recommendAction(state.selected.length) })}><Sparkles size={12} />{recommendLabel(state.selected.length)}</button>
++          <button disabled={state.busy || !authenticated} className="assistant-button inline-flex items-center gap-1" onClick={() => send('Show me books available now.', { action: 'AVAILABLE_NOW' })}><BookOpen size={12} />Available now</button>
+         </div>
+         <SelectedBooksTray busy={state.busy || !authenticated} onSend={send} />
+         {!!Object.keys(context).length && <p className="mb-2 truncate text-xs text-ink-soft">Context: {context.document_id ? 'selected document' : context.work_id ? 'current book' : 'current results'}</p>}
+--- before/frontend/src/components/assistant/AssistantTurn.tsx
++++ after/frontend/src/components/assistant/AssistantTurn.tsx
+@@ -6,6 +6,7 @@
+ 
+ const label = (key: string) => key.replaceAll('_', ' ').replace(/^./, first => first.toUpperCase())
+ const ACTION_LABELS: Record<AssistantAction['type'], string> = {
++  RECOMMEND: 'Recommend', AVAILABLE_NOW: 'Available now',
+   VIEW_BOOK: 'View book', SELECT_BOOK: 'Select', UNSELECT_BOOK: 'Unselect', COMPARE: 'Compare with AI',
+   RECOMMEND_SIMILAR: 'Recommend Similar', RECOMMEND_FROM_SELECTION: 'Recommend From These', CHECK_AVAILABILITY: 'Check Availability',
+   BORROW: 'Borrow', RESERVE: 'Reserve', RETURN: 'Return', CONFIRM_ACTION: 'Confirm', CANCEL_ACTION: 'Cancel',
+--- before/frontend/src/lib/assistant.ts
++++ after/frontend/src/lib/assistant.ts
+@@ -1,11 +1,12 @@
+ import { request } from './api.ts'
+-import type { AssistantPageContext, AssistantRequest, AssistantResponse, AssistantBook, RecommendationMode } from './assistantTypes.ts'
++import type { AssistantPageContext, AssistantRequest, AssistantResponse, AssistantBook, RecommendationMode, AssistantRequestAction } from './assistantTypes.ts'
+ 
+ export const MAX_SELECTION_MESSAGE = 'You can select up to 4 books. Remove one first.'
+ export const validWorkId = (id: string) => /^[A-Za-z0-9_-]{1,128}$/.test(id)
+ export const uniqueIds = (ids: string[], limit: number) => [...new Set(ids.filter(validWorkId))].slice(0, limit)
+ export const displayText = (value: unknown): string => Array.isArray(value) ? value.map(displayText).filter(Boolean).join(' Â· ') : value == null ? '' : typeof value === 'object' ? JSON.stringify(value) : String(value)
+ export const recommendLabel = (count: number) => count === 0 ? 'Recommend' : count === 1 ? 'Recommend Similar' : 'Recommend From These'
++export const recommendAction = (count: number): AssistantRequestAction => count === 0 ? 'RECOMMEND' : count === 1 ? 'RECOMMEND_SIMILAR' : 'RECOMMEND_FROM_SELECTION'
+ export const recommendationHeading: Record<RecommendationMode, string> = {
+   PERSONALIZED_EXISTING_FORMULA: 'Recommended for you', SINGLE_SELECTED_BOOK: 'Similar recommendations',
+   MULTI_SELECTED_BOOKS: 'Based on your selected books', EXPLICIT_BOOK_SEED: 'Based on the book you mentioned',
+--- before/frontend/src/lib/assistantTypes.ts
++++ after/frontend/src/lib/assistantTypes.ts
+@@ -1,6 +1,7 @@
+ export type AssistantIntent = 'SEARCH_BOOKS' | 'RECOMMEND_BOOKS' | 'RECOMMEND_FROM_BOOK' | 'RECOMMEND_FROM_SELECTION' | 'COMPARE_BOOKS' | 'CHECK_AVAILABILITY' | 'BOOK_DETAILS' | 'BORROW_BOOK' | 'RETURN_BOOK' | 'RESERVE_BOOK' | 'USER_LOANS' | 'USER_RESERVATIONS' | 'USER_HISTORY' | 'USER_FEES' | 'GENERAL_LIBRARY_HELP' | 'BOOK_CONTENT_QUESTION' | 'DOCUMENT_QUESTION' | 'CLARIFICATION' | 'UNKNOWN'
+ export type RecommendationMode = 'PERSONALIZED_EXISTING_FORMULA' | 'SINGLE_SELECTED_BOOK' | 'MULTI_SELECTED_BOOKS' | 'EXPLICIT_BOOK_SEED'
+-export type AssistantActionType = 'VIEW_BOOK' | 'SELECT_BOOK' | 'UNSELECT_BOOK' | 'COMPARE' | 'RECOMMEND_SIMILAR' | 'RECOMMEND_FROM_SELECTION' | 'CHECK_AVAILABILITY' | 'BORROW' | 'RESERVE' | 'RETURN' | 'CONFIRM_ACTION' | 'CANCEL_ACTION'
++export type AssistantActionType = 'VIEW_BOOK' | 'SELECT_BOOK' | 'UNSELECT_BOOK' | 'COMPARE' | 'RECOMMEND' | 'AVAILABLE_NOW' | 'RECOMMEND_SIMILAR' | 'RECOMMEND_FROM_SELECTION' | 'CHECK_AVAILABILITY' | 'BORROW' | 'RESERVE' | 'RETURN' | 'CONFIRM_ACTION' | 'CANCEL_ACTION'
++export type AssistantRequestAction = 'CONFIRM_ACTION' | 'CANCEL_ACTION' | 'COMPARE' | 'RECOMMEND' | 'RECOMMEND_SIMILAR' | 'RECOMMEND_FROM_SELECTION' | 'CHECK_AVAILABILITY' | 'AVAILABLE_NOW' | 'USER_LOANS' | 'USER_FEES' | 'USER_RESERVATIONS' | 'BOOK_CONTENT_QUESTION' | 'DOCUMENT_QUESTION'
+ export interface AssistantPageContext { work_id?: string | null; work_ids?: string[]; document_id?: string | null }
+ export interface AssistantRequest {
+   message: string
+@@ -9,7 +10,7 @@
+   recent_work_ids: string[]
+   page_context: AssistantPageContext
+   pending_action_id?: string | null
+-  action?: 'CONFIRM_ACTION' | 'CANCEL_ACTION' | null
++  action?: AssistantRequestAction | null
+ }
+ export interface AssistantBook {
+   work_id: string
+--- before/frontend/tests/assistant.test.tsx
++++ after/frontend/tests/assistant.test.tsx
+@@ -64,6 +64,21 @@
+ test('test_multiple_selected_recommend_from_these_button', async () => { await select(4); mount(); open(); assert.equal(screen.getAllByRole('button', { name: 'Recommend From These' }).length, 2) })
+ test('test_compare_requires_two', async () => { await select(1); mount(); open(); assert.equal(screen.queryByRole('button', { name: 'Compare with AI' }), null) })
+ test('test_compare_sends_selected_work_ids', async () => { await select(2); mount(); open(); fireEvent.click(screen.getByRole('button', { name: 'Compare with AI' })); await waitFor(() => assert.equal(store.getState().busy, false)); assert.deepEqual(calls[0].body.selected_work_ids, ['OL1W', 'OL2W']); assert.match(calls[0].body.message, /Compare/) })
++test('compare tray sends structured action', async () => { await select(2); mount(); open(); fireEvent.click(screen.getByRole('button', { name: 'Compare with AI' })); await waitFor(() => assert.equal(store.getState().busy, false)); assert.equal(calls[0].body.action, 'COMPARE') })
++test('recommend buttons send selection-specific structured actions', async () => {
++  for (const [count, expected] of [[0, 'RECOMMEND'], [1, 'RECOMMEND_SIMILAR'], [3, 'RECOMMEND_FROM_SELECTION']] as const) {
++    await act(async () => { store.getState().clearSelection(); store.getState().setOpen(false) }); await select(count); const view = mount(); open()
++    fireEvent.click(screen.getAllByRole('button', { name: count === 0 ? 'Recommend' : count === 1 ? 'Recommend Similar' : 'Recommend From These', exact: true })[0])
++    await waitFor(() => assert.equal(store.getState().busy, false)); assert.equal(calls.at(-1)?.body.action, expected); view.unmount()
++  }
++})
++test('available now sends structured action', async () => { mount(); open(); fireEvent.click(screen.getByRole('button', { name: 'Available now' })); await waitFor(() => assert.equal(store.getState().busy, false)); assert.equal(calls[0].body.action, 'AVAILABLE_NOW') })
++test('typed text has no explicit action', async () => { mount(); open(); await submit('Compare these two'); assert.equal(calls[0].body.action, null) })
++test('card availability action binds clicked canonical ID', async () => {
++  next = response({ books: [book()], actions: [{ type: 'CHECK_AVAILABILITY', work_id: 'OL1W' }] }); mount(); open(); await submit('Find books')
++  fireEvent.click(screen.getByRole('button', { name: 'Check Availability' })); await waitFor(() => assert.equal(store.getState().busy, false))
++  assert.equal(calls.at(-1)?.body.action, 'CHECK_AVAILABILITY'); assert.deepEqual(calls.at(-1)?.body.selected_work_ids, ['OL1W'])
++})
+ test('test_recommend_sends_selected_work_ids', async () => { await select(3); mount(); open(); fireEvent.click(screen.getAllByRole('button', { name: 'Recommend From These' })[0]); await waitFor(() => assert.equal(store.getState().busy, false)); assert.deepEqual(calls[0].body.selected_work_ids, ['OL1W', 'OL2W', 'OL3W']) })
+ test('test_book_results_render', () => { turn(response({ intent: 'SEARCH_BOOKS', books: [book()], actions: [{ type: 'VIEW_BOOK', work_id: 'OL1W' }, { type: 'SELECT_BOOK', work_id: 'OL1W' }] })); assert.ok(screen.getByRole('article', { name: 'Book OL1W' })); assert.equal(screen.getByRole('link', { name: 'View book' }).getAttribute('href'), '/book/OL1W') })
+ test('test_recommendation_mode_render', () => { const modes = ['PERSONALIZED_EXISTING_FORMULA', 'SINGLE_SELECTED_BOOK', 'MULTI_SELECTED_BOOKS', 'EXPLICIT_BOOK_SEED'] as const; for (const mode of modes) { const view = turn(response({ recommendation_mode: mode, books: [book()] })); assert.ok(screen.getByRole('heading', { level: 3 })); view.unmount() } })
+--- before/tests/test_assistant_backend.py
++++ after/tests/test_assistant_backend.py
+@@ -134,7 +134,7 @@
+ 
+ def test_zero_selection_recommend_uses_existing_formula():
+     orch, tools = setup(requested_result_count=5)
+-    result = chat(orch, tools)
++    result = chat(orch, tools, 'Recommend 5 books')
+     assert tools.calls == [(5, None)]
+     assert result.recommendation_mode == RecommendationMode.PERSONALIZED_EXISTING_FORMULA
+ 
+@@ -400,7 +400,7 @@
+ def test_qwen_timeout_safe():
+     orch, tools = setup()
+     orch.qwen.parse = AsyncMock(side_effect=QwenUnavailable('Assistant service unavailable'))
+-    result = chat(orch, tools)
++    result = chat(orch, tools, 'Recommend something atmospheric')
+     assert result.errors[0].code == 'QWEN_UNAVAILABLE'
+     assert not tools.calls
+ 
+--- before/.env.assistant.example
++++ after/.env.assistant.example
+@@ -5,3 +5,5 @@
+ ASSISTANT_RECOMMENDATION_URL=http://127.0.0.1:8004
+ ASSISTANT_QWEN_TIMEOUT=60
+ ASSISTANT_RAG_TIMEOUT=120
++# Optional local numeric-only JSONL profiling (absolute path); disabled by default.
++# ASSISTANT_PROFILE_PATH=D:\SDC\LibraryLLM\reports\assistant_request_profiles.jsonl

@@ -1,0 +1,108 @@
+{
+  "diagnostic_timestamp": "2026-09-14T00:01:00+05:30",
+  "v8_modified": false,
+
+  "frontend_payload": {
+    "endpoint": "/rag/ask",
+    "method": "POST",
+    "body": {
+      "query": "What is this book about?",
+      "depth": "normal",
+      "document_id": "OL17930368W"
+    },
+    "note": "Frontend sends selectedDocumentId as document_id. work_id is not sent separately."
+  },
+
+  "rag_api_routing": {
+    "received_document_id": "OL17930368W",
+    "received_work_id": null,
+    "classification": "BOOK-SPECIFIC",
+    "routing_logic": "document_id is not in doc_ids (uploaded PDFs) so _is_uploaded_document returns false. Backwards compat assigns work_id=document_id. work_id is truthy so _search_book() is called."
+  },
+
+  "book_index_verification": {
+    "global_index_path": "rag/book_index/rag.index",
+    "global_metadata_path": "rag/book_index/rag_metadata.json",
+    "global_index_vectors": 3946,
+    "global_index_dimension": 384,
+    "global_metadata_count": 3946,
+    "total_indexed_books": 17,
+    "per_book_index_dir": "rag/book_index/books/",
+    "per_book_index_count": 17,
+    "metadata_field_for_work_id": "work_id",
+    "metadata_field_for_document_id": "document_id",
+    "both_fields_contain_same_value": true,
+    "sample_metadata_entry": {
+      "chunk_id": "OL15933082W_000001",
+      "document_id": "OL15933082W",
+      "work_id": "OL15933082W",
+      "filename": "The Strange Case of Dr. Jekyll and Mr. Hyde.txt",
+      "page": null,
+      "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+      "author": "Robert Louis Stevenson",
+      "chapter": "Unknown",
+      "chunk_index": 1
+    }
+  },
+
+  "indexed_books": [
+    {"work_id": "OL15933082W", "title": "The Strange Case of Dr. Jekyll and Mr. Hyde", "author": "Robert Louis Stevenson"},
+    {"work_id": "OL17494673W", "title": "The Adventures of Sherlock Holmes", "author": "Arthur Conan Doyle"},
+    {"work_id": "OL27039837W", "title": "The Time Machine", "author": "H. G. Wells"},
+    {"work_id": "OL27471326W", "title": "Moby-Dick", "author": "Herman Melville"},
+    {"work_id": "OL28944494W", "title": "The Adventures of Tom Sawyer", "author": "Mark Twain"},
+    {"work_id": "OL33027136W", "title": "The War of the Worlds", "author": "H. G. Wells"},
+    {"work_id": "OL33723557W", "title": "The Importance of Being Earnest", "author": "Oscar Wilde"},
+    {"work_id": "OL35758281W", "title": "Adventures of Huckleberry Finn", "author": "Mark Twain"},
+    {"work_id": "OL36979234W", "title": "Jane Eyre", "author": "Charlotte Bronte"},
+    {"work_id": "OL38619874W", "title": "Alice's Adventures in Wonderland", "author": "Lewis Carroll"},
+    {"work_id": "OL41470186W", "title": "Great Expectations", "author": "Charles Dickens"},
+    {"work_id": "OL42479046W", "title": "The Metamorphosis", "author": "Franz Kafka"},
+    {"work_id": "OL43032614W", "title": "A Tale of Two Cities", "author": "Charles Dickens"},
+    {"work_id": "OL44512357W", "title": "The Picture of Dorian Gray", "author": "Oscar Wilde"},
+    {"work_id": "OL45326637W", "title": "Frankenstein", "author": "Mary Shelley"},
+    {"work_id": "OL66524W", "title": "Pride and Prejudice", "author": "Jane Austen"},
+    {"work_id": "OL85892W", "title": "Dracula", "author": "Bram Stoker"}
+  ],
+
+  "frontend_books": [
+    {"work_id": "OL17930368W", "title": "Atomic Habits", "author": "James Clear", "in_rag_index": false},
+    {"work_id": "unknown", "title": "The 48 Laws of Power", "author": "Robert Greene", "in_rag_index": false},
+    {"work_id": "unknown", "title": "It Ends With Us", "author": "Colleen Hoover", "in_rag_index": false},
+    {"work_id": "unknown", "title": "Rich Dad, Poor Dad", "author": "Robert T. Kiyosaki", "in_rag_index": false},
+    {"work_id": "unknown", "title": "The Subtle Art of Not Giving a F...", "author": "Mark Manson", "in_rag_index": false},
+    {"work_id": "unknown", "title": "Control Your Mind and Master Y...", "author": "Eric Robertson", "in_rag_index": false},
+    {"work_id": "unknown", "title": "Um casamento arranjado", "author": "Zana Kheiron", "in_rag_index": false}
+  ],
+
+  "dataset_overlap": 0,
+
+  "global_vs_book_specific": {
+    "global_search_works": true,
+    "global_search_results": 10,
+    "global_search_books_found": "classic literature only (e.g. Software Engineering notes from uploaded docs + classic books)",
+    "book_specific_search_OL17930368W": {
+      "results": 0,
+      "reason": "FileNotFoundError — OL17930368W.index does not exist in book_index/books/"
+    }
+  },
+
+  "retriever_routing_analysis": {
+    "step_1": "document_id=OL17930368W received",
+    "step_2": "_is_uploaded_document('OL17930368W') returns False (not in doc_ids set of uploaded PDFs)",
+    "step_3": "Backwards compat: work_id = document_id = 'OL17930368W'",
+    "step_4": "work_id is truthy, so _search_book(work_id='OL17930368W') is called",
+    "step_5": "_load_book_index('OL17930368W') tries to open book_index/books/OL17930368W.index",
+    "step_6": "FileNotFoundError caught, returns 0 results",
+    "conclusion": "Routing logic is CORRECT. The problem is that the file doesn't exist because the book was never indexed."
+  },
+
+  "root_cause": "INDEX_DATASET_MISMATCH",
+  "root_cause_explanation": "The RAG book index contains 17 public-domain classic literature texts (Project Gutenberg). The frontend 'Library Books' sidebar fetches modern bestsellers from the backend catalog database (MongoDB via getPopularBooks API). These are two completely separate datasets with ZERO overlap. Every book shown in the frontend sidebar has a work_id that does not exist in the RAG index.",
+
+  "recommended_fix": {
+    "option_A": "Change the frontend to show only RAG-indexed books in the sidebar (filter catalog books against a new /rag/books endpoint that returns indexed work_ids).",
+    "option_B": "Ingest the catalog bestsellers into the RAG book index (requires obtaining their full text, which may not be freely available for copyrighted modern books).",
+    "option_C": "Show both sections in the sidebar: 'RAG-Indexed Books' (the 17 classics) and 'Catalog Books' (the bestsellers, but marked as not available for Q&A)."
+  }
+}

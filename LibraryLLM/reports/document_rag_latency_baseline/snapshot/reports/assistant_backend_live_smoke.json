@@ -1,0 +1,158 @@
+{
+  "passed": true,
+  "validation_strategy": "Full read-only service run plus targeted reservation and saved-conversation reruns after literal ordinal/context guards. Earlier raw diagnostic results are retained separately.",
+  "model_name": "Qwen/Qwen2.5-3B-Instruct",
+  "real_generation": true,
+  "qwen_load_count_per_process": [
+    1,
+    1,
+    1
+  ],
+  "cases": [
+    {
+      "case": "search",
+      "status": 200,
+      "intent": "SEARCH_BOOKS",
+      "recommendation_mode": null,
+      "seed_work_ids": [],
+      "book_count": 10,
+      "errors": [],
+      "message": "Here are some books related to neural networks:\n\n1. **\"Neural Networks: Artificial Intelligence and Industrial Applications\"** by Bert Kappen\n   - Description: Overview of new developments with contributions from various fields.\n\n2. **Neural Network in a Soft Computing Framework**\n   - Authors: M.N.S. Swamy & Ke-Lin Du\n\n3. **\u201cNeural networks theory, technology, and applications\u201d**\n   Author: Patrick K. Simpson\n\n4. **'Neural-Networks-in-C\u2019**\n   Authors: Adam Blum\n\n5. **\u2018Neural-networks\u2019**\n    Author: Richard J. Mammone\n\n6. **G\u00e9neral Dreyfus \u2013 'Neural Nets'\"\n   Author(s): G\u00e9rard Dreydus\n\n7. **Haykin\u2019s \u2018Neural Networls\u2019**\n     Author: S. S. Haykin\n\n8. **Caianiello\u2019s \u2018Nerual Networks\u2019**\n      Author: E. R. Caianiello\n\n9. **Garson\u2019s \u2018Social Sciences Models and Data Processing\u2019**\n       Subjects: Neural networks (Computer Science), Social Sciences, Mathematical Models, Social Sciences\n\n10. **Antognetti et al.\u2019s \u2018Neuronal Networks\u2019**  \n        Authors: Paolo Antognetti, Veljko Milutinovic, Velja Milutincic",
+      "clarification": null,
+      "pending_action": false,
+      "latency_seconds": 57.08
+    },
+    {
+      "case": "compare",
+      "status": 200,
+      "intent": "COMPARE_BOOKS",
+      "recommendation_mode": null,
+      "seed_work_ids": [],
+      "book_count": 2,
+      "errors": [],
+      "message": "The catalogue does not record these comparison fields: page_count. Verified metadata and availability are shown below.",
+      "clarification": null,
+      "pending_action": false,
+      "latency_seconds": 38.62
+    },
+    {
+      "case": "server_conversation_reference",
+      "status": 200,
+      "intent": "CHECK_AVAILABILITY",
+      "errors": [],
+      "resolved_work_ids": [
+        "OL2000134W"
+      ],
+      "passed": true
+    },
+    {
+      "case": "availability",
+      "status": 200,
+      "intent": "CHECK_AVAILABILITY",
+      "recommendation_mode": null,
+      "seed_work_ids": [],
+      "book_count": 1,
+      "errors": [],
+      "message": "Frankenstein: available (1 available copies, 1 total).",
+      "clarification": null,
+      "pending_action": false,
+      "latency_seconds": 40.3
+    },
+    {
+      "case": "recommend_default",
+      "status": 200,
+      "intent": "RECOMMEND_BOOKS",
+      "recommendation_mode": "PERSONALIZED_EXISTING_FORMULA",
+      "seed_work_ids": [],
+      "book_count": 0,
+      "errors": [],
+      "message": "The service returned no matching books for this request.",
+      "clarification": null,
+      "pending_action": false,
+      "latency_seconds": 15.78
+    },
+    {
+      "case": "recommend_one",
+      "status": 200,
+      "intent": "RECOMMEND_FROM_BOOK",
+      "recommendation_mode": "SINGLE_SELECTED_BOOK",
+      "seed_work_ids": [
+        "OL3411044W"
+      ],
+      "book_count": 10,
+      "errors": [],
+      "message": "Based on the available books, \"The Truth About Dracula\" by Gabriel Ronay seems to be the most focused work on historical aspects related to vampires and Count Dracula. It has one copy available at the location indicated. You might want to check this out.",
+      "clarification": null,
+      "pending_action": false,
+      "latency_seconds": 33.77
+    },
+    {
+      "case": "recommend_multiple",
+      "status": 200,
+      "intent": "RECOMMEND_FROM_SELECTION",
+      "recommendation_mode": "MULTI_SELECTED_BOOKS",
+      "seed_work_ids": [
+        "OL3411044W",
+        "OL2000134W"
+      ],
+      "book_count": 10,
+      "errors": [],
+      "message": "Based on the provided books, \"Frankenstein\" seems to be the most popular choice among these selections. It has received an average rating of 4.0 and there is one available copy each for it and other related works like \"Mary Shelley's Frankenstein; or, the Modern Prometheus (1818 Text)\" and \"Understanding Frankenstein\". If you're interested in more detailed historical and critical analysis, those might also be good options alongside \"Frankenstien.\"",
+      "clarification": null,
+      "pending_action": false,
+      "latency_seconds": 51.86
+    },
+    {
+      "case": "fees",
+      "status": 200,
+      "intent": "USER_FEES",
+      "recommendation_mode": null,
+      "seed_work_ids": [],
+      "book_count": 0,
+      "errors": [],
+      "message": "Your unpaid fees total 0. See the fee records below.",
+      "clarification": null,
+      "pending_action": false,
+      "latency_seconds": 14.84
+    },
+    {
+      "case": "general",
+      "status": 200,
+      "intent": "GENERAL_LIBRARY_HELP",
+      "recommendation_mode": null,
+      "seed_work_ids": [],
+      "book_count": 0,
+      "errors": [],
+      "message": "Gothic fiction is a genre of literature that typically features dark settings, mysterious events, and often involves supernatural elements such as ghosts, vampires, and werewolves. It usually centers around themes of horror, suspense, and psychological terror. Authors like Edgar Allan Poe and Bram Stoker are notable figures in this genre.",
+      "clarification": null,
+      "pending_action": false,
+      "latency_seconds": 22.03
+    },
+    {
+      "case": "reserve_proposal",
+      "status": 200,
+      "intent": "RESERVE_BOOK",
+      "recommendation_mode": null,
+      "seed_work_ids": [],
+      "book_count": 1,
+      "errors": [],
+      "message": "Confirm reserving Frankenstein? Library actions are currently disabled.",
+      "clarification": null,
+      "pending_action": true,
+      "latency_seconds": 18.17
+    },
+    {
+      "case": "disabled_confirmation",
+      "status": 200,
+      "intent": "RESERVE_BOOK",
+      "errors": [
+        {
+          "code": "MUTATIONS_DISABLED",
+          "service": "assistant",
+          "message": "Library actions are currently disabled. No action was performed."
+        }
+      ],
+      "passed": true
+    }
+  ]
+}

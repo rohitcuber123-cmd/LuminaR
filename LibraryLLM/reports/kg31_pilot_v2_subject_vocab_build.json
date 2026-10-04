@@ -1,0 +1,55 @@
+{
+  "version": "kg31-description-subject-vocabulary-v2",
+  "source": "Mongo books: projected public metadata only",
+  "source_count": 100040,
+  "books": 100040,
+  "edges": 620810,
+  "features": {
+    "author": 105107,
+    "subject": 93867,
+    "topic": 4789
+  },
+  "missing_authors": 1178,
+  "missing_subjects": 5089,
+  "isolated_books": 30,
+  "skipped_books": 0,
+  "created_at": "2026-10-02T17:57:26.143472+00:00",
+  "catalogue_hash": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+  "build_seconds": 60.39075859999866,
+  "schema": {
+    "nodes": [
+      "Book",
+      "Author name",
+      "Subject label",
+      "Description topic"
+    ],
+    "edges": [
+      "AUTHORED_BY",
+      "HAS_SUBJECT",
+      "HAS_TOPIC"
+    ]
+  },
+  "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+  "scoring": "Weighted cosine using explicit relation weights and retained graph degree. Topic amplitude 0.5 gives one quarter of subject squared weight at equal degree; conservative untuned initial policy.",
+  "scope": "systematic 100040-book pilot; global V1 subject vocabulary",
+  "relation_weights": {
+    "author": 2.0,
+    "subject": 1.0,
+    "topic": 0.5
+  },
+  "topic_policy": {
+    "min_degree": 3,
+    "maximum_degree_fraction": 0.001,
+    "max_topics_per_book": 5,
+    "max_description_tokens": 512,
+    "min_description_tokens": 20,
+    "language_policy": "Unicode source phrases; English stop words plus conservative generic terms. Language unknown, never inferred."
+  },
+  "base_snapshot": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+  "description_books_with_phrase_candidates": 25393,
+  "topic_books": 15642,
+  "weak_feature_qualification": "Only author, subject and bounded description-topic connections qualify. Publisher/language/era unavailable and never qualify alone.",
+  "topic_vocabulary": "Exact normalized phrases already present as subject labels in frozen full V1 graph; no title inference, generative labels or per-seed allowlist.",
+  "database_bytes": 138604544,
+  "total_enrichment_seconds_including_compaction": 61.2823395000014
+}

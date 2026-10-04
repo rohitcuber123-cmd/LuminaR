@@ -1,0 +1,149 @@
+{
+  "http_and_service_ms": {
+    "POST /issues/issue": {
+      "samples": 5,
+      "median": 14.118199997028569,
+      "max": 18.93220000056317
+    },
+    "POST /admin/notifications": {
+      "samples": 1,
+      "median": 8.11999999859836,
+      "max": 8.11999999859836
+    },
+    "renew_operation": {
+      "samples": 1,
+      "median": 12.20159999866155,
+      "max": 12.20159999866155
+    },
+    "renew_retry": {
+      "samples": 1,
+      "median": 8.744399998249719,
+      "max": 8.744399998249719
+    },
+    "GET /notifications": {
+      "samples": 1,
+      "median": 11.387900001864182,
+      "max": 11.387900001864182
+    },
+    "POST /reservations/": {
+      "samples": 1,
+      "median": 8.094699998764554,
+      "max": 8.094699998764554
+    },
+    "POST /issues/return/40": {
+      "samples": 1,
+      "median": 17.849600000772625,
+      "max": 17.849600000772625
+    },
+    "POST /admin/operations/renew/42": {
+      "samples": 1,
+      "median": 12.699300001258962,
+      "max": 12.699300001258962
+    },
+    "POST /issues/return/43": {
+      "samples": 1,
+      "median": 13.063300000794698,
+      "max": 13.063300000794698
+    },
+    "renew_eligibility": {
+      "samples": 5,
+      "median": 7.073299999319715,
+      "max": 8.91079999928479
+    },
+    "user_loans_page": {
+      "samples": 5,
+      "median": 22.323999997752253,
+      "max": 23.713999999017688
+    },
+    "admin_operations_page": {
+      "samples": 5,
+      "median": 14.165299999149283,
+      "max": 17.051599999831524
+    },
+    "idempotent_reconciliation": {
+      "samples": 5,
+      "median": 0.6468999999924563,
+      "max": 0.8923999994294718
+    }
+  },
+  "worker_before_change_prior_phase": {
+    "active_loans_scanned": 3,
+    "relevant_loans": 3,
+    "created": 3,
+    "duplicates_skipped": 0,
+    "invalid_or_changed_skipped": 0,
+    "scanned_at": "2026-10-03T07:25:28.127668+00:00",
+    "duration_ms": 7.202400000096532
+  },
+  "worker_after_change": {
+    "active_loans_scanned": 1,
+    "relevant_loans": 1,
+    "created": 0,
+    "duplicates_skipped": 1,
+    "invalid_or_changed_skipped": 0,
+    "resolved_stale": 0,
+    "scanned_at": "2026-10-03T09:27:54+00:00",
+    "duration_ms": 3.719299998920178
+  },
+  "comparison_limit": "Before/after use small disposable fixtures; different scenario mix, not a controlled capacity benchmark.",
+  "reconciliation_query_plan": {
+    "isCached": true,
+    "stage": "FETCH",
+    "filter": {
+      "$and": [
+        {
+          "resolved_at": {
+            "$eq": null
+          }
+        },
+        {
+          "source": {
+            "$eq": "SYSTEM"
+          }
+        },
+        {
+          "type": {
+            "$in": [
+              "DUE_SOON",
+              "DUE_TODAY",
+              "OVERDUE"
+            ]
+          }
+        }
+      ]
+    },
+    "nss": "luminar_library.notifications",
+    "inputStage": {
+      "stage": "IXSCAN",
+      "nss": "luminar_library.notifications",
+      "keyPattern": {
+        "source_ref.loan_id": 1,
+        "resolved_at": 1
+      },
+      "indexName": "source_ref.loan_id_1_resolved_at_1",
+      "isMultiKey": false,
+      "multiKeyPaths": {
+        "source_ref.loan_id": [],
+        "resolved_at": []
+      },
+      "isUnique": false,
+      "isSparse": false,
+      "isPartial": false,
+      "indexVersion": 2,
+      "direction": "forward",
+      "indexBounds": {
+        "source_ref.loan_id": [
+          "[39, 39]"
+        ],
+        "resolved_at": [
+          "[null, null]"
+        ]
+      }
+    }
+  },
+  "query_execution": {
+    "nReturned": 1,
+    "totalKeysExamined": 1,
+    "totalDocsExamined": 1
+  }
+}

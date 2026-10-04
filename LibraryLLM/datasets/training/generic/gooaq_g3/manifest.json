@@ -1,0 +1,204 @@
+{
+  "experiment": "G3_GOOAQ",
+  "dataset_id": "sentence-transformers/gooaq",
+  "config": "pair",
+  "revision": "b089f728748a068b7bc5234e5bcf5b25e3c8279c",
+  "split": "train",
+  "schema": {
+    "question": "string",
+    "answer": "string"
+  },
+  "source_row_count": 3012496,
+  "automatic_download": "successful bounded streaming; no complete multi-million-row materialization",
+  "cache": "D:\\SDC\\LibraryLLM\\datasets\\training\\hf_cache\\gooaq_g3",
+  "selection": {
+    "seed": 42,
+    "shuffle_buffer": 10000,
+    "pair_rule": "first 50k usable distinct normalized queries from seeded shuffled stream; seed-42 final shuffle, 45k/5k split; no later replacements",
+    "pool_rule": "continue same shuffled stream until at least 200k normalized unique answers; bounded cap 500k processed source records",
+    "buffer_note": "rows_inspected counts yielded rows; up to 10k lookahead rows may be internally buffered"
+  },
+  "inventory": {
+    "rows_inspected": 255250,
+    "duplicate_normalized_questions": 0,
+    "duplicate_answer_passages": 55250,
+    "multi_positive_questions": 0
+  },
+  "rows_materialized": 255250,
+  "selected_rows": 50000,
+  "train_validation_normalized_query_overlap": 0,
+  "token_lengths": {
+    "inspected_usable": {
+      "question": {
+        "min": 8,
+        "median": 12,
+        "p90": 15,
+        "p95": 16,
+        "p99": 18,
+        "max": 34,
+        "over_256": 0
+      },
+      "answer": {
+        "min": 10,
+        "median": 61,
+        "p90": 77,
+        "p95": 85,
+        "p99": 109,
+        "max": 197,
+        "over_256": 0
+      }
+    },
+    "selected_50000": {
+      "question": {
+        "min": 8,
+        "median": 12,
+        "p90": 15,
+        "p95": 16,
+        "p99": 18,
+        "max": 34,
+        "over_256": 0
+      },
+      "answer": {
+        "min": 11,
+        "median": 61,
+        "p90": 77,
+        "p95": 85,
+        "p99": 110,
+        "max": 197,
+        "over_256": 0
+      }
+    }
+  },
+  "mining_corpus_count": 200000,
+  "known_positive_scope": "all alternate positives discoverable among bounded inspected source records; unknown positives outside this pool remain unlabelled",
+  "answer_canonicalization": "first-seen original passage for normalized-equivalent texts; selected positives use that canonical source passage",
+  "files": {
+    "pairs_train": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_pairs_train.parquet",
+      "rows": 45000,
+      "sha256": "1ccb299ae166fd7007cfe13fc85a6888b8b47b5a504ca5da37150ac4b711de25"
+    },
+    "pairs_validation": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_pairs_validation.parquet",
+      "rows": 5000,
+      "sha256": "ab658a0657038e0b642e2f0637fa1ed8881687ad0401b2c554d060daa28fa271"
+    },
+    "source_records": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_source_records.parquet",
+      "rows": 255250,
+      "sha256": "6dbbc76766617df9670744f496494100cb59e645273588bb5ad51de66d677fce"
+    },
+    "answer_corpus": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_answer_corpus.parquet",
+      "rows": 200000,
+      "sha256": "e723e858ca3c427e0a54c1e4690e0595ae5897d018724e75028376b517e9716c"
+    },
+    "train": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_train_triplets.parquet",
+      "rows": 45000,
+      "sha256": "0ae30b5083b831b298699511f1513eeb2b83d73ed145268d26614d44e01e059c"
+    },
+    "validation": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_validation_pairs.parquet",
+      "rows": 5000,
+      "sha256": "ab658a0657038e0b642e2f0637fa1ed8881687ad0401b2c554d060daa28fa271"
+    }
+  },
+  "versions": {
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "datasets": "5.0.0",
+    "sentence_transformers": "5.6.0",
+    "accelerate": "1.14.0",
+    "faiss": "1.14.3"
+  },
+  "mining": {
+    "mining_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "base_snapshot": "C:\\Users\\balak\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "corpus_count": 200000,
+    "settings": {
+      "absolute_margin": 0.02448827922344208,
+      "relative_margin": 0.03535122352084876,
+      "max_score": 0.5955077618360519
+    },
+    "settings_reason": "GooAQ raw calibration: absolute margin = clipped half p10 observed gap [.01,.04]; relative margin = absolute/median positive clipped [.02,.08]; cap = min(.85, negative p99+.03, positive p75); Engineering audit trial1 found one possible alternate answer (calorie-deficit question) and two ambiguous partial-relevance cases; tightened ceiling to measured raw negative p95, preserving margins and query distribution.",
+    "initial_window": [
+      10,
+      100
+    ],
+    "wider_window": [
+      10,
+      500
+    ],
+    "window_note": "installed miner applies rank slice to eligible candidates after score/positive masking; stored ranks are raw 1-based corpus ranks",
+    "candidates_per_query": 5,
+    "retained_per_query": 1,
+    "initial_unmineable": 1345,
+    "wider_window_hard_count": 1058,
+    "hard_count": 44713,
+    "random_fallback_count": 287,
+    "random_fallback_fraction": 0.006377777777777777,
+    "known_positive_candidates_excluded": 0,
+    "raw_calibration_distributions": null,
+    "distributions": {
+      "positive_score": {
+        "min": 0.018019119277596474,
+        "p10": 0.5480401396751404,
+        "median": 0.7044015228748322,
+        "p90": 0.8142160475254059,
+        "p95": 0.8389064013957976,
+        "max": 0.9471812844276428,
+        "mean": 0.6900377311041371,
+        "count": 45000
+      },
+      "negative_score": {
+        "min": -0.20795796811580658,
+        "p10": 0.38397143185138705,
+        "median": 0.48256225883960724,
+        "p90": 0.5579559326171875,
+        "p95": 0.5686054527759552,
+        "max": 0.5920495986938477,
+        "mean": 0.47375354726517366,
+        "count": 45000
+      },
+      "score_margin": {
+        "min": 0.025321662425994873,
+        "p10": 0.06940972506999969,
+        "median": 0.2159879207611084,
+        "p90": 0.3567699044942856,
+        "p95": 0.395626263320446,
+        "max": 0.6260011196136475,
+        "mean": 0.2162841838389635,
+        "count": 45000
+      },
+      "negative_rank": {
+        "min": 12.0,
+        "p10": 17.0,
+        "median": 33.0,
+        "p90": 64.0,
+        "p95": 77.0,
+        "max": 500.0,
+        "mean": 41.22492340035336,
+        "count": 44713
+      }
+    },
+    "safeguards": "all normalized positives/alternates discoverable in bounded source records excluded; rank floor10, calibrated ceiling/margins; fixed safe wider window; random fallback also score/margin screened; no query replacement",
+    "rows": 45000,
+    "query_replacements": 0,
+    "software_versions": {
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.15.1",
+      "datasets": "5.0.0",
+      "sentence_transformers": "5.6.0",
+      "accelerate": "1.14.0",
+      "faiss": "1.14.3"
+    },
+    "file": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_train_triplets.parquet",
+      "rows": 45000,
+      "sha256": "0ae30b5083b831b298699511f1513eeb2b83d73ed145268d26614d44e01e059c"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "experiment": "G1_MS_MARCO",
+  "dataset_id": "sentence-transformers/msmarco-co-condenser-margin-mse-sym-mnrl-mean-v1",
+  "config": "triplet-hard",
+  "revision": "84ed2d35626f617d890bd493b4d6db69a741e0e2",
+  "split": "train",
+  "selection": {
+    "stream": true,
+    "shuffle_seed": 42,
+    "shuffle_buffer": 10000,
+    "take_usable_rows": 50000,
+    "post_selection_shuffle_seed": 42,
+    "split_rule": "first 45000 train; last 5000 validation"
+  },
+  "cache_location": "D:\\SDC\\LibraryLLM\\datasets\\training\\hf_cache",
+  "raw_rows_inspected": 50000,
+  "rejected_rows": {
+    "raw": 50000
+  },
+  "selected_rows": 50000,
+  "schema": {
+    "query": "string",
+    "positive": "string",
+    "negative": "string"
+  },
+  "files": {
+    "train": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\msmarco_g1\\msmarco_g1_train.parquet",
+      "rows": 45000,
+      "sha256": "073eb5fec486c1c311deb4d525272cfcfc987c5a789c95b1d612cad11835d0cd"
+    },
+    "validation": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\msmarco_g1\\msmarco_g1_validation.parquet",
+      "rows": 5000,
+      "sha256": "9fb47d8616fd1730036292c149d6a6dfa899d5cd10910c82d2b832689e4a9f8c"
+    }
+  },
+  "quality": {
+    "exact_duplicate_triplets": 0,
+    "duplicate_queries": 47946,
+    "duplicate_positives": 47849,
+    "positive_equals_negative": 0,
+    "train_validation_query_overlap": 1585
+  },
+  "token_lengths": {
+    "query": {
+      "min": 4,
+      "median": 9,
+      "p90": 12,
+      "p95": 14,
+      "p99": 19,
+      "max": 41,
+      "over_256": 0
+    },
+    "positive": {
+      "min": 13,
+      "median": 72,
+      "p90": 125,
+      "p95": 140,
+      "p99": 176,
+      "max": 216,
+      "over_256": 0
+    },
+    "negative": {
+      "min": 13,
+      "median": 70,
+      "p90": 124,
+      "p95": 140,
+      "p99": 176,
+      "max": 292,
+      "over_256": 11
+    }
+  },
+  "created_utc": "2026-09-29T17:38:50.700333+00:00",
+  "versions": {
+    "python": "3.11.9",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "datasets": "5.0.0",
+    "sentence_transformers": "5.6.0",
+    "accelerate": "1.14.0",
+    "faiss": "1.14.3"
+  }
+}

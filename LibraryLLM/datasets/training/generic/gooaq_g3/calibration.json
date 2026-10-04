@@ -1,0 +1,396 @@
+{
+  "mining_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "base_snapshot": "C:\\Users\\balak\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "corpus_count": 200000,
+  "settings": {
+    "absolute_margin": 0.02448827922344208,
+    "relative_margin": 0.03535122352084876,
+    "max_score": 0.5955077618360519
+  },
+  "settings_reason": "GooAQ raw calibration: absolute margin = clipped half p10 observed gap [.01,.04]; relative margin = absolute/median positive clipped [.02,.08]; cap = min(.85, negative p99+.03, positive p75); Engineering audit trial1 found one possible alternate answer (calorie-deficit question) and two ambiguous partial-relevance cases; tightened ceiling to measured raw negative p95, preserving margins and query distribution.",
+  "initial_window": [
+    10,
+    100
+  ],
+  "wider_window": [
+    10,
+    500
+  ],
+  "window_note": "installed miner applies rank slice to eligible candidates after score/positive masking; stored ranks are raw 1-based corpus ranks",
+  "candidates_per_query": 5,
+  "retained_per_query": 1,
+  "initial_unmineable": 22,
+  "wider_window_hard_count": 18,
+  "hard_count": 496,
+  "random_fallback_count": 4,
+  "random_fallback_fraction": 0.008,
+  "known_positive_candidates_excluded": 0,
+  "raw_calibration_distributions": {
+    "positive": {
+      "min": 0.22060838341712952,
+      "p10": 0.5392104744911194,
+      "median": 0.6927137672901154,
+      "p90": 0.8092228055000305,
+      "p95": 0.8315198630094518,
+      "max": 0.8966025114059448,
+      "mean": 0.6811445517539978,
+      "count": 2500
+    },
+    "negative": {
+      "min": 0.22604645788669586,
+      "p10": 0.3557638645172119,
+      "median": 0.45501962304115295,
+      "p90": 0.5633065462112427,
+      "p95": 0.5955077618360519,
+      "max": 0.8102681636810303,
+      "mean": 0.4580120831131935,
+      "count": 2500
+    },
+    "margin": {
+      "min": -0.3128971755504608,
+      "p10": 0.04897655844688416,
+      "median": 0.23176255822181702,
+      "p90": 0.38806853294372556,
+      "p95": 0.42246534973382943,
+      "max": 0.5690655708312988,
+      "mean": 0.2231324686408043,
+      "count": 2500
+    }
+  },
+  "distributions": {
+    "positive_score": {
+      "min": 0.2206083983182907,
+      "p10": 0.5392104744911194,
+      "median": 0.6927137672901154,
+      "p90": 0.8092228055000306,
+      "p95": 0.8315198630094527,
+      "max": 0.8966025114059448,
+      "mean": 0.6811445515453816,
+      "count": 500
+    },
+    "negative_score": {
+      "min": -0.009861718863248825,
+      "p10": 0.3756163835525513,
+      "median": 0.47956059873104095,
+      "p90": 0.5515644311904907,
+      "p95": 0.5656304121017456,
+      "max": 0.587933361530304,
+      "mean": 0.47095397931337357,
+      "count": 500
+    },
+    "score_margin": {
+      "min": 0.02598351240158081,
+      "p10": 0.062032794952392584,
+      "median": 0.21035557985305786,
+      "p90": 0.35027461349964145,
+      "p95": 0.3796218037605283,
+      "max": 0.5290684700012207,
+      "mean": 0.210190572232008,
+      "count": 500
+    },
+    "negative_rank": {
+      "min": 12.0,
+      "p10": 18.0,
+      "median": 34.0,
+      "p90": 69.0,
+      "p95": 83.25,
+      "max": 497.0,
+      "mean": 45.596774193548384,
+      "count": 496
+    }
+  },
+  "safeguards": "all normalized positives/alternates discoverable in bounded source records excluded; rank floor10, calibrated ceiling/margins; fixed safe wider window; random fallback also score/margin screened; no query replacement",
+  "rows": 500,
+  "query_replacements": 0,
+  "software_versions": {
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "datasets": "5.0.0",
+    "sentence_transformers": "5.6.0",
+    "accelerate": "1.14.0",
+    "faiss": "1.14.3"
+  },
+  "file": {
+    "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_calibration.parquet",
+    "rows": 500,
+    "sha256": "318c14dfd9d2347196acf91956c09f0ef2b98703b88b942286c9d0a008ec2598"
+  },
+  "audit_sample": [
+    {
+      "question": "what is restricted holiday and gazetted holiday?",
+      "positive": "Restricted holidays are the holidays which an employee can avail from the list of Gazetted/restricted holidays. Further these are the holidays only for employee and not for the organization or government departments.",
+      "negative": "Presidents Day is a federal holiday, so almost all government offices are closed. U.S. Post Office \u2013 Closed. Mail will not run and the post offices is closed. UPS and FedEx \u2013 Some schedules will be altered but both will be delivering packages.",
+      "negative_kind": "HARD",
+      "negative_rank": 38,
+      "positive_score": 0.8047064542770386,
+      "negative_score": 0.45465087890625,
+      "score_margin": 0.3500555753707886,
+      "mining_window_max": 100
+    },
+    {
+      "question": "why afc falls as output increases?",
+      "positive": "In economics, average fixed cost (AFC) is the fixed costs of production (FC) divided by the quantity (Q) of output produced. ... As the total number of units of the good produced increases, the average fixed cost decreases because the same amount of fixed costs is being spread over a larger number of units of output.",
+      "negative": "Firms need to sell their extra output at a higher price so that they can pay the higher marginal cost of production. Hence, decisions to supply are largely determined by the marginal cost of production. The supply curve slopes upward, reflecting the higher price needed to cover the higher marginal cost of production.",
+      "negative_kind": "HARD",
+      "negative_rank": 18,
+      "positive_score": 0.574253499507904,
+      "negative_score": 0.3660217523574829,
+      "score_margin": 0.20823174715042114,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what is the significance of the number 8 in numerology?",
+      "positive": "Number 8's are single-minded and show good judgment and executive skills, often achieving power and material success. 8 represents justice and balance. Those under the influence of the powerful and karmic number 8 seem to endure life's hardships moreso than other numbers.",
+      "negative": "1. VII - the cardinal number that is the sum of six and one. 7, heptad, septenary, septet, seven, sevener. digit, figure - one of the elements that collectively form a system of numeration; \"0 and 1 are digits\"",
+      "negative_kind": "HARD",
+      "negative_rank": 22,
+      "positive_score": 0.7165855765342712,
+      "negative_score": 0.4831058979034424,
+      "score_margin": 0.23347967863082886,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what are the minimum requirements for windows 7 installation?",
+      "positive": "['1 gigahertz (GHz) or faster 32-bit (x86) or 64-bit (x64) processor*', '1 gigabyte (GB) RAM (32-bit) or 2 GB RAM (64-bit)', '16 GB available hard disk space (32-bit) or 20 GB (64-bit)', 'DirectX 9 graphics device with WDDM 1.0 or higher driver.']",
+      "negative": "['Wireless broadband Internet access is required for online features. ... ', 'Additional games and systems required for multiplayer mode.']",
+      "negative_kind": "HARD",
+      "negative_rank": 55,
+      "positive_score": 0.6189475655555725,
+      "negative_score": 0.4409993290901184,
+      "score_margin": 0.1779482364654541,
+      "mining_window_max": 100
+    },
+    {
+      "question": "how much is a vehicle inspection in nc?",
+      "positive": "NC Vehicle Inspection Price Safety inspection fees are $13.60. Emissions inspection fees, which include Safety Inspection, cost $30.00. After market window tinting costs an additional $10 for both inspections.",
+      "negative": "\u200b$50 one-time issuance fee and twice the annual registration fee for vehicle type.",
+      "negative_kind": "HARD",
+      "negative_rank": 31,
+      "positive_score": 0.8166667222976685,
+      "negative_score": 0.49864524602890015,
+      "score_margin": 0.3180214762687683,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what is the function of the ribs?",
+      "positive": "The rib cage is formed by the sternum, costal cartilage, ribs, and the bodies of the thoracic vertebrae. The rib cage protects the organs in the thoracic cavity, assists in respiration, and provides support for the upper extremities.",
+      "negative": "The major functions of the skeletal system are body support, facilitation of movement, protection of internal organs, storage of minerals and fat, and blood cell formation.",
+      "negative_kind": "HARD",
+      "negative_rank": 35,
+      "positive_score": 0.7131789922714233,
+      "negative_score": 0.49782902002334595,
+      "score_margin": 0.2153499722480774,
+      "mining_window_max": 100
+    },
+    {
+      "question": "how long does it take for first herpes outbreak after exposure?",
+      "positive": "The average incubation period for an initial herpes infection is 4 days (range, 2 to 12) after exposure. The vesicles break and leave painful ulcers that may take two to four weeks to heal after the initial herpes infection. Experiencing these symptoms is referred to as having a first herpes \u201coutbreak\u201d or episode.",
+      "negative": "HSV-1 can be transmitted from oral or skin surfaces that appear normal and when there are no symptoms present. However, the greatest risk of transmission is when there are active sores. Individuals who already have HSV-1 oral herpes infection are unlikely to be subsequently infected with HSV-1 in the genital area.",
+      "negative_kind": "HARD",
+      "negative_rank": 68,
+      "positive_score": 0.8038953542709351,
+      "negative_score": 0.5092543363571167,
+      "score_margin": 0.29464101791381836,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what vaccines are required to enter taiwan?",
+      "positive": "Yes, some vaccines are recommended or required for Taiwan. The National Travel Health Network and Centre and WHO recommend the following vaccinations for Taiwan: hepatitis A, hepatitis B, Japanese encephalitis, rabies and tetanus. Recommended for most travellers to the region, especially if unvaccinated.",
+      "negative": "The PHAC and WHO recommend the following vaccinations for South Korea: hepatitis A, hepatitis B, typhoid, Japanese encephalitis, rabies, meningitis, polio, measles, mumps and rubella (MMR), Tdap (tetanus, diphtheria and pertussis), chickenpox, shingles, pneumonia and influenza.",
+      "negative_kind": "HARD",
+      "negative_rank": 35,
+      "positive_score": 0.7890812754631042,
+      "negative_score": 0.551518440246582,
+      "score_margin": 0.23756283521652222,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what are the pimples on my nipples?",
+      "positive": "Montgomery glands are normal skin glands that appear as small, painless bumps on the areola, which is the area of darkened skin around the nipple. Every person has Montgomery glands, though they are more apparent in some than others. These glands secrete oil to help keep the skin lubricated.",
+      "negative": "Pimples popping up on your lower cheek, jawline, and chin is known as a \u201chormonal pattern.\u201d Acne in these areas is often caused by your skin's oil glands overreacting to hormonal responses, which can be triggered by factors such as stress, eating too much sugar or dairy, or the (perfectly normal) fluctuations that ...",
+      "negative_kind": "HARD",
+      "negative_rank": 26,
+      "positive_score": 0.5958311557769775,
+      "negative_score": 0.520020604133606,
+      "score_margin": 0.07581055164337158,
+      "mining_window_max": 100
+    },
+    {
+      "question": "are bearer shares legal in the uk?",
+      "positive": "UK: Bearer Shares Banned The first of the corporate transparency provisions in the Small Business, Enterprise and Employment Act 2015 came into force on 26 May 2015 with the banning of share warrants to bearer, or bearer shares as they are more commonly known.",
+      "negative": "In some countries, dowry has been outlawed due to the female death toll associated with it, but the practice remains legal in Britain.",
+      "negative_kind": "HARD",
+      "negative_rank": 20,
+      "positive_score": 0.7128859758377075,
+      "negative_score": 0.42531752586364746,
+      "score_margin": 0.28756844997406006,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what is the primary function of the hormone adh?",
+      "positive": "Anti-diuretic hormone. Anti-diuretic hormone acts to maintain blood pressure, blood volume and tissue water content by controlling the amount of water and hence the concentration of urine excreted by the kidney.",
+      "negative": "Both systems control body functions. The nervous system controls through motor responses. Responses are quick, and short-lived. The endocrine system controls through chemicals, and responses are slow and long-lasting.",
+      "negative_kind": "HARD",
+      "negative_rank": 192,
+      "positive_score": 0.46614956855773926,
+      "negative_score": 0.38928261399269104,
+      "score_margin": 0.07686695456504822,
+      "mining_window_max": 500
+    },
+    {
+      "question": "can apple cider vinegar lower blood pressure?",
+      "positive": "Take apple cider vinegar. Most importantly, it helps with weight loss by improving metabolism and reducing water retention -- and a healthy weight is key to normalizing blood pressure. Easy fix: Three teaspoons per day of apple cider vinegar can lower your blood pressure significantly within a week.",
+      "negative": "Apple cider vinegar has lots of health benefits, but drinking it straight isn't for the faint of heart. Combining it with other ingredients makes it much more palatable\u2014and combining it with green tea, ginger and honey makes it an antioxidant-packed, cold-fighting powerhouse.",
+      "negative_kind": "HARD",
+      "negative_rank": 63,
+      "positive_score": 0.8124966621398926,
+      "negative_score": 0.5499303936958313,
+      "score_margin": 0.2625662684440613,
+      "mining_window_max": 100
+    },
+    {
+      "question": "they are few and far between meaning?",
+      "positive": "phrase. Things that are few and far between are very rare or do not happen very often. [emphasis] Visitors to the town were few and far between. Synonyms: scarce, rare, unusual, scattered More Synonyms of few and far between.",
+      "negative": "Homonyms Homophones Antonyms Synonyms. Antonyms are words that have opposite meanings, like large and small or hard and easy.",
+      "negative_kind": "HARD",
+      "negative_rank": 20,
+      "positive_score": 0.6153587102890015,
+      "negative_score": 0.38319557905197144,
+      "score_margin": 0.23216313123703003,
+      "mining_window_max": 100
+    },
+    {
+      "question": "which among the following cell organelles does not participate in cellular division?",
+      "positive": "It is a fact considered that Neurons cannot divide because they lack centrioles. Centrioles are minute cylindrical organelle present near the nucleus in animal cells involved in the development of Spindle fibres in Cell division.",
+      "negative": "Contains genetic material, including DNA, which controls the cell's activities. Its structure is permeable to some substances but not to others. It therefore controls the movement of substances in and out of the cell. Organelles that contain the enzymes for respiration, and where most energy is released in respiration.",
+      "negative_kind": "HARD",
+      "negative_rank": 43,
+      "positive_score": 0.5681694746017456,
+      "negative_score": 0.5123894214630127,
+      "score_margin": 0.05578005313873291,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what is the basic difference between covalent and ionic bonding?",
+      "positive": "The two main types of chemical bonds are ionic and covalent bonds. An ionic bond essentially donates an electron to the other atom participating in the bond, while electrons in a covalent bond are shared equally between the atoms. The only pure covalent bonds occur between identical atoms.",
+      "negative": "Covalent compounds are formed on the basis of sharing electrons. When the electrons are shared within the bonds, there is no electrons available to conduct electricity - hence why covalent compounds are generally poor conductors of electricity.",
+      "negative_kind": "HARD",
+      "negative_rank": 75,
+      "positive_score": 0.6949915289878845,
+      "negative_score": 0.5637516975402832,
+      "score_margin": 0.13123983144760132,
+      "mining_window_max": 100
+    },
+    {
+      "question": "how long does it take to get verified for doordash?",
+      "positive": "This can vary for each restaurant and generally takes between 3-5 days on average.",
+      "negative": "Generally, it takes about 3 to 5 months to get a decision. However, the exact time depends on how long it takes to get your medical records and any other evidence needed to make a decision. * How does Social Security make the decision?",
+      "negative_kind": "HARD",
+      "negative_rank": 429,
+      "positive_score": 0.4234864115715027,
+      "negative_score": 0.3959601819515228,
+      "score_margin": 0.02752622961997986,
+      "mining_window_max": 500
+    },
+    {
+      "question": "when cm election in bihar?",
+      "positive": "2020 Bihar Legislative Assembly election. Bihar Legislative Assembly elections will be held in Bihar in October 2020 to elect 243 members of the Bihar Legislative Assembly.",
+      "negative": "\u201cThe results will be released tomorrow February 28, 2019 at 10am at the President's office in the main auditorium. Minister of state for higher education will release them in acting capacity at the Minister of Education and Sports,\u201d Muinda told SoftPower News on Wednesday.",
+      "negative_kind": "HARD",
+      "negative_rank": 33,
+      "positive_score": 0.6589145064353943,
+      "negative_score": 0.4347035884857178,
+      "score_margin": 0.2242109179496765,
+      "mining_window_max": 100
+    },
+    {
+      "question": "can lactose intolerant eat yogurt?",
+      "positive": "Summary: Lactose intolerant people often find yogurt much easier to digest than milk. The best yogurt for people with lactose intolerance is a full-fat, probiotic yogurt that contains live bacterial cultures.",
+      "negative": "Hard, aged cheeses like Swiss, parmesan, and cheddars are lower in lactose. Other low-lactose cheese options include cottage cheese or feta cheese made from goat or sheep's milk. ... If you want to avoid dairy completely, try lactose-free and dairy-free cheeses.",
+      "negative_kind": "HARD",
+      "negative_rank": 34,
+      "positive_score": 0.7684199810028076,
+      "negative_score": 0.5459990501403809,
+      "score_margin": 0.22242093086242676,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what is the difference between a mazda 3 maxx and maxx sport?",
+      "positive": "maxx to maxx sport got climate control air, electronic park brake and a couple of other minor things. Happened in april last year. One of these is named as Mazda 3 Maxx and the other is named as Mada 3 Maxx Sports but they look exactly the same to me. The Maxx Sport has more crap crammed into it compared to the Maxx.",
+      "negative": "The only difference between the 883 and 1200 Sportster is the displacement of the engine. ... Simply put, the 1200 Sportster engine has a bit more material and weighs slightly more than the 883 engine; the difference in weight is too small though to make a significant effect on performance.",
+      "negative_kind": "HARD",
+      "negative_rank": 25,
+      "positive_score": 0.8076217770576477,
+      "negative_score": 0.43820124864578247,
+      "score_margin": 0.36942052841186523,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what are the two major categories of probability interpretations?",
+      "positive": "There are two broad categories of probability interpretations which can be called \"physical\" and \"evidential\" probabilities. Physical probabilities, which are also called objective or frequency probabilities, are associated with random physical systems such as roulette wheels, rolling dice and radioactive atoms.",
+      "negative": "They also include artifacts such as paintings, coins, stamps, and manufactured items. Secondary sources are interpretations or analyses of primary source information. Secondary sources include textbooks, encyclopedias, as well as any secondhand telling of an event.",
+      "negative_kind": "HARD",
+      "negative_rank": 52,
+      "positive_score": 0.7273818850517273,
+      "negative_score": 0.37564557790756226,
+      "score_margin": 0.35173630714416504,
+      "mining_window_max": 100
+    },
+    {
+      "question": "how to get a rental property with bad history?",
+      "positive": "[\"Know What's in Your Credit Report. ... \", \"Look for Property Owners Who Don't Check Credit. ... \", 'Get a Recommendation. ... ', 'Demonstrate Provable Income. ... ', 'Be Prepared to Pay More Upfront. ... ', 'Ask a Co-Signer to Help You.']",
+      "negative": "If a taxpayer makes improvements to leased or owned property that qualifies for the shorter recovery period, the taxpayer is required to depreciate the improvement over 15 years for tax purposes.",
+      "negative_kind": "HARD",
+      "negative_rank": 52,
+      "positive_score": 0.45348575711250305,
+      "negative_score": 0.4090397357940674,
+      "score_margin": 0.04444602131843567,
+      "mining_window_max": 100
+    },
+    {
+      "question": "how many calories it take to lose a pound?",
+      "positive": "Because 3,500 calories equals about 1 pound (0.45 kilogram) of fat, it's estimated that you need to burn about 3,500 calories to lose 1 pound. So, in general, if you cut about 500 to 1,000 calories a day from your typical diet, you'd lose about 1 to 2 pounds a week.",
+      "negative": "Setting a realistic time frame Generally, most health experts recommend aiming for about 1\u20133 pounds (0.5\u20131.4 kg) of weight loss per week, or approximately 1% of your total body weight ( 33 , 34 ). Therefore, it may take anywhere from a few weeks to several months to lose 30 pounds safely.",
+      "negative_kind": "HARD",
+      "negative_rank": 68,
+      "positive_score": 0.6999603509902954,
+      "negative_score": 0.541039228439331,
+      "score_margin": 0.15892112255096436,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what does it mean when you have grey hair on your private area?",
+      "positive": "The hairs on your genitals are subjected to exactly the same effects of time as those on your head. Hair follicles contain melanin, the pigment that gives hair (and your skin) its colour. As we get older, your body produces less melanin and your hair begins to turn grey, silver, or white.",
+      "negative": "There is nothing wrong with leaving this hair the way it is. But if you feel self conscious about the way it looks, you can remove it by shaving, applying a cream or waxing. Before you shave, make sure that you exfoliate the area and use warm water and a new razor to avoid any nicks or bumps.",
+      "negative_kind": "HARD",
+      "negative_rank": 67,
+      "positive_score": 0.6036058068275452,
+      "negative_score": 0.41443243622779846,
+      "score_margin": 0.1891733705997467,
+      "mining_window_max": 100
+    },
+    {
+      "question": "how many words is average novel?",
+      "positive": "A story that is over 40,000 words is generally considered a novel. However, it will be on the short side, as the average length of a novel hovers around 50,000-70,000 words.",
+      "negative": "There are 168,923 words. How many words are in Harry Potter and the Deathly Hallows? There are 198,227 words. While knowing the total number of words in the Harry Potter series isn't going to convince anyone to read all the books, knowing the total word count is an excellent way to encourage kids to read more.",
+      "negative_kind": "HARD",
+      "negative_rank": 24,
+      "positive_score": 0.74739009141922,
+      "negative_score": 0.5018024444580078,
+      "score_margin": 0.24558764696121216,
+      "mining_window_max": 100
+    },
+    {
+      "question": "what is the relationship between elements and atoms quizlet?",
+      "positive": "Matter is anything that occupies space and has mass. what is the relationship between elements and atoms? Elements are substances that cannot be broken down chemically into simpler kinds of matter. Atoms are simplest particle of an element that continues to have all the properties of that element.",
+      "negative": "Isotopes are atoms that have the same numbers of protons but different numbers of neutrons. An ion is an atom that has gained or lost electrons, so it now has more or fewer electrons than it does protons. ... All atoms are isotopes and if an isotope gains or loses electrons it becomes an ion.",
+      "negative_kind": "HARD",
+      "negative_rank": 66,
+      "positive_score": 0.751884937286377,
+      "negative_score": 0.5510855317115784,
+      "score_margin": 0.20079940557479858,
+      "mining_window_max": 100
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "document_id": "AI-CSE-III-I-GRU-NOTES",
+  "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+  "chunk_count": 18,
+  "chunks": [
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000001",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 1,
+      "text": "KESHAV MEMORIAL INSTITUTE OF TECHNOLOGY \n(AN AUTONOMOUS INSTITUTE) \nAccredited by NBA & NAAC, Approved by AICTE, Affiliated to JNTUH, Hyderabad \n \nB.Tech. in COMPUTER SCIENCE AND ENGINEERING \nIII Year I Semester Course Syllabus (KR24) \nARTIFICIAL INTELLIGENCE \n \nContents \n1. Introduction to Gated Recurrent Unit (GRU) \n2. Why Do We Need GRU? \n3. Evolution of Sequence Models \no Simple RNN \no LSTM \no GRU \n4. GRU Architecture \n5. Components of GRU \n6. Mathematical Formulation of GRU \n7. Step-by-Step Working of GRU \n8. Why Sigmoid and tanh in GRU? \n9. Difference Between RNN, LSTM, and GRU \n10. Advantages of GRU \n11. Disadvantages of GRU \n12. Applications of GRU \n13. Hyperparameter Tuning in GRU \n \nPrepared by: \nAsha M. \nAssistant Professor, Department of CSE(AI&ML) \nKeshav Memorial Institute of Technology, Hyderabad"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000002",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 2,
+      "text": "1. Introduction to Gated Recurrent Unit (GRU) \nImagine you are reading a novel. \nThe first sentence says, \n\"Ravi was born in Hyderabad.\" \nAfter reading another 20 pages, you come across the sentence, \n\"He later became the Chief Scientist at ISRO.\" \nTo understand who \"He\" refers to, your brain must remember Ravi from many pages earlier. \nHumans naturally remember important information and forget unnecessary details. \nSimilarly, computers also need a mechanism to remember important information while \nprocessing sequences such as text, speech, ECG signals, stock prices, weather data, and human \nactivities. \nSimple Recurrent Neural Networks (RNNs) were introduced for this purpose. They process \none element of a sequence at a time while passing information from one time step to the next. \nHowever, when the sequence becomes very long, a Simple RNN gradually forgets earlier \ninformation because of the Vanishing Gradient Problem. \nTo overcome this limitation, researchers proposed Long Short-Term Memory (LSTM), \nwhich introduced three gates and a separate memory cell. \nAlthough LSTM significantly improved sequence learning, it also increased the number of \nparameters and computational complexity. \nSo Can we design a simpler version of LSTM that is faster to train while still remembering \nlong-term information? \nThe answer is GRU (Gated Recurrent Unit)."
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000003",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 3,
+      "text": "2. What is GRU? \nGRU is a simplified version of LSTM that combines some of LSTM's operations, making it \ncomputationally efficient while maintaining excellent performance on many sequence learning \ntasks. \nThus, \nGRU = Simplified LSTM with fewer gates and fewer parameters. \nSimple RNN \nSimple RNN has only one memory (Hidden State). \nIt works well for short sequences. \nHowever, when the sequence length increases, it gradually forgets earlier information. \nExample \nSentence: \n\"The patient was admitted to the hospital after experiencing chest pain, dizziness, breathing \ndifficulty, high fever, severe cough, and after several medical tests was diagnosed with \npneumonia.\" \nTo predict the disease correctly, the network must remember the symptoms mentioned at the \nbeginning. \nA Simple RNN often forgets these earlier symptoms because information weakens as it travels \nthrough many time steps. \nThis is called the Vanishing Gradient Problem. \nLSTM \nLSTM solved this problem by introducing: \n• \nForget Gate \n• \nInput Gate \n• \nOutput Gate \n• \nCell State \nThese components carefully control the flow of information."
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000004",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 4,
+      "text": "As a result, LSTM can remember important information for much longer durations. \nHowever, this improvement comes at a cost. \nEvery LSTM cell performs several matrix multiplications and activation functions, increasing \ncomputational complexity. \nConsequently, \n• \nTraining becomes slower. \n• \nMore GPU memory is required. \n• \nMore parameters need to be learned. \n• \nInference takes more time. \nGRU \nThe Forget Gate and Input Gate often work together. \nWhen old information is forgotten, new information is usually added immediately. \nTherefore, instead of maintaining two separate gates, these operations can be combined into a \nsingle gate. \nSimilarly, researchers found that maintaining a separate Cell State was not always necessary. \nThe Hidden State alone was sufficient for many practical problems. \nThese observations led to the development of GRU, which simplifies the LSTM architecture \nwhile preserving its ability to learn long-term dependencies."
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000005",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 5,
+      "text": "Gated Recurrent Unit (GRU) is a type of recurrent neural network introduced in 2014 that \nimproves the ability of RNNs to learn long-term dependencies using two gating mechanisms: \n• \nReset Gate \n• \nUpdate Gate \nUnlike LSTM, GRU does not maintain a separate Cell State. The Hidden State itself stores \nboth short-term and long-term information. \n \nThe GRU consists of two main gates: \n1. Update Gate (𝑧𝑡): This gate decides how much information from previous hidden state \nshould be retained for the next time step."
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000006",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 6,
+      "text": "2. Reset Gate (𝑟𝑡): This gate determines how much of the past hidden state should be \nforgotten. \nThese gates allow GRU to control the flow of information in a more efficient manner compared \nto traditional RNNs which solely rely on hidden state. \n \n• 1–2 Reset gate – previous hidden state (h_t-1) and current input (x_t) are combined \n(multiplied by their respective weights and bias added) and passed through a reset gate. \nSince the sigmoid function ranges between 0 and 1, step one sets which values should \nbe discarded (0), remembered (1), or partially retained (between 0 and 1). Step two \nresets the previous hidden state multiplying it with outputs from step one. \n• 3–4–5 Update gate – step three may seem analogous to step one, but keep in mind that \nweights and biases used to scale these vectors are different, providing a different \nsigmoid output. So, after passing a combined vector through a sigmoid function, we \nsubtract it from a vector containing all 1s (step four) and multiply it by the previous \nhidden state (step five). That’s one part of updating the hidden state with new \ninformation. \n• 6–7–8 Hidden state candidate – after resetting a previous hidden state in step two, the \noutputs are combined with new inputs (x_t), multiplying them by their respective \nweights and adding biases before passing through a tanh activation function (step six)."
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000007",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 7,
+      "text": "Then the hidden state candidate is multiplied by the results of an update gate (step \nseven) and added to previously modified h_t-1 to form the new hidden state h_t. \n• Next, the process repeats for timestep t+1, etc., until the recurrent unit processes the \nentire sequence. \n \n3. Equations for GRU Operations \nThe internal workings of a GRU can be described using following equations \n1. Reset gate: \n𝑟𝑡= 𝜎(𝑊𝑟⋅[ℎ𝑡−1, 𝑥𝑡] + 𝑏𝑟) \nThe reset gate controls how much of the previous hidden state is used when computing the \ncandidate hidden state. \n2. Update gate: \nThe update gate controls the balance between retaining the previous hidden state and \nincorporating the candidate hidden state. \n3. Candidate hidden state: \nℎ'𝑡= 𝑡𝑎𝑛ℎ(𝑊ℎ⋅[𝑟𝑡,⋅ℎ𝑡−1𝑥𝑡] + 𝑏ℎ) \nThis is the potential new hidden state calculated based on the current input and the previous \nhidden state. \n4. Hidden state: \nℎ𝑡= (1 −𝑧𝑡) ⋅ℎ𝑡−1 + 𝑧𝑡⋅ℎ𝑡\n′ \nThe final hidden state is a weighted average of the previous hidden state ℎ𝑡−1 and the candidate \nhidden state ℎ𝑡\n′ based on the update gate 𝑧𝑡."
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000008",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 8,
+      "text": "4. Why Sigmoid and tanh in GRU? \nActivation functions play an important role in the GRU architecture. Different activation \nfunctions are used for different purposes because each performs a specific task. \nGRU mainly uses two activation functions: \n1. Sigmoid (σ) \n2. Hyperbolic Tangent (tanh) \nEach activation function has unique characteristics that help the network decide what \ninformation should be remembered and what information should be updated. \nA. Why is Sigmoid Used? \nThe sigmoid function is defined as \nIts output always lies between 0 and 1. \nOutput Range"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000009",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 9,
+      "text": "Input \nSigmoid Output \nVery Negative Close to 0 \n0 \n0.5 \nVery Positive Close to 1 \nSince the output lies between 0 and 1, sigmoid behaves like a switch or probability. \nTherefore, it is ideal for making decisions. \nIn GRU, Sigmoid is used in \n• \nUpdate Gate \n• \nReset Gate \nbecause these gates decide \n• \nHow much previous information should be remembered? \n• \nHow much previous information should be ignored? \nExample \nSuppose the Update Gate produces \nz = 0.9 \nThis means \n90% of the previous memory should be retained. \nIf \nz = 0.2 \nOnly 20% of the previous memory is retained, while most of it is replaced with new \ninformation. \nThus, sigmoid acts as a controller of information flow. \n \nB. Why is tanh Used? \nThe tanh function is"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000010",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 10,
+      "text": "Its output ranges from \n-1 to +1. \nUnlike sigmoid, tanh can represent both positive and negative information. \nWhy is this useful? \nSuppose a sentiment analysis model processes the following sentences. \nSentence 1 \n\"The movie was excellent.\" \nPositive information should increase memory. \nSentence 2 \n\"The movie was terrible.\" \nNegative information should reduce or modify memory. \nSince tanh produces both positive and negative values, it can represent both situations \neffectively. \nIn GRU, tanh is used for \nCandidate Hidden State \nbecause it creates new information that may later replace the old memory. \nWhy not ReLU? \nReLU outputs values from \n0 to ∞ \nProblems inside GRU: \n• \nUnbounded outputs \n• \nMemory values may become extremely large \n• \nCannot represent negative information \n• \nTraining becomes unstable \nTherefore,"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000011",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 11,
+      "text": "• \nSigmoid controls information flow. \n• \ntanh generates meaningful memory values. \nActivation Output Range Used In \nPurpose \nSigmoid \n0 to 1 \nUpdate Gate, Reset Gate Controls information flow \ntanh \n-1 to +1 \nCandidate Hidden State Generates new memory \n \n5. Difference Between RNN, LSTM and GRU \nThe three recurrent architectures differ mainly in how they store memory and process \nsequential information. \nFeature \nSimple RNN LSTM \nGRU \nHidden State \nYes \nYes \nYes \nCell State \nNo \nYes \nNo \nNumber of Gates \nNone \n3 \n2 \nForget Gate \nNo \nYes \nNo \nInput Gate \nNo \nYes \nNo \nOutput Gate \nNo \nYes \nNo \nUpdate Gate \nNo \nNo \nYes \nReset Gate \nNo \nNo \nYes \nLong-Term Memory \nPoor \nExcellent \nVery Good \nVanishing Gradient \nSevere \nGreatly Reduced Greatly Reduced \nParameters \nFew \nMost \nFewer \nTraining Speed \nFast \nSlow \nFaster"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000012",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 12,
+      "text": "Feature \nSimple RNN LSTM \nGRU \nMemory Requirement \nLow \nHigh \nMedium \nSuitable for Very Long Sequences No \nYes \nYes \n \nWhen to Choose Each Model? \nSimple RNN \n• \nShort sequences \n• \nSimple problems \n• \nEducational purposes \nLSTM \n• \nVery long sequences \n• \nMachine translation \n• \nLanguage modelling \n• \nMedical time-series \nGRU \n• \nFaster training \n• \nLimited GPU memory \n• \nHuman Activity Recognition \n• \nSpeech recognition \n• \nECG classification \n6. Advantages of GRU \nGRU has become popular because it provides performance close to LSTM while being \ncomputationally simpler. \nAdvantages \n1. Learns Long-Term Dependencies"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000013",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 13,
+      "text": "GRU effectively remembers important information over long sequences using Update and \nReset Gates. \n2. Fewer Parameters \nSince GRU removes \n• \nCell State \n• \nForget Gate \n• \nOutput Gate \nit contains fewer trainable parameters. \nAdvantages \n• \nFaster training \n• \nLower memory consumption \n3. Faster Training \nFewer mathematical operations mean \n• \nReduced computation \n• \nFaster convergence \n4. Lower GPU Memory Usage \nSuitable for \n• \nMobile devices \n• \nEmbedded systems \n• \nEdge AI applications \n5. Solves Vanishing Gradient Problem \nUpdate Gate allows gradients to flow through many time steps, greatly reducing the vanishing \ngradient problem. \n6. Easier to Implement \nCompared to LSTM, \nGRU architecture is simpler."
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000014",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 14,
+      "text": "7. Performs Well on Small Datasets \nBecause fewer parameters must be learned, \nGRU often generalizes better when training data is limited. \n7. Disadvantages of GRU \nAlthough GRU is efficient, it also has some limitations. \n1. Less Expressive than LSTM \nLSTM maintains separate \n• \nCell State \n• \nHidden State \nGRU combines both into one Hidden State. \nSometimes this limits its ability to model extremely complex dependencies. \n2. Slightly Lower Accuracy for Very Long Sequences \nFor extremely long text documents or language translation tasks, \nLSTM may outperform GRU. \n3. Exploding Gradient Can Still Occur \nAlthough vanishing gradients are reduced, \nexploding gradients may still occur. \nSolutions include \n• \nGradient clipping \n• \nSmaller learning rate \n• \nProper weight initialization \n4. Sequential Processing \nLike all recurrent networks, \nGRU processes one time step after another. \nTherefore,"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000015",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 15,
+      "text": "parallel computation is limited compared to Transformers. \n5. Not Always the Best Choice \nModern Transformer architectures often outperform GRU on very large NLP datasets. \n8. Applications of GRU \nGRU is widely used wherever sequential or time-dependent data is present. \nMajor Applications \nNatural Language Processing \n• \nLanguage modelling \n• \nText generation \n• \nMachine translation \n• \nQuestion answering \nSpeech Recognition \nProcesses speech signals over time to recognize spoken words. \nHuman Activity Recognition \nSensor signals collected from smartphones or wearable devices are sequential. \nGRU learns walking, running, sitting, standing, and other activities. \nECG Signal Classification \nProcesses heartbeat signals to detect \n• \nArrhythmia \n• \nHeart disease \nStock Price Prediction \nLearns patterns from historical stock prices. \nWeather Forecasting \nPredicts future weather conditions using historical observations. \nVideo Activity Recognition"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000016",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 16,
+      "text": "Processes frame sequences to recognize actions such as \n• \nWalking \n• \nFighting \n• \nDriving \nAutonomous Driving \nProcesses temporal sensor information from \n• \nCameras \n• \nLiDAR \n• \nRadar \nto understand dynamic road scenes. \n9. Hyperparameter Tuning in GRU \nHyperparameters are values selected before training that control how the GRU model learns. \nChoosing suitable hyperparameters improves accuracy, reduces overfitting, and decreases \ntraining time. \nImportant Hyperparameters \n(a) Number of GRU Units \nExamples \nGRU(32) \nGRU(64) \nGRU(128) \nGRU(256) \nMore units increase learning capacity but also increase computation and the risk of overfitting. \n(b) Number of GRU Layers \nOne GRU Layer \n↓ \nTwo GRU Layers"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000017",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 17,
+      "text": "↓ \nThree GRU Layers \nMore layers enable the model to learn deeper sequential features but require more training time. \n(c) Batch Size \nCommon values \n• \n16 \n• \n32 \n• \n64 \n• \n128 \nSmall batches provide more stable learning but slower training. \nLarge batches train faster but require more GPU memory. \n(d) Epochs \nCommon values \n10 \n20 \n50 \n100 \nToo few epochs → Underfitting \nToo many epochs → Overfitting \n(e) Learning Rate \nTypical values \n0.1 \n0.01 \n0.001 \n0.0001"
+    },
+    {
+      "chunk_id": "AI-CSE-III-I-GRU-NOTES_000018",
+      "document_id": "AI-CSE-III-I-GRU-NOTES",
+      "filename": "AI-CSE-III-I-GRU-NOTES.pdf",
+      "page": 18,
+      "text": "Controls how much the model weights are updated during training. \n(f) Optimizer \nPopular choices \n• \nAdam \n• \nRMSprop \n• \nSGD \nAdam is the most widely used optimizer for GRU networks because of its fast convergence. \n(g) Dropout \nDropout randomly disables neurons during training to reduce overfitting. \nTypical values \n0.2 \n0.3 \n0.5 \n(h) Sequence Length \nRepresents the number of time steps processed at once. \nLonger sequences capture more context but require more memory and computation."
+    }
+  ]
+}

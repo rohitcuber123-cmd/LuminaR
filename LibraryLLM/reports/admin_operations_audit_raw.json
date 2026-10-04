@@ -1,0 +1,287 @@
+{
+  "counts": {
+    "users": 12,
+    "activity": 88,
+    "issues": 38,
+    "reservations": 11,
+    "fines": 5
+  },
+  "fields": {
+    "users": [
+      "created_at",
+      "is_active",
+      "is_email_verified",
+      "role",
+      "user_id"
+    ],
+    "activity": [
+      "activity_id",
+      "activity_type",
+      "created_at",
+      "description",
+      "fine_id",
+      "issue_id",
+      "reservation_id",
+      "user_id",
+      "work_id"
+    ],
+    "issues": [
+      "book_id",
+      "due_date",
+      "fine_amount",
+      "inventory_source",
+      "issue_id",
+      "issued_at",
+      "library_id",
+      "returned_at",
+      "status",
+      "title",
+      "user_id",
+      "work_id"
+    ],
+    "reservations": [
+      "book_id",
+      "cancelled_at",
+      "fulfilled_at",
+      "reservation_id",
+      "reserved_at",
+      "status",
+      "title",
+      "user_id",
+      "work_id"
+    ],
+    "fines": [
+      "amount",
+      "created_at",
+      "fine_id",
+      "issue_id",
+      "overdue_days",
+      "paid_at",
+      "status",
+      "title",
+      "user_id",
+      "work_id"
+    ]
+  },
+  "legacy": {
+    "missing_target": 0,
+    "missing_actor": 88,
+    "types": [
+      {
+        "_id": "FINE_PAID",
+        "count": 4
+      },
+      {
+        "_id": "RESERVATION_CANCELLED",
+        "count": 5
+      },
+      {
+        "_id": "BOOK_ISSUED",
+        "count": 35
+      },
+      {
+        "_id": "RESERVATION_FULFILLED",
+        "count": 1
+      },
+      {
+        "_id": "BOOK_RETURNED",
+        "count": 31
+      },
+      {
+        "_id": "RESERVATION_READY",
+        "count": 1
+      },
+      {
+        "_id": "FINE_CREATED",
+        "count": 4
+      },
+      {
+        "_id": "RESERVATION_CREATED",
+        "count": 7
+      }
+    ],
+    "range": [
+      {
+        "_id": null,
+        "min": "2026-08-21 05:08:22.165000",
+        "max": "2026-10-03 04:24:35.036000"
+      }
+    ]
+  },
+  "indexes": {
+    "users": [
+      {
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "key": {
+          "email": 1
+        },
+        "name": "email_1",
+        "unique": true
+      },
+      {
+        "key": {
+          "user_id": 1
+        },
+        "name": "user_id_1",
+        "unique": true
+      }
+    ],
+    "activity": [
+      {
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "key": {
+          "user_id": 1
+        },
+        "name": "user_id_1"
+      },
+      {
+        "key": {
+          "activity_id": 1
+        },
+        "name": "activity_id_1",
+        "unique": true
+      },
+      {
+        "key": {
+          "activity_type": 1
+        },
+        "name": "activity_type_1"
+      },
+      {
+        "key": {
+          "created_at": -1
+        },
+        "name": "created_at_-1"
+      }
+    ],
+    "issues": [
+      {
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "key": {
+          "user_id": 1
+        },
+        "name": "user_id_1"
+      },
+      {
+        "key": {
+          "book_id": 1
+        },
+        "name": "book_id_1"
+      },
+      {
+        "key": {
+          "issue_id": 1
+        },
+        "name": "issue_id_1",
+        "unique": true
+      },
+      {
+        "key": {
+          "work_id": 1
+        },
+        "name": "work_id_1"
+      },
+      {
+        "key": {
+          "status": 1
+        },
+        "name": "status_1"
+      }
+    ],
+    "reservations": [
+      {
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "key": {
+          "user_id": 1
+        },
+        "name": "user_id_1"
+      },
+      {
+        "key": {
+          "book_id": 1
+        },
+        "name": "book_id_1"
+      },
+      {
+        "key": {
+          "reservation_id": 1
+        },
+        "name": "reservation_id_1",
+        "unique": true
+      },
+      {
+        "key": {
+          "work_id": 1
+        },
+        "name": "work_id_1"
+      },
+      {
+        "key": {
+          "status": 1
+        },
+        "name": "status_1"
+      },
+      {
+        "key": {
+          "work_id": 1,
+          "reserved_at": 1
+        },
+        "name": "work_id_1_reserved_at_1"
+      }
+    ],
+    "fines": [
+      {
+        "key": {
+          "_id": 1
+        },
+        "name": "_id_"
+      },
+      {
+        "key": {
+          "fine_id": 1
+        },
+        "name": "fine_id_1",
+        "unique": true
+      },
+      {
+        "key": {
+          "user_id": 1
+        },
+        "name": "user_id_1"
+      },
+      {
+        "key": {
+          "issue_id": 1
+        },
+        "name": "issue_id_1",
+        "unique": true
+      },
+      {
+        "key": {
+          "status": 1
+        },
+        "name": "status_1"
+      }
+    ]
+  }
+}

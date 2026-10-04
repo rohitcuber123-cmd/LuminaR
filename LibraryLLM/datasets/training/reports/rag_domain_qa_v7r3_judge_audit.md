@@ -1,0 +1,30 @@
+# V7R3A same-model judge audit
+
+Judge status is diagnostic and separate from engineering source audit.
+
+Plausible false rejections: 0; obvious errors marked SUPPORTED: 1.
+
+| Candidate | Engineering audit | Judge result | Judge reason | Format valid | Supporting IDs valid |
+|---|---|---|---|---|---|
+| AQA7R3-005-1 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-005-2 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-011-2 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-012-1 | PLAUSIBLE_FOR_HUMAN_REVIEW | SUPPORTED | outside_context=False; wrong_role=False | True | True |
+| AQA7R3-012-2 | AMBIGUOUS | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-021-2 | OBVIOUS_SEMANTIC_ERROR | INVALID_JSON | JUDGE_INVALID_JSON | False | None |
+| AQA7R3-025-1 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-031-2 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-032-1 | AMBIGUOUS | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-032-2 | PLAUSIBLE_FOR_HUMAN_REVIEW | SUPPORTED | outside_context=False; wrong_role=False | True | True |
+| AQA7R3-033-2 | OBVIOUS_SEMANTIC_ERROR | INVALID_SUPPORT_REFERENCE | JUDGE_SUPPORT_UNIT_OUTSIDE_EVIDENCE | True | False |
+| AQA7R3-034-2 | OBVIOUS_SEMANTIC_ERROR | SUPPORTED | outside_context=False; wrong_role=False | True | True |
+| AQA7R3-038-1 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-040-1 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-042-2 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-043-1 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+| AQA7R3-046-1 | OBVIOUS_SEMANTIC_ERROR | INVALID_JSON | JUDGE_INVALID_JSON | False | None |
+| AQA7R3-046-2 | OBVIOUS_SEMANTIC_ERROR | UNSUPPORTED | outside_context=False; wrong_role=True | True | True |
+| AQA7R3-049-2 | OBVIOUS_SEMANTIC_ERROR | SEMANTIC_UNCERTAIN | JUDGE_SEMANTIC_UNCERTAIN | True | True |
+
+The same Qwen snapshot generated both stages and judged them. Judge support is not independent review.
+Judge output is advisory for a future human packet; human decisions remain mandatory for training.

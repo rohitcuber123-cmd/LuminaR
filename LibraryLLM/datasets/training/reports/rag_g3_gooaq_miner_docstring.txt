@@ -1,0 +1,208 @@
+Add hard negatives to a dataset of (anchor, positive) pairs to create (anchor, positive, negative) triplets or
+(anchor, positive, negative_1, ..., negative_n) tuples.
+
+Hard negative mining is a technique to improve the quality of a dataset by adding hard negatives, which are
+texts that may appear similar to the anchor, but are not. Using hard negatives can improve the performance of
+models trained on the dataset.
+
+This function uses a SentenceTransformer model to embed the inputs in the dataset, and then finds the closest
+matches to each anchor input in the dataset. It then samples negatives from the closest matches, optionally
+using a CrossEncoder model to rescore the candidates.
+
+Supports prompt formatting for models that expect specific instruction-style input.
+
+You can influence the candidate negative selection in various ways:
+
+- **range_min**: Minimum rank of the closest matches to consider as negatives: useful to skip the most similar texts to
+  avoid marking texts as negative that are actually positives.
+- **range_max**: Maximum rank of the closest matches to consider as negatives: useful to limit the number of candidates
+  to sample negatives from. A lower value makes processing faster, but may result in less candidate negatives that
+  satisfy the margin or max_score conditions.
+- **max_score**: Maximum score to consider as a negative: useful to skip candidates that are too similar to the anchor.
+- **min_score**: Minimum score to consider as a negative: useful to skip candidates that are too dissimilar to the anchor.
+- **absolute_margin**: Absolute margin for hard negative mining: useful to skip candidate negatives whose similarity
+  to the anchor is within a certain margin of the positive pair. A value of 0 can be used to enforce that the negative
+  is always further away from the anchor than the positive.
+- **relative_margin**: Relative margin for hard negative mining: useful to skip candidate negatives whose similarity
+  to the anchor is within a certain margin of the positive pair. A value of 0.05 keeps a negative only if its
+  similarity to the anchor is at least 5% of the positive score magnitude below the positive.
+- **sampling_strategy**: Sampling strategy for negatives: "top" or "random". "top" will always sample the top n
+  candidates as negatives, while "random" will sample n negatives randomly from the candidates that satisfy the
+  margin or max_score conditions.
+
+.. tip::
+
+    The excellent `NV-Retriever paper <https://huggingface.co/papers/2407.15831>`_ is a great resource for understanding the
+    details of hard negative mining and how to use it effectively. Notably, it reaches the strongest performance using
+    these settings::
+
+        dataset = mine_hard_negatives(
+            dataset=dataset,
+            model=model,
+            relative_margin=0.05,         # keep negatives at least 5% of the positive score magnitude below the positive
+            num_negatives=num_negatives,  # 10 or less is recommended
+            sampling_strategy="top",      # "top" means that we sample the top candidates as negatives
+            batch_size=batch_size,        # Adjust as needed
+            use_faiss=True,               # Optional: Use faiss/faiss-gpu for faster similarity search
+        )
+
+    This corresponds with the `TopK-PercPos (95%)` mining method.
+
+Example:
+
+    >>> from sentence_transformers.util import mine_hard_negatives
+    >>> from sentence_transformers import SentenceTransformer
+    >>> from datasets import load_dataset
+    >>> # Load a Sentence Transformer model
+    >>> model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+    >>>
+    >>> # Load a dataset to mine hard negatives from
+    >>> dataset = load_dataset("sentence-transformers/natural-questions", split="train")
+    >>> dataset
+    Dataset({
+        features: ['query', 'answer'],
+        num_rows: 100231
+    })
+    >>> dataset = mine_hard_negatives(
+    ...     dataset=dataset,
+    ...     model=model,
+    ...     range_min=10,
+    ...     range_max=50,
+    ...     max_score=0.8,
+    ...     relative_margin=0.05,
+    ...     num_negatives=5,
+    ...     sampling_strategy="random",
+    ...     batch_size=128,
+    ...     use_faiss=True,
+    ... )
+    Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 588/588 [00:32<00:00, 18.07it/s]
+    Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 784/784 [00:08<00:00, 96.41it/s]
+    Querying FAISS index: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████| 7/7 [00:06<00:00,  1.06it/s]
+    Negative candidates mined, preparing dataset...
+    Metric       Positive       Negative     Difference
+    Count         100,231        487,865
+    Mean           0.6866         0.4194         0.2752
+    Median         0.7010         0.4102         0.2760
+    Std            0.1125         0.0719         0.1136
+    Min            0.0303         0.1702         0.0209
+    25%            0.6221         0.3672         0.1899
+    50%            0.7010         0.4102         0.2760
+    75%            0.7667         0.4647         0.3590
+    Max            0.9584         0.7621         0.7073
+    Skipped 427,503 potential negatives (8.36%) due to the relative_margin of 0.05.
+    Skipped 978 potential negatives (0.02%) due to the max_score of 0.8.
+    Could not find enough negatives for 13290 samples (2.65%). Consider adjusting the range_max, range_min, relative_margin and max_score parameters if you'd like to find more valid negatives.
+    >>> dataset
+    Dataset({
+        features: ['query', 'answer', 'negative'],
+        num_rows: 487865
+    })
+    >>> dataset[0]
+    {
+        'query': 'when did richmond last play in a preliminary final',
+        'answer': "Richmond Football Club Richmond began 2017 with 5 straight wins, a feat it had not achieved since 1995. A series of close losses hampered the Tigers throughout the middle of the season, including a 5-point loss to the Western Bulldogs, 2-point loss to Fremantle, and a 3-point loss to the Giants. Richmond ended the season strongly with convincing victories over Fremantle and St Kilda in the final two rounds, elevating the club to 3rd on the ladder. Richmond's first final of the season against the Cats at the MCG attracted a record qualifying final crowd of 95,028; the Tigers won by 51 points. Having advanced to the first preliminary finals for the first time since 2001, Richmond defeated Greater Western Sydney by 36 points in front of a crowd of 94,258 to progress to the Grand Final against Adelaide, their first Grand Final appearance since 1982. The attendance was 100,021, the largest crowd to a grand final since 1986. The Crows led at quarter time and led by as many as 13, but the Tigers took over the game as it progressed and scored seven straight goals at one point. They eventually would win by 48 points – 16.12 (108) to Adelaide's 8.12 (60) – to end their 37-year flag drought.[22] Dustin Martin also became the first player to win a Premiership medal, the Brownlow Medal and the Norm Smith Medal in the same season, while Damien Hardwick was named AFL Coaches Association Coach of the Year. Richmond's jump from 13th to premiers also marked the biggest jump from one AFL season to the next.",
+        'negative': "2018 NRL Grand Final The 2018 NRL Grand Final was the conclusive and premiership-deciding game of the 2018 National Rugby League season and was played on Sunday September 30 at Sydney's ANZ Stadium.[1] The match was contested between minor premiers the Sydney Roosters and defending premiers the Melbourne Storm. In front of a crowd of 82,688, Sydney won the match 21â€“6 to claim their 14th premiership title and their first since 2013. Roosters five-eighth Luke Keary was awarded the Clive Churchill Medal as the game's official man of the match."
+    }
+    >>> # To include similarity scores, use output_scores=True
+    >>> dataset_with_scores = mine_hard_negatives(
+    ...     dataset=dataset,
+    ...     model=model,
+    ...     output_scores=True,
+    ...     # ... other parameters
+    ... )
+    >>> dataset_with_scores
+    Dataset({
+        features: ['query', 'answer', 'negative', 'scores'],
+        num_rows: 487865
+    })
+    >>> dataset.push_to_hub("natural-questions-hard-negatives", "triplet-all")
+
+Args:
+    dataset (Dataset): A dataset containing (anchor, positive) pairs.
+    model (SentenceTransformer): A SentenceTransformer model to use for embedding the inputs.
+    anchor_column_name (str, optional): The column name in `dataset` that contains the anchor/query. Defaults to None, in which case the first column in `dataset` will be used.
+    positive_column_name (str, optional): The column name in `dataset` that contains the positive candidates. Defaults to None, in which case the second column in `dataset` will be used.
+    corpus (List[str], optional): A list containing documents as strings that will be used as candidate negatives
+        in addition to the second column in `dataset`. Defaults to None, in which case the second column in
+        `dataset` will exclusively be used as the negative candidate corpus.
+    cross_encoder (CrossEncoder, optional): A CrossEncoder model to use for rescoring the candidates. Defaults to None.
+    range_min (int): Minimum rank of the closest matches to consider as negatives. Defaults to 0.
+    range_max (int, optional): Maximum rank of the closest matches to consider as negatives. Defaults to None.
+    max_score (float, optional): Maximum score to consider as a negative. Defaults to None.
+    min_score (float, optional): Minimum score to consider as a negative. Defaults to None.
+    absolute_margin (float, optional): Absolute margin for hard negative mining, i.e. the minimum distance between
+        the positive similarity and the negative similarity. Defaults to None.
+    relative_margin (float, optional): Relative margin for hard negative mining, i.e. the minimum distance between
+        the positive similarity and the negative similarity as a fraction of the positive score magnitude. A value
+        of 0.05 discards negatives whose similarity is greater than ``positive_score - abs(positive_score) * 0.05``.
+        Defaults to None.
+    num_negatives (int): Number of negatives to sample. Defaults to 3.
+    sampling_strategy (Literal["random", "top"]): Sampling strategy for negatives: "top" or "random". Defaults to "top".
+    query_prompt_name (Optional[str], optional): The name of a predefined prompt to use when encoding the first/anchor dataset column.
+        It must match a key in the ``model.prompts`` dictionary, which can be set during model initialization
+        or loaded from the model configuration.
+
+        For example, if ``query_prompt_name="query"`` and the model prompts dictionary includes {"query": "query: "},
+        then the input "What is the capital of France?" is transformed into: "query: What is the capital of France?"
+        before encoding. This is useful for models that were trained or fine-tuned with specific prompt formats.
+
+        Ignored if ``query_prompt`` is provided. Defaults to None.
+
+    query_prompt (Optional[str], optional): A raw prompt string to prepend directly to the first/anchor dataset column during encoding.
+
+        For instance, `query_prompt="query: "` transforms the input "What is the capital of France?" into:
+        "query: What is the capital of France?". Use this to override the prompt logic entirely and supply your own prefix.
+        This takes precedence over ``query_prompt_name``. Defaults to None.
+    corpus_prompt_name (Optional[str], optional): The name of a predefined prompt to use when encoding the corpus. See
+        ``query_prompt_name`` for more information. Defaults to None.
+    corpus_prompt (Optional[str], optional): A raw prompt string to prepend directly to the corpus during encoding.
+        See ``query_prompt`` for more information. Defaults to None.
+    include_positives (bool): Whether to include the positives in the negative candidates.
+        Setting this to True is primarily useful for creating Reranking evaluation datasets for CrossEncoder models,
+        where it can be useful to get a full ranking (including the positives) from a first-stage retrieval model.
+        Defaults to False.
+    output_format (Literal["triplet", "n-tuple", "labeled-pair", "labeled-list"]): Output format for the `datasets.Dataset`.
+        When ``output_scores=False`` (default), options are:
+
+        - "triplet": (anchor, positive, negative) triplets, i.e. 3 columns. Useful for e.g. :class:`~sentence_transformers.cross_encoder.losses.CachedMultipleNegativesRankingLoss`.
+        - "n-tuple": (anchor, positive, negative_1, ..., negative_n) tuples, i.e. 2 + num_negatives columns. Useful for e.g. :class:`~sentence_transformers.cross_encoder.losses.CachedMultipleNegativesRankingLoss`.
+        - "labeled-pair": (anchor, document, label) tuples with a label of 0 for negative and 1 for positive, i.e. 3 columns. Useful for e.g. :class:`~sentence_transformers.cross_encoder.losses.BinaryCrossEntropyLoss`.
+        - "labeled-list": (anchor, [doc1, doc2, ..., docN], [label1, label2, ..., labelN]) tuples with labels of 0 for negative and 1 for positive, i.e. 3 columns. Useful for e.g. :class:`~sentence_transformers.cross_encoder.losses.LambdaLoss`.
+
+        Defaults to "triplet". See ``output_scores`` for the output formats when ``output_scores=True``.
+    output_scores (bool): Whether to include similarity scores in the output dataset. When True, adds score fields to the output:
+        - For "triplet" format: adds `scores` column with query-positive and query-negative similarity scores, for 4 columns total.
+        - For "n-tuple" format: adds `scores` column with a list of similarity scores for the query-positive and each of the query-negative pairs, for 3 + num_negatives columns total. Useful for e.g. :class:`~sentence_transformers.sparse_encoder.losses.SparseMarginMSELoss`.
+        - For "labeled-pair" format: replaces the `label` column with a `score` column. Labels are binary (1 for positive, 0 for negative), but scores contain the actual similarity scores computed by the model or cross_encoder. The output has 3 columns.
+        - For "labeled-list" format: replaces the `labels` column with a `scores` column. Labels are binary (1 for positive, 0 for negative), but scores contain the actual similarity scores computed by the model or cross_encoder. The output has 3 columns.
+        Defaults to False.
+    batch_size (int): Batch size for encoding the dataset. Defaults to 32.
+    faiss_batch_size (int): Batch size of queries for the top-k similarity search, both with FAISS and without
+        (``use_faiss=False``), where it bounds the size of the intermediate similarity matrix to
+        ``faiss_batch_size * len(corpus)``. Defaults to 16384.
+    use_faiss (bool): Whether to use FAISS for similarity search. May be recommended for large datasets. Defaults to False.
+    use_multi_process (bool | List[str], optional): Whether to use multi-GPU/CPU processing. If True, uses all GPUs if CUDA
+        is available, and 4 CPU processes if it's not available. You can also pass a list of PyTorch devices like
+        ["cuda:0", "cuda:1", ...] or ["cpu", "cpu", "cpu", "cpu"].
+    verbose (bool): Whether to print statistics and logging. Defaults to True.
+    cache_folder (str, optional): Directory path for caching embeddings. If provided, the function will save
+        ``query_embeddings_{hash}.npy`` and ``corpus_embeddings_{hash}.npy`` under this folder after the first run,
+        and on subsequent calls will load from these files if they exist to avoid recomputation. The hashes are
+        computed based on the model name and the queries/corpus. Defaults to None.
+    as_triplets (bool, optional): Deprecated. Use `output_format` instead. Defaults to None.
+    margin (float, optional): Deprecated. Use `absolute_margin` or `relative_margin` instead. Defaults to None.
+
+Returns:
+    Dataset: A dataset containing the specified output format. If `output_scores=False` (default), the formats are:
+
+    - "triplet": (anchor, positive, negative)
+    - "n-tuple": (anchor, positive, negative_1, ..., negative_n)
+    - "labeled-pair": (anchor, document, label)
+    - "labeled-list": (anchor, [documents], [labels])
+
+    And if `output_scores=True`, the formats are:
+
+    - "triplet": (anchor, positive, negative, [scores])
+    - "n-tuple": (anchor, positive, negative_1, ..., negative_n, [scores])
+    - "labeled-pair": (anchor, document, score)
+    - "labeled-list": (anchor, [documents], [scores])

@@ -1,0 +1,2053 @@
+{
+  "experiment": "G3_GOOAQ",
+  "decision": "B. GOOAQ G3 IS NEUTRAL / INCONCLUSIVE",
+  "result_label": "EXPERIMENTAL / DESCRIPTIVE \u2014 DRAFT DEV labels",
+  "source": {
+    "experiment": "G3_GOOAQ",
+    "dataset_id": "sentence-transformers/gooaq",
+    "config": "pair",
+    "revision": "b089f728748a068b7bc5234e5bcf5b25e3c8279c",
+    "split": "train",
+    "schema": {
+      "question": "string",
+      "answer": "string"
+    },
+    "source_row_count": 3012496,
+    "automatic_download": "successful bounded streaming; no complete multi-million-row materialization",
+    "cache": "D:\\SDC\\LibraryLLM\\datasets\\training\\hf_cache\\gooaq_g3",
+    "selection": {
+      "seed": 42,
+      "shuffle_buffer": 10000,
+      "pair_rule": "first 50k usable distinct normalized queries from seeded shuffled stream; seed-42 final shuffle, 45k/5k split; no later replacements",
+      "pool_rule": "continue same shuffled stream until at least 200k normalized unique answers; bounded cap 500k processed source records",
+      "buffer_note": "rows_inspected counts yielded rows; up to 10k lookahead rows may be internally buffered"
+    },
+    "inventory": {
+      "rows_inspected": 255250,
+      "duplicate_normalized_questions": 0,
+      "duplicate_answer_passages": 55250,
+      "multi_positive_questions": 0
+    },
+    "rows_materialized": 255250,
+    "selected_rows": 50000,
+    "train_validation_normalized_query_overlap": 0,
+    "token_lengths": {
+      "inspected_usable": {
+        "question": {
+          "min": 8,
+          "median": 12,
+          "p90": 15,
+          "p95": 16,
+          "p99": 18,
+          "max": 34,
+          "over_256": 0
+        },
+        "answer": {
+          "min": 10,
+          "median": 61,
+          "p90": 77,
+          "p95": 85,
+          "p99": 109,
+          "max": 197,
+          "over_256": 0
+        }
+      },
+      "selected_50000": {
+        "question": {
+          "min": 8,
+          "median": 12,
+          "p90": 15,
+          "p95": 16,
+          "p99": 18,
+          "max": 34,
+          "over_256": 0
+        },
+        "answer": {
+          "min": 11,
+          "median": 61,
+          "p90": 77,
+          "p95": 85,
+          "p99": 110,
+          "max": 197,
+          "over_256": 0
+        }
+      }
+    },
+    "mining_corpus_count": 200000,
+    "known_positive_scope": "all alternate positives discoverable among bounded inspected source records; unknown positives outside this pool remain unlabelled",
+    "answer_canonicalization": "first-seen original passage for normalized-equivalent texts; selected positives use that canonical source passage",
+    "files": {
+      "pairs_train": {
+        "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_pairs_train.parquet",
+        "rows": 45000,
+        "sha256": "1ccb299ae166fd7007cfe13fc85a6888b8b47b5a504ca5da37150ac4b711de25"
+      },
+      "pairs_validation": {
+        "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_pairs_validation.parquet",
+        "rows": 5000,
+        "sha256": "ab658a0657038e0b642e2f0637fa1ed8881687ad0401b2c554d060daa28fa271"
+      },
+      "source_records": {
+        "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_source_records.parquet",
+        "rows": 255250,
+        "sha256": "6dbbc76766617df9670744f496494100cb59e645273588bb5ad51de66d677fce"
+      },
+      "answer_corpus": {
+        "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_answer_corpus.parquet",
+        "rows": 200000,
+        "sha256": "e723e858ca3c427e0a54c1e4690e0595ae5897d018724e75028376b517e9716c"
+      }
+    },
+    "versions": {
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.15.1",
+      "datasets": "5.0.0",
+      "sentence_transformers": "5.6.0",
+      "accelerate": "1.14.0",
+      "faiss": "1.14.3"
+    }
+  },
+  "source_manifest_sha256": "70231f683e953cd663ca51024b0c4d3c664ae78329a52e00c181ed093c64ff72",
+  "final_data_manifest_sha256": "d45756db7cdd60b30a66ad21b20d1594ba97f17513e94800bd6adc48bc907c51",
+  "calibration": {
+    "mining_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "base_snapshot": "C:\\Users\\balak\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "corpus_count": 200000,
+    "settings": {
+      "absolute_margin": 0.02448827922344208,
+      "relative_margin": 0.03535122352084876,
+      "max_score": 0.5955077618360519
+    },
+    "settings_reason": "GooAQ raw calibration: absolute margin = clipped half p10 observed gap [.01,.04]; relative margin = absolute/median positive clipped [.02,.08]; cap = min(.85, negative p99+.03, positive p75); Engineering audit trial1 found one possible alternate answer (calorie-deficit question) and two ambiguous partial-relevance cases; tightened ceiling to measured raw negative p95, preserving margins and query distribution.",
+    "initial_window": [
+      10,
+      100
+    ],
+    "wider_window": [
+      10,
+      500
+    ],
+    "window_note": "installed miner applies rank slice to eligible candidates after score/positive masking; stored ranks are raw 1-based corpus ranks",
+    "candidates_per_query": 5,
+    "retained_per_query": 1,
+    "initial_unmineable": 22,
+    "wider_window_hard_count": 18,
+    "hard_count": 496,
+    "random_fallback_count": 4,
+    "random_fallback_fraction": 0.008,
+    "known_positive_candidates_excluded": 0,
+    "raw_calibration_distributions": {
+      "positive": {
+        "min": 0.22060838341712952,
+        "p10": 0.5392104744911194,
+        "median": 0.6927137672901154,
+        "p90": 0.8092228055000305,
+        "p95": 0.8315198630094518,
+        "max": 0.8966025114059448,
+        "mean": 0.6811445517539978,
+        "count": 2500
+      },
+      "negative": {
+        "min": 0.22604645788669586,
+        "p10": 0.3557638645172119,
+        "median": 0.45501962304115295,
+        "p90": 0.5633065462112427,
+        "p95": 0.5955077618360519,
+        "max": 0.8102681636810303,
+        "mean": 0.4580120831131935,
+        "count": 2500
+      },
+      "margin": {
+        "min": -0.3128971755504608,
+        "p10": 0.04897655844688416,
+        "median": 0.23176255822181702,
+        "p90": 0.38806853294372556,
+        "p95": 0.42246534973382943,
+        "max": 0.5690655708312988,
+        "mean": 0.2231324686408043,
+        "count": 2500
+      }
+    },
+    "distributions": {
+      "positive_score": {
+        "min": 0.2206083983182907,
+        "p10": 0.5392104744911194,
+        "median": 0.6927137672901154,
+        "p90": 0.8092228055000306,
+        "p95": 0.8315198630094527,
+        "max": 0.8966025114059448,
+        "mean": 0.6811445515453816,
+        "count": 500
+      },
+      "negative_score": {
+        "min": -0.009861718863248825,
+        "p10": 0.3756163835525513,
+        "median": 0.47956059873104095,
+        "p90": 0.5515644311904907,
+        "p95": 0.5656304121017456,
+        "max": 0.587933361530304,
+        "mean": 0.47095397931337357,
+        "count": 500
+      },
+      "score_margin": {
+        "min": 0.02598351240158081,
+        "p10": 0.062032794952392584,
+        "median": 0.21035557985305786,
+        "p90": 0.35027461349964145,
+        "p95": 0.3796218037605283,
+        "max": 0.5290684700012207,
+        "mean": 0.210190572232008,
+        "count": 500
+      },
+      "negative_rank": {
+        "min": 12.0,
+        "p10": 18.0,
+        "median": 34.0,
+        "p90": 69.0,
+        "p95": 83.25,
+        "max": 497.0,
+        "mean": 45.596774193548384,
+        "count": 496
+      }
+    },
+    "safeguards": "all normalized positives/alternates discoverable in bounded source records excluded; rank floor10, calibrated ceiling/margins; fixed safe wider window; random fallback also score/margin screened; no query replacement",
+    "rows": 500,
+    "query_replacements": 0,
+    "software_versions": {
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.15.1",
+      "datasets": "5.0.0",
+      "sentence_transformers": "5.6.0",
+      "accelerate": "1.14.0",
+      "faiss": "1.14.3"
+    },
+    "file": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_calibration.parquet",
+      "rows": 500,
+      "sha256": "318c14dfd9d2347196acf91956c09f0ef2b98703b88b942286c9d0a008ec2598"
+    },
+    "audit_sample": [
+      {
+        "question": "what is restricted holiday and gazetted holiday?",
+        "positive": "Restricted holidays are the holidays which an employee can avail from the list of Gazetted/restricted holidays. Further these are the holidays only for employee and not for the organization or government departments.",
+        "negative": "Presidents Day is a federal holiday, so almost all government offices are closed. U.S. Post Office \u2013 Closed. Mail will not run and the post offices is closed. UPS and FedEx \u2013 Some schedules will be altered but both will be delivering packages.",
+        "negative_kind": "HARD",
+        "negative_rank": 38,
+        "positive_score": 0.8047064542770386,
+        "negative_score": 0.45465087890625,
+        "score_margin": 0.3500555753707886,
+        "mining_window_max": 100
+      },
+      {
+        "question": "why afc falls as output increases?",
+        "positive": "In economics, average fixed cost (AFC) is the fixed costs of production (FC) divided by the quantity (Q) of output produced. ... As the total number of units of the good produced increases, the average fixed cost decreases because the same amount of fixed costs is being spread over a larger number of units of output.",
+        "negative": "Firms need to sell their extra output at a higher price so that they can pay the higher marginal cost of production. Hence, decisions to supply are largely determined by the marginal cost of production. The supply curve slopes upward, reflecting the higher price needed to cover the higher marginal cost of production.",
+        "negative_kind": "HARD",
+        "negative_rank": 18,
+        "positive_score": 0.574253499507904,
+        "negative_score": 0.3660217523574829,
+        "score_margin": 0.20823174715042114,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what is the significance of the number 8 in numerology?",
+        "positive": "Number 8's are single-minded and show good judgment and executive skills, often achieving power and material success. 8 represents justice and balance. Those under the influence of the powerful and karmic number 8 seem to endure life's hardships moreso than other numbers.",
+        "negative": "1. VII - the cardinal number that is the sum of six and one. 7, heptad, septenary, septet, seven, sevener. digit, figure - one of the elements that collectively form a system of numeration; \"0 and 1 are digits\"",
+        "negative_kind": "HARD",
+        "negative_rank": 22,
+        "positive_score": 0.7165855765342712,
+        "negative_score": 0.4831058979034424,
+        "score_margin": 0.23347967863082886,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what are the minimum requirements for windows 7 installation?",
+        "positive": "['1 gigahertz (GHz) or faster 32-bit (x86) or 64-bit (x64) processor*', '1 gigabyte (GB) RAM (32-bit) or 2 GB RAM (64-bit)', '16 GB available hard disk space (32-bit) or 20 GB (64-bit)', 'DirectX 9 graphics device with WDDM 1.0 or higher driver.']",
+        "negative": "['Wireless broadband Internet access is required for online features. ... ', 'Additional games and systems required for multiplayer mode.']",
+        "negative_kind": "HARD",
+        "negative_rank": 55,
+        "positive_score": 0.6189475655555725,
+        "negative_score": 0.4409993290901184,
+        "score_margin": 0.1779482364654541,
+        "mining_window_max": 100
+      },
+      {
+        "question": "how much is a vehicle inspection in nc?",
+        "positive": "NC Vehicle Inspection Price Safety inspection fees are $13.60. Emissions inspection fees, which include Safety Inspection, cost $30.00. After market window tinting costs an additional $10 for both inspections.",
+        "negative": "\u200b$50 one-time issuance fee and twice the annual registration fee for vehicle type.",
+        "negative_kind": "HARD",
+        "negative_rank": 31,
+        "positive_score": 0.8166667222976685,
+        "negative_score": 0.49864524602890015,
+        "score_margin": 0.3180214762687683,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what is the function of the ribs?",
+        "positive": "The rib cage is formed by the sternum, costal cartilage, ribs, and the bodies of the thoracic vertebrae. The rib cage protects the organs in the thoracic cavity, assists in respiration, and provides support for the upper extremities.",
+        "negative": "The major functions of the skeletal system are body support, facilitation of movement, protection of internal organs, storage of minerals and fat, and blood cell formation.",
+        "negative_kind": "HARD",
+        "negative_rank": 35,
+        "positive_score": 0.7131789922714233,
+        "negative_score": 0.49782902002334595,
+        "score_margin": 0.2153499722480774,
+        "mining_window_max": 100
+      },
+      {
+        "question": "how long does it take for first herpes outbreak after exposure?",
+        "positive": "The average incubation period for an initial herpes infection is 4 days (range, 2 to 12) after exposure. The vesicles break and leave painful ulcers that may take two to four weeks to heal after the initial herpes infection. Experiencing these symptoms is referred to as having a first herpes \u201coutbreak\u201d or episode.",
+        "negative": "HSV-1 can be transmitted from oral or skin surfaces that appear normal and when there are no symptoms present. However, the greatest risk of transmission is when there are active sores. Individuals who already have HSV-1 oral herpes infection are unlikely to be subsequently infected with HSV-1 in the genital area.",
+        "negative_kind": "HARD",
+        "negative_rank": 68,
+        "positive_score": 0.8038953542709351,
+        "negative_score": 0.5092543363571167,
+        "score_margin": 0.29464101791381836,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what vaccines are required to enter taiwan?",
+        "positive": "Yes, some vaccines are recommended or required for Taiwan. The National Travel Health Network and Centre and WHO recommend the following vaccinations for Taiwan: hepatitis A, hepatitis B, Japanese encephalitis, rabies and tetanus. Recommended for most travellers to the region, especially if unvaccinated.",
+        "negative": "The PHAC and WHO recommend the following vaccinations for South Korea: hepatitis A, hepatitis B, typhoid, Japanese encephalitis, rabies, meningitis, polio, measles, mumps and rubella (MMR), Tdap (tetanus, diphtheria and pertussis), chickenpox, shingles, pneumonia and influenza.",
+        "negative_kind": "HARD",
+        "negative_rank": 35,
+        "positive_score": 0.7890812754631042,
+        "negative_score": 0.551518440246582,
+        "score_margin": 0.23756283521652222,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what are the pimples on my nipples?",
+        "positive": "Montgomery glands are normal skin glands that appear as small, painless bumps on the areola, which is the area of darkened skin around the nipple. Every person has Montgomery glands, though they are more apparent in some than others. These glands secrete oil to help keep the skin lubricated.",
+        "negative": "Pimples popping up on your lower cheek, jawline, and chin is known as a \u201chormonal pattern.\u201d Acne in these areas is often caused by your skin's oil glands overreacting to hormonal responses, which can be triggered by factors such as stress, eating too much sugar or dairy, or the (perfectly normal) fluctuations that ...",
+        "negative_kind": "HARD",
+        "negative_rank": 26,
+        "positive_score": 0.5958311557769775,
+        "negative_score": 0.520020604133606,
+        "score_margin": 0.07581055164337158,
+        "mining_window_max": 100
+      },
+      {
+        "question": "are bearer shares legal in the uk?",
+        "positive": "UK: Bearer Shares Banned The first of the corporate transparency provisions in the Small Business, Enterprise and Employment Act 2015 came into force on 26 May 2015 with the banning of share warrants to bearer, or bearer shares as they are more commonly known.",
+        "negative": "In some countries, dowry has been outlawed due to the female death toll associated with it, but the practice remains legal in Britain.",
+        "negative_kind": "HARD",
+        "negative_rank": 20,
+        "positive_score": 0.7128859758377075,
+        "negative_score": 0.42531752586364746,
+        "score_margin": 0.28756844997406006,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what is the primary function of the hormone adh?",
+        "positive": "Anti-diuretic hormone. Anti-diuretic hormone acts to maintain blood pressure, blood volume and tissue water content by controlling the amount of water and hence the concentration of urine excreted by the kidney.",
+        "negative": "Both systems control body functions. The nervous system controls through motor responses. Responses are quick, and short-lived. The endocrine system controls through chemicals, and responses are slow and long-lasting.",
+        "negative_kind": "HARD",
+        "negative_rank": 192,
+        "positive_score": 0.46614956855773926,
+        "negative_score": 0.38928261399269104,
+        "score_margin": 0.07686695456504822,
+        "mining_window_max": 500
+      },
+      {
+        "question": "can apple cider vinegar lower blood pressure?",
+        "positive": "Take apple cider vinegar. Most importantly, it helps with weight loss by improving metabolism and reducing water retention -- and a healthy weight is key to normalizing blood pressure. Easy fix: Three teaspoons per day of apple cider vinegar can lower your blood pressure significantly within a week.",
+        "negative": "Apple cider vinegar has lots of health benefits, but drinking it straight isn't for the faint of heart. Combining it with other ingredients makes it much more palatable\u2014and combining it with green tea, ginger and honey makes it an antioxidant-packed, cold-fighting powerhouse.",
+        "negative_kind": "HARD",
+        "negative_rank": 63,
+        "positive_score": 0.8124966621398926,
+        "negative_score": 0.5499303936958313,
+        "score_margin": 0.2625662684440613,
+        "mining_window_max": 100
+      },
+      {
+        "question": "they are few and far between meaning?",
+        "positive": "phrase. Things that are few and far between are very rare or do not happen very often. [emphasis] Visitors to the town were few and far between. Synonyms: scarce, rare, unusual, scattered More Synonyms of few and far between.",
+        "negative": "Homonyms Homophones Antonyms Synonyms. Antonyms are words that have opposite meanings, like large and small or hard and easy.",
+        "negative_kind": "HARD",
+        "negative_rank": 20,
+        "positive_score": 0.6153587102890015,
+        "negative_score": 0.38319557905197144,
+        "score_margin": 0.23216313123703003,
+        "mining_window_max": 100
+      },
+      {
+        "question": "which among the following cell organelles does not participate in cellular division?",
+        "positive": "It is a fact considered that Neurons cannot divide because they lack centrioles. Centrioles are minute cylindrical organelle present near the nucleus in animal cells involved in the development of Spindle fibres in Cell division.",
+        "negative": "Contains genetic material, including DNA, which controls the cell's activities. Its structure is permeable to some substances but not to others. It therefore controls the movement of substances in and out of the cell. Organelles that contain the enzymes for respiration, and where most energy is released in respiration.",
+        "negative_kind": "HARD",
+        "negative_rank": 43,
+        "positive_score": 0.5681694746017456,
+        "negative_score": 0.5123894214630127,
+        "score_margin": 0.05578005313873291,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what is the basic difference between covalent and ionic bonding?",
+        "positive": "The two main types of chemical bonds are ionic and covalent bonds. An ionic bond essentially donates an electron to the other atom participating in the bond, while electrons in a covalent bond are shared equally between the atoms. The only pure covalent bonds occur between identical atoms.",
+        "negative": "Covalent compounds are formed on the basis of sharing electrons. When the electrons are shared within the bonds, there is no electrons available to conduct electricity - hence why covalent compounds are generally poor conductors of electricity.",
+        "negative_kind": "HARD",
+        "negative_rank": 75,
+        "positive_score": 0.6949915289878845,
+        "negative_score": 0.5637516975402832,
+        "score_margin": 0.13123983144760132,
+        "mining_window_max": 100
+      },
+      {
+        "question": "how long does it take to get verified for doordash?",
+        "positive": "This can vary for each restaurant and generally takes between 3-5 days on average.",
+        "negative": "Generally, it takes about 3 to 5 months to get a decision. However, the exact time depends on how long it takes to get your medical records and any other evidence needed to make a decision. * How does Social Security make the decision?",
+        "negative_kind": "HARD",
+        "negative_rank": 429,
+        "positive_score": 0.4234864115715027,
+        "negative_score": 0.3959601819515228,
+        "score_margin": 0.02752622961997986,
+        "mining_window_max": 500
+      },
+      {
+        "question": "when cm election in bihar?",
+        "positive": "2020 Bihar Legislative Assembly election. Bihar Legislative Assembly elections will be held in Bihar in October 2020 to elect 243 members of the Bihar Legislative Assembly.",
+        "negative": "\u201cThe results will be released tomorrow February 28, 2019 at 10am at the President's office in the main auditorium. Minister of state for higher education will release them in acting capacity at the Minister of Education and Sports,\u201d Muinda told SoftPower News on Wednesday.",
+        "negative_kind": "HARD",
+        "negative_rank": 33,
+        "positive_score": 0.6589145064353943,
+        "negative_score": 0.4347035884857178,
+        "score_margin": 0.2242109179496765,
+        "mining_window_max": 100
+      },
+      {
+        "question": "can lactose intolerant eat yogurt?",
+        "positive": "Summary: Lactose intolerant people often find yogurt much easier to digest than milk. The best yogurt for people with lactose intolerance is a full-fat, probiotic yogurt that contains live bacterial cultures.",
+        "negative": "Hard, aged cheeses like Swiss, parmesan, and cheddars are lower in lactose. Other low-lactose cheese options include cottage cheese or feta cheese made from goat or sheep's milk. ... If you want to avoid dairy completely, try lactose-free and dairy-free cheeses.",
+        "negative_kind": "HARD",
+        "negative_rank": 34,
+        "positive_score": 0.7684199810028076,
+        "negative_score": 0.5459990501403809,
+        "score_margin": 0.22242093086242676,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what is the difference between a mazda 3 maxx and maxx sport?",
+        "positive": "maxx to maxx sport got climate control air, electronic park brake and a couple of other minor things. Happened in april last year. One of these is named as Mazda 3 Maxx and the other is named as Mada 3 Maxx Sports but they look exactly the same to me. The Maxx Sport has more crap crammed into it compared to the Maxx.",
+        "negative": "The only difference between the 883 and 1200 Sportster is the displacement of the engine. ... Simply put, the 1200 Sportster engine has a bit more material and weighs slightly more than the 883 engine; the difference in weight is too small though to make a significant effect on performance.",
+        "negative_kind": "HARD",
+        "negative_rank": 25,
+        "positive_score": 0.8076217770576477,
+        "negative_score": 0.43820124864578247,
+        "score_margin": 0.36942052841186523,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what are the two major categories of probability interpretations?",
+        "positive": "There are two broad categories of probability interpretations which can be called \"physical\" and \"evidential\" probabilities. Physical probabilities, which are also called objective or frequency probabilities, are associated with random physical systems such as roulette wheels, rolling dice and radioactive atoms.",
+        "negative": "They also include artifacts such as paintings, coins, stamps, and manufactured items. Secondary sources are interpretations or analyses of primary source information. Secondary sources include textbooks, encyclopedias, as well as any secondhand telling of an event.",
+        "negative_kind": "HARD",
+        "negative_rank": 52,
+        "positive_score": 0.7273818850517273,
+        "negative_score": 0.37564557790756226,
+        "score_margin": 0.35173630714416504,
+        "mining_window_max": 100
+      },
+      {
+        "question": "how to get a rental property with bad history?",
+        "positive": "[\"Know What's in Your Credit Report. ... \", \"Look for Property Owners Who Don't Check Credit. ... \", 'Get a Recommendation. ... ', 'Demonstrate Provable Income. ... ', 'Be Prepared to Pay More Upfront. ... ', 'Ask a Co-Signer to Help You.']",
+        "negative": "If a taxpayer makes improvements to leased or owned property that qualifies for the shorter recovery period, the taxpayer is required to depreciate the improvement over 15 years for tax purposes.",
+        "negative_kind": "HARD",
+        "negative_rank": 52,
+        "positive_score": 0.45348575711250305,
+        "negative_score": 0.4090397357940674,
+        "score_margin": 0.04444602131843567,
+        "mining_window_max": 100
+      },
+      {
+        "question": "how many calories it take to lose a pound?",
+        "positive": "Because 3,500 calories equals about 1 pound (0.45 kilogram) of fat, it's estimated that you need to burn about 3,500 calories to lose 1 pound. So, in general, if you cut about 500 to 1,000 calories a day from your typical diet, you'd lose about 1 to 2 pounds a week.",
+        "negative": "Setting a realistic time frame Generally, most health experts recommend aiming for about 1\u20133 pounds (0.5\u20131.4 kg) of weight loss per week, or approximately 1% of your total body weight ( 33 , 34 ). Therefore, it may take anywhere from a few weeks to several months to lose 30 pounds safely.",
+        "negative_kind": "HARD",
+        "negative_rank": 68,
+        "positive_score": 0.6999603509902954,
+        "negative_score": 0.541039228439331,
+        "score_margin": 0.15892112255096436,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what does it mean when you have grey hair on your private area?",
+        "positive": "The hairs on your genitals are subjected to exactly the same effects of time as those on your head. Hair follicles contain melanin, the pigment that gives hair (and your skin) its colour. As we get older, your body produces less melanin and your hair begins to turn grey, silver, or white.",
+        "negative": "There is nothing wrong with leaving this hair the way it is. But if you feel self conscious about the way it looks, you can remove it by shaving, applying a cream or waxing. Before you shave, make sure that you exfoliate the area and use warm water and a new razor to avoid any nicks or bumps.",
+        "negative_kind": "HARD",
+        "negative_rank": 67,
+        "positive_score": 0.6036058068275452,
+        "negative_score": 0.41443243622779846,
+        "score_margin": 0.1891733705997467,
+        "mining_window_max": 100
+      },
+      {
+        "question": "how many words is average novel?",
+        "positive": "A story that is over 40,000 words is generally considered a novel. However, it will be on the short side, as the average length of a novel hovers around 50,000-70,000 words.",
+        "negative": "There are 168,923 words. How many words are in Harry Potter and the Deathly Hallows? There are 198,227 words. While knowing the total number of words in the Harry Potter series isn't going to convince anyone to read all the books, knowing the total word count is an excellent way to encourage kids to read more.",
+        "negative_kind": "HARD",
+        "negative_rank": 24,
+        "positive_score": 0.74739009141922,
+        "negative_score": 0.5018024444580078,
+        "score_margin": 0.24558764696121216,
+        "mining_window_max": 100
+      },
+      {
+        "question": "what is the relationship between elements and atoms quizlet?",
+        "positive": "Matter is anything that occupies space and has mass. what is the relationship between elements and atoms? Elements are substances that cannot be broken down chemically into simpler kinds of matter. Atoms are simplest particle of an element that continues to have all the properties of that element.",
+        "negative": "Isotopes are atoms that have the same numbers of protons but different numbers of neutrons. An ion is an atom that has gained or lost electrons, so it now has more or fewer electrons than it does protons. ... All atoms are isotopes and if an isotope gains or loses electrons it becomes an ion.",
+        "negative_kind": "HARD",
+        "negative_rank": 66,
+        "positive_score": 0.751884937286377,
+        "negative_score": 0.5510855317115784,
+        "score_margin": 0.20079940557479858,
+        "mining_window_max": 100
+      }
+    ]
+  },
+  "audit": {
+    "approved": true,
+    "sample_count": 25,
+    "sample_seed": 42,
+    "obviously_not_answer": 22,
+    "possible_false_negative": 0,
+    "ambiguous": 3,
+    "type": "engineering source-text inspection; not human training-label review",
+    "adjustment": "Trial1 possible calorie alternative removed by stricter empirical negative-p95 ceiling; margins/windows unchanged",
+    "rows": [
+      {
+        "sample": 1,
+        "question": "what is restricted holiday and gazetted holiday?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Specific US holiday closure does not define restricted versus gazetted holidays."
+      },
+      {
+        "sample": 2,
+        "question": "why afc falls as output increases?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Marginal-cost/supply behavior does not explain declining average fixed cost."
+      },
+      {
+        "sample": 3,
+        "question": "what is the significance of the number 8 in numerology?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Roman numeral seven does not give numerological significance of eight."
+      },
+      {
+        "sample": 4,
+        "question": "what are the minimum requirements for windows 7 installation?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Unspecified gaming/network requirements do not give Windows 7 installation requirements."
+      },
+      {
+        "sample": 5,
+        "question": "how much is a vehicle inspection in nc?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Issuance/registration fees do not establish North Carolina inspection price."
+      },
+      {
+        "sample": 6,
+        "question": "what is the function of the ribs?",
+        "classification": "AMBIGUOUS",
+        "reason": "General skeletal-system functions overlap rib functions; ambiguous partial relevance."
+      },
+      {
+        "sample": 7,
+        "question": "how long does it take for first herpes outbreak after exposure?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Herpes transmission discussion does not supply exposure-to-outbreak incubation time."
+      },
+      {
+        "sample": 8,
+        "question": "what vaccines are required to enter taiwan?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Travel vaccinations concern South Korea, not Taiwan."
+      },
+      {
+        "sample": 9,
+        "question": "what are the pimples on my nipples?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Facial acne does not identify nipple/areola bumps."
+      },
+      {
+        "sample": 10,
+        "question": "are bearer shares legal in the uk?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Dowry legality does not establish bearer-share legality."
+      },
+      {
+        "sample": 11,
+        "question": "what is the primary function of the hormone adh?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "General endocrine control does not state the specific ADH function."
+      },
+      {
+        "sample": 12,
+        "question": "can apple cider vinegar lower blood pressure?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Vinegar taste/cold-fighting discussion does not address blood pressure."
+      },
+      {
+        "sample": 13,
+        "question": "they are few and far between meaning?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Antonym definition does not explain the requested idiom."
+      },
+      {
+        "sample": 14,
+        "question": "which among the following cell organelles does not participate in cellular division?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Generic cellular structures/respiration description does not identify participation in cell division."
+      },
+      {
+        "sample": 15,
+        "question": "what is the basic difference between covalent and ionic bonding?",
+        "classification": "AMBIGUOUS",
+        "reason": "Explains covalent sharing without ionic comparison; ambiguous partial answer."
+      },
+      {
+        "sample": 16,
+        "question": "how long does it take to get verified for doordash?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Social Security decision time does not answer DoorDash verification time."
+      },
+      {
+        "sample": 17,
+        "question": "when cm election in bihar?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Education result announcement does not answer Bihar election timing."
+      },
+      {
+        "sample": 18,
+        "question": "can lactose intolerant eat yogurt?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Cheese lactose levels do not answer yogurt tolerance."
+      },
+      {
+        "sample": 19,
+        "question": "what is the difference between a mazda 3 maxx and maxx sport?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Sportster motorcycle engine comparison does not address Mazda trims."
+      },
+      {
+        "sample": 20,
+        "question": "what are the two major categories of probability interpretations?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Primary/secondary historical sources do not categorize probability interpretations."
+      },
+      {
+        "sample": 21,
+        "question": "how to get a rental property with bad history?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Tax depreciation does not explain securing a rental with bad history."
+      },
+      {
+        "sample": 22,
+        "question": "how many calories it take to lose a pound?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Weight-loss time frame does not give calorie deficit per pound."
+      },
+      {
+        "sample": 23,
+        "question": "what does it mean when you have grey hair on your private area?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Hair-removal instructions do not explain greying hair."
+      },
+      {
+        "sample": 24,
+        "question": "how many words is average novel?",
+        "classification": "OBVIOUSLY_NOT_ANSWER",
+        "reason": "Specific Harry Potter book counts do not give average novel length."
+      },
+      {
+        "sample": 25,
+        "question": "what is the relationship between elements and atoms quizlet?",
+        "classification": "AMBIGUOUS",
+        "reason": "Isotope/ion definitions overlap atomic structure but do not state element-atom relationship; ambiguous relevance."
+      }
+    ]
+  },
+  "mining": {
+    "mining_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "base_snapshot": "C:\\Users\\balak\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "corpus_count": 200000,
+    "settings": {
+      "absolute_margin": 0.02448827922344208,
+      "relative_margin": 0.03535122352084876,
+      "max_score": 0.5955077618360519
+    },
+    "settings_reason": "GooAQ raw calibration: absolute margin = clipped half p10 observed gap [.01,.04]; relative margin = absolute/median positive clipped [.02,.08]; cap = min(.85, negative p99+.03, positive p75); Engineering audit trial1 found one possible alternate answer (calorie-deficit question) and two ambiguous partial-relevance cases; tightened ceiling to measured raw negative p95, preserving margins and query distribution.",
+    "initial_window": [
+      10,
+      100
+    ],
+    "wider_window": [
+      10,
+      500
+    ],
+    "window_note": "installed miner applies rank slice to eligible candidates after score/positive masking; stored ranks are raw 1-based corpus ranks",
+    "candidates_per_query": 5,
+    "retained_per_query": 1,
+    "initial_unmineable": 1345,
+    "wider_window_hard_count": 1058,
+    "hard_count": 44713,
+    "random_fallback_count": 287,
+    "random_fallback_fraction": 0.006377777777777777,
+    "known_positive_candidates_excluded": 0,
+    "raw_calibration_distributions": null,
+    "distributions": {
+      "positive_score": {
+        "min": 0.018019119277596474,
+        "p10": 0.5480401396751404,
+        "median": 0.7044015228748322,
+        "p90": 0.8142160475254059,
+        "p95": 0.8389064013957976,
+        "max": 0.9471812844276428,
+        "mean": 0.6900377311041371,
+        "count": 45000
+      },
+      "negative_score": {
+        "min": -0.20795796811580658,
+        "p10": 0.38397143185138705,
+        "median": 0.48256225883960724,
+        "p90": 0.5579559326171875,
+        "p95": 0.5686054527759552,
+        "max": 0.5920495986938477,
+        "mean": 0.47375354726517366,
+        "count": 45000
+      },
+      "score_margin": {
+        "min": 0.025321662425994873,
+        "p10": 0.06940972506999969,
+        "median": 0.2159879207611084,
+        "p90": 0.3567699044942856,
+        "p95": 0.395626263320446,
+        "max": 0.6260011196136475,
+        "mean": 0.2162841838389635,
+        "count": 45000
+      },
+      "negative_rank": {
+        "min": 12.0,
+        "p10": 17.0,
+        "median": 33.0,
+        "p90": 64.0,
+        "p95": 77.0,
+        "max": 500.0,
+        "mean": 41.22492340035336,
+        "count": 44713
+      }
+    },
+    "safeguards": "all normalized positives/alternates discoverable in bounded source records excluded; rank floor10, calibrated ceiling/margins; fixed safe wider window; random fallback also score/margin screened; no query replacement",
+    "rows": 45000,
+    "query_replacements": 0,
+    "software_versions": {
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.15.1",
+      "datasets": "5.0.0",
+      "sentence_transformers": "5.6.0",
+      "accelerate": "1.14.0",
+      "faiss": "1.14.3"
+    },
+    "file": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_train_triplets.parquet",
+      "rows": 45000,
+      "sha256": "0ae30b5083b831b298699511f1513eeb2b83d73ed145268d26614d44e01e059c"
+    }
+  },
+  "stop": null,
+  "preflight": {
+    "experiment": "G3_GOOAQ",
+    "production_files": 64,
+    "production_changed": 0,
+    "historical_recorded_hashes_verified": true,
+    "historical_before_sha256": {
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\dense_dev_evaluation.json": "8783ddfe14f7fff902545f22647c7c434dc567a7cb088155fcd31ca90b21e4bb",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\embeddings.npy": "c70b932bcb4143015d9b435337acb06b09daba78a2eddae8e2de7f4c966049c0",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\faiss.index": "060fc0392cb471d4648d872242a0cf9aa9ef6492d450d9c235e30c91f44c50f6",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\manifest.json": "75307bef235f266f9ef67a14de1ea6308eec0cc5b83e8723472a76701625e49e",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL15933082W.index": "37ffd6c1184a3514dd42c79a82da524c2bc8047e105b483d3f3ba4f62c625035",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL17494673W.index": "f186563210a76c6c147c0207cd0056d0f228612e1e9164ffb96df979ccbad02a",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL27039837W.index": "ce7e8d320ffb5cd45d5a53d39dd15fbdc04216f82f4136d95095e517be261085",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL27471326W.index": "41202eea81668f2c6b76f877ab9f3dcb8be945a9cc4ce1f959554d8b8d1d5e3b",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL2772007W.index": "2ec3b43554b1511eb1867ca5b19c2abc863848b007e66c52a777a4d807d1d3d6",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL28944494W.index": "3f417de42658556e08da789526e4c11657d2607c991bf16cbc40f87ec2866475",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL33027136W.index": "ea56c6130f079768f32e8be7020054f3844567eb36003438f06f4d58d30e98e2",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL33723557W.index": "6d5c900ad18c0be36df96af3b22ddaad347c1a2a246e7d74797c83eb3debf1dd",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL35758281W.index": "438114a6ad821c0e1a586f48693ca2fc0e632ff80d9d2de82b23682104e6b082",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL36979234W.index": "054ef3e62941998518c54f3edaa47137184ad6085eedb98acfc71edad800aea8",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL38619874W.index": "ee6c0f7227a0ad53c1836af3cd2d68b8553cdacdaaeb63105185be6aca074a16",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL41470186W.index": "d3328f3d1141b970bf716960a041828e08ac067c53a84734ecd19fa3a7b07e70",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL42479046W.index": "bd0e4384b889855e3ebeaf15de578a9bf4c5f02808e9b77585f70164b27dec13",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL43032614W.index": "786abc8421db0a8affb4fa7cd70726867b9061b72c9bb9bec2919ef3cc318e5e",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL44512357W.index": "ceee6af6f6f5fe3980fdfe3ee4f806eb5a4402a772ff4976e4d794785122a0e4",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL45326637W.index": "4a12c42b8074c4e4fd1746b13af12538de6f1c8e3c509a1f201ad27699e2b390",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL66524W.index": "1b6aef41988e222d40d436a977f4ed488f9e9718b414ee19e70d2de6c65fa8df",
+      "datasets\\training\\evaluation_indexes\\minilm_g1_msmarco_50k\\books\\OL85892W.index": "39e3667cf7b59ce33663d975eeb0c6feaa8a563178a90679ee6ef0c0e21334fd",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\dense_dev_evaluation.json": "281451a17a7fc9f990287e1e0ba8ef87b859c7d442054e29dee7fb10916fad28",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\embeddings.npy": "774d36470093251626bddac2e60fabe9c266ff5a6679a6386f735c86ba65a9a2",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\faiss.index": "cbc38658b6e6583df6480a58ad9e76da24d3dd13885011a03ff4eae5641fd03b",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\manifest.json": "7c37ddbd11cea34fb374fe24f02196e289bcf22e52d07a5f19e86e33a553719b",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL15933082W.index": "c668cac0d5d6265036416c99f64d5886e4708fdbb9bd3318458f01a7ea84284e",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL17494673W.index": "229227d835681a637d6b15c64056a563ee50928a71840dd76d48c6992ff741f7",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL27039837W.index": "b52b4758a6592259478036a425e4d823567cf46c6466ce0575b5900e9d415852",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL27471326W.index": "5e42b4b992195fa1815ebfeaaf6d80023ce01b5f3fcbce79b1d12df0cf9d0c01",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL2772007W.index": "53ebc9ac32e21be1454efdf04389a08819fc7a4b4b74243af9d4120e1cfaba54",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL28944494W.index": "23a059dcb878e70bb6dd71e691ed8828e3d8053f0294812e8a27aca0615cc547",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL33027136W.index": "f2da1be23c299d4fa57b1aef71bfaab187bb775d1a46deb2c98d6bac28ab72dd",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL33723557W.index": "a44a1ebcfca7d7dbabc8e77cefc7c74c59e657672591832c7dfaf17a846c2dbb",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL35758281W.index": "051fd7a9f637e8f41bf1cf538ae808781ee89a9eead505913bd898dc19bca26d",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL36979234W.index": "e23871e1e2287b6f21fcda2ad5fbbe4eaf72d5624ac0b6f843b72eb3cfa7bd6d",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL38619874W.index": "4002cceb372553bad5e4b5b3e19e42188d1556fa457208eb94dc436cb86c16dd",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL41470186W.index": "6710113aaa88d4269be6cd5eb18fbb4b95a6f83917f94e46a5bc85d92be50fd8",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL42479046W.index": "7f0a7d69885b9e519a8d6d66d73e997150c587646bfa39a9ffa9ea393ed30a9b",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL43032614W.index": "28274b15dfb47fc892e1cb7b97a2653f1a3cf459efe209aa83b37d93a4ab3f0a",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL44512357W.index": "5a418b3a816707230e4295783ebcd11b2f8b0b28b0d3d5b790bc04be8de3e4a2",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL45326637W.index": "6a38a0cd961adf6afd862cca18ba029c084619f979e6d17fc4769853ec44d335",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL66524W.index": "b8cc226ae004e30463ce03042c0701274f97238fa5e24e450bb8364b98c5176d",
+      "datasets\\training\\evaluation_indexes\\minilm_g2_nq_50k\\books\\OL85892W.index": "5ed8b01ee1621466e000676e86023bdc1e73ababec5f28ca93a94e39a16a2435",
+      "datasets\\training\\generic\\msmarco_g1\\manifest.json": "ddb8a6ba8a1f1ed49bb057a1c26a0c5f76865108a5b3f11d2231492e09354b3c",
+      "datasets\\training\\generic\\msmarco_g1\\msmarco_g1_train.parquet": "7fb3fc0802a11efc3cf4b54be71509d36bbea3fc6bf3aa258c16d98ad22b6c16",
+      "datasets\\training\\generic\\msmarco_g1\\msmarco_g1_validation.parquet": "7e34e6325b220155d970192d63d902a8a1d67770f6ef8b4efb77260f2cd7d4a3",
+      "datasets\\training\\generic\\msmarco_g1_triplet_hard_probe\\manifest.json": "06addd069466a78acd4a1863aa3213109a2789aae43f295d9046205b2eb082cf",
+      "datasets\\training\\generic\\msmarco_g1_triplet_hard_probe\\msmarco_g1_train.parquet": "073eb5fec486c1c311deb4d525272cfcfc987c5a789c95b1d612cad11835d0cd",
+      "datasets\\training\\generic\\msmarco_g1_triplet_hard_probe\\msmarco_g1_validation.parquet": "9fb47d8616fd1730036292c149d6a6dfa899d5cd10910c82d2b832689e4a9f8c",
+      "datasets\\training\\generic\\nq_g2\\calibration.json": "40dab39bf94811867fff2b7850e9eb2004b9b3e9cf6bbfee50ea88f41cdc7a6f",
+      "datasets\\training\\generic\\nq_g2\\calibration_audit.json": "cccc8c3066878af5211017faaaf120083566b43b249e6652fbbc030f7364a8f7",
+      "datasets\\training\\generic\\nq_g2\\calibration_missing.json": "38251ddf6d139c7ae05bf51c9512e2d1f1b4107e1191638e555a5516ec863ecd",
+      "datasets\\training\\generic\\nq_g2\\manifest.json": "0366a97f400e05b58db268866b33ad0c968ddc82989d6d7f1f33aab8ddef1a03",
+      "datasets\\training\\generic\\nq_g2\\mining.json": "d8ad0cdb2400360f917ed3d226565163f3bc7b26bac3ef566f626eabb82a4b8f",
+      "datasets\\training\\generic\\nq_g2\\mining_missing.json": "4a20aad2b977eca1651e8d06ad6a6e6ec4b36ae4d9ed549642c6fe767c4671b8",
+      "datasets\\training\\generic\\nq_g2\\nq_g2_calibration.parquet": "29b65377addbf6bf96a143fe2a0e85606de546aebd2d5947f5668fc65576fea7",
+      "datasets\\training\\generic\\nq_g2\\nq_g2_pairs_train.parquet": "6b3cdffd2ac3c66e32a1d187ec4b7c6f6c3478be415129d3225a33824a460658",
+      "datasets\\training\\generic\\nq_g2\\nq_g2_pairs_train_final.parquet": "2bae681f6e3a9f31cec37cdcd7ed971b1d150f17df98754b7f89d7c6a2be1639",
+      "datasets\\training\\generic\\nq_g2\\nq_g2_pairs_validation.parquet": "8830c0c0201b5931e858e3a6c89bdf4cd316a6f214df9d65e50a1855b2b9f07b",
+      "datasets\\training\\generic\\nq_g2\\nq_g2_source_pairs.parquet": "b2444063b4616334b6b3ea629061d747d59e9fa4ffdaec15f9ca52677106b561",
+      "datasets\\training\\generic\\nq_g2\\nq_g2_train_triplets.parquet": "e061ea7afccf73743f1617aa054ed97988261542f5535e38a487558c97a591b0",
+      "datasets\\training\\generic\\nq_g2\\mining_cache\\corpus_embeddings_3a7fb9920d76cd4ce25c63ab0ba368b2b4f262f7bf971620c222784c0759f75f.npy": "dd24604bde0b010158006a8d051d50aefc351d783ec1d0acccaee1cfed4e83ee",
+      "datasets\\training\\generic\\nq_g2\\mining_cache\\corpus_embeddings_bf6883ce821194bfcfc58dd1adba30dd751c94fb05035c2a87cf6b97173b8d3a.npy": "640b74c13b5cd0f0cd31b3c8e5fdba51903ab26d36c721c27c095d90746bc5ca",
+      "datasets\\training\\generic\\nq_g2\\mining_cache\\query_embeddings_2daa639e65ab9f7f35a3c112934e096a2d2ae36bd451081d828342956eabbec9.npy": "d23cf61d9e6dbeeb5e04ccaaf1a83c3733289200448785766e1d44fdd8fc3952",
+      "datasets\\training\\generic\\nq_g2\\mining_cache\\query_embeddings_b00603b83d10f7e6423be087cefea6e4eb414ce43ad270a7a2cb451aa0d14ad1.npy": "ca5f30f3aa2845be7b0b03d231083469e8197cd581287cd9746d26b83ab7fbca",
+      "datasets\\training\\hf_cache\\nq_g2\\.agent_harnesses.json": "fce17fe375f6d857126d31f6a3e3ae5697c44d530b1bc652aaeb43fe8d7b357c",
+      "datasets\\training\\hf_cache\\nq_g2\\datasets\\sentence-transformers___natural-questions\\pair\\0.0.0\\f9e894e1081e206e577b4eaa9ee6de2b06ae6f17\\dataset_info.json": "668bfd6d1419b119843c1454fbda28ddcbc52c1eb0d83d65047a7b9ae4ae6615",
+      "datasets\\training\\hf_cache\\nq_g2\\datasets\\sentence-transformers___natural-questions\\pair\\0.0.0\\f9e894e1081e206e577b4eaa9ee6de2b06ae6f17\\natural-questions-train.arrow": "be5c54e2fe9f8fb7e74ea025e64b3613e34761cf0feb8905f7d21dd09c8bcd36",
+      "datasets\\training\\hf_cache\\nq_g2\\hub\\CACHEDIR.TAG": "e8893e2dcb3f4545ef67a0a5b7b769113d38eef1aa61c7c7ba14659b02af955f",
+      "datasets\\training\\hf_cache\\nq_g2\\hub\\datasets--sentence-transformers--natural-questions\\.no_exist\\f9e894e1081e206e577b4eaa9ee6de2b06ae6f17\\.huggingface.yaml": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "datasets\\training\\hf_cache\\nq_g2\\hub\\datasets--sentence-transformers--natural-questions\\.no_exist\\f9e894e1081e206e577b4eaa9ee6de2b06ae6f17\\dataset_infos.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "datasets\\training\\hf_cache\\nq_g2\\hub\\datasets--sentence-transformers--natural-questions\\.no_exist\\f9e894e1081e206e577b4eaa9ee6de2b06ae6f17\\natural-questions.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "datasets\\training\\hf_cache\\nq_g2\\hub\\datasets--sentence-transformers--natural-questions\\snapshots\\f9e894e1081e206e577b4eaa9ee6de2b06ae6f17\\README.md": "4e8a8ced721dff45d7cc375b177a331c901e88a346053e63d807acbac6b2a806",
+      "datasets\\training\\hf_cache\\nq_g2\\hub\\datasets--sentence-transformers--natural-questions\\snapshots\\f9e894e1081e206e577b4eaa9ee6de2b06ae6f17\\pair\\train-00000-of-00001.parquet": "8cfb5e5a7cb1cd09dbb035a581aa42ce5db5852acb3e70f070d89d7035887de9",
+      "datasets\\training\\hf_cache\\nq_g2\\xet\\logs\\xet_20260930T150156391+0530_29196.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "datasets\\training\\manifests\\minilm_g1_msmarco_50k_full.json": "6e2132d5cb270e317f73bba02135f46213ab39aeab37f4cd6ab7cf01454d1d51",
+      "datasets\\training\\manifests\\minilm_g1_msmarco_50k_smoke.json": "aa07f37f7356fbaad7c7007d4d8c9a7cec112542a23a99c7c140c730e2e80ffd",
+      "datasets\\training\\manifests\\minilm_g2_nq_50k_full.json": "dbe0148def0b4fbef7a9d09c2e21fc5d914fd83de53b16bcd087c766de6ff0a7",
+      "datasets\\training\\manifests\\minilm_g2_nq_50k_smoke.json": "b071bf9c071caec173f597c65b17d16d075c7d722a607a56ad6d6b00969a1020",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\config.json": "127f61bd96821301040697d7cf01b413d316915e532b10116cc2ef9826fe7600",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\config_sentence_transformers.json": "d709bcf44d8e08921f2e8e77c76dddadfe7147823c3be80839e09de6af4666cb",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\model.safetensors": "18b51b15c248916dce4e99532796edbbb0de0322827ad9fe1bb1b7ec90d1ec1f",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\modules.json": "5286260f53f0f5d318eb02f1565fd30f7ec7c6d305f41ad29e2bb3ec974046a6",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\README.md": "63291f21fe072d30b150f23953a3da33f829e9fdcabe0168ea27fc45d9d131cd",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\sentence_bert_config.json": "5fee3fcdc4a727fad422f0fed0c867b0921eefa9051de221521956ed42eb4c19",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\tokenizer_config.json": "9ae1bbd92b29d9490d71ae045aa1e034336352c58d664c35cb4ac251fa85f26a",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_full\\1_Pooling\\config.json": "bb80272f7adad76ce93073c25e18113ee66be1e91f60bcdd72aa41d05b28247e",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\config.json": "127f61bd96821301040697d7cf01b413d316915e532b10116cc2ef9826fe7600",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\config_sentence_transformers.json": "d709bcf44d8e08921f2e8e77c76dddadfe7147823c3be80839e09de6af4666cb",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\model.safetensors": "f6917a99e3dce07071ac7b702f4013f833ab604c416d457f0a6f8b2fbd248c8e",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\modules.json": "5286260f53f0f5d318eb02f1565fd30f7ec7c6d305f41ad29e2bb3ec974046a6",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\README.md": "43f02b47bf149caa4e9351fd529887bdba078fbc1bfa0a9a89ffa150c82e9bcb",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\sentence_bert_config.json": "5fee3fcdc4a727fad422f0fed0c867b0921eefa9051de221521956ed42eb4c19",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\tokenizer_config.json": "9ae1bbd92b29d9490d71ae045aa1e034336352c58d664c35cb4ac251fa85f26a",
+      "datasets\\training\\models\\minilm_g1_msmarco_50k_smoke\\1_Pooling\\config.json": "bb80272f7adad76ce93073c25e18113ee66be1e91f60bcdd72aa41d05b28247e",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\config.json": "127f61bd96821301040697d7cf01b413d316915e532b10116cc2ef9826fe7600",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\config_sentence_transformers.json": "d709bcf44d8e08921f2e8e77c76dddadfe7147823c3be80839e09de6af4666cb",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\model.safetensors": "f1a5609a3315525d9794e16e6813d090b89970e533ac601352e8a2c9452a92ea",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\modules.json": "5286260f53f0f5d318eb02f1565fd30f7ec7c6d305f41ad29e2bb3ec974046a6",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\README.md": "756927555bae4a8f09a0b42c232fbd7df7435deead5354e2bf972d273963f573",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\sentence_bert_config.json": "5fee3fcdc4a727fad422f0fed0c867b0921eefa9051de221521956ed42eb4c19",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\tokenizer_config.json": "9ae1bbd92b29d9490d71ae045aa1e034336352c58d664c35cb4ac251fa85f26a",
+      "datasets\\training\\models\\minilm_g2_nq_50k_full\\1_Pooling\\config.json": "bb80272f7adad76ce93073c25e18113ee66be1e91f60bcdd72aa41d05b28247e",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\config.json": "127f61bd96821301040697d7cf01b413d316915e532b10116cc2ef9826fe7600",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\config_sentence_transformers.json": "d709bcf44d8e08921f2e8e77c76dddadfe7147823c3be80839e09de6af4666cb",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\model.safetensors": "b8c62fb4cde2ea0cd1326eaae00fba74d75391539af6eca656024a6e821b1ab8",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\modules.json": "5286260f53f0f5d318eb02f1565fd30f7ec7c6d305f41ad29e2bb3ec974046a6",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\README.md": "b7d2172b13b2f80aac820efd9b62b93e1bb74bd4167fb3901da7a25bc936ab36",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\sentence_bert_config.json": "5fee3fcdc4a727fad422f0fed0c867b0921eefa9051de221521956ed42eb4c19",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\tokenizer_config.json": "9ae1bbd92b29d9490d71ae045aa1e034336352c58d664c35cb4ac251fa85f26a",
+      "datasets\\training\\models\\minilm_g2_nq_50k_smoke\\1_Pooling\\config.json": "bb80272f7adad76ce93073c25e18113ee66be1e91f60bcdd72aa41d05b28247e",
+      "datasets\\training\\reports\\rag_g1_baseline_reproduction.json": "c67bd5714aca6d857f7f3b84893482bc8522a3294dd2a413842fab3a2fd98173",
+      "datasets\\training\\reports\\rag_g1_msmarco_data.md": "d4a16b7d93d394e826188b5674debc5c7a71bb7369b93a2793981e3496b12494",
+      "datasets\\training\\reports\\rag_g1_msmarco_eval.json": "7a64c923a2e469f0a5d369c9f58511dd2256fda7e42695668d5c1ca596f47c4b",
+      "datasets\\training\\reports\\rag_g1_msmarco_eval.md": "cffb345d1751dc1ab9387ef9d37f4fd8141bf275d04d5bf11bc3eec86d790ef3",
+      "datasets\\training\\reports\\rag_g1_msmarco_final.md": "973a2f9386ead42b53ab2dc377febebc654816275e25a5b3aec7b3afa1215050",
+      "datasets\\training\\reports\\rag_g1_msmarco_generic_validation.json": "a7e6194e0f5eb5df98f1d8878c9fcee0ba4aa795c7d53295bc3e9df9ddc0d2d1",
+      "datasets\\training\\reports\\rag_g1_msmarco_training.md": "1529dc3504dfafbca0daa6f15c5fab1954bb0750145e5c0376e6e653cc06a282",
+      "datasets\\training\\reports\\rag_g2_baseline_reproduction.json": "43ed8da82ce5b129195618f6c5a33ffefaa6c3e33f54942aae02aa589803427d",
+      "datasets\\training\\reports\\rag_g2_baseline_reproduction.log": "87e336063815b9534e3730ccf15db3b583c3371e8ac160c20e95639375b396eb",
+      "datasets\\training\\reports\\rag_g2_nq_calibration.log": "93a3ab4c3f9cd18e56620e7c6415a0333ca0efbf6016b664e1313660b12e3709",
+      "datasets\\training\\reports\\rag_g2_nq_contract_test.log": "29ef043948c6c298d46b2b11c1bf36720a7bbe39874be9ae7bec380d7be4d9cd",
+      "datasets\\training\\reports\\rag_g2_nq_eval.json": "678184eda51a2c85df20baec8e7549e452deb7f7d89db16c58de912ea94510e6",
+      "datasets\\training\\reports\\rag_g2_nq_eval.log": "4af65d1173a1afcb4d5df824f041888c3b38fa6378237f76b90f8a0f499996b1",
+      "datasets\\training\\reports\\rag_g2_nq_eval.md": "baae8c182a845b5698a9cf077859009aec2d46566f37ac3958c0de0ff9ed4d17",
+      "datasets\\training\\reports\\rag_g2_nq_final.json": "1e5b754c621601dc21a617a3979aa33e591ffe3414fe69ac5bc6548cd959578d",
+      "datasets\\training\\reports\\rag_g2_nq_final.md": "007f5cd8f4939fedbf10e9de1d7be6b152ff37e1325eef62884254947b2707a2",
+      "datasets\\training\\reports\\rag_g2_nq_generic_validation.json": "3755498c2c357fd84319c4c6c759516184ddb6793c9a450d3a7ec8b6245e986f",
+      "datasets\\training\\reports\\rag_g2_nq_generic_validation.log": "1f8d59141c955a9c9a62d303b40838a926ed2b82ff3b38f1dcfb91b016d95cec",
+      "datasets\\training\\reports\\rag_g2_nq_index.log": "51758330c04d6292c25784d268a3230ebec9145f027b67f3378f9e4b2204a91b",
+      "datasets\\training\\reports\\rag_g2_nq_miner_docstring.txt": "cf2ea4485f25eb51605f93c6902bcfd13fcadea3536089ee0fafbcbafed15fc2",
+      "datasets\\training\\reports\\rag_g2_nq_mining.log": "23bf6732460b67b7c40a692a0e087df8ef9af6802d7c78b47c32aae0e89ffe11",
+      "datasets\\training\\reports\\rag_g2_nq_preflight.json": "a28e281d2eb64ce3ba3043eb3484b6754af40a01731ba74cf0960cff879eb804",
+      "datasets\\training\\reports\\rag_g2_nq_smoke.log": "bb9fa95c7c7d78986f5c67adedd7c9059fe083a1e1280078e673c853d195df44",
+      "datasets\\training\\reports\\rag_g2_nq_source_probe.json": "fad441834738ccf5bd184a383b9a67836e2a676bc9268d1dc966711c72fce412",
+      "datasets\\training\\reports\\rag_g2_nq_source_probe_retry.json": "941661f558008361b4778b72f200400324184ec7d7d4bb0b7d1ece0d4ac30a1a",
+      "datasets\\training\\reports\\rag_g2_nq_split_audit.json": "ccce434374a8eea2bb72c548856455fcd51eba9ffe584d4034a1e1c26929e42b",
+      "datasets\\training\\reports\\rag_g2_nq_training.log": "300a82e794574408018e06d282c5539c86cb356960ea7ffce435dc9b59570a0d",
+      "scripts\\build_rag_g1_index.py": "8d3b7878631f42532393139852dfa514a39467177e0df8d2acf55f32a087bc5b",
+      "scripts\\build_rag_g2_index.py": "a260c130bdb0644da13330088021f3d962b559833405f23b0bd7bfee926b5a6c",
+      "scripts\\evaluate_msmarco_g1_validation.py": "99cdcb078f3d68dae4fce30c9b7b3e039fae524c3d426348aaf8a6426ad7dc11",
+      "scripts\\evaluate_nq_g2_validation.py": "ba7327f86d5b2a7901e49decc687f88a01a4b794200ad4b205b1492cde67a19d",
+      "scripts\\evaluate_rag_g1.py": "82ec65f6b8276b3db2bb4ba4ced89d5205f9006feda729919f4407a93a29fa01",
+      "scripts\\evaluate_rag_g2.py": "927c51d432738e7cc94b1cd5ffcbe790059820a1da0f92b9e68ba96ccbc0d455",
+      "scripts\\mine_nq_hard_negatives_g2.py": "c08fcf232519c4136df6ad4ad050fd4f360b8a3f3896547fb974872151dbc97c",
+      "scripts\\nq_g2_controls.py": "03ad472f8759a706db75a6d22e3fa029b6346c15b9c1b45565fb11ca5d5ae2a0",
+      "scripts\\prepare_msmarco_g1.py": "8e3cf1cdee2e6d83768991f3c47b6b987e4a28c7c53b8532bcfa2867eb8577f7",
+      "scripts\\prepare_nq_g2.py": "15489ae20aaedbc0f8cf9a47b6a1afb8c2bc299091109f161f804ea4cb82e016",
+      "scripts\\probe_nq_g2_source.py": "56900a0e3c8e18fcbcac2b00dd0753f5091484d3eb0a86ca8ec6bcbfd95f3725",
+      "scripts\\report_nq_g2.py": "7de196140156d9a14d946816dce827c185bb2ef2c838e6aa4dc6086723aa06f9",
+      "scripts\\train_msmarco_biencoder_g1.py": "9d4a529316d81420378bd84ea7a8955f6e369a00c32820098bfd05744147deea",
+      "scripts\\train_nq_biencoder_g2.py": "1946361beaaa97c1680cfd25b34be4d25a4dc18274442838af1cd2acd189eaa8",
+      "tests\\test_msmarco_g1_training.py": "2e3ce34071bd7fff1c0f5a3c441dbc860249835e3f8e8b3eee7b67015506df90",
+      "tests\\test_nq_g2_training.py": "a7b0c8d419810198f8a3d3c3911166e1abd317839cc0d02dff303b996a02d1ea"
+    },
+    "base_snapshot": "C:\\Users\\balak\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "base_snapshot_sha256": {
+      "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+      "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3",
+      "model.safetensors": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+      "modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+      "README.md": "dcd602d2fd35c203a247304a06fec6654a12f7941b739f9221a064fe8dc3b7f0",
+      "sentence_bert_config.json": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+      "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+      "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+      "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+      "1_Pooling\\config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23"
+    },
+    "versions": {
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.15.1",
+      "datasets": "5.0.0",
+      "sentence_transformers": "5.6.0",
+      "accelerate": "1.14.0",
+      "faiss": "1.14.3"
+    },
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_free_bytes": 7385120768,
+    "gpu_total_bytes": 8546484224,
+    "bf16_supported": true,
+    "ram_total_bytes": 16438054912,
+    "ram_available_bytes": 2331541504,
+    "disk_free_bytes": 60819091456,
+    "miner_signature": "(dataset: 'Dataset', model: 'SentenceTransformer', anchor_column_name: 'str | None' = None, positive_column_name: 'str | None' = None, corpus: 'list[str] | None' = None, cross_encoder: 'CrossEncoder | None' = None, range_min: 'int' = 0, range_max: 'int | None' = None, max_score: 'float | None' = None, min_score: 'float | None' = None, absolute_margin: 'float | None' = None, relative_margin: 'float | None' = None, num_negatives: 'int' = 3, sampling_strategy: \"Literal['random', 'top']\" = 'top', query_prompt_name: 'str | None' = None, query_prompt: 'str | None' = None, corpus_prompt_name: 'str | None' = None, corpus_prompt: 'str | None' = None, include_positives: 'bool' = False, output_format: \"Literal['triplet', 'n-tuple', 'labeled-pair', 'labeled-list']\" = 'triplet', output_scores: 'bool' = False, batch_size: 'int' = 32, faiss_batch_size: 'int' = 16384, use_faiss: 'bool' = False, use_multi_process: 'list[str] | bool' = False, verbose: 'bool' = True, cache_folder: 'str | None' = None, as_triplets: 'bool | None' = None, margin: 'float | None' = None) -> 'Dataset'"
+  },
+  "smoke": {
+    "experiment": "G3_GOOAQ",
+    "phase": "smoke",
+    "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "base_snapshot": "C:\\Users\\balak\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "base_weights_sha256": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+    "model_path": "D:\\SDC\\LibraryLLM\\datasets\\training\\models\\minilm_g3_gooaq_50k_smoke",
+    "model_weights_sha256": "7199afb4f58aa27afc7d289ea3ec7a505c2ea8b793f24a61c227a67aa4cd66c9",
+    "dataset_manifest_sha256": "d45756db7cdd60b30a66ad21b20d1594ba97f17513e94800bd6adc48bc907c51",
+    "train_parquet_sha256": "0ae30b5083b831b298699511f1513eeb2b83d73ed145268d26614d44e01e059c",
+    "frozen_corpus_sha256": "c41cd28eb870ab318c67ffbb7071748a95c5f76ce5af84ea2d898636ae8bc57f",
+    "loss": "MultipleNegativesRankingLoss",
+    "explicit_negative_column": "negative",
+    "batch_sampler": "NO_DUPLICATES",
+    "physical_batch": 16,
+    "effective_contrastive_batch": 16,
+    "gradient_accumulation_steps": 1,
+    "explicit_hard_negatives_per_query": 1,
+    "full_batch_document_candidate_count": 32,
+    "bf16": true,
+    "fp16": false,
+    "rows": 1024,
+    "epochs": 1,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "scheduler": "linear",
+    "warmup_ratio": 0.05,
+    "training_steps": 64,
+    "training_seconds": 11.04122929999994,
+    "final_training_loss": 0.09902138635516167,
+    "peak_vram_reserved_bytes": 1059061760,
+    "peak_vram_allocated_bytes": 847444992,
+    "available_vram_before_bytes": 7385120768,
+    "total_vram_bytes": 8546484224,
+    "vram_headroom_bytes": 6284115968,
+    "peak_ram_rss_bytes": 2233860096,
+    "model_max_seq_length": 256,
+    "embedding_dimension": 384,
+    "software_versions": {
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.15.1",
+      "datasets": "5.0.0",
+      "sentence_transformers": "5.6.0",
+      "accelerate": "1.14.0",
+      "faiss": "1.14.3"
+    },
+    "base_snapshot_file_sha256": {
+      "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+      "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3",
+      "model.safetensors": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+      "modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+      "README.md": "dcd602d2fd35c203a247304a06fec6654a12f7941b739f9221a064fe8dc3b7f0",
+      "sentence_bert_config.json": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+      "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+      "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+      "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+      "1_Pooling\\config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23"
+    },
+    "last_logged_batch_loss": 0.08773722648620605
+  },
+  "training": {
+    "experiment": "G3_GOOAQ",
+    "phase": "full",
+    "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "base_snapshot": "C:\\Users\\balak\\.cache\\huggingface\\hub\\models--sentence-transformers--all-MiniLM-L6-v2\\snapshots\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "base_weights_sha256": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+    "model_path": "D:\\SDC\\LibraryLLM\\datasets\\training\\models\\minilm_g3_gooaq_50k_full",
+    "model_weights_sha256": "93e147de5e7a18998bff9a6cd9478ff6322553288403482bf6514792a0c940cd",
+    "dataset_manifest_sha256": "d45756db7cdd60b30a66ad21b20d1594ba97f17513e94800bd6adc48bc907c51",
+    "train_parquet_sha256": "0ae30b5083b831b298699511f1513eeb2b83d73ed145268d26614d44e01e059c",
+    "frozen_corpus_sha256": "c41cd28eb870ab318c67ffbb7071748a95c5f76ce5af84ea2d898636ae8bc57f",
+    "loss": "MultipleNegativesRankingLoss",
+    "explicit_negative_column": "negative",
+    "batch_sampler": "NO_DUPLICATES",
+    "physical_batch": 16,
+    "effective_contrastive_batch": 16,
+    "gradient_accumulation_steps": 1,
+    "explicit_hard_negatives_per_query": 1,
+    "full_batch_document_candidate_count": 32,
+    "bf16": true,
+    "fp16": false,
+    "rows": 45000,
+    "epochs": 1,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "scheduler": "linear",
+    "warmup_ratio": 0.05,
+    "training_steps": 2813,
+    "training_seconds": 348.19943549999994,
+    "final_training_loss": 0.09279995048508032,
+    "peak_vram_reserved_bytes": 1077936128,
+    "peak_vram_allocated_bytes": 940789760,
+    "available_vram_before_bytes": 7385120768,
+    "total_vram_bytes": 8546484224,
+    "vram_headroom_bytes": 6263144448,
+    "peak_ram_rss_bytes": 2279112704,
+    "model_max_seq_length": 256,
+    "embedding_dimension": 384,
+    "software_versions": {
+      "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.15.1",
+      "datasets": "5.0.0",
+      "sentence_transformers": "5.6.0",
+      "accelerate": "1.14.0",
+      "faiss": "1.14.3"
+    },
+    "base_snapshot_file_sha256": {
+      "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+      "config_sentence_transformers.json": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3",
+      "model.safetensors": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+      "modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+      "README.md": "dcd602d2fd35c203a247304a06fec6654a12f7941b739f9221a064fe8dc3b7f0",
+      "sentence_bert_config.json": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+      "special_tokens_map.json": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+      "tokenizer_config.json": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+      "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+      "1_Pooling\\config.json": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23"
+    },
+    "last_logged_batch_loss": 0.07454360723495483
+  },
+  "generic": {
+    "type": "actual held-out retrieval; candidate corpus = deduplicated 5k validation positives; not full GooAQ corpus",
+    "queries": 5000,
+    "candidate_count": 4909,
+    "train_validation_document_overlap": 674,
+    "train_validation_normalized_query_overlap": 0,
+    "results": {
+      "A": {
+        "MRR@50": 0.9282587329186274,
+        "Hit@1": 0.882,
+        "Hit@5": 0.9842,
+        "Hit@10": 0.9934,
+        "Hit@20": 0.9974,
+        "Hit@50": 0.9986
+      },
+      "G3": {
+        "MRR@50": 0.9259915620930589,
+        "Hit@1": 0.8796,
+        "Hit@5": 0.9834,
+        "Hit@10": 0.9914,
+        "Hit@20": 0.9968,
+        "Hit@50": 0.9984
+      }
+    },
+    "minimum_global_free_vram_bytes": 6902775808
+  },
+  "index": {
+    "experiment": "G3_GOOAQ",
+    "frozen_corpus_sha256": "c41cd28eb870ab318c67ffbb7071748a95c5f76ce5af84ea2d898636ae8bc57f",
+    "model_weights_sha256": "93e147de5e7a18998bff9a6cd9478ff6322553288403482bf6514792a0c940cd",
+    "embedding_shape": [
+      16895,
+      384
+    ],
+    "dimension": 384,
+    "faiss_type": "IndexFlatIP",
+    "index_count": 16895,
+    "book_count": 18,
+    "norm_min": 0.9999998807907104,
+    "norm_max": 1.0000001192092896,
+    "embeddings_sha256": "45668431c798415fb11169b38c4b4d615d7746a2f2acf4a2da5be3ffcc82b80a",
+    "index_sha256": "79276283bbeeb849f04b9fe46f1c9974eb4f8077edd1ea45f06c2c77e64a7d27",
+    "build_seconds": 25.543179800000075,
+    "peak_process_rss_bytes": 1631145984
+  },
+  "DEV": {
+    "result_label": "EXPERIMENTAL / DESCRIPTIVE \u2014 DRAFT DEV LABELS",
+    "experiment": "G3_GOOAQ",
+    "split": "DEV",
+    "test_evaluated": false,
+    "comparison": "original query; dense only; per-book IndexFlatIP; no expansion/reranker/LLM/lexical/union",
+    "a": {
+      "evaluated": 29,
+      "mrr": 0.16526615853761104,
+      "hit": {
+        "1": 0.06896551724137931,
+        "3": 0.1724137931034483,
+        "5": 0.2413793103448276,
+        "10": 0.3448275862068966,
+        "20": 0.4827586206896552,
+        "40": 0.5517241379310345,
+        "50": 0.6551724137931034
+      },
+      "recall": {
+        "1": 0.06896551724137931,
+        "3": 0.1724137931034483,
+        "5": 0.2413793103448276,
+        "10": 0.3448275862068966,
+        "20": 0.46551724137931033,
+        "40": 0.5517241379310345,
+        "50": 0.6206896551724138
+      }
+    },
+    "g3": {
+      "evaluated": 29,
+      "mrr": 0.13603995042283237,
+      "hit": {
+        "1": 0.034482758620689655,
+        "3": 0.1724137931034483,
+        "5": 0.20689655172413793,
+        "10": 0.3793103448275862,
+        "20": 0.4482758620689655,
+        "40": 0.6206896551724138,
+        "50": 0.7241379310344828
+      },
+      "recall": {
+        "1": 0.034482758620689655,
+        "3": 0.1724137931034483,
+        "5": 0.20689655172413793,
+        "10": 0.3793103448275862,
+        "20": 0.4482758620689655,
+        "40": 0.603448275862069,
+        "50": 0.6896551724137931
+      }
+    },
+    "a_no_gold_top50": 10,
+    "g3_no_gold_top50": 8,
+    "counts": {
+      "IMPROVED": 8,
+      "REGRESSED": 7,
+      "UNCHANGED": 14
+    },
+    "recovered_top50": 2,
+    "lost_top50": 0,
+    "per_query": [
+      {
+        "query_id": "v8_01",
+        "work_id": "OL45326637W",
+        "book": "Frankenstein",
+        "question": "Why does Victor create the creature?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": null,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null
+        ],
+        "g3_gold_span_ranks": [
+          null
+        ]
+      },
+      {
+        "query_id": "v8_02",
+        "work_id": "OL45326637W",
+        "book": "Frankenstein",
+        "question": "Who is Victor's father?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": 4,
+        "g3_first_gold_rank": 4,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          4
+        ],
+        "g3_gold_span_ranks": [
+          4
+        ]
+      },
+      {
+        "query_id": "v8_03",
+        "work_id": "OL45326637W",
+        "book": "Frankenstein",
+        "question": "Why doesn't Victor create a female creature?",
+        "status": "REGRESSED",
+        "a_first_gold_rank": 8,
+        "g3_first_gold_rank": 9,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          8
+        ],
+        "g3_gold_span_ranks": [
+          9
+        ]
+      },
+      {
+        "query_id": "v8_04",
+        "work_id": "OL45326637W",
+        "book": "Frankenstein",
+        "question": "What happens after Victor creates the creature?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": null,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null
+        ],
+        "g3_gold_span_ranks": [
+          null
+        ]
+      },
+      {
+        "query_id": "v8_06",
+        "work_id": "OL85892W",
+        "book": "Dracula",
+        "question": "Why doesn't Jonathan Harker leave the castle?",
+        "status": "IMPROVED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": 47,
+        "recovered_top50": true,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null
+        ],
+        "g3_gold_span_ranks": [
+          47
+        ],
+        "gold_span_excerpts": [
+          "cked and\nbolted. In no place save from the windows in the castle walls is there\nan available exit.\n\nThe castle is a veritable prison, and I am a prisoner!\n\nCHAPTER III\n\nJONATHAN HARKER\u2019S JOURNAL--_continued_\n\nWhen I found that I was a prisoner "
+        ],
+        "a_first_accepted": null,
+        "g3_first_accepted": {
+          "rank": 47,
+          "chunk_id": "OL85892W__tokens_220__6690f3fb21c189f5",
+          "similarity": 0.3848326802253723,
+          "text_excerpt": "In no place save from the windows in the castle walls is there\nan available exit.\n\nThe castle is a veritable prison, and I am a prisoner!\n\nCHAPTER III\n\nJONATHAN HARKER\u2019S JOURNAL--_continued_\n\nWhen I found that I was a prisoner a sort of wild feeling came over me.\nI rushed up and down the stairs, trying every door and peering out of\nevery window I could find; but after a little the conviction of my\nhelplessness overpowered all other feelings. When"
+        },
+        "a_nearest": [
+          {
+            "rank": 1,
+            "chunk_id": "OL85892W__tokens_220__b2fcccaa27b65e8a",
+            "similarity": 0.5243475437164307,
+            "text_excerpt": "Harker and Harker; Quincey\nand Art are all out following up the clues as to the earth-boxes. I\nshall finish my round of work and we shall meet to-night.\n\n_Mina Harker\u2019s Journal._\n\n_1 October._--It is strange to me to be kept in the dark as I am to-day;\nafter Jonathan\u2019s full confidence for so many years, to see him\nmanifestly avoid certain matters, and those the most vital of all. This\nmorning I slept late after the fatigues of yesterday, and thou"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "OL85892W__tokens_220__84ba230d9042d7cc",
+            "similarity": 0.512706995010376,
+            "text_excerpt": "He have always the\nstrength in his hand of twenty men; even we four who gave our strength\nto Miss Lucy it also is all to him. Besides, he can summon his wolf and\nI know not what. So if it be that he come thither on this night he shall\nfind me; but none other shall--until it be too late. But it may be that\nhe will not attempt the place. There is no reason why he should; his\nhunting ground is more full of game than the churchyard where the\nUn-Dead "
+          },
+          {
+            "rank": 3,
+            "chunk_id": "OL85892W__tokens_220__bd0e1f87626f1267",
+            "similarity": 0.48480960726737976,
+            "text_excerpt": "It was terribly weak, and\nlooked quite emaciated. It too, when partially restored, had the common\nstory to tell of being lured away by the \u201cbloofer lady.\u201d\n\nCHAPTER XIV\n\nMINA HARKER\u2019S JOURNAL\n\n_23 September_.--Jonathan is better after a bad night. I am so glad that\nhe has plenty of work to do, for that keeps his mind off the terrible\nthings; and oh, I am rejoiced that he is not now weighed down with the\nresponsibility of his new position. I knew h"
+          }
+        ],
+        "g3_nearest": [
+          {
+            "rank": 1,
+            "chunk_id": "OL85892W__tokens_220__b2fcccaa27b65e8a",
+            "similarity": 0.5625519156455994,
+            "text_excerpt": "Harker and Harker; Quincey\nand Art are all out following up the clues as to the earth-boxes. I\nshall finish my round of work and we shall meet to-night.\n\n_Mina Harker\u2019s Journal._\n\n_1 October._--It is strange to me to be kept in the dark as I am to-day;\nafter Jonathan\u2019s full confidence for so many years, to see him\nmanifestly avoid certain matters, and those the most vital of all. This\nmorning I slept late after the fatigues of yesterday, and thou"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "OL85892W__tokens_220__6eb69d39e29aba6c",
+            "similarity": 0.5294723510742188,
+            "text_excerpt": "Harker has got\nthe letters between the consignee of the boxes at Whitby and the\ncarriers in London who took charge of them. He is now reading his wife\u2019s\ntypescript of my diary. I wonder what they make out of it. Here it\nis....\n\nStrange that it never struck me that the very next house might be\nthe Count\u2019s hiding-place! Goodness knows that we had enough clues\nfrom the conduct of the patient Renfield! The bundle of letters\nrelating to the purchase o"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "OL85892W__tokens_220__61178db585acbaa6",
+            "similarity": 0.5220344066619873,
+            "text_excerpt": "Harker everything which had passed; and\nalthough she grew snowy white at times when danger had seemed to\nthreaten her husband, and red at others when his devotion to her was\nmanifested, she listened bravely and with calmness. When we came to the\npart where Harker had rushed at the Count so recklessly, she clung to\nher husband\u2019s arm, and held it tight as though her clinging could\nprotect him from any harm that might come. She said nothing, however"
+          }
+        ]
+      },
+      {
+        "query_id": "v8_07",
+        "work_id": "OL85892W",
+        "book": "Dracula",
+        "question": "Who is Mina's husband?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": null,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null,
+          null,
+          null
+        ],
+        "g3_gold_span_ranks": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "query_id": "v8_08",
+        "work_id": "OL85892W",
+        "book": "Dracula",
+        "question": "What ship transported Dracula to England?",
+        "status": "IMPROVED",
+        "a_first_gold_rank": 46,
+        "g3_first_gold_rank": 44,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          46,
+          null
+        ],
+        "g3_gold_span_ranks": [
+          44,
+          null
+        ]
+      },
+      {
+        "query_id": "v8_09",
+        "work_id": "OL45326637W",
+        "book": "Frankenstein",
+        "question": "Why does Victor regret creating the creature?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": null,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null,
+          null
+        ],
+        "g3_gold_span_ranks": [
+          null,
+          null
+        ]
+      },
+      {
+        "query_id": "v8_10",
+        "work_id": "OL45326637W",
+        "book": "Frankenstein",
+        "question": "What happens when Victor first sees the creature?",
+        "status": "REGRESSED",
+        "a_first_gold_rank": 13,
+        "g3_first_gold_rank": 27,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          23,
+          13
+        ],
+        "g3_gold_span_ranks": [
+          37,
+          27
+        ]
+      },
+      {
+        "query_id": "pp_01",
+        "work_id": "OL66524W",
+        "book": "Pride and Prejudice",
+        "question": "Which estate has been let to a wealthy young man from northern England?",
+        "status": "IMPROVED",
+        "a_first_gold_rank": 12,
+        "g3_first_gold_rank": 7,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          12
+        ],
+        "g3_gold_span_ranks": [
+          7
+        ]
+      },
+      {
+        "query_id": "pp_02",
+        "work_id": "OL66524W",
+        "book": "Pride and Prejudice",
+        "question": "How does Darcy describe Elizabeth when declining to dance with her?",
+        "status": "REGRESSED",
+        "a_first_gold_rank": 17,
+        "g3_first_gold_rank": 29,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          17
+        ],
+        "g3_gold_span_ranks": [
+          29
+        ]
+      },
+      {
+        "query_id": "pp_03",
+        "work_id": "OL66524W",
+        "book": "Pride and Prejudice",
+        "question": "Whom does Charlotte Lucas agree to marry?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": 7,
+        "g3_first_gold_rank": 7,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          7
+        ],
+        "g3_gold_span_ranks": [
+          7
+        ]
+      },
+      {
+        "query_id": "pp_04",
+        "work_id": "OL66524W",
+        "book": "Pride and Prejudice",
+        "question": "To whom is Mr. Bennet's estate entailed?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": null,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null
+        ],
+        "g3_gold_span_ranks": [
+          null
+        ]
+      },
+      {
+        "query_id": "pp_05",
+        "work_id": "OL66524W",
+        "book": "Pride and Prejudice",
+        "question": "Which man does Lydia leave Brighton with, alarming her family?",
+        "status": "IMPROVED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": 49,
+        "recovered_top50": true,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null
+        ],
+        "g3_gold_span_ranks": [
+          49
+        ],
+        "gold_span_excerpts": [
+          "for time, my\nhead is so bewildered that I cannot answer for being coherent. Dearest\nLizzy, I hardly know what I would write, but I have bad news for you,\nand it cannot be delayed. Imprudent as a marriage between Mr. Wickham\nand our poor Lydia would be, we are now anxious to be assured it has\ntaken place, for there is but too much reason to fear they are not gone\nto Scotland. Colonel Forster came yesterday, having left Brighton the\nday before, not"
+        ],
+        "a_first_accepted": null,
+        "g3_first_accepted": {
+          "rank": 49,
+          "chunk_id": "OL66524W__tokens_220__a636a19f5f30a36b",
+          "similarity": 0.5539288520812988,
+          "text_excerpt": "Without allowing herself time for consideration, and scarcely knowing\nwhat she felt, Elizabeth, on finishing this letter, instantly seized the\nother, and opening it with the utmost impatience, read as follows: it\nhad been written a day later than the conclusion of the first.\n\n\u201cBy this time, my dearest sister, you have received my hurried letter; I\nwish this may be more intelligible, but though not confined for time, my\nhead is so bewildered that "
+        },
+        "a_nearest": [
+          {
+            "rank": 1,
+            "chunk_id": "OL66524W__tokens_220__ed4650337b0907aa",
+            "similarity": 0.7205778360366821,
+            "text_excerpt": "Lydia\u2019s going to Brighton was all that consoled her for the\nmelancholy conviction of her husband\u2019s never intending to go there\nhimself.\n\nBut they were entirely ignorant of what had passed; and their raptures\ncontinued, with little intermission, to the very day of Lydia\u2019s leaving\nhome.\n\nElizabeth was now to see Mr. Wickham for the last time. Having been\nfrequently in company with him since her return, agitation was pretty\nwell over; the agitations"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "OL66524W__tokens_220__f915ac65851d429c",
+            "similarity": 0.7014776468276978,
+            "text_excerpt": "She got up and ran out of the room;\nand returned no more, till she heard them passing through the hall to\nthe dining-parlour. She then joined them soon enough to see Lydia, with\nanxious parade, walk up to her mother\u2019s right hand, and hear her say to\nher eldest sister,--\n\n\u201cAh, Jane, I take your place now, and you must go lower, because I am a\nmarried woman.\u201d\n\nIt was not to be supposed that time would give Lydia that embarrassment\nfrom which she ha"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "OL66524W__tokens_220__26ddfe20d4330d82",
+            "similarity": 0.6752507090568542,
+            "text_excerpt": "Gardiner, after\ngeneral assurances of his affection for her and all her family, told her\nthat he meant to be in London the very next day, and would assist Mr.\nBennet in every endeavour for recovering Lydia.\n\n\u201cDo not give way to useless alarm,\u201d added he: \u201cthough it is right to be\nprepared for the worst, there is no occasion to look on it as certain.\nIt is not quite a week since they left Brighton. In a few days more, we\nmay gain some news of them;"
+          }
+        ],
+        "g3_nearest": [
+          {
+            "rank": 1,
+            "chunk_id": "OL66524W__tokens_220__ed4650337b0907aa",
+            "similarity": 0.7301313877105713,
+            "text_excerpt": "Lydia\u2019s going to Brighton was all that consoled her for the\nmelancholy conviction of her husband\u2019s never intending to go there\nhimself.\n\nBut they were entirely ignorant of what had passed; and their raptures\ncontinued, with little intermission, to the very day of Lydia\u2019s leaving\nhome.\n\nElizabeth was now to see Mr. Wickham for the last time. Having been\nfrequently in company with him since her return, agitation was pretty\nwell over; the agitations"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "OL66524W__tokens_220__f915ac65851d429c",
+            "similarity": 0.6978580951690674,
+            "text_excerpt": "She got up and ran out of the room;\nand returned no more, till she heard them passing through the hall to\nthe dining-parlour. She then joined them soon enough to see Lydia, with\nanxious parade, walk up to her mother\u2019s right hand, and hear her say to\nher eldest sister,--\n\n\u201cAh, Jane, I take your place now, and you must go lower, because I am a\nmarried woman.\u201d\n\nIt was not to be supposed that time would give Lydia that embarrassment\nfrom which she ha"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "OL66524W__tokens_220__afe3a410b9e8065c",
+            "similarity": 0.6742000579833984,
+            "text_excerpt": "Lydia does not leave me because she is married;\nbut only because her husband\u2019s regiment happens to be so far off. If\nthat had been nearer, she would not have gone so soon.\u201d\n\nBut the spiritless condition which this event threw her into was shortly\nrelieved, and her mind opened again to the agitation of hope, by an\narticle of news which then began to be in circulation. The housekeeper\nat Netherfield had received orders to prepare for the arrival of"
+          }
+        ]
+      },
+      {
+        "query_id": "alice_01",
+        "work_id": "OL38619874W",
+        "book": "Alice's Adventures in Wonderland",
+        "question": "What unusual item does the White Rabbit take from his waistcoat pocket?",
+        "status": "REGRESSED",
+        "a_first_gold_rank": 4,
+        "g3_first_gold_rank": 7,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          4
+        ],
+        "g3_gold_span_ranks": [
+          7
+        ]
+      },
+      {
+        "query_id": "alice_02",
+        "work_id": "OL38619874W",
+        "book": "Alice's Adventures in Wonderland",
+        "question": "How tall is Alice after drinking from the first small bottle?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": 17,
+        "g3_first_gold_rank": 17,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          17
+        ],
+        "g3_gold_span_ranks": [
+          17
+        ]
+      },
+      {
+        "query_id": "alice_03",
+        "work_id": "OL38619874W",
+        "book": "Alice's Adventures in Wonderland",
+        "question": "What does the Caterpillar say the two sides of the mushroom will do?",
+        "status": "REGRESSED",
+        "a_first_gold_rank": 1,
+        "g3_first_gold_rank": 3,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          1
+        ],
+        "g3_gold_span_ranks": [
+          3
+        ]
+      },
+      {
+        "query_id": "alice_04",
+        "work_id": "OL38619874W",
+        "book": "Alice's Adventures in Wonderland",
+        "question": "Who tells Alice that everyone there is mad?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": 2,
+        "g3_first_gold_rank": 2,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          2
+        ],
+        "g3_gold_span_ranks": [
+          2
+        ]
+      },
+      {
+        "query_id": "alice_05",
+        "work_id": "OL38619874W",
+        "book": "Alice's Adventures in Wonderland",
+        "question": "What animals serve as balls and mallets in the Queen's croquet game?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": 1,
+        "g3_first_gold_rank": 1,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          1
+        ],
+        "g3_gold_span_ranks": [
+          1
+        ]
+      },
+      {
+        "query_id": "time_01",
+        "work_id": "OL27039837W",
+        "book": "The Time Machine",
+        "question": "What year does the Time Traveller say he has reached when he meets the Eloi?",
+        "status": "IMPROVED",
+        "a_first_gold_rank": 44,
+        "g3_first_gold_rank": 34,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          44,
+          null
+        ],
+        "g3_gold_span_ranks": [
+          34,
+          null
+        ]
+      },
+      {
+        "query_id": "time_02",
+        "work_id": "OL27039837W",
+        "book": "The Time Machine",
+        "question": "What is the name of the Eloi woman who befriends the Time Traveller?",
+        "status": "IMPROVED",
+        "a_first_gold_rank": 50,
+        "g3_first_gold_rank": 31,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          50
+        ],
+        "g3_gold_span_ranks": [
+          31
+        ]
+      },
+      {
+        "query_id": "time_03",
+        "work_id": "OL27039837W",
+        "book": "The Time Machine",
+        "question": "Where does the Time Traveller conclude his missing machine has been hidden?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": null,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null
+        ],
+        "g3_gold_span_ranks": [
+          null
+        ]
+      },
+      {
+        "query_id": "time_04",
+        "work_id": "OL27039837W",
+        "book": "The Time Machine",
+        "question": "Where does the Time Traveller infer the second human species lives?",
+        "status": "IMPROVED",
+        "a_first_gold_rank": 10,
+        "g3_first_gold_rank": 7,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          10
+        ],
+        "g3_gold_span_ranks": [
+          7
+        ]
+      },
+      {
+        "query_id": "time_05",
+        "work_id": "OL27039837W",
+        "book": "The Time Machine",
+        "question": "What color is the sun in the far future at the end of the Traveller's journey?",
+        "status": "IMPROVED",
+        "a_first_gold_rank": 22,
+        "g3_first_gold_rank": 16,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          22
+        ],
+        "g3_gold_span_ranks": [
+          16
+        ]
+      },
+      {
+        "query_id": "war_01",
+        "work_id": "OL33027136W",
+        "book": "The War of the Worlds",
+        "question": "What object does the crowd discover on Horsell Common after the first Martian landing?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": null,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null
+        ],
+        "g3_gold_span_ranks": [
+          null
+        ]
+      },
+      {
+        "query_id": "war_02",
+        "work_id": "OL33027136W",
+        "book": "The War of the Worlds",
+        "question": "What flag does the deputation carry toward the Martians?",
+        "status": "REGRESSED",
+        "a_first_gold_rank": 2,
+        "g3_first_gold_rank": 3,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          2
+        ],
+        "g3_gold_span_ranks": [
+          3
+        ]
+      },
+      {
+        "query_id": "war_03",
+        "work_id": "OL33027136W",
+        "book": "The War of the Worlds",
+        "question": "What shape are the towering machines the Martians use to walk?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": null,
+        "g3_first_gold_rank": null,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          null
+        ],
+        "g3_gold_span_ranks": [
+          null
+        ]
+      },
+      {
+        "query_id": "war_04",
+        "work_id": "OL33027136W",
+        "book": "The War of the Worlds",
+        "question": "What is the dominant color of Martian vegetation?",
+        "status": "UNCHANGED",
+        "a_first_gold_rank": 2,
+        "g3_first_gold_rank": 2,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          2
+        ],
+        "g3_gold_span_ranks": [
+          2
+        ]
+      },
+      {
+        "query_id": "war_05",
+        "work_id": "OL33027136W",
+        "book": "The War of the Worlds",
+        "question": "What kills the Martians after their invasion?",
+        "status": "REGRESSED",
+        "a_first_gold_rank": 27,
+        "g3_first_gold_rank": 37,
+        "recovered_top50": false,
+        "lost_top50": false,
+        "a_gold_span_ranks": [
+          27
+        ],
+        "g3_gold_span_ranks": [
+          37
+        ]
+      }
+    ]
+  },
+  "safety": {
+    "production_files": 64,
+    "production_changed": 0,
+    "historical_files": 159,
+    "G1_G2_changed": 0,
+    "baseline_unchanged": true,
+    "corpus_labels_sources_unchanged": true
+  },
+  "TEST_evaluated": false,
+  "files_added": [
+    "datasets/training/reports/rag_g3_gooaq_final.json",
+    "datasets/training/reports/rag_g3_gooaq_final.md",
+    "datasets\\training\\manifests\\minilm_g3_gooaq_50k_full.json",
+    "datasets\\training\\manifests\\minilm_g3_gooaq_50k_smoke.json",
+    "datasets\\training\\reports\\rag_g3_baseline_reproduction.json",
+    "datasets\\training\\reports\\rag_g3_baseline_reproduction.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_calibration.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_calibration_v2.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_contract_test.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_eval.json",
+    "datasets\\training\\reports\\rag_g3_gooaq_eval.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_eval.md",
+    "datasets\\training\\reports\\rag_g3_gooaq_final.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_generic_validation.json",
+    "datasets\\training\\reports\\rag_g3_gooaq_generic_validation.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_index.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_index_integrity.json",
+    "datasets\\training\\reports\\rag_g3_gooaq_miner_docstring.txt",
+    "datasets\\training\\reports\\rag_g3_gooaq_mining.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_preflight.json",
+    "datasets\\training\\reports\\rag_g3_gooaq_prepare.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_resume_preflight.json",
+    "datasets\\training\\reports\\rag_g3_gooaq_smoke.log",
+    "datasets\\training\\reports\\rag_g3_gooaq_source_probe.json",
+    "datasets\\training\\reports\\rag_g3_gooaq_training.log",
+    "scripts\\build_rag_g3_index.py",
+    "scripts\\evaluate_gooaq_g3_validation.py",
+    "scripts\\evaluate_rag_g3.py",
+    "scripts\\gooaq_g3_controls.py",
+    "scripts\\mine_gooaq_hard_negatives_g3.py",
+    "scripts\\prepare_gooaq_g3.py",
+    "scripts\\probe_gooaq_g3_source.py",
+    "scripts\\report_gooaq_g3.py",
+    "scripts\\train_gooaq_biencoder_g3.py",
+    "tests\\test_gooaq_g3_training.py"
+  ],
+  "isolated_artifact_directories": [
+    "datasets/training/generic/gooaq_g3",
+    "datasets/training/hf_cache/gooaq_g3",
+    "datasets/training/models/minilm_g3_gooaq_50k_smoke",
+    "datasets/training/models/minilm_g3_gooaq_50k_full",
+    "datasets/training/checkpoints/minilm_g3_gooaq_50k_smoke",
+    "datasets/training/checkpoints/minilm_g3_gooaq_50k_full",
+    "datasets/training/evaluation_indexes/minilm_g3_gooaq_50k"
+  ],
+  "resume_preflight": {
+    "safety": {
+      "production_files": 64,
+      "production_changed": 0,
+      "historical_files": 159,
+      "G1_G2_changed": 0,
+      "baseline_unchanged": true,
+      "corpus_labels_sources_unchanged": true
+    },
+    "GPU_free_bytes": 7385120768,
+    "GPU_total_bytes": 8546484224,
+    "GPU": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "BF16_supported": true,
+    "RAM_available_bytes": 4475998208,
+    "RAM_total_bytes": 16438054912,
+    "disk_free_bytes": 60266590208,
+    "triplets": 45000,
+    "hard_count": 44713,
+    "fallback_count": 287,
+    "fallback_fraction": 0.006377777777777777
+  },
+  "frozen_historical_context": {
+    "A": {
+      "evaluated": 29,
+      "mrr": 0.16526615853761104,
+      "hit": {
+        "1": 0.06896551724137931,
+        "3": 0.1724137931034483,
+        "5": 0.2413793103448276,
+        "10": 0.3448275862068966,
+        "20": 0.4827586206896552,
+        "40": 0.5517241379310345,
+        "50": 0.6551724137931034
+      },
+      "recall": {
+        "1": 0.06896551724137931,
+        "3": 0.1724137931034483,
+        "5": 0.2413793103448276,
+        "10": 0.3448275862068966,
+        "20": 0.46551724137931033,
+        "40": 0.5517241379310345,
+        "50": 0.6206896551724138
+      }
+    },
+    "G1": {
+      "evaluated": 29,
+      "mrr": 0.1095812877874788,
+      "hit": {
+        "1": 0.034482758620689655,
+        "3": 0.10344827586206896,
+        "5": 0.1724137931034483,
+        "10": 0.2413793103448276,
+        "20": 0.3793103448275862,
+        "40": 0.4827586206896552,
+        "50": 0.5172413793103449
+      },
+      "recall": {
+        "1": 0.034482758620689655,
+        "3": 0.10344827586206896,
+        "5": 0.1724137931034483,
+        "10": 0.2413793103448276,
+        "20": 0.3793103448275862,
+        "40": 0.46551724137931033,
+        "50": 0.5
+      }
+    },
+    "G2": {
+      "evaluated": 29,
+      "mrr": 0.1543859067940777,
+      "hit": {
+        "1": 0.06896551724137931,
+        "3": 0.1724137931034483,
+        "5": 0.2413793103448276,
+        "10": 0.3448275862068966,
+        "20": 0.41379310344827586,
+        "40": 0.5862068965517241,
+        "50": 0.6206896551724138
+      },
+      "recall": {
+        "1": 0.06896551724137931,
+        "3": 0.1724137931034483,
+        "5": 0.2413793103448276,
+        "10": 0.3448275862068966,
+        "20": 0.39655172413793105,
+        "40": 0.5517241379310345,
+        "50": 0.603448275862069
+      }
+    }
+  },
+  "index_integrity": {
+    "global_exact_vector_match": true,
+    "shape": [
+      16895,
+      384
+    ],
+    "books": {
+      "OL15933082W": {
+        "count": 263,
+        "sha256": "e7b15c115dd73edcff9590a486cd71cb116ff42f2adeebef17946eb1b8cc0362",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL17494673W": {
+        "count": 1005,
+        "sha256": "d9286b166249b2ee81307faf45dd60cd1d08c4a3d019a83cfb6dbf6b6a1ba8da",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL27039837W": {
+        "count": 305,
+        "sha256": "25c8af57908ea34a5d423adb1d1047536f36eeb41cafa008ef520fd4a27841d2",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL27471326W": {
+        "count": 2363,
+        "sha256": "c2eed08686e817b6a9877de39d0cd89a8c32bdfa9bc070624b52059d12b5b5a9",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL2772007W": {
+        "count": 52,
+        "sha256": "056ce179598b493e14d8b6674ef5ae3fa0162dbe32ec4257a63e5bd991d84d35",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL28944494W": {
+        "count": 728,
+        "sha256": "9c6955adef20b356df70f8529d1d1af539e3cb3a388b334bf7f866e9831800e9",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL33027136W": {
+        "count": 606,
+        "sha256": "323e4c6f85b19d4888a839b8936c07a34a90d1bc03011b41ccf6d5ccdf17d75a",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL33723557W": {
+        "count": 200,
+        "sha256": "031bff93df376f2856e672155ea1431861ee676e705289f8e9135fa393a461b9",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL35758281W": {
+        "count": 1208,
+        "sha256": "f6b0f6763cb1760960bf45dda818269ebc6e4477dbf9a89ee8fdd0af56683752",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL36979234W": {
+        "count": 1945,
+        "sha256": "de0b814b0c73e9bcb51bfca0eb2422245edfd19845d0e022ade4f0ed59acc380",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL38619874W": {
+        "count": 284,
+        "sha256": "6c03d0e22d88b8ad1acdbf046f982a5fea3e452e83fcdc50c4d724a1e732c551",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL41470186W": {
+        "count": 1939,
+        "sha256": "c208cb28362dc85c7f948c3b7ffee4f37d53dd7581f914250bb51042a83d8604",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL42479046W": {
+        "count": 205,
+        "sha256": "761b4b7f521d426241708d4c3c3b40c0296cf70c1b2cefb84bd4aadf6a9872d2",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL43032614W": {
+        "count": 1420,
+        "sha256": "a30580d053733798d266df759d1d7850eadb119833bb7a74322578cbf95b7a77",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL44512357W": {
+        "count": 742,
+        "sha256": "851d9bbba00b4b011e7c89a6e677362750258257fdb3e13d62df9b8c5aed7f9c",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL45326637W": {
+        "count": 787,
+        "sha256": "c27b060bcf1673078a9012ed74a7518ad6e3e93d15546f009bbe31f009e375a2",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL66524W": {
+        "count": 1286,
+        "sha256": "63f090ada190f732069f1a7263548a6ba7232f7f12b09e88d885408e2dde5cf6",
+        "exact_frozen_row_vector_order": true
+      },
+      "OL85892W": {
+        "count": 1557,
+        "sha256": "d660405d520e60cca282c5835185ad65037e56814206402fbe30819bc24f6060",
+        "exact_frozen_row_vector_order": true
+      }
+    },
+    "TEST_evaluated": false
+  },
+  "primary_metric_deltas": {
+    "hit@20": -0.03448275862068967,
+    "hit@50": 0.06896551724137934,
+    "recall@20": -0.017241379310344807,
+    "recall@50": 0.06896551724137934,
+    "no_gold_top50": -2
+  },
+  "top20_entered": [
+    "time_05"
+  ],
+  "top20_lost": [
+    "v8_10",
+    "pp_02"
+  ]
+}

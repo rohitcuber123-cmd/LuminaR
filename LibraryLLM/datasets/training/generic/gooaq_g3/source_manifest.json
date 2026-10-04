@@ -1,0 +1,106 @@
+{
+  "experiment": "G3_GOOAQ",
+  "dataset_id": "sentence-transformers/gooaq",
+  "config": "pair",
+  "revision": "b089f728748a068b7bc5234e5bcf5b25e3c8279c",
+  "split": "train",
+  "schema": {
+    "question": "string",
+    "answer": "string"
+  },
+  "source_row_count": 3012496,
+  "automatic_download": "successful bounded streaming; no complete multi-million-row materialization",
+  "cache": "D:\\SDC\\LibraryLLM\\datasets\\training\\hf_cache\\gooaq_g3",
+  "selection": {
+    "seed": 42,
+    "shuffle_buffer": 10000,
+    "pair_rule": "first 50k usable distinct normalized queries from seeded shuffled stream; seed-42 final shuffle, 45k/5k split; no later replacements",
+    "pool_rule": "continue same shuffled stream until at least 200k normalized unique answers; bounded cap 500k processed source records",
+    "buffer_note": "rows_inspected counts yielded rows; up to 10k lookahead rows may be internally buffered"
+  },
+  "inventory": {
+    "rows_inspected": 255250,
+    "duplicate_normalized_questions": 0,
+    "duplicate_answer_passages": 55250,
+    "multi_positive_questions": 0
+  },
+  "rows_materialized": 255250,
+  "selected_rows": 50000,
+  "train_validation_normalized_query_overlap": 0,
+  "token_lengths": {
+    "inspected_usable": {
+      "question": {
+        "min": 8,
+        "median": 12,
+        "p90": 15,
+        "p95": 16,
+        "p99": 18,
+        "max": 34,
+        "over_256": 0
+      },
+      "answer": {
+        "min": 10,
+        "median": 61,
+        "p90": 77,
+        "p95": 85,
+        "p99": 109,
+        "max": 197,
+        "over_256": 0
+      }
+    },
+    "selected_50000": {
+      "question": {
+        "min": 8,
+        "median": 12,
+        "p90": 15,
+        "p95": 16,
+        "p99": 18,
+        "max": 34,
+        "over_256": 0
+      },
+      "answer": {
+        "min": 11,
+        "median": 61,
+        "p90": 77,
+        "p95": 85,
+        "p99": 110,
+        "max": 197,
+        "over_256": 0
+      }
+    }
+  },
+  "mining_corpus_count": 200000,
+  "known_positive_scope": "all alternate positives discoverable among bounded inspected source records; unknown positives outside this pool remain unlabelled",
+  "answer_canonicalization": "first-seen original passage for normalized-equivalent texts; selected positives use that canonical source passage",
+  "files": {
+    "pairs_train": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_pairs_train.parquet",
+      "rows": 45000,
+      "sha256": "1ccb299ae166fd7007cfe13fc85a6888b8b47b5a504ca5da37150ac4b711de25"
+    },
+    "pairs_validation": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_pairs_validation.parquet",
+      "rows": 5000,
+      "sha256": "ab658a0657038e0b642e2f0637fa1ed8881687ad0401b2c554d060daa28fa271"
+    },
+    "source_records": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_source_records.parquet",
+      "rows": 255250,
+      "sha256": "6dbbc76766617df9670744f496494100cb59e645273588bb5ad51de66d677fce"
+    },
+    "answer_corpus": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\gooaq_g3\\gooaq_g3_answer_corpus.parquet",
+      "rows": 200000,
+      "sha256": "e723e858ca3c427e0a54c1e4690e0595ae5897d018724e75028376b517e9716c"
+    }
+  },
+  "versions": {
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "datasets": "5.0.0",
+    "sentence_transformers": "5.6.0",
+    "accelerate": "1.14.0",
+    "faiss": "1.14.3"
+  }
+}

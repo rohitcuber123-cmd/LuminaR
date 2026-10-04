@@ -1,0 +1,128 @@
+rag\api.py:147:            "CrossEncoder",
+rag\api.py:150:            "cuda"
+rag\api.py:364:        engine.reranker.retriever.reload()
+rag\build_rag_index.py:6:from sentence_transformers import SentenceTransformer
+rag\build_rag_index.py:91:    model = SentenceTransformer(
+rag\embed.py:9:from sentence_transformers import SentenceTransformer
+rag\embed.py:52:    "cuda"
+rag\embed.py:53:    if torch.cuda.is_available()
+rag\embed.py:580:    start = time.perf_counter()
+rag\embed.py:582:    model = SentenceTransformer(
+rag\embed.py:588:        time.perf_counter()
+rag\embed.py:634:    start = time.perf_counter()
+rag\embed.py:645:        time.perf_counter()
+rag\reranker.py:6:from sentence_transformers import CrossEncoder
+rag\reranker.py:28:    "cuda"
+rag\reranker.py:29:    if torch.cuda.is_available()
+rag\reranker.py:74:            "Loading CrossEncoder..."
+rag\reranker.py:77:        start = time.perf_counter()
+rag\reranker.py:79:        self.model = CrossEncoder(
+rag\reranker.py:85:            time.perf_counter()
+rag\reranker.py:100:            "Warming CrossEncoder..."
+rag\reranker.py:113:            "CrossEncoder warm-up complete."
+rag\reranker.py:290:        start = time.perf_counter()
+rag\reranker.py:297:            time.perf_counter()
+rag\reranker.py:336:        evidence_start = time.perf_counter()
+rag\reranker.py:360:            time.perf_counter()
+rag\retriever.py:9:from sentence_transformers import SentenceTransformer
+rag\retriever.py:64:    "cuda"
+rag\retriever.py:65:    if torch.cuda.is_available()
+rag\retriever.py:122:        self.book_index_cache = OrderedDict()
+rag\retriever.py:139:        start = time.perf_counter()
+rag\retriever.py:141:        self.model = SentenceTransformer(
+rag\retriever.py:147:            time.perf_counter()
+rag\retriever.py:187:        start = time.perf_counter()
+rag\retriever.py:201:            time.perf_counter()
+rag\retriever.py:376:        # Already cached?
+rag\retriever.py:379:        if work_id in self.book_index_cache:
+rag\retriever.py:381:            cached = (
+rag\retriever.py:382:                self.book_index_cache.pop(
+rag\retriever.py:388:            self.book_index_cache[
+rag\retriever.py:390:            ] = cached
+rag\retriever.py:392:            return cached
+rag\retriever.py:434:        start = time.perf_counter()
+rag\retriever.py:449:            time.perf_counter()
+rag\retriever.py:472:        cached_data = {
+rag\retriever.py:478:        # Add to cache
+rag\retriever.py:481:        self.book_index_cache[
+rag\retriever.py:483:        ] = cached_data
+rag\retriever.py:490:            len(self.book_index_cache)
+rag\retriever.py:495:                self.book_index_cache.popitem(
+rag\retriever.py:513:            f"{len(self.book_index_cache)}/"
+rag\retriever.py:517:        return cached_data
+rag\retriever.py:523:    def reload(self):
+rag\retriever.py:530:        start = time.perf_counter()
+rag\retriever.py:539:        # Clear cached per-book indexes
+rag\retriever.py:542:        self.book_index_cache.clear()
+rag\retriever.py:553:            time.perf_counter()
+rag\retriever.py:590:            "Per-book cache cleared."
+rag\retriever.py:604:        start = time.perf_counter()
+rag\retriever.py:618:            time.perf_counter()
+rag\retriever.py:780:        start = time.perf_counter()
+rag\retriever.py:793:                time.perf_counter()
+rag\retriever.py:856:            time.perf_counter()
+rag\retriever.py:1036:        start = time.perf_counter()
+rag\retriever.py:1051:            time.perf_counter()
+rag\retriever.py:1101:            doc_start = time.perf_counter()
+rag\retriever.py:1116:                time.perf_counter()
+rag\retriever.py:1239:        start = time.perf_counter()
+rag\retriever.py:1246:            time.perf_counter()
+rag\retriever.py:1437:        start = time.perf_counter()
+rag\retriever.py:1455:            time.perf_counter()
+rag\llm.py:7:    AutoTokenizer,
+rag\llm.py:8:    AutoModelForCausalLM,
+rag\llm.py:44:DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+rag\llm.py:142:        start = time.perf_counter()
+rag\llm.py:144:        self.tokenizer = AutoTokenizer.from_pretrained(
+rag\llm.py:149:            time.perf_counter() - start
+rag\llm.py:164:        start = time.perf_counter()
+rag\llm.py:166:        if DEVICE == "cuda":
+rag\llm.py:175:            self.model = AutoModelForCausalLM.from_pretrained(
+rag\llm.py:183:            self.model = AutoModelForCausalLM.from_pretrained(
+rag\llm.py:188:            self.model.to(DEVICE)
+rag\llm.py:193:            time.perf_counter() - start
+rag\llm.py:206:        print(f"CUDA Available: {torch.cuda.is_available()}")
+rag\llm.py:222:        if DEVICE == "cuda":
+rag\llm.py:223:            allocated_mb = torch.cuda.memory_allocated() / (1024 ** 2)
+rag\llm.py:224:            reserved_mb = torch.cuda.memory_reserved() / (1024 ** 2)
+rag\llm.py:236:        self.generate(
+rag\llm.py:238:            max_new_tokens=20
+rag\llm.py:252:    def generate(
+rag\llm.py:255:        max_new_tokens=256,
+rag\llm.py:315:        ).to(self.model.device)
+rag\llm.py:348:            f"{max_new_tokens}"
+rag\llm.py:390:            "max_new_tokens": max_new_tokens,
+rag\llm.py:408:            output_ids = self.model.generate(
+rag\llm.py:562:        response = self.generate(
+rag\llm.py:564:            max_new_tokens=400,
+rag\llm.py:630:        response = self.generate(
+rag\llm.py:632:            max_new_tokens=160,
+rag\llm.py:670:        "--max_new_tokens",
+rag\llm.py:684:    response = llm.generate(
+rag\llm.py:686:        max_new_tokens=args.max_new_tokens
+rag\qa.py:543:            time.perf_counter()
+rag\qa.py:550:        intent_start = time.perf_counter()
+rag\qa.py:554:        intent_time = time.perf_counter() - intent_start
+rag\qa.py:561:            time.perf_counter()
+rag\qa.py:575:            time.perf_counter()
+rag\qa.py:646:        fast_filter_start = time.perf_counter()
+rag\qa.py:654:        fast_filter_time = time.perf_counter() - fast_filter_start
+rag\qa.py:660:        validation_start = time.perf_counter()
+rag\qa.py:691:        validation_time = time.perf_counter() - validation_start
+rag\qa.py:715:            time.perf_counter()
+rag\qa.py:718:        answer = self.llm.generate(
+rag\qa.py:720:            max_new_tokens=
+rag\qa.py:727:            time.perf_counter()
+rag\qa.py:827:            time.perf_counter()
+rag\services\document_service.py:11:from sentence_transformers import SentenceTransformer
+rag\services\document_service.py:38:    "cuda"
+rag\services\document_service.py:39:    if torch.cuda.is_available()
+rag\services\document_service.py:152:        start = time.perf_counter()
+rag\services\document_service.py:154:        self.model = SentenceTransformer(
+rag\services\document_service.py:160:            time.perf_counter()
+rag\services\document_service.py:570:        start = time.perf_counter()
+rag\services\document_service.py:577:            time.perf_counter()
+rag\services\document_service.py:618:        start = time.perf_counter()
+rag\services\document_service.py:625:            time.perf_counter()
+rag\run_regression.py:36:        start_t = time.perf_counter()
+rag\run_regression.py:38:        end_t = time.perf_counter()

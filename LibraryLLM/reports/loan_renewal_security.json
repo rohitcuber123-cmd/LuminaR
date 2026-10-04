@@ -1,0 +1,34 @@
+{
+  "authentication": "Existing JWT dependency plus current canonical database identity/activity/role revalidation.",
+  "owner": "Only immutable authenticated user_id; no authoritative body owner/actor accepted, request extras rejected.",
+  "cross_account": "ADMIN assisted route only; GENERAL_USER and LIBRARIAN denied. Forged token role does not override current DB role.",
+  "issue_cas_fields": [
+    "issue_id",
+    "user_id",
+    "status=ISSUED",
+    "expected due_date",
+    "expected renewal_count (legacy missing=0)"
+  ],
+  "retry_receipt": "Same UUID/original due/actor replays one extension and one event; stale different UUID cannot apply a second accidental extension, including configured maximum two.",
+  "audit": "BOOK_RENEWED canonical reader user_id; authenticated actor_user_id; issue/work references; original occurrence timestamp and immutable old/new due snapshots. event_key unique sparse. Failed requests create no success event. Legacy actors remain null.",
+  "notifications": "Private canonical account inbox; SYSTEM due types only reconciled. Admin messages, other loans and other users remain unchanged.",
+  "tests": {
+    "new_backend": 40,
+    "notification_admin_regression": 48,
+    "auth_staff_regression": 76,
+    "broader_regression_passed": 385,
+    "known_failures": 1,
+    "skipped": 10,
+    "backend_distinct_passed": 549,
+    "frontend_distinct_passed": 180
+  },
+  "live_disposable_accounts": true,
+  "live_cleanup": "Complete; original users/circulation/inventory hashes and book count match.",
+  "production_state_unchanged": true,
+  "qwen_calls": 0,
+  "protected_source_integrity": "loan_renewal_integrity.json",
+  "limitations": [
+    "Reservation eligibility check is separate from issue CAS; a newly created concurrent reservation is not protected by a cross-collection transaction.",
+    "Atomic issue renewal and audit/reconciliation are separate writes; UUID retry repairs side effects. Startup/interval sweep repairs stale notifications; missing audit after a crash requires retry and is not automatically rebuilt."
+  ]
+}

@@ -1,0 +1,973 @@
+{
+  "version": "v7r3a",
+  "read_only_saved_generation": true,
+  "frozen_v7r3_sha256": {
+    "luminar/domain_qa_assisted_v7r3_stage_a_raw.jsonl": "4f31375c71e63fca131cf0e906c94867e406f031578bd870c90d110e5f798a8e",
+    "luminar/domain_qa_assisted_v7r3_stage_a_valid.jsonl": "3028592099e95abe8ea6ee43fb94046414c32e5715b5594cb62223ae33880def",
+    "luminar/domain_qa_assisted_v7r3_raw.jsonl": "7b5ee1fa8ec1741b16aa2a1426d64bd2aa86879308708bdaa2a6e3a869cc77c5",
+    "luminar/domain_qa_assisted_v7r3_auto_checked.jsonl": "aefd6023828407c021d37760d9069c40c0921ed8bfa474c9e19e5caeb0f133d0",
+    "luminar/domain_qa_assisted_v7r3_rejected.jsonl": "175d9ef2064e20cf4fc67ac4d35ab3e09487166a040692d18b6931363a7ba605",
+    "manifests/rag_domain_qa_v7r3_word_units.json": "50a79a1d7323a53a963e42e2c5bb2c2298d8b361dfc753e3d4b93ecc5198b70a",
+    "reports/rag_domain_qa_assisted_v7r3_generation.json": "f1c3b7388deaa3f039c80b6d98dbf85852eec40efac33c3d63af2a06091b5a59",
+    "reports/rag_domain_qa_assisted_v7r3_contract_audit.json": "720a1f260693cba4b4fb676328d01b6bc3545046683aca156c4b5ca9c4a892ae",
+    "reports/rag_domain_qa_assisted_v7r3_audit.json": "3839c574eccb057d7615cb18600cd4b4b208c46c478062567c0d11b9a2834193",
+    "reports/rag_domain_qa_assisted_v7r3_audit.md": "a2247a9ee4c9fd9eeb1b7bbf29a757be262202ef65a94696fdd67f42f55728d7",
+    "reports/rag_domain_qa_assisted_v7r3_engineering_decisions.json": "7927b79a7937cb4f0bb04116446fa9df63e2fb431156e407cdbc965caf56050f",
+    "reports/rag_domain_qa_v7_all_versions_comparison.json": "bc942b988809d3ee4f0920fdf22a18b13e24610ebb08cf1aa25b930d133080d1",
+    "reports/rag_domain_qa_v7_all_versions_comparison.md": "66471424c680d8da245ca06825760fdaef51bfd69bd3182b8432e7cb52f656bc"
+  },
+  "v7r3_validation": {
+    "passages": 50,
+    "same_original_50_in_order": true,
+    "source_hashes_valid": true,
+    "unit_word_mapping_failures": 0,
+    "test_leakage": 0,
+    "evaluation_span_leakage": 0,
+    "production_snapshot_files": 64,
+    "production_snapshot_changed": 0,
+    "stage_a_valid_facts": 37,
+    "stage_b_calls": 37,
+    "auto_checked": 3,
+    "rejected_records": 76,
+    "rejection_reasons": {
+      "ANSWER_SPAN_INCOMPLETE": 21,
+      "NONCONTIGUOUS_EVIDENCE_UNITS": 14,
+      "JUDGE_SEMANTIC_UNCERTAIN": 12,
+      "QUESTION_CONTAINS_ANSWER": 7,
+      "QUESTION_LENGTH_OR_FORMAT": 2,
+      "QUESTION_UNRESOLVED_REFERENT": 12,
+      "ANSWER_SPAN_PUNCTUATION_ONLY": 5,
+      "INVALID_ANSWER_WORD_ID": 1,
+      "JUDGE_INVALID_JSON": 2,
+      "CONTEXT_ONLY_NAMED_REFERENCE": 2,
+      "JUDGE_SUPPORT_UNIT_OUTSIDE_EVIDENCE": 1,
+      "INVALID_EVIDENCE_UNIT_ID": 1,
+      "JUDGE_UNSUPPORTED": 1
+    }
+  },
+  "deterministic_passes": 19,
+  "engineering_audit_counts": {
+    "OBVIOUS_SEMANTIC_ERROR": 15,
+    "PLAUSIBLE_FOR_HUMAN_REVIEW": 2,
+    "AMBIGUOUS": 2
+  },
+  "engineering_error_types": {
+    "ANSWER_SELECTION_ERROR": 12,
+    "QUESTION_FORMULATION_ERROR": 1,
+    "ANSWER_TYPE_ERROR": 1,
+    "WRONG_SEMANTIC_ROLE": 2,
+    "OUTSIDE_CONTEXT": 1
+  },
+  "other_explicit_failures": 11,
+  "mixed_semantic_answer_failures": 1,
+  "corrected_category_candidates": 13,
+  "category_only_repaired_candidates": [
+    "AQA7R3-032-2"
+  ],
+  "contract_valid_count": 4,
+  "judge_buckets_among_contract_valid": {
+    "SUPPORTED": 2,
+    "SEMANTIC_UNCERTAIN": 2
+  },
+  "contract_valid_ids": [
+    "AQA7R3-012-1",
+    "AQA7R3-032-1",
+    "AQA7R3-032-2",
+    "AQA7R3-049-2"
+  ],
+  "ready_for_human_review_count": 2,
+  "ready_for_human_review_ids": [
+    "AQA7R3-012-1",
+    "AQA7R3-032-2"
+  ],
+  "pilot_threshold": 10,
+  "pilot_gate_passed": false,
+  "current_gate": "B. QWEN-3B AUTONOMOUS QA AUTHORING IS TOO WEAK — SWITCH TO HUMAN-FIRST / QWEN-ASSISTED AUTHORING",
+  "review_packet_rows": 0,
+  "human_review_status": "NOT_REVIEWED",
+  "test_leakage": 0,
+  "evaluation_leakage": 0,
+  "production_snapshot_files": 64,
+  "production_snapshot_changed": 0,
+  "rows": [
+    {
+      "candidate_id": "AQA7R3-005-1",
+      "question": "What did the eye fall upon?",
+      "answer": "with",
+      "authoritative_evidence": "His eye fell with a mute inquiry upon the withered white flowers upon\nthe little table. Then he turned over the hand holding his pipe, and I\nsaw he was looking at some half-healed scars on his knuckles.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "The eye fell upon the withered white flowers; 'with' is a preposition, not the object."
+      },
+      "contract": {
+        "question_intent": "WHAT_OBJECT",
+        "answer_type_proposed": "OBJECT",
+        "answer_type_final": "OBJECT",
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "ANSWER_SPAN_INCOMPLETE"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-005-2",
+      "question": "What did the eye fall upon?",
+      "answer": "looking",
+      "authoritative_evidence": "His eye fell with a mute inquiry upon the withered white flowers upon\nthe little table. Then he turned over the hand holding his pipe, and I\nsaw he was looking at some half-healed scars on his knuckles.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "'Looking' describes a later action and does not name what the eye fell upon."
+      },
+      "contract": {
+        "question_intent": "WHAT_OBJECT",
+        "answer_type_proposed": "OBJECT",
+        "answer_type_final": "OBJECT",
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "ANSWER_TYPE_COMPATIBILITY_FAILED"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-011-2",
+      "question": "What did Mr. Quincey Morris say?",
+      "answer": "Count",
+      "authoritative_evidence": "When the Professor had done speaking my husband looked in my eyes, and I\nin his; there was no need for speaking between us.\n\n“I answer for Mina and myself,” he said.\n\n“Count me in, Professor,” said Mr. Quincey Morris, laconically as usual.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "'Count' is only the first word of 'Count me in, Professor,' rather than what Morris said."
+      },
+      "contract": {
+        "question_intent": "WHAT_QUOTE",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "EVENT",
+        "category_final": "QUOTE_OR_PHRASE",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-012-1",
+      "question": "What were brought up from Woolwich and Chatham to cover Kingston?",
+      "answer": "guns",
+      "authoritative_evidence": "These were the guns that were brought\nup from Woolwich and Chatham to cover Kingston. There was an exchange\nof pleasantries: “You’ll get eaten!” “We’re the beast-tamers!” and so\nforth.",
+      "engineering_audit": {
+        "label": "PLAUSIBLE_FOR_HUMAN_REVIEW",
+        "error_type": null,
+        "reason": "The source explicitly says the guns were brought up from Woolwich and Chatham to cover Kingston."
+      },
+      "contract": {
+        "question_intent": "WHAT_OBJECT",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": "OBJECT",
+        "category_proposed": "FACTUAL_DIRECT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": false,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [],
+        "contract_pass": true
+      },
+      "judge": {
+        "bucket": "SUPPORTED",
+        "label": "SUPPORTED",
+        "reason": "outside_context=False; wrong_role=False",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_PLAUSIBLE",
+        "JUDGE_SUPPORTED",
+        "READY_FOR_HUMAN_REVIEW"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_PLAUSIBLE",
+      "ready_for_human_review": true,
+      "status": "READY_FOR_HUMAN_REVIEW",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-012-2",
+      "question": "What group of people came to clear the public from the station?",
+      "answer": "squad",
+      "authoritative_evidence": "A little while after that a squad of police came into the\nstation and began to clear the public off the platforms, and my brother\nwent out into the street again.\n\nThe church bells were ringing for evensong, and a squad of Salvation\nArmy lassies came singing down Waterloo Road.",
+      "engineering_audit": {
+        "label": "AMBIGUOUS",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "'Squad' points to the right event but omits 'of police'; another squad also appears in the selected evidence."
+      },
+      "contract": {
+        "question_intent": "WHAT_OBJECT",
+        "answer_type_proposed": "ACTION",
+        "answer_type_final": "ACTION",
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S03",
+          "S04"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_AMBIGUOUS",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_AMBIGUOUS",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-021-2",
+      "question": "Who suggests asking a question of the guardian first?",
+      "answer": "GWENDOLEN.\nAn admirable",
+      "authoritative_evidence": "Jack and Algernon groan and walk up and down.]\n\nCECILY.\n[Rather brightly.] There is just one question I would like to be\nallowed to ask my guardian.\n\nGWENDOLEN.\nAn admirable idea! Mr. Worthing, there is just one question I would\nlike to be permitted to put to you.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "The span combines a speaker label with the beginning of her speech, not a person answer."
+      },
+      "contract": {
+        "question_intent": "WHO",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "INVALID_JSON",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_INVALID_JSON",
+        "format_valid": false,
+        "supporting_ids_valid": null,
+        "supporting_unit_ids": []
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-025-1",
+      "question": "What did Jaggers do before looking at his boots?",
+      "answer": "forward",
+      "authoritative_evidence": "Jaggers, bending forward to look at his boots and\nthen straightening himself. “Hah! I don’t think I should have done so,\nif I had been Miss Havisham.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "QUESTION_FORMULATION_ERROR",
+        "reason": "The source says Jaggers bent forward to look at his boots; it does not describe a separate action before looking."
+      },
+      "contract": {
+        "question_intent": "WHAT_ACTION",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "FACTUAL_DIRECT",
+        "category_final": "EVENT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-031-2",
+      "question": "What did Mrs. Bennet not do during their walk?",
+      "answer": "was not",
+      "authoritative_evidence": "Bennet had time to\ntell him of their having seen his aunt, of which her daughter sat in\nmomentary dread, Bingley, who wanted to be alone with Jane, proposed\ntheir all walking out. It was agreed to. Mrs. Bennet was not in the\nhabit of walking, Mary could never spare time, but the remaining five\nset off together.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "'Was not' is an incomplete predicate; the source says Mrs. Bennet was not in the habit of walking."
+      },
+      "contract": {
+        "question_intent": "WHAT_ACTION",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "EVENT",
+        "category_final": "EVENT",
+        "category_changed": false,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "ANSWER_SPAN_INCOMPLETE",
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-032-1",
+      "question": "What did the Hatter prefer to do?",
+      "answer": "finish",
+      "authoritative_evidence": "“I’d rather finish my tea,” said the Hatter, with an anxious look at\nthe Queen, who was reading the list of singers.\n\n“You may go,” said the King, and the Hatter hurriedly left the court,\nwithout even waiting to put his shoes on.\n\n“—and just take his head off outside,” the Queen added to one of the\nofficers: but the Hatter was out of sight before the officer could get\nto the door.\n\n“Call the next witness!” said the King.\n\nThe next witness was the Duchess’s cook.",
+      "engineering_audit": {
+        "label": "AMBIGUOUS",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "'Finish' is the selected verb, but the useful action is 'finish my tea'; a reviewer would need to decide whether the short answer is sufficient."
+      },
+      "contract": {
+        "question_intent": "WHAT_ACTION",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": "ACTION",
+        "category_proposed": "EVENT",
+        "category_final": "EVENT",
+        "category_changed": false,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [],
+        "contract_pass": true
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_AMBIGUOUS",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_AMBIGUOUS",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-032-2",
+      "question": "Who said, 'I’d rather finish my tea'?",
+      "answer": "Hatter",
+      "authoritative_evidence": "“I’d rather finish my tea,” said the Hatter, with an anxious look at\nthe Queen, who was reading the list of singers.",
+      "engineering_audit": {
+        "label": "PLAUSIBLE_FOR_HUMAN_REVIEW",
+        "error_type": null,
+        "reason": "The source directly attributes the quoted line to the Hatter; its EVENT category can be corrected to FACTUAL_DIRECT."
+      },
+      "contract": {
+        "question_intent": "WHO",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": "PERSON",
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [],
+        "contract_pass": true
+      },
+      "judge": {
+        "bucket": "SUPPORTED",
+        "label": "SUPPORTED",
+        "reason": "outside_context=False; wrong_role=False",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_PLAUSIBLE",
+        "JUDGE_SUPPORTED",
+        "READY_FOR_HUMAN_REVIEW"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_PLAUSIBLE",
+      "ready_for_human_review": true,
+      "status": "READY_FOR_HUMAN_REVIEW",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-033-2",
+      "question": "Who did Cecily think was in the dining room?",
+      "answer": "look as",
+      "authoritative_evidence": "You look as if you had\ntoothache, and I have got such a surprise for you. Who do you think is\nin the dining-room? Your brother!\n\nJACK.\nWho?\n\nCECILY.\nYour brother Ernest. He arrived about half an hour ago.\n\nJACK.\nWhat nonsense! I haven’t got a brother.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "'Look as' comes from a different clause and does not identify the person in the dining room."
+      },
+      "contract": {
+        "question_intent": "WHOM",
+        "answer_type_proposed": "STATE",
+        "answer_type_final": "STATE",
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "ANSWER_SPAN_INCOMPLETE",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "INVALID_SUPPORT_REFERENCE",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SUPPORT_UNIT_OUTSIDE_EVIDENCE",
+        "format_valid": true,
+        "supporting_ids_valid": false,
+        "supporting_unit_ids": []
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-034-2",
+      "question": "Where did Georgiana Reed used to be admired for her beauty?",
+      "answer": "ago\nin London",
+      "authoritative_evidence": "“None that would own me, sir. Mr. Reed is dead, and his wife cast me\noff.”\n\n“Why?”\n\n“Because I was poor, and burdensome, and she disliked me.”\n\n“But Reed left children?—you must have cousins? Sir George Lynn was\ntalking of a Reed of Gateshead yesterday, who, he said, was one of the\nveriest rascals on town; and Ingram was mentioning a Georgiana Reed of\nthe same place, who was much admired for her beauty a season or two ago\nin London.”\n\n“John Reed is dead, too, sir: he ruined himself and half-ruined his\nfamily, and is supposed to have committed suicide.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_TYPE_ERROR",
+        "reason": "'Ago in London' mixes a time word with the location requested by WHERE; the answer span is substantively wrong."
+      },
+      "contract": {
+        "question_intent": "WHERE",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "FACTUAL_DIRECT",
+        "category_final": "LOCATION",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "MIXED_SEMANTIC_ANSWER_SPAN",
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SUPPORTED",
+        "label": "SUPPORTED",
+        "reason": "outside_context=False; wrong_role=False",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_SUPPORTED"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-038-1",
+      "question": "Who did Miss Pross say to shake her head at her brother?",
+      "answer": "your",
+      "authoritative_evidence": "“Then hold your meddlesome tongue,” said Solomon, “and come out, if you\nwant to speak to me. Pay for your wine, and come out. Who’s this man?”\n\nMiss Pross, shaking her loving and dejected head at her by no means\naffectionate brother, said through her tears, “Mr.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "'Your' is a possessive in another speaker's dialogue and cannot answer the person question."
+      },
+      "contract": {
+        "question_intent": "WHOM",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "FACTUAL_DIRECT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": false,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "ANSWER_SPAN_INCOMPLETE",
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-040-1",
+      "question": "What did Buck's group use for smoking?",
+      "answer": "ma",
+      "authoritative_evidence": "Buck and his ma and all of them smoked cob pipes,\nexcept the nigger woman, which was gone, and the two young women. They\nall smoked and talked, and I eat and talked.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "The source says Buck's group smoked cob pipes; 'ma' is a participant, not the smoking object."
+      },
+      "contract": {
+        "question_intent": "WHAT_OBJECT",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "FACTUAL_DIRECT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": false,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-042-2",
+      "question": "Did Mr. Jones leave the wagon near the door?",
+      "answer": "not",
+      "authoritative_evidence": "This question was not entirely answered in Huck’s slow mind before he\nfound himself pushed, along with Tom, into Mrs. Douglas’ drawing-room.\nMr. Jones left the wagon near the door and followed.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "WRONG_SEMANTIC_ROLE",
+        "reason": "'Not' modifies an earlier clause about a question; the source affirmatively says Mr. Jones left the wagon near the door."
+      },
+      "contract": {
+        "question_intent": "OTHER",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "FACTUAL_DIRECT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": false,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "ANSWER_SPAN_INCOMPLETE",
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_INTENT_OTHER"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-043-1",
+      "question": "Which boarding house does Jane and her sister Kitty stay at?",
+      "answer": "Lizzy’s",
+      "authoritative_evidence": "Never mind Miss\nLizzy’s hair.”\n\n“We will be down as soon as we can,” said Jane; “but I dare say Kitty is\nforwarder than either of us, for she went upstairs half an hour ago.”\n\n“Oh! hang Kitty! what has she to do with it? Come, be quick, be quick!\nwhere is your sash, my dear?”\n\nBut when her mother was gone, Jane would not be prevailed on to go down\nwithout one of her sisters.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "OUTSIDE_CONTEXT",
+        "reason": "The source mentions Lizzy's hair and Jane and Kitty, but no boarding house where they stay."
+      },
+      "contract": {
+        "question_intent": "WHERE",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "FACTUAL_DIRECT",
+        "category_final": "LOCATION",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-046-1",
+      "question": "What does the phrase 'kindred despoiled' refer to in the given text?",
+      "answer": "kindred despoiled;\nHeaven",
+      "authoritative_evidence": "There is a thought that for strength should avail me,\nThough both of shelter and kindred despoiled;\nHeaven is a home, and a rest will not fail me;\nGod is a friend to the poor orphan child.”\n\n“Come, Miss Jane, don’t cry,” said Bessie as she finished. She might as\nwell have said to the fire, “don’t burn!” but how could she divine the\nmorbid suffering to which I was a prey?",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "The span joins unrelated lines across a semicolon; it does not explain the quoted phrase."
+      },
+      "contract": {
+        "question_intent": "WHAT_OBJECT",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "INVALID_JSON",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_INVALID_JSON",
+        "format_valid": false,
+        "supporting_ids_valid": null,
+        "supporting_unit_ids": []
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-046-2",
+      "question": "Who does the poet promise to take the orphan child?",
+      "answer": "will my Father",
+      "authoritative_evidence": "Yet distant and soft the night breeze is blowing,\nClouds there are none, and clear stars beam mild,\nGod, in His mercy, protection is showing,\nComfort and hope to the poor orphan child.\n\nEv’n should I fall o’er the broken bridge passing,\nOr stray in the marshes, by false lights beguiled,\nStill will my Father, with promise and blessing,\nTake to His bosom the poor orphan child.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "ANSWER_SELECTION_ERROR",
+        "reason": "'Will my Father' is an incomplete clause; the question asks who will take the child."
+      },
+      "contract": {
+        "question_intent": "WHOM",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": null,
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [
+          "OTHER_EXPLICIT_NEEDS_REVIEW",
+          "QUESTION_ANSWER_TYPE_MISMATCH"
+        ],
+        "contract_pass": false
+      },
+      "judge": {
+        "bucket": "UNSUPPORTED",
+        "label": "UNSUPPORTED",
+        "reason": "outside_context=False; wrong_role=True",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    },
+    {
+      "candidate_id": "AQA7R3-049-2",
+      "question": "Who imparted the wish to buy furniture to Herbert?",
+      "answer": "Jaggers",
+      "authoritative_evidence": "I felt\nthat this delicacy arose out of the consideration that the plan would\nsave Herbert some expense, so I went off to Little Britain and imparted\nmy wish to Mr. Jaggers.\n\n“If I could buy the furniture now hired for me,” said I, “and one or\ntwo other little things, I should be quite at home there.”\n\n“Go it!” said Mr.",
+      "engineering_audit": {
+        "label": "OBVIOUS_SEMANTIC_ERROR",
+        "error_type": "WRONG_SEMANTIC_ROLE",
+        "reason": "The narrator imparted the wish to Jaggers; Jaggers was the recipient, not the actor."
+      },
+      "contract": {
+        "question_intent": "WHO",
+        "answer_type_proposed": "OTHER_EXPLICIT",
+        "answer_type_final": "PERSON",
+        "category_proposed": "EVENT",
+        "category_final": "FACTUAL_DIRECT",
+        "category_changed": true,
+        "question_unchanged": true,
+        "answer_unchanged": true,
+        "evidence_unchanged": true,
+        "contract_reasons": [],
+        "contract_pass": true
+      },
+      "judge": {
+        "bucket": "SEMANTIC_UNCERTAIN",
+        "label": "UNCERTAIN",
+        "reason": "JUDGE_SEMANTIC_UNCERTAIN",
+        "format_valid": true,
+        "supporting_ids_valid": true,
+        "supporting_unit_ids": [
+          "S01"
+        ]
+      },
+      "statuses": [
+        "DETERMINISTIC_PASS",
+        "ENGINEERING_REJECTED",
+        "JUDGE_UNCERTAIN"
+      ],
+      "deterministic_pass": true,
+      "engineering_status": "ENGINEERING_REJECTED",
+      "ready_for_human_review": false,
+      "status": "DETERMINISTIC_PASS",
+      "reviewed": false
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "experiment": "G1_MS_MARCO",
+  "dataset_id": "sentence-transformers/msmarco-co-condenser-margin-mse-sym-mnrl-mean-v1",
+  "config": "triplet",
+  "revision": "84ed2d35626f617d890bd493b4d6db69a741e0e2",
+  "split": "train",
+  "selection": {
+    "stream": true,
+    "shuffle_seed": 42,
+    "shuffle_buffer": 10000,
+    "take_usable_rows": 50000,
+    "post_selection_shuffle_seed": 42,
+    "split_rule": "first 45000 train; last 5000 validation"
+  },
+  "negative_provenance": "triplet config: publisher mines the most query-similar passage per query-positive pair as an explicit hard negative",
+  "cache_location": "D:\\SDC\\LibraryLLM\\datasets\\training\\hf_cache",
+  "raw_rows_inspected": 68822,
+  "rejected_rows": {
+    "raw": 68822,
+    "positive_equals_negative": 18822
+  },
+  "selected_rows": 50000,
+  "schema": {
+    "query": "string",
+    "positive": "string",
+    "negative": "string"
+  },
+  "files": {
+    "train": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\msmarco_g1\\msmarco_g1_train.parquet",
+      "rows": 45000,
+      "sha256": "7fb3fc0802a11efc3cf4b54be71509d36bbea3fc6bf3aa258c16d98ad22b6c16"
+    },
+    "validation": {
+      "path": "D:\\SDC\\LibraryLLM\\datasets\\training\\generic\\msmarco_g1\\msmarco_g1_validation.parquet",
+      "rows": 5000,
+      "sha256": "7e34e6325b220155d970192d63d902a8a1d67770f6ef8b4efb77260f2cd7d4a3"
+    }
+  },
+  "quality": {
+    "exact_duplicate_triplets": 0,
+    "duplicate_queries": 0,
+    "duplicate_positives": 301,
+    "positive_equals_negative": 0,
+    "train_validation_query_overlap": 0
+  },
+  "token_lengths": {
+    "query": {
+      "min": 4,
+      "median": 9,
+      "p90": 12,
+      "p95": 14,
+      "p99": 18,
+      "max": 70,
+      "over_256": 0
+    },
+    "positive": {
+      "min": 11,
+      "median": 73,
+      "p90": 130,
+      "p95": 146,
+      "p99": 182,
+      "max": 326,
+      "over_256": 11
+    },
+    "negative": {
+      "min": 8,
+      "median": 67,
+      "p90": 112,
+      "p95": 130,
+      "p99": 165,
+      "max": 275,
+      "over_256": 2
+    }
+  },
+  "created_utc": "2026-09-29T17:41:21.562180+00:00",
+  "versions": {
+    "python": "3.11.9",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "datasets": "5.0.0",
+    "sentence_transformers": "5.6.0",
+    "accelerate": "1.14.0",
+    "faiss": "1.14.3"
+  }
+}

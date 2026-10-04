@@ -1,0 +1,135 @@
+{
+  "checks": [
+    {
+      "case": "assistant_requires_identity",
+      "status": 401,
+      "expected": 401,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "invalid_identity",
+      "status": 401,
+      "expected": 401,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "own_conversation",
+      "status": 200,
+      "expected": 200,
+      "pass": true,
+      "errors": [],
+      "source_ids": []
+    },
+    {
+      "case": "cross_user_conversation_denied",
+      "status": 404,
+      "expected": 404,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "unknown_source",
+      "status": 404,
+      "expected": 404,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "traversal_source",
+      "status": 404,
+      "expected": 404,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "absolute_source",
+      "status": 404,
+      "expected": 404,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "mismatched_source",
+      "status": 400,
+      "expected": 400,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "book_anonymous_denied",
+      "status": 401,
+      "expected": 401,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "book_without_entitlement_denied",
+      "status": 403,
+      "expected": 403,
+      "pass": true,
+      "errors": null,
+      "source_ids": []
+    },
+    {
+      "case": "shared_upload_user_1",
+      "status": 200,
+      "expected": 200,
+      "pass": true,
+      "errors": [],
+      "source_ids": [
+        "User Roles and Permissions in MongoDB_000001",
+        "User Roles and Permissions in MongoDB_000016",
+        "User Roles and Permissions in MongoDB_000018",
+        "User Roles and Permissions in MongoDB_000008",
+        "User Roles and Permissions in MongoDB_000011",
+        "User Roles and Permissions in MongoDB_000006",
+        "User Roles and Permissions in MongoDB_000009"
+      ]
+    },
+    {
+      "case": "shared_upload_user_2",
+      "status": 200,
+      "expected": 200,
+      "pass": true,
+      "errors": [],
+      "source_ids": [
+        "User Roles and Permissions in MongoDB_000001",
+        "User Roles and Permissions in MongoDB_000016",
+        "User Roles and Permissions in MongoDB_000018",
+        "User Roles and Permissions in MongoDB_000008",
+        "User Roles and Permissions in MongoDB_000011",
+        "User Roles and Permissions in MongoDB_000006",
+        "User Roles and Permissions in MongoDB_000009"
+      ]
+    },
+    {
+      "case": "prompt_injection_source_boundary",
+      "status": 200,
+      "expected": 200,
+      "pass": true,
+      "errors": [],
+      "source_ids": [
+        "User Roles and Permissions in MongoDB_000003",
+        "User Roles and Permissions in MongoDB_000001",
+        "User Roles and Permissions in MongoDB_000016",
+        "User Roles and Permissions in MongoDB_000008",
+        "User Roles and Permissions in MongoDB_000002",
+        "User Roles and Permissions in MongoDB_000009",
+        "User Roles and Permissions in MongoDB_000007"
+      ]
+    }
+  ],
+  "pass": true,
+  "uploaded_document_policy": "Shared/public uploads; no owner-scoped cross-user upload denial exists. Conversations and book entitlements remain protected.",
+  "injection_limit": "One source-boundary probe plus existing regressions; this does not prove arbitrary injection resistance."
+}

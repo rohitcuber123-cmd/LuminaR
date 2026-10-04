@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "current_account_revalidation": true,
+  "role_claim_only_rejected": true,
+  "role_matrix": {
+    "GENERAL_USER": [
+      "Own inbox/count/read/read-all",
+      "Existing own circulation actions"
+    ],
+    "LIBRARIAN": [
+      "Own inbox/count/read/read-all",
+      "Existing staff circulation visibility/actions unchanged"
+    ],
+    "ADMIN": [
+      "Own inbox/count/read/read-all",
+      "Current email directory",
+      "Operation filters and user drilldown",
+      "Single/multiple send and sent audit",
+      "Explicit assisted-return with authoritative target owner"
+    ]
+  },
+  "tests": {
+    "feature_backend_passed": 48,
+    "existing_auth_passed": 76,
+    "non_admin_admin_endpoints_forbidden": true,
+    "non_admin_send_forbidden": true,
+    "cross_user_read_private_404": true,
+    "caller_user_id_query_ignored": true,
+    "all_recipients_validated_before_store": true,
+    "unknown_inactive_ambiguous_recipients_rejected": true,
+    "actor_from_authenticated_server_identity": true,
+    "plain_text_xss_backend_and_frontend": true,
+    "deleted_inactive_current_accounts_rejected": true,
+    "client_scope_reset_and_abort": true,
+    "same_tab_and_two_tab_login_switch_passed": true
+  },
+  "logging": "Worker logs only counts/duration/error code. No credentials, message contents, emails or loan documents.",
+  "transport": "Same existing JWT Core API; loopback development server; no new secrets or external push provider.",
+  "audit": "Persistent sender_user_id and recipient_user_id relations; sent audit hydrates safe current identities."
+}

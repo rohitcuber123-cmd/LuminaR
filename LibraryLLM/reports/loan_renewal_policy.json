@@ -1,0 +1,41 @@
+{
+  "version": "V1",
+  "configuration": {
+    "LOAN_RENEWAL_ENABLED": "1",
+    "LOAN_RENEWAL_DAYS": "14",
+    "LOAN_MAX_RENEWALS": "1"
+  },
+  "existing_loan_days": 14,
+  "period_source": "Default matches issue_service.LOAN_PERIOD_DAYS; configurable centrally, 1..365 days.",
+  "max_renewals": 1,
+  "maximum_config_range": [
+    0,
+    20
+  ],
+  "extension_from": "current authoritative UTC due_date",
+  "overdue_allowed": false,
+  "overdue_definition": "current due timestamp earlier than current UTC timestamp; stricter than calendar-day fine accrual.",
+  "owner_self_renewal_roles": [
+    "GENERAL_USER",
+    "LIBRARIAN",
+    "ADMIN"
+  ],
+  "assisted_role": "ADMIN only, same authorization boundary as assisted return",
+  "reservation_block_statuses": [
+    "ACTIVE",
+    "READY_FOR_PICKUP"
+  ],
+  "reservation_block_owner": "Another account on same work_id, regardless of spare copies. Own/cancelled/fulfilled reservations do not block.",
+  "fees": "No fee or inventory mutation on renewal. Overdue renewal is denied. Existing return fine remains UTC overdue calendar days x INR 5.",
+  "legacy_schema": "Missing renewal_count treated as zero; original_due_date first saved at renewal; no broad backfill.",
+  "schema_added": [
+    "renewal_count",
+    "last_renewed_at",
+    "original_due_date",
+    "last_renewal_new_due_date",
+    "renewal_receipts"
+  ],
+  "idempotency": "Required UUID request_id + expected_due_date; receipt stored in same atomic issue update. Replay requires same actor and original expected due.",
+  "invalid_config": "Fail closed; eligibility/mutation routes return structured RENEWAL_POLICY_INVALID.",
+  "assistant": "Deferred: existing mutation intents and default-off pending confirmation framework untouched."
+}

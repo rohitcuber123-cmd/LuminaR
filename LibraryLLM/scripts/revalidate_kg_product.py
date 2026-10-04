@@ -1,0 +1,10 @@
+"""Fresh read-only product validation using a disposable identity and eight real cases."""
+from pathlib import Path
+source=Path(__file__).resolve().parent/'validate_kg31_product.py'
+s=source.read_text(encoding='utf-8')
+s=s.replace("    user = next(u for u in users_collection.find({'role': 'GENERAL_USER', 'is_email_verified': True})\n                if current_identity({'sub': str(u['user_id'])}))", "    validation = json.loads((ROOT/'.kg_product_validation.json').read_text(encoding='utf-8'))\n    user = users_collection.find_one({'user_id':validation['user_id'],'email':validation['email']})\n    assert user and user['name']=='Disposable KG validation'")
+s=s.replace("    report = {'created_at':", "    from knowledge_graph.core import connect\n    with connect(graph.path) as connection:\n        marks=','.join('?' for _ in frozen)\n        generic=connection.execute(f'SELECT b.work_id,f.degree,e.label FROM books b JOIN edges e ON e.book_id=b.id JOIN features f USING(kind,term) WHERE b.work_id IN ({marks}) AND f.kind=\\'subject\\' ORDER BY f.degree DESC LIMIT 1',[item['work_id'] for item in frozen]).fetchone()\n    cases += [('same-author','OL2000134W'),('high-degree generic subject',generic['work_id'])]\n    report = {'created_at':")
+s=s.replace("            assert not failures, failures", "            assert not failures, failures\n            for card in data['recommendations']:\n                assert abs(sum(path['contribution'] for path in card['reason_paths'])-card['score'])<1e-8\n                assert all(abs(path['feature_weight']-path['relation_weight']*path['importance'])<1e-8 for path in card['reason_paths'])")
+s=s.replace("    report['warm_summary'] =", "    report['high_degree_probe'] = dict(generic)\n    report['warm_summary'] =")
+s=s.replace("'p95_ms': sorted(warm)[int(.95 * (len(warm) - 1))]", "'p90_ms': sorted(warm)[__import__('math').ceil(.90*len(warm))-1],\n                              'p95_ms': sorted(warm)[__import__('math').ceil(.95*len(warm))-1]")
+exec(compile(s,str(source),'exec'),{'__name__':'__main__','__file__':str(source)})

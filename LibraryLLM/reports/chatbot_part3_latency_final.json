@@ -1,0 +1,4763 @@
+{
+  "functional_acceptance": "PASS",
+  "latency_acceptance": "PARTIAL: document RAG retains required checks above 15s",
+  "method": "3 sequential warm requests per operation, one resident model per phase, no concurrent model workers, warmup and model startup excluded; before is repaired functional baseline, not failed Part 3.",
+  "tool_metric": "Non-model tool time = measured tool wall minus nested RAG model generation. Early explanation tools use measured Core metadata wall. Inclusive tool wall and every original stage are also retained; do not sum overlapping stages.",
+  "operations": [
+    {
+      "operation": "Simple Search",
+      "case": "simple_search",
+      "warm_runs": 3,
+      "baseline_min_ms": 18845.91,
+      "baseline_median_ms": 20797.49,
+      "baseline_max_ms": 21539.41,
+      "baseline_qwen_calls": [
+        1,
+        1,
+        1
+      ],
+      "min_ms": 1210.45,
+      "median_ms": 1266.13,
+      "max_ms": 1335.32,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 954.2214999964926,
+      "tool_wall_median_ms": 954.2214999964926,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": true,
+      "runs": [
+        {
+          "case": "simple_search",
+          "round": 1,
+          "status": 200,
+          "intent": "SEARCH_BOOKS",
+          "client_total_ms": 1335.32,
+          "profile": {
+            "trace_id": "d4ff051dea134668b550ada324827ca4",
+            "stages_ms": {
+              "request_validation": 0.02510000194888562,
+              "intent_routing": 0.17070000467356294,
+              "search": 128.09589999960735,
+              "core_metadata": 26232.65169995284,
+              "core_metadata_wall": 855.2528000000166,
+              "availability": 0.08670001989230514,
+              "tool_execution": 984.5168000028934,
+              "response_serialization": 0.23979999969014898,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.546875,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 1333.71679999982,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL19890395W",
+            "OL21354124W",
+            "OL18936858W",
+            "OL18174067W",
+            "OL19205420W",
+            "OL9074961W",
+            "OL11287853W",
+            "OL19890406W",
+            "OL29015865W",
+            "OL19012944W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "simple_search",
+          "round": 2,
+          "status": 200,
+          "intent": "SEARCH_BOOKS",
+          "client_total_ms": 1266.13,
+          "profile": {
+            "trace_id": "eb0757d5147a4c5489cf7c77479f417d",
+            "stages_ms": {
+              "request_validation": 0.026599998818710446,
+              "intent_routing": 0.1827000014600344,
+              "search": 115.66839999431977,
+              "core_metadata": 26977.1495000532,
+              "core_metadata_wall": 837.4017000023741,
+              "availability": 0.10939998901449144,
+              "tool_execution": 954.2214999964926,
+              "response_serialization": 0.3132999991066754,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2752.16796875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 1264.2441999996663,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL19890395W",
+            "OL21354124W",
+            "OL18936858W",
+            "OL18174067W",
+            "OL19205420W",
+            "OL9074961W",
+            "OL11287853W",
+            "OL19890406W",
+            "OL29015865W",
+            "OL19012944W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "simple_search",
+          "round": 3,
+          "status": 200,
+          "intent": "SEARCH_BOOKS",
+          "client_total_ms": 1210.45,
+          "profile": {
+            "trace_id": "5e0e74dc1b03413ba22aa7e23afe25c7",
+            "stages_ms": {
+              "request_validation": 0.025499997718725353,
+              "intent_routing": 0.08579999848734587,
+              "search": 85.985099998652,
+              "core_metadata": 26483.014699988416,
+              "core_metadata_wall": 835.049599998456,
+              "availability": 0.08170001092366874,
+              "tool_execution": 922.0161000048392,
+              "response_serialization": 0.22429999808082357,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.08203125,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 1209.2162999979337,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL19890395W",
+            "OL21354124W",
+            "OL18936858W",
+            "OL18174067W",
+            "OL19205420W",
+            "OL9074961W",
+            "OL11287853W",
+            "OL19890406W",
+            "OL29015865W",
+            "OL19012944W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Complex Search",
+      "case": "complex_search",
+      "warm_runs": 3,
+      "baseline_min_ms": 17625.22,
+      "baseline_median_ms": 18018.15,
+      "baseline_max_ms": 20285.75,
+      "baseline_qwen_calls": [
+        1,
+        1,
+        1
+      ],
+      "min_ms": 10965.66,
+      "median_ms": 11502.23,
+      "max_ms": 13485.58,
+      "qwen_calls": [
+        1,
+        1,
+        1
+      ],
+      "tool_nonmodel_median_ms": 916.7384000029415,
+      "tool_wall_median_ms": 916.7384000029415,
+      "model_median_ms": 10324.72129999951,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "complex_search",
+          "round": 1,
+          "status": 200,
+          "intent": "SEARCH_BOOKS",
+          "client_total_ms": 13485.58,
+          "profile": {
+            "trace_id": "64c7bc44bc9d41669cbb53a4db8cdf32",
+            "stages_ms": {
+              "request_validation": 0.02849999873433262,
+              "intent_routing": 0.06199999916134402,
+              "intent_json_validation": 0.20729999960167333,
+              "intent_parsing": 12022.920299998077,
+              "search": 315.3080999982194,
+              "core_metadata": 25979.561900028784,
+              "core_metadata_wall": 831.9743000029121,
+              "availability": 0.20289999520173296,
+              "tool_execution": 1149.1387999994913,
+              "response_serialization": 0.8407999994233251,
+              "qwen_intent_generation": 12006.424700004573,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "intent",
+                "input_tokens": 816,
+                "generated_tokens": 73,
+                "max_new_tokens": 180,
+                "generation_ms": 12006.424700004573
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2656.578125,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 13484.138399995572,
+            "qwen_call_count": 1
+          },
+          "book_ids": [
+            "OL10810893W",
+            "OL20675805W",
+            "OL16930493W",
+            "OL5744740W",
+            "OL13573152W",
+            "OL19208265W",
+            "OL12033243W",
+            "OL17307261W",
+            "OL32405072W",
+            "OL17317373W",
+            "OL19532774W",
+            "OL30383299W",
+            "OL4707262W",
+            "OL22585973W",
+            "OL1311220W",
+            "OL5356454W",
+            "OL42696815W",
+            "OL17190396W",
+            "OL17190316W",
+            "OL17195050W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "complex_search",
+          "round": 2,
+          "status": 200,
+          "intent": "SEARCH_BOOKS",
+          "client_total_ms": 11502.23,
+          "profile": {
+            "trace_id": "589a1c76eb81479bac0bde589649c9f6",
+            "stages_ms": {
+              "request_validation": 0.035099998058285564,
+              "intent_routing": 0.05539999983739108,
+              "intent_json_validation": 0.13240000407677144,
+              "intent_parsing": 10338.028300000587,
+              "search": 83.08310000575148,
+              "core_metadata": 25140.478700006497,
+              "core_metadata_wall": 786.3863000020501,
+              "availability": 0.19519999477779493,
+              "tool_execution": 871.114800000214,
+              "response_serialization": 0.301499996567145,
+              "qwen_intent_generation": 10324.72129999951,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "intent",
+                "input_tokens": 816,
+                "generated_tokens": 73,
+                "max_new_tokens": 180,
+                "generation_ms": 10324.72129999951
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2753.2421875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 11500.338899997587,
+            "qwen_call_count": 1
+          },
+          "book_ids": [
+            "OL10810893W",
+            "OL20675805W",
+            "OL16930493W",
+            "OL5744740W",
+            "OL13573152W",
+            "OL19208265W",
+            "OL12033243W",
+            "OL17307261W",
+            "OL32405072W",
+            "OL17317373W",
+            "OL19532774W",
+            "OL30383299W",
+            "OL4707262W",
+            "OL22585973W",
+            "OL1311220W",
+            "OL5356454W",
+            "OL42696815W",
+            "OL17190396W",
+            "OL17190316W",
+            "OL17195050W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "complex_search",
+          "round": 3,
+          "status": 200,
+          "intent": "SEARCH_BOOKS",
+          "client_total_ms": 10965.66,
+          "profile": {
+            "trace_id": "b128746d5ecc4943ad1efc1545efd860",
+            "stages_ms": {
+              "request_validation": 0.03429999924264848,
+              "intent_routing": 0.0518000015290454,
+              "intent_json_validation": 0.12059999426128343,
+              "intent_parsing": 9706.904600003327,
+              "search": 103.17469999426976,
+              "core_metadata": 25244.285199980368,
+              "core_metadata_wall": 812.0382999986759,
+              "availability": 0.16449997201561928,
+              "tool_execution": 916.7384000029415,
+              "response_serialization": 0.3136000013910234,
+              "qwen_intent_generation": 9691.694400004053,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "intent",
+                "input_tokens": 816,
+                "generated_tokens": 73,
+                "max_new_tokens": 180,
+                "generation_ms": 9691.694400004053
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2759.08984375,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 10964.303399996425,
+            "qwen_call_count": 1
+          },
+          "book_ids": [
+            "OL10810893W",
+            "OL20675805W",
+            "OL16930493W",
+            "OL5744740W",
+            "OL13573152W",
+            "OL19208265W",
+            "OL12033243W",
+            "OL17307261W",
+            "OL32405072W",
+            "OL17317373W",
+            "OL19532774W",
+            "OL30383299W",
+            "OL4707262W",
+            "OL22585973W",
+            "OL1311220W",
+            "OL5356454W",
+            "OL42696815W",
+            "OL17190396W",
+            "OL17190316W",
+            "OL17195050W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "General Help",
+      "case": "general_help",
+      "warm_runs": 3,
+      "baseline_min_ms": 24023.73,
+      "baseline_median_ms": 24359.36,
+      "baseline_max_ms": 25254.99,
+      "baseline_qwen_calls": [
+        2,
+        2,
+        2
+      ],
+      "min_ms": 5915.32,
+      "median_ms": 6763.91,
+      "max_ms": 7335.08,
+      "qwen_calls": [
+        1,
+        1,
+        1
+      ],
+      "tool_nonmodel_median_ms": 0.0242000023717992,
+      "tool_wall_median_ms": 0.0242000023717992,
+      "model_median_ms": 6473.410300000978,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "general_help",
+          "round": 1,
+          "status": 200,
+          "intent": "GENERAL_LIBRARY_HELP",
+          "client_total_ms": 7335.08,
+          "profile": {
+            "trace_id": "fe9f81ffd583452f80188347f2e6ff8b",
+            "stages_ms": {
+              "request_validation": 0.08760000491747633,
+              "intent_routing": 0.14319999900180846,
+              "tool_execution": 0.037999998312443495,
+              "response_serialization": 2.0130000048084185,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 7020.207699999446,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 224,
+                "generated_tokens": 50,
+                "max_new_tokens": 160,
+                "generation_ms": 7020.207699999446
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2656.59375,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 7332.976300000155,
+            "qwen_call_count": 1
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "general_help",
+          "round": 2,
+          "status": 200,
+          "intent": "GENERAL_LIBRARY_HELP",
+          "client_total_ms": 5915.32,
+          "profile": {
+            "trace_id": "ac1b6a1038bb4156a60479c48d8eaca2",
+            "stages_ms": {
+              "request_validation": 0.024500004656147212,
+              "intent_routing": 0.07990000449353829,
+              "tool_execution": 0.0242000023717992,
+              "response_serialization": 0.9155000007012859,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 5625.020699997549,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 224,
+                "generated_tokens": 50,
+                "max_new_tokens": 160,
+                "generation_ms": 5625.020699997549
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2753.265625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 5913.895100005902,
+            "qwen_call_count": 1
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "general_help",
+          "round": 3,
+          "status": 200,
+          "intent": "GENERAL_LIBRARY_HELP",
+          "client_total_ms": 6763.91,
+          "profile": {
+            "trace_id": "c019603e12704b7186e6f1b39c9d5b19",
+            "stages_ms": {
+              "request_validation": 0.028700000257231295,
+              "intent_routing": 0.07360000017797574,
+              "tool_execution": 0.01920000067912042,
+              "response_serialization": 1.0382999971625395,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 6473.410300000978,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 224,
+                "generated_tokens": 50,
+                "max_new_tokens": 160,
+                "generation_ms": 6473.410300000978
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2759.10546875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 6762.684999994235,
+            "qwen_call_count": 1
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Explain Recommendation",
+      "case": "explain_recommendation",
+      "warm_runs": 3,
+      "baseline_min_ms": 7605.34,
+      "baseline_median_ms": 8287.2,
+      "baseline_max_ms": 8552.27,
+      "baseline_qwen_calls": [
+        1,
+        1,
+        1
+      ],
+      "min_ms": 10950.96,
+      "median_ms": 11847.33,
+      "max_ms": 13258.05,
+      "qwen_calls": [
+        1,
+        1,
+        1
+      ],
+      "tool_nonmodel_median_ms": 134.6452999932808,
+      "tool_wall_median_ms": 134.6452999932808,
+      "model_median_ms": 11417.03370000323,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "explain_recommendation",
+          "round": 1,
+          "status": 200,
+          "intent": "RECOMMEND_BOOKS",
+          "client_total_ms": 13258.05,
+          "profile": {
+            "trace_id": "79634d0f598e4b85a66b1be1c02fe2f9",
+            "stages_ms": {
+              "request_validation": 0.041799998143687844,
+              "core_metadata": 675.852299980761,
+              "core_metadata_wall": 149.08249999280088,
+              "availability": 0.037999998312443495,
+              "response_serialization": 1.9571000011637807,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 12705.53760000621,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 593,
+                "generated_tokens": 96,
+                "max_new_tokens": 160,
+                "generation_ms": 12705.53760000621
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2656.640625,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 13255.962800001726,
+            "qwen_call_count": 1
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "explain_recommendation",
+          "round": 2,
+          "status": 200,
+          "intent": "RECOMMEND_BOOKS",
+          "client_total_ms": 10950.96,
+          "profile": {
+            "trace_id": "4153229dde4f4e68b2e9f100d2f919e6",
+            "stages_ms": {
+              "request_validation": 0.03480000304989517,
+              "core_metadata": 605.6286999955773,
+              "core_metadata_wall": 129.08929999684915,
+              "availability": 0.03599999035941437,
+              "response_serialization": 0.13220000255387276,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 10538.217900000745,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 593,
+                "generated_tokens": 96,
+                "max_new_tokens": 160,
+                "generation_ms": 10538.217900000745
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2753.265625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 10949.732599998242,
+            "qwen_call_count": 1
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "explain_recommendation",
+          "round": 3,
+          "status": 200,
+          "intent": "RECOMMEND_BOOKS",
+          "client_total_ms": 11847.33,
+          "profile": {
+            "trace_id": "f43cc7e88e6a416183a6eacd760ed8be",
+            "stages_ms": {
+              "request_validation": 0.028200003725942224,
+              "core_metadata": 629.0819000059855,
+              "core_metadata_wall": 134.6452999932808,
+              "availability": 0.035200006095692515,
+              "response_serialization": 0.19250000332249328,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 11417.03370000323,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 593,
+                "generated_tokens": 96,
+                "max_new_tokens": 160,
+                "generation_ms": 11417.03370000323
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2759.140625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 11846.13669999817,
+            "qwen_call_count": 1
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Explain Comparison",
+      "case": "explain_comparison",
+      "warm_runs": 3,
+      "baseline_min_ms": 11116.38,
+      "baseline_median_ms": 11708.16,
+      "baseline_max_ms": 11893.76,
+      "baseline_qwen_calls": [
+        1,
+        1,
+        1
+      ],
+      "min_ms": 6144.33,
+      "median_ms": 6869.9,
+      "max_ms": 7280.75,
+      "qwen_calls": [
+        1,
+        1,
+        1
+      ],
+      "tool_nonmodel_median_ms": 51.255400001537055,
+      "tool_wall_median_ms": 51.255400001537055,
+      "model_median_ms": 6494.8330000042915,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "explain_comparison",
+          "round": 1,
+          "status": 200,
+          "intent": "COMPARE_BOOKS",
+          "client_total_ms": 7280.75,
+          "profile": {
+            "trace_id": "b1806b08805541f281ab3ff0bb073e61",
+            "stages_ms": {
+              "request_validation": 0.0427999984822236,
+              "core_metadata": 95.19310000177938,
+              "core_metadata_wall": 51.255400001537055,
+              "availability": 0.021500003640539944,
+              "response_serialization": 0.23999999393709004,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 6928.356800002803,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 521,
+                "generated_tokens": 50,
+                "max_new_tokens": 160,
+                "generation_ms": 6928.356800002803
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2656.703125,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 7278.931500004546,
+            "qwen_call_count": 1
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "explain_comparison",
+          "round": 2,
+          "status": 200,
+          "intent": "COMPARE_BOOKS",
+          "client_total_ms": 6144.33,
+          "profile": {
+            "trace_id": "9ede0255755b42babe05383df596f4ed",
+            "stages_ms": {
+              "request_validation": 0.03569999535102397,
+              "core_metadata": 96.38449999329168,
+              "core_metadata_wall": 51.51570000452921,
+              "availability": 0.021899999410379678,
+              "response_serialization": 0.1260999997612089,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 5745.482499994978,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 521,
+                "generated_tokens": 50,
+                "max_new_tokens": 160,
+                "generation_ms": 5745.482499994978
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2753.83984375,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 6143.019800001639,
+            "qwen_call_count": 1
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "explain_comparison",
+          "round": 3,
+          "status": 200,
+          "intent": "COMPARE_BOOKS",
+          "client_total_ms": 6869.9,
+          "profile": {
+            "trace_id": "f12cc5182288455fb4baa9d8f8fc7999",
+            "stages_ms": {
+              "request_validation": 0.027599999157246202,
+              "core_metadata": 87.43610000237823,
+              "core_metadata_wall": 46.4226999974926,
+              "availability": 0.015300000086426735,
+              "response_serialization": 0.14699999883305281,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 6494.8330000042915,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [
+              {
+                "stage": "response",
+                "input_tokens": 521,
+                "generated_tokens": 50,
+                "max_new_tokens": 160,
+                "generation_ms": 6494.8330000042915
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2759.1953125,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 6868.665200003306,
+            "qwen_call_count": 1
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Book RAG",
+      "case": "authorized_book_rag",
+      "warm_runs": 3,
+      "baseline_min_ms": 6291.95,
+      "baseline_median_ms": 6446.12,
+      "baseline_max_ms": 7254.47,
+      "baseline_qwen_calls": [
+        2,
+        2,
+        2
+      ],
+      "min_ms": 6157.7,
+      "median_ms": 7142.57,
+      "max_ms": 7342.55,
+      "qwen_calls": [
+        2,
+        2,
+        2
+      ],
+      "tool_nonmodel_median_ms": 417.82080000120914,
+      "tool_wall_median_ms": 6856.17959999945,
+      "model_median_ms": 6158.585899996979,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "authorized_book_rag",
+          "round": 1,
+          "status": 200,
+          "intent": "BOOK_CONTENT_QUESTION",
+          "client_total_ms": 7342.55,
+          "profile": {
+            "trace_id": "b11d3f5e81aa4951bb6b264e64b5bbe2",
+            "stages_ms": {
+              "request_validation": 0.03279999509686604,
+              "intent_routing": 0.07889999687904492,
+              "core_metadata": 28.417900000931695,
+              "core_metadata_wall": 29.755300005490426,
+              "entity_resolution": 29.83749999839347,
+              "rag_routing": 7018.655400002899,
+              "availability": 0.05239999882178381,
+              "tool_execution": 7048.772199996165,
+              "response_serialization": 2.300000000104774,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 6158.585899996979
+            },
+            "qwen_calls": [
+              {
+                "stage": "rag",
+                "input_tokens": 2070,
+                "generated_tokens": 19,
+                "max_new_tokens": 160,
+                "generation_ms": 3068.506800002069
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 4528,
+                "generated_tokens": 14,
+                "max_new_tokens": 320,
+                "generation_ms": 3090.0790999949095
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2710.16015625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2814.0
+            },
+            "status": 200,
+            "total_ms": 7340.9367999993265,
+            "qwen_call_count": 2
+          },
+          "book_ids": [
+            "OL45326637W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": "SUPPORTED",
+          "rag_answer": "Victor Frankenstein is the main character in this selected book.",
+          "rag_source_count": 7,
+          "rag_timing_ms": {
+            "response": 0.11,
+            "intent_analysis": 0.54,
+            "retrieval": 425.96,
+            "fast_filter": 0.62,
+            "validation": 3082.06,
+            "generation": 3114.83,
+            "total": 6632.5
+          },
+          "rag_source_ids": [
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000028"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000105"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000003"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000007"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000001"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000112"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000026"
+            }
+          ],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "authorized_book_rag",
+          "round": 2,
+          "status": 200,
+          "intent": "BOOK_CONTENT_QUESTION",
+          "client_total_ms": 6157.7,
+          "profile": {
+            "trace_id": "f3a57f1b14ef4cbd86f28f8edfa640c1",
+            "stages_ms": {
+              "request_validation": 0.03090000245720148,
+              "intent_routing": 0.04520000220509246,
+              "core_metadata": 23.852999998780433,
+              "core_metadata_wall": 24.815600001602434,
+              "entity_resolution": 24.853700000676326,
+              "rag_routing": 5836.007600002631,
+              "availability": 0.026900001103058457,
+              "tool_execution": 5860.991000001377,
+              "response_serialization": 1.0275999957229942,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 5485.8718999967095
+            },
+            "qwen_calls": [
+              {
+                "stage": "rag",
+                "input_tokens": 2070,
+                "generated_tokens": 19,
+                "max_new_tokens": 160,
+                "generation_ms": 2711.242299999867
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 4528,
+                "generated_tokens": 14,
+                "max_new_tokens": 320,
+                "generation_ms": 2774.6295999968424
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2758.09375,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 6156.414800003404,
+            "qwen_call_count": 2
+          },
+          "book_ids": [
+            "OL45326637W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": "SUPPORTED",
+          "rag_answer": "Victor Frankenstein is the main character in this selected book.",
+          "rag_source_count": 7,
+          "rag_timing_ms": {
+            "response": 0.04,
+            "intent_analysis": 0.06,
+            "retrieval": 277.97,
+            "fast_filter": 0.6,
+            "validation": 2721.51,
+            "generation": 2791.32,
+            "total": 5798.98
+          },
+          "rag_source_ids": [
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000028"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000105"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000003"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000007"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000001"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000112"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000026"
+            }
+          ],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "authorized_book_rag",
+          "round": 3,
+          "status": 200,
+          "intent": "BOOK_CONTENT_QUESTION",
+          "client_total_ms": 7142.57,
+          "profile": {
+            "trace_id": "81b0fc4a3c60420ca1f81078795e8e36",
+            "stages_ms": {
+              "request_validation": 0.04829999670619145,
+              "intent_routing": 0.11389999417588115,
+              "core_metadata": 26.124999996682163,
+              "core_metadata_wall": 27.27020000020275,
+              "entity_resolution": 27.30870000232244,
+              "rag_routing": 6828.7437000035425,
+              "availability": 0.028399997972883284,
+              "tool_execution": 6856.17959999945,
+              "response_serialization": 1.4150999995763414,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 6438.358799998241
+            },
+            "qwen_calls": [
+              {
+                "stage": "rag",
+                "input_tokens": 2070,
+                "generated_tokens": 19,
+                "max_new_tokens": 160,
+                "generation_ms": 3061.1238999990746
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 4528,
+                "generated_tokens": 14,
+                "max_new_tokens": 320,
+                "generation_ms": 3377.2348999991664
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2761.53515625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 7141.341100003046,
+            "qwen_call_count": 2
+          },
+          "book_ids": [
+            "OL45326637W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": "SUPPORTED",
+          "rag_answer": "Victor Frankenstein is the main character in this selected book.",
+          "rag_source_count": 7,
+          "rag_timing_ms": {
+            "response": 0.04,
+            "intent_analysis": 0.06,
+            "retrieval": 323.59,
+            "fast_filter": 0.58,
+            "validation": 3071.7,
+            "generation": 3393.12,
+            "total": 6797.33
+          },
+          "rag_source_ids": [
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000028"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000105"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000003"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000007"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000001"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000112"
+            },
+            {
+              "work_id": "OL45326637W",
+              "filename": "Frankenstein.txt",
+              "chunk_id": "OL45326637W_000026"
+            }
+          ],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Document RAG",
+      "case": "document_rag",
+      "warm_runs": 3,
+      "baseline_min_ms": 24908.02,
+      "baseline_median_ms": 26112.5,
+      "baseline_max_ms": 29981.57,
+      "baseline_qwen_calls": [
+        3,
+        3,
+        3
+      ],
+      "min_ms": 24596.08,
+      "median_ms": 25239.99,
+      "max_ms": 28162.2,
+      "qwen_calls": [
+        3,
+        3,
+        3
+      ],
+      "tool_nonmodel_median_ms": 63.27550000423798,
+      "tool_wall_median_ms": 24962.07040000445,
+      "model_median_ms": 24900.61869999772,
+      "median_at_most_15s": false,
+      "all_runs_at_most_15s": false,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "document_rag",
+          "round": 1,
+          "status": 200,
+          "intent": "DOCUMENT_QUESTION",
+          "client_total_ms": 28162.2,
+          "profile": {
+            "trace_id": "16322732b9ad4538b82e3dba4a5a338d",
+            "stages_ms": {
+              "request_validation": 0.02970000059576705,
+              "intent_routing": 0.053099996875971556,
+              "rag_routing": 27843.87609999976,
+              "tool_execution": 27844.123200004105,
+              "response_serialization": 2.0179999992251396,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 27748.575799996615
+            },
+            "qwen_calls": [
+              {
+                "stage": "rag",
+                "input_tokens": 443,
+                "generated_tokens": 63,
+                "max_new_tokens": 400,
+                "generation_ms": 12155.91349999886
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 676,
+                "generated_tokens": 12,
+                "max_new_tokens": 160,
+                "generation_ms": 1670.6867999964743
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 1712,
+                "generated_tokens": 107,
+                "max_new_tokens": 320,
+                "generation_ms": 13921.975500001281
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2751.3984375,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 28160.288400002173,
+            "qwen_call_count": 3
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": "SUPPORTED",
+          "rag_answer": "Role-Based Access Control (RBAC) is implemented in MongoDB through assigning roles to users based on their permissions. According to the provided context, RBAC allows administrators to define various levels of access such as 'read', 'readWrite', and 'dbAdmin' which can be assigned to users ('Ravi', 'Sita', 'Kiran', 'Admin') according to their responsibilities. The example shows how roles can be created within the MongoDB environment itself, allowing fine-grained control over who has permission to perform certain actions.",
+          "rag_source_count": 7,
+          "rag_timing_ms": {
+            "response": 0.08,
+            "intent_analysis": 12186.85,
+            "retrieval": 44.5,
+            "fast_filter": 0.49,
+            "validation": 1677.73,
+            "generation": 13931.06,
+            "total": 27842.69
+          },
+          "rag_source_ids": [
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000001"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000016"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000018"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000008"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000011"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000006"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000009"
+            }
+          ],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "document_rag",
+          "round": 2,
+          "status": 200,
+          "intent": "DOCUMENT_QUESTION",
+          "client_total_ms": 24596.08,
+          "profile": {
+            "trace_id": "f37eec0e48ed402fa0cc75e6d689ee6f",
+            "stages_ms": {
+              "request_validation": 0.02469999890308827,
+              "intent_routing": 0.03339999966556206,
+              "rag_routing": 24290.206800003943,
+              "tool_execution": 24290.24500000378,
+              "response_serialization": 1.0177000003750436,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 24226.96949999954
+            },
+            "qwen_calls": [
+              {
+                "stage": "rag",
+                "input_tokens": 443,
+                "generated_tokens": 63,
+                "max_new_tokens": 400,
+                "generation_ms": 10474.354300000414
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 676,
+                "generated_tokens": 12,
+                "max_new_tokens": 160,
+                "generation_ms": 1417.5080999993952
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 1712,
+                "generated_tokens": 107,
+                "max_new_tokens": 320,
+                "generation_ms": 12335.107099999732
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2759.08203125,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 24594.927799997095,
+            "qwen_call_count": 3
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": "SUPPORTED",
+          "rag_answer": "Role-Based Access Control (RBAC) is implemented in MongoDB through assigning roles to users based on their permissions. According to the provided context, RBAC allows administrators to define various levels of access such as 'read', 'readWrite', and 'dbAdmin' which can be assigned to users ('Ravi', 'Sita', 'Kiran', 'Admin') according to their responsibilities. The example shows how roles can be created within the MongoDB environment itself, allowing fine-grained control over who has permission to perform certain actions.",
+          "rag_source_count": 7,
+          "rag_timing_ms": {
+            "response": 0.03,
+            "intent_analysis": 10488.33,
+            "retrieval": 36.06,
+            "fast_filter": 0.42,
+            "validation": 1421.56,
+            "generation": 12342.64,
+            "total": 24289.51
+          },
+          "rag_source_ids": [
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000001"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000016"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000018"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000008"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000011"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000006"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000009"
+            }
+          ],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "document_rag",
+          "round": 3,
+          "status": 200,
+          "intent": "DOCUMENT_QUESTION",
+          "client_total_ms": 25239.99,
+          "profile": {
+            "trace_id": "3e676698779d4bd281c376b0ef066c8d",
+            "stages_ms": {
+              "request_validation": 0.024900000425986946,
+              "intent_routing": 0.03210000431863591,
+              "rag_routing": 24962.031200004276,
+              "tool_execution": 24962.07040000445,
+              "response_serialization": 1.0448999964864925,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 24900.61869999772
+            },
+            "qwen_calls": [
+              {
+                "stage": "rag",
+                "input_tokens": 443,
+                "generated_tokens": 63,
+                "max_new_tokens": 400,
+                "generation_ms": 11356.984199999715
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 676,
+                "generated_tokens": 12,
+                "max_new_tokens": 160,
+                "generation_ms": 1502.3845999967307
+              },
+              {
+                "stage": "rag",
+                "input_tokens": 1712,
+                "generated_tokens": 107,
+                "max_new_tokens": 320,
+                "generation_ms": 12041.249900001276
+              }
+            ],
+            "memory": {
+              "process_rss_mb": 2762.79296875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 25238.644999997632,
+            "qwen_call_count": 3
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": "SUPPORTED",
+          "rag_answer": "Role-Based Access Control (RBAC) is implemented in MongoDB through assigning roles to users based on their permissions. According to the provided context, RBAC allows administrators to define various levels of access such as 'read', 'readWrite', and 'dbAdmin' which can be assigned to users ('Ravi', 'Sita', 'Kiran', 'Admin') according to their responsibilities. The example shows how roles can be created within the MongoDB environment itself, allowing fine-grained control over who has permission to perform certain actions.",
+          "rag_source_count": 7,
+          "rag_timing_ms": {
+            "response": 0.04,
+            "intent_analysis": 11369.15,
+            "retrieval": 35.43,
+            "fast_filter": 0.42,
+            "validation": 1506.62,
+            "generation": 12048.98,
+            "total": 24961.1
+          },
+          "rag_source_ids": [
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000001"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000016"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000018"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000008"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000011"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000006"
+            },
+            {
+              "work_id": "User Roles and Permissions in MongoDB",
+              "filename": "User Roles and Permissions in MongoDB.pdf",
+              "chunk_id": "User Roles and Permissions in MongoDB_000009"
+            }
+          ],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Default Recommendation",
+      "case": "default_recommendation",
+      "warm_runs": 3,
+      "baseline_min_ms": 637.21,
+      "baseline_median_ms": 728.25,
+      "baseline_max_ms": 1309.95,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 716.54,
+      "median_ms": 717.85,
+      "max_ms": 729.51,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 431.5935000049649,
+      "tool_wall_median_ms": 431.5935000049649,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "default_recommendation",
+          "round": 1,
+          "status": 200,
+          "intent": "RECOMMEND_BOOKS",
+          "client_total_ms": 716.54,
+          "profile": {
+            "trace_id": "1a681f33b3ab42ec8964e7c743ba8fb9",
+            "stages_ms": {
+              "request_validation": 0.0259000007645227,
+              "intent_routing": 0.06040000153006986,
+              "entity_resolution": 0.030499999411404133,
+              "recommendation": 200.775799996336,
+              "core_metadata": 2098.0392999917967,
+              "core_metadata_wall": 214.78700000443496,
+              "availability": 0.10530001600272954,
+              "tool_execution": 416.8506999994861,
+              "response_serialization": 0.31260000105248764,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.59375,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 714.3154999939725,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL15176975W",
+            "OL8831559W",
+            "OL15159532W",
+            "OL13550084W",
+            "OL24195300W",
+            "OL1835511W",
+            "OL15159518W",
+            "OL21599909W",
+            "OL3941269W",
+            "OL2769793W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": "PERSONALIZED_EXISTING_FORMULA",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "default_recommendation",
+          "round": 2,
+          "status": 200,
+          "intent": "RECOMMEND_BOOKS",
+          "client_total_ms": 717.85,
+          "profile": {
+            "trace_id": "05a2df8947264ba181825ec6fba9051d",
+            "stages_ms": {
+              "request_validation": 0.028099995688535273,
+              "intent_routing": 0.03340000694151968,
+              "entity_resolution": 0.016500001947861165,
+              "recommendation": 182.85330000071554,
+              "core_metadata": 2499.7755000003963,
+              "core_metadata_wall": 247.6466999942204,
+              "availability": 0.07740000728517771,
+              "tool_execution": 431.5935000049649,
+              "response_serialization": 0.20030000450788066,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2753.265625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 716.6203999950085,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL15176975W",
+            "OL8831559W",
+            "OL15159532W",
+            "OL13550084W",
+            "OL24195300W",
+            "OL1835511W",
+            "OL15159518W",
+            "OL21599909W",
+            "OL3941269W",
+            "OL2769793W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": "PERSONALIZED_EXISTING_FORMULA",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "default_recommendation",
+          "round": 3,
+          "status": 200,
+          "intent": "RECOMMEND_BOOKS",
+          "client_total_ms": 729.51,
+          "profile": {
+            "trace_id": "4a5f92994816447e922883f47a800201",
+            "stages_ms": {
+              "request_validation": 0.0259000007645227,
+              "intent_routing": 0.033899996196851134,
+              "entity_resolution": 0.0202999945031479,
+              "recommendation": 223.15209999942454,
+              "core_metadata": 2005.6523000093875,
+              "core_metadata_wall": 210.2729999969597,
+              "availability": 0.12469998910091817,
+              "tool_execution": 434.62410000211094,
+              "response_serialization": 0.2589000068837777,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.10546875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 728.2463000010466,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL15176975W",
+            "OL8831559W",
+            "OL15159532W",
+            "OL13550084W",
+            "OL24195300W",
+            "OL1835511W",
+            "OL15159518W",
+            "OL21599909W",
+            "OL3941269W",
+            "OL2769793W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": "PERSONALIZED_EXISTING_FORMULA",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Single Recommendation",
+      "case": "single_seed",
+      "warm_runs": 3,
+      "baseline_min_ms": 1309.28,
+      "baseline_median_ms": 1505.91,
+      "baseline_max_ms": 1633.25,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 1273.48,
+      "median_ms": 1302.89,
+      "max_ms": 1495.41,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 1009.2042000032961,
+      "tool_wall_median_ms": 1009.2042000032961,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "single_seed",
+          "round": 1,
+          "status": 200,
+          "intent": "RECOMMEND_FROM_BOOK",
+          "client_total_ms": 1495.41,
+          "profile": {
+            "trace_id": "6b7f1dcdf6f742dca3055db282a40904",
+            "stages_ms": {
+              "request_validation": 0.07429999823216349,
+              "intent_routing": 0.04099999932805076,
+              "core_metadata": 25120.216200011782,
+              "core_metadata_wall": 848.5160000054748,
+              "entity_resolution": 27.254600005107932,
+              "recommendation": 342.9372999962652,
+              "availability": 0.12319999223109335,
+              "tool_execution": 1193.195799998648,
+              "response_serialization": 0.8067000017035753,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.59375,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 1493.4286999996402,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W",
+            "OL14909604W",
+            "OL3151634W",
+            "OL15562464W",
+            "OL22533654W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "single_seed",
+          "round": 2,
+          "status": 200,
+          "intent": "RECOMMEND_FROM_BOOK",
+          "client_total_ms": 1273.48,
+          "profile": {
+            "trace_id": "d3c5105412da4d2c805ae600046cc7ce",
+            "stages_ms": {
+              "request_validation": 0.035099998058285564,
+              "intent_routing": 0.03189999551977962,
+              "core_metadata": 23195.314800032065,
+              "core_metadata_wall": 788.3088000016869,
+              "entity_resolution": 29.48119999928167,
+              "recommendation": 179.87949999951525,
+              "availability": 0.0836999824969098,
+              "tool_execution": 969.2357999956585,
+              "response_serialization": 0.2409999942756258,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2753.265625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 1271.9616000031237,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W",
+            "OL14909604W",
+            "OL3151634W",
+            "OL15562464W",
+            "OL22533654W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "single_seed",
+          "round": 3,
+          "status": 200,
+          "intent": "RECOMMEND_FROM_BOOK",
+          "client_total_ms": 1302.89,
+          "profile": {
+            "trace_id": "bd1ac79fea374fe5bb1af63e64f22613",
+            "stages_ms": {
+              "request_validation": 0.03170000127283856,
+              "intent_routing": 0.032699994335416704,
+              "core_metadata": 24792.16999997152,
+              "core_metadata_wall": 808.0137999932049,
+              "entity_resolution": 22.184800000104588,
+              "recommendation": 200.06870000361232,
+              "availability": 0.08820000948617235,
+              "tool_execution": 1009.2042000032961,
+              "response_serialization": 0.19249999604653567,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.10546875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 1301.567900001828,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W",
+            "OL14909604W",
+            "OL3151634W",
+            "OL15562464W",
+            "OL22533654W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Multi Recommendation",
+      "case": "multi_seed",
+      "warm_runs": 3,
+      "baseline_min_ms": 2345.28,
+      "baseline_median_ms": 2507.28,
+      "baseline_max_ms": 3072.76,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 2308.84,
+      "median_ms": 2383.42,
+      "max_ms": 2594.34,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 2090.6801000019186,
+      "tool_wall_median_ms": 2090.6801000019186,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "multi_seed",
+          "round": 1,
+          "status": 200,
+          "intent": "RECOMMEND_FROM_SELECTION",
+          "client_total_ms": 2594.34,
+          "profile": {
+            "trace_id": "921acd12f7e54740a390669b366c7d17",
+            "stages_ms": {
+              "request_validation": 0.047900000936351717,
+              "intent_routing": 0.05589999636868015,
+              "core_metadata": 89282.47050001664,
+              "core_metadata_wall": 1700.0737999987905,
+              "entity_resolution": 55.88089999946533,
+              "recommendation": 905.3830999982893,
+              "availability": 0.23390002024825662,
+              "tool_execution": 2292.772100001457,
+              "response_serialization": 0.37680000241380185,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.640625,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 2592.715300001146,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL2686990W",
+            "OL3562741W",
+            "OL14942685W",
+            "OL3333951W",
+            "OL25595002W",
+            "OL4789501W",
+            "OL15072408W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL4803257W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W",
+            "OL2000134W"
+          ],
+          "recommendation_mode": "MULTI_SELECTED_BOOKS",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "multi_seed",
+          "round": 2,
+          "status": 200,
+          "intent": "RECOMMEND_FROM_SELECTION",
+          "client_total_ms": 2383.42,
+          "profile": {
+            "trace_id": "5099501f5a74405e883fc98b84d8ae62",
+            "stages_ms": {
+              "request_validation": 0.03310000465717167,
+              "intent_routing": 0.03319999814266339,
+              "core_metadata": 85564.28100001358,
+              "core_metadata_wall": 1708.8475999917137,
+              "entity_resolution": 45.31239999778336,
+              "recommendation": 728.9364999960526,
+              "availability": 0.1205000007757917,
+              "tool_execution": 2090.6801000019186,
+              "response_serialization": 0.30059999699005857,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2753.32421875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 2382.344400000875,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL2686990W",
+            "OL3562741W",
+            "OL14942685W",
+            "OL3333951W",
+            "OL25595002W",
+            "OL4789501W",
+            "OL15072408W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL4803257W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W",
+            "OL2000134W"
+          ],
+          "recommendation_mode": "MULTI_SELECTED_BOOKS",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "multi_seed",
+          "round": 3,
+          "status": 200,
+          "intent": "RECOMMEND_FROM_SELECTION",
+          "client_total_ms": 2308.84,
+          "profile": {
+            "trace_id": "8cf6503a0b6942528aa910f9f1b3fe32",
+            "stages_ms": {
+              "request_validation": 0.03529999958118424,
+              "intent_routing": 0.034500000765547156,
+              "core_metadata": 83429.78290004248,
+              "core_metadata_wall": 1612.1672000008402,
+              "entity_resolution": 46.075199999904726,
+              "recommendation": 732.9485000009299,
+              "availability": 0.0813999940874055,
+              "tool_execution": 1992.2850000002654,
+              "response_serialization": 0.21890000061830506,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.140625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 2307.503900003212,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL2686990W",
+            "OL3562741W",
+            "OL14942685W",
+            "OL3333951W",
+            "OL25595002W",
+            "OL4789501W",
+            "OL15072408W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL4803257W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W",
+            "OL2000134W"
+          ],
+          "recommendation_mode": "MULTI_SELECTED_BOOKS",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Compare",
+      "case": "compare",
+      "warm_runs": 3,
+      "baseline_min_ms": 350.75,
+      "baseline_median_ms": 360.94,
+      "baseline_max_ms": 405.9,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 321.24,
+      "median_ms": 335.97,
+      "max_ms": 370.44,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 48.49059999833116,
+      "tool_wall_median_ms": 48.49059999833116,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "compare",
+          "round": 1,
+          "status": 200,
+          "intent": "COMPARE_BOOKS",
+          "client_total_ms": 335.97,
+          "profile": {
+            "trace_id": "44fb09871e27404e96a535c6e83a19a0",
+            "stages_ms": {
+              "request_validation": 0.032500000088475645,
+              "intent_routing": 0.053800002206116915,
+              "core_metadata": 90.94789999653585,
+              "core_metadata_wall": 48.2901000068523,
+              "entity_resolution": 48.3345000029658,
+              "availability": 0.020600004063453525,
+              "tool_execution": 48.49059999833116,
+              "response_serialization": 0.2119999990100041,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.64453125,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 334.1022999957204,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3411044W",
+            "OL2000134W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "compare",
+          "round": 2,
+          "status": 200,
+          "intent": "COMPARE_BOOKS",
+          "client_total_ms": 370.44,
+          "profile": {
+            "trace_id": "f7e8e3449d7341858ed0e51e7163e619",
+            "stages_ms": {
+              "request_validation": 0.03279999509686604,
+              "intent_routing": 0.04529999569058418,
+              "core_metadata": 92.02389999700245,
+              "core_metadata_wall": 51.33769999520155,
+              "entity_resolution": 51.3823000001139,
+              "availability": 0.021099993318784982,
+              "tool_execution": 51.54630000470206,
+              "response_serialization": 0.1919999995152466,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2753.33203125,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 369.3018999983906,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3411044W",
+            "OL2000134W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "compare",
+          "round": 3,
+          "status": 200,
+          "intent": "COMPARE_BOOKS",
+          "client_total_ms": 321.24,
+          "profile": {
+            "trace_id": "4cb23f4ea80e4349b6ff68b51648c1f4",
+            "stages_ms": {
+              "request_validation": 0.029299997549969703,
+              "intent_routing": 0.03169999399688095,
+              "core_metadata": 83.28910000273027,
+              "core_metadata_wall": 44.34010000113631,
+              "entity_resolution": 44.36859999987064,
+              "availability": 0.014499993994832039,
+              "tool_execution": 44.48050000064541,
+              "response_serialization": 0.14670000382466242,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.140625,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 319.7968999957084,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3411044W",
+            "OL2000134W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Availability",
+      "case": "availability",
+      "warm_runs": 3,
+      "baseline_min_ms": 308.96,
+      "baseline_median_ms": 332.09,
+      "baseline_max_ms": 335.81,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 311.72,
+      "median_ms": 320.14,
+      "max_ms": 337.89,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 26.150400000915397,
+      "tool_wall_median_ms": 26.150400000915397,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "availability",
+          "round": 1,
+          "status": 200,
+          "intent": "CHECK_AVAILABILITY",
+          "client_total_ms": 337.89,
+          "profile": {
+            "trace_id": "be37da4c38534017800825c859b29d3b",
+            "stages_ms": {
+              "request_validation": 0.048000001697801054,
+              "intent_routing": 0.08080000407062471,
+              "core_metadata": 33.04360000038287,
+              "core_metadata_wall": 34.579200000735,
+              "entity_resolution": 34.662699996260926,
+              "availability": 0.028500006010290235,
+              "tool_execution": 34.80459999991581,
+              "response_serialization": 0.22370000078808516,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.703125,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 335.83460000227205,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3411044W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "availability",
+          "round": 2,
+          "status": 200,
+          "intent": "CHECK_AVAILABILITY",
+          "client_total_ms": 311.72,
+          "profile": {
+            "trace_id": "67a0d9aabccc43dc81bdecb6e1d1bb71",
+            "stages_ms": {
+              "request_validation": 0.03159999323543161,
+              "intent_routing": 0.05179999425308779,
+              "core_metadata": 25.08710000256542,
+              "core_metadata_wall": 26.041700002679136,
+              "entity_resolution": 26.068000006489456,
+              "availability": 0.015500001609325409,
+              "tool_execution": 26.150400000915397,
+              "response_serialization": 0.10379999730503187,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2753.83984375,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 310.49199999688426,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3411044W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "availability",
+          "round": 3,
+          "status": 200,
+          "intent": "CHECK_AVAILABILITY",
+          "client_total_ms": 320.14,
+          "profile": {
+            "trace_id": "9d5fad904fab4b1197e64d7410937505",
+            "stages_ms": {
+              "request_validation": 0.03060000017285347,
+              "intent_routing": 0.04959999932907522,
+              "core_metadata": 25.092900003073737,
+              "core_metadata_wall": 26.008599998021964,
+              "entity_resolution": 26.04270000301767,
+              "availability": 0.01569999585626647,
+              "tool_execution": 26.126600001589395,
+              "response_serialization": 0.10150000161956996,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.1953125,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 318.49850000435254,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3411044W"
+          ],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Fees",
+      "case": "fees",
+      "warm_runs": 3,
+      "baseline_min_ms": 300.6,
+      "baseline_median_ms": 304.57,
+      "baseline_max_ms": 374.43,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 304.5,
+      "median_ms": 311.97,
+      "max_ms": 317.9,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 12.028299999656156,
+      "tool_wall_median_ms": 12.028299999656156,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "fees",
+          "round": 1,
+          "status": 200,
+          "intent": "USER_FEES",
+          "client_total_ms": 311.97,
+          "profile": {
+            "trace_id": "1ee20bebf8414b2aba44a9d9faa2ecd2",
+            "stages_ms": {
+              "request_validation": 0.032300005841534585,
+              "intent_routing": 0.040099999750964344,
+              "account_service": 13.853100004780572,
+              "tool_execution": 14.348400000017136,
+              "response_serialization": 0.9904999969876371,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.69140625,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 309.9870000005467,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "b66550f6e58e3ff42e80e2de595634334dc5d734eb17bf4c6a7ad7d2176e9fa6",
+          "pending_present": false
+        },
+        {
+          "case": "fees",
+          "round": 2,
+          "status": 200,
+          "intent": "USER_FEES",
+          "client_total_ms": 317.9,
+          "profile": {
+            "trace_id": "4d16999a7404441ab141f990a6c56452",
+            "stages_ms": {
+              "request_validation": 0.02390000008745119,
+              "intent_routing": 0.04220000118948519,
+              "account_service": 11.508799994771834,
+              "tool_execution": 12.028299999656156,
+              "response_serialization": 0.10029999975813553,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2753.82421875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 316.48690000292845,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "b66550f6e58e3ff42e80e2de595634334dc5d734eb17bf4c6a7ad7d2176e9fa6",
+          "pending_present": false
+        },
+        {
+          "case": "fees",
+          "round": 3,
+          "status": 200,
+          "intent": "USER_FEES",
+          "client_total_ms": 304.5,
+          "profile": {
+            "trace_id": "62f6c39c57b14a1184fd067c83f0feed",
+            "stages_ms": {
+              "request_validation": 0.023699998564552516,
+              "intent_routing": 0.03930000093532726,
+              "account_service": 10.698300000512972,
+              "tool_execution": 11.24599999457132,
+              "response_serialization": 0.13690000196220353,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.1875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 303.07080000056885,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "b66550f6e58e3ff42e80e2de595634334dc5d734eb17bf4c6a7ad7d2176e9fa6",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Loans",
+      "case": "loans",
+      "warm_runs": 3,
+      "baseline_min_ms": 327.19,
+      "baseline_median_ms": 346.03,
+      "baseline_max_ms": 351.42,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 330.3,
+      "median_ms": 332.89,
+      "max_ms": 347.0,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 36.20439999940572,
+      "tool_wall_median_ms": 36.20439999940572,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "loans",
+          "round": 1,
+          "status": 200,
+          "intent": "USER_LOANS",
+          "client_total_ms": 347.0,
+          "profile": {
+            "trace_id": "f308f62380a74b3ba468d9393b498ae7",
+            "stages_ms": {
+              "request_validation": 0.023300002794712782,
+              "intent_routing": 0.05130000499775633,
+              "account_service": 44.82039999857079,
+              "tool_execution": 45.87970000284258,
+              "response_serialization": 0.20230000518495217,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.6796875,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 344.9890000047162,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "7bcab398935439cb313d715b9458dca28fcd9eb4b2efdc31546bf93482e17662",
+          "pending_present": false
+        },
+        {
+          "case": "loans",
+          "round": 2,
+          "status": 200,
+          "intent": "USER_LOANS",
+          "client_total_ms": 330.3,
+          "profile": {
+            "trace_id": "23776bcd00ab45afa35669e9f3467846",
+            "stages_ms": {
+              "request_validation": 0.02269999822601676,
+              "intent_routing": 0.0805000017862767,
+              "account_service": 34.275799996976275,
+              "tool_execution": 34.715800000412855,
+              "response_serialization": 0.08630000229459256,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2753.8125,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 328.97020000382327,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "7bcab398935439cb313d715b9458dca28fcd9eb4b2efdc31546bf93482e17662",
+          "pending_present": false
+        },
+        {
+          "case": "loans",
+          "round": 3,
+          "status": 200,
+          "intent": "USER_LOANS",
+          "client_total_ms": 332.89,
+          "profile": {
+            "trace_id": "38e959363aed464285929f04c9832d63",
+            "stages_ms": {
+              "request_validation": 0.029900002118665725,
+              "intent_routing": 0.03819999983534217,
+              "account_service": 35.82579999783775,
+              "tool_execution": 36.20439999940572,
+              "response_serialization": 0.08639999578008428,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.1875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 331.5858999994816,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "7bcab398935439cb313d715b9458dca28fcd9eb4b2efdc31546bf93482e17662",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Reading List",
+      "case": "reading_list",
+      "warm_runs": 3,
+      "baseline_min_ms": 303.01,
+      "baseline_median_ms": 307.15,
+      "baseline_max_ms": 309.31,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 308.89,
+      "median_ms": 311.47,
+      "max_ms": 380.68,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 12.059400003636256,
+      "tool_wall_median_ms": 12.059400003636256,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "reading_list",
+          "round": 1,
+          "status": 200,
+          "intent": "USER_READING_LIST",
+          "client_total_ms": 380.68,
+          "profile": {
+            "trace_id": "056d1a97067f48b1bcc355167569fe5a",
+            "stages_ms": {
+              "request_validation": 0.05270000110613182,
+              "intent_routing": 0.06340000254567713,
+              "account_service": 16.820700002426747,
+              "core_metadata_wall": 0.019400002202019095,
+              "tool_execution": 17.55859999684617,
+              "response_serialization": 0.18770000315271318,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.68359375,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 378.4092999994755,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "reading_list",
+          "round": 2,
+          "status": 200,
+          "intent": "USER_READING_LIST",
+          "client_total_ms": 311.47,
+          "profile": {
+            "trace_id": "e1385e2d85204a1998bca9dbaf189b84",
+            "stages_ms": {
+              "request_validation": 0.022499996703118086,
+              "intent_routing": 0.037500001781154424,
+              "account_service": 11.517699997057207,
+              "core_metadata_wall": 0.012299999070819467,
+              "tool_execution": 12.059400003636256,
+              "response_serialization": 0.10420000035082921,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2753.8125,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 309.7171999979764,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "reading_list",
+          "round": 3,
+          "status": 200,
+          "intent": "USER_READING_LIST",
+          "client_total_ms": 308.89,
+          "profile": {
+            "trace_id": "e093edc952a846beba573c1baf263e25",
+            "stages_ms": {
+              "request_validation": 0.022599997464567423,
+              "intent_routing": 0.0368999972124584,
+              "account_service": 9.918700001435354,
+              "core_metadata_wall": 0.011600001016631722,
+              "tool_execution": 10.331100005714688,
+              "response_serialization": 0.10140000085812062,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.1875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 307.7040999996825,
+            "qwen_call_count": 0
+          },
+          "book_ids": [],
+          "seed_work_ids": [],
+          "recommendation_mode": null,
+          "has_more": false,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    },
+    {
+      "operation": "Available Alternatives",
+      "case": "available_alternatives",
+      "warm_runs": 3,
+      "baseline_min_ms": 1303.06,
+      "baseline_median_ms": 1313.16,
+      "baseline_max_ms": 1314.83,
+      "baseline_qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "min_ms": 1298.88,
+      "median_ms": 1339.59,
+      "max_ms": 1555.33,
+      "qwen_calls": [
+        0,
+        0,
+        0
+      ],
+      "tool_nonmodel_median_ms": 1043.1783999956679,
+      "tool_wall_median_ms": 1043.1783999956679,
+      "model_median_ms": 0,
+      "median_at_most_15s": true,
+      "all_runs_at_most_15s": true,
+      "simple_search_at_most_5s": null,
+      "runs": [
+        {
+          "case": "available_alternatives",
+          "round": 1,
+          "status": 200,
+          "intent": "RECOMMEND_AVAILABLE_SIMILAR",
+          "client_total_ms": 1555.33,
+          "profile": {
+            "trace_id": "5a1f66502fc24690b590824ccacbbe24",
+            "stages_ms": {
+              "request_validation": 0.0720999960321933,
+              "intent_routing": 0.10009999823523685,
+              "core_metadata": 28859.91129996546,
+              "core_metadata_wall": 956.2026999992668,
+              "recommendation": 251.84180000360357,
+              "availability": 0.0875999903655611,
+              "tool_execution": 1209.4028999999864,
+              "response_serialization": 0.22529999841935933,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2656.68359375,
+              "cuda_allocated_mb": 2162.4150390625,
+              "cuda_reserved_mb": 2352.0
+            },
+            "status": 200,
+            "total_ms": 1553.3983999994234,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W",
+            "OL14909604W",
+            "OL3151634W",
+            "OL15562464W",
+            "OL22533654W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "available_alternatives",
+          "round": 2,
+          "status": 200,
+          "intent": "RECOMMEND_AVAILABLE_SIMILAR",
+          "client_total_ms": 1298.88,
+          "profile": {
+            "trace_id": "b2d531c440c44802bf483d38af366428",
+            "stages_ms": {
+              "request_validation": 0.6355000004987232,
+              "intent_routing": 0.05319999763742089,
+              "core_metadata": 24873.59759998799,
+              "core_metadata_wall": 813.3963000000222,
+              "recommendation": 192.5682000000961,
+              "availability": 0.07719998393440619,
+              "tool_execution": 1007.0419000039692,
+              "response_serialization": 0.19269999756943434,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2754.86328125,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 1297.66440000094,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W",
+            "OL14909604W",
+            "OL3151634W",
+            "OL15562464W",
+            "OL22533654W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        },
+        {
+          "case": "available_alternatives",
+          "round": 3,
+          "status": 200,
+          "intent": "RECOMMEND_AVAILABLE_SIMILAR",
+          "client_total_ms": 1339.59,
+          "profile": {
+            "trace_id": "3c917f376a74453f99a974c43fbc3bdf",
+            "stages_ms": {
+              "request_validation": 0.028700000257231295,
+              "intent_routing": 0.04510000144364312,
+              "core_metadata": 24696.189099973708,
+              "core_metadata_wall": 826.844400005939,
+              "recommendation": 214.99880000192206,
+              "availability": 0.1299000286962837,
+              "tool_execution": 1043.1783999956679,
+              "response_serialization": 0.19500000053085387,
+              "qwen_intent_generation": 0,
+              "qwen_response_generation": 0,
+              "qwen_rag_generation": 0
+            },
+            "qwen_calls": [],
+            "memory": {
+              "process_rss_mb": 2759.21875,
+              "cuda_allocated_mb": 2171.5400390625,
+              "cuda_reserved_mb": 2844.0
+            },
+            "status": 200,
+            "total_ms": 1337.308900001517,
+            "qwen_call_count": 0
+          },
+          "book_ids": [
+            "OL3562741W",
+            "OL3333951W",
+            "OL4789501W",
+            "OL21293765W",
+            "OL3558989W",
+            "OL495479W",
+            "OL14909604W",
+            "OL3151634W",
+            "OL15562464W",
+            "OL22533654W"
+          ],
+          "seed_work_ids": [
+            "OL3411044W"
+          ],
+          "recommendation_mode": "SINGLE_SELECTED_BOOK",
+          "has_more": true,
+          "result_offset": 0,
+          "error_codes": [],
+          "rag_verdict": null,
+          "rag_answer": null,
+          "rag_source_count": 0,
+          "rag_timing_ms": null,
+          "rag_source_ids": [],
+          "reading_list_count": 0,
+          "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "pending_present": false
+        }
+      ]
+    }
+  ],
+  "real_service_checks": [
+    {
+      "case": "continuation_setup",
+      "pass": true,
+      "evidence": {
+        "case": "continuation_setup",
+        "round": null,
+        "status": 200,
+        "intent": "SEARCH_BOOKS",
+        "client_total_ms": 1263.37,
+        "profile": {
+          "trace_id": "341bd9b566844175bd3fd470a983b985",
+          "stages_ms": {
+            "request_validation": 0.023799999326001853,
+            "intent_routing": 0.08379999781027436,
+            "search": 92.83879999566125,
+            "core_metadata": 28178.209999998217,
+            "core_metadata_wall": 873.7075999961235,
+            "availability": 0.08350000280188397,
+            "tool_execution": 967.5053000028129,
+            "response_serialization": 0.21289999858709052,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2762.796875,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 1262.0080999986385,
+          "qwen_call_count": 0
+        },
+        "book_ids": [
+          "OL19890395W",
+          "OL21354124W",
+          "OL18936858W",
+          "OL18174067W",
+          "OL19205420W",
+          "OL9074961W",
+          "OL11287853W",
+          "OL19890406W",
+          "OL29015865W",
+          "OL19012944W"
+        ],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": true,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "continuation",
+      "pass": true,
+      "evidence": {
+        "case": "continuation",
+        "round": null,
+        "status": 200,
+        "intent": "SEARCH_BOOKS",
+        "client_total_ms": 1100.24,
+        "profile": {
+          "trace_id": "ece20ceb243e47049f7b1bd79ead954d",
+          "stages_ms": {
+            "request_validation": 0.028399997972883284,
+            "core_metadata": 25365.50880001596,
+            "core_metadata_wall": 798.5178999952041,
+            "availability": 0.06639999628532678,
+            "response_serialization": 0.17759999900590628,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2762.796875,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 1098.9539000001969,
+          "qwen_call_count": 0
+        },
+        "book_ids": [
+          "OL20848240W",
+          "OL11913847W",
+          "OL20850543W",
+          "OL4733182W",
+          "OL20524353W",
+          "OL19608817W",
+          "OL19596270W",
+          "OL3513899W",
+          "OL5895181W",
+          "OL21859791W"
+        ],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": true,
+        "result_offset": 10,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "available_only_refinement",
+      "pass": true,
+      "evidence": {
+        "case": "available_only_refinement",
+        "round": null,
+        "status": 200,
+        "intent": "SEARCH_BOOKS",
+        "client_total_ms": 1087.27,
+        "profile": {
+          "trace_id": "00cf01ea4cce4345bd3eae94e9113fac",
+          "stages_ms": {
+            "request_validation": 0.026299996534362435,
+            "core_metadata": 25342.06660001655,
+            "core_metadata_wall": 791.8090999955893,
+            "availability": 0.048099995183292776,
+            "response_serialization": 0.1917000045068562,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2762.796875,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 1086.0524999952759,
+          "qwen_call_count": 0
+        },
+        "book_ids": [
+          "OL19890395W",
+          "OL21354124W",
+          "OL18936858W",
+          "OL18174067W",
+          "OL19205420W",
+          "OL9074961W",
+          "OL11287853W",
+          "OL19890406W",
+          "OL29015865W",
+          "OL19012944W"
+        ],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": true,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "recommendation_continuation_setup",
+      "pass": true,
+      "evidence": {
+        "case": "recommendation_continuation_setup",
+        "round": null,
+        "status": 200,
+        "intent": "RECOMMEND_FROM_BOOK",
+        "client_total_ms": 1518.95,
+        "profile": {
+          "trace_id": "3d902eda18ce4fd69dd71beb97103b97",
+          "stages_ms": {
+            "request_validation": 0.031100003980100155,
+            "intent_routing": 0.03380000271135941,
+            "core_metadata": 26946.573199966224,
+            "core_metadata_wall": 907.0447999984026,
+            "entity_resolution": 26.114599997526966,
+            "recommendation": 332.5955999971484,
+            "availability": 0.12109999806853011,
+            "tool_execution": 1241.1865999965812,
+            "response_serialization": 0.2342000007047318,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2762.796875,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 1517.9485999979079,
+          "qwen_call_count": 0
+        },
+        "book_ids": [
+          "OL3562741W",
+          "OL3333951W",
+          "OL4789501W",
+          "OL21293765W",
+          "OL3558989W",
+          "OL495479W",
+          "OL14909604W",
+          "OL3151634W",
+          "OL15562464W",
+          "OL22533654W"
+        ],
+        "seed_work_ids": [
+          "OL3411044W"
+        ],
+        "recommendation_mode": "SINGLE_SELECTED_BOOK",
+        "has_more": true,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "recommendation_continuation",
+      "pass": true,
+      "evidence": {
+        "case": "recommendation_continuation",
+        "round": null,
+        "status": 200,
+        "intent": "RECOMMEND_FROM_BOOK",
+        "client_total_ms": 1223.32,
+        "profile": {
+          "trace_id": "a612f8843f884ed089bddddd1cb1832e",
+          "stages_ms": {
+            "request_validation": 0.02890000178012997,
+            "core_metadata": 26945.16210000438,
+            "core_metadata_wall": 889.9438999942504,
+            "availability": 0.0644999963697046,
+            "response_serialization": 0.29350000113481656,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2762.796875,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 1222.1169999975245,
+          "qwen_call_count": 0
+        },
+        "book_ids": [
+          "OL4067121W",
+          "OL1853043W",
+          "OL18933880W",
+          "OL26039285W",
+          "OL85875W",
+          "OL892488W",
+          "OL2762695W",
+          "OL21568256W",
+          "OL85876W",
+          "OL3788596W"
+        ],
+        "seed_work_ids": [
+          "OL3411044W"
+        ],
+        "recommendation_mode": "SINGLE_SELECTED_BOOK",
+        "has_more": true,
+        "result_offset": 10,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "concept_after_search",
+      "pass": true,
+      "evidence": {
+        "case": "concept_after_search",
+        "round": null,
+        "status": 200,
+        "intent": "GENERAL_LIBRARY_HELP",
+        "client_total_ms": 4877.8,
+        "profile": {
+          "trace_id": "ed32dd3673554f66b5de65b6bbfb356a",
+          "stages_ms": {
+            "request_validation": 0.025699999241624027,
+            "intent_routing": 0.07500000356230885,
+            "tool_execution": 0.019500002963468432,
+            "response_serialization": 1.1799999992945231,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 4541.122800001176,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [
+            {
+              "stage": "response",
+              "input_tokens": 225,
+              "generated_tokens": 41,
+              "max_new_tokens": 160,
+              "generation_ms": 4541.122800001176
+            }
+          ],
+          "memory": {
+            "process_rss_mb": 2762.8515625,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 4876.605399993423,
+          "qwen_call_count": 1
+        },
+        "book_ids": [],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "pdf_after_search",
+      "pass": true,
+      "evidence": {
+        "case": "pdf_after_search",
+        "round": null,
+        "status": 200,
+        "intent": "DOCUMENT_QUESTION",
+        "client_total_ms": 30727.4,
+        "profile": {
+          "trace_id": "4b6fc0795398496c8bb127dfca225179",
+          "stages_ms": {
+            "request_validation": 0.024100001610349864,
+            "intent_routing": 0.2620999948703684,
+            "rag_routing": 30420.08559999522,
+            "tool_execution": 30420.124000003852,
+            "response_serialization": 1.1068999956478365,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 30362.26390000229
+          },
+          "qwen_calls": [
+            {
+              "stage": "rag",
+              "input_tokens": 439,
+              "generated_tokens": 51,
+              "max_new_tokens": 400,
+              "generation_ms": 9160.82859999733
+            },
+            {
+              "stage": "rag",
+              "input_tokens": 541,
+              "generated_tokens": 12,
+              "max_new_tokens": 160,
+              "generation_ms": 1735.0093999993987
+            },
+            {
+              "stage": "rag",
+              "input_tokens": 1092,
+              "generated_tokens": 175,
+              "max_new_tokens": 320,
+              "generation_ms": 19466.42590000556
+            }
+          ],
+          "memory": {
+            "process_rss_mb": 2761.70703125,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 30726.21860000072,
+          "qwen_call_count": 3
+        },
+        "book_ids": [],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": "SUPPORTED",
+        "rag_answer": "This PDF discusses various aspects related to indexing in MongoDB. Specifically, it covers creating indexes on collections, dropping existing indexes, and listing index definitions. Here are some key points:\n\n- The creation of an index is demonstrated through `createIndex` command, such as:\n  ```javascript\n  db.students.createIndex({\n      name: 1\n  })\n  ```\n\n- Dropping an index can be done via `dropIndex`, e.g.,:\n  ```\n  db.student.dropIndex('name_1')\n  ```\n  \n- Listing available indexes uses the method `getIndexes()` which returns details of all indexes defined on the collection, including their names and types.\n\n- It also shows how to create users with specified permissions, but mentions that attempting to create a user without specifying a unique username results in failure, indicating that usernames must be unique within a database.",
+        "rag_source_count": 3,
+        "rag_timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 9171.95,
+          "retrieval": 34.73,
+          "fast_filter": 0.64,
+          "validation": 1740.24,
+          "generation": 19471.58,
+          "total": 30419.39
+        },
+        "rag_source_ids": [
+          {
+            "work_id": "User Roles and Permissions in MongoDB",
+            "filename": "User Roles and Permissions in MongoDB.pdf",
+            "chunk_id": "User Roles and Permissions in MongoDB_000014"
+          },
+          {
+            "work_id": "User Roles and Permissions in MongoDB",
+            "filename": "User Roles and Permissions in MongoDB.pdf",
+            "chunk_id": "User Roles and Permissions in MongoDB_000017"
+          },
+          {
+            "work_id": "User Roles and Permissions in MongoDB",
+            "filename": "User Roles and Permissions in MongoDB.pdf",
+            "chunk_id": "User Roles and Permissions in MongoDB_000008"
+          }
+        ],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "fees_after_search",
+      "pass": true,
+      "evidence": {
+        "case": "fees_after_search",
+        "round": null,
+        "status": 200,
+        "intent": "USER_FEES",
+        "client_total_ms": 319.97,
+        "profile": {
+          "trace_id": "30bc72317317447f8220ba272ec4dfd0",
+          "stages_ms": {
+            "request_validation": 0.029000002541579306,
+            "intent_routing": 0.040400002035312355,
+            "account_service": 15.596299999742769,
+            "tool_execution": 15.99529999657534,
+            "response_serialization": 0.11510000331327319,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2761.70703125,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 318.7268000037875,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "b66550f6e58e3ff42e80e2de595634334dc5d734eb17bf4c6a7ad7d2176e9fa6",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "due_first",
+      "pass": true,
+      "evidence": {
+        "case": "due_first",
+        "round": null,
+        "status": 200,
+        "intent": "USER_LOANS",
+        "client_total_ms": 328.69,
+        "profile": {
+          "trace_id": "8f158537fc9b4a9f9c3a7a02caaa731a",
+          "stages_ms": {
+            "request_validation": 0.02469999890308827,
+            "intent_routing": 0.03840000135824084,
+            "account_service": 33.64300000248477,
+            "tool_execution": 34.079999997629784,
+            "response_serialization": 0.10180000390391797,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2761.70703125,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 327.47289999679197,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "7bcab398935439cb313d715b9458dca28fcd9eb4b2efdc31546bf93482e17662",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "unauthenticated",
+      "pass": true,
+      "evidence": {
+        "case": "unauthenticated",
+        "round": null,
+        "status": 401,
+        "intent": null,
+        "client_total_ms": 2.85,
+        "profile": {
+          "trace_id": "4943439ddc214244a4560afd09a57759",
+          "stages_ms": {
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "status": 401,
+          "total_ms": 1.6633000050205737,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": null,
+        "recommendation_mode": null,
+        "has_more": null,
+        "result_offset": null,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "invalid_token",
+      "pass": true,
+      "evidence": {
+        "case": "invalid_token",
+        "round": null,
+        "status": 401,
+        "intent": null,
+        "client_total_ms": 3.81,
+        "profile": {
+          "trace_id": "c6738f31429d43639f2e5f117ca3b33d",
+          "stages_ms": {
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "status": 401,
+          "total_ms": 2.3599000051035546,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": null,
+        "recommendation_mode": null,
+        "has_more": null,
+        "result_offset": null,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "unknown_book",
+      "pass": true,
+      "evidence": {
+        "case": "unknown_book",
+        "round": null,
+        "status": 200,
+        "intent": "CHECK_AVAILABILITY",
+        "client_total_ms": 316.34,
+        "profile": {
+          "trace_id": "0e80e8c36ed445fb9e374d94c4728111",
+          "stages_ms": {
+            "request_validation": 0.029599999834317714,
+            "intent_routing": 0.04930000432068482,
+            "core_metadata": 9.387499994772952,
+            "core_metadata_wall": 10.461400001076981,
+            "entity_resolution": 10.490100001334213,
+            "tool_execution": 10.504300000320654,
+            "response_serialization": 0.09000000136438757,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2761.70703125,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 315.19030000345083,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [
+          "HTTP_404"
+        ],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "cross_user_conversation",
+      "pass": true,
+      "evidence": {
+        "case": "cross_user_conversation",
+        "round": null,
+        "status": 404,
+        "intent": null,
+        "client_total_ms": 301.8,
+        "profile": {
+          "trace_id": "4fda4edc966944cab2b7a1cec7500ad4",
+          "stages_ms": {
+            "request_validation": 0.031799994758330286,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "status": 404,
+          "total_ms": 301.96840000280645,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": null,
+        "recommendation_mode": null,
+        "has_more": null,
+        "result_offset": null,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "reserve_disabled",
+      "pass": true,
+      "evidence": {
+        "case": "reserve_disabled",
+        "round": null,
+        "status": 200,
+        "intent": "RESERVE_BOOK",
+        "client_total_ms": 356.67,
+        "profile": {
+          "trace_id": "e179ec2043da49f294533b4a153ef467",
+          "stages_ms": {
+            "request_validation": 0.02800000220304355,
+            "intent_routing": 0.0931999966269359,
+            "core_metadata": 32.574500000919215,
+            "core_metadata_wall": 33.675400001811795,
+            "entity_resolution": 33.71080000215443,
+            "availability": 0.014400000509340316,
+            "tool_execution": 33.9254000064102,
+            "response_serialization": 0.15929999790387228,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2761.70703125,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 355.60650000115857,
+          "qwen_call_count": 0
+        },
+        "book_ids": [
+          "OL3411044W"
+        ],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": true
+      }
+    },
+    {
+      "case": "confirm_disabled",
+      "pass": true,
+      "evidence": {
+        "case": "confirm_disabled",
+        "round": null,
+        "status": 200,
+        "intent": "RESERVE_BOOK",
+        "client_total_ms": 395.3,
+        "profile": {
+          "trace_id": "6677fbbc064c4c288e64c723689cccf2",
+          "stages_ms": {
+            "request_validation": 0.029100003303028643,
+            "response_serialization": 1.4774000010220334,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2761.703125,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 394.128300002194,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [
+          "MUTATIONS_DISABLED"
+        ],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": true
+      }
+    },
+    {
+      "case": "pending_before_explanation",
+      "pass": true,
+      "evidence": {
+        "case": "pending_before_explanation",
+        "round": null,
+        "status": 200,
+        "intent": "RESERVE_BOOK",
+        "client_total_ms": 344.11,
+        "profile": {
+          "trace_id": "ac7814716f2a4a3daa2cefdd3edd4c63",
+          "stages_ms": {
+            "request_validation": 0.04339999577496201,
+            "intent_routing": 0.0670000008540228,
+            "core_metadata": 26.320400000258815,
+            "core_metadata_wall": 29.839800001354888,
+            "entity_resolution": 29.86830000008922,
+            "availability": 0.009900002623908222,
+            "tool_execution": 29.9892999973963,
+            "response_serialization": 0.14430000010179356,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2761.703125,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 342.7869000006467,
+          "qwen_call_count": 0
+        },
+        "book_ids": [
+          "OL3411044W"
+        ],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": true
+      }
+    },
+    {
+      "case": "explanation_invalidates_pending",
+      "pass": true,
+      "evidence": {
+        "case": "explanation_invalidates_pending",
+        "round": null,
+        "status": 200,
+        "intent": "RECOMMEND_BOOKS",
+        "client_total_ms": 7297.85,
+        "profile": {
+          "trace_id": "49b2b2dc33c74ab38f532c94d8883816",
+          "stages_ms": {
+            "request_validation": 0.026299996534362435,
+            "core_metadata": 618.6096000019461,
+            "core_metadata_wall": 134.7500999982003,
+            "availability": 0.03320001269457862,
+            "response_serialization": 0.1478000049246475,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 6861.777400001301,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [
+            {
+              "stage": "response",
+              "input_tokens": 920,
+              "generated_tokens": 57,
+              "max_new_tokens": 160,
+              "generation_ms": 6861.777400001301
+            }
+          ],
+          "memory": {
+            "process_rss_mb": 2761.71875,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 7295.820300001651,
+          "qwen_call_count": 1
+        },
+        "book_ids": [
+          "OL4067121W",
+          "OL1853043W",
+          "OL18933880W",
+          "OL26039285W",
+          "OL85875W",
+          "OL892488W"
+        ],
+        "seed_work_ids": [
+          "OL3411044W"
+        ],
+        "recommendation_mode": "SINGLE_SELECTED_BOOK",
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "old_confirmation_replay",
+      "pass": true,
+      "evidence": {
+        "case": "old_confirmation_replay",
+        "round": null,
+        "status": 200,
+        "intent": "CLARIFICATION",
+        "client_total_ms": 299.72,
+        "profile": {
+          "trace_id": "77e35ca72fc24ae58ce36d06460f3096",
+          "stages_ms": {
+            "request_validation": 0.027800000680144876,
+            "response_serialization": 0.924600004509557,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2761.71875,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 298.39970000466565,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    },
+    {
+      "case": "unauthorized_book_rag",
+      "pass": true,
+      "evidence": {
+        "case": "unauthorized_book_rag",
+        "round": null,
+        "status": 200,
+        "intent": "BOOK_CONTENT_QUESTION",
+        "client_total_ms": 332.83,
+        "profile": {
+          "trace_id": "90ecc1232da94e64bc5a8eaa70c1424f",
+          "stages_ms": {
+            "request_validation": 0.030300005164463073,
+            "intent_routing": 0.051399998483248055,
+            "core_metadata": 25.61539999442175,
+            "core_metadata_wall": 26.617100003932137,
+            "entity_resolution": 26.647099999536294,
+            "rag_routing": 17.672800000582356,
+            "tool_execution": 44.350000003760215,
+            "response_serialization": 0.09669999417383224,
+            "qwen_intent_generation": 0,
+            "qwen_response_generation": 0,
+            "qwen_rag_generation": 0
+          },
+          "qwen_calls": [],
+          "memory": {
+            "process_rss_mb": 2761.71875,
+            "cuda_allocated_mb": 2171.5400390625,
+            "cuda_reserved_mb": 2844.0
+          },
+          "status": 200,
+          "total_ms": 331.6631999987294,
+          "qwen_call_count": 0
+        },
+        "book_ids": [],
+        "seed_work_ids": [],
+        "recommendation_mode": null,
+        "has_more": false,
+        "result_offset": 0,
+        "error_codes": [
+          "HTTP_403"
+        ],
+        "rag_verdict": null,
+        "rag_answer": null,
+        "rag_source_count": 0,
+        "rag_timing_ms": null,
+        "rag_source_ids": [],
+        "reading_list_count": 0,
+        "account_digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "pending_present": false
+      }
+    }
+  ],
+  "real_state_unchanged": true,
+  "mutations_enabled": false,
+  "runtime": {
+    "attention_backend": "luminar_sdpa",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "cuda": "12.8",
+    "device": "cuda:0",
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "flash_available": false,
+    "sdpa_flash_enabled": true,
+    "sdpa_mem_efficient_enabled": true,
+    "model_resident_id": 2699049912144,
+    "pid": 15160
+  },
+  "integrity": {
+    "changed_existing_source_files": [
+      "assistant/orchestrator.py",
+      "assistant/qwen.py",
+      "assistant/routing.py",
+      "assistant/schemas.py",
+      "assistant/state.py",
+      "frontend/src/components/AIChatWidget.tsx",
+      "frontend/src/components/assistant/AssistantTurn.tsx",
+      "frontend/src/lib/assistantTypes.ts",
+      "frontend/src/store/useAssistantStore.ts",
+      "frontend/tests/assistant.test.tsx",
+      "tests/test_assistant_backend.py",
+      "tests/test_assistant_latency.py"
+    ],
+    "protected_report_changes": [
+      "reports/part3_contract_test.py"
+    ],
+    "original_backend_contract_restored_copy_matches": true,
+    "frontend_independent_contract_unchanged": true
+  },
+  "browser_checks": {
+    "empty_layouts": [
+      {
+        "composer": {
+          "bottom": 739.4626693725586,
+          "height": 63.998985290527344,
+          "left": 977.2738647460938,
+          "right": 1390.0215759277344,
+          "top": 675.4636840820312,
+          "width": 412.7477111816406,
+          "x": 977.2738647460938,
+          "y": 675.4636840820312
+        },
+        "dialog": {
+          "bottom": 804.0015106201172,
+          "height": 679.9987182617188,
+          "left": 963.649658203125,
+          "right": 1403.6458435058594,
+          "top": 124.00279235839844,
+          "width": 439.9961853027344,
+          "x": 963.649658203125,
+          "y": 124.00279235839844
+        },
+        "height": 900,
+        "pageWidth": 1427,
+        "width": 1440
+      },
+      {
+        "composer": {
+          "bottom": 607.7553329467773,
+          "height": 63.998985290527344,
+          "left": 903.2901611328124,
+          "right": 1316.0378723144531,
+          "top": 543.75634765625,
+          "width": 412.7477111816406,
+          "x": 903.2901611328124,
+          "y": 543.75634765625
+        },
+        "dialog": {
+          "bottom": 672.2941837310791,
+          "height": 656.2880859375,
+          "left": 889.6658935546875,
+          "right": 1329.662078857422,
+          "top": 16.0060977935791,
+          "width": 439.9961853027344,
+          "x": 889.6658935546875,
+          "y": 16.0060977935791
+        },
+        "height": 768,
+        "pageWidth": 1353,
+        "width": 1366
+      },
+      {
+        "composer": {
+          "bottom": 863.8528671264648,
+          "height": 63.998985290527344,
+          "left": 305.7291564941406,
+          "right": 718.4768676757812,
+          "top": 799.8538818359375,
+          "width": 412.7477111816406,
+          "x": 305.7291564941406,
+          "y": 799.8538818359375
+        },
+        "dialog": {
+          "bottom": 928.3917541503906,
+          "height": 679.9987182617188,
+          "left": 292.10491943359375,
+          "right": 732.1011047363281,
+          "top": 248.39303588867188,
+          "width": 439.9961853027344,
+          "x": 292.10491943359375,
+          "y": 248.39303588867188
+        },
+        "height": 1024,
+        "pageWidth": 756,
+        "width": 768
+      },
+      {
+        "composer": {
+          "bottom": 731.6565170288086,
+          "height": 63.998985290527344,
+          "left": 17.435213088989258,
+          "right": 332.977632522583,
+          "top": 667.6575317382812,
+          "width": 315.54241943359375,
+          "x": 17.435213088989258,
+          "y": 667.6575317382812
+        },
+        "dialog": {
+          "bottom": 796.1953678131104,
+          "height": 780.1892700195312,
+          "left": 3.8109755516052246,
+          "right": 346.6018691062927,
+          "top": 16.0060977935791,
+          "width": 342.7908935546875,
+          "x": 3.8109755516052246,
+          "y": 16.0060977935791
+        },
+        "height": 812,
+        "pageWidth": 362,
+        "width": 375
+      }
+    ],
+    "populated_layouts": [
+      {
+        "comparisonVisible": true,
+        "composer": {
+          "bottom": 739.4626693725586,
+          "height": 63.998985290527344,
+          "left": 977.2738647460938,
+          "right": 1390.0215759277344,
+          "top": 675.4636840820312,
+          "width": 412.7477111816406,
+          "x": 977.2738647460938,
+          "y": 675.4636840820312
+        },
+        "dialog": {
+          "bottom": 804.0015106201172,
+          "height": 679.9987182617188,
+          "left": 963.649658203125,
+          "right": 1403.6458435058594,
+          "top": 124.00279235839844,
+          "width": 439.9961853027344,
+          "x": 963.649658203125,
+          "y": 124.00279235839844
+        },
+        "height": 900,
+        "pageWidth": 1427,
+        "width": 1440
+      },
+      {
+        "comparisonVisible": true,
+        "composer": {
+          "bottom": 607.7553329467773,
+          "height": 63.998985290527344,
+          "left": 903.2901611328124,
+          "right": 1316.0378723144531,
+          "top": 543.75634765625,
+          "width": 412.7477111816406,
+          "x": 903.2901611328124,
+          "y": 543.75634765625
+        },
+        "dialog": {
+          "bottom": 672.2941837310791,
+          "height": 656.2880859375,
+          "left": 889.6658935546875,
+          "right": 1329.662078857422,
+          "top": 16.0060977935791,
+          "width": 439.9961853027344,
+          "x": 889.6658935546875,
+          "y": 16.0060977935791
+        },
+        "height": 768,
+        "pageWidth": 1353,
+        "width": 1366
+      },
+      {
+        "comparisonVisible": true,
+        "composer": {
+          "bottom": 863.8528671264648,
+          "height": 63.998985290527344,
+          "left": 305.7291564941406,
+          "right": 718.4768676757812,
+          "top": 799.8538818359375,
+          "width": 412.7477111816406,
+          "x": 305.7291564941406,
+          "y": 799.8538818359375
+        },
+        "dialog": {
+          "bottom": 928.3917541503906,
+          "height": 679.9987182617188,
+          "left": 292.10491943359375,
+          "right": 732.1011047363281,
+          "top": 248.39303588867188,
+          "width": 439.9961853027344,
+          "x": 292.10491943359375,
+          "y": 248.39303588867188
+        },
+        "height": 1024,
+        "pageWidth": 756,
+        "width": 768
+      },
+      {
+        "comparisonVisible": true,
+        "composer": {
+          "bottom": 731.6565170288086,
+          "height": 63.998985290527344,
+          "left": 17.435213088989258,
+          "right": 332.977632522583,
+          "top": 667.6575317382812,
+          "width": 315.54241943359375,
+          "x": 17.435213088989258,
+          "y": 667.6575317382812
+        },
+        "dialog": {
+          "bottom": 796.1953678131104,
+          "height": 780.1892700195312,
+          "left": 3.8109755516052246,
+          "right": 346.6018691062927,
+          "top": 16.0060977935791,
+          "width": 342.7908935546875,
+          "x": 3.8109755516052246,
+          "y": 16.0060977935791
+        },
+        "height": 812,
+        "pageWidth": 362,
+        "width": 375
+      }
+    ],
+    "ui_actions": [
+      {
+        "case": "show_more_search",
+        "firstCount": 10,
+        "totalCount": 20,
+        "noDuplicates": true
+      },
+      {
+        "case": "empty_reading_list_blocks_old_comparison",
+        "pass": true,
+        "message": "The current result list is empty. Choose a book or request new results."
+      },
+      {
+        "case": "ordinal_comparison_stays_structured",
+        "pass": true
+      }
+    ],
+    "comparison_explanation": [
+      {
+        "intent": "COMPARE_BOOKS",
+        "latencyMs": 412,
+        "message": "Compare verified catalogue metadata and availability below."
+      },
+      {
+        "intent": "COMPARE_BOOKS",
+        "latencyMs": 10045,
+        "message": "Recorded authors \u2014 Neural Networks and Deep Learning: Charu C. Aggarwal; Concepts for neural networks: John Gerald Taylor. Shared recorded subject examples: neural networks (computer science). Descriptions are missing, so detailed content differences are unknown. Unlisted topics are unknown, not absent."
+      }
+    ],
+    "recommendation_explanation": [
+      {
+        "intent": "COMPARE_BOOKS",
+        "latencyMs": 412,
+        "message": "Compare verified catalogue metadata and availability below.",
+        "mode": null
+      },
+      {
+        "intent": "COMPARE_BOOKS",
+        "latencyMs": 10045,
+        "message": "Recorded authors \u2014 Neural Networks and Deep Learning: Charu C. Aggarwal; Concepts for neural networks: John Gerald Taylor. Shared recorded subject examples: neural networks (computer science). Descriptions are missing, so detailed content differences are unknown. Unlisted topics are unknown, not absent.",
+        "mode": null
+      },
+      {
+        "intent": "RECOMMEND_FROM_BOOK",
+        "latencyMs": 2077,
+        "message": "Here are books related to your selected book.",
+        "mode": "SINGLE_SELECTED_BOOK"
+      },
+      {
+        "intent": "RECOMMEND_BOOKS",
+        "latencyMs": 11313,
+        "message": "The metadata suggests that there is a strong overlap between \"Neural Networks and Deep Learning\" by Charu C. Aggarwal and Daniel Graupe\u2019s work on \"Deep Learning Neural Networks.\" Both works focus primarily on neural networks and machine learning, indicating a potential common interest in these areas. However, without more specific information linking individual chapters or sections, we cannot make definitive statements about direct similarities beyond this general area of subject matter.",
+        "mode": "SINGLE_SELECTED_BOOK"
+      }
+    ],
+    "screenshots": [
+      "part3_repair_overlay_1440x900.png",
+      "part3_repair_overlay_1366x768.png",
+      "part3_repair_overlay_768x1024.png",
+      "part3_repair_overlay_375x812.png",
+      "part3_repair_explanation_final.png",
+      "part3_repair_why_final.png",
+      "part3_repair_empty_reference_final.png"
+    ]
+  },
+  "cleanup": {
+    "owned_services_stopped": true,
+    "review_ports_free": true,
+    "mutating_flag_enabled": false,
+    "viewport_override_reset": true,
+    "browser_signed_out": true,
+    "stopped_pids": [
+      8332,
+      23944,
+      27228,
+      4664,
+      29592,
+      3140,
+      24244,
+      15160,
+      14152
+    ],
+    "bootstrap_files_removed": true,
+    "real_state_unchanged": true,
+    "agent_created_tab_closed": true
+  },
+  "model_lifecycle": "Seven sequential workers: functional baseline, prompt-only trial, compact-intent trial, metadata-instruction trial, sparse-metadata browser trial, reference-handling browser trial, and final ordinal-comparison worker. Six controlled replacements; each predecessor stopped before replacement. Benchmark phases reused one resident worker. No duplicate resident model, downloads or retraining.",
+  "evidence_files": [
+    "part3_repair_latency_baseline_raw.json",
+    "part3_repair_latency_trial1_raw.json",
+    "part3_repair_latency_trial2_raw.json",
+    "part3_repair_latency_final_raw.json",
+    "part3_repair_profiles_quality_trial.jsonl",
+    "part3_repair_profiles_reference_trial.jsonl",
+    "part3_repair_profiles_ordinal_trial.jsonl",
+    "part3_repair_profiles_final.jsonl",
+    "part3_repair_cleanup.json"
+  ]
+}

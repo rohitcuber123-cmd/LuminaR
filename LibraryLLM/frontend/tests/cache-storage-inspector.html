@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Disposable cache storage validation</title></head>
+<body><h1>Disposable cache storage validation</h1><pre id="result">Checking…</pre>
+<script type="module">
+import { getToken } from '../src/lib/api.ts'
+import { documentCacheScope } from '../src/lib/documentCacheApi.ts'
+import { localDocumentCache } from '../src/lib/localDocumentCache.ts'
+const output = document.getElementById('result')
+try {
+  const scope = await documentCacheScope(), owner = scope.owner_scope_id
+  const records = await localDocumentCache.listForOwner(owner)
+  const results = { backend: await localDocumentCache.backend(), account_cache_count: records.length, copies: [] }
+  for (const record of records) {
+    const readStart = performance.now(), copy = await localDocumentCache.get(record.cache_id, owner)
+    const readMs = performance.now() - readStart
+    const data = new Uint8Array(await copy.blob.arrayBuffer()), text = new TextDecoder().decode(data)
+    const writeStart = performance.now()
+    await localDocumentCache.store(record, copy.blob)
+    results.copies.push({ bytes: copy.blob.size, read_ms: readMs, store_ms: performance.now() - writeStart,
+      blob_has_document_sample: text.includes('Role-based access control assigns permissions'),
+      blob_has_filename: text.includes('know_more_browser_test.pdf'),
+      bookkeeping_has_filename: JSON.stringify(record).includes('know_more_browser_test.pdf'),
+      ciphertext_container_verified: String.fromCharCode(...data.slice(0,7)) === 'LUMKMC1',
+      opted_in: record.keep })
+  }
+  // Controlled attack fixture: bypass UI filtering, submit another scope's ciphertext.
+  const db = await new Promise((resolve,reject) => {
+    const request = indexedDB.open('luminar-private-document-cache',1)
+    request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error)
+  })
+  const all = await new Promise((resolve,reject) => {
+    const request = db.transaction('copies').objectStore('copies').getAll()
+    request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error)
+  }); db.close()
+  results.other_account_restore_attempts = []
+  for (const record of all.filter(r => r.owner_scope_id !== owner)) {
+    const copy = await localDocumentCache.get(record.cache_id,record.owner_scope_id)
+    const response = await fetch('/rag-api/rag/local-cache/restore',{method:'POST',headers:{Authorization:`Bearer ${getToken()}`,'Content-Type':'application/octet-stream'},body:copy.blob})
+    results.other_account_restore_attempts.push({ status: response.status, rejected: response.status === 400 })
+  }
+  output.textContent = JSON.stringify(results, null, 2)
+} catch (error) { output.textContent = String(error) }
+</script></body></html>

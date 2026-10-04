@@ -1,0 +1,45 @@
+{
+  "storage_collection": "activity",
+  "canonical_target_field": "user_id",
+  "additive_actor_field": "actor_user_id",
+  "legacy_backfill": "None; never infer actor/target",
+  "api_fields": {
+    "operation_id": "string(activity_id)",
+    "operation_type": "existing activity_type",
+    "target_user_id": "integer or null; alias of stored user_id",
+    "target_user": "current safe user record or null",
+    "actor_user_id": "integer or null",
+    "actor": "current safe user record or null",
+    "book": {
+      "work_id": "string or null",
+      "title": "event snapshot, linked circulation source, then current catalogue title"
+    },
+    "occurred_at": "UTC ISO datetime",
+    "due_at": "UTC ISO datetime or null",
+    "returned_at": "UTC ISO datetime or null",
+    "status": "linked source current status or null",
+    "description": "plain text",
+    "source_ref": "authoritative issue_id/reservation_id/fine_id"
+  },
+  "safe_user_fields": [
+    "user_id",
+    "name",
+    "email",
+    "role"
+  ],
+  "historical_counts": {
+    "legacy_missing_target": 0,
+    "legacy_unknown_actor": 88,
+    "unresolvable_target_account": 0,
+    "activity_count": 88
+  },
+  "pagination": {
+    "default_limit": 20,
+    "max_limit": 50,
+    "offset": "nonnegative",
+    "sort": [
+      "created_at DESC",
+      "activity_id DESC"
+    ]
+  }
+}

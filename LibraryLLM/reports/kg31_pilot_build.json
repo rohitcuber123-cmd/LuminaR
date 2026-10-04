@@ -1,0 +1,103 @@
+{
+  "sample_books": 100040,
+  "selection": "systematic pilot, every 50th catalogue book_id plus frozen 40 seeds",
+  "frozen_source": "D:\\SDC\\LibraryLLM\\reports\\kg31_pilot_books.jsonl",
+  "v1": {
+    "version": "kg1-2-metadata-cosine-v1",
+    "source": "Mongo books: projected public metadata only",
+    "source_count": 100040,
+    "books": 100040,
+    "edges": 587074,
+    "features": {
+      "author": 105107,
+      "subject": 93867
+    },
+    "missing_authors": 1178,
+    "missing_subjects": 5089,
+    "isolated_books": 30,
+    "skipped_books": 0,
+    "created_at": "2026-10-02T17:43:04.145474+00:00",
+    "catalogue_hash": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+    "build_seconds": 10.14072060000035,
+    "schema": {
+      "nodes": [
+        "Book",
+        "Author name",
+        "Subject label"
+      ],
+      "edges": [
+        "AUTHORED_BY",
+        "HAS_SUBJECT"
+      ]
+    },
+    "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+    "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+    "scope": "systematic pilot, every 50th catalogue book_id plus frozen 40 seeds"
+  },
+  "v1_bytes": 126763008,
+  "v2": {
+    "version": "kg31-description-topics-pilot-v2",
+    "source": "Mongo books: projected public metadata only",
+    "source_count": 100040,
+    "books": 100040,
+    "edges": 656478,
+    "features": {
+      "author": 105107,
+      "subject": 93867,
+      "topic": 16623
+    },
+    "missing_authors": 1178,
+    "missing_subjects": 5089,
+    "isolated_books": 30,
+    "skipped_books": 0,
+    "created_at": "2026-10-02T17:43:50.725003+00:00",
+    "catalogue_hash": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+    "build_seconds": 49.27469360000396,
+    "schema": {
+      "nodes": [
+        "Book",
+        "Author name",
+        "Subject label",
+        "Description topic"
+      ],
+      "edges": [
+        "AUTHORED_BY",
+        "HAS_SUBJECT",
+        "HAS_TOPIC"
+      ]
+    },
+    "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+    "scoring": "Weighted cosine using explicit relation weights and retained graph degree. Topic amplitude 0.5 gives one quarter of subject squared weight at equal degree; conservative untuned initial policy.",
+    "scope": "systematic pilot, every 50th catalogue book_id plus frozen 40 seeds",
+    "relation_weights": {
+      "author": 2.0,
+      "subject": 1.0,
+      "topic": 0.5
+    },
+    "topic_policy": {
+      "min_degree": 3,
+      "maximum_degree_fraction": 0.001,
+      "max_topics_per_book": 5,
+      "max_description_tokens": 512,
+      "min_description_tokens": 20,
+      "language_policy": "Unicode source phrases; English stop words plus conservative generic terms. Language unknown, never inferred."
+    },
+    "base_snapshot": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+    "description_books_with_phrase_candidates": 25393,
+    "topic_books": 22046,
+    "weak_feature_qualification": "Only author, subject and bounded description-topic connections qualify. Publisher/language/era unavailable and never qualify alone.",
+    "database_bytes": 145911808,
+    "total_enrichment_seconds_including_compaction": 50.08740470000339
+  },
+  "total_seconds": 66.82025949999661,
+  "full_build_gate": {
+    "integrity_required": true,
+    "strong_source_reason_review_required": true,
+    "median_query_seconds_at_most": 1,
+    "maximum_query_seconds_at_most": 5,
+    "maximum_mean_paired_diversity_decline": 0.05,
+    "maximum_topic_contribution_share": 0.5,
+    "estimated_build_seconds_at_most": 3600,
+    "minimum_free_disk_after_estimated_peak_gb": 15
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "types": [
+    "DUE_SOON",
+    "DUE_TODAY",
+    "OVERDUE"
+  ],
+  "source": "SYSTEM only",
+  "resolution_fields": [
+    "resolved_at",
+    "resolution_reason"
+  ],
+  "read_state_separate": true,
+  "delete_historical_notifications": false,
+  "resolved_unread_counts": false,
+  "resolved_toasts": false,
+  "inbox_order": "Current/unresolved first, then resolved history; bounded server pagination.",
+  "renewal_scope": "Same loan + previous exact UTC due version",
+  "return_scope": "All unresolved due reminders for the returned loan",
+  "admin_messages": "Never matched by reconciliation. Read state preserved.",
+  "external_due_change": "No manual Admin due-date API exists. Next startup/interval sweep resolves changed versions.",
+  "worker": "Pre-insert authoritative active/due check; deduplicated insert; post-insert check + exact version reconciliation. Mutation also resolves. Next sweep recovers a process crash between steps.",
+  "source_sweep_batch": 500,
+  "cadence": {
+    "startup": true,
+    "interval_minutes": 60,
+    "minimum_minutes": 5,
+    "frontend_poll_seconds": 45,
+    "focus_refresh": true
+  },
+  "dedupe": "TYPE:<loan_id>:<UTC_due_timestamp>",
+  "reservation_available": "Emitted only by successful ACTIVE -> READY_FOR_PICKUP transition, once per reservation; no pickup expiry invented.",
+  "added_indexes": {
+    "notifications": [
+      [
+        "source_ref.loan_id",
+        "resolved_at"
+      ],
+      [
+        "source",
+        "resolved_at",
+        "type"
+      ],
+      [
+        "user_id",
+        "resolved_at",
+        "created_at DESC",
+        "notification_id DESC"
+      ]
+    ],
+    "activity": "event_key unique sparse"
+  },
+  "live_races": {
+    "assisted_renew_race": {
+      "active_loans_scanned": 2,
+      "relevant_loans": 2,
+      "created": 1,
+      "duplicates_skipped": 1,
+      "invalid_or_changed_skipped": 0,
+      "resolved_stale": 1,
+      "scanned_at": "2026-10-03T09:27:54+00:00",
+      "duration_ms": 22.308600000542356
+    },
+    "return_race": {
+      "active_loans_scanned": 1,
+      "relevant_loans": 1,
+      "created": 1,
+      "duplicates_skipped": 0,
+      "invalid_or_changed_skipped": 0,
+      "resolved_stale": 1,
+      "scanned_at": "2026-10-03T09:27:54+00:00",
+      "duration_ms": 17.852300003141863
+    }
+  },
+  "checks": {
+    "owner_renewal": true,
+    "renewal_retry_one_extension": true,
+    "old_due_resolved_read_separate": true,
+    "old_due_no_future_alert": true,
+    "new_due_version_future_alert": true,
+    "admin_message_unaffected": true,
+    "overdue_return_resolved": true,
+    "returned_worker_no_new_alert": true,
+    "fees_unchanged": true,
+    "authoritative_reservation_available": true,
+    "real_core_assisted_renew_race": true,
+    "real_core_return_race": true,
+    "admin_actor_target": true
+  },
+  "performance_evidence": "loan_renewal_performance.json"
+}

@@ -1,0 +1,133 @@
+{
+  "document_id": "User Roles and Permissions in MongoDB",
+  "filename": "User Roles and Permissions in MongoDB.pdf",
+  "chunk_count": 18,
+  "chunks": [
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000001",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 1,
+      "text": "User Roles and Permissions in MongoDB \n========================================== \n| User \n| Role \n \n \n| Responsibility \n| ----- \n| --------- \n \n \n| --------------------- \n| Ravi \n| read \n \n \n| Can only view student records \n| Sita \n| readWrite \n \n \n| Can view and modify student records \n| Kiran \n| dbAdmin \n \n \n| Can create indexes and manage collections but \n \n \n \n \n \n \n \nnot insert student data \n| Admin \n| userAdmin \n \n \n| Can create/delete users \n \nCreate a Super Admin (All Permissions) \n======================================================= \nSwitch to the admin database: \nuse admin \n \nCreate the root user: \n \ndb.createUser({ \n user: \"superadmin\", \n pwd: \"admin123\", \n roles: [ \n { role: \"root\", db: \"admin\" } \n ] \n})"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000002",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 2,
+      "text": "Now run the command prompt in administrator mode \n \n \n \nCheck the mongodb version"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000003",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 3,
+      "text": "Open the c drive then open program files \n \n \nOpen the folder mongodb"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000004",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 4,
+      "text": "Open the server folder \n \n \nIn that open the version folder in this case 5.0 → then open the bin folder→ check for mongod.cfg \n \n \nCopy the path from the url"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000005",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 5,
+      "text": "Open it in the terminal \ncd C:\\Program Files\\MongoDB\\Server\\5.0\\bin \n \nOpen the file mongod.cfg using notepad from the terminal only"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000006",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 6,
+      "text": "Paste the below in the file at security parameter check for space before authorization \nsecurity: \n authorization: enabled \n \n \nSave and close the notepad file \nThen run the below commands in the terminal \nnet stop mongodb \nnet start mongodb"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000007",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 7,
+      "text": "Close all the terminals and open a new terminal and try to Login as superadmin \nmongosh -u superadmin -p admin123 --authenticationDatabase admin \n \nWhat can the Super Admin do? \n1. Read Documents \nuse college \n \ndb.students.find() \n \n2. Insert Documents \ndb.students.insertOne({ \n rollNo: 10, \n name: \"Rakesh\", \n branch: \"CSE\" \n}) \n \n3. Update Documents \ndb.students.updateOne( \n { rollNo: 10 }, \n { $set: { branch: \"AI\" } } \n) \n4. Delete Documents \ndb.students.deleteOne({ \n rollNo: 10 \n})"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000008",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 8,
+      "text": "5. Create Collection \ndb.createCollection(\"faculty\") \n \n6. Drop Collection \ndb.faculty.drop() \n \n7. Create Another User \nuse college \n \ndb.createUser({ \n user: \"guest\", \n pwd: \"guest123\", \n roles: [ \n { role: \"read\", db: \"college\" } \n ] \n}) \n \n8. Drop User \ndb.dropUser(\"guest\") \n \n9. Create Index \ndb.students.createIndex({ \n name: 1 \n}) \n \n10. Drop Database \ndb.dropDatabase()"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000009",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 9,
+      "text": "Step 1: Create Database \nuse college \n \nStep 2: Create Collection \ndb.students.insertMany([ \n{ \nrollNo:1, \nname:\"Rahul\", \nbranch:\"CSE\" \n}, \n{ \nrollNo:2, \nname:\"Anitha\", \nbranch:\"ECE\" \n} \n]) \n \nVerify \ndb.students.find() \n \nStep 3: Create Read Only User \ndb.createUser({ \nuser:\"ravi\", \npwd:\"ravi123\", \nroles:[ \n{ \nrole:\"read\", \ndb:\"college\" \n} \n] \n})"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000010",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 10,
+      "text": "Step 4: Login as Ravi \nExit shell \nexit \n \nLogin \nmongosh -u ravi -p ravi123 --authenticationDatabase college \n \nRavi tries to READ \nuse college \n \ndb.students.find() \n \nRavi tries to INSERT( Not Allowed) \n \ndb.students.insertOne({ \nrollNo:5, \nname:\"Kiran\" \n}) \n \nRavi tries to UPDATE( Not Allowed) \n \ndb.students.updateOne( \n{rollNo:1}, \n{$set:{branch:\"IT\"}} \n) \n \nRavi tries to DELETE(Not Allowed) \n \ndb.students.deleteOne({ \nrollNo:2 \n})"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000011",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 11,
+      "text": "Now exit from the shell \nexit \n \ntry to Login as superadmin \n \nmongosh -u superadmin -p admin123 --authenticationDatabase admin \n \nNow Create ReadWrite User \n \nuse college \n \ndb.createUser({ \nuser:\"sita\", \npwd:\"sita123\", \nroles:[ \n{ \nrole:\"readWrite\", \ndb:\"college\" \n} \n] \n}) \nNow exit from the shell \nexit \n \nLogin as Sita \nmongosh -u sita -p sita123 --authenticationDatabase college \n \nuse college \n \nRead \ndb.students.find()"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000012",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 12,
+      "text": "Insert \ndb.students.insertOne({ \nrollNo:3, \nname:\"Ramesh\" \n}) \n \nUpdate \ndb.students.updateOne( \n{rollNo:1}, \n{$set:{branch:\"AI\"}} \n) \n \nDelete \ndb.students.deleteOne({ \nrollNo:2 \n}) \n \nexit"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000013",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 13,
+      "text": "Create dbAdmin User \n \nLogin as admin \nmongosh -u superadmin -p admin123 --authenticationDatabase admin \n \nuse college \n \ndb.createUser({ \nuser:\"kiran\", \npwd:\"kiran123\", \nroles:[ \n{ \nrole:\"dbAdmin\", \ndb:\"college\" \n} \n] \n}) \n \nexit \n \nLogin as Kiran \nmongosh -u kiran -p kiran123 --authenticationDatabase college \n \nuse college \n \nTry to Insert (Not Allowed) \ndb.students.insertOne({ \nrollNo:5, \nname:\"Ajay\" \n})"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000014",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 14,
+      "text": "Create Index \ndb.students.createIndex({ \nname:1 \n}) \n \nList Indexes \ndb.students.getIndexes() \n \nDrop Index \ndb.students.dropIndex(\"name_1\") \n \nexit \n \nLogin as admin \nmongosh -u superadmin -p admin123 --authenticationDatabase admin \n \nuse college \n \nCreate userAdmin \ndb.createUser({ \nuser:\"manager\", \npwd:\"manager123\", \nroles:[ \n{ \nrole:\"userAdmin\", \ndb:\"college\" \n} \n] \n}) \n \nexit"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000015",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 15,
+      "text": "Login as Manager \nmongosh -u manager -p manager123 --authenticationDatabase college \n \nCreate User \ndb.createUser({ \nuser:\"guest\", \npwd:\"guest123\", \nroles:[ \n{ \nrole:\"read\", \ndb:\"college\" \n} \n] \n}) \n \nList Users \nshow users \n \nDrop User \ndb.dropUser(\"guest\") \n \nTry to Insert Student (Not Allowed) \ndb.students.insertOne({ \nrollNo:100, \nname:\"XYZ\" \n}) \n \nexit"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000016",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 16,
+      "text": "If you want a user to have: Read data, Insert, Update, Delete data, Administrative privileges (indexes, \ncollections, statistics) then assign both readWrite and dbAdmin roles. \nExample \nLogin as admin \nmongosh -u superadmin -p admin123 --authenticationDatabase admin \n \nuse college \n \ndb.createUser({ \n user: \"faculty\", \n pwd: \"faculty123\", \n roles: [ \n { role: \"readWrite\", db: \"college\" }, \n { role: \"dbAdmin\", db: \"college\" } \n ] \n}) \n \nexit \n \nLogin \nmongosh -u faculty -p faculty123 --authenticationDatabase college \n \nuse college \nRead \ndb.students.find() \nInsert \ndb.students.insertOne({ \n rollNo:5, \n name:\"Ramesh\" \n})"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000017",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 17,
+      "text": "Update \ndb.students.updateOne( \n {rollNo:5}, \n {$set:{branch:\"CSE\"}} \n) \n \nDelete \ndb.students.deleteOne({ \n rollNo:5 \n}) \n \nCreate Index \ndb.students.createIndex({ \n name:1 \n}) \n \nTry Creating a User (Not Allowed) \ndb.createUser({ \n user:\"guest\", \n pwd:\"guest123\", \n roles:[ \n { \n role:\"read\", \n db:\"college\" \n } \n ] \n}) \n \nexit"
+    },
+    {
+      "chunk_id": "User Roles and Permissions in MongoDB_000018",
+      "document_id": "User Roles and Permissions in MongoDB",
+      "filename": "User Roles and Permissions in MongoDB.pdf",
+      "page": 18,
+      "text": "Login \nmongosh -u faculty -p faculty123 --authenticationDatabase college \n \nIf you also want the user to create other users \nThen include the userAdmin role as well: \n \nuse college \n \ndb.createUser({ \n user: \"admin\", \n pwd: \"admin123\", \n roles: [ \n { role: \"readWrite\", db: \"college\" }, \n { role: \"dbAdmin\", db: \"college\" }, \n { role: \"userAdmin\", db: \"college\" } \n ] \n})"
+    }
+  ]
+}

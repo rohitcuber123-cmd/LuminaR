@@ -1,0 +1,173 @@
+{
+  "reported_at": "2026-10-03T06:41:42.193114+00:00",
+  "build_reused": true,
+  "new_build_this_turn": false,
+  "active_graph": "knowledge_graph/data/catalogue.sqlite (V1)",
+  "v1_pilot": {
+    "version": "kg1-2-metadata-cosine-v1",
+    "source": "Mongo books: projected public metadata only",
+    "source_count": 100040,
+    "books": 100040,
+    "edges": 587074,
+    "features": {
+      "author": 105107,
+      "subject": 93867
+    },
+    "missing_authors": 1178,
+    "missing_subjects": 5089,
+    "isolated_books": 30,
+    "skipped_books": 0,
+    "created_at": "2026-10-02T17:43:04.145474+00:00",
+    "catalogue_hash": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+    "build_seconds": 10.14072060000035,
+    "schema": {
+      "nodes": [
+        "Book",
+        "Author name",
+        "Subject label"
+      ],
+      "edges": [
+        "AUTHORED_BY",
+        "HAS_SUBJECT"
+      ]
+    },
+    "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+    "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+    "scope": "systematic pilot, every 50th catalogue book_id plus frozen 40 seeds"
+  },
+  "initial_v2_pilot": {
+    "version": "kg31-description-topics-pilot-v2",
+    "source": "Mongo books: projected public metadata only",
+    "source_count": 100040,
+    "books": 100040,
+    "edges": 656478,
+    "features": {
+      "author": 105107,
+      "subject": 93867,
+      "topic": 16623
+    },
+    "missing_authors": 1178,
+    "missing_subjects": 5089,
+    "isolated_books": 30,
+    "skipped_books": 0,
+    "created_at": "2026-10-02T17:43:50.725003+00:00",
+    "catalogue_hash": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+    "build_seconds": 49.27469360000396,
+    "schema": {
+      "nodes": [
+        "Book",
+        "Author name",
+        "Subject label",
+        "Description topic"
+      ],
+      "edges": [
+        "AUTHORED_BY",
+        "HAS_SUBJECT",
+        "HAS_TOPIC"
+      ]
+    },
+    "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+    "scoring": "Weighted cosine using explicit relation weights and retained graph degree. Topic amplitude 0.5 gives one quarter of subject squared weight at equal degree; conservative untuned initial policy.",
+    "scope": "systematic pilot, every 50th catalogue book_id plus frozen 40 seeds",
+    "relation_weights": {
+      "author": 2.0,
+      "subject": 1.0,
+      "topic": 0.5
+    },
+    "topic_policy": {
+      "min_degree": 3,
+      "maximum_degree_fraction": 0.001,
+      "max_topics_per_book": 5,
+      "max_description_tokens": 512,
+      "min_description_tokens": 20,
+      "language_policy": "Unicode source phrases; English stop words plus conservative generic terms. Language unknown, never inferred."
+    },
+    "base_snapshot": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+    "description_books_with_phrase_candidates": 25393,
+    "topic_books": 22046,
+    "weak_feature_qualification": "Only author, subject and bounded description-topic connections qualify. Publisher/language/era unavailable and never qualify alone.",
+    "database_bytes": 145911808,
+    "total_enrichment_seconds_including_compaction": 50.08740470000339
+  },
+  "refined_v2_pilot": {
+    "version": "kg31-description-subject-vocabulary-v2",
+    "source": "Mongo books: projected public metadata only",
+    "source_count": 100040,
+    "books": 100040,
+    "edges": 620810,
+    "features": {
+      "author": 105107,
+      "subject": 93867,
+      "topic": 4789
+    },
+    "missing_authors": 1178,
+    "missing_subjects": 5089,
+    "isolated_books": 30,
+    "skipped_books": 0,
+    "created_at": "2026-10-02T17:57:26.143472+00:00",
+    "catalogue_hash": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+    "build_seconds": 60.39075859999866,
+    "schema": {
+      "nodes": [
+        "Book",
+        "Author name",
+        "Subject label",
+        "Description topic"
+      ],
+      "edges": [
+        "AUTHORED_BY",
+        "HAS_SUBJECT",
+        "HAS_TOPIC"
+      ]
+    },
+    "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+    "scoring": "Weighted cosine using explicit relation weights and retained graph degree. Topic amplitude 0.5 gives one quarter of subject squared weight at equal degree; conservative untuned initial policy.",
+    "scope": "systematic 100040-book pilot; global V1 subject vocabulary",
+    "relation_weights": {
+      "author": 2.0,
+      "subject": 1.0,
+      "topic": 0.5
+    },
+    "topic_policy": {
+      "min_degree": 3,
+      "maximum_degree_fraction": 0.001,
+      "max_topics_per_book": 5,
+      "max_description_tokens": 512,
+      "min_description_tokens": 20,
+      "language_policy": "Unicode source phrases; English stop words plus conservative generic terms. Language unknown, never inferred."
+    },
+    "base_snapshot": "c8d9e516bab7bbce875fa128bc2b689136bcfc39102341d764dd3d09022963e1",
+    "description_books_with_phrase_candidates": 25393,
+    "topic_books": 15642,
+    "weak_feature_qualification": "Only author, subject and bounded description-topic connections qualify. Publisher/language/era unavailable and never qualify alone.",
+    "topic_vocabulary": "Exact normalized phrases already present as subject labels in frozen full V1 graph; no title inference, generative labels or per-seed allowlist.",
+    "database_bytes": 138604544,
+    "total_enrichment_seconds_including_compaction": 61.2823395000014
+  },
+  "frozen_population": "100040 systematic pilot works including all 40 frozen KG3 seeds; V1 and V2 have the same books. This is NOT full-5M V1 versus a small V2.",
+  "published_pilot_quick_check": "ok for V1, initial V2 and refined V2",
+  "full_build_gate": {
+    "integrity": "PASS",
+    "latency": "PASS",
+    "disk_projection": "PASS",
+    "diversity_decline": "PASS",
+    "useful_reason_review": "FAIL",
+    "decision": "STOP AT PILOT; preserve production V1"
+  },
+  "full_5m_v2_built": false,
+  "full_projection": {
+    "linear_projected_topic_nodes": 239354.2582966813,
+    "linear_projected_new_edges": 1686125.5497800878,
+    "linear_projected_disk_bytes": 6927456217.512995,
+    "conservative_peak_additional_bytes": 20782368652.538986,
+    "linear_projected_enrichment_seconds": 3018.330597760829,
+    "disk_free_now_bytes": 52715401216,
+    "limitation": "Linear projections from 100K; corpus degree, vocabulary growth and indexing can scale nonlinearly. Preserve V1 and allow 3x V2 output for staging/compaction."
+  },
+  "disk_free_now_bytes": 52712988672,
+  "source_build_reports": [
+    "kg31_pilot_build.json",
+    "kg31_pilot_v2_subject_vocab_build.json"
+  ],
+  "note": "Earlier failed staging artifact retained separately; it is not a published graph."
+}

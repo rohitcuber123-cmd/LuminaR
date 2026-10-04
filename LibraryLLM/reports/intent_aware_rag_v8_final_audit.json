@@ -1,0 +1,30 @@
+{
+  "audit_result": "FREEZE_V8",
+  "verified_implementation": {
+    "validator_schema": "MinimalSchema (supported: bool, confidence: float)",
+    "fast_filter_thresholds": {
+      "actor": 0.8,
+      "event": 0.6
+    },
+    "tokenization_regex": "\\b[a-zA-Z']+\\b",
+    "directionality": "verb-noun subtraction and prefix-matching",
+    "gpu_initialization_order": "Retriever -> Reranker -> LLM"
+  },
+  "verified_metrics": {
+    "E2E_Groundedness_Valid": "56.5%",
+    "E2E_Groundedness_Invalid_Rejection": "55.6%",
+    "Overall_Adversarial_Accuracy": "88.1%",
+    "Unsupported_Premise_Rejection_Rate": "94.6%",
+    "Intent_Regression": "100.0%",
+    "Retrieval_Regression": "70.0%"
+  },
+  "disclosures": {
+    "regression_disclosed": true,
+    "metrics_distinguished": true,
+    "claims_verified": true
+  },
+  "traceability": {
+    "v7_traceable": true,
+    "v8_traceable": true
+  }
+}

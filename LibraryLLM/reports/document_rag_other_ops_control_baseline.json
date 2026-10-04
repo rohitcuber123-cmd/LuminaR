@@ -1,0 +1,563 @@
+{
+  "runs": [
+    {
+      "case": "simple_search",
+      "status": 200,
+      "total_ms": 1247.647500000312,
+      "errors": [],
+      "profile": {
+        "trace_id": "94f72cf55a464ca4a24e786425192c9e",
+        "stages_ms": {
+          "request_validation": 0.024900000425986946,
+          "intent_routing": 0.11610000365180895,
+          "search": 117.04560000362108,
+          "core_metadata": 25678.099200013094,
+          "core_metadata_wall": 811.5746000039508,
+          "availability": 0.11819999781437218,
+          "tool_execution": 929.8689999995986,
+          "response_serialization": 0.3285999991931021,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 738.8203125,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 1246.070699999109,
+        "qwen_call_count": 0
+      },
+      "intent": "SEARCH_BOOKS",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "complex_search",
+      "status": 200,
+      "total_ms": 12127.035500001512,
+      "errors": [],
+      "profile": {
+        "trace_id": "a23603dcfd154063a5e1f33f9a50bd64",
+        "stages_ms": {
+          "request_validation": 0.03959999594371766,
+          "intent_routing": 0.05740000051446259,
+          "intent_json_validation": 0.3423999951337464,
+          "intent_parsing": 10915.693099996133,
+          "search": 102.14940000150818,
+          "core_metadata": 25254.05209996825,
+          "core_metadata_wall": 787.6299999988987,
+          "availability": 0.19380000594537705,
+          "tool_execution": 891.9643999979598,
+          "response_serialization": 0.6322999979602173,
+          "qwen_intent_generation": 10895.280000004277,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [
+          {
+            "stage": "intent",
+            "input_tokens": 816,
+            "generated_tokens": 73,
+            "max_new_tokens": 180,
+            "generation_ms": 10895.280000004277
+          }
+        ],
+        "memory": {
+          "process_rss_mb": 739.78125,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 12125.130000000354,
+        "qwen_call_count": 1
+      },
+      "intent": "SEARCH_BOOKS",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "general_help",
+      "status": 200,
+      "total_ms": 7030.693500004418,
+      "errors": [],
+      "profile": {
+        "trace_id": "aad68b12a5e241a1be41eb50506a53dc",
+        "stages_ms": {
+          "request_validation": 0.03529999958118424,
+          "intent_routing": 0.07550000009359792,
+          "tool_execution": 0.017899998056236655,
+          "response_serialization": 1.8798999954015017,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 6726.857499998005,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [
+          {
+            "stage": "response",
+            "input_tokens": 224,
+            "generated_tokens": 50,
+            "max_new_tokens": 160,
+            "generation_ms": 6726.857499998005
+          }
+        ],
+        "memory": {
+          "process_rss_mb": 739.76953125,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 7028.999699999986,
+        "qwen_call_count": 1
+      },
+      "intent": "GENERAL_LIBRARY_HELP",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "default_recommendation",
+      "status": 200,
+      "total_ms": 668.2130000044708,
+      "errors": [],
+      "profile": {
+        "trace_id": "023a10ae208f4905b01809bfa6bc614d",
+        "stages_ms": {
+          "request_validation": 0.0261999957729131,
+          "intent_routing": 0.03409999771974981,
+          "entity_resolution": 0.02130000211764127,
+          "recommendation": 174.66300000523916,
+          "core_metadata": 1941.222099987499,
+          "core_metadata_wall": 203.30079999985173,
+          "availability": 0.10829998791450635,
+          "tool_execution": 379.1629999977886,
+          "response_serialization": 0.25430000096093863,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.76953125,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 666.469199997664,
+        "qwen_call_count": 0
+      },
+      "intent": "RECOMMEND_BOOKS",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "single_seed",
+      "status": 200,
+      "total_ms": 1357.5915999972494,
+      "errors": [],
+      "profile": {
+        "trace_id": "029221bb60484bcb81148494c56e1df9",
+        "stages_ms": {
+          "request_validation": 0.05339999916031957,
+          "intent_routing": 0.03319999814266339,
+          "core_metadata": 25165.41320001852,
+          "core_metadata_wall": 841.0929000019678,
+          "entity_resolution": 27.382100000977516,
+          "recommendation": 211.93510000011884,
+          "availability": 0.1072000086423941,
+          "tool_execution": 1054.4948000024306,
+          "response_serialization": 0.2593000026536174,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.76953125,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 1355.7182000004104,
+        "qwen_call_count": 0
+      },
+      "intent": "RECOMMEND_FROM_BOOK",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "explain_recommendation",
+      "status": 200,
+      "total_ms": 12909.210500001791,
+      "errors": [],
+      "profile": {
+        "trace_id": "0d3461ecc7b447879a1d2f9fec48fc23",
+        "stages_ms": {
+          "request_validation": 0.04410000110510737,
+          "core_metadata": 623.0538000090746,
+          "core_metadata_wall": 137.1523000052548,
+          "availability": 0.05570000212173909,
+          "response_serialization": 0.2012999975704588,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 12473.263699997915,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [
+          {
+            "stage": "response",
+            "input_tokens": 593,
+            "generated_tokens": 96,
+            "max_new_tokens": 160,
+            "generation_ms": 12473.263699997915
+          }
+        ],
+        "memory": {
+          "process_rss_mb": 739.79296875,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 12907.209099998,
+        "qwen_call_count": 1
+      },
+      "intent": "RECOMMEND_BOOKS",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "multi_seed",
+      "status": 200,
+      "total_ms": 2362.137800002529,
+      "errors": [],
+      "profile": {
+        "trace_id": "b30e3240e87741a096bd8fa3d9358739",
+        "stages_ms": {
+          "request_validation": 0.04720000288216397,
+          "intent_routing": 0.03409999771974981,
+          "core_metadata": 89089.70630000113,
+          "core_metadata_wall": 1638.876999997592,
+          "entity_resolution": 44.84109999611974,
+          "recommendation": 794.3481999973301,
+          "availability": 0.10550000297371298,
+          "tool_execution": 2045.2537999954075,
+          "response_serialization": 0.5038999952375889,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.79296875,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 2359.999800006335,
+        "qwen_call_count": 0
+      },
+      "intent": "RECOMMEND_FROM_SELECTION",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "compare",
+      "status": 200,
+      "total_ms": 315.80960000428604,
+      "errors": [],
+      "profile": {
+        "trace_id": "a4316b5de2fd46ea884ca7a2e1a4dc56",
+        "stages_ms": {
+          "request_validation": 0.04719999560620636,
+          "intent_routing": 0.031600000511389226,
+          "core_metadata": 78.83330000186106,
+          "core_metadata_wall": 42.1589000034146,
+          "entity_resolution": 42.194499998004176,
+          "availability": 0.02050000330200419,
+          "tool_execution": 42.34510000242153,
+          "response_serialization": 0.2206999997724779,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.79296875,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 314.28730000334326,
+        "qwen_call_count": 0
+      },
+      "intent": "COMPARE_BOOKS",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "explain_comparison",
+      "status": 200,
+      "total_ms": 6850.128400001267,
+      "errors": [],
+      "profile": {
+        "trace_id": "f563ff5332a14dedb4616a6d5f49aea6",
+        "stages_ms": {
+          "request_validation": 0.029599999834317714,
+          "core_metadata": 81.06750000297325,
+          "core_metadata_wall": 43.71050000190735,
+          "availability": 0.026799993065651506,
+          "response_serialization": 0.2534000013838522,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 6501.119100001233,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [
+          {
+            "stage": "response",
+            "input_tokens": 521,
+            "generated_tokens": 50,
+            "max_new_tokens": 160,
+            "generation_ms": 6501.119100001233
+          }
+        ],
+        "memory": {
+          "process_rss_mb": 739.81640625,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 6848.67170000507,
+        "qwen_call_count": 1
+      },
+      "intent": "COMPARE_BOOKS",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "availability",
+      "status": 200,
+      "total_ms": 311.44530000165105,
+      "errors": [],
+      "profile": {
+        "trace_id": "819213bf8ff84a0f836f0e0f8a660647",
+        "stages_ms": {
+          "request_validation": 0.047900000936351717,
+          "intent_routing": 0.05270000110613182,
+          "core_metadata": 22.585499995329883,
+          "core_metadata_wall": 23.54149999882793,
+          "entity_resolution": 23.573500002385117,
+          "availability": 0.015500001609325409,
+          "tool_execution": 23.653600001125596,
+          "response_serialization": 0.09809999755816534,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.81640625,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 309.71670000144513,
+        "qwen_call_count": 0
+      },
+      "intent": "CHECK_AVAILABILITY",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "fees",
+      "status": 200,
+      "total_ms": 309.53279999812366,
+      "errors": [],
+      "profile": {
+        "trace_id": "1bb3f181f93348dabd7ae9c093df9f2c",
+        "stages_ms": {
+          "request_validation": 0.02359999780310318,
+          "intent_routing": 0.03800000558840111,
+          "account_service": 9.426800002984237,
+          "tool_execution": 9.801199994399212,
+          "response_serialization": 0.16229999891947955,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.80859375,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 308.14299999474315,
+        "qwen_call_count": 0
+      },
+      "intent": "USER_FEES",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "loans",
+      "status": 200,
+      "total_ms": 363.4276999946451,
+      "errors": [],
+      "profile": {
+        "trace_id": "0794173318244f7bac0323d142b9857f",
+        "stages_ms": {
+          "request_validation": 0.024599998141638935,
+          "intent_routing": 0.048600006266497076,
+          "account_service": 39.20530000323197,
+          "tool_execution": 39.74929999822052,
+          "response_serialization": 0.09669999417383224,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.80859375,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 362.1643000005861,
+        "qwen_call_count": 0
+      },
+      "intent": "USER_LOANS",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "reading_list",
+      "status": 200,
+      "total_ms": 333.0446000036318,
+      "errors": [],
+      "profile": {
+        "trace_id": "e44faa600ef64095a3019e2c6c7a5881",
+        "stages_ms": {
+          "request_validation": 0.024300003133248538,
+          "intent_routing": 0.037699996028095484,
+          "account_service": 10.036699997726828,
+          "core_metadata_wall": 0.011600001016631722,
+          "tool_execution": 10.43799999752082,
+          "response_serialization": 0.07840000034775585,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.80859375,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 331.6021999999066,
+        "qwen_call_count": 0
+      },
+      "intent": "USER_READING_LIST",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "available_alternatives",
+      "status": 200,
+      "total_ms": 1343.824699994002,
+      "errors": [],
+      "profile": {
+        "trace_id": "d0211140ca8e4c9ab0f54c583860449a",
+        "stages_ms": {
+          "request_validation": 0.032000003557186574,
+          "intent_routing": 0.04600000102072954,
+          "core_metadata": 24982.138200000918,
+          "core_metadata_wall": 839.7370000020601,
+          "recommendation": 210.21519999339944,
+          "availability": 0.10679999832063913,
+          "tool_execution": 1051.3814000005368,
+          "response_serialization": 0.5059999966761097,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 0
+        },
+        "qwen_calls": [],
+        "memory": {
+          "process_rss_mb": 739.80859375,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 1342.5164000000223,
+        "qwen_call_count": 0
+      },
+      "intent": "RECOMMEND_AVAILABLE_SIMILAR",
+      "rag_verdict": null,
+      "source_ids": []
+    },
+    {
+      "case": "authorized_book_rag",
+      "status": 200,
+      "total_ms": 6545.895800001745,
+      "errors": [],
+      "profile": {
+        "trace_id": "42859c44b9104cfcb8e0518733f758fb",
+        "stages_ms": {
+          "request_validation": 0.06040000153006986,
+          "intent_routing": 0.0453000029665418,
+          "core_metadata": 22.7184000032139,
+          "core_metadata_wall": 23.624899993592408,
+          "entity_resolution": 23.658899997826666,
+          "rag_routing": 6237.390200003574,
+          "availability": 0.03210000431863591,
+          "tool_execution": 6261.17659999727,
+          "response_serialization": 1.828899999964051,
+          "qwen_intent_generation": 0,
+          "qwen_response_generation": 0,
+          "qwen_rag_generation": 5836.155200006033
+        },
+        "qwen_calls": [
+          {
+            "stage": "rag",
+            "input_tokens": 2070,
+            "generated_tokens": 19,
+            "max_new_tokens": 160,
+            "generation_ms": 2855.074800005241
+          },
+          {
+            "stage": "rag",
+            "input_tokens": 4528,
+            "generated_tokens": 14,
+            "max_new_tokens": 320,
+            "generation_ms": 2981.080400000792
+          }
+        ],
+        "memory": {
+          "process_rss_mb": 740.25390625,
+          "cuda_allocated_mb": 2171.5400390625,
+          "cuda_reserved_mb": 3144.0
+        },
+        "status": 200,
+        "total_ms": 6544.13580000255,
+        "qwen_call_count": 2
+      },
+      "intent": "BOOK_CONTENT_QUESTION",
+      "rag_verdict": "SUPPORTED",
+      "source_ids": [
+        "OL45326637W_000028",
+        "OL45326637W_000105",
+        "OL45326637W_000003",
+        "OL45326637W_000007",
+        "OL45326637W_000001",
+        "OL45326637W_000112",
+        "OL45326637W_000026"
+      ]
+    }
+  ],
+  "warm_repetitions": 1,
+  "mode": "baseline",
+  "real_services": true,
+  "cache_hits_not_document_benchmark": true,
+  "real_state_unchanged": true,
+  "pass": true
+}

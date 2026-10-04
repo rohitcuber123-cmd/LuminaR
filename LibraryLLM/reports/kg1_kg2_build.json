@@ -1,0 +1,32 @@
+{
+  "version": "kg1-2-metadata-cosine-v1",
+  "source": "Mongo books: projected public metadata only",
+  "source_count": 5000000,
+  "books": 5000000,
+  "edges": 29406707,
+  "features": {
+    "author": 2454492,
+    "subject": 975785
+  },
+  "missing_authors": 60151,
+  "missing_subjects": 257541,
+  "isolated_books": 1211,
+  "skipped_books": 0,
+  "created_at": "2026-10-02T17:00:36.932421+00:00",
+  "catalogue_hash": "50559012605f6fe3aba1fbc36f3f943c24563bb0a88fc60ac6a14df90fb3e904",
+  "build_seconds": 882.8079306,
+  "schema": {
+    "nodes": [
+      "Book",
+      "Author name",
+      "Subject label"
+    ],
+    "edges": [
+      "AUTHORED_BY",
+      "HAS_SUBJECT"
+    ]
+  },
+  "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+  "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+  "scope": "full catalogue"
+}

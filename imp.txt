@@ -1,0 +1,35 @@
+cd D:\SDC\LibraryLLM
+.\.venv\Scripts\activate.bat
+
+ 
+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
+
+server on:
+uvicorn backend.main:app --host 127.0.0.1 --port 8002(backend)
+
+uvicorn search.api:app --host 127.0.0.1 --port 8003(search)
+
+uvicorn recommendation.api:app --host 127.0.0.1 --port 8004(recommendation)
+
+uvicorn rag.api:app --host 127.0.0.1 --port 8005(rag)
+npm run dev -- --host 0.0.0.0
+
+curl -X POST http://127.0.0.1:8002/auth/login -H "Content-Type: application/json" -d "{\"email\":\"YOUR_USER4_EMAIL\",\"password\":\"TestPassword123\"}"
+
+
+Answerable queries
+1. “Why did Victor Frankenstein create the creature?”
+   Expected: The model should explain Victor’s ambition to discover the secret of life and overcome death.
+2. “How did the creature learn to speak and understand human behavior?”
+   Expected: It learned by secretly observing the De Lacey family.
+3. “Who rescued Victor after he was found at sea?”
+   Expected: Robert Walton rescued him.
+4. “Why did the creature ask Victor to create a female companion?”
+   Expected: He wanted someone like himself so he would not be completely alone.
+Rejection-testing queries
+1. “What reward did Victor receive from the King of England for creating the creature?”
+   Expected: Rejection, because the novel does not establish that Victor received such a reward.
+2. “How did the creature travel to Mars after leaving Victor?”
+   Expected: Rejection, because the premise is not supported by Frankenstein.
+3. “What conversation did Victor have with Albert Einstein about the creature?”
+   Expected: Rejection, because Albert Einstein does not appear in the novel.

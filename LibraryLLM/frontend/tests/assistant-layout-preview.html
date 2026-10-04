@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LuminaR assistant layout preview</title></head>
+<body><div id="root"></div><script type="module">
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { MemoryRouter } from 'react-router-dom'
+import { AIChatWidget } from '/src/components/AIChatWidget.tsx'
+import { useAssistantStore } from '/src/store/useAssistantStore.ts'
+import { useAuthStore } from '/src/store/useAuthStore.ts'
+import '/src/index.css'
+// Development-only fixture, run on a separate port to isolate browser storage.
+const books = [
+  { work_id: 'OLPREVIEW1W', title: 'Making Habits, Breaking Habits', authors: 'Jeremy Dean', subjects: ['Habit breaking', 'Psychology'], average_rating: 4.1, available_copies: 1 },
+  { work_id: 'OLPREVIEW2W', title: 'The Power of Habit', authors: 'Charles Duhigg', subjects: ['Habit', 'Personal development'], average_rating: 4.3, available_copies: 3 },
+  { work_id: 'OLPREVIEW3W', title: 'Tiny Habits', authors: 'B. J. Fogg', subjects: ['Behaviour change'], average_rating: 4.2, available_copies: 2 },
+  { work_id: 'OLPREVIEW4W', title: 'Better Than Before', authors: 'Gretchen Rubin', subjects: ['Habits'], average_rating: 4.0, available_copies: 1 },
+]
+const response = { conversation_id:'layout-preview', intent:'RECOMMEND_FROM_SELECTION', message:'A few books to help you build better habits.', books, comparison:null, recommendation_mode:'MULTI_SELECTED_BOOKS', seed_work_ids:['OLPREVIEW5W','OLPREVIEW1W'], availability:[], actions:books.flatMap(book=>['SELECT_BOOK','VIEW_BOOK','RECOMMEND_SIMILAR','ADD_TO_READING_LIST','CHECK_AVAILABILITY'].map(type=>({type,work_id:book.work_id}))), clarification:null, pending_action:null, account:null, reading_list:null, rag:null, errors:[], has_more:true, result_offset:0, explanation_available:false }
+useAuthStore.setState({isAuthenticated:true})
+useAssistantStore.setState({open:true,busy:false,selected:[{work_id:'OLPREVIEW5W',title:'Atomic Habits'},books[0]],messages:[{id:'preview-user',kind:'USER_TEXT',text:'Find books similar to my selections.'},{id:'preview-response',kind:'ASSISTANT_RESPONSE',response,latencyMs:120}],send:async()=>{},pageContext:{},pagePath:''})
+createRoot(document.getElementById('root')).render(React.createElement(MemoryRouter,{initialEntries:['/book/OLPREVIEW5W']},React.createElement(React.Fragment,null,React.createElement('p',{style:{padding:24,color:'#4a463f'}},'Development layout preview · sample books · no service requests'),React.createElement(AIChatWidget))))
+</script></body></html>

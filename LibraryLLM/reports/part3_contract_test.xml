@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="13" skipped="0" tests="16" time="1.643" timestamp="2026-10-02T18:33:17.583711+05:30" hostname="Rohit-pc"><testcase classname="reports.part3_contract_test" name="test_pdf_context_beats_stale_search" time="0.010"><failure message="AssertionError: assert &lt;Intent.GENER...LIBRARY_HELP'&gt; == &lt;Intent.DOCUM...ENT_QUESTION'&gt;&#10;  &#10;  - DOCUMENT_QUESTION&#10;  + GENERAL_LIBRARY_HELP">def test_pdf_context_beats_stale_search():
+        orch, tools, qwen, store = setup(Intent.DOCUMENT_QUESTION)
+        state = store.get(None, '17')
+        state.last_intent = Intent.SEARCH_BOOKS
+        result = chat(orch, tools, 'What does this PDF say about indexing?', conversation_id=state.conversation_id,
+                      page_context={'document_id': 'fixture-doc'})
+&gt;       assert result.intent == Intent.DOCUMENT_QUESTION
+E       AssertionError: assert &lt;Intent.GENER...LIBRARY_HELP'&gt; == &lt;Intent.DOCUM...ENT_QUESTION'&gt;
+E         
+E         - DOCUMENT_QUESTION
+E         + GENERAL_LIBRARY_HELP
+
+reports\part3_contract_test.py:40: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_account_question_beats_stale_search" time="0.009"><failure message="AssertionError: assert &lt;Intent.GENER...LIBRARY_HELP'&gt; == &lt;Intent.USER_...: 'USER_FEES'&gt;&#10;  &#10;  - USER_FEES&#10;  + GENERAL_LIBRARY_HELP">def test_account_question_beats_stale_search():
+        orch, tools, qwen, store = setup(Intent.USER_FEES)
+        state = store.get(None, '17')
+        state.last_intent = Intent.SEARCH_BOOKS
+        result = chat(orch, tools, 'What do I owe?', conversation_id=state.conversation_id)
+&gt;       assert result.intent == Intent.USER_FEES
+E       AssertionError: assert &lt;Intent.GENER...LIBRARY_HELP'&gt; == &lt;Intent.USER_...: 'USER_FEES'&gt;
+E         
+E         - USER_FEES
+E         + GENERAL_LIBRARY_HELP
+
+reports\part3_contract_test.py:49: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_show_more_wire_action_is_valid" time="0.001"><failure message="pydantic_core._pydantic_core.ValidationError: 1 validation error for AssistantRequest&#10;action&#10;  Input should be 'CONFIRM_ACTION', 'CANCEL_ACTION', 'COMPARE', 'RECOMMEND', 'RECOMMEND_SIMILAR', 'RECOMMEND_FROM_SELECTION', 'CHECK_AVAILABILITY', 'AVAILABLE_NOW', 'USER_LOANS', 'USER_FEES', 'USER_RESERVATIONS', 'BOOK_CONTENT_QUESTION', 'DOCUMENT_QUESTION', 'USER_READING_LIST', 'ADD_TO_READING_LIST', 'REMOVE_FROM_READING_LIST', 'CLEAR_READING_LIST', 'RECOMMEND_AVAILABLE_SIMILAR', 'EXPLAIN_RECOMMENDATION' or 'EXPLAIN_COMPARISON' [type=literal_error, input_value='SEARCH_BOOKS', input_type=str]&#10;    For further information visit https://errors.pydantic.dev/2.13/v/literal_error">def test_show_more_wire_action_is_valid():
+&gt;       AssistantRequest(message='Show more', action='SEARCH_BOOKS', result_offset=10)
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for AssistantRequest
+E       action
+E         Input should be 'CONFIRM_ACTION', 'CANCEL_ACTION', 'COMPARE', 'RECOMMEND', 'RECOMMEND_SIMILAR', 'RECOMMEND_FROM_SELECTION', 'CHECK_AVAILABILITY', 'AVAILABLE_NOW', 'USER_LOANS', 'USER_FEES', 'USER_RESERVATIONS', 'BOOK_CONTENT_QUESTION', 'DOCUMENT_QUESTION', 'USER_READING_LIST', 'ADD_TO_READING_LIST', 'REMOVE_FROM_READING_LIST', 'CLEAR_READING_LIST', 'RECOMMEND_AVAILABLE_SIMILAR', 'EXPLAIN_RECOMMENDATION' or 'EXPLAIN_COMPARISON' [type=literal_error, input_value='SEARCH_BOOKS', input_type=str]
+E           For further information visit https://errors.pydantic.dev/2.13/v/literal_error
+
+reports\part3_contract_test.py:54: ValidationError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_alternative_pagination_detects_remaining_results" time="0.008"><failure message="AssertionError: assert False is True&#10; +  where False = AssistantResponse(conversation_id='707208b6d4bb4da0af2b4ef081e62a69', intent=&lt;Intent.RECOMMEND_AVAILABLE_SIMILAR: 'REC...ne, account=None, reading_list=None, rag=None, errors=[], has_more=False, result_offset=0, explanation_available=False).has_more">def test_alternative_pagination_detects_remaining_results():
+        orch, tools, qwen, store = setup()
+        books = [Book(work_id=f'OL{i}W', title=f'Book {i}', available_copies=1) for i in range(10,40)]
+        tools.recommendation.recommend = AsyncMock(return_value=[b.work_id for b in books])
+        tools.catalogue.books = AsyncMock(side_effect=lambda ids: [fixtures.BOOKS.get(i) or next(b for b in books if b.work_id == i) for i in ids])
+        result = chat(orch, tools, action='RECOMMEND_AVAILABLE_SIMILAR', selected_work_ids=['OL1W'])
+        assert len(result.books) == 10
+&gt;       assert result.has_more is True
+E       AssertionError: assert False is True
+E        +  where False = AssistantResponse(conversation_id='707208b6d4bb4da0af2b4ef081e62a69', intent=&lt;Intent.RECOMMEND_AVAILABLE_SIMILAR: 'REC...ne, account=None, reading_list=None, rag=None, errors=[], has_more=False, result_offset=0, explanation_available=False).has_more
+
+reports\part3_contract_test.py:64: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_default_recommendations_offer_continuation" time="0.008"><failure message="AssertionError: assert False is True&#10; +  where False = AssistantResponse(conversation_id='b755e4cb772640ce936ec1d43bcc959e', intent=&lt;Intent.RECOMMEND_BOOKS: 'RECOMMEND_BOOKS...ne, account=None, reading_list=None, rag=None, errors=[], has_more=False, result_offset=0, explanation_available=False).has_more">def test_default_recommendations_offer_continuation():
+        orch, tools, qwen, store = setup()
+        books = [Book(work_id=f'OL{i}W', title=f'Book {i}', available_copies=1) for i in range(10,40)]
+        tools.recommendation.recommend = AsyncMock(side_effect=lambda count, seed=None: [b.work_id for b in books[:count]])
+        tools.catalogue.books = AsyncMock(side_effect=lambda ids: [next(b for b in books if b.work_id == i) for i in ids])
+        result = chat(orch, tools, action='RECOMMEND')
+&gt;       assert result.has_more is True
+E       AssertionError: assert False is True
+E        +  where False = AssistantResponse(conversation_id='b755e4cb772640ce936ec1d43bcc959e', intent=&lt;Intent.RECOMMEND_BOOKS: 'RECOMMEND_BOOKS...ne, account=None, reading_list=None, rag=None, errors=[], has_more=False, result_offset=0, explanation_available=False).has_more
+
+reports\part3_contract_test.py:73: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_explanation_uses_original_seed_when_tray_cleared" time="0.009"><failure message="assert &quot;'seeds': [{'title': 'Dracula'&quot; in &quot;Explain in 2-3 sentences why the following books were recommended based on the seed books. Use only the subjects and ..., 'subjects': 'Science fiction'}, {'title': 'Frankenstein', 'authors': 'Mary Shelley', 'subjects': 'Gothic fiction'}]}&quot;">def test_explanation_uses_original_seed_when_tray_cleared():
+        orch, tools, qwen, store = setup()
+        first = chat(orch, tools, action='RECOMMEND_SIMILAR', selected_work_ids=['OL1W'])
+        qwen.generate = AsyncMock(return_value='fixture explanation')
+        chat(orch, tools, action='EXPLAIN_RECOMMENDATION', conversation_id=first.conversation_id)
+        prompt = qwen.generate.call_args.args[0]
+&gt;       assert "'seeds': [{'title': 'Dracula'" in prompt
+E       assert "'seeds': [{'title': 'Dracula'" in "Explain in 2-3 sentences why the following books were recommended based on the seed books. Use only the subjects and ..., 'subjects': 'Science fiction'}, {'title': 'Frankenstein', 'authors': 'Mary Shelley', 'subjects': 'Gothic fiction'}]}"
+
+reports\part3_contract_test.py:82: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_explanation_invalidates_previous_mutation_proposal" time="0.010"><failure message="AssertionError: assert &lt;Intent.RESER...RESERVE_BOOK'&gt; == &lt;Intent.CLARI...LARIFICATION'&gt;&#10;  &#10;  - CLARIFICATION&#10;  + RESERVE_BOOK">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000179064F1E50&gt;
+
+    def test_explanation_invalidates_previous_mutation_proposal(monkeypatch):
+        monkeypatch.setenv('ASSISTANT_MUTATING_ACTIONS_ENABLED', 'true')
+        orch, tools, qwen, store = setup(Intent.RESERVE_BOOK)
+        proposal = chat(orch, tools, 'reserve this', selected_work_ids=['OL1W'])
+        chat(orch, tools, action='EXPLAIN_RECOMMENDATION', conversation_id=proposal.conversation_id)
+        result = chat(orch, tools, 'Confirm', action='CONFIRM_ACTION', conversation_id=proposal.conversation_id,
+                      pending_action_id=proposal.pending_action.action_id)
+&gt;       assert result.intent == Intent.CLARIFICATION
+E       AssertionError: assert &lt;Intent.RESER...RESERVE_BOOK'&gt; == &lt;Intent.CLARI...LARIFICATION'&gt;
+E         
+E         - CLARIFICATION
+E         + RESERVE_BOOK
+
+reports\part3_contract_test.py:92: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_unavailable_book_offers_reserve_and_alternatives" time="0.006"><failure message="AssertionError: assert 'RESERVE' in {'ADD_TO_READING_LIST', 'CHECK_AVAILABILITY', 'RECOMMEND_AVAILABLE_SIMILAR', 'RECOMMEND_SIMILAR', 'SELECT_BOOK', 'VIEW_BOOK'}">def test_unavailable_book_offers_reserve_and_alternatives():
+        orch, tools, qwen, store = setup()
+        result = chat(orch, tools, action='CHECK_AVAILABILITY', selected_work_ids=['OL1W'])
+        types = {a.type.value for a in result.actions}
+        assert 'RECOMMEND_AVAILABLE_SIMILAR' in types
+&gt;       assert 'RESERVE' in types
+E       AssertionError: assert 'RESERVE' in {'ADD_TO_READING_LIST', 'CHECK_AVAILABILITY', 'RECOMMEND_AVAILABLE_SIMILAR', 'RECOMMEND_SIMILAR', 'SELECT_BOOK', 'VIEW_BOOK'}
+
+reports\part3_contract_test.py:101: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_reading_list_availability_is_fresh" time="0.006"><failure message="AssertionError: assert 3 == 0&#10; +  where 3 = Book(work_id='OL1W', title='Dracula', authors=None, subjects=None, description=None, average_rating=None, available_copies=3, total_copies=3, shelf_location=None).available_copies&#10; +  and   0 = Book(work_id='OL1W', title='Dracula', authors='Bram Stoker', subjects='Gothic fiction', description=None, average_rating=None, available_copies=0, total_copies=2, shelf_location=None).available_copies">def test_reading_list_availability_is_fresh():
+        orch, tools, qwen, store = setup(items=[{'work_id':'OL1W','title':'Dracula','available_copies':3,'total_copies':3}])
+        result = chat(orch, tools, action='USER_READING_LIST')
+&gt;       assert result.reading_list[0].available_copies == fixtures.BOOKS['OL1W'].available_copies
+E       AssertionError: assert 3 == 0
+E        +  where 3 = Book(work_id='OL1W', title='Dracula', authors=None, subjects=None, description=None, average_rating=None, available_copies=3, total_copies=3, shelf_location=None).available_copies
+E        +  and   0 = Book(work_id='OL1W', title='Dracula', authors='Bram Stoker', subjects='Gothic fiction', description=None, average_rating=None, available_copies=0, total_copies=2, shelf_location=None).available_copies
+
+reports\part3_contract_test.py:107: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_reading_list_ids_are_available_to_compare_followup" time="0.007"><failure message="AssertionError: assert &lt;Intent.CLARI...LARIFICATION'&gt; == &lt;Intent.COMPA...OMPARE_BOOKS'&gt;&#10;  &#10;  - COMPARE_BOOKS&#10;  + CLARIFICATION">def test_reading_list_ids_are_available_to_compare_followup():
+        orch, tools, qwen, store = setup(items=[{'work_id':i,'title':b.title} for i,b in list(fixtures.BOOKS.items())[:2]])
+        first = chat(orch, tools, action='USER_READING_LIST')
+        qwen.intent = AssistantIntent(intent=Intent.COMPARE_BOOKS, confidence=1, ordinal_references=[1,2])
+        result = chat(orch, tools, 'Compare the first two', conversation_id=first.conversation_id)
+&gt;       assert result.intent == Intent.COMPARE_BOOKS
+E       AssertionError: assert &lt;Intent.CLARI...LARIFICATION'&gt; == &lt;Intent.COMPA...OMPARE_BOOKS'&gt;
+E         
+E         - COMPARE_BOOKS
+E         + CLARIFICATION
+
+reports\part3_contract_test.py:115: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_exact_add_to_reading_list_phrase_uses_canonical_selection" time="0.006" /><testcase classname="reports.part3_contract_test" name="test_exact_remove_first_phrase_resolves_owned_reading_list_item" time="0.007"><failure message="AssertionError: assert &lt;Intent.CLARI...LARIFICATION'&gt; == &lt;Intent.REMOV...READING_LIST'&gt;&#10;  &#10;  - REMOVE_FROM_READING_LIST&#10;  + CLARIFICATION">def test_exact_remove_first_phrase_resolves_owned_reading_list_item():
+        orch, tools, qwen, store = setup(items=[{'work_id':'OL1W','title':'Dracula'}])
+        first = chat(orch, tools, 'show my reading list')
+        qwen.intent = AssistantIntent(intent=Intent.REMOVE_FROM_READING_LIST, confidence=1, ordinal_references=[1])
+        result = chat(orch, tools, 'remove the first book from my reading list', conversation_id=first.conversation_id)
+&gt;       assert result.intent == Intent.REMOVE_FROM_READING_LIST
+E       AssertionError: assert &lt;Intent.CLARI...LARIFICATION'&gt; == &lt;Intent.REMOV...READING_LIST'&gt;
+E         
+E         - REMOVE_FROM_READING_LIST
+E         + CLARIFICATION
+
+reports\part3_contract_test.py:132: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_search_pages_are_distinct_with_explicit_original_query" time="0.008" /><testcase classname="reports.part3_contract_test" name="test_available_refinement_retains_the_original_search_query" time="0.008"><failure message="AssertionError: assert 'only available ones' == 'artificial intelligence'&#10;  &#10;  - artificial intelligence&#10;  + only available ones">def test_available_refinement_retains_the_original_search_query():
+        from assistant.schemas import Filters
+        orch, tools, qwen, store = setup(Intent.SEARCH_BOOKS)
+        qwen.intent = AssistantIntent(intent=Intent.SEARCH_BOOKS, confidence=1, query='artificial intelligence')
+        first = chat(orch, tools, 'Find books about AI')
+        qwen.intent = AssistantIntent(intent=Intent.SEARCH_BOOKS, confidence=1, filters=Filters(available_only=True))
+        chat(orch, tools, 'only available ones', conversation_id=first.conversation_id)
+&gt;       assert tools.search.search.call_args.args[0] == 'artificial intelligence'
+E       AssertionError: assert 'only available ones' == 'artificial intelligence'
+E         
+E         - artificial intelligence
+E         + only available ones
+
+reports\part3_contract_test.py:154: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_due_first_sorts_verified_loans_by_due_date" time="0.007"><failure message="AssertionError: assert 'OL1W' == 'OL2W'&#10;  &#10;  - OL2W&#10;  ?   ^&#10;  + OL1W&#10;  ?   ^">def test_due_first_sorts_verified_loans_by_due_date():
+        orch, tools, qwen, store = setup(Intent.USER_LOANS)
+        tools.loans.loans = AsyncMock(return_value={'count':2,'issues':[
+            {'work_id':'OL1W','due_date':'2026-10-10'}, {'work_id':'OL2W','due_date':'2026-10-03'}]})
+        result = chat(orch, tools, 'Which one is due first?')
+&gt;       assert result.account['issues'][0]['work_id'] == 'OL2W'
+E       AssertionError: assert 'OL1W' == 'OL2W'
+E         
+E         - OL2W
+E         ?   ^
+E         + OL1W
+E         ?   ^
+
+reports\part3_contract_test.py:162: AssertionError</failure></testcase><testcase classname="reports.part3_contract_test" name="test_real_reading_list_routes_use_owned_idempotent_persistence" time="0.471" /></testsuite></testsuites>

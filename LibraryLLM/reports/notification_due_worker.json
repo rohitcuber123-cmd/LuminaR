@@ -1,0 +1,60 @@
+{
+  "enabled_default": true,
+  "running_local_core_port": 8002,
+  "interval_minutes": 60,
+  "configuration": {
+    "NOTIFICATION_DUE_WORKER_ENABLED": "1 (default); 0 disables explicitly",
+    "NOTIFICATION_DUE_CHECK_INTERVAL_MINUTES": "60 (default), minimum5"
+  },
+  "lifecycle": "FastAPI lifespan starts a daemon thread; startup scan then interruptible Event wait; stop/join on shutdown",
+  "source_query": "issues.status=ISSUED AND due_date < UTC midnight(today+3days); Mongo cursor batch500",
+  "rules": {
+    "DUE_SOON": "due UTC calendar date minus today =2",
+    "DUE_TODAY": "same UTC calendar date",
+    "OVERDUE": "due UTC calendar date before today; one initial per due version"
+  },
+  "catchup": "Only the present meaningful state; does not replay missed DUE_SOON/TODAY or every overdue day",
+  "dedupe": "TYPE:issue_id:normalized_UTC_due_timestamp; unique DB index and setOnInsert; four concurrent scanners verified",
+  "source_recheck": "Exact issue/user/status/due version re-read immediately before write",
+  "scoped_live_first": {
+    "active_loans_scanned": 3,
+    "relevant_loans": 3,
+    "created": 3,
+    "duplicates_skipped": 0,
+    "invalid_or_changed_skipped": 0,
+    "scanned_at": "2026-10-03T07:25:28.127668+00:00",
+    "duration_ms": 7.202400000096532
+  },
+  "scoped_live_repeat": {
+    "active_loans_scanned": 3,
+    "relevant_loans": 3,
+    "created": 0,
+    "duplicates_skipped": 3,
+    "invalid_or_changed_skipped": 0,
+    "scanned_at": "2026-10-03T07:25:28.127668+00:00",
+    "duration_ms": 5.244599999059574
+  },
+  "production_startup": {
+    "created": 0,
+    "duplicates": 0,
+    "duration_ms": 1.79,
+    "evidence": "admin_notification_core_stderr.log"
+  },
+  "production_followup": {
+    "active_loans_scanned": 0,
+    "relevant_loans": 0,
+    "created": 0,
+    "duplicates_skipped": 0,
+    "invalid_or_changed_skipped": 0,
+    "scanned_at": "2026-10-03T08:04:29.246560+00:00",
+    "duration_ms": 2.4326000002474757
+  },
+  "qwen_calls": 0,
+  "reservations": "Optional V1 alerts skipped; no invented expiry",
+  "renewal": "No current renewal API; changed due version verified in isolated Mongo test",
+  "limitations": [
+    "An already stored reminder stays in history after return/due change.",
+    "Source recheck and notice insert are not a multi-document transaction; a concurrent return in the tiny interval can still race.",
+    "Hourly catch-up needs Core running; no durable separate scheduler."
+  ]
+}
