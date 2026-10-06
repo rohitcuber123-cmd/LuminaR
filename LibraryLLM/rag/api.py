@@ -80,6 +80,8 @@ import contextlib
 private_documents = PrivateDocuments(Path(__file__).resolve().parent / 'private_documents',
     engine.reranker.retriever.model, engine.reranker.retriever, engine._document_latency)
 install_private_documents(app, private_documents, engine)
+from rag.services.knowledge_routes import install_knowledge_artifacts
+install_knowledge_artifacts(app, private_documents)
 book_runtime = BookRuntime(engine.reranker.retriever, loaded_book_revision)
 optional_auth = HTTPBearer(auto_error=False)
 service_loading_ms = (perf_counter() - service_loading_started) * 1000
