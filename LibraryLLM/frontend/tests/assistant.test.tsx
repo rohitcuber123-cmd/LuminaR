@@ -47,6 +47,21 @@ async function submit(text: string) { fireEvent.change(screen.getByLabelText('Me
 async function select(count: number) { await act(async () => { for (let i = 1; i <= count; i++) store.getState().select(book(`OL${i}W`)) }) }
 function turn(data: AssistantResponse, onAction = () => {}, onChoice = () => {}) { return render(<MemoryRouter><AssistantTurn response={data} busy={false} pendingActive={true} now={Date.now()} onAction={onAction} onChoice={onChoice} /></MemoryRouter>) }
 
+for (const intent of ['ADD_TO_READING_LIST', 'REMOVE_FROM_READING_LIST'] as const) {
+  test(`reading-list ${intent} renders immutable targets and explicit confirm/cancel`, () => {
+    const actions: Array<{ type: string; action_id?: string | null }> = []
+    turn(response({ intent, books: [book(), book('OL2W')], pending_action: {
+      action_id: 'saved-action', type: intent, work_id: 'OL1W', work_ids: ['OL1W', 'OL2W'],
+      requires_confirmation: true, enabled: true, expires_at: new Date(Date.now() + 300000).toISOString(),
+    } }), action => actions.push(action))
+    assert.equal(calls.length, 0)
+    assert.ok(screen.getByRole('region', { name: 'Confirm library action' }).textContent?.includes('Book OL1W, Book OL2W'))
+    fireEvent.click(screen.getByRole('button', { name: intent === 'ADD_TO_READING_LIST' ? 'Confirm add to reading list' : 'Confirm remove from reading list' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
+    assert.deepEqual(actions, [{ type: 'CONFIRM_ACTION', action_id: 'saved-action' }, { type: 'CANCEL_ACTION', action_id: 'saved-action' }])
+  })
+}
+
 test('visible tray equals typed comparison payload and renders without title choices', async () => {
   await select(2)
   next = response({ intent: 'COMPARE_BOOKS', comparison: { books: [book(), book('OL2W')], requested_fields: [], missing_fields: [] } })
@@ -388,3 +403,38 @@ test('reading list section passes axe checks', async () => {
   assert.deepEqual(result.violations.map(v => v.id), [])
 })
 
+
+
+test('selected_tray_is_sent_with_typed_freeform_message', async () => {
+  await select(1); mount(); open(); await submit('what stands out about this?')
+  assert.deepEqual(calls[0].body.selected_work_ids, ['OL1W']); assert.equal(calls[0].body.action, null)
+})
+test('two_visible_selected_books_send_two_ids_for_reported_question', async () => {
+  await select(2); mount(); open()
+  assert.ok(screen.getByRole('region', { name: 'Selected books' }).textContent?.includes('Book OL1W'))
+  assert.ok(screen.getByText('Context: 2 selected books'))
+  await submit('why are these named similarly?')
+  assert.deepEqual(calls[0].body.selected_work_ids, ['OL1W','OL2W'])
+})
+test('new_chat_preserves_visible_selection_and_null_conversation_payload', async () => {
+  await select(2); mount(); open(); await submit('what connects these two?')
+  fireEvent.click(screen.getByRole('button', { name: 'New chat', exact: true }))
+  assert.ok(screen.getByText('Context: 2 selected books'))
+  await submit('why do they sound alike?')
+  assert.equal(calls[1].body.conversation_id, null)
+  assert.deepEqual(calls[1].body.selected_work_ids, ['OL1W','OL2W'])
+})
+test('removing_selected_book_updates_freeform_payload', async () => {
+  await select(2); mount(); open(); fireEvent.click(screen.getByRole('button', { name: 'Remove Book OL2W from selection' }))
+  await submit('what is interesting about this one?'); assert.deepEqual(calls[0].body.selected_work_ids, ['OL1W'])
+})
+test('clear_selection_sends_empty_selection_for_freeform_question', async () => {
+  await select(2); mount(); open(); fireEvent.click(screen.getByRole('button', { name: 'Clear', exact: true }))
+  await submit('what do these have in common?'); assert.deepEqual(calls[0].body.selected_work_ids, [])
+})
+test('context_label_matches_payload_after_selection_replacement', async () => {
+  await select(2); mount(); open()
+  await act(async () => { store.getState().clearSelection(); store.getState().select(book('OL3W')); store.getState().select(book('OL4W')) })
+  assert.ok(screen.getByText('Context: 2 selected books'))
+  await submit('what connects this selection?'); assert.deepEqual(calls[0].body.selected_work_ids, ['OL3W','OL4W'])
+})

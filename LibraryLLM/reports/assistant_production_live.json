@@ -1,0 +1,140 @@
+{
+  "router": "existing_qwen",
+  "scenarios": [
+    {
+      "name": "add no write before confirm; confirm adds once",
+      "pass": true,
+      "before_count": 0,
+      "after_count": 1,
+      "confirm_qwen_calls": 0
+    },
+    {
+      "name": "confirm replay rejected",
+      "pass": true
+    },
+    {
+      "name": "remove proposal and cancel never write",
+      "pass": true
+    },
+    {
+      "name": "remove confirmation",
+      "pass": true,
+      "confirm_qwen_calls": 0
+    },
+    {
+      "name": "selection B cannot retarget stored A",
+      "pass": true
+    },
+    {
+      "name": "ordinary direct Core remove unchanged",
+      "pass": true
+    },
+    {
+      "name": "wrong account private rejection",
+      "pass": true,
+      "status": 404
+    },
+    {
+      "name": "wrong session private rejection",
+      "pass": true,
+      "status": 404
+    },
+    {
+      "name": "add already present; direct Core add unchanged",
+      "pass": true
+    },
+    {
+      "name": "remove now absent is idempotent",
+      "pass": true
+    },
+    {
+      "name": "unrelated turn invalidates pending action",
+      "pass": true
+    },
+    {
+      "name": "production structured comparison smoke",
+      "pass": true
+    }
+  ],
+  "natural_language": [
+    {
+      "message": "add this to my reading list",
+      "pass": true,
+      "status": 200,
+      "actual_intent": "ADD_TO_READING_LIST",
+      "errors": [],
+      "qwen_calls": 1
+    },
+    {
+      "message": "remove this from my reading list",
+      "pass": true,
+      "status": 200,
+      "actual_intent": "REMOVE_FROM_READING_LIST",
+      "errors": [],
+      "qwen_calls": 1
+    },
+    {
+      "message": "remove this from my reading list",
+      "pass": true,
+      "status": 200,
+      "actual_intent": "REMOVE_FROM_READING_LIST",
+      "errors": [],
+      "qwen_calls": 1
+    },
+    {
+      "message": "add this to my reading list",
+      "pass": true,
+      "status": 200,
+      "actual_intent": "ADD_TO_READING_LIST",
+      "errors": [],
+      "qwen_calls": 1
+    },
+    {
+      "message": "add this to my reading list",
+      "pass": true,
+      "status": 200,
+      "actual_intent": "ADD_TO_READING_LIST",
+      "errors": [],
+      "qwen_calls": 1
+    },
+    {
+      "message": "add this to my reading list",
+      "pass": true,
+      "status": 200,
+      "actual_intent": "ADD_TO_READING_LIST",
+      "errors": [],
+      "qwen_calls": 1
+    },
+    {
+      "message": "remove this from my reading list",
+      "pass": true,
+      "status": 200,
+      "actual_intent": "REMOVE_FROM_READING_LIST",
+      "errors": [],
+      "qwen_calls": 1
+    },
+    {
+      "message": "add this to my reading list",
+      "pass": true,
+      "status": 200,
+      "actual_intent": "ADD_TO_READING_LIST",
+      "errors": [],
+      "qwen_calls": 1
+    }
+  ],
+  "cleanup": true,
+  "public_work_ids": [
+    "OL10000000W",
+    "OL10000005W"
+  ],
+  "health": {
+    "core": 200,
+    "search": 200,
+    "recommendation": 200,
+    "rag": 200,
+    "frontend": 200
+  },
+  "experimental_profile_fields_present": false,
+  "disposable_accounts_created_and_removed": 2,
+  "pass": true
+}

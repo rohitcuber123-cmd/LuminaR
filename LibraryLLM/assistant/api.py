@@ -35,12 +35,36 @@ class ProfileRoute(APIRoute):
 
 
 def install_assistant(app, engine, rag_ask, rag_request):
+    mode = os.getenv('ASSISTANT_ROUTER_MODE', 'existing_qwen')
+    # Router research is frozen. These modes are EXPERIMENTAL / NOT
+    # PRODUCTION APPROVED and import only after explicit configuration.
+    if mode not in {'existing_qwen','router_v3','router_v3_shadow','router_v4','router_v4_shadow','router_v5'}:
+        raise ValueError('Unsupported ASSISTANT_ROUTER_MODE')
     observe_model(engine.llm)
     app.add_middleware(ProfileMiddleware)
     gateway = QwenGateway(engine.llm, engine.inference_lock,
-                          timeout=float(os.getenv('ASSISTANT_QWEN_TIMEOUT', '60')))
+                          timeout=float(os.getenv('ASSISTANT_QWEN_TIMEOUT', '60')), allow_experimental=False)
+    app.state.assistant_router_mode = mode
+    if mode != 'existing_qwen':
+        if mode == 'router_v5':
+            from assistant.router_v5.gateway import HybridGateway
+        elif mode.startswith('router_v4'):
+            from assistant.router_v4 import HybridGateway
+        else:
+            from assistant.router_v3 import HybridGateway
+        gateway.router_variant = ''
+        gateway.router_retry = False
+        gateway = HybridGateway(gateway, mode)
     orchestrator = AssistantOrchestrator(gateway, ConversationStore())
     app.state.assistant = orchestrator
+    # Construct once during installation, before accepting traffic. TLS trust
+    # store setup is synchronous (~390ms on this Windows host). Per-request
+    # construction blocked the event loop for ~8s at twenty-way concurrency.
+    # Headers remain request-local in AssistantTools; this client has no user
+    # credentials or shared cookies from the internal bearer-only APIs.
+    client = httpx.AsyncClient(timeout=httpx.Timeout(40, connect=3),
+                              limits=httpx.Limits(max_connections=40, max_keepalive_connections=20))
+    app.state.assistant_http_client = client
     router = APIRouter(prefix='/assistant', tags=['Assistant'], route_class=ProfileRoute)
 
     @router.post('/chat', response_model=AssistantResponse)
@@ -61,10 +85,8 @@ def install_assistant(app, engine, rag_ask, rag_request):
             except Exception as exc:
                 raise ToolFailure('rag', 'RAG_UNAVAILABLE', 'RAG could not complete this question.') from exc
 
-        async with httpx.AsyncClient(timeout=httpx.Timeout(40, connect=3),
-                                     limits=httpx.Limits(max_connections=20)) as client:
-            tools = AssistantTools(client, f'Bearer {credentials.credentials}', rag_callback)
-            result = await orchestrator.chat(request, f"{current_user['sub']}:{current_user.get('sid', 'legacy')}", tools)
+        tools = AssistantTools(client, f'Bearer {credentials.credentials}', rag_callback)
+        result = await orchestrator.chat(request, f"{current_user['sub']}:{current_user.get('sid', 'legacy')}", tools)
         profile = current.get()
         if profile is not None:
             profile['handler_finished'] = perf_counter()
@@ -82,6 +104,7 @@ def install_assistant(app, engine, rag_ask, rag_request):
 
     app.include_router(router)
     app.router.add_event_handler('shutdown', gateway.close)
+    app.router.add_event_handler('shutdown', client.aclose)
     if os.getenv('ASSISTANT_PROFILE_PATH') and getattr(engine.llm, 'model', None) is not None:
         import torch
         import transformers
@@ -93,6 +116,19 @@ def install_assistant(app, engine, rag_ask, rag_request):
             'sdpa_flash_enabled': torch.backends.cuda.flash_sdp_enabled(),
             'sdpa_mem_efficient_enabled': torch.backends.cuda.mem_efficient_sdp_enabled(),
             'model_resident_id': id(engine.llm.model), 'pid': os.getpid()}
+        import sys
+        import psutil
+        process = psutil.Process()
+        memory = psutil.virtual_memory()
+        swap = psutil.swap_memory()
+        runtime.update(router_mode=mode,
+            experimental_router_modules=[name for name in sys.modules if name.startswith(
+                ('assistant.router_v2', 'assistant.router_v3', 'assistant.router_v4', 'assistant.router_v5'))],
+            process_rss_bytes=process.memory_info().rss,
+            child_processes=[{'pid': child.pid, 'name': child.name()} for child in process.children(recursive=True)],
+            host_available_bytes=memory.available, host_total_bytes=memory.total,
+            psutil_swap_used_bytes=swap.used, psutil_swap_total_bytes=swap.total,
+            cuda_allocated_bytes=torch.cuda.memory_allocated(), cuda_reserved_bytes=torch.cuda.memory_reserved())
         if os.getenv('ASSISTANT_ROUTER_V2_HARDWARE_AUDIT') == '1':
             # Explicit local experiment observation; no second model or tensors
             # retained, and no changes to RAG generation or device placement.

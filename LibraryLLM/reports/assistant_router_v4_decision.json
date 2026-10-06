@@ -1,0 +1,74 @@
+{
+  "status": "FAIL",
+  "production_mode": "existing_qwen",
+  "gates": [
+    {
+      "requirement": "Accepted precision >=97%, both",
+      "observed": "88.46% / 75.00%",
+      "passed": false
+    },
+    {
+      "requirement": "Accepted coverage >=70%, both",
+      "observed": "44.83% / 39.67%",
+      "passed": false
+    },
+    {
+      "requirement": "Hybrid >=90% / >=85%",
+      "observed": "72.41% / 56.20%",
+      "passed": false
+    },
+    {
+      "requirement": "Critical context >=95%",
+      "observed": "60.34%",
+      "passed": false
+    },
+    {
+      "requirement": "Fallback <=30%, both",
+      "observed": "55.17% / 60.33%",
+      "passed": false
+    },
+    {
+      "requirement": "Live sports / second / account / Search",
+      "observed": "5/6; 5/5; 3/4; 1/2",
+      "passed": false
+    },
+    {
+      "requirement": "Page / previous comparison / selection change",
+      "observed": "1/3; 0/2; 1/1",
+      "passed": false
+    },
+    {
+      "requirement": "20 classifier routes p95 <1 second",
+      "observed": "784.97 ms default; 686.27 ms experimental batching",
+      "passed": true
+    },
+    {
+      "requirement": "Classifier independent of GPU lock; runtime CUDA delta zero",
+      "observed": "Zero lock acquisitions; zero bytes",
+      "passed": true
+    },
+    {
+      "requirement": "Fuzzy-title and unrelated Search false positives zero",
+      "observed": "0 / 0 on both frozen sets",
+      "passed": true
+    },
+    {
+      "requirement": "Concurrent users resolve their own complete context",
+      "observed": "No observed crossover; 0/20 successful book responses",
+      "passed": false
+    },
+    {
+      "requirement": "Preserve other algorithms and V3 evidence",
+      "observed": "Hash audit confirms authorized shared changes only",
+      "passed": true
+    },
+    {
+      "requirement": "Production build",
+      "observed": "PASS",
+      "passed": true
+    }
+  ],
+  "shadow": "SKIPPED: offline gates failed",
+  "frozen_evaluations_once_only": true,
+  "no_post_frozen_training_or_calibration": true
+}

@@ -99,6 +99,15 @@ class ProfileMiddleware:
             if profile.get('router_v2'):
                 profile['router_v2'].update(tool_ms=profile['tool_ms'],total_ms=profile['total_ms'],
                     qwen_calls=profile['qwen_call_count'])
+            if profile.get('router_v3'):
+                profile['router_v3'].update(tool_ms=profile['tool_ms'],total_ms=profile['total_ms'],
+                    qwen_calls=profile['qwen_call_count'])
+            if profile.get('router_v4'):
+                profile['router_v4'].update(tool_ms=profile['tool_ms'],total_ms=profile['total_ms'],
+                    qwen_calls=profile['qwen_call_count'])
+            if profile.get('router_v5'):
+                profile['router_v5'].update(tool_ms=profile['tool_ms'],total_ms=profile['total_ms'],
+                    qwen_calls=profile['qwen_call_count'])
             path = os.getenv('ASSISTANT_PROFILE_PATH')
             if path:
                 # Opt-in local development sink; payload contains numeric metrics only.

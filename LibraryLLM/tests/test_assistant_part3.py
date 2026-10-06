@@ -158,7 +158,8 @@ def test_add_to_reading_list_single():
     result = chat(orch, tools, 'Add this to my reading list',
                   action='ADD_TO_READING_LIST', selected_work_ids=['OL1W'])
     assert result.intent == Intent.ADD_TO_READING_LIST
-    assert 'OL1W' in tools.reading_list.added
+    assert tools.reading_list.added == []
+    assert result.pending_action.work_id == 'OL1W'
     assert result.books[0].work_id == 'OL1W'
 
 
@@ -168,8 +169,8 @@ def test_add_to_reading_list_multiple():
                   action='ADD_TO_READING_LIST',
                   selected_work_ids=['OL1W', 'OL2W', 'OL3W'])
     assert result.intent == Intent.ADD_TO_READING_LIST
-    assert set(tools.reading_list.added) == {'OL1W', 'OL2W', 'OL3W'}
-    assert '3 books' in result.message
+    assert tools.reading_list.added == []
+    assert result.pending_action.work_ids == ('OL1W', 'OL2W', 'OL3W')
 
 
 def test_remove_from_reading_list():
@@ -177,8 +178,9 @@ def test_remove_from_reading_list():
     result = chat(orch, tools, 'Remove Dracula',
                   action='REMOVE_FROM_READING_LIST', selected_work_ids=['OL1W'])
     assert result.intent == Intent.REMOVE_FROM_READING_LIST
-    assert 'OL1W' in tools.reading_list.removed
-    assert 'removed' in result.message.lower()
+    assert tools.reading_list.removed == []
+    assert result.pending_action.work_id == 'OL1W'
+    assert 'Remove Dracula' in result.message
 
 
 def test_clear_reading_list():
@@ -697,7 +699,10 @@ def test_core_service_unavailable_for_add_to_reading_list():
         side_effect=ToolFailure('core', 'HTTP_503'))
     result = chat(orch, tools, 'Add this to reading list',
                   action='ADD_TO_READING_LIST', selected_work_ids=['OL2W'])
-    # Catalogue validation succeeds; persistence fails gracefully
+    assert result.pending_action and not result.errors
+    result = chat(orch, tools, 'Confirm', action='CONFIRM_ACTION', conversation_id=result.conversation_id,
+                  pending_action_id=result.pending_action.action_id)
+    # Proposal is read-only; persistence failure appears only after confirmation.
     assert result.errors
 
 

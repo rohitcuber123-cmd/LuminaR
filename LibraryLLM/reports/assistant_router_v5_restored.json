@@ -1,0 +1,55 @@
+{
+  "health": {
+    "core": 200,
+    "search": 200,
+    "recommendation": 200,
+    "rag": 200,
+    "frontend": 200
+  },
+  "smokes": [
+    {
+      "expected_intent": "COMPARE_BOOKS",
+      "actual_intent": "COMPARE_BOOKS",
+      "expected_public_ids": [
+        "OL25644705W",
+        "OL20667625W"
+      ],
+      "resolved_ids": [
+        "OL25644705W",
+        "OL20667625W"
+      ],
+      "status": 200,
+      "errors": [],
+      "no_v5_telemetry": true,
+      "qwen_calls": 0,
+      "pass": true
+    },
+    {
+      "expected_intent": "CHECK_AVAILABILITY",
+      "actual_intent": "CLARIFICATION",
+      "expected_public_ids": [
+        "OL25644705W"
+      ],
+      "resolved_ids": [],
+      "status": 200,
+      "errors": [],
+      "no_v5_telemetry": true,
+      "qwen_calls": 1,
+      "pass": false
+    }
+  ],
+  "default": "existing_qwen",
+  "private_document_registry_rows": 0,
+  "private_document_directories": 0,
+  "baseline_differences": [
+    "assistant/api.py",
+    "assistant/profiling.py",
+    "assistant/semantic.py",
+    "rag/private_documents/registry.sqlite"
+  ],
+  "cached_encoder_hashes_unchanged": true,
+  "frozen_runtime_hashes_unchanged": true,
+  "complete": true,
+  "initial_recommendation_health_probe": 404,
+  "recommendation_health_note": "Recommendation readiness endpoint is /, not /health. Initial 404 was an observer URL error; no service code changed."
+}

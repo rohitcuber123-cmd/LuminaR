@@ -1,0 +1,136 @@
+{
+  "pass": true,
+  "backend": {
+    "unit": {
+      "tests": 37,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 37
+    },
+    "assistant": {
+      "tests": 439,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 439
+    },
+    "security": {
+      "tests": 125,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 10,
+      "passed": 115
+    },
+    "staff": {
+      "tests": 76,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 76
+    },
+    "notifications": {
+      "tests": 51,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 51
+    },
+    "circulation": {
+      "tests": 40,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 40
+    },
+    "search": {
+      "tests": 157,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 157
+    },
+    "events": {
+      "tests": 76,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 76
+    }
+  },
+  "backend_total_passed": 991,
+  "backend_total_existing_skips": 10,
+  "frontend": {
+    "events": {
+      "tests": 49,
+      "pass": 49,
+      "fail": 0,
+      "skipped": 0
+    },
+    "existing": {
+      "tests": 191,
+      "pass": 191,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "frontend_total_passed": 240,
+  "build": {
+    "pass": true,
+    "bundle_js_kb": 539.18,
+    "v1_bundle_js_kb": 529.67,
+    "note": "A 9.51 kB uncompressed bundle increase. Existing large-chunk advisory; no build failure."
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 19,
+    "note": "19 existing warnings; none introduced in Events V1.1."
+  },
+  "preservation": {
+    "changed": [
+      "backend/services/event_service.py",
+      "frontend/src/lib/events.ts",
+      "frontend/src/pages/EventEditorPage.tsx",
+      "frontend/src/pages/Events.css",
+      "frontend/src/pages/ManageEventsPage.tsx",
+      "frontend/tests/events.test.tsx",
+      "frontend/tsconfig.app.json",
+      "tests/events/test_events.py"
+    ],
+    "new": [
+      "backend/schemas/event_publish_requirements.json",
+      "backend/services/event_publish_validation.py",
+      "frontend/src/components/events/EventPublishSummary.tsx",
+      "frontend/src/lib/eventPresets.ts",
+      "scripts/check_events_v1_1_live.py",
+      "scripts/start_events_v1_1_stack.ps1",
+      "scripts/test_events_v1_1_regressions.py",
+      "tests/events/test_event_presets.py"
+    ],
+    "deleted": [],
+    "all_existing_changes_scoped_to_events": true,
+    "frozen_v1_reports_unchanged": true,
+    "preserved_production_sources": [
+      "Assistant existing_qwen",
+      "Search",
+      "Recommendation",
+      "KG",
+      "Book RAG",
+      "document security",
+      "Admin",
+      "Notifications",
+      "auth",
+      "EventMonitor and seen/badge/toast code"
+    ]
+  },
+  "production_services_health": {
+    "core_8002": 200,
+    "search_8003": 200,
+    "recommendation_8004": 200,
+    "rag_8005": 200,
+    "frontend_5173": 200
+  },
+  "assistant_router": "existing_qwen",
+  "router_research_rerun": false,
+  "method": "Same previously passing production suites, isolated processes for mock Mongo modules. Recommendation paging/depth tests included in Search suite; KG and Book/document RAG regressions included in production Assistant/security suites."
+}

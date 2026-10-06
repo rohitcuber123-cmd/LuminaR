@@ -101,7 +101,7 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
   onChoice: (book: AssistantBook) => void
 }) {
   const pending = response.pending_action
-  const confirmationLabel = pending ? ({ BORROW_BOOK: 'borrowing', RESERVE_BOOK: 'reservation', RETURN_BOOK: 'return' } as Partial<Record<AssistantResponse['intent'], string>>)[pending.type] || 'action' : 'action'
+  const confirmationLabel = pending ? ({ BORROW_BOOK: 'borrowing', RESERVE_BOOK: 'reservation', RETURN_BOOK: 'return', ADD_TO_READING_LIST: 'add to reading list', REMOVE_FROM_READING_LIST: 'remove from reading list' } as Partial<Record<AssistantResponse['intent'], string>>)[pending.type] || 'action' : 'action'
   const pendingExpired = pending ? Date.parse(pending.expires_at) <= now : false
   const bookTitle = (id: string) => response.books.find(book => book.work_id === id)?.title || id
 
@@ -239,7 +239,9 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
       {!!response.rag.sources?.length && <details className="mt-3 text-xs"><summary className="cursor-pointer">Sources ({response.rag.sources.length})</summary><ul className="mt-2 space-y-2">{response.rag.sources.map((source, index) => <li key={index}>{source.title || source.filename || 'Source'}{source.page != null ? ` · Page ${source.page}` : ''}{source.chapter ? ` · ${source.chapter}` : ''}</li>)}</ul></details>}
     </section>}
     {pending && <section aria-label="Confirm library action" className="border border-brand/30 bg-panel p-3">
-      <h3 className="font-display text-sm">{label(pending.type.replace('_BOOK', '').toLowerCase())} {bookTitle(pending.work_id)}?</h3>
+      <h3 className="font-display text-sm">{pending.type === 'ADD_TO_READING_LIST' || pending.type === 'REMOVE_FROM_READING_LIST'
+        ? `${pending.type === 'ADD_TO_READING_LIST' ? 'Add' : 'Remove'} ${(pending.work_ids?.length ? pending.work_ids : [pending.work_id]).map(bookTitle).join(', ')} ${pending.type === 'ADD_TO_READING_LIST' ? 'to' : 'from'} your reading list?`
+        : `${label(pending.type.replace('_BOOK', '').toLowerCase())} ${bookTitle(pending.work_id)}?`}</h3>
       {!pending.enabled && <p className="mt-2 text-xs">Library actions are currently disabled.</p>}
       <p className="mt-2 text-xs text-ink-soft">{!pendingActive ? 'This confirmation is no longer active.' : pendingExpired ? 'This confirmation expired. Ask again to create a new one.' : `Confirm by ${new Date(pending.expires_at).toLocaleTimeString()}.`}</p>
       <div className="mt-3 flex gap-2"><button className="assistant-button" disabled={busy || !pendingActive || pendingExpired} onClick={() => onAction({ type: 'CONFIRM_ACTION', action_id: pending.action_id })}>Confirm {confirmationLabel}</button>

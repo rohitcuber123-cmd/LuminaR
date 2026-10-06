@@ -123,7 +123,10 @@ def test_ordinal_remove_uses_owned_reading_list_not_search_or_tray():
     state=orch.store.get(first.conversation_id,'17')
     state.recent_result_work_ids=['OL1W']
     qwen.intent=AssistantIntent(intent=Intent.REMOVE_FROM_READING_LIST,ordinal_references=[1])
-    chat(orch,tools,'remove the first book from my reading list',conversation_id=first.conversation_id,selected_work_ids=['OL1W'])
+    pending=chat(orch,tools,'remove the first book from my reading list',conversation_id=first.conversation_id,selected_work_ids=['OL1W'])
+    assert pending.pending_action.work_id == 'OL2W' and tools.reading_list.removed == []
+    chat(orch,tools,'Confirm',conversation_id=first.conversation_id,action='CONFIRM_ACTION',
+         pending_action_id=pending.pending_action.action_id)
     assert tools.reading_list.removed == ['OL2W']
     tools.reading_list._items=[]
     result=chat(orch,tools,'remove the first book from my reading list',conversation_id=first.conversation_id)

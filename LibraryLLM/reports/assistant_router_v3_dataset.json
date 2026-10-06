@@ -1,0 +1,841 @@
+{
+  "path": "D:\\SDC\\LibraryLLM\\training\\assistant_router_v3\\dataset.jsonl",
+  "sha256": "396c7cf158fbd7721c34383cdabca6718880c9114e411fc962f6e3fd9cb48119",
+  "generated": 3224,
+  "retained": 2635,
+  "train_count": 2112,
+  "dev_count": 523,
+  "split": "Disjoint TRAIN/DEV template authoring groups before augmentation",
+  "provenance": "New hand-authored intent definitions + compositional topics/reference/purpose/polite variants; no Qwen authoring and no private chats",
+  "limitations": "Synthetic coverage, repeated structures and polite variants inflate sample count; DEV differs by templates but shares vocabulary.",
+  "template_groups": 225,
+  "manual_review_samples": [
+    {
+      "id": "531e668a3cfd2dc6f0df",
+      "split": "train",
+      "message": "Could you help: Search the shelves for marine conservation please",
+      "context": {
+        "selected_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          },
+          {
+            "work_id": "TRAIN_ID_1"
+          },
+          {
+            "work_id": "TRAIN_ID_2"
+          },
+          {
+            "work_id": "TRAIN_ID_3"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:SEARCH:1",
+      "intent_family": "DISCOVER",
+      "intent_subtypes": "SEARCH",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "76dd58371519b3cf104e",
+      "split": "train",
+      "message": "Hello, Help me find resources about geology now",
+      "context": {
+        "previous_comparison": [
+          {
+            "work_id": "TRAIN_ID_0"
+          }
+        ],
+        "active_result_context": {
+          "type": "comparison",
+          "work_ids": [
+            "TRAIN_ID_0"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:SEARCH:6",
+      "intent_family": "DISCOVER",
+      "intent_subtypes": "SEARCH",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "ebb2c1f4dbe9035de9e2",
+      "split": "train",
+      "message": "For me, Choose some recommendations for me",
+      "context": {},
+      "template_group": "train:RECOMMEND:3",
+      "intent_family": "DISCOVER",
+      "intent_subtypes": "RECOMMEND",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "2e477aa537e36911128b",
+      "split": "train",
+      "message": "Find books with themes shared by the chosen volumes?",
+      "context": {},
+      "template_group": "train:SIMILAR:4",
+      "intent_family": "DISCOVER",
+      "intent_subtypes": "SIMILAR",
+      "reference": "AMBIGUOUS",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "6262c230da22d8e0df7e",
+      "split": "train",
+      "message": "Recommend similar books I can borrow today instead of the other volume today",
+      "context": {
+        "previous_recommendations": {
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "active_result_context": {
+          "type": "recommendations",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:ALTERNATIVES:2",
+      "intent_family": "DISCOVER",
+      "intent_subtypes": "ALTERNATIVES",
+      "reference": "PREVIOUS_RECOMMENDATIONS",
+      "position": "OTHER",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "a43a51bd6552bc5b2249",
+      "split": "train",
+      "message": "Compare the metadata of the books I picked today",
+      "context": {
+        "active_result_context": {
+          "type": "availability",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:FACTUAL:6",
+      "intent_family": "COMPARE",
+      "intent_subtypes": "FACTUAL",
+      "reference": "RECENT",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "0c3bd1fa50d2156c52d1",
+      "split": "train",
+      "message": "Could you help: Contrast quantity of reader ratings across this pair please",
+      "context": {
+        "selected_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          },
+          {
+            "work_id": "TRAIN_ID_1"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ],
+        "awaiting_criteria": true,
+        "previous_comparison": [
+          {
+            "work_id": "OLD_TRAIN_ID_A"
+          },
+          {
+            "work_id": "OLD_TRAIN_ID_B"
+          }
+        ],
+        "selection_changed": true
+      },
+      "template_group": "train:FIELD:3",
+      "intent_family": "COMPARE",
+      "intent_subtypes": "FIELD",
+      "reference": "SELECTION",
+      "position": "ALL",
+      "fields": "rating_count",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "22cc70d4eae7887642e1",
+      "split": "train",
+      "message": "Could you help: I cannot decide which book suits me when preparing for a statistics exam?",
+      "context": {
+        "pending_action": true
+      },
+      "template_group": "train:PREFERENCE:5",
+      "intent_family": "COMPARE",
+      "intent_subtypes": "PREFERENCE",
+      "reference": "AMBIGUOUS",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "PRESENT"
+    },
+    {
+      "id": "1436feb78d358bea70c2",
+      "split": "train",
+      "message": "Please, Is Tides of Argent available today",
+      "context": {
+        "active_result_context": {
+          "type": "search",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:AVAILABILITY:5",
+      "intent_family": "BOOK",
+      "intent_subtypes": "AVAILABILITY",
+      "reference": "EXPLICIT",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "8031b95ab834afb1d137",
+      "split": "train",
+      "message": "Show catalogue details for the remaining member of the pair",
+      "context": {
+        "previous_recommendations": {
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "active_result_context": {
+          "type": "recommendations",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:DETAILS:0",
+      "intent_family": "BOOK",
+      "intent_subtypes": "DETAILS",
+      "reference": "PREVIOUS_RECOMMENDATIONS",
+      "position": "OTHER",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "5b54de4c4c9414f56b87",
+      "split": "train",
+      "message": "May I borrow the second volume please",
+      "context": {},
+      "template_group": "train:BORROW:5",
+      "intent_family": "BOOK",
+      "intent_subtypes": "BORROW",
+      "reference": "AMBIGUOUS",
+      "position": "SECOND",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "798d4c0ebd90bb757452",
+      "split": "train",
+      "message": "Please, Record that I am returning the book at the end of the list",
+      "context": {
+        "page_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ],
+        "pending_action": true
+      },
+      "template_group": "train:RETURN:1",
+      "intent_family": "BOOK",
+      "intent_subtypes": "RETURN",
+      "reference": "PAGE",
+      "position": "LAST",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "bbcb3b05b03ff710dde1",
+      "split": "train",
+      "message": "Could you help: I need to return the remaining member of the pair now",
+      "context": {
+        "previous_recommendations": {
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "active_result_context": {
+          "type": "recommendations",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:RETURN:4",
+      "intent_family": "BOOK",
+      "intent_subtypes": "RETURN",
+      "reference": "PREVIOUS_RECOMMENDATIONS",
+      "position": "OTHER",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "4d23270afb149e720b74",
+      "split": "train",
+      "message": "For me, Reserve the first volume for me.",
+      "context": {
+        "previous_recommendations": {
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2"
+          ]
+        },
+        "active_result_context": {
+          "type": "recommendations",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:RESERVE:1",
+      "intent_family": "BOOK",
+      "intent_subtypes": "RESERVE",
+      "reference": "PREVIOUS_RECOMMENDATIONS",
+      "position": "FIRST",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "107ea116e03112740ead",
+      "split": "train",
+      "message": "Please, Save that book to my reading list now",
+      "context": {
+        "active_result_context": {
+          "type": "details",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2",
+            "TRAIN_ID_3"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ],
+        "awaiting_criteria": true
+      },
+      "template_group": "train:ADD_LIST:0",
+      "intent_family": "BOOK",
+      "intent_subtypes": "ADD_LIST",
+      "reference": "RECENT",
+      "position": "FOCUS",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "895ce4e45c9f23a3530d",
+      "split": "train",
+      "message": "Could you help: Take the chosen volumes off my reading list.",
+      "context": {
+        "selected_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          },
+          {
+            "work_id": "TRAIN_ID_1"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ],
+        "previous_comparison": [
+          {
+            "work_id": "OLD_TRAIN_ID_A"
+          },
+          {
+            "work_id": "OLD_TRAIN_ID_B"
+          }
+        ],
+        "selection_changed": true,
+        "pending_action": true
+      },
+      "template_group": "train:REMOVE_LIST:3",
+      "intent_family": "BOOK",
+      "intent_subtypes": "REMOVE_LIST",
+      "reference": "SELECTION",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "541154f1c456393f25b6",
+      "split": "train",
+      "message": "Hello, Remove every book from my reading list now",
+      "context": {
+        "previous_comparison": [
+          {
+            "work_id": "TRAIN_ID_0"
+          },
+          {
+            "work_id": "TRAIN_ID_1"
+          },
+          {
+            "work_id": "TRAIN_ID_2"
+          },
+          {
+            "work_id": "TRAIN_ID_3"
+          }
+        ],
+        "active_result_context": {
+          "type": "comparison",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2",
+            "TRAIN_ID_3"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:CLEAR_LIST:2",
+      "intent_family": "ACCOUNT",
+      "intent_subtypes": "CLEAR_LIST",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "c7ac6915e8dcb837d083",
+      "split": "train",
+      "message": "For me, Check my outstanding library charges",
+      "context": {
+        "active_result_context": {
+          "type": "availability",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:FEES:0",
+      "intent_family": "ACCOUNT",
+      "intent_subtypes": "FEES",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "0935fb779a41ba932df3",
+      "split": "train",
+      "message": "Show my reservation queue?",
+      "context": {
+        "previous_comparison": [
+          {
+            "work_id": "TRAIN_ID_0"
+          }
+        ],
+        "active_result_context": {
+          "type": "comparison",
+          "work_ids": [
+            "TRAIN_ID_0"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ],
+        "awaiting_criteria": true
+      },
+      "template_group": "train:RESERVATIONS:0",
+      "intent_family": "ACCOUNT",
+      "intent_subtypes": "RESERVATIONS",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "44b456e7860a841c6230",
+      "split": "train",
+      "message": "For me, Review my past library borrowing",
+      "context": {},
+      "template_group": "train:HISTORY:6",
+      "intent_family": "ACCOUNT",
+      "intent_subtypes": "HISTORY",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "c805b4c30da972bf7375",
+      "split": "train",
+      "message": "Could you help: Explain the ending of the latter one now",
+      "context": {
+        "selected_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          },
+          {
+            "work_id": "TRAIN_ID_1"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:BOOK_CONTENT:3",
+      "intent_family": "CONTENT",
+      "intent_subtypes": "BOOK_CONTENT",
+      "reference": "SELECTION",
+      "position": "SECOND",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "53f25a2813363d87a4d2",
+      "split": "train",
+      "message": "Could you help: Explain the ending of the last volume?",
+      "context": {
+        "previous_comparison": [
+          {
+            "work_id": "TRAIN_ID_0"
+          },
+          {
+            "work_id": "TRAIN_ID_1"
+          },
+          {
+            "work_id": "TRAIN_ID_2"
+          }
+        ],
+        "active_result_context": {
+          "type": "comparison",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:BOOK_CONTENT:3",
+      "intent_family": "CONTENT",
+      "intent_subtypes": "BOOK_CONTENT",
+      "reference": "PREVIOUS_COMPARISON",
+      "position": "LAST",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "69a9bd825a40f2c66a5f",
+      "split": "train",
+      "message": "Help me understand the catalogue",
+      "context": {
+        "active_result_context": {
+          "type": "search",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2",
+            "TRAIN_ID_3"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ],
+        "awaiting_criteria": true
+      },
+      "template_group": "train:HELP:3",
+      "intent_family": "HELP",
+      "intent_subtypes": "HELP",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "7a2cc5585bf857eb80c7",
+      "split": "train",
+      "message": "Could you help: Translate this greeting into Greek please",
+      "context": {
+        "page_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:UNKNOWN:2",
+      "intent_family": "UNKNOWN",
+      "intent_subtypes": "UNKNOWN",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "5e47815077280d1db5d6",
+      "split": "train",
+      "message": "Could you help: Show another page of results?",
+      "context": {
+        "page_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "train:SHOW_MORE:0",
+      "intent_family": "CONTEXT",
+      "intent_subtypes": "SHOW_MORE",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "feb7b1a814bf3acc7567",
+      "split": "dev",
+      "message": "Please, Could you locate volumes exploring landscape drawing",
+      "context": {
+        "active_result_context": {
+          "type": "availability",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "dev:SEARCH:0",
+      "intent_family": "DISCOVER",
+      "intent_subtypes": "SEARCH",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "814914bb35185fac17e5",
+      "split": "dev",
+      "message": "Please, Give a neutral account of how my chosen volumes differ please",
+      "context": {
+        "previous_recommendations": {
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2",
+            "TRAIN_ID_3"
+          ]
+        },
+        "active_result_context": {
+          "type": "recommendations",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2",
+            "TRAIN_ID_3"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "dev:FACTUAL:0",
+      "intent_family": "COMPARE",
+      "intent_subtypes": "FACTUAL",
+      "reference": "PREVIOUS_RECOMMENDATIONS",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "a6d1ac77768969e7e465",
+      "split": "dev",
+      "message": "Please, Show descriptive catalogue facts about the books in this group now",
+      "context": {
+        "selected_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          },
+          {
+            "work_id": "TRAIN_ID_1"
+          },
+          {
+            "work_id": "TRAIN_ID_2"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "dev:DETAILS:0",
+      "intent_family": "BOOK",
+      "intent_subtypes": "DETAILS",
+      "reference": "SELECTION",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "0f30fa1e27d65f1c1887",
+      "split": "dev",
+      "message": "Please, Request a waiting-list position for the next book in the pair.",
+      "context": {
+        "active_result_context": {
+          "type": "availability",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "dev:RESERVE:1",
+      "intent_family": "BOOK",
+      "intent_subtypes": "RESERVE",
+      "reference": "RECENT",
+      "position": "SECOND",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "ecbe5b4cc8ecc111121f",
+      "split": "dev",
+      "message": "Are there outstanding monetary charges against me today",
+      "context": {
+        "active_result_context": {
+          "type": "availability",
+          "work_ids": [
+            "TRAIN_ID_0",
+            "TRAIN_ID_1",
+            "TRAIN_ID_2"
+          ]
+        },
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ],
+        "awaiting_criteria": true
+      },
+      "template_group": "dev:FEES:0",
+      "intent_family": "ACCOUNT",
+      "intent_subtypes": "FEES",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "52571a561a1378b3360a",
+      "split": "dev",
+      "message": "Hello, Explain a quotation from the full text of Voyages Beyond Kepler.",
+      "context": {
+        "selected_books": [
+          {
+            "work_id": "TRAIN_ID_0"
+          },
+          {
+            "work_id": "TRAIN_ID_1"
+          },
+          {
+            "work_id": "TRAIN_ID_2"
+          },
+          {
+            "work_id": "TRAIN_ID_3"
+          }
+        ],
+        "last_referenced_work_ids": [
+          "TRAIN_ID_0"
+        ]
+      },
+      "template_group": "dev:BOOK_CONTENT:1",
+      "intent_family": "CONTENT",
+      "intent_subtypes": "BOOK_CONTENT",
+      "reference": "EXPLICIT",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    },
+    {
+      "id": "d22f54626424e30f87b6",
+      "split": "dev",
+      "message": "Hello, Sort these current matches by name",
+      "context": {},
+      "template_group": "dev:REFINE:1",
+      "intent_family": "CONTEXT",
+      "intent_subtypes": "REFINE",
+      "reference": "NONE",
+      "position": "ALL",
+      "fields": "NONE",
+      "criterion": "ABSENT"
+    }
+  ],
+  "validation": "length, labels, normalization deduplication, exact TEST rejection, embedding-neighbor flags",
+  "manual_review": {
+    "samples_checked": 32,
+    "result": "No incorrect intent/field/criterion labels observed in the 32 sampled records. Missing or incompatible structural references are deliberately represented by ambiguity and left to validator/fallback.",
+    "limitation": "Compositional templates and shared vocabulary; not production distribution."
+  }
+}

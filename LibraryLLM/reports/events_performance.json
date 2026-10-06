@@ -1,0 +1,183 @@
+{
+  "pass": true,
+  "timings": {
+    "create_event": {
+      "samples_ms": [
+        27.82,
+        11.64,
+        10.54,
+        12.05,
+        12.16
+      ],
+      "median_ms": 12.05,
+      "max_ms": 27.82,
+      "preferred_ms": 500,
+      "within_preferred_max": true
+    },
+    "publish_event": {
+      "samples_ms": [
+        16.36,
+        11.4,
+        9.82,
+        11.16,
+        10.6
+      ],
+      "median_ms": 11.16,
+      "max_ms": 16.36,
+      "preferred_ms": 500,
+      "within_preferred_max": true
+    },
+    "unseen_count": {
+      "samples_ms": [
+        10.33,
+        9.58,
+        8.61,
+        9.61,
+        8.44
+      ],
+      "median_ms": 9.58,
+      "max_ms": 10.33,
+      "preferred_ms": 100,
+      "within_preferred_max": true
+    },
+    "published_list": {
+      "samples_ms": [
+        15.04,
+        14.08,
+        14.61,
+        13.23,
+        14.02
+      ],
+      "median_ms": 14.08,
+      "max_ms": 15.04,
+      "preferred_ms": 250,
+      "within_preferred_max": true
+    },
+    "mark_seen": {
+      "samples_ms": [
+        10.58,
+        13.82,
+        12.77,
+        11.6,
+        12.91
+      ],
+      "median_ms": 12.77,
+      "max_ms": 13.82,
+      "preferred_ms": 500,
+      "within_preferred_max": true
+    },
+    "edit_event": {
+      "samples_ms": [
+        13.6,
+        14.41,
+        12.02,
+        13.84,
+        12.22
+      ],
+      "median_ms": 13.6,
+      "max_ms": 14.41,
+      "preferred_ms": 500,
+      "within_preferred_max": true
+    },
+    "event_detail": {
+      "samples_ms": [
+        10.38,
+        6.92,
+        8.73,
+        8.48,
+        8.17
+      ],
+      "median_ms": 8.48,
+      "max_ms": 10.38,
+      "preferred_ms": 250,
+      "within_preferred_max": true
+    },
+    "staff_management_list": {
+      "samples_ms": [
+        14.46,
+        14.46,
+        14.57,
+        12.83
+      ],
+      "median_ms": 14.46,
+      "max_ms": 14.57,
+      "preferred_ms": 250,
+      "within_preferred_max": true
+    },
+    "category_search_filter": {
+      "samples_ms": [
+        16.32,
+        15.31,
+        15.92,
+        14.14
+      ],
+      "median_ms": 15.62,
+      "max_ms": 16.32,
+      "preferred_ms": 250,
+      "within_preferred_max": true
+    }
+  },
+  "method": "Five actual localhost HTTP samples/action; published idempotent repetitions and first publication are both included. Small V1 test event catalogue, existing live book catalogue; no ML.",
+  "book_hydration": "One bounded $in lookup per list/detail; at most 50 events \u00d7 12 canonical IDs.",
+  "indexes": {
+    "events": [
+      {
+        "name": "_id_",
+        "key": {
+          "_id": 1
+        },
+        "unique": false
+      },
+      {
+        "name": "event_id_unique",
+        "key": {
+          "event_id": 1
+        },
+        "unique": true
+      },
+      {
+        "name": "event_status_start",
+        "key": {
+          "status": 1,
+          "start_at": 1
+        },
+        "unique": false
+      },
+      {
+        "name": "event_status_publish",
+        "key": {
+          "status": 1,
+          "published_at": -1,
+          "event_id": 1
+        },
+        "unique": false
+      },
+      {
+        "name": "event_category_status_start",
+        "key": {
+          "category": 1,
+          "status": 1,
+          "start_at": 1
+        },
+        "unique": false
+      }
+    ],
+    "event_user_state": [
+      {
+        "name": "_id_",
+        "key": {
+          "_id": 1
+        },
+        "unique": false
+      },
+      {
+        "name": "event_seen_user_unique",
+        "key": {
+          "user_id": 1
+        },
+        "unique": true
+      }
+    ]
+  },
+  "scalability_limit": "Escaped substring search and computed upcoming sorting may scan/sort matching events; measurements are not a large-catalogue guarantee."
+}

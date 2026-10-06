@@ -1,0 +1,1295 @@
+{
+  "method": "Normal authenticated /assistant/chat endpoint with router_v3 explicitly opted in; real catalogue and frozen tools",
+  "privacy": "No credentials, emails, identity IDs, account records or private chunks persisted.",
+  "public_books": [
+    {
+      "work_id": "OL25644705W",
+      "title": "Economics of Football"
+    },
+    {
+      "work_id": "OL20667625W",
+      "title": "The Economics of the National Football League"
+    },
+    {
+      "work_id": "OL17930368W",
+      "title": "Atomic Habits"
+    },
+    {
+      "work_id": "OL2000134W",
+      "title": "Frankenstein"
+    }
+  ],
+  "chains": [
+    {
+      "name": "original_sports",
+      "turns": [
+        {
+          "message": "what differences do these books indicate",
+          "expected_intent": "COMPARE_BOOKS",
+          "actual_intent": "COMPARE_BOOKS",
+          "expected_ids": [
+            "OL25644705W",
+            "OL20667625W"
+          ],
+          "resolved_ids": [
+            "OL25644705W",
+            "OL20667625W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": true,
+          "fallback_reason": "ACCEPTED",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.9988076686859131,
+            "margin": 0.9977530241012573,
+            "entropy": 0.009767178446054459
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9425016641616821,
+            "margin": 0.9079898595809937,
+            "entropy": 0.25943928956985474
+          },
+          "qwen_calls": 0,
+          "latency_ms": 1925.2185999939684
+        },
+        {
+          "message": "which one would be better",
+          "expected_intent": "COMPARE_BOOKS",
+          "actual_intent": "COMPARE_BOOKS",
+          "expected_ids": [
+            "OL25644705W",
+            "OL20667625W"
+          ],
+          "resolved_ids": [
+            "OL25644705W",
+            "OL20667625W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": "CRITERIA_AMBIGUITY",
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "LOW_CONFIDENCE_REFERENCE",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.6737819314002991,
+            "margin": 0.38063329458236694,
+            "entropy": 0.7609541416168213
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.49703413248062134,
+            "margin": 0.19729149341583252,
+            "entropy": 1.0811647176742554
+          },
+          "qwen_calls": 1,
+          "latency_ms": 4845.1874000020325
+        },
+        {
+          "message": "for someone mainly interested in soccer economics",
+          "expected_intent": "COMPARE_BOOKS",
+          "actual_intent": "COMPARE_BOOKS",
+          "expected_ids": [
+            "OL25644705W",
+            "OL20667625W"
+          ],
+          "resolved_ids": [
+            "OL25644705W",
+            "OL20667625W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "OUT_OF_DISTRIBUTION",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.4180404245853424,
+            "margin": 0.11718034744262695,
+            "entropy": 1.200744867324829
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9957212209701538,
+            "margin": 0.9914865493774414,
+            "entropy": 0.02789740264415741
+          },
+          "qwen_calls": 1,
+          "latency_ms": 6361.5014999959385
+        },
+        {
+          "message": "is the first one available",
+          "expected_intent": "CHECK_AVAILABILITY",
+          "actual_intent": "CHECK_AVAILABILITY",
+          "expected_ids": [
+            "OL25644705W"
+          ],
+          "resolved_ids": [
+            "OL25644705W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "LOW_CONFIDENCE_REFERENCE",
+          "reference": {
+            "label": "PREVIOUS_COMPARISON",
+            "confidence": 0.6251202821731567,
+            "margin": 0.2728237509727478,
+            "entropy": 0.7669587731361389
+          },
+          "position": {
+            "label": "FIRST",
+            "confidence": 0.9999967813491821,
+            "margin": 0.9999940991401672,
+            "entropy": 4.583567351801321e-05
+          },
+          "qwen_calls": 1,
+          "latency_ms": 3770.6920000055106
+        },
+        {
+          "message": "and the other?",
+          "expected_intent": "CHECK_AVAILABILITY",
+          "actual_intent": "CHECK_AVAILABILITY",
+          "expected_ids": [
+            "OL20667625W"
+          ],
+          "resolved_ids": [
+            "OL20667625W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "OUT_OF_DISTRIBUTION",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.8231281042098999,
+            "margin": 0.6847745180130005,
+            "entropy": 0.5795441269874573
+          },
+          "position": {
+            "label": "OTHER",
+            "confidence": 0.9682567715644836,
+            "margin": 0.9366327524185181,
+            "entropy": 0.14164936542510986
+          },
+          "qwen_calls": 1,
+          "latency_ms": 3840.1849000074435
+        },
+        {
+          "message": "anything similar to that one",
+          "expected_intent": "MORE_LIKE_THIS",
+          "actual_intent": "MORE_LIKE_THIS",
+          "expected_ids": [
+            "OL20667625W"
+          ],
+          "resolved_ids": [
+            "OL20667625W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "LOW_CONFIDENCE_REFERENCE",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.9649662375450134,
+            "margin": 0.9382821917533875,
+            "entropy": 0.176570326089859
+          },
+          "position": {
+            "label": "FIRST",
+            "confidence": 0.5472312569618225,
+            "margin": 0.11259901523590088,
+            "entropy": 0.7837207317352295
+          },
+          "qwen_calls": 1,
+          "latency_ms": 5181.626799996593
+        }
+      ]
+    },
+    {
+      "name": "second_pair",
+      "turns": [
+        {
+          "message": "how do they stack up?",
+          "expected_intent": "COMPARE_BOOKS",
+          "actual_intent": "COMPARE_BOOKS",
+          "expected_ids": [
+            "OL17930368W",
+            "OL2000134W"
+          ],
+          "resolved_ids": [
+            "OL17930368W",
+            "OL2000134W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": "CRITERIA_AMBIGUITY",
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "OUT_OF_DISTRIBUTION",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.49783360958099365,
+            "margin": 0.002125948667526245,
+            "entropy": 0.7328457832336426
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9998824596405029,
+            "margin": 0.9997879862785339,
+            "entropy": 0.001271680579520762
+          },
+          "qwen_calls": 1,
+          "latency_ms": 5566.560799998115
+        },
+        {
+          "message": "which has more subjects?",
+          "expected_intent": "COMPARE_BOOKS",
+          "actual_intent": "COMPARE_BOOKS",
+          "expected_ids": [
+            "OL17930368W",
+            "OL2000134W"
+          ],
+          "resolved_ids": [
+            "OL17930368W",
+            "OL2000134W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "LOW_CONFIDENCE_REFERENCE",
+          "reference": {
+            "label": "PREVIOUS_COMPARISON",
+            "confidence": 0.46674051880836487,
+            "margin": 0.022012382745742798,
+            "entropy": 0.9640486240386963
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9965944886207581,
+            "margin": 0.9943251013755798,
+            "entropy": 0.025709686800837517
+          },
+          "qwen_calls": 1,
+          "latency_ms": 5111.514200005331
+        },
+        {
+          "message": "what about availability?",
+          "expected_intent": "CHECK_AVAILABILITY",
+          "actual_intent": "CHECK_AVAILABILITY",
+          "expected_ids": [
+            "OL17930368W",
+            "OL2000134W"
+          ],
+          "resolved_ids": [
+            "OL17930368W",
+            "OL2000134W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "OUT_OF_DISTRIBUTION",
+          "reference": {
+            "label": "NONE",
+            "confidence": 0.42223209142684937,
+            "margin": 0.13433018326759338,
+            "entropy": 1.3350939750671387
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.847817063331604,
+            "margin": 0.7107845544815063,
+            "entropy": 0.49276626110076904
+          },
+          "qwen_calls": 1,
+          "latency_ms": 4022.200299994438
+        },
+        {
+          "message": "tell me more about the second",
+          "expected_intent": "BOOK_DETAILS",
+          "actual_intent": "BOOK_DETAILS",
+          "expected_ids": [
+            "OL2000134W"
+          ],
+          "resolved_ids": [
+            "OL2000134W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "LOW_CONFIDENCE_INTENT",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.7618733048439026,
+            "margin": 0.6199490427970886,
+            "entropy": 0.7909189462661743
+          },
+          "position": {
+            "label": "SECOND",
+            "confidence": 0.9999982118606567,
+            "margin": 0.9999964237213135,
+            "entropy": 2.589648102002684e-05
+          },
+          "qwen_calls": 1,
+          "latency_ms": 5132.677200002945
+        },
+        {
+          "message": "find something connected to it",
+          "expected_intent": "MORE_LIKE_THIS",
+          "actual_intent": "MORE_LIKE_THIS",
+          "expected_ids": [
+            "OL2000134W"
+          ],
+          "resolved_ids": [
+            "OL2000134W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "OUT_OF_DISTRIBUTION",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.9158334136009216,
+            "margin": 0.8533536195755005,
+            "entropy": 0.3582647442817688
+          },
+          "position": {
+            "label": "FOCUS",
+            "confidence": 0.9408555626869202,
+            "margin": 0.8917825818061829,
+            "entropy": 0.2546699643135071
+          },
+          "qwen_calls": 1,
+          "latency_ms": 6227.8679000010015
+        }
+      ]
+    },
+    {
+      "name": "accounts",
+      "turns": [
+        {
+          "message": "what books do I still have out?",
+          "expected_intent": "USER_LOANS",
+          "actual_intent": "CLARIFICATION",
+          "expected_ids": [],
+          "resolved_ids": [],
+          "pass": false,
+          "http_status": 200,
+          "clarification_type": "REFERENCE_AMBIGUITY",
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "LOW_CONFIDENCE_INTENT",
+          "reference": {
+            "label": "NONE",
+            "confidence": 0.9821681976318359,
+            "margin": 0.9645554423332214,
+            "entropy": 0.09098879992961884
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9994233846664429,
+            "margin": 0.9990399479866028,
+            "entropy": 0.00538825336843729
+          },
+          "qwen_calls": 1,
+          "latency_ms": 6452.371299994411
+        },
+        {
+          "message": "do I owe the library anything?",
+          "expected_intent": "USER_FEES",
+          "actual_intent": "USER_FEES",
+          "expected_ids": [],
+          "resolved_ids": [],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": true,
+          "fallback_reason": "ACCEPTED",
+          "reference": {
+            "label": "NONE",
+            "confidence": 0.9997394680976868,
+            "margin": 0.9995068311691284,
+            "entropy": 0.002512561157345772
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.999422550201416,
+            "margin": 0.9989169836044312,
+            "entropy": 0.005178948398679495
+          },
+          "qwen_calls": 0,
+          "latency_ms": 534.1019000043161
+        },
+        {
+          "message": "have I got any reservations?",
+          "expected_intent": "USER_RESERVATIONS",
+          "actual_intent": "USER_LOANS",
+          "expected_ids": [],
+          "resolved_ids": [],
+          "pass": false,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "CONFLICTING_CLASSIFIERS",
+          "reference": {
+            "label": "NONE",
+            "confidence": 0.8380174040794373,
+            "margin": 0.7009320259094238,
+            "entropy": 0.5179165601730347
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9970205426216125,
+            "margin": 0.9941069483757019,
+            "entropy": 0.020680826157331467
+          },
+          "qwen_calls": 1,
+          "latency_ms": 6075.9354000038
+        },
+        {
+          "message": "what have I borrowed recently?",
+          "expected_intent": "USER_HISTORY",
+          "actual_intent": "CLARIFICATION",
+          "expected_ids": [],
+          "resolved_ids": [],
+          "pass": false,
+          "http_status": 200,
+          "clarification_type": "CRITERIA_AMBIGUITY",
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "LOW_CONFIDENCE_INTENT",
+          "reference": {
+            "label": "NONE",
+            "confidence": 0.9985142350196838,
+            "margin": 0.9970840215682983,
+            "entropy": 0.011469766497612
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9920896291732788,
+            "margin": 0.985261082649231,
+            "entropy": 0.05036752298474312
+          },
+          "qwen_calls": 1,
+          "latency_ms": 5832.980400009546
+        }
+      ]
+    },
+    {
+      "name": "search",
+      "turns": [
+        {
+          "message": "I need a beginner-friendly book about machine learning",
+          "expected_intent": "SEARCH_BOOKS",
+          "actual_intent": "SEARCH_BOOKS",
+          "expected_ids": [],
+          "resolved_ids": [
+            "OL19542893W",
+            "OL20794000W",
+            "OL21654311W",
+            "OL19543070W",
+            "OL27389964W",
+            "OL20560218W",
+            "OL25591389W",
+            "OL19543610W",
+            "OL26198197W",
+            "OL25227435W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": null,
+          "errors": [],
+          "classifier_accepted": true,
+          "fallback_reason": "ACCEPTED",
+          "reference": {
+            "label": "NONE",
+            "confidence": 0.9486541152000427,
+            "margin": 0.9004464745521545,
+            "entropy": 0.2179109752178192
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.5789490938186646,
+            "margin": 0.23052608966827393,
+            "entropy": 0.880133330821991
+          },
+          "qwen_calls": 0,
+          "latency_ms": 4140.521599998465
+        },
+        {
+          "message": "something on saving and household budgeting",
+          "expected_intent": "SEARCH_BOOKS",
+          "actual_intent": "CLARIFICATION",
+          "expected_ids": [],
+          "resolved_ids": [],
+          "pass": false,
+          "http_status": 200,
+          "clarification_type": "CRITERIA_AMBIGUITY",
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "OUT_OF_DISTRIBUTION",
+          "reference": {
+            "label": "NONE",
+            "confidence": 0.9999688863754272,
+            "margin": 0.9999431371688843,
+            "entropy": 0.0003693829057738185
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9814385771751404,
+            "margin": 0.9710766077041626,
+            "entropy": 0.10939080268144608
+          },
+          "qwen_calls": 1,
+          "latency_ms": 6106.426999991527
+        }
+      ]
+    },
+    {
+      "name": "complex",
+      "turns": [
+        {
+          "message": "I want whichever of these would give me more useful background for studying the economics of professional sports, but I'm less interested in management or player salaries.",
+          "expected_intent": "COMPARE_BOOKS",
+          "actual_intent": "COMPARE_BOOKS",
+          "expected_ids": [
+            "OL25644705W",
+            "OL20667625W"
+          ],
+          "resolved_ids": [
+            "OL25644705W",
+            "OL20667625W"
+          ],
+          "pass": true,
+          "http_status": 200,
+          "clarification_type": "CRITERIA_AMBIGUITY",
+          "errors": [],
+          "classifier_accepted": false,
+          "fallback_reason": "LOW_CONFIDENCE_INTENT",
+          "reference": {
+            "label": "SELECTION",
+            "confidence": 0.9979850053787231,
+            "margin": 0.9970623254776001,
+            "entropy": 0.017146063968539238
+          },
+          "position": {
+            "label": "ALL",
+            "confidence": 0.9955644607543945,
+            "margin": 0.9925606846809387,
+            "entropy": 0.03174319490790367
+          },
+          "qwen_calls": 1,
+          "latency_ms": 5456.318099997588
+        }
+      ]
+    }
+  ],
+  "complete": true,
+  "multi_user_isolation": {
+    "requests": [
+      {
+        "request": 0,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8606.054699994274,
+        "accepted": null,
+        "qwen_calls": null
+      },
+      {
+        "request": 4,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8650.880300003337,
+        "accepted": null,
+        "qwen_calls": null
+      },
+      {
+        "request": 5,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8686.955800003489,
+        "accepted": null,
+        "qwen_calls": null
+      },
+      {
+        "request": 2,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8733.727400001953,
+        "accepted": null,
+        "qwen_calls": null
+      },
+      {
+        "request": 3,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8735.407000000123,
+        "accepted": null,
+        "qwen_calls": null
+      },
+      {
+        "request": 6,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8765.171100007137,
+        "accepted": null,
+        "qwen_calls": null
+      },
+      {
+        "request": 1,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8794.196500006365,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 7,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8801.448799989885,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 8,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8815.230100008193,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 9,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8828.489799998351,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 10,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8834.244899990153,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 11,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8834.9806000042,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 12,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8847.2863999923,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 13,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8861.445300004561,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 14,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8861.439500004053,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 17,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8856.70950000349,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 16,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8862.87579999771,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 15,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8869.340500008548,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 18,
+        "user_alias": "A",
+        "own_public_tray": [
+          "OL25644705W",
+          "OL20667625W"
+        ],
+        "resolved_ids": [
+          "OL20667625W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8866.672099989955,
+        "accepted": true,
+        "qwen_calls": 0
+      },
+      {
+        "request": 19,
+        "user_alias": "B",
+        "own_public_tray": [
+          "OL17930368W",
+          "OL2000134W"
+        ],
+        "resolved_ids": [
+          "OL2000134W"
+        ],
+        "no_crossover": true,
+        "successful_book_response": true,
+        "correct_second_book": true,
+        "errors": [],
+        "latency_ms": 8866.83310000808,
+        "accepted": true,
+        "qwen_calls": 0
+      }
+    ],
+    "no_crossover": true,
+    "successful_book_responses": 20
+  },
+  "rag_coexistence": {
+    "document_upload_status": 200,
+    "document": {
+      "status": 200,
+      "duration_ms": 19236.073500011116,
+      "verdict": "SUPPORTED",
+      "has_answer": true,
+      "classifier_traffic": [
+        {
+          "status": 200,
+          "latency_ms": 8737.773400003789,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8738.224599990644,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8795.88760000479,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8828.011499994318,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8972.471700006281,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8989.115000003949,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9032.484100011061,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9071.05440000305,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9050.45660000178,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9079.155900006299,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9079.764199996134,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9077.932900007,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9102.20069999923,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9090.701599998283,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9073.599299998023,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9111.733899990213,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9129.089900001418,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9099.565199998324,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9115.02979999932,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 9095.354599994607,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        }
+      ]
+    },
+    "book": {
+      "status": 200,
+      "public_work_id": "OL45326637W",
+      "duration_ms": 25085.099300005822,
+      "verdict": "SUPPORTED",
+      "has_answer": true,
+      "classifier_traffic": [
+        {
+          "status": 200,
+          "latency_ms": 8130.024600002798,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": [
+            "TIMEOUT"
+          ]
+        },
+        {
+          "status": 200,
+          "latency_ms": 8141.463199994178,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": [
+            "TIMEOUT"
+          ]
+        },
+        {
+          "status": 200,
+          "latency_ms": 8147.39610000106,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": [
+            "TIMEOUT"
+          ]
+        },
+        {
+          "status": 200,
+          "latency_ms": 8166.1979000055,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": [
+            "TIMEOUT"
+          ]
+        },
+        {
+          "status": 200,
+          "latency_ms": 8183.309799991548,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": [
+            "TIMEOUT"
+          ]
+        },
+        {
+          "status": 200,
+          "latency_ms": 8199.828300013905,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": [
+            "TIMEOUT"
+          ]
+        },
+        {
+          "status": 200,
+          "latency_ms": 8201.706100007868,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": [
+            "TIMEOUT"
+          ]
+        },
+        {
+          "status": 200,
+          "latency_ms": 8228.84619999968,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8221.845699998084,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8217.437500003143,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8231.212500002584,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8240.422999995644,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8258.634199999506,
+          "accepted": null,
+          "qwen_calls": null,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8291.5173000074,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8315.71310000436,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8322.918300007586,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8315.336100000422,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8318.68399999803,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8318.654000002425,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        },
+        {
+          "status": 200,
+          "latency_ms": 8326.525899989065,
+          "accepted": true,
+          "qwen_calls": 0,
+          "errors": []
+        }
+      ],
+      "error_type": null
+    },
+    "disposable_document_removed": true
+  },
+  "strict_live": {
+    "passed": 14,
+    "total": 18
+  }
+}

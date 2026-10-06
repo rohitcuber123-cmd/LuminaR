@@ -10,7 +10,8 @@ from assistant.schemas import (Action, AssistantAction, AssistantError, Assistan
                                Book, Clarification, Comparison, Intent, PendingAction,
                                RecommendationMode)
 from assistant.tools import ToolFailure
-from assistant.profiling import measured, timed
+from assistant.profiling import measured, timed, current
+from assistant.selected_context import is_selected_context_question
 from assistant.routing import FastRouteError, needs_prose
 from assistant.kg_routing import fast_route
 from assistant.state import ResultContext
@@ -27,6 +28,7 @@ ENTITY = MUTATING | {Intent.COMPARE_BOOKS, Intent.CHECK_AVAILABILITY, Intent.BOO
                      Intent.BOOK_CONTENT_QUESTION}
 READING_LIST_WRITE = {Intent.ADD_TO_READING_LIST, Intent.REMOVE_FROM_READING_LIST,
                       Intent.CLEAR_READING_LIST}
+READING_LIST_PENDING = READING_LIST_WRITE - {Intent.CLEAR_READING_LIST}
 # Default initial page size; show-more continues from offset.
 DEFAULT_PAGE_SIZE = 10
 
@@ -63,6 +65,10 @@ class AssistantOrchestrator:
         async with state.lock:
             state.touched = monotonic()
             response = AssistantResponse(conversation_id=state.conversation_id)
+            profile = current.get()
+            if profile is not None:
+                profile.update(selected_count=len(request.selected_work_ids), selected_context_bound=False,
+                               route='NONE', fuzzy_title_calls=0, search_calls=0, tool_calls=0)
             try:
                 if request.action in {'CONFIRM_ACTION', 'CANCEL_ACTION'} or request.pending_action_id:
                     await self.confirm(request, state, tools, response)
@@ -93,13 +99,57 @@ class AssistantOrchestrator:
                 with timed('intent_routing'):
                     fast = fast_route(request)
                 routing_request = request
+                book_cache = {}
                 if fast:
                     parsed, routing_request = fast
                     parsed = as_decision(parsed)
                 else:
                     with timed('router_context'):
-                        context = await router_context(request, state, tools)
+                        context = await router_context(request, state, tools, book_cache)
                     parsed = as_decision(await self.qwen.parse(request.message, context))
+                # Literal entities supplied by the semantic decision take
+                # precedence over its contextual scope. Reuse the existing
+                # provenance guard; this does not classify user language.
+                if not request.action and parsed.intent in ENTITY | {Intent.GENERAL_LIBRARY_HELP}:
+                    literal_titles = [title for title in parsed.mentioned_titles
+                                      if not generic_title(title) and normalize(title) in normalize(request.message)]
+                    if literal_titles:
+                        parsed = parsed.model_copy(update={'reference_scope': ReferenceScope.EXPLICIT_BOOK,
+                            'reference_position': None,
+                            'resolved_work_ids': [wid for wid in parsed.resolved_work_ids if wid in literal_ids(request.message)],
+                            'mentioned_titles': literal_titles})
+                        if request.selected_work_ids and parsed.intent == Intent.GENERAL_LIBRARY_HELP:
+                            # A supplied literal work overrides the current
+                            # selection through the existing catalogue route.
+                            parsed = parsed.model_copy(update={'intent': Intent.BOOK_DETAILS})
+                    elif (request.selected_work_ids and parsed.intent == Intent.GENERAL_LIBRARY_HELP
+                          and parsed.goal == SemanticGoal.EXPLAIN
+                          and parsed.reference_scope == ReferenceScope.EXPLICIT_BOOK
+                          and not any(wid in literal_ids(request.message) for wid in parsed.resolved_work_ids)
+                          and not any(normalize(a) in normalize(request.message) for a in parsed.mentioned_authors if a)):
+                        # An explicit title scope without literal entity evidence
+                        # cannot displace the current user-supplied selection.
+                        parsed = parsed.model_copy(update={'reference_scope': ReferenceScope.SELECTED_BOOKS,
+                            'mentioned_titles': [], 'mentioned_authors': [], 'resolved_work_ids': []})
+                if not request.action and parsed.intent in ENTITY | {Intent.GENERAL_LIBRARY_HELP}:
+                    if parsed.goal == SemanticGoal.CONTENT_QUESTION:
+                        parsed = parsed.model_copy(update={'intent': Intent.BOOK_CONTENT_QUESTION})
+                    elif parsed.goal == SemanticGoal.DETAIL and parsed.intent in {Intent.GENERAL_LIBRARY_HELP, Intent.BOOK_CONTENT_QUESTION}:
+                        parsed = parsed.model_copy(update={'intent': Intent.BOOK_DETAILS})
+                    elif (parsed.intent == Intent.COMPARE_BOOKS and parsed.goal == SemanticGoal.DISCOVER
+                          and parsed.reference_scope == ReferenceScope.SELECTED_BOOKS
+                          and (len(request.selected_work_ids) == 1 or parsed.reference_position in
+                               {'FIRST', 'SECOND', 'THIRD', 'FOURTH', 'LAST', 'FOCUS', 'OTHER'})):
+                        parsed = parsed.model_copy(update={'intent': Intent.MORE_LIKE_THIS})
+                selected_question = is_selected_context_question(request, parsed)
+                if profile is not None:
+                    profile.update(reference_scope=parsed.reference_scope.value, semantic_goal=parsed.goal.value,
+                                   reference_position=parsed.reference_position, has_criterion=bool(parsed.criterion),
+                                   mentioned_title_count=len(parsed.mentioned_titles))
+                if selected_question:
+                    parsed = parsed.model_copy(update={'intent': Intent.GENERAL_LIBRARY_HELP,
+                        'clarification_needed': False, 'clarification_type': None,
+                        'resolved_work_ids': [], 'mentioned_titles': [], 'mentioned_authors': []})
                 if parsed.context_operation == 'SHOW_MORE':
                     await self.continue_results(request, state, tools, response)
                     return response
@@ -118,6 +168,8 @@ class AssistantOrchestrator:
                          parsed.reference, parsed.clarification_needed)
                 response.intent = parsed.intent
                 state.selected_work_ids = list(dict.fromkeys(request.selected_work_ids))
+                if profile is not None:
+                    profile['route'] = 'SELECTED_BOOK_CONTEXT_QUESTION' if selected_question else parsed.intent.value
                 if parsed.intent in {Intent.UNKNOWN, Intent.CLARIFICATION} or (
                         parsed.clarification_needed and parsed.intent not in ENTITY | RECOMMEND
                         and parsed.intent != Intent.MORE_LIKE_THIS):
@@ -128,10 +180,16 @@ class AssistantOrchestrator:
                 if parsed.unsupported_filters:
                     raise NeedsClarification('These catalogue filters are unavailable: '
                                              + ', '.join(parsed.unsupported_filters) + '.')
+                if (parsed.intent == Intent.GENERAL_LIBRARY_HELP
+                        and parsed.reference_scope == ReferenceScope.SELECTED_BOOKS and not request.selected_work_ids):
+                    raise NeedsClarification('Select the books you want to ask about.')
                 if parsed.confidence < .5 and parsed.reference_scope in {ReferenceScope.AMBIGUOUS, ReferenceScope.EXPLICIT_BOOK}:
                     raise NeedsClarification('Which books are you referring to?')
                 with timed('tool_execution'):
-                    await self.route(routing_request, parsed, state, tools, response)
+                    if selected_question:
+                        await self.bind_selected_question(request, parsed, state, tools, response, book_cache)
+                    else:
+                        await self.route(routing_request, parsed, state, tools, response)
                 if not response.rag and needs_prose(request, response.intent, parsed):
                     try:
                         response.message = await self.qwen.respond(request.message, response)
@@ -162,10 +220,34 @@ class AssistantOrchestrator:
                                                        message='Assistant request could not be completed.'))
                 response.message = response.errors[-1].message
             finally:
+                if profile is not None:
+                    if response.intent == Intent.CLARIFICATION or profile['route'] == 'NONE':
+                        profile['route'] = response.intent.value
                 LOG.info('assistant conversation_id=%s intent=%s selected_count=%d resolved_ids=%s result_count=%d',
                          state.conversation_id, response.intent.value, len(request.selected_work_ids),
                          state.last_referenced_work_ids, len(response.books))
             return response
+
+    async def bind_selected_question(self, request, decision, state, tools, response, book_cache):
+        try:
+            explanation = decision.model_copy(update={'reference_position': 'ALL'}) if decision.reference_position in {'FOCUS', 'OTHER'} else decision
+            focused_ids = contextual_ids(request, explanation, state)
+        except ValueError as exc:
+            raise NeedsClarification(str(exc)) from exc
+        if not focused_ids:
+            raise NeedsClarification('Choose a book from the current selection.')
+        # Validate the requested position, but keep all explicitly supplied
+        # records available for explanations involving multiple referents.
+        ids = list(request.selected_work_ids)
+        missing = [wid for wid in ids if wid not in book_cache]
+        if missing:
+            book_cache.update({book.work_id: book for book in await tools.catalogue.books(missing)})
+        response.books = [book_cache[wid] for wid in ids]
+        state.last_referenced_work_ids = list(ids)
+        response.actions = [Action(type=AssistantAction.VIEW_BOOK, work_id=wid) for wid in ids]
+        profile = current.get()
+        if profile is not None:
+            profile['selected_context_bound'] = True
 
     @staticmethod
     def remember_results(state, response):
@@ -212,6 +294,7 @@ class AssistantOrchestrator:
     @staticmethod
     def remember_semantics(state, request, parsed, response):
         result_type = ('comparison' if response.comparison else
+            'details' if response.intent == Intent.GENERAL_LIBRARY_HELP and response.books else
             'availability' if response.intent == Intent.CHECK_AVAILABILITY else
             'details' if response.intent == Intent.BOOK_DETAILS else
             'recommendations' if response.intent in RECOMMEND else
@@ -386,10 +469,15 @@ class AssistantOrchestrator:
     @staticmethod
     def ground_operational_message(response):
         if response.pending_action:
-            action = {Intent.BORROW_BOOK: 'borrowing', Intent.RESERVE_BOOK: 'reserving',
-                      Intent.RETURN_BOOK: 'returning'}[response.pending_action.type]
-            title = response.books[0].title or response.pending_action.work_id
-            response.message = f'Confirm {action} {title}?'
+            pending = response.pending_action
+            title = ', '.join(b.title or b.work_id for b in response.books) or pending.work_id
+            if pending.type in READING_LIST_PENDING:
+                response.message = (f'Add {title} to your reading list?' if pending.type == Intent.ADD_TO_READING_LIST
+                                    else f'Remove {title} from your reading list?')
+            else:
+                action = {Intent.BORROW_BOOK: 'borrowing', Intent.RESERVE_BOOK: 'reserving',
+                          Intent.RETURN_BOOK: 'returning'}[pending.type]
+                response.message = f'Confirm {action} {title}?'
             if not response.pending_action.enabled:
                 response.message += ' Library actions are currently disabled.'
         elif response.intent == Intent.CHECK_AVAILABILITY:
@@ -502,6 +590,11 @@ class AssistantOrchestrator:
         if decision.reference == 'this' and not decision.ordinal_references and not decision.resolved_work_ids and len(books) != 1:
             raise NeedsClarification('Which book do you mean?', books)
         state.last_referenced_work_ids = [b.work_id for b in books]
+        profile = current.get()
+        if (profile is not None and request.selected_work_ids
+                and decision.reference_scope != ReferenceScope.EXPLICIT_BOOK
+                and set(state.last_referenced_work_ids) <= set(request.selected_work_ids)):
+            profile['selected_context_bound'] = True
         return books
 
     @staticmethod
@@ -714,9 +807,9 @@ class AssistantOrchestrator:
         elif intent == Intent.ADD_TO_READING_LIST:
             # Semantic references still pass through authoritative canonical lookup.
             books = await self.resolve(request, parsed, state, tools)
-            await asyncio.gather(*(tools.reading_list.add(b.work_id) for b in books))
             response.books = books
             response.intent = Intent.ADD_TO_READING_LIST
+            self.propose_reading_list(intent, books, state, response)
 
         elif intent == Intent.REMOVE_FROM_READING_LIST:
             if (not request.action and parsed.reference_position and parsed.reference_scope in {
@@ -746,9 +839,9 @@ class AssistantOrchestrator:
             if not targets:
                 raise NeedsClarification('Select a book to remove from your reading list.')
             books = await tools.catalogue.books(targets)
-            await asyncio.gather(*(tools.reading_list.remove(b.work_id) for b in books))
             response.books = books
             response.intent = Intent.REMOVE_FROM_READING_LIST
+            self.propose_reading_list(intent, books, state, response)
 
         elif intent == Intent.CLEAR_READING_LIST:
             # List-wide deletion requires the existing explicit UI action.
@@ -771,30 +864,76 @@ class AssistantOrchestrator:
             # Standard book card actions — Phase 11: include ADD_TO_READING_LIST.
             response.actions = self.book_actions(response.books, response.availability, response.has_more)
 
+    @staticmethod
+    def propose_reading_list(intent, books, state, response):
+        if not books:
+            raise NeedsClarification('Choose a book for this reading-list action.')
+        pending = PendingAction(action_id=uuid4().hex, type=intent, work_id=books[0].work_id,
+            work_ids=tuple(dict.fromkeys(b.work_id for b in books)),
+            expires_at=(datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat(), enabled=True)
+        state.pending = pending
+        state.pending_deadline = monotonic() + 300
+        response.pending_action = pending
+        response.actions = [Action(type=AssistantAction.CONFIRM_ACTION, action_id=pending.action_id),
+                            Action(type=AssistantAction.CANCEL_ACTION, action_id=pending.action_id)]
+
     async def confirm(self, request, state, tools, response):
         pending = state.pending
         if request.action not in {'CONFIRM_ACTION', 'CANCEL_ACTION'} or not request.pending_action_id:
             raise NeedsClarification('Confirmation requires both action and pending_action_id.')
-        if not pending or pending.action_id != request.pending_action_id or monotonic() > state.pending_deadline:
+        if pending and monotonic() > state.pending_deadline:
+            state.pending, state.pending_issue_id, state.pending_deadline = None, None, 0
+            pending = None
+        if not pending or pending.action_id != request.pending_action_id:
             raise NeedsClarification('This action is invalid, expired or already consumed. Request it again.')
         response.intent = pending.type
         if request.action == 'CANCEL_ACTION':
-            state.pending = None
+            state.pending, state.pending_issue_id, state.pending_deadline = None, None, 0
             response.message = 'Action cancelled.'
             return
-        if not enabled('ASSISTANT_MUTATING_ACTIONS_ENABLED'):
+        # The existing feature flag disables circulation writes. Saved-list
+        # editing stays available, with this same mandatory confirmation gate.
+        if pending.type in MUTATING and not enabled('ASSISTANT_MUTATING_ACTIONS_ENABLED'):
             response.pending_action = pending
             response.message = 'Library actions are currently disabled. No action was performed.'
             response.errors.append(AssistantError(code='MUTATIONS_DISABLED', service='assistant', message=response.message))
             return
         # Consume before sending: a timeout may have committed at Core. Never auto-retry.
         state.pending = None
+        state.pending_deadline = 0
         if pending.type == Intent.BORROW_BOOK:
             result = await tools.loans.borrow(pending.work_id)
         elif pending.type == Intent.RESERVE_BOOK:
             result = await tools.reservations.reserve(pending.work_id)
         elif pending.type == Intent.RETURN_BOOK and state.pending_issue_id is not None:
             result = await tools.loans.return_book(state.pending_issue_id)
+        elif pending.type in READING_LIST_PENDING:
+            targets = pending.work_ids or (pending.work_id,)
+            # No model, prose or current selection participates in execution.
+            # Validate every stored catalogue ID before any batch write.
+            books = await tools.catalogue.books(list(targets))
+            if tuple(b.work_id for b in books) != targets:
+                raise NeedsClarification('The saved books could not be verified. Request the action again.')
+            raw = await tools.reading_list.get()
+            present = {row['work_id'] for row in raw.get('items', []) if row.get('work_id')}
+            changed = 0
+            for wid in targets:
+                if pending.type == Intent.ADD_TO_READING_LIST and wid not in present:
+                    await tools.reading_list.add(wid)
+                    changed += 1
+                elif pending.type == Intent.REMOVE_FROM_READING_LIST and wid in present:
+                    await tools.reading_list.remove(wid)
+                    changed += 1
+            response.books = books
+            response.availability = [tools.availability.availability(b) for b in books]
+            if changed:
+                operation = 'Added' if pending.type == Intent.ADD_TO_READING_LIST else 'Removed'
+                result = {'message': f'{operation} {changed} book{"s" if changed != 1 else ""} '
+                          + ('to' if operation == 'Added' else 'from') + ' your reading list.'}
+            else:
+                result = {'message': 'Already in your reading list. No changes were needed.'
+                          if pending.type == Intent.ADD_TO_READING_LIST else
+                          'No longer in your reading list. No changes were needed.'}
         else:
             raise NeedsClarification('The pending action cannot be executed.')
         state.pending_issue_id = None

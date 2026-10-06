@@ -31,15 +31,19 @@ def reference_sources(request, state):
     }
 
 
-async def router_context(request, state, tools):
+async def router_context(request, state, tools, book_cache=None):
+    import os
+    v5 = os.getenv('ASSISTANT_ROUTER_MODE') == 'router_v5'
     sources = reference_sources(request, state)
     selected = sources[ReferenceScope.SELECTED_BOOKS]
     page = sources[ReferenceScope.CURRENT_PAGE_BOOK]
     active_ids = sources[ReferenceScope.RECENT_RESULTS][:20]
     # Metadata is only identity-level and bounded; no descriptions or chunks.
-    identities = unique(selected + page + state.last_comparison_work_ids[:4]
+    identities = unique(selected + page + (request.action_work_ids if v5 else []) + state.last_comparison_work_ids[:4]
                         + state.last_referenced_work_ids[:4] + active_ids[:4])[:16]
     books = await tools.catalogue.books(identities) if identities else []
+    if book_cache is not None:
+        book_cache.update({book.work_id: book for book in books})
     index = {b.work_id: {'work_id': b.work_id, 'title': b.title, 'authors': b.authors} for b in books}
     brief = lambda ids: [index.get(wid, {'work_id': wid}) for wid in ids]
     changed = bool(selected and selected != state.selected_work_ids)
@@ -48,7 +52,8 @@ async def router_context(request, state, tools):
     if state.result_context and result_type not in ('comparison', 'details', 'availability'):
         result_type = 'search' if state.result_context.intent == Intent.SEARCH_BOOKS else 'recommendations'
     context = {
-        'selected_books': brief(selected), 'selection_changed': changed,
+        'selected_books': brief(selected), 'selected_count': len(selected),
+        'current_selection_exists': bool(selected), 'selection_changed': changed,
         'page_books': brief(page), 'document_id': request.page_context.document_id,
         'previous_turns': state.semantic_turns[-2:],
         'last_intent': state.last_intent,
@@ -63,17 +68,23 @@ async def router_context(request, state, tools):
         'awaiting_criteria': state.awaiting_criteria and not changed,
     }
     # Keep context compact: absent sources and empty default facts add no meaning.
-    context = {key: value for key, value in context.items() if value not in (None, [], False)}
+    context = {key: value for key, value in context.items()
+               if key in {'selected_count', 'current_selection_exists'} or value not in (None, [], False)}
     if not state.last_recommendation_work_ids:
         context.pop('previous_recommendations', None)
     if not active_ids and state.active_result_work_ids is None:
         context.pop('active_result_context', None)
+    # V5 separates deterministic binding and capability filtering from action
+    # scoring. The other routers retain their existing compact context shape.
+    if v5:
+        from assistant.router_v5.binding import enrich_context
+        context = await enrich_context(context, request, tools)
     return context
 
 
 def bind_position(pool, position, last_focus):
-    if position in {'FIRST','SECOND','LAST'}:
-        index = {'FIRST':0,'SECOND':1,'LAST':len(pool)-1}[position]
+    if position in {'FIRST','SECOND','THIRD','FOURTH','LAST'}:
+        index = {'FIRST':0,'SECOND':1,'THIRD':2,'FOURTH':3,'LAST':len(pool)-1}[position]
         if index < 0 or index >= len(pool):
             raise ValueError('That position is not in the current book list.')
         return [pool[index]]

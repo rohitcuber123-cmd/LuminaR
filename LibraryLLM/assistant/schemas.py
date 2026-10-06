@@ -122,6 +122,7 @@ class SemanticGoal(str, Enum):
     ACTION = 'ACTION'
     ACCOUNT_QUERY = 'ACCOUNT_QUERY'
     NONE = 'NONE'
+    CONTENT_QUESTION = 'CONTENT_QUESTION'
 
 
 class ClarificationType(str, Enum):
@@ -138,7 +139,7 @@ class AssistantIntentDecision(AssistantIntent):
     It never grants access and is checked against the context/source scope.
     """
     reference_scope: ReferenceScope = ReferenceScope.NONE
-    reference_position: Literal['ALL','FIRST','SECOND','LAST','OTHER','FOCUS'] | None = None
+    reference_position: Literal['ALL','FIRST','SECOND','THIRD','FOURTH','LAST','OTHER','FOCUS'] | None = None
     goal: SemanticGoal = SemanticGoal.NONE
     criterion: str | None = Field(default=None, max_length=300)
     clarification_type: ClarificationType | None = None
@@ -205,9 +206,12 @@ class Action(StrictModel):
 
 
 class PendingAction(StrictModel):
+    model_config = ConfigDict(extra='forbid', frozen=True)
     action_id: str
     type: Intent
     work_id: WorkID
+    # Canonical batch targets, resolved once. Empty preserves circulation shape.
+    work_ids: tuple[WorkID, ...] = ()
     requires_confirmation: bool = True
     expires_at: str
     enabled: bool = False

@@ -1,0 +1,100 @@
+{
+  "pass": true,
+  "method": "Actual Core HTTP/Mongo checks plus browser UI with disposable identities. Tests use localhost origin to preserve the real 127.0.0.1 login. No mocked live API.",
+  "scenarios": [
+    {
+      "name": "Draft with three books private before publish",
+      "pass": true
+    },
+    {
+      "name": "Explicit publication visible with unseen signal",
+      "pass": true
+    },
+    {
+      "name": "One online reader toast through normal polling",
+      "pass": true
+    },
+    {
+      "name": "Opening Events acknowledges its snapshot",
+      "pass": true
+    },
+    {
+      "name": "Separate account unseen state",
+      "pass": true
+    },
+    {
+      "name": "Published corrections preserve first publication",
+      "pass": true
+    },
+    {
+      "name": "Cancelled Upcoming removal and retained history",
+      "pass": true
+    },
+    {
+      "name": "Book Sale informational only",
+      "pass": true
+    },
+    {
+      "name": "Reader management forbidden",
+      "pass": true
+    },
+    {
+      "name": "Bounded one-record/account seen state with zero inbox fanout",
+      "pass": true
+    }
+  ],
+  "ui_checks": {
+    "real_search_three_selected_work_ids": [
+      "OL27837589W",
+      "OL6609090W",
+      "OL12654085W"
+    ],
+    "save_draft_safe": true,
+    "explicit_native_publish_confirmation": true,
+    "public_detail_related_cards": true,
+    "related_book_deep_link": "/book/OL27837589W",
+    "login_backlog_toasts": 0,
+    "normal_poll_online_reader_toast_observed": true,
+    "later_poll_duplicate_toasts": 0,
+    "reader_A_badge_after_opening_events": 0,
+    "reader_B_badge_after_switch": 5,
+    "reader_create_deep_link_redirect": "/profile"
+  },
+  "responsive": {
+    "desktop": {
+      "viewport": 1440,
+      "client_width": 1425,
+      "scroll_width": 1425
+    },
+    "tablet": {
+      "viewport": 768,
+      "client_width": 753,
+      "scroll_width": 753
+    },
+    "mobile": {
+      "viewport": 390,
+      "client_width": 375,
+      "scroll_width": 375
+    },
+    "horizontal_overflow": false,
+    "mobile_badge": true,
+    "tablet_badge": true
+  },
+  "screenshots": [
+    "events_page_desktop.jpg",
+    "events_detail_desktop.jpg",
+    "events_online_toast.jpg",
+    "events_header_mobile.jpg",
+    "events_page_mobile.jpg",
+    "events_page_tablet.jpg",
+    "events_header_tablet.jpg"
+  ],
+  "api_evidence": "events_api.json",
+  "security_evidence": "events_security.json",
+  "cleanup_evidence": "events_cleanup.json",
+  "real_users_modified": false,
+  "real_books_modified": false,
+  "qwen_used_for_events": false,
+  "broadcast_inbox_rows_created": 0,
+  "environment_note": "Existing normal services were initially stopped and restored. They stopped again around the interrupted continuation; restoration is now independent of terminal execution lifetime. Live workflows and screenshots completed before this environment interruption."
+}

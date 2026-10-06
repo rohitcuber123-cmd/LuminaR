@@ -1,0 +1,17 @@
+{
+  "pass": true,
+  "tests": {
+    "test_shared_http_client_created_once": true,
+    "test_requests_reuse_http_client": true,
+    "test_request_auth_headers_not_shared": true,
+    "test_concurrent_users_keep_auth_headers_isolated": true,
+    "test_http_client_closed_on_shutdown": true
+  },
+  "client_constructions_per_install": 1,
+  "bounded_connections": 40,
+  "bounded_keepalive": 20,
+  "request_local_bearers": true,
+  "shared_default_authorization": false,
+  "shutdown_closed": true,
+  "method": "Real installed FastAPI lifecycle with a MockTransport Core adapter. Two concurrent authenticated identities receive distinct responses; recorded Core headers remain A/B-specific. No per-request client construction."
+}

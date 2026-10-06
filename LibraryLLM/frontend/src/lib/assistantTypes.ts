@@ -31,7 +31,7 @@ export interface AssistantAvailability { work_id: string; available: boolean | n
 export interface AssistantComparison { books: AssistantBook[]; requested_fields: string[]; missing_fields: string[] }
 export interface AssistantAction { type: AssistantActionType; work_id?: string | null; action_id?: string | null }
 export interface AssistantClarification { reason: string; choices: AssistantBook[] }
-export interface AssistantPendingAction { action_id: string; type: AssistantIntent; work_id: string; requires_confirmation: boolean; expires_at: string; enabled: boolean }
+export interface AssistantPendingAction { action_id: string; type: AssistantIntent; work_id: string; work_ids?: string[]; requires_confirmation: boolean; expires_at: string; enabled: boolean }
 // Core account/RAG envelopes are intentionally extensible; values stay structured.
 export interface AssistantAccountRecord {
   work_id?: string; title?: string; book_title?: string; due_date?: string; issue_date?: string; return_date?: string

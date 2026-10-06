@@ -1,0 +1,77 @@
+{
+  "pass": true,
+  "checks": {
+    "draft_three_related_books_private": true,
+    "first_publish_visible_with_new_unseen": true,
+    "opening_events_receipt_seen_and_per_account_isolation": true,
+    "cross_staff_edit_preserves_first_publish_no_notification": true,
+    "related_metadata_hydrated_not_stored": true,
+    "published_hard_delete_blocked": true,
+    "cancel_removed_upcoming_archive_retains_staff_history": true,
+    "admin_create_and_book_sale_informational_only": true,
+    "upcoming_past_category_search_and_pagination": true,
+    "one_seen_record_per_reader_and_no_inbox_fanout": true
+  },
+  "indexes": {
+    "events": [
+      {
+        "name": "_id_",
+        "key": {
+          "_id": 1
+        },
+        "unique": false
+      },
+      {
+        "name": "event_id_unique",
+        "key": {
+          "event_id": 1
+        },
+        "unique": true
+      },
+      {
+        "name": "event_status_start",
+        "key": {
+          "status": 1,
+          "start_at": 1
+        },
+        "unique": false
+      },
+      {
+        "name": "event_status_publish",
+        "key": {
+          "status": 1,
+          "published_at": -1,
+          "event_id": 1
+        },
+        "unique": false
+      },
+      {
+        "name": "event_category_status_start",
+        "key": {
+          "category": 1,
+          "status": 1,
+          "start_at": 1
+        },
+        "unique": false
+      }
+    ],
+    "event_user_state": [
+      {
+        "name": "_id_",
+        "key": {
+          "_id": 1
+        },
+        "unique": false
+      },
+      {
+        "name": "event_seen_user_unique",
+        "key": {
+          "user_id": 1
+        },
+        "unique": true
+      }
+    ]
+  },
+  "base_url": "http://127.0.0.1:8002",
+  "synthetic_records_only": true
+}

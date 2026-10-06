@@ -212,7 +212,8 @@ def test_account_list_position_checks_current_ownership_before_removal():
     tools.reading_list.remove.assert_not_awaited()
     tools.reading_list.get.return_value={'items':[{'work_id':'OL1W'},{'work_id':'OL2W'}]}
     result=chat(orch,tools,'remove a saved item',conversation_id=state.conversation_id)
-    tools.reading_list.remove.assert_awaited_once_with('OL2W')
+    tools.reading_list.remove.assert_not_awaited()
+    assert result.pending_action.work_id == 'OL2W'
     assert [b.work_id for b in result.books]==['OL2W']
 
 

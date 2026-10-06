@@ -28,11 +28,16 @@ import { VerifyOTPPage } from '@/pages/VerifyOTPPage'
 import { StaffDashboard } from '@/pages/StaffDashboard'
 import { ReaderDashboard } from '@/pages/CorePages'
 import { KnowledgeGraphPage } from '@/pages/KnowledgeGraphPage'
+import { EventsPage } from '@/pages/EventsPage'
+import { EventDetailPage } from '@/pages/EventDetailPage'
+import { ManageEventsPage } from '@/pages/ManageEventsPage'
+import { EventEditorPage } from '@/pages/EventEditorPage'
+import { EventMonitor } from '@/components/events/EventMonitor'
 
 
 function DashboardLayout() {
   const { pathname } = useLocation()
-  const staffPage = pathname === '/admin' || pathname === '/librarian'
+  const staffPage = pathname === '/admin' || pathname === '/librarian' || pathname.startsWith('/staff/events')
   return (
     <div className="min-h-screen bg-paper">
 
@@ -40,6 +45,11 @@ function DashboardLayout() {
 
       <main>
         <Routes>
+          <Route path="/events" element={<ProtectedRoute><EventsPage /></ProtectedRoute>} />
+          <Route path="/events/:eventId" element={<ProtectedRoute><EventDetailPage /></ProtectedRoute>} />
+          <Route path="/staff/events" element={<ProtectedRoute allowedRoles={['ADMIN','LIBRARIAN']}><ManageEventsPage /></ProtectedRoute>} />
+          <Route path="/staff/events/new" element={<ProtectedRoute allowedRoles={['ADMIN','LIBRARIAN']}><EventEditorPage /></ProtectedRoute>} />
+          <Route path="/staff/events/:eventId/edit" element={<ProtectedRoute allowedRoles={['ADMIN','LIBRARIAN']}><EventEditorPage /></ProtectedRoute>} />
 
           <Route
             path="/"
@@ -109,7 +119,6 @@ function DashboardLayout() {
 
       {!staffPage && <AIChatWidget />}
 
-      <ToastContainer />
 
     </div>
   )
@@ -186,6 +195,8 @@ function App() {
 
   return (
     <>
+      <EventMonitor />
+      <ToastContainer />
       <ScrollToHash />
       <Routes>
 

@@ -17,6 +17,7 @@ import {
 import { useLibraryStore } from '@/store/useLibraryStore'
 import { useAuthStore } from '@/store/useAuthStore'
 import { NotificationCenter } from './NotificationCenter'
+import { useEventStore } from '../store/useEventStore'
 
 
 const NAV_LINKS: {
@@ -34,7 +35,7 @@ const NAV_LINKS: {
   },
   {
     label: 'Events',
-    to: '/#events',
+    to: '/events',
   },
   {
     label: 'About',
@@ -49,6 +50,8 @@ const NAV_LINKS: {
 
 
 export function Header() {
+  const eventToken = useAuthStore(s => s.token)
+  const eventCount = useEventStore(s => s.scope === eventToken ? s.count : 0)
 
   const [menuOpen, setMenuOpen] =
     useState(false)
@@ -222,6 +225,7 @@ export function Header() {
               <Link
                 key={link.label}
                 to={link.to}
+                aria-label={link.label === 'Events' && eventCount ? `Events, ${eventCount} new` : undefined}
 
                 className="
                   font-display
@@ -233,6 +237,7 @@ export function Header() {
                 "
               >
                 {link.label}
+                {link.label === 'Events' && eventCount > 0 && <span aria-hidden="true" className="ml-1 rounded-full bg-brand px-1.5 py-0.5 text-[10px] text-paper">{eventCount > 9 ? '9+' : eventCount}</span>}
               </Link>
 
             )
@@ -730,6 +735,8 @@ export function Header() {
               >
 
                 {link.label}
+
+                {link.label === 'Events' && eventCount > 0 && <span aria-label={`${eventCount} new events`} className="ml-2 rounded-full bg-brand px-2 py-0.5 text-xs text-paper">{eventCount > 9 ? '9+' : eventCount}</span>}
 
               </Link>
 

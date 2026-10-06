@@ -60,7 +60,8 @@ test('reading-list remove button binds its card ID',async () => {
   next=response();fireEvent.click(screen.getByRole('button',{name:/Remove Fixture OL1W from reading list/}))
   await waitFor(() => assert.equal(store.getState().busy,false))
   assert.equal(calls.at(-1).action,'REMOVE_FROM_READING_LIST')
-  assert.deepEqual(calls.at(-1).selected_work_ids,['OL1W'])
+  assert.deepEqual(calls.at(-1).action_work_ids,['OL1W'])
+  assert.deepEqual(calls.at(-1).selected_work_ids,[])
 })
 test('Part 3 reading-list and explanation controls pass axe semantic checks',async () => {
   await mountResult(response({intent:'USER_READING_LIST',reading_list:[book()]}))

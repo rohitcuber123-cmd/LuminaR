@@ -1,0 +1,147 @@
+{
+  "mode": "existing_qwen",
+  "health": [
+    {
+      "role": "Core",
+      "status": 200,
+      "health": "healthy",
+      "index_state": null
+    },
+    {
+      "role": "Search",
+      "status": 200,
+      "health": "degraded",
+      "index_state": null
+    },
+    {
+      "role": "Recommendation",
+      "status": 200,
+      "health": "ready",
+      "index_state": null
+    },
+    {
+      "role": "RAG",
+      "status": 200,
+      "health": "healthy",
+      "index_state": null
+    },
+    {
+      "role": "Frontend",
+      "status": 200,
+      "health": null,
+      "index_state": null
+    }
+  ],
+  "smoke": [
+    {
+      "message": "Compare selected books",
+      "http_status": 200,
+      "actual_intent": "COMPARE_BOOKS",
+      "resolved_public_ids": [
+        "OL25644705W",
+        "OL20667625W"
+      ],
+      "qwen_calls": 0,
+      "v4_prediction_present": false,
+      "trace_id": "d46dd45355c74f159c6df0f1047adeeb",
+      "pass": true
+    },
+    {
+      "message": "is the first one available",
+      "http_status": 200,
+      "actual_intent": "CHECK_AVAILABILITY",
+      "resolved_public_ids": [
+        "OL25644705W"
+      ],
+      "qwen_calls": 1,
+      "v4_prediction_present": false,
+      "trace_id": "b034f26e749d477daac3551c12e25134",
+      "pass": true
+    }
+  ],
+  "python_processes": [
+    {
+      "pid": 4720,
+      "parent_pid": 22884,
+      "role": "Other Python",
+      "router_spawn_child": false,
+      "rss_mb": 4.0703125,
+      "commit_mb": 0.81640625
+    },
+    {
+      "pid": 14240,
+      "parent_pid": 4720,
+      "role": "Other Python",
+      "router_spawn_child": false,
+      "rss_mb": 135.59765625,
+      "commit_mb": 2521.9140625
+    },
+    {
+      "pid": 22480,
+      "parent_pid": 28156,
+      "role": "Search",
+      "router_spawn_child": false,
+      "rss_mb": 0.015625,
+      "commit_mb": 0.76171875
+    },
+    {
+      "pid": 23488,
+      "parent_pid": 12132,
+      "role": "RAG",
+      "router_spawn_child": false,
+      "rss_mb": 3.8359375,
+      "commit_mb": 0.75
+    },
+    {
+      "pid": 27176,
+      "parent_pid": 22480,
+      "role": "Search",
+      "router_spawn_child": false,
+      "rss_mb": 26.40625,
+      "commit_mb": 14388.875
+    },
+    {
+      "pid": 27344,
+      "parent_pid": 30304,
+      "role": "Core",
+      "router_spawn_child": false,
+      "rss_mb": 25.8125,
+      "commit_mb": 2568.671875
+    },
+    {
+      "pid": 30208,
+      "parent_pid": 23488,
+      "role": "RAG",
+      "router_spawn_child": false,
+      "rss_mb": 1395.10546875,
+      "commit_mb": 8611.25390625
+    },
+    {
+      "pid": 30304,
+      "parent_pid": 28156,
+      "role": "Core",
+      "router_spawn_child": false,
+      "rss_mb": 0.015625,
+      "commit_mb": 0.7578125
+    },
+    {
+      "pid": 30460,
+      "parent_pid": 35508,
+      "role": "Recommendation",
+      "router_spawn_child": false,
+      "rss_mb": 12.1796875,
+      "commit_mb": 50.33203125
+    },
+    {
+      "pid": 35508,
+      "parent_pid": 28156,
+      "role": "Recommendation",
+      "router_spawn_child": false,
+      "rss_mb": 0.01953125,
+      "commit_mb": 0.7578125
+    }
+  ],
+  "no_router_spawn_children": true,
+  "host_available_mb": 1674.65625,
+  "default_smoke_passed": true
+}

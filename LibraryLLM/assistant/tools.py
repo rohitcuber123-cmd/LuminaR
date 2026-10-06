@@ -25,6 +25,13 @@ class ServiceTransport:
         self.client, self.authorization = client, authorization
 
     async def call(self, service, method, path, **kwargs):
+        profile = current.get()
+        if profile is not None:
+            profile['tool_calls'] = profile.get('tool_calls', 0) + 1
+            if service == 'search':
+                profile['search_calls'] = profile.get('search_calls', 0) + 1
+            if service == 'core' and path == '/assistant/catalogue/resolve':
+                profile['fuzzy_title_calls'] = profile.get('fuzzy_title_calls', 0) + 1
         base = os.getenv(f'ASSISTANT_{service.upper()}_URL',
                          {'core': 'http://127.0.0.1:8002', 'search': 'http://127.0.0.1:8003',
                           'recommendation': 'http://127.0.0.1:8004'}[service])
@@ -192,6 +199,9 @@ class AssistantRAGTool:
 
     @measured('rag_routing')
     async def ask(self, message, work_id=None, document_id=None):
+        profile = current.get()
+        if profile is not None:
+            profile['tool_calls'] = profile.get('tool_calls', 0) + 1
         return await self.callback(message, work_id=work_id, document_id=document_id)
 
 

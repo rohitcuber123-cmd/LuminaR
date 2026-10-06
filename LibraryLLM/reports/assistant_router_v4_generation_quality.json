@@ -1,0 +1,1661 @@
+{
+  "generated": 364,
+  "validated": 305,
+  "rejections": {
+    "format_or_entity": 4,
+    "placeholder_drift": 21,
+    "duplicate": 1,
+    "similarity_too_far": 31,
+    "similarity_too_close": 2
+  },
+  "similarity_band": [
+    0.55,
+    0.965
+  ],
+  "label_source": "Manually authored seed; Qwen only paraphrases",
+  "review_samples": 202,
+  "review_status": "COMPLETE; semantic accept-list applied before training",
+  "sources": [
+    "manual semantic seeds",
+    "existing local Qwen2.5-3B offline paraphrases",
+    "context permutations",
+    "generic character swaps"
+  ],
+  "manual_review": {
+    "reviewed": 305,
+    "initial_stratified_n": 202,
+    "approved": true,
+    "rejected_keys": [
+      "ADD_LIST:0:1",
+      "ADD_LIST:0:2",
+      "ADD_LIST:0:3",
+      "ADD_LIST:2:2",
+      "ALTERNATIVES:0:0",
+      "ALTERNATIVES:0:1",
+      "ALTERNATIVES:0:2",
+      "ALTERNATIVES:0:3",
+      "ALTERNATIVES:1:0",
+      "ALTERNATIVES:1:1",
+      "ALTERNATIVES:4:0",
+      "ALTERNATIVES:4:1",
+      "ALTERNATIVES:4:2",
+      "ALTERNATIVES:4:3",
+      "AVAILABILITY:0:0",
+      "AVAILABILITY:0:1",
+      "AVAILABILITY:0:2",
+      "AVAILABILITY:0:3",
+      "AVAILABILITY:4:3",
+      "BOOK_CONTENT:1:0",
+      "BOOK_CONTENT:1:1",
+      "BOOK_CONTENT:2:1",
+      "BOOK_CONTENT:4:1",
+      "BOOK_CONTENT:4:3",
+      "BORROW:0:1",
+      "BORROW:1:0",
+      "BORROW:1:2",
+      "BORROW:4:0",
+      "CLEAR_LIST:1:0",
+      "DETAILS:1:0",
+      "DETAILS:1:1",
+      "DETAILS:1:2",
+      "DOCUMENT_CONTENT:4:3",
+      "FACTUAL:4:1",
+      "FEES:0:2",
+      "FIELD:2:0",
+      "FIELD:2:1",
+      "FIELD:2:2",
+      "FIELD:2:3",
+      "FIELD:4:2",
+      "HELP:0:2",
+      "LOANS:0:0",
+      "LOANS:0:1",
+      "LOANS:0:2",
+      "LOANS:0:3",
+      "LOANS:4:0",
+      "LOANS:4:1",
+      "LOANS:4:3",
+      "PREFERENCE:1:0",
+      "PREFERENCE:1:1",
+      "PREFERENCE:1:2",
+      "PREFERENCE:1:3",
+      "READING_LIST:0:0",
+      "READING_LIST:0:2",
+      "READING_LIST:0:3",
+      "READING_LIST:4:0",
+      "RECOMMEND:4:3",
+      "REMOVE_LIST:2:3",
+      "RESERVATIONS:0:0",
+      "RESERVATIONS:1:0",
+      "RESERVATIONS:1:1",
+      "RETURN:1:0",
+      "RETURN:1:1",
+      "RETURN:1:2",
+      "RETURN:1:3",
+      "RETURN:4:0",
+      "RETURN:4:1",
+      "RETURN:4:2",
+      "RETURN:4:3",
+      "SEARCH:0:3",
+      "SEARCH:1:0",
+      "SEARCH:1:1",
+      "SEARCH:1:2",
+      "SEARCH:1:3",
+      "SHOW_MORE:0:3",
+      "SHOW_MORE:4:0",
+      "SHOW_MORE:4:1",
+      "SHOW_MORE:4:2",
+      "SHOW_MORE:4:3",
+      "SIMILAR:0:1",
+      "SIMILAR:1:0",
+      "SIMILAR:1:2",
+      "SIMILAR:1:3"
+    ],
+    "initial_wrong_meaning": 45,
+    "initial_awkward": 8,
+    "initial_label_drift": 45,
+    "initial_duplicates": 0,
+    "initial_semantic_error_rate": 0.22277227722772278,
+    "retained": 227,
+    "method": "Agent manually compared every one of 305 validated public synthetic paraphrases with its seed. 202 stratified initial, 103 remainder. Conservative per-item/family rejection before training. Generic emoji removal is formatting only.",
+    "seed_repairs": [
+      "RETURN:1 closing active loan rather than ambiguous finish checkout",
+      "FIELD:2 explicitly compare metadata instead of physical placement",
+      "SHOW_MORE:4 explicitly next results page"
+    ],
+    "wrong_examples": [
+      "RETURN:4 changed end borrowing period into extension",
+      "AVAILABILITY:0 changed current copy status into future arrangement",
+      "LOANS:0 changed my borrowed books into books with you",
+      "ALTERNATIVES removed availability constraint"
+    ],
+    "post_filter_review": "Every retained paraphrase inspected. No remaining detected semantic drift; reviewer judgement, not external annotation or statistical guarantee.",
+    "item_reviews": [
+      {
+        "key": "SEARCH:0:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "SEARCH:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:1:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "SEARCH:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:4:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "RECOMMEND:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:1:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "SIMILAR:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:1:2",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "SIMILAR:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:1:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "SIMILAR:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ALTERNATIVES:0:3",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "ALTERNATIVES:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ALTERNATIVES:4:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "ALTERNATIVES:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ALTERNATIVES:1:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "ALTERNATIVES:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ALTERNATIVES:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ALTERNATIVES:0:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "FACTUAL:4:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "FACTUAL:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FACTUAL:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FACTUAL:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FACTUAL:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FACTUAL:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FACTUAL:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:2:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "FIELD:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:2:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "FIELD:2:3",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "PREFERENCE:1:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "PREFERENCE:1:3",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "PREFERENCE:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "PREFERENCE:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "PREFERENCE:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "PREFERENCE:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "PREFERENCE:1:1",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "PREFERENCE:1:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "AVAILABILITY:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:0:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "AVAILABILITY:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:0:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "DETAILS:1:2",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "DETAILS:1:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "DETAILS:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DETAILS:1:1",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "DETAILS:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DETAILS:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DETAILS:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:4:0",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "BORROW:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:0:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "RETURN:4:3",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "RETURN:4:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "RETURN:1:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "RETURN:4:1",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "RETURN:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RETURN:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RETURN:1:3",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "RETURN:4:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "RESERVE:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:0:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "ADD_LIST:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:0:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "REMOVE_LIST:2:3",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "REMOVE_LIST:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:1:0",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "CLEAR_LIST:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "LOANS:0:3",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "LOANS:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "LOANS:4:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "LOANS:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "LOANS:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "LOANS:4:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "LOANS:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "LOANS:0:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "FEES:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:1:1",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "RESERVATIONS:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "READING_LIST:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "READING_LIST:0:2",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "READING_LIST:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "READING_LIST:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "READING_LIST:0:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "READING_LIST:0:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "READING_LIST:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "READING_LIST:4:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "BOOK_CONTENT:4:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "BOOK_CONTENT:1:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "BOOK_CONTENT:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:2:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:4:3",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:0:2",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "HELP:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SHOW_MORE:4:1",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "SHOW_MORE:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SHOW_MORE:0:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "SHOW_MORE:4:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "SHOW_MORE:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SHOW_MORE:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SHOW_MORE:4:3",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "SHOW_MORE:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REFINE:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REFINE:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REFINE:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REFINE:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SEARCH:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RECOMMEND:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:0:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "SIMILAR:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SIMILAR:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ALTERNATIVES:0:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "ALTERNATIVES:0:1",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "ALTERNATIVES:1:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "ALTERNATIVES:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ALTERNATIVES:4:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "FIELD:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FIELD:2:1",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "FIELD:4:2",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "AVAILABILITY:0:1",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "AVAILABILITY:0:3",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "AVAILABILITY:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "AVAILABILITY:4:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "BORROW:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:1:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "BORROW:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:1:2",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "BORROW:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BORROW:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RETURN:1:1",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "RETURN:1:2",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "RETURN:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RETURN:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVE:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:0:2",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "ADD_LIST:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:2:2",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "ADD_LIST:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "ADD_LIST:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:2:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "REMOVE_LIST:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "CLEAR_LIST:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "LOANS:0:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "LOANS:0:1",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      },
+      {
+        "key": "LOANS:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "LOANS:4:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "FEES:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:0:2",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "FEES:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:4:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "FEES:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:0:0",
+        "status": "rejected",
+        "reason": "awkward_or_format"
+      },
+      {
+        "key": "RESERVATIONS:0:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:1:0",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "RESERVATIONS:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "RESERVATIONS:4:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HISTORY:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:1:1",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "BOOK_CONTENT:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:2:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:4:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "BOOK_CONTENT:4:3",
+        "status": "rejected",
+        "reason": "meaning_or_label_drift"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "DOCUMENT_CONTENT:4:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:0:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:0:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:0:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "HELP:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:1:1",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:1:3",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:2:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "UNKNOWN:2:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SHOW_MORE:1:0",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SHOW_MORE:1:2",
+        "status": "approved",
+        "reason": "meaning preserved; formatting cleaned"
+      },
+      {
+        "key": "SHOW_MORE:4:0",
+        "status": "rejected",
+        "reason": "audited_family_drift_or_seed_ambiguity"
+      }
+    ]
+  },
+  "retained_after_manual": 227
+}

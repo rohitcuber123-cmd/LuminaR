@@ -10,6 +10,7 @@ from backend.services.notification_worker import DueWorker
 @asynccontextmanager
 async def lifespan(app):
     await to_thread(ensure_indexes)
+    await to_thread(ensure_event_indexes)
     worker = DueWorker()
     worker.start()
     try:
@@ -19,6 +20,8 @@ async def lifespan(app):
 
 from backend.routes.auth import router as auth_router
 from backend.routes.staff import router as staff_router
+from backend.routes.events import router as event_router, staff_router as staff_event_router
+from backend.services.event_service import ensure_indexes as ensure_event_indexes
 from backend.routes.books import router as books_router
 from backend.routes.issues import router as issues_router
 from backend.routes.renewals import router as renewal_router, admin_router as renewal_admin_router
@@ -84,6 +87,8 @@ app.include_router(
     auth_router
 )
 app.include_router(staff_router)
+app.include_router(event_router)
+app.include_router(staff_event_router)
 app.include_router(notification_router)
 app.include_router(operations_router)
 app.include_router(renewal_router)

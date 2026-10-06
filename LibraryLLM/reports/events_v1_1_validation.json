@@ -1,0 +1,284 @@
+{
+  "pass": true,
+  "supported_categories": [
+    "NEW_ARRIVALS",
+    "BOOK_SALE",
+    "WORKSHOP",
+    "AUTHOR_EVENT",
+    "READING_CLUB",
+    "COMMUNITY_EVENT",
+    "LIBRARY_PROGRAM",
+    "LIBRARY_NOTICE",
+    "CLOSURE",
+    "EXHIBITION",
+    "OTHER"
+  ],
+  "single_contract": "backend/schemas/event_publish_requirements.json imported by both Python and TypeScript",
+  "publish_requirements": {
+    "NEW_ARRIVALS": {
+      "fields": {},
+      "min_books": 1,
+      "books_error": "Select at least one new book before publishing New Arrivals."
+    },
+    "BOOK_SALE": {
+      "fields": {
+        "start_at": "Sale start date is required before publishing a Book Sale.",
+        "location": "Sale location is required before publishing a Book Sale."
+      },
+      "min_books": 0
+    },
+    "WORKSHOP": {
+      "fields": {
+        "start_at": "Workshop start date is required before publishing a Workshop.",
+        "description": "Workshop description is required before publishing a Workshop.",
+        "location": "Workshop location is required before publishing a Workshop."
+      },
+      "min_books": 0
+    },
+    "AUTHOR_EVENT": {
+      "fields": {},
+      "min_books": 0
+    },
+    "READING_CLUB": {
+      "fields": {},
+      "min_books": 1,
+      "books_error": "Select at least one reading club book before publishing a Reading Club."
+    },
+    "COMMUNITY_EVENT": {
+      "fields": {},
+      "min_books": 0
+    },
+    "LIBRARY_PROGRAM": {
+      "fields": {},
+      "min_books": 0
+    },
+    "LIBRARY_NOTICE": {
+      "fields": {},
+      "min_books": 0
+    },
+    "CLOSURE": {
+      "fields": {
+        "start_at": "Closure start date is required before publishing a Library Closure.",
+        "end_at": "Reopening or closure end date is required before publishing a Library Closure.",
+        "description": "A closure reason is required before publishing a Library Closure."
+      },
+      "min_books": 0
+    },
+    "EXHIBITION": {
+      "fields": {},
+      "min_books": 0
+    },
+    "OTHER": {
+      "fields": {},
+      "min_books": 0
+    }
+  },
+  "draft_validation": "Unchanged EventCreate/EventPatch base schema: title length, bounded plain-text fields, canonical unique IDs <=12, catalogue existence, UTC/date ordering. No category-specific requirement for draft saving.",
+  "published_edit_policy": "Enforce new requirements when changing category or when an existing publication already meets the contract. Legacy V1 incomplete publications may receive same-category corrections without a data backfill; no republish.",
+  "schema_change": false,
+  "preset_fields_persisted": false,
+  "author_speaker_contract": "Use existing summary and description; no new presenter field.",
+  "data_preservation": "All generic field values and ordered selected canonical work IDs survive preset switches; unavailable book IDs shown explicitly for removal, never silently dropped.",
+  "tests": {
+    "events_backend": {
+      "tests": 76,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 76
+    },
+    "events_frontend": {
+      "tests": 49,
+      "pass": 49,
+      "fail": 0,
+      "skipped": 0
+    },
+    "new_backend_cases": 28,
+    "new_frontend_cases": 21
+  },
+  "responsive": {
+    "method": "Compensated in-app viewport display scaling, then verified exact rendered DOM dimensions; screenshots are provider-scaled captures.",
+    "new_arrivals": [
+      {
+        "target": {
+          "width": 1440,
+          "height": 900
+        },
+        "override": {
+          "width": 2579,
+          "height": 1603
+        },
+        "actual": {
+          "height": 900,
+          "scrollWidth": 1440,
+          "width": 1440
+        }
+      },
+      {
+        "target": {
+          "width": 1366,
+          "height": 768
+        },
+        "override": {
+          "width": 2447,
+          "height": 1367
+        },
+        "actual": {
+          "height": 768,
+          "scrollWidth": 1366,
+          "width": 1366
+        }
+      },
+      {
+        "target": {
+          "width": 768,
+          "height": 1024
+        },
+        "override": {
+          "width": 1382,
+          "height": 1824
+        },
+        "actual": {
+          "height": 1024,
+          "scrollWidth": 768,
+          "width": 768
+        }
+      },
+      {
+        "target": {
+          "width": 375,
+          "height": 812
+        },
+        "override": {
+          "width": 684,
+          "height": 1446
+        },
+        "actual": {
+          "height": 812,
+          "scrollWidth": 375,
+          "width": 375
+        }
+      }
+    ],
+    "workshop": [
+      {
+        "target": {
+          "width": 1440,
+          "height": 900
+        },
+        "actual": {
+          "dates": [
+            {
+              "right": 994.724349975586,
+              "width": 237.6580047607422,
+              "x": 757.0663452148438,
+              "y": -84.5856704711914
+            },
+            {
+              "right": 1247.3840637207031,
+              "width": 237.66238403320312,
+              "x": 1009.7216796875,
+              "y": -84.5856704711914
+            }
+          ],
+          "height": 900,
+          "scrollWidth": 1440,
+          "width": 1440
+        }
+      },
+      {
+        "target": {
+          "width": 1366,
+          "height": 768
+        },
+        "actual": {
+          "dates": [
+            {
+              "right": 957.6456756591796,
+              "width": 237.6580047607422,
+              "x": 719.9876708984375,
+              "y": -84.5856704711914
+            },
+            {
+              "right": 1210.3054504394531,
+              "width": 237.66238403320312,
+              "x": 972.64306640625,
+              "y": -84.5856704711914
+            }
+          ],
+          "height": 768,
+          "scrollWidth": 1366,
+          "width": 1366
+        }
+      },
+      {
+        "target": {
+          "width": 768,
+          "height": 1024
+        },
+        "actual": {
+          "dates": [
+            {
+              "right": 376.4878730773926,
+              "width": 323.6481628417969,
+              "x": 52.8397102355957,
+              "y": 369.17132568359375
+            },
+            {
+              "right": 715.1377868652344,
+              "width": 323.6525573730469,
+              "x": 391.4852294921875,
+              "y": 369.17132568359375
+            }
+          ],
+          "height": 1024,
+          "scrollWidth": 768,
+          "width": 768
+        }
+      },
+      {
+        "target": {
+          "width": 375,
+          "height": 812
+        },
+        "actual": {
+          "dates": [
+            {
+              "right": 339.001033782959,
+              "width": 302.1593933105469,
+              "x": 36.84164047241211,
+              "y": 370.9884033203125
+            },
+            {
+              "right": 339.001033782959,
+              "width": 302.1593933105469,
+              "x": 36.84164047241211,
+              "y": 454.481201171875
+            }
+          ],
+          "height": 812,
+          "scrollWidth": 375,
+          "width": 375
+        }
+      }
+    ],
+    "pass": true,
+    "mobile_dates_stack": true
+  },
+  "live_scenarios": [
+    "A_new_arrivals_three_real_books_one_signal",
+    "B_empty_draft_saved_empty_publication_blocked_one_book_succeeds",
+    "C_offline_book_sale_publishes_without_books_or_commerce_fields",
+    "D_closure_missing_end_blocked_complete_closure_published",
+    "E_api_type_switch_retains_generic_fields_and_book_order",
+    "F_published_category_correction_preserves_first_publication_and_no_fresh_signal"
+  ],
+  "general_user_permissions": "Unchanged; read-only and management 403 verified by existing Events real-Mongo tests.",
+  "limitations": [
+    "No dedicated speaker field; use summary/description.",
+    "Legacy V1 incomplete publications keep same-category correction compatibility.",
+    "Responsive DOM dimensions verified at all four exact sizes; screenshot files are scaled/clipped by the in-app provider and should not be treated as full-resolution exports.",
+    "Local latency samples are not a large-catalogue benchmark. Search path unchanged; browser picker measurements include automation overhead.",
+    "Existing 10 security fixture skips and 19 lint warnings remain."
+  ]
+}

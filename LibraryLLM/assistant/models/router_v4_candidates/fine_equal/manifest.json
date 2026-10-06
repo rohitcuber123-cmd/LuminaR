@@ -1,0 +1,192 @@
+{
+  "version": "4.0.0",
+  "created_at": "2026-10-05T08:44:25.915638+00:00",
+  "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+  "encoder_finetuned": true,
+  "dataset_sha256": "325213efbd3a46503ac6e68f1830a5f6aa3dfd6022d3f20d6def6a37083a8c64",
+  "seed_split_sha256": "f9807fbd502e1a44a6eb1480583d72df490bb3953785d90a3ff9bd4dfc5e0f15",
+  "input_dimension": 408,
+  "dimension": 384,
+  "max_tokens": 256,
+  "numeric_features": 24,
+  "training": {
+    "seed": 947,
+    "device": "cuda",
+    "learning_rate": 2e-05,
+    "head_learning_rate": 0.002,
+    "epochs_max": 6,
+    "early_stopping_patience": 2,
+    "gradient_clip": 1.0,
+    "balanced_action_sampler": true,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 7.755248259703318,
+        "dev_loss": 4.700226151337058
+      },
+      {
+        "epoch": 2,
+        "train_loss": 1.4811078599095344,
+        "dev_loss": 1.9335504219693653
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.298578713486592,
+        "dev_loss": 1.2478283565428296
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.09123225974539916,
+        "dev_loss": 1.1326823706849147
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.04680335548395912,
+        "dev_loss": 1.1138718556297027
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.02910756298030416,
+        "dev_loss": 1.1432514370624292
+      }
+    ]
+  },
+  "loss_weights": {
+    "intent_family": 1.0,
+    "intent_subtypes": 1.0,
+    "reference": 1.0,
+    "position": 1.0,
+    "fields": 1.0,
+    "criterion": 1.0,
+    "action": 1.0
+  },
+  "heads": {
+    "intent_family": [
+      "ACCOUNT",
+      "BOOK",
+      "COMPARE",
+      "CONTENT",
+      "CONTEXT",
+      "DISCOVER",
+      "HELP",
+      "UNKNOWN"
+    ],
+    "intent_subtypes": [
+      "ADD_LIST",
+      "ALTERNATIVES",
+      "AVAILABILITY",
+      "BOOK_CONTENT",
+      "BORROW",
+      "CLEAR_LIST",
+      "DETAILS",
+      "DOCUMENT_CONTENT",
+      "FACTUAL",
+      "FEES",
+      "FIELD",
+      "HELP",
+      "HISTORY",
+      "LOANS",
+      "PREFERENCE",
+      "READING_LIST",
+      "RECOMMEND",
+      "REFINE",
+      "REMOVE_LIST",
+      "RESERVATIONS",
+      "RESERVE",
+      "RETURN",
+      "SEARCH",
+      "SHOW_MORE",
+      "SIMILAR",
+      "UNKNOWN"
+    ],
+    "reference": [
+      "AMBIGUOUS",
+      "EXPLICIT",
+      "NONE",
+      "PAGE",
+      "PREVIOUS_COMPARISON",
+      "PREVIOUS_RECOMMENDATIONS",
+      "RECENT",
+      "SELECTION"
+    ],
+    "position": [
+      "ALL",
+      "FIRST",
+      "FOCUS",
+      "LAST",
+      "OTHER",
+      "SECOND"
+    ],
+    "fields": [
+      "NONE",
+      "authors",
+      "availability",
+      "average_rating",
+      "description",
+      "rating_count",
+      "subjects"
+    ],
+    "criterion": [
+      "ABSENT",
+      "PRESENT"
+    ],
+    "action": [
+      "ADD_LIST",
+      "ALTERNATIVES",
+      "AVAILABILITY",
+      "BOOK_CONTENT",
+      "BORROW",
+      "CLEAR_LIST",
+      "DETAILS",
+      "DOCUMENT_CONTENT",
+      "FACTUAL",
+      "FEES",
+      "FIELD:authors",
+      "FIELD:availability",
+      "FIELD:average_rating",
+      "FIELD:description",
+      "FIELD:rating_count",
+      "FIELD:subjects",
+      "HELP",
+      "HISTORY",
+      "LOANS",
+      "PREFERENCE",
+      "READING_LIST",
+      "RECOMMEND",
+      "REFINE",
+      "REMOVE_LIST",
+      "RESERVATIONS",
+      "RESERVE",
+      "RETURN",
+      "SEARCH",
+      "SHOW_MORE",
+      "SIMILAR",
+      "UNKNOWN"
+    ]
+  },
+  "routing_policy": "joint",
+  "thresholds": "calibration.json",
+  "frameworks": {
+    "torch": "2.11.0+cu128",
+    "sentence_transformers": "5.6.0",
+    "transformers": "5.15.1",
+    "sklearn": "1.9.0"
+  },
+  "artifact_sha256": {
+    "calibration.json": "69cc6970e0e68005972d0f8b531535adf10a9147ad38a028ee869a4a77bd0606",
+    "heads.pt": "f53c589e21e91055853797aacc7dfabd4ac7f7f6ae397e7a7dc0ba0a03f7a03d",
+    "labels.json": "ca069ca7e5719b915fe824a6e410303980b5d09cda1843a0a9b02c01b88fe2db",
+    "encoder/config.json": "42fa4bb0bebbf12ad936e8f52cfbf39df9e6942ea94f47320692bcd24817eeb1",
+    "encoder/config_sentence_transformers.json": "d709bcf44d8e08921f2e8e77c76dddadfe7147823c3be80839e09de6af4666cb",
+    "encoder/model.safetensors": "82727eed09cd8f1caadbb20373ab3a5bdacded06a58682742d2d6ade6930575a",
+    "encoder/modules.json": "5286260f53f0f5d318eb02f1565fd30f7ec7c6d305f41ad29e2bb3ec974046a6",
+    "encoder/README.md": "3fc756c24ada7da8ea723c13c19cba30b02a4fb22f358cd5b9262eba6a974a3b",
+    "encoder/sentence_bert_config.json": "5fee3fcdc4a727fad422f0fed0c867b0921eefa9051de221521956ed42eb4c19",
+    "encoder/tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+    "encoder/tokenizer_config.json": "42ebc1a64fda13e929aa09250a8a6e7833a8f8d1e414dddf0fbadeef1e0b1397",
+    "encoder/1_Pooling/config.json": "bb80272f7adad76ce93073c25e18113ee66be1e91f60bcdd72aa41d05b28247e"
+  },
+  "activation": "experimental opt-in only; existing_qwen default",
+  "finetuned_encoder_sha256": "bb7c81346707d6a1a1d5d5c28c1b3670cf994ff3a8db10332270714e1183e438",
+  "artifact_bytes": 91844803
+}
