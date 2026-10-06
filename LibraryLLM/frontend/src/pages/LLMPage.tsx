@@ -1,3 +1,4 @@
+import { KnowledgeTools } from '../components/knowledge/KnowledgeTools'
 import {
   useEffect,
   useCallback,
@@ -446,6 +447,9 @@ export function LLMPage() {
 
   const [selectedDocumentId, setSelectedDocumentId] =
     useState<string | null>(null)
+
+  const [workspace, setWorkspace] = useState<'ask' | 'knowledge'>('ask')
+  const supportsKnowledge = !!selectedDocumentId && documents.some(d => d.document_id === selectedDocumentId)
 
   useEffect(() => {
     const clear = () => {
@@ -1403,7 +1407,12 @@ export function LLMPage() {
             WELCOME STATE
         ===================================================== */}
 
-        {messages.length === 0 ? (
+        {supportsKnowledge && <nav aria-label="Document workspace" className="flex shrink-0 flex-wrap gap-2 border-b border-line px-5 py-3">
+          <button className={`border border-line px-3 py-2 text-sm ${workspace === 'ask' ? 'bg-brand text-paper' : 'hover:bg-panel'}`} aria-pressed={workspace === 'ask'} onClick={() => setWorkspace('ask')}>Ask Document</button>
+          <button className={`border border-line px-3 py-2 text-sm ${workspace === 'knowledge' ? 'bg-brand text-paper' : 'hover:bg-panel'}`} aria-pressed={workspace === 'knowledge'} onClick={() => setWorkspace('knowledge')}>Knowledge Tools</button>
+        </nav>}
+
+        {supportsKnowledge && workspace === 'knowledge' ? <KnowledgeTools documentId={selectedDocumentId!} title={selectedDocName || 'Uploaded document'} /> : messages.length === 0 ? (
 
           <div
             className="

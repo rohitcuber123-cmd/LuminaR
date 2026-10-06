@@ -39,6 +39,7 @@ class PrivateDocuments:
     def db(self):
         db = sqlite3.connect(self.root / 'registry.sqlite', timeout=15)
         db.execute('PRAGMA secure_delete=ON')
+        db.execute('PRAGMA foreign_keys=ON')
         db.row_factory = sqlite3.Row
         try:
             with db:
