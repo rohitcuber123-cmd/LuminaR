@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "transport": "real HTTP / uvicorn / Mongo / Vite",
+  "production_modified": false,
+  "scenarios": [
+    {
+      "code": "A",
+      "scenario": "Aggregate request holds without a loan; approval converts the same allocation",
+      "status": "PASS",
+      "loan_id": "ac706840-3059-48df-a4e5-b45ad2ae11de"
+    },
+    {
+      "code": "B",
+      "scenario": "Concurrent last unit requests have one winner",
+      "status": "PASS",
+      "results": [
+        {
+          "user": 4,
+          "status": 201,
+          "request": {
+            "lending_request_id": "56c70db2-8a30-4657-b9b0-12e28a29c71f",
+            "library_id": "6aa132aa-0967-4546-8cf2-c585dc2aa649",
+            "library_book_id": "0162aae6-4600-40b4-ab46-9c0c5abf760e",
+            "holding_id": "bdd9cbb2-9cc6-48f5-aa2c-56f199275bbe",
+            "copy_id": null,
+            "allocation_mode": "AGGREGATE",
+            "user_id": 4,
+            "request_type": "BORROW",
+            "status": "PENDING",
+            "loan_id": null,
+            "title": "The Last Unit",
+            "accession_number": "AUR-000002",
+            "requested_at": "2026-10-08T20:47:12.388000+00:00",
+            "expires_at": "2026-10-09T20:47:12.388000+00:00",
+            "created_at": "2026-10-08T20:47:12.388000+00:00",
+            "updated_at": "2026-10-08T20:47:12.388000+00:00",
+            "operation_id": "3a170514-c14d-4f01-a1db-8eb5807e3af6",
+            "last_lending_operation_id": "3a170514-c14d-4f01-a1db-8eb5807e3af6"
+          }
+        },
+        {
+          "user": 5,
+          "status": 409,
+          "request": {
+            "detail": "This book is currently unavailable for requests."
+          }
+        }
+      ]
+    },
+    {
+      "code": "C",
+      "scenario": "Rejection releases the held unit",
+      "status": "PASS"
+    },
+    {
+      "code": "D",
+      "scenario": "Cancellation and replay release once",
+      "status": "PASS"
+    },
+    {
+      "code": "E",
+      "scenario": "Lazy expiry releases the hold",
+      "status": "PASS"
+    },
+    {
+      "code": "F",
+      "scenario": "Return request stays active; physical confirmation moves it to history and releases once",
+      "status": "PASS"
+    },
+    {
+      "code": "G",
+      "scenario": "Rejected return remains active and allocated",
+      "status": "PASS"
+    },
+    {
+      "code": "H",
+      "scenario": "Same global work uses independent library holdings",
+      "status": "PASS"
+    },
+    {
+      "code": "I",
+      "scenario": "Local-only record completes the full request/issue/physical-return cycle",
+      "status": "PASS"
+    },
+    {
+      "code": "J",
+      "scenario": "Reference-only record remains visible but cannot be requested",
+      "status": "PASS"
+    },
+    {
+      "code": "K",
+      "scenario": "Shelf change is visible to member availability and staff queue",
+      "status": "PASS"
+    },
+    {
+      "code": "L",
+      "scenario": "Stock increase safely creates requestable capacity",
+      "status": "PASS"
+    },
+    {
+      "code": "M",
+      "scenario": "Stock decrease below pending/active allocation is denied",
+      "status": "PASS"
+    }
+  ],
+  "security": {
+    "outsider_global_admin_denied": true,
+    "member_staff_denied": true,
+    "legacy_bypass_denied": true,
+    "disabled_account_denied": true
+  }
+}

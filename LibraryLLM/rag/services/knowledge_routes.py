@@ -22,9 +22,15 @@ class QuizRequest(ArtifactRequest):
     questionCount: int = Field(default=12, ge=1, le=30, strict=True)
 
 
-def install_knowledge_artifacts(app, documents):
-    service = KnowledgeArtifacts(documents)
+class ClozeGradeRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    answer: str = Field(min_length=1, max_length=500, strict=True)
+
+
+def install_knowledge_artifacts(app, documents, encoder=None):
+    service = KnowledgeArtifacts(documents, encoder)
     app.state.knowledge_artifacts = service
+    app.router.add_event_handler('startup', service.prepare_cloze_grading)
 
     def private_response(response: Response):
         response.headers['Cache-Control'] = 'no-store'
@@ -39,6 +45,10 @@ def install_knowledge_artifacts(app, documents):
     @app.post(prefix + '/artifacts/quiz', dependencies=guards)
     def generate_quiz(document_id: str, request: QuizRequest, user=Depends(get_current_user)):
         return service.generate(document_id, 'quiz', user, request.mode, request.questionTypes, request.questionCount)
+
+    @app.post(prefix + '/artifacts/{artifact_id}/cloze/{item_id}/grade', dependencies=guards)
+    def grade_cloze(document_id: str, artifact_id: str, item_id: str, request: ClozeGradeRequest, user=Depends(get_current_user)):
+        return service.grade_cloze(document_id,artifact_id,item_id,request.answer,user)
 
     @app.post(prefix + '/artifacts/{kind}', dependencies=guards)
     def generate(document_id: str, kind: Literal['key-concepts', 'summary', 'flashcards', 'mindmap'],

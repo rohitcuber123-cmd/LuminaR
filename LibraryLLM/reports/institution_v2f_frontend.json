@@ -1,0 +1,167 @@
+{
+  "status": "PASS",
+  "captured_at": "2026-10-12T13:41:41.734140+00:00",
+  "scope": "Institution Part 2F frontend routes, assets UI, scoped document tools, and full frontend regression",
+  "command": ".venv/Scripts/python.exe scripts/institution_v2f_regressions.py --frontend",
+  "results": [
+    {
+      "group": "default",
+      "exit": 0,
+      "log": "institution_v2f_frontend_default.log",
+      "passed": 627,
+      "failed": 0,
+      "warnings": 0
+    },
+    {
+      "group": "extended",
+      "exit": 0,
+      "log": "institution_v2f_frontend_extended.log",
+      "passed": 148,
+      "failed": 0,
+      "warnings": 0
+    },
+    {
+      "group": "lint",
+      "exit": 0,
+      "log": "institution_v2f_frontend_lint.log",
+      "passed": 0,
+      "failed": 0,
+      "warnings": 14
+    },
+    {
+      "group": "build",
+      "exit": 0,
+      "log": "institution_v2f_frontend_build.log",
+      "passed": 0,
+      "failed": 0,
+      "warnings": 0
+    }
+  ],
+  "frontend_passed": 775,
+  "frontend_failed": 0,
+  "asset_suite": {
+    "passed": 37,
+    "failed": 0,
+    "log": "institution_v2f_frontend_assets.log",
+    "tests": [
+      "test_staff_assets_route",
+      "test_staff_assets_nav",
+      "test_patron_resources_nav",
+      "test_asset_upload_form",
+      "test_asset_upload_zero_file_validation",
+      "test_asset_upload_idempotent_command_header",
+      "test_asset_processing_state",
+      "test_asset_failed_retry",
+      "test_asset_visibility_control",
+      "test_asset_book_link",
+      "test_asset_book_unlink",
+      "test_asset_delete_confirm",
+      "test_asset_delete_cancel",
+      "test_asset_dialog_escape_restores_focus",
+      "test_patron_member_asset_list",
+      "test_patron_staff_asset_hidden",
+      "test_patron_processing_asset_hidden",
+      "test_patron_direct_staff_asset_denied",
+      "test_book_detail_member_resources",
+      "test_global_book_detail_no_tenant_resource_leak",
+      "test_asset_rag_action",
+      "test_asset_rag_denial_clears_answer",
+      "test_asset_rag_wrong_identity_rejected",
+      "test_asset_file_download_fresh_authorization_and_sandbox",
+      "test_multi_library_asset_switch",
+      "test_asset_stale_response_rejected",
+      "test_asset_response_cross_library_rejected",
+      "test_asset_account_switch_clears_display",
+      "test_asset_membership_revocation_clears_display",
+      "test_general_user_cannot_mount_staff_assets",
+      "test_platform_role_alone_cannot_mount_assets",
+      "test_asset_metadata_server_search_filters_pagination",
+      "test_asset_mobile_layout",
+      "test_library_knowledge_tools_reuses_shared_renderer",
+      "test_personal_knowledge_tools_remains_personal",
+      "test_library_knowledge_adapter_all_actions_scoped",
+      "test_library_knowledge_revocation_clears_artifacts_and_source"
+    ]
+  },
+  "routes": [
+    "/staff/libraries/:libraryId/assets",
+    "/staff/libraries/:libraryId/assets/:assetId",
+    "/libraries/:libraryId/resources",
+    "/libraries/:libraryId/resources/:assetId"
+  ],
+  "coverage": {
+    "staff_route_and_navigation": true,
+    "patron_resources_route_and_navigation": true,
+    "upload_pdf_form_default_staff_only_and_empty_validation": true,
+    "upload_idempotency_header": true,
+    "processing_state_and_failed_retry": true,
+    "visibility_and_same_library_book_link_and_unlink": true,
+    "delete_confirmation_cancel_escape_and_focus_restore": true,
+    "patron_members_ready_only_and_staff_only_hidden": true,
+    "linked_local_book_resources_and_global_detail_exclusion": true,
+    "document_specific_rag_and_identity_validation": true,
+    "fresh_file_fetch_authorization_and_sandboxed_reader": true,
+    "multi_library_switch_stale_response_and_identity_discard": true,
+    "account_switch_membership_revocation_and_platform_only_denial": true,
+    "bounded_server_search_filter_pagination": true,
+    "shared_knowledge_tools_optional_library_adapter": true,
+    "personal_knowledge_tools_original_path_retained": true,
+    "knowledge_list_generate_source_cloze_all_library_scoped": true,
+    "knowledge_403_discards_saved_artifacts_and_source_preview": true
+  },
+  "shared_renderer": "Existing KnowledgeTools, Quiz, KnowledgeMap, SourceLink and RAGAnswer; optional LibraryAssetTarget changes request namespace only.",
+  "revocation_regression": "Rendered a saved flashcard and source excerpt, returned HTTP 403 on the next source fetch, and asserted that saved flashcard, source preview and backend diagnostic are absent.",
+  "build": "PASS",
+  "lint": {
+    "errors": 0,
+    "warnings": 14,
+    "comparison": "14 existing warnings, equal to the accepted Part 2E lint baseline."
+  },
+  "limitations": [
+    "DOM unit tests and CSS contract checks do not substitute for real browser responsive, contrast, file processing, retrieval or authorization checks; those are recorded in the separate Part 2F browser/backend reports."
+  ],
+  "source_sha256": {
+    "frontend/src/App.tsx": "9cd5abe1057de78ac476f45307b214f6a66ced46e659d20624bc1d2da359e254",
+    "frontend/src/components/LibraryShells.tsx": "c60aaf8523d13e1da0c964fdb3e35d6467324b61ea960a7b9ecea4fa74d4af4f",
+    "frontend/src/pages/LibraryAssets.tsx": "ec05beb637883381687242d0845b11e0c6908828f5a57477e1fc7e7f6428457b",
+    "frontend/src/pages/LibraryAssets.css": "bc60540520e20afa4c79702ebfa10470ed61cc5d3e13c8b5c98305be7c13d8ed",
+    "frontend/src/lib/libraryAssets.ts": "ffb24de52d9391d553bef5b007b2ebe79468b795edb871894c8cc08c4d6e8bdb",
+    "frontend/src/pages/LibraryCatalogue.tsx": "2605d6c29d327ec8f73d9f3af6f295c081a8bb23554caf120359a74fa189c5c6",
+    "frontend/src/components/knowledge/KnowledgeTools.tsx": "733527a06a3d9daa61a92efbe11c152df3f1e2a73a9bbe95d0a9ad5ac45ce105",
+    "frontend/src/lib/knowledgeArtifacts.ts": "e09eaf133665caf69e14e53010a1d60cb44da9235a426591f1ef548c70b10784",
+    "frontend/tests/institution-assets.test.tsx": "d00e99964bf1bf9732013f5bc51cb62192a13a4e281b2af306b51e59fd03606e",
+    "frontend/package.json": "1bf62732b57447bc57d6489dc1b85aff5a4638c29253cd3d5ac8496c4d164632",
+    "frontend/src/components/StaffActivityTable.tsx": "59e5d68030573a5fe0b265ccdd7b0b697e561090fca61f9f15ec48a0a007abe5",
+    "frontend/src/components/StaffUI.tsx": "b7820560f192164adc094bc2df5d52b37bf01a528842c5ae9b2dea9b8e09e01b",
+    "frontend/src/pages/LibraryActivity.tsx": "b4db052c6054cce4da78b54e1dcb6c75ee2a444770ae85f554a246eb4d45e386",
+    "frontend/src/pages/InstitutionPanel.tsx": "a10e46b1d2c6936a625d99a4f9007d04db323fd443add204390e033eaa38e27a",
+    "frontend/src/styles/workspaces.css": "4a34bd96ccad46fd1aeeb9d55f5a3887cc6e597a8254bc13b66ffdf0dc66aa9e",
+    "frontend/tests/institution-activity.test.tsx": "62cce40ad9cbbb5b78c15909e221ed0ab91b62d2b3b4c5c544460fcaa40d3ee8"
+  },
+  "post_browser_css_repair": {
+    "captured_at": "2026-10-12T12:30:50.663016+00:00",
+    "file": "frontend/src/pages/LibraryAssets.css",
+    "change": "Scoped asset dialog form selectors outrank inherited input rules and ensure 44px input/select height; asset dialog close control ensures 44px width and height.",
+    "build": "PASS",
+    "lint_errors": 0,
+    "lint_existing_warnings": 14,
+    "browser_geometry": "Separately rechecked by the real browser matrix; this report records build/lint only."
+  },
+  "post_browser_launcher_repair": {
+    "captured_at": "2026-10-12T12:45:11.670483+00:00",
+    "file": "frontend/src/pages/LibraryAssets.css",
+    "change": "Suppress floating global Assistant launcher only when the dedicated library asset workspace is rendered; source-specific Ask LuminaR and Knowledge Tools remain accessible.",
+    "scope_selector": "body:has(.library-assets .asset-workspace) .assistant-launcher",
+    "build": "PASS",
+    "lint_errors": 0,
+    "lint_existing_warnings": 14,
+    "protected_assistant_sources_changed": false,
+    "browser_geometry": "Separately rechecked by the real browser matrix; this report records build/lint only."
+  },
+  "final_verification": "Full frontend rerun after shared activity/audit table, accessibility and identity display additions: 627 default + 148 extended; build PASS; lint 0 errors, 14 existing warnings. Final production build repeated after the accessible reference containing-block CSS fix; PASS.",
+  "activity_suite": {
+    "passed": 14,
+    "failed": 0,
+    "file": "frontend/tests/institution-activity.test.tsx"
+  }
+}

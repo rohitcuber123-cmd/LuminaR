@@ -1,0 +1,93 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "model": "Unified LibraryLendingRequest with request_type BORROW/RETURN; strict UUID tenant/book/request IDs.",
+    "states": [
+      "PENDING",
+      "APPROVED",
+      "REJECTED",
+      "CANCELLED",
+      "EXPIRED"
+    ],
+    "pending": "Exactly one hold, no loan and no due date.",
+    "policy": "LIBRARY_BORROW_HOLD_HOURS default24 range1..168; LIBRARY_MAX_PENDING_REQUESTS default5 range1..100."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_lending::test_pending_hold_then_issue_does_not_decrement_twice",
+    "tests.institution_v2b.test_lending::test_releases_once[cancel]",
+    "tests.institution_v2b.test_lending::test_releases_once[reject]",
+    "tests.institution_v2b.test_lending::test_releases_once[expire]",
+    "tests.institution_v2b.test_lending::test_borrower_revalidated_and_hold_released[REMOVED]",
+    "tests.institution_v2b.test_lending::test_borrower_revalidated_and_hold_released[SUSPENDED]",
+    "tests.institution_v2b.test_lending::test_borrower_revalidated_and_hold_released[ACCOUNT_DISABLED]",
+    "tests.institution_v2b.test_recovery_edges::test_pending_request_policy_is_bounded_and_enforced"
+  ],
+  "live_scenarios": [
+    {
+      "code": "A",
+      "scenario": "Aggregate request holds without a loan; approval converts the same allocation",
+      "status": "PASS",
+      "loan_id": "ac706840-3059-48df-a4e5-b45ad2ae11de"
+    },
+    {
+      "code": "B",
+      "scenario": "Concurrent last unit requests have one winner",
+      "status": "PASS",
+      "results": [
+        {
+          "user": 4,
+          "status": 201,
+          "request": {
+            "lending_request_id": "56c70db2-8a30-4657-b9b0-12e28a29c71f",
+            "library_id": "6aa132aa-0967-4546-8cf2-c585dc2aa649",
+            "library_book_id": "0162aae6-4600-40b4-ab46-9c0c5abf760e",
+            "holding_id": "bdd9cbb2-9cc6-48f5-aa2c-56f199275bbe",
+            "copy_id": null,
+            "allocation_mode": "AGGREGATE",
+            "user_id": 4,
+            "request_type": "BORROW",
+            "status": "PENDING",
+            "loan_id": null,
+            "title": "The Last Unit",
+            "accession_number": "AUR-000002",
+            "requested_at": "2026-10-08T20:47:12.388000+00:00",
+            "expires_at": "2026-10-09T20:47:12.388000+00:00",
+            "created_at": "2026-10-08T20:47:12.388000+00:00",
+            "updated_at": "2026-10-08T20:47:12.388000+00:00",
+            "operation_id": "3a170514-c14d-4f01-a1db-8eb5807e3af6",
+            "last_lending_operation_id": "3a170514-c14d-4f01-a1db-8eb5807e3af6"
+          }
+        },
+        {
+          "user": 5,
+          "status": 409,
+          "request": {
+            "detail": "This book is currently unavailable for requests."
+          }
+        }
+      ]
+    },
+    {
+      "code": "C",
+      "scenario": "Rejection releases the held unit",
+      "status": "PASS"
+    },
+    {
+      "code": "D",
+      "scenario": "Cancellation and replay release once",
+      "status": "PASS"
+    },
+    {
+      "code": "E",
+      "scenario": "Lazy expiry releases the hold",
+      "status": "PASS"
+    },
+    {
+      "code": "I",
+      "scenario": "Local-only record completes the full request/issue/physical-return cycle",
+      "status": "PASS"
+    }
+  ],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

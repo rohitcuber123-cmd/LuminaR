@@ -38,7 +38,7 @@ def env(tmp_path, monkeypatch):
     app = FastAPI()
     app.dependency_overrides[get_current_user] = lambda: user
     install_private_documents(app, docs, SimpleNamespace(inference_lock=RLock()))
-    service = install_knowledge_artifacts(app, docs)
+    service = install_knowledge_artifacts(app, docs, encoder=model.encode)
     client = TestClient(app)
     pdf = fitz.open()
     page = pdf.new_page()
@@ -61,7 +61,8 @@ def test_pdf_upload_generate_persist_reopen_source_index_regression(env, monkeyp
     assert response.status_code == 200 and response.headers['cache-control'] == 'no-store'
     artifact = response.json()['artifact']
     cards = artifact['content']['cards']
-    assert {'definition', 'cloze'} <= {c['type'] for c in cards}
+    assert 'definition' in {c['type'] for c in cards}
+    assert len({c['sourceExcerpt'] for c in cards}) == len(cards)
     assert all(c['pageStart'] == 1 for c in cards)
     source = env.client.get(env.base + '/sources/' + cards[0]['sourceChunkIds'][0]).json()
     assert cards[0]['sourceExcerpt'] in source['text']
@@ -70,7 +71,7 @@ def test_pdf_upload_generate_persist_reopen_source_index_regression(env, monkeyp
     assert reopened.generate(env.doc, 'flashcards', env.user)['artifact']['id'] == artifact['id']
     assert env.client.get(env.base + '/artifacts/' + artifact['id']).json()['id'] == artifact['id']
     assert len(env.client.get(env.base + '/artifacts').json()['artifacts']) == 1
-    assert env.model.calls == before
+    assert env.model.calls == before + 1
     import faiss
     index = faiss.read_index(str(env.docs.directory(env.doc) / 'runtime.faiss'))
     assert index.ntotal > 0
@@ -89,7 +90,7 @@ def test_quiz_patch_version_does_not_reuse_previous_empty_result(env, monkeypatc
     result = env.client.post(env.base+'/artifacts/quiz', json={'questionTypes':['mcq']}).json()
     assert result['cached'] is False
     assert result['artifact']['id'] != previous['id']
-    assert result['artifact']['generatorVersion'] == '2.1.0'
+    assert result['artifact']['generatorVersion'] == '3.2.2'
     assert result['artifact']['content']['questions']
     assert all(q['type'] == 'mcq' for q in result['artifact']['content']['questions'])
     replay = env.client.post(env.base+'/artifacts/quiz', json={'questionTypes':['mcq']}).json()
@@ -211,10 +212,10 @@ def test_quiz_selected_types_real_route_and_cache(env, selection):
     first = env.client.post(env.base+'/artifacts/quiz', json=body)
     assert first.status_code == 200 and first.headers['cache-control'] == 'no-store'
     artifact = first.json()['artifact']
-    assert artifact['generator'] == 'deterministic-v2' and artifact['generatorVersion'] == '2.1.0'
+    assert artifact['generator'] == 'document-knowledge-v3' and artifact['generatorVersion'] == '3.2.2'
     assert artifact['options']['questionTypes'] == sorted(selection)
     assert {q['type'] for q in artifact['content']['questions']} == set(selection)
-    assert env.model.calls == before
+    assert env.model.calls == before + 1
     second = env.client.post(env.base+'/artifacts/quiz', json={**body,'questionTypes':list(reversed(selection))}).json()
     assert second['cached'] and second['artifact']['id'] == artifact['id']
     assert env.client.get(env.base+'/artifacts/'+artifact['id']).status_code == 200
@@ -244,10 +245,10 @@ def test_quiz_cache_selection_count_version_and_non_quiz_preservation(env, monke
     monkeypatch.setattr(knowledge_quiz,'VERSION','9.0.0')
     assert env.service.generate(env.doc,'quiz',env.user,question_types=['mcq'])['artifact']['id'] != mcq['id']
     assert env.service.generate(env.doc,'summary',env.user)['artifact']['id'] == summary['id']
-    assert summary['generatorVersion'] == '1.0.0'
+    assert summary['generatorVersion'] == '3.0.0'
 
 
-def test_legacy_quiz_remains_readable_but_cannot_satisfy_a_new_selection(env):
+def test_obsolete_quiz_is_hidden_and_cannot_satisfy_a_new_selection(env):
     quiz_fixture(env)
     artifact = env.service.generate(env.doc,'quiz',env.user)['artifact']
     artifact.update(id='legacy_quiz',generator='deterministic-v1',generatorVersion='1.0.0',options={})
@@ -257,7 +258,7 @@ def test_legacy_quiz_remains_readable_but_cannot_satisfy_a_new_selection(env):
         db.execute('DELETE FROM knowledge_artifacts WHERE document_id=?',(env.doc,))
         db.execute('INSERT INTO knowledge_artifacts VALUES (?,?,?,?,?,?,?)',
             (artifact['id'],env.doc,env.user['sub'],'QUIZ','legacy-key',json.dumps(artifact),time.time()))
-    assert env.client.get(env.base+'/artifacts/legacy_quiz').json()['id'] == 'legacy_quiz'
+    assert env.client.get(env.base+'/artifacts/legacy_quiz').status_code == 404
     new = env.client.post(env.base+'/artifacts/quiz',json={'questionTypes':['mcq','matching']}).json()
     assert not new['cached'] and new['artifact']['id'] != 'legacy_quiz'
     assert {q['type'] for q in new['artifact']['content']['questions']} == {'mcq','matching'}
@@ -277,3 +278,79 @@ def test_quiz_security_and_direct_service_validation(env):
 def test_quiz_fields_do_not_change_other_artifact_requests(env):
     assert env.client.post(env.base+'/artifacts/flashcards',json={'questionTypes':['mcq']}).status_code == 422
     assert env.client.post(env.base+'/artifacts/flashcards',json={}).status_code == 200
+
+
+def test_shared_model_parses_and_embeds_once_across_all_five_tabs(env, monkeypatch):
+    calls = []
+    parse = env.service._parse
+    monkeypatch.setattr(env.service, '_parse', lambda raw: (calls.append(1), parse(raw))[1])
+    before = env.model.calls
+    for kind in ('key-concepts','summary','flashcards','mindmap','quiz'):
+        result = env.service.generate(env.doc, kind, env.user)
+        assert result['artifact']['analysis']['knowledgeCached'] == (kind != 'key-concepts')
+    assert len(calls) == 1 and env.model.calls == before + 1
+
+
+def test_document_purge_removes_model_and_artifacts(env):
+    env.service.generate(env.doc,'key-concepts',env.user)
+    env.docs.purge(env.doc)
+    with env.docs.db() as db:
+        assert db.execute('SELECT COUNT(*) FROM document_knowledge').fetchone()[0] == 0
+        assert db.execute('SELECT COUNT(*) FROM knowledge_artifacts').fetchone()[0] == 0
+
+
+def test_logout_removes_shared_model_and_cannot_reopen_it(env):
+    env.service.generate(env.doc,'key-concepts',env.user)
+    env.docs.logout(env.user)
+    with env.docs.db() as db:
+        assert db.execute('SELECT COUNT(*) FROM document_knowledge').fetchone()[0] == 0
+    with pytest.raises(HTTPException):
+        KnowledgeArtifacts(env.docs).generate(env.doc,'summary',env.user)
+
+
+def test_revision_and_knowledge_version_invalidate_model(env, monkeypatch):
+    from rag.services import document_knowledge
+    env.service.generate(env.doc,'summary',env.user)
+    before = env.model.calls
+    path = env.docs.directory(env.doc)/'chunks.json'
+    chunks = json.loads(path.read_text())
+    chunks[0]['text'] += ' Compression is a coding method that reduces stored data size using repeated patterns.'
+    path.write_text(json.dumps(chunks))
+    env.service.generate(env.doc,'summary',env.user)
+    assert env.model.calls == before + 1
+    monkeypatch.setattr(document_knowledge,'VERSION','9.1.0')
+    env.service.generate(env.doc,'flashcards',env.user)
+    assert env.model.calls == before + 2
+
+
+def test_reopened_service_uses_session_model_without_reparsing(env, monkeypatch):
+    env.service.generate(env.doc,'key-concepts',env.user)
+    reopened = KnowledgeArtifacts(env.docs, encoder=lambda _: pytest.fail('re-embedded'))
+    monkeypatch.setattr(reopened,'_parse',lambda _: pytest.fail('reparsed'))
+    assert reopened.generate(env.doc,'mindmap',env.user)['artifact']['analysis']['knowledgeCached']
+
+
+def test_per_user_admission_rejects_extra_work_but_allows_another_user(env, monkeypatch):
+    from threading import Event
+    other = {**env.user,'sub':'other','sid':'other-session'}
+    env.app.dependency_overrides[get_current_user] = lambda: other
+    second = env.client.post('/rag/upload',files={'file':('other.pdf',env.pdf,'application/pdf')}).json()['document']['document_id']
+    entered, release = Event(), Event()
+    original = env.service._generate
+    def blocked(document_id,*args):
+        if document_id == env.doc:
+            entered.set()
+            assert release.wait(10)
+        return original(document_id,*args)
+    monkeypatch.setattr(env.service,'_generate',blocked)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        first = pool.submit(env.service.generate,env.doc,'key-concepts',env.user)
+        assert entered.wait(5)
+        try:
+            with pytest.raises(HTTPException) as error:
+                env.service.generate(env.doc,'summary',env.user)
+            assert error.value.status_code == 429
+            assert env.service.generate(second,'summary',other)['artifact']['documentId'] == second
+        finally:
+            release.set()
+        assert first.result()['artifact']['documentId'] == env.doc

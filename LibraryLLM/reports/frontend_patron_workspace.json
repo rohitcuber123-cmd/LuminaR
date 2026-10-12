@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "required_role": "ACTIVE GENERAL_USER",
+  "routes": [
+    "/libraries/:libraryId",
+    "/libraries/:libraryId/catalogue",
+    "/libraries/:libraryId/my-library",
+    "/libraries/:libraryId/loans",
+    "/libraries/:libraryId/reservations",
+    "/libraries/:libraryId/fees"
+  ],
+  "navigation": [
+    "Home",
+    "Browse Books",
+    "My Library",
+    "Reservations",
+    "Fees"
+  ],
+  "identity": "Selected library name, Member badge and Public/Private label",
+  "selector": "Only active GENERAL_USER libraries; independent patronLibraryId",
+  "home": [
+    "Actual selected library information",
+    "Browse Books",
+    "Open My Library"
+  ],
+  "my_library": [
+    "Borrow requests",
+    "Current loans",
+    "Loan history",
+    "Request Return",
+    "Renew"
+  ],
+  "return_pending": "Loan remains active until staff physically receives the book; Return/Renew disabled while pending.",
+  "no_staff_admin_ui": true,
+  "global_shortcut": "Selected patron My Library, single patron home, or patron library selector",
+  "new_join_destination": "Patron home",
+  "fixture_flow": {
+    "passed": true,
+    "registrationStaffLanding": "http://127.0.0.1:5184/staff/libraries/2601b6bb-e061-440e-8382-16a0adb5ace3",
+    "requiredMetadataOnlyBookCreated": true,
+    "overviewRefreshedAfterAdd": true,
+    "separateAccountDidNotInheritContexts": true,
+    "singleMembershipLogin": "Patron Library B",
+    "pendingReturnKeepsLoanActive": true,
+    "staffInvitationAccepted": "Librarian staff overview",
+    "productionMutations": 0
+  },
+  "assistant_default_library": "patronLibraryId only; staff selection never supplies patron lending context"
+}

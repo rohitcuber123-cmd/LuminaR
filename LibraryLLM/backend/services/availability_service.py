@@ -69,3 +69,14 @@ def with_authoritative_availability(
     result["available_copies"] = context["available_copies"]
     result["total_copies"] = context["total_copies"]
     return result
+
+
+def with_batch_availability(books, library_id=DEFAULT_LIBRARY_ID):
+    """Preserve read-only legacy fields with one query per bounded result batch."""
+    if not books:
+        return []
+    inventory = {row['work_id']: row for row in library_inventory_collection.find(
+        {'library_id': library_id, 'work_id': {'$in': [book['work_id'] for book in books]}},
+        {'_id': 0, 'work_id': 1, 'available_copies': 1, 'total_copies': 1})}
+    return [{**book, 'available_copies': _as_non_negative_int(inventory.get(book['work_id'], book).get('available_copies')),
+             'total_copies': _as_non_negative_int(inventory.get(book['work_id'], book).get('total_copies'))} for book in books]

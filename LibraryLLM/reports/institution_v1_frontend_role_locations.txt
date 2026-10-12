@@ -1,0 +1,156 @@
+frontend/src\components\AIChatWidget.tsx:23:    {selectionNotice && <p role="status" className="mt-2 text-xs text-brand">{selectionNotice}</p>}
+frontend/src\components\AIChatWidget.tsx:112:    {state.open && <div role="dialog" aria-modal="false" aria-labelledby="luminar-ai-title" className="assistant-drawer" onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); close() } }}>
+frontend/src\components\AIChatWidget.tsx:119:      <div ref={historyRef} role="log" aria-label="Assistant conversation" aria-live="polite" aria-relevant="additions" className="assistant-history min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4">
+frontend/src\components\AIChatWidget.tsx:128:          }} /> : <p role={message.kind === 'ERROR' ? 'alert' : undefined} className="whitespace-pre-wrap text-sm leading-relaxed">{message.text}</p>}
+frontend/src\components\AIChatWidget.tsx:130:        {state.busy && <div role="status" aria-live="polite" className="border-l-2 border-brand pl-3 text-sm"><span className="mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-brand" />Working on that…
+frontend/src\components\BookConnectionGraph.tsx:20:    <svg viewBox={`0 0 360 ${height}`} className="mx-auto mt-3 block w-full max-w-[360px]" role="img" aria-label={`Connection map: ${starting} to ${related}`}>
+frontend/src\components\BookCapabilities.tsx:16:  const role = useAuthStore(state => state.user?.role)
+frontend/src\components\BookCapabilities.tsx:29:    role,
+frontend/src\components\BookCapabilities.tsx:38:      ? <p className="mt-4 text-[0.7rem] text-ink-soft" role="status">Loading access…</p>
+frontend/src\components\DeviceDocuments.tsx:35:    {device.notice && <p role="status" className="px-2 text-ink-soft">{device.notice}</p>}
+frontend/src\components\Header.tsx:111:  // Build role-specific nav links
+frontend/src\components\Header.tsx:112:  const roleLinks: { label: string; to: string; icon: React.ReactNode }[] = []
+frontend/src\components\Header.tsx:114:  if (user?.role === 'GENERAL_USER') {
+frontend/src\components\Header.tsx:115:    roleLinks.push({ label: 'My Library', to: '/profile', icon: <User className="h-3.5 w-3.5" /> })
+frontend/src\components\Header.tsx:118:  if (user?.role === 'ADMIN') {
+frontend/src\components\Header.tsx:119:    roleLinks.push({
+frontend/src\components\Header.tsx:126:  if (user?.role === 'LIBRARIAN' || user?.role === 'ADMIN') {
+frontend/src\components\Header.tsx:127:    roleLinks.push({
+frontend/src\components\Header.tsx:135:  const staffRoleLinks = roleLinks.filter((link) => link.to !== '/profile')
+frontend/src\components\Header.tsx:248:          {roleLinks.map(
+frontend/src\components\Header.tsx:462:                      {user.role && user.role !== 'GENERAL_USER' && (
+frontend/src\components\Header.tsx:464:                          {user.role.replace('_', ' ')}
+frontend/src\components\Header.tsx:469:                    {/* Staff role links */}
+frontend/src\components\Header.tsx:748:          {roleLinks.map(
+frontend/src\components\Header.tsx:789:                  {user.role && user.role !== 'GENERAL_USER' && (
+frontend/src\components\Header.tsx:791:                      {user.role.replace('_', ' ')}
+frontend/src\components\knowledge\Quiz.tsx:75:        {errors[q.id] && <div role="alert" className="mt-3 text-sm"><p>{errors[q.id]}</p><button className={toolButton + ' mt-2'} disabled={busy[q.id]} onClick={() => void submitCloze(q.id)}>Retry checking</button></div>}
+frontend/src\components\knowledge\Quiz.tsx:76:        {checked[q.id] && <div role="status" aria-live="polite">
+frontend/src\components\knowledge\KnowledgeTools.tsx:26:      if (!card || event.altKey || event.ctrlKey || event.metaKey || target?.closest('input,textarea,select,button,a,[contenteditable="true"],[role="dialog"]')) return
+frontend/src\components\knowledge\KnowledgeTools.tsx:37:    {!card ? <p role="status" className="mt-5">Not enough reliable content was found for this card type. Try another filter.</p> : <>
+frontend/src\components\knowledge\KnowledgeTools.tsx:107:    {sourceLoading && <p role="status">Loading source…</p>}
+frontend/src\components\knowledge\KnowledgeTools.tsx:108:    {isMap && error && <p role="alert" className="mt-3 text-sm">{error}</p>}
+frontend/src\components\knowledge\KnowledgeTools.tsx:115:      <div role="tablist" aria-label="Artifact types" className="flex flex-wrap gap-2">{tabs.map(([id, label]) => <button key={id} role="tab" aria-selected={tab === id} aria-controls="knowledge-content" className={tab === id ? toolButton.replace('hover:bg-panel', 'hover:bg-brand') + ' bg-brand text-paper' : toolButton} disabled={generating} onClick={() => { setTab(id); setSource(null); setNotice('') }}>{label}</button>)}</div>
+frontend/src\components\knowledge\KnowledgeTools.tsx:125:        {!questionTypes.length && <p role="alert" className="text-sm text-ink-soft">Select at least one question type.</p>}
+frontend/src\components\knowledge\KnowledgeTools.tsx:128:        {legacyId && <p role="status" className="text-sm text-ink-soft">This saved quiz uses the earlier format. Generate Quiz to apply your selected question types.</p>}
+frontend/src\components\knowledge\KnowledgeTools.tsx:130:      {error && (!isMap || !content?.nodes) && <div role="alert" className="border border-line p-3"><p>{error}</p><button className={toolButton + ' mt-2'} disabled={loading || generating} onClick={() => { setLoading(true); setError(''); load() }}>Retry loading</button></div>}
+frontend/src\components\knowledge\KnowledgeTools.tsx:131:      {generating && <p role="status" aria-live="polite" className="border-l-2 border-brand bg-panel p-4">Analyzing the document and preparing source-backed {tabs.find(t => t[0] === tab)?.[1].toLowerCase()}…</p>}
+frontend/src\components\knowledge\KnowledgeTools.tsx:132:      {loading ? <p role="status">Loading saved artifacts…</p> : <div role="tabpanel" id="knowledge-content" aria-label={tabs.find(t => t[0] === tab)?.[1]} className={isMap ? 'flex min-h-0 flex-1 flex-col' : undefined}>
+frontend/src\components\knowledge\KnowledgeTools.tsx:134:        {notice && <p role="status" className="mb-3 text-sm text-ink-soft">{notice}</p>}
+frontend/src\components\knowledge\KnowledgeTools.tsx:137:        {tab === 'quiz' && content?.messages?.map(message => <p key={message} role="status" className="mb-3 text-sm text-ink-soft">{message}</p>)}
+frontend/src\components\knowledge\KnowledgeTools.tsx:138:        {empty && <p role="status" className="border border-line p-5">{tab === 'flashcards' ? 'Not enough definition-style content was found in this document to create reliable flashcards or cloze cards.' : 'Not enough reliable source content was found for this artifact.'}</p>}
+frontend/src\components\knowledge\KnowledgeMap.tsx:84:        <svg role="group" aria-label="Document concept map" width="100%" height="100%" viewBox={`0 0 ${size.width} ${size.height}`}
+frontend/src\components\knowledge\KnowledgeMap.tsx:87:            if ((e.target as Element).closest('[role="button"]')) return
+frontend/src\components\knowledge\KnowledgeMap.tsx:103:              return <g key={node.id} role="button" tabIndex={0} aria-label={node.label} aria-pressed={selected?.id === node.id}
+frontend/src\components\knowledge\KnowledgeMap.tsx:124:  return fullscreen ? createPortal(<section ref={dialog} role="dialog" aria-modal="true" aria-label="Fullscreen mind map" className="fixed inset-0 z-[200] flex min-h-0 flex-col bg-paper p-3 text-ink sm:p-4">{content}</section>, document.body)
+frontend/src\store\useAuthStore.ts:32:  role: UserRole;
+frontend/src\store\useAuthStore.ts:75:    if (!localStorage.getItem("luminar_token") || !user || typeof user.email !== "string" || !["GENERAL_USER", "LIBRARIAN", "ADMIN"].includes(user.role)) throw new Error("Invalid stored session");
+frontend/src\store\useAuthStore.ts:120:      if (!user || !["GENERAL_USER", "LIBRARIAN", "ADMIN"].includes(user.role))
+frontend/src\store\useAuthStore.ts:121:        throw new Error("Login did not return a supported user role.");
+frontend/src\store\useAuthStore.ts:122:      if (staff && !['ADMIN', 'LIBRARIAN'].includes(user.role))
+frontend/src\pages\AdminOperations.tsx:9:export interface Account { user_id: number; email: string; name: string; role?: string }
+frontend/src\pages\AdminOperations.tsx:48:    {error && <p className="admin-picker-error" role="alert">{error}</p>}
+frontend/src\pages\AdminOperations.tsx:83:    {error && <p className="admin-picker-error" role="alert">{error}</p>}
+frontend/src\pages\AdminOperations.tsx:85:    <footer className="admin-notification-footer"><span role="status">{busy ? `Sending: ${delivered} of ${users.length}` : `${users.length} ${users.length === 1 ? 'recipient' : 'recipients'}`}</span><button type="button" disabled={busy || selecting} onClick={onClose}>Cancel</button><button className="staff-primary" disabled={busy || selecting || !users.length || !title.trim() || !message.trim()}>{busy ? 'Sending…' : started ? 'Retry remaining' : 'Send'}</button></footer>
+frontend/src\pages\AdminOperations.tsx:133:    {loading ? <p role="status">Loading operations…</p> : groups.map(g => <div key={String(g.id)}>{group && <h3>{g.rows[0]?.target_user?.email || 'Unknown user'}</h3>}<Table headers={['User', 'Book', 'Operation', 'Date', 'Performed by', 'Actions']} count={g.rows.length} empty="No operations match these filters.">{rows(g.rows)}</Table></div>)}
+frontend/src\pages\AdminOperations.tsx:135:    {detail && <Modal title={`Activity for ${detail.user.email}`} onClose={() => setDetail(null)}><p>{detail.user.name} · {detail.user.role}</p><h3>Current Loans ({detail.loans.count})</h3>{detail.loans.records.map((l, i) => <p key={i}>{l.title} · Due {date(l.due_date)}</p>)}<h3>Reservations ({detail.reservations.count})</h3>{detail.reservations.records.map((l, i) => <p key={i}>{l.title} · {l.status}</p>)}<h3>Fees ({detail.fines.count})</h3>{detail.fines.records.map((l, i) => <p key={i}>{l.title} · ₹{l.amount} · {l.status}</p>)}<h3>Notification History ({detail.notifications.count})</h3>{detail.notifications.records.map(n => <p key={n.notification_id}>{n.title}: {n.message}</p>)}<p className="staff-note">Each summary shows up to 20 records. Recent operation history is filtered to this account behind this panel.</p></Modal>}
+frontend/src\lib\authDestination.ts:1:export function destination(role: string, from?: string): string {
+frontend/src\lib\authDestination.ts:3:    role === "ADMIN"
+frontend/src\lib\authDestination.ts:5:      : role === "LIBRARIAN"
+frontend/src\lib\authDestination.ts:17:  if (from.startsWith("/admin") && role !== "ADMIN") return home;
+frontend/src\lib\authDestination.ts:18:  if (from.startsWith("/librarian") && !["ADMIN", "LIBRARIAN"].includes(role))
+frontend/src\pages\EventsPage.tsx:11:  const token = useAuthStore(s => s.token), role = useAuthStore(s => s.user?.role)
+frontend/src\pages\EventsPage.tsx:31:  return <div className="events-shell"><header className="events-heading"><div><span className="event-eyebrow">AT YOUR LIBRARY</span><h1>Events &amp; Announcements</h1><p>Discover what’s happening at the library.</p></div>{(role === 'ADMIN' || role === 'LIBRARIAN') && <div className="events-actions"><Link className="event-button" to="/staff/events">Manage Events</Link><Link className="event-button primary" to="/staff/events/new">Create Event</Link></div>}</header>
+frontend/src\pages\EventsPage.tsx:34:    {error ? <div role="alert" className="event-empty"><p>{error}</p><button className="event-button" onClick={() => setRetry(v => v + 1)}>Retry</button></div> : !data ? <EventSkeleton /> : <>
+frontend/src\components\assistant\AssistantTurn.tsx:251:    {!!response.errors.length && <div role="status" className="space-y-2 border-l-2 border-brand/40 pl-3 text-xs text-ink-soft">{response.errors.map((error, index) => <p key={index}>{error.code === 'MUTATIONS_DISABLED' ? 'Library actions are currently disabled. No action was performed.' : error.message}</p>)}</div>}
+frontend/src\pages\ReadingListPage.tsx:51:      {error ? <div role="alert" className="staff-feedback is-error">{error} <button onClick={() => setRetry(v => v + 1)}>Retry</button></div> : loading ? (
+frontend/src\pages\ProfilePage.tsx:364:              {user?.role && (
+frontend/src\pages\ProfilePage.tsx:366:                  {user.role.replace(/_/g, ' ')}
+frontend/src\pages\EventEditorPage.tsx:20:  return <section className="event-picker" id="event-related_work_ids" tabIndex={-1} aria-invalid={invalid || undefined}><h2>{label} <span>{selected.length}/12</span></h2><p className="event-muted">{helper}</p><div className="event-picker-search"><label>Search catalogue<input aria-label="Search catalogue" value={query} maxLength={120} onChange={e => setQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); if (query.trim()) void search() } }} /></label><button type="button" className="event-button" disabled={disabled || busy || !query.trim()} onClick={() => void search()}>{busy ? 'Searching…' : 'Search catalogue'}</button></div>{error && <p role="alert">{error}</p>}
+frontend/src\pages\EventEditorPage.tsx:22:    {selected.length === 12 && <p role="status">Select no more than 12 related books.</p>}<div className="event-picker-results">{rows.map(book => { const exists = selected.some(b => b.work_id === book.work_id); return <div key={book.work_id}><div><strong>{book.title || book.work_id}</strong><p>{author(book)}</p><small>{book.work_id}</small></div><button type="button" className="event-button" disabled={disabled || exists || selected.length >= 12} onClick={() => change([...selected, book])}>{exists ? 'Selected' : 'Select book'}</button></div> })}</div>
+frontend/src\pages\EventEditorPage.tsx:96:      {(errors.length > 0 || error) && <div className="event-error-summary" role="alert" aria-label="Event validation errors"><strong>{errors.length ? 'Check these fields before continuing.' : 'Unable to complete this action.'}</strong>{errors.length > 0 && <ul>{errors.map(e => <li key={e.field + e.message}><button type="button" className="event-link" onClick={() => focusField(e.field)}>{e.message}</button></li>)}</ul>}{error && <p>{error}</p>}</div>}
+frontend/src\pages\EventEditorPage.tsx:105:        {Boolean(loaded?.missing_related_work_ids?.length) && <p role="status" className="event-error">Some linked books have left the catalogue. Remove unavailable links before saving.</p>}
+frontend/src\pages\EventEditorPage.tsx:110:    {publish && <Modal title="Publish this event?" busy={busy} onClose={() => setPublish(false)}><p>It will become visible to library users and create a new-event badge.</p><EventPublishSummary event={current} />{error && <p role="alert">{error}</p>}<div className="events-actions"><button className="event-button" disabled={busy} onClick={() => setPublish(false)}>Keep as draft</button><button className="event-button primary" disabled={busy} onClick={() => void publishSaved()}>{busy ? 'Publishing…' : 'Publish event'}</button></div></Modal>}
+frontend/src\components\MoreLikeThisSection.tsx:17:    {status === 'loading' && <p role="status" className="py-8 text-sm text-ink-soft">Finding related books…</p>}
+frontend/src\components\MoreLikeThisSection.tsx:18:    {status === 'error' && <div className="mt-5 text-sm"><p role="alert">{error}</p><button className="assistant-button mt-3" onClick={() => void related.load()}>Retry related books</button>{error?.startsWith('Sign in') && <Link className="ml-3 underline" to="/login">Sign in</Link>}</div>}
+frontend/src\pages\ManageEventsPage.tsx:23:    {(result.key === key && result.error) && <p role="alert">{result.error} <button className="event-button" onClick={() => setReload(v => v + 1)}>Retry</button></p>}
+frontend/src\pages\ManageEventsPage.tsx:25:    {confirmation && <Modal title={confirmation.action === 'publish' ? 'Publish this event?' : confirmation.action === 'delete' ? 'Delete this draft?' : confirmation.action === 'cancel' ? 'Cancel this event?' : 'Archive this event?'} busy={busy} onClose={() => setConfirmation(null)}>{confirmation.action === 'publish' ? <EventPublishSummary event={confirmation.event} /> : <p>{confirmation.event.title}</p>}<p>{confirmation.action === 'publish' ? 'It will become visible to library users and create a new-event signal.' : confirmation.action === 'delete' ? 'This unpublished draft will be permanently removed.' : confirmation.action === 'cancel' ? 'It will leave Upcoming. Its detail page will show that it was cancelled.' : 'It will be hidden from ordinary browsing. Staff history is retained.'}</p>{error && <p role="alert">{error}</p>}<div className="events-actions"><button className="event-button" disabled={busy} onClick={() => setConfirmation(null)}>Keep editing</button><button className="event-button primary" disabled={busy} onClick={() => void action()}>{busy ? 'Working…' : confirmation.action === 'delete' ? 'Delete Draft' : confirmation.action === 'publish' ? 'Publish event' : confirmation.action === 'cancel' ? 'Cancel event' : 'Archive event'}</button></div></Modal>}
+frontend/src\pages\LoginPage.tsx:24:  // If already logged in, redirect based on role
+frontend/src\pages\LoginPage.tsx:28:    return <Navigate to={destination(user.role, from)} replace />;
+frontend/src\pages\LoginPage.tsx:56:      const role = response?.user?.role;
+frontend/src\pages\LoginPage.tsx:58:      navigate(destination(role, from), { replace: true });
+frontend/src\pages\StaffForms.tsx:348:              <p role="alert" key={i}>
+frontend/src\pages\LLMPage.tsx:47:  role: 'user' | 'assistant'
+frontend/src\pages\LLMPage.tsx:715:      role:
+frontend/src\pages\LLMPage.tsx:780:        role:
+frontend/src\pages\LLMPage.tsx:819:        role:
+frontend/src\pages\LLMPage.tsx:1013:            {previousFile && <div role="dialog" aria-label="Previously processed document" className="mt-3 border border-line p-3 text-xs">
+frontend/src\pages\LLMPage.tsx:1194:        {bookAccessMessage && <p role="status" className="border-b border-line bg-panel px-5 py-3 text-sm text-ink-soft">{bookAccessMessage}</p>}
+frontend/src\pages\LLMPage.tsx:1367:        {documents.find(d => d.document_id === selectedDocumentId)?.warnings?.map(warning => <p key={warning} role="status" className="mx-5 mt-3 border border-line bg-panel p-3 text-sm">{warning}</p>)}
+frontend/src\pages\LLMPage.tsx:1763:                              message.role ===
+frontend/src\pages\LLMPage.tsx:1774:                            message.role ===
+frontend/src\pages\LLMPage.tsx:1796:                            message.role ===
+frontend/src\pages\LLMPage.tsx:1809:                        {message.role ===
+frontend/src\pages\LLMPage.tsx:1865:                        {message.role === 'assistant' ? (
+frontend/src\pages\LLMPage.tsx:1866:                          <Suspense fallback={<span role="status">Preparing answer…</span>}>
+frontend/src\pages\StaffDashboard.tsx:63:  if ((admin && user?.role !== 'ADMIN') || (!admin && !['ADMIN', 'LIBRARIAN'].includes(user?.role || ''))) {
+frontend/src\pages\StaffDashboard.tsx:402:        <div className="staff-feedback is-error" role="alert" key={key}>
+frontend/src\pages\StaffDashboard.tsx:410:        role="tablist"
+frontend/src\pages\StaffDashboard.tsx:417:            role="tab"
+frontend/src\pages\StaffDashboard.tsx:426:      <div id="staff-content" role="tabpanel" aria-labelledby={`tab-${tab}`}>
+frontend/src\pages\StaffDashboard.tsx:429:        {admin && tab === 'Operations' && <Suspense fallback={<p role="status">Loading operations…</p>}><AdminOperations /></Suspense>}
+frontend/src\pages\StaffDashboard.tsx:430:        {admin && tab === 'Notifications' && <Suspense fallback={<p role="status">Loading notifications…</p>}><AdminNotifications /></Suspense>}
+frontend/src\pages\StaffDashboard.tsx:460:              <p className="staff-empty" role="status">
+frontend/src\pages\StaffDashboard.tsx:497:                          {user.role === "ADMIN" && <button
+frontend/src\pages\StaffDashboard.tsx:556:              <p className="staff-empty" role="status">
+frontend/src\pages\StaffDashboard.tsx:607:                          {user.role === "ADMIN" && (
+frontend/src\pages\StaffDashboard.tsx:673:              <p className="staff-empty" role="status">
+frontend/src\components\LoanRenewalControl.tsx:73:        <p role="alert" className="text-[0.68rem] text-brand font-medium leading-tight max-w-[220px]">
+frontend/src\components\ProtectedRoute.tsx:31:        to={libraryRoles || allowedRoles?.some(role => role === 'GENERAL_USER') || !allowedRoles ? '/login' : '/staff/login'}
+frontend/src\components\ProtectedRoute.tsx:45:    const role = user?.role;
+frontend/src\components\ProtectedRoute.tsx:47:    const libraryAllowed = !!institution?.membership && institution.membership.status === 'ACTIVE' && libraryRoles?.includes(institution.membership.role);
+frontend/src\components\ProtectedRoute.tsx:48:    if (libraryRoles && institutionLoading && !allowedRoles.includes(role!)) return <p role="status">Loading library permissions…</p>;
+frontend/src\components\ProtectedRoute.tsx:49:    if ((!role || !allowedRoles.includes(role)) && !libraryAllowed) {
+frontend/src\components\ProtectedRoute.tsx:53:            user?.role === "ADMIN"
+frontend/src\components\ProtectedRoute.tsx:55:              : user?.role === "LIBRARIAN"
+frontend/src\lib\institutions.ts:4:export type Membership = { membership_id: string; library_id: string; user_id: number; role: LibraryRole; status: 'ACTIVE' | 'SUSPENDED' | 'REMOVED'; is_owner: boolean; joined_at: string }
+frontend/src\lib\institutions.ts:8:export type Invitation = { invitation_id: string; library_id: string; library_name?: string; email_normalized: string; role: LibraryRole; status: string; invited_by_user_id: number; expires_at: string; requires_token?: boolean }
+frontend/src\pages\SignUpPage.tsx:57:      // Send only name, email, password — no role field.
+frontend/src\lib\nav.ts:6:export function getRoleNavLinks(role?: string): NavLink[] {
+frontend/src\lib\nav.ts:8:  if (role === "GENERAL_USER") {
+frontend/src\lib\nav.ts:11:  if (role === "ADMIN") {
+frontend/src\lib\nav.ts:14:  if (role === "LIBRARIAN" || role === "ADMIN") {
+frontend/src\pages\StaffManagement.tsx:6:  user_id: number; name: string; email: string; role: 'ADMIN' | 'LIBRARIAN';
+frontend/src\pages\StaffManagement.tsx:73:      {error ? <div role="alert" className="staff-feedback is-error">{error} <button onClick={() => setRevision(v => v + 1)}>Retry</button></div> : loading ? <p role="status" className="staff-empty">Loading staff…</p> : <>
+frontend/src\pages\StaffManagement.tsx:76:            <td>{user.name}</td><td>{user.email}</td><td>{user.role}</td><td>{user.is_email_verified ? 'Verified' : 'Pending'}</td><td>{user.is_active ? 'Active' : 'Disabled'}</td><td>{date(user.created_at)}</td>
+frontend/src\pages\StaffManagement.tsx:77:            <td>{user.role === 'LIBRARIAN' ? <>
+frontend/src\pages\StaffLoginPage.tsx:28:  if (isAuthenticated && user && ['ADMIN', 'LIBRARIAN'].includes(user.role))
+frontend/src\pages\StaffLoginPage.tsx:29:    return <Navigate to={user.role === 'ADMIN' ? '/admin' : '/librarian'} replace />
+frontend/src\pages\StaffLoginPage.tsx:36:      navigate(response.user.role === 'ADMIN' ? '/admin' : '/librarian', { replace: true })
+frontend/src\pages\StaffLoginPage.tsx:44:    {error && <p role="alert" className="mt-5 text-sm text-brand">{error}</p>}
+frontend/src\pages\BookReaderPage.tsx:23:      {error ? <p className="mt-8 text-red-700" role="alert">{error}</p> : !book ? (
+frontend/src\pages\BookReaderPage.tsx:24:        <p className="mt-8 text-ink-soft" role="status">Loading full text…</p>
+frontend/src\pages\StaffSetupPage.tsx:24:    {done ? <div role="status" className="mt-6"><p>Your account is ready.</p><Link className="mt-5 inline-block text-brand" to="/staff/login">Sign in</Link></div> : <>
+frontend/src\pages\StaffSetupPage.tsx:26:      {error && <p role="alert" className="mt-5 text-sm text-brand">{error}</p>}
+frontend/src\components\NotificationCenter.tsx:80:    {open && <div id="notification-center" ref={panel} tabIndex={-1} role="region" aria-label="Notification Center" className="notification-panel">
+frontend/src\components\NotificationCenter.tsx:83:      {error && <p role="alert">{error} <button onClick={() => void refresh.current()}>Retry</button></p>}
+frontend/src\components\NotificationCenter.tsx:88:    {toast && <div className="notification-toast" role="status"><div><strong>{toast.title}</strong><p>{toast.message}</p></div><button aria-label="Close notification toast" onClick={() => setToast(null)}><X size={18} /></button></div>}
+frontend/src\components\rag\RAGAnswer.tsx:19:  table: ({ children }) => <div className="rag-answer-scroll" role="region" aria-label="Answer table" tabIndex={0}><table>{children}</table></div>,
+frontend/src\components\rag\RAGAnswer.tsx:24:    return <span {...props} className={className} {...(scrollable ? { tabIndex: 0, role: 'region', 'aria-label': 'Answer equation' } : {})}>{children}</span>
+frontend/src\lib\readNow.ts:5:  role?: string
+frontend/src\lib\readNow.ts:16:  if (input.role !== 'GENERAL_USER') return 'HIDDEN'
+frontend/src\pages\CorePages.tsx:6: * This component provides safe backward compatibility by redirecting to the appropriate role home.
+frontend/src\pages\CorePages.tsx:11:    user?.role === "ADMIN"
+frontend/src\pages\CorePages.tsx:13:      : user?.role === "LIBRARIAN"
+frontend/src\components\Toast.tsx:48:          role="status"
+frontend/src\pages\EventDetailPage.tsx:9:  const { eventId = '' } = useParams(), token = useAuthStore(s => s.token), role = useAuthStore(s => s.user?.role)
+frontend/src\pages\EventDetailPage.tsx:18:  return <div className="events-shell event-detail"><Link className="event-link" to="/events">← All events</Link>{error ? <div role="alert" className="event-empty"><p>{error}</p><button className="event-button" onClick={() => setRetry(v => v + 1)}>Retry</button></div> : !event ? <EventSkeleton /> : <>
+frontend/src\pages\EventDetailPage.tsx:19:    <header className="events-heading"><div><div className="event-card-top"><span className="event-icon"><EventIcon category={event.category} /></span><span className="event-category">{categories[event.category]}</span>{event.featured && <span className="event-tag">Featured</span>}</div><h1>{event.title}</h1><p>{event.summary}</p></div>{(role === 'ADMIN' || role === 'LIBRARIAN') && <Link className="event-button" to={'/staff/events/' + event.event_id + '/edit'}>Edit event</Link>}</header>
+frontend/src\pages\EventDetailPage.tsx:20:    {event.status === 'CANCELLED' && <div role="status" className="event-cancelled"><strong>Cancelled</strong><p>This event has been cancelled. Please do not attend the original program.</p></div>}
+frontend/src\components\OperationTypeFilter.tsx:20:    <button type="button" role="combobox" aria-label="Operation type" aria-expanded={open} aria-haspopup="listbox"
+frontend/src\components\OperationTypeFilter.tsx:35:    {open && <div id={`${id}-list`} role="listbox" aria-label="Operation types">{choices.map((key, index) => <button
+frontend/src\components\OperationTypeFilter.tsx:36:      key={key} type="button" role="option" id={`${id}-${index}`} aria-selected={value === key} tabIndex={-1}
+frontend/src\pages\KnowledgeGraphPage.tsx:88:    {error && <p role="alert" className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">{error}</p>}
+frontend/src\pages\KnowledgeGraphPage.tsx:97:            {visible.map(node => { const p = position(node); return <g key={node.id} role="button" tabIndex={0} aria-label={`Inspect ${node.kind}: ${node.label}`} onClick={() => setSelected(node)} onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setSelected(node) } }} style={{ cursor: 'pointer' }}><title>{node.label}</title><rect x={p.x - 115} y={p.y - 17} width={230} height={34} rx={node.kind === 'book' ? 8 : 17} fill={selected?.id === node.id || node.seed ? nodeColour(node.kind) : '#f8f7f0'} stroke={nodeColour(node.kind)} strokeWidth={selected?.id === node.id ? 2.5 : 1} /><text x={p.x} y={p.y + 4} textAnchor="middle" fontSize={12} fill={selected?.id === node.id || node.seed ? '#fff' : nodeColour(node.kind)}>{shorten(node.label, 32)}</text></g> })}
+frontend/src\pages\KnowledgeGraphPage.tsx:103:      {result.metrics && <div className="mb-5 grid gap-3 rounded-xl border border-line bg-white/60 p-5 sm:grid-cols-3" role="region" aria-label="Recommendation comparison metrics"><div><p className="text-xs text-ink-soft">List overlap</p><p className="mt-1 font-serif text-2xl text-moss">{Math.round(result.metrics.overlap_at_k * 100)}%</p><p className="text-xs text-ink-soft">{result.metrics.intersection_count} shared books</p></div><div><p className="text-xs text-ink-soft">New graph candidates</p><p className="mt-1 font-serif text-2xl text-moss">{result.metrics.kg_only_ids.length}</p><p className="text-xs text-ink-soft">Absent from the existing top ten</p></div><div><p className="text-xs text-ink-soft">Subject diversity · existing / graph</p><p className="mt-1 font-serif text-2xl text-moss">{result.metrics.existing_diversity.subject_pairwise_distance?.toFixed(2) ?? '—'} / {result.metrics.kg_diversity.subject_pairwise_distance?.toFixed(2) ?? '—'}</p><p className="text-xs text-ink-soft">Higher means less subject overlap</p></div><p className="text-xs text-ink-soft sm:col-span-3">List overlap and metadata diversity measure different recommendations; they do not establish which list is more relevant. Catalogue coverage across seeds is measured in the KG3 report.</p></div>}
+frontend/src\components\StaffUI.tsx:224:        role={value.error ? "alert" : "status"}

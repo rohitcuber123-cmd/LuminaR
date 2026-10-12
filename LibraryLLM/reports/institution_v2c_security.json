@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "authority_source": "Current verified account and ACTIVE tenant membership, rechecked after acquiring the shared mutation gate; JWT/global role alone grants no tenant authority.",
+  "member_privacy": "Own reservations/fees only; queue positions contain no other member identity.",
+  "id_scope": "UUID path identifiers resolved only in the explicit authenticated library.",
+  "strict_body": "Extra caller library/user/policy version/paid amount fields rejected; actors come from authenticated account and monetary limits are server-enforced.",
+  "negative_checks": [
+    "Private outsider",
+    "Unrelated canonical library/book/reservation/fee UUIDs",
+    "Unaffiliated global ADMIN",
+    "Other-member cancel/detail",
+    "Librarian waiver/adjust",
+    "Removed or demoted staff",
+    "Disabled account with stale credentials",
+    "Unverified account conversion",
+    "Money precision/range/overpayment",
+    "Cross-library queue isolation"
+  ],
+  "test_auth_scope": "Part 2C API tests override JWT decoding but perform real current-account/membership checks. Live scenarios use actual JWT logins; frozen security suites retain auth/expiry tests.",
+  "evidence": {
+    "junit": "institution_v2c_backend.xml",
+    "passing_test_cases": [
+      "test_client_tenant_borrower_amount_policy_spoofing_rejected",
+      "test_stale_staff_credentials_cannot_mutate_finances[REMOVED]",
+      "test_stale_staff_credentials_cannot_mutate_finances[DEMOTED]",
+      "test_stale_staff_credentials_cannot_mutate_finances[DISABLED]",
+      "test_active_canonical_cross_library_idor_and_unaffiliated_global_admin",
+      "test_head_ineligible_advance[REMOVED]",
+      "test_head_ineligible_advance[SUSPENDED]",
+      "test_head_ineligible_advance[DISABLED]",
+      "test_head_ineligible_advance[UNVERIFIED]",
+      "test_waiver_retains_charge_history_authority_reason",
+      "test_cross_library_private_and_global_admin_denied",
+      "test_money_strict_integer[1.5]",
+      "test_money_strict_integer[True]",
+      "test_money_strict_integer[-1]",
+      "test_money_strict_integer[0]",
+      "test_money_strict_integer[1000000000001]"
+    ]
+  }
+}

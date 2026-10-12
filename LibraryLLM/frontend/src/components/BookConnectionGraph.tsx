@@ -1,3 +1,4 @@
+import { useProductContext } from '../hooks/useProductContext'
 import { Link } from 'react-router-dom'
 import type { ReasonPath } from '@/lib/knowledgeGraph'
 
@@ -8,6 +9,7 @@ const shorten = (value: string, length: number) => value.length > length ? `${va
 export function BookConnectionGraph({ paths, seedTitle, bookTitle }: { paths: ReasonPath[]; seedTitle?: string; bookTitle?: string }) {
   const first = paths[0]
   const source = first?.nodes[0]
+  const context=useProductContext()
   const target = first?.nodes[2]
   const features = [...new Map(paths.filter(path => path.nodes.length === 3 && path.nodes[0] === source && path.nodes[2] === target)
     .map(path => [path.nodes[1], path])).values()]
@@ -45,6 +47,6 @@ export function BookConnectionGraph({ paths, seedTitle, bookTitle }: { paths: Re
       })}
     </svg>
     <p className="mt-2 text-xs text-ink-soft">Only the verified relationships between these two books are shown. Full labels appear in Why related?</p>
-    <Link to={`/experimental/kg?seed=${encodeURIComponent(target)}`} className="mt-3 inline-block text-xs text-moss underline">Explore this book in Graph Lab →</Link>
+    <Link to={context.personalPath(`/experimental/kg?seed=${encodeURIComponent(target)}`)} className="mt-3 inline-block text-xs text-moss underline">Explore this book in Graph Lab →</Link>
   </figure>
 }

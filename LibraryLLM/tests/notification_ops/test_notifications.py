@@ -41,6 +41,7 @@ def isolated(monkeypatch):
                                   (3,'Bob','bob@example.com','GENERAL_USER'),(4,'Staff','staff@example.com','LIBRARIAN')]])
     db.books.insert_many([{'book_id':1,'work_id':'OL1W','title':'Dracula','available_copies':2,'total_copies':2},
                          {'book_id':2,'work_id':'OL2W','title':'Dune','available_copies':2,'total_copies':2}])
+    db.platform_role_assignments.insert_one({'user_id':1,'role':'PLATFORM_ADMIN','status':'ACTIVE','approved_by':'test-operator','approval_ref':'TEST-REVIEW','approved_at':datetime.now(timezone.utc)})
     ns.ensure_indexes()
     app.dependency_overrides.clear()
     yield db
@@ -56,7 +57,7 @@ def http(uid=1, claimed='ADMIN'):
 def send(uid=1, **fields):
     body = {'recipient_user_ids':[2], 'title':'Notice','message':'Hello','request_id':str(uuid4())}
     body.update(fields)
-    return http(uid).post('/admin/notifications', json=body)
+    return http(uid).post('/platform/notifications', json=body)
 
 
 def loan(db, delta=2, status='ISSUED', uid=2, loan_id=1):
@@ -66,7 +67,7 @@ def loan(db, delta=2, status='ISSUED', uid=2, loan_id=1):
 
 
 @pytest.mark.parametrize('uid',[2,3,4])
-@pytest.mark.parametrize('path',['/admin/operations','/admin/users?q=alice','/admin/users/2/activity','/admin/notifications/sent'])
+@pytest.mark.parametrize('path',['/platform/operations','/platform/users?q=alice','/platform/users/2/activity','/platform/notifications/sent'])
 def test_cross_user_admin_api_forbidden_despite_claimed_role(isolated, uid, path):
     assert http(uid).get(path).status_code == 403
 
@@ -83,7 +84,7 @@ def test_admin_send_email_id_multi_persistence_audit_and_current_email(isolated)
     rows=list(isolated.notifications.find({})); assert {n['user_id'] for n in rows}=={2,3}
     assert all(n['created_by_user_id']==1 and n['source']=='ADMIN' for n in rows)
     isolated.users.update_one({'user_id':2},{'$set':{'email':'new@example.com'}})
-    audit=http().get('/admin/notifications/sent').json()
+    audit=http().get('/platform/notifications/sent').json()
     assert 'new@example.com' in str(audit) and 'SECRET' not in str(audit)
     assert http(2).get('/notifications').json()['count']==1
     assert http(3).get('/notifications').json()['count']==1
@@ -110,17 +111,17 @@ def test_recipient_directory_pagination_complete_private_and_eligible(isolated):
                                 'password_hash': 'SECRET'} for i in range(73)])
     isolated.users.insert_many([{'user_id': 1000, 'email': 'inactive@example.com', 'is_active': False, 'is_email_verified': True},
                                {'user_id': 1001, 'email': 'unverified@example.com', 'is_active': True, 'is_email_verified': False}])
-    pages=[http().get(f'/admin/users?limit=50&offset={offset}').json() for offset in [0,50]]
+    pages=[http().get(f'/platform/users?limit=50&offset={offset}').json() for offset in [0,50]]
     assert [len(p['users']) for p in pages] == [50,27]
     assert all(p['count']==77 for p in pages)
     ids=[u['user_id'] for p in pages for u in p['users']]
     assert len(set(ids))==77 and 1000 not in ids and 1001 not in ids
     assert 'SECRET' not in str(pages)
-    filtered=http().get('/admin/users?q=reader&limit=50&offset=50').json()
+    filtered=http().get('/platform/users?q=reader&limit=50&offset=50').json()
     assert filtered['count']==73 and len(filtered['users'])==23
-    assert http().get('/admin/users?offset=-1').status_code==422
-    assert http().get('/admin/users?limit=51').status_code==422
-    assert http(2).get('/admin/users?limit=50&offset=50').status_code==403
+    assert http().get('/platform/users?offset=-1').status_code==422
+    assert http().get('/platform/users?limit=51').status_code==422
+    assert http(2).get('/platform/users?limit=50&offset=50').status_code==403
 
 
 def test_bulk_selected_recipients_batched_with_same_request_retry_no_duplicates(isolated):
@@ -140,7 +141,7 @@ def test_performed_by_current_user_staff_system_and_explicit_legacy_reader(isola
     for kind,actor in events:
         activity_service.create_activity(2,kind,'Test action',actor_user_id=actor,title='Dracula',work_id='OL1W')
     isolated.users.update_one({'user_id':2},{'$set':{'email':'current-alice@example.com'}})
-    rows={r['operation_type']:r for r in http().get('/admin/operations').json()['operations']}
+    rows={r['operation_type']:r for r in http().get('/platform/operations').json()['operations']}
     assert rows['BOOK_ISSUED']['performed_by']['account']['email']=='current-alice@example.com'
     assert rows['BOOK_ISSUED']['actor_user_id']==2
     assert rows['BOOK_RETURNED']['performed_by']['account']['email']=='admin@example.com'
@@ -211,20 +212,20 @@ def event(uid=2, actor=None, kind='BOOK_ISSUED', title='Dracula', work='OL1W'):
 def test_operation_current_email_identity_actor_filters_pagination_and_legacy(isolated):
     event(actor=2);event(actor=1,kind='BOOK_RETURNED');event(uid=None,actor=None);event(uid=3,actor=3,title='Dune',work='OL2W')
     isolated.users.update_one({'user_id':2},{'$set':{'email':'changed@example.com'}})
-    client=http();data=client.get('/admin/operations?email=changed@&limit=1').json()
+    client=http();data=client.get('/platform/operations?email=changed@&limit=1').json()
     assert data['count']==2 and len(data['operations'])==1
     row=data['operations'][0];assert row['target_user_id']==2 and row['target_user']['email']=='changed@example.com'
     assert row['actor_user_id']==1 and row['actor']['email']=='admin@example.com'
-    assert client.get('/admin/operations?user_id=3').json()['count']==1
-    assert client.get('/admin/operations?work_id=OL2W').json()['count']==1
-    assert client.get('/admin/operations?title=Drac').json()['count']==3
-    assert client.get('/admin/operations?operation_type=BOOK_RETURNED').json()['count']==1
-    assert client.get('/admin/operations?email=changed@&limit=1&offset=1').json()['operations'][0]['actor_user_id']==2
-    unknown=[r for r in client.get('/admin/operations').json()['operations'] if r['target_user_id'] is None][0]
+    assert client.get('/platform/operations?user_id=3').json()['count']==1
+    assert client.get('/platform/operations?work_id=OL2W').json()['count']==1
+    assert client.get('/platform/operations?title=Drac').json()['count']==3
+    assert client.get('/platform/operations?operation_type=BOOK_RETURNED').json()['count']==1
+    assert client.get('/platform/operations?email=changed@&limit=1&offset=1').json()['operations'][0]['actor_user_id']==2
+    unknown=[r for r in client.get('/platform/operations').json()['operations'] if r['target_user_id'] is None][0]
     assert unknown['target_user'] is None and unknown['actor'] is None
-    assert client.get('/admin/operations?operation_type=INVENTED').status_code==422
-    assert client.get('/admin/operations?limit=51').status_code==422
-    assert 'SECRET' not in str(client.get('/admin/users/2/activity').json())
+    assert client.get('/platform/operations?operation_type=INVENTED').status_code==422
+    assert client.get('/platform/operations?limit=51').status_code==422
+    assert 'SECRET' not in str(client.get('/platform/users/2/activity').json())
 
 
 def test_legacy_source_hydration_and_constant_user_queries(isolated):
@@ -235,17 +236,14 @@ def test_legacy_source_hydration_and_constant_user_queries(isolated):
     assert row['book']['title']=='Dracula' and row['due_at'] is not None and row['actor_user_id'] is None
 
 
-def test_real_self_borrow_staff_return_and_failed_action_no_success_event(isolated):
-    issue=issue_service.issue_book(2,'OL1W');event_row=isolated.activity.find_one({'activity_type':'BOOK_ISSUED'})
-    assert event_row['user_id']==event_row['actor_user_id']==2
-    # Borrowing twice fails before audit success.
-    before=isolated.activity.count_documents({})
-    with pytest.raises(ValueError):issue_service.issue_book(2,'OL1W')
-    assert isolated.activity.count_documents({})==before
-    result=http().post(f"/admin/operations/return/{issue['issue_id']}");assert result.status_code==200
-    row=isolated.activity.find_one({'activity_type':'BOOK_RETURNED'})
-    assert row['user_id']==2 and row['actor_user_id']==1
-    assert http(4).post(f"/admin/operations/return/{issue['issue_id']}").status_code==403
+def test_retired_circulation_cannot_create_success_notifications(isolated):
+    from fastapi import HTTPException
+    with pytest.raises(HTTPException) as retired: issue_service.issue_book(2,'OL1W')
+    assert retired.value.status_code == 410
+    assert http().post('/platform/operations/return/1').status_code == 410
+    assert http(4).post('/platform/operations/return/1').status_code == 403
+    assert isolated.activity.count_documents({}) == 0
+    assert isolated.notifications.count_documents({}) == 0
 
 
 def test_plain_text_payload_stored_as_text(isolated):
@@ -256,7 +254,7 @@ def test_plain_text_payload_stored_as_text(isolated):
 
 def test_inactive_account_and_deleted_account_fail_closed(isolated):
     isolated.users.update_one({'user_id':1},{'$set':{'is_active':False}})
-    assert http().get('/admin/operations').status_code==401
+    assert http().get('/platform/operations').status_code==401
     isolated.users.delete_one({'user_id':2});assert http(2).get('/notifications').status_code==401
 
 
@@ -281,6 +279,6 @@ def test_worker_lifecycle_startup_catchup_and_clean_stop(monkeypatch):
 
 def test_summary_returns_counts_without_loading_history(isolated):
     loan(isolated)
-    response=http().get('/admin/summary');assert response.status_code==200
-    assert response.json()['active_loans']==1 and response.json()['users']==4
+    response=http().get('/platform/summary');assert response.status_code==200
+    assert response.json()['platform_admins']==1 and response.json()['users']==4 and 'active_loans' not in response.json()
     assert 'issues' not in response.json() and 'email' not in response.json()

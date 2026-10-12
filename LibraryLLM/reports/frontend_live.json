@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-09T05:58:42.982929+00:00",
+  "environment": "Isolated localhost fixture, frontend 5184/core 8084",
+  "account": "Global ADMIN with per-library ADMIN / GENERAL_USER / LIBRARIAN memberships",
+  "api": {
+    "status": "PASS",
+    "verified_at": "2026-10-09T05:14:57.533560+00:00",
+    "database": "luminar_fw_live_2455cfe17d634beda2f0b33f4236c929",
+    "account_user_id": 1,
+    "account_global_role": "ADMIN",
+    "libraries": [
+      {
+        "library_id": "9b4ba0ab-4300-428c-ac57-e6c14ab1ea7c",
+        "name": "Library A",
+        "role": "ADMIN"
+      },
+      {
+        "library_id": "86829ed8-0d3c-43c5-aa73-ab308bf113cb",
+        "name": "Library B",
+        "role": "GENERAL_USER"
+      },
+      {
+        "library_id": "8f614fed-fa03-4a8b-97f7-0b565c4779ed",
+        "name": "Library C",
+        "role": "LIBRARIAN"
+      },
+      {
+        "library_id": "bfe4626b-4253-48f0-b4eb-34d5a6801682",
+        "name": "Library D",
+        "role": "GENERAL_USER"
+      },
+      {
+        "library_id": "0e546c36-8d3c-4a5e-b6ca-f03c6ba3eb4c",
+        "name": "Library E",
+        "role": "LIBRARIAN"
+      }
+    ],
+    "existing_tenant_api_authority_verified": true,
+    "production_mutations": 0,
+    "workspace_policy": "Active GENERAL_USER patron endpoints; ADMIN/LIBRARIAN operational endpoints. Separate route contexts."
+  },
+  "context_switching": {
+    "passed": true,
+    "sequence": "A admin → C librarian → B patron → D patron → C librarian",
+    "staffSelection": "Library C",
+    "patronSelection": "Library D",
+    "librarianMemberAdministrationVisible": false
+  },
+  "registration_invitation_return": {
+    "passed": true,
+    "registrationStaffLanding": "http://127.0.0.1:5184/staff/libraries/2601b6bb-e061-440e-8382-16a0adb5ace3",
+    "requiredMetadataOnlyBookCreated": true,
+    "overviewRefreshedAfterAdd": true,
+    "separateAccountDidNotInheritContexts": true,
+    "singleMembershipLogin": "Patron Library B",
+    "pendingReturnKeepsLoanActive": true,
+    "staffInvitationAccepted": "Librarian staff overview",
+    "productionMutations": 0
+  },
+  "login_and_logout": {
+    "passed": true,
+    "authorizedDeepLink": "http://127.0.0.1:5184/libraries/86829ed8-0d3c-43c5-aa73-ab308bf113cb/my-library?history=1#returns",
+    "multiMembershipLanding": "http://127.0.0.1:5184/account/libraries",
+    "logoutClearedPatronShortcut": 1
+  },
+  "responsive_checks": 54,
+  "responsive_failures": 0,
+  "text_contrast_failures": 0,
+  "production_mutations": 0,
+  "cleanup": {
+    "fixture_database": "luminar_fw_live_2455cfe17d634beda2f0b33f4236c929",
+    "fixture_database_dropped": true,
+    "own_services_stopped": true,
+    "owned_pids": [
+      4008,
+      29488
+    ],
+    "cleanup_method": "Owned server processes were already stopped; exact disposable fixture database verified and dropped. No other process stopped.",
+    "production_modified": false,
+    "temporary_browser_tab_closed": true,
+    "browser_viewport_reset": true
+  },
+  "proof": [
+    "frontend_workspace_inventory_1440.png",
+    "frontend_workspace_owner_onboarding_375.png",
+    "frontend_workspace_patron_return_pending_375.png",
+    "frontend_workspace_invitation_staff_375.png"
+  ],
+  "no_browser_auth_state_extraction": true,
+  "browser_actions": "Supported computer-use UI API only"
+}

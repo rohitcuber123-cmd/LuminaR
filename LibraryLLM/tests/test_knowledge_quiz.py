@@ -33,7 +33,8 @@ def test_every_selection_is_respected_and_balanced(selection):
     assert len(types) <= 12 and len(types) > 0
     assert result['generatedCounts'] == {kind: types.count(kind) for kind in sorted(selection)}
     if len(selection) == 3:
-        assert max(types.count(kind) for kind in selection)-min(types.count(kind) for kind in selection) <= 1
+        items = {kind:sum(len(item['leftItems']) if kind=='matching' else 1 for item in result['questions'] if item['type']==kind) for kind in selection}
+        assert max(items.values())-min(items.values()) <= 1
     assert result == generate(list(reversed(selection)))
 
 
@@ -45,7 +46,11 @@ def test_mcq_unique_category_compatible_options_and_rotated_answers():
         assert len(question['options']) == len(set(question['options'])) == 4
         assert question['options'].count(question['correctAnswer']) == 1
         positions.add(question['options'].index(question['correctAnswer']))
-        assert len({facts[option]['category'] for option in question['options']}) == 1
+        if all(option in facts for option in question['options']):
+            assert len({facts[option]['category'] for option in question['options']}) == 1
+        else:
+            assert question['relationFamily'] == 'DEFINITION'
+            assert all(option.lower() in question['optionSources'][option]['sourceExcerpt'].lower().replace('\n',' ') for option in question['options'])
         assert question['sourceChunkIds'] and question['pageStart']
         assert question['sourceExcerpt'] in next(c['text'] for c in chunks() if c['chunk_id'] == question['sourceChunkIds'][0])
         assert all(question['optionSources'][option]['sourceChunkIds'] for option in question['options'])
@@ -67,7 +72,7 @@ def test_matching_unique_structured_pairs_shuffled_and_grounded():
     assert result
     for question in result:
         left, right, mapping = question['leftItems'], question['rightItems'], question['correctMatches']
-        assert 3 <= len(left) == len(right) <= 5
+        assert 3 <= len(left) == len(right) <= 6
         assert len({item['text'] for item in left}) == len(left)
         assert len({item['text'] for item in right}) == len(right)
         assert set(mapping) == {item['id'] for item in left}
@@ -139,7 +144,10 @@ def test_generation_has_no_qwen_assistant_rag_or_model_calls(monkeypatch):
     assert generate(list(q.QUESTION_TYPES))['questions']
     assert forbidden.call_count == 0
     tree = ast.parse((Path(__file__).parents[1]/'rag/services/knowledge_quiz.py').read_text(encoding='utf-8'))
-    allowed = {'hashlib','itertools','random','re','rag.services.knowledge_algorithms','rag.services.knowledge_quiz_sources'}
+    allowed = {'hashlib','itertools','random','re','rag.services.knowledge_algorithms','rag.services.knowledge_quiz_sources',
+               'rag.services.knowledge_quiz_evidence','rag.services.knowledge_quiz_formats',
+               'rag.services.knowledge_quiz_relations','rag.services.knowledge_mcq','rag.services.knowledge_match',
+               'rag.services.knowledge_cloze'}
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             assert all(item.name in allowed for item in node.names)

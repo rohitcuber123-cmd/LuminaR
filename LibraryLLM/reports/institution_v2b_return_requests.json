@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "pending": "Loan remains ACTIVE and unavailable until physical receipt; pending_return_request_id prevents duplicate requests.",
+    "confirmed": "COMPLETED request / RETURNED loan / allocation released once.",
+    "rejected": "Loan remains ACTIVE; re-request permitted; original return_requested_at retained.",
+    "removed_borrower": "Current authorized staff can receive historical active loan."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_boundaries::test_return_confirm_race_and_renew_return_race",
+    "tests.institution_v2b.test_lending::test_return_request_remains_active_reject_re_request_confirm",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-approve]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-cancel]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-create]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-confirm]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-renew]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-stock]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-shelf]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-approve]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-cancel]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-create]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-confirm]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-renew]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-stock]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-shelf]"
+  ],
+  "live_scenarios": [
+    {
+      "code": "F",
+      "scenario": "Return request stays active; physical confirmation moves it to history and releases once",
+      "status": "PASS"
+    },
+    {
+      "code": "G",
+      "scenario": "Rejected return remains active and allocated",
+      "status": "PASS"
+    },
+    {
+      "code": "I",
+      "scenario": "Local-only record completes the full request/issue/physical-return cycle",
+      "status": "PASS"
+    }
+  ],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

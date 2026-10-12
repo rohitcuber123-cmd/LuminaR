@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "evidence_type": "derived from completed test artifacts, not a new test run",
+  "backend_evidence": "institution_v1_backend.xml",
+  "backend_total_passed": 56,
+  "matched_backend_cases": 13,
+  "tests": [
+    "test_public_join_idempotent_general_and_multi_library",
+    "test_no_self_reactivation[True-SUSPENDED]",
+    "test_no_self_reactivation[True-REMOVED]",
+    "test_no_self_reactivation[False-SUSPENDED]",
+    "test_no_self_reactivation[False-REMOVED]",
+    "test_roles_differ_by_library_and_librarian_limits",
+    "test_staff_loses_authority_and_can_be_reactivated[SUSPENDED]",
+    "test_staff_loses_authority_and_can_be_reactivated[REMOVED]",
+    "test_concurrent_double_accept_and_duplicate_joins",
+    "test_concurrent_private_attempt_budget_and_20_user_context_isolation",
+    "test_owner_last_admin_concurrent_protection",
+    "test_real_jwt_identity_ignores_global_role_and_stale_library_role",
+    "test_cross_library_membership_uuid_and_invitation_mass_assignment"
+  ],
+  "frontend_evidence": "institution_v1_frontend.log (28 institution component tests)",
+  "live_evidence": "institution_v1_live.json (A-J, real uvicorn + HTTP + disposable Mongo)",
+  "live_status": "PASS",
+  "browser_status": "PASS",
+  "assertions": [
+    "Unique library + canonical user membership",
+    "Public/private joins only GENERAL_USER",
+    "Idempotent repeat join",
+    "No self-reactivation after suspension/removal",
+    "Different roles for same account in different libraries",
+    "Session-scoped active context; backend remains authority"
+  ],
+  "limitations": [
+    "Only Part 1 APIs use these membership guards; old domain data remains legacy scoped."
+  ],
+  "note": "Feature subsets intentionally overlap; do not add subset counts as unique tests."
+}

@@ -1,5 +1,6 @@
 from enum import Enum
 from typing import Annotated, Any, Literal
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 from assistant.profiling import timed
@@ -152,6 +153,13 @@ class PageContext(StrictModel):
     document_id: str | None = Field(default=None, min_length=1, max_length=128)
 
 
+class LendingContext(StrictModel):
+    library_id: UUID
+    library_book_id: UUID | None = None
+    loan_id: UUID | None = None
+    reservation_id: UUID | None = None
+
+
 class AssistantRequest(StrictModel):
     @model_validator(mode='wrap')
     @classmethod
@@ -167,13 +175,14 @@ class AssistantRequest(StrictModel):
     recent_work_ids: list[WorkID] = Field(default_factory=list, max_length=20)
     page_context: PageContext = Field(default_factory=PageContext)
     pending_action_id: str | None = Field(default=None, min_length=1, max_length=64)
+    lending_context: LendingContext | None = None
     action: Literal['CONFIRM_ACTION', 'CANCEL_ACTION', 'COMPARE', 'RECOMMEND',
                     'RECOMMEND_SIMILAR', 'MORE_LIKE_THIS', 'RECOMMEND_FROM_SELECTION', 'CHECK_AVAILABILITY',
                     'AVAILABLE_NOW', 'USER_LOANS', 'USER_FEES', 'USER_RESERVATIONS',
                     'BOOK_CONTENT_QUESTION', 'DOCUMENT_QUESTION',
                     'USER_READING_LIST', 'ADD_TO_READING_LIST', 'REMOVE_FROM_READING_LIST',
                     'CLEAR_READING_LIST', 'RECOMMEND_AVAILABLE_SIMILAR',
-                    'EXPLAIN_RECOMMENDATION', 'EXPLAIN_COMPARISON', 'SHOW_MORE'] | None = None
+                    'EXPLAIN_RECOMMENDATION', 'EXPLAIN_COMPARISON', 'SHOW_MORE', 'REQUEST_BOOK', 'REQUEST_RETURN', 'RESERVE_LIBRARY_BOOK', 'CANCEL_LIBRARY_RESERVATION'] | None = None
     # Pagination: offset for show-more continuation
     result_offset: int = Field(default=0, ge=0, le=200)
 
@@ -215,6 +224,11 @@ class PendingAction(StrictModel):
     requires_confirmation: bool = True
     expires_at: str
     enabled: bool = False
+    library_id: UUID | None = None
+    library_book_id: UUID | None = None
+    loan_id: UUID | None = None
+    idempotency_key: UUID | None = None
+    reservation_id: UUID | None = None
 
 
 class AssistantError(StrictModel):

@@ -1,0 +1,15 @@
+# Part 2F.1 canonical collection and formats
+
+Staff Catalog is `/staff/libraries/:libraryId/inventory`, guarded by the current active LibraryMembership. Patron Browse remains `/libraries/:libraryId/catalogue`; explicit global Catalog remains `/catalog`. The shared product-context resolver handles Catalog, New Arrivals and Search. A historical `/catalog?staff_library=...` request redirects to inventory and cannot render the global catalogue as a staff collection. Return parameters on personal pages preserve navigation context and grant no authority.
+
+Add Book has exactly three native, mutually exclusive choices: Physical, Online, Physical + Online. The choice is creation intent, not a persisted format flag. Physical requires positive quantity and creates canonical stock. Online omits physical inputs and requests no holding, copy, stock or placeholder shelf. Both creates the physical record once and attaches a separately processed PDF to the same book UUID. Interrupted uploads and processing failures retain the created identity; retry reuses the operation/upload identity. READY is required before a successful online-availability announcement.
+
+The current backend accepts PDF. No unsupported TXT/DOCX acceptance is advertised by the corrected forms. This closure does not introduce another extraction pipeline.
+
+`library_book_formats` derives availability from a real holding and a READY, permitted, same-library attached asset. Processing, failed, deleted and unauthorized staff-only assets do not count as patron Online capability. Removing the last usable asset removes Online capability. No `format` authority is stored on the book. Inventory search/filter/pagination use a scoped Mongo aggregation and server-side format predicate; the browser does not fetch every library record or make per-book asset-list requests.
+
+Existing Physical → Add Online Copy preserves the book UUID, accession, original holding and copy count. Online → Add Physical Stock uses the canonical guarded stock operation, with immutable creation provenance distinguishing an intentionally absent holding from a lost physical holding. A lost physical holding remains fail-closed and is not silently recreated. Lending queues tolerate intentional online-only records without introducing fake inventory.
+
+Patron Online details show Read Online and omit physical Request Book, stock and shelf facts. Physical details retain request behavior. Both exposes Read Online and physical request independently. Digital visibility, asset file access, Q&A, processing and revocation continue to use existing library-scoped APIs; no platform-role bypass or personal-document fallback is introduced.
+
+Live evidence: `institution_v2f1_staff_catalog_browser.json`, `institution_v2f1_formats_browser.json`, `institution_v2f1_format_accessibility.json`. The hand-authored QA PDF and three format records are retained in a separate review library. TEST receives one expressly requested QA attachment; its original 150 books and holdings are compared byte-for-byte using canonical JSON hashes.

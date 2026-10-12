@@ -25,7 +25,7 @@ class RankedSearchPages:
             lexical = (health.get('lexical_available', False), health.get('lexical_version'),
                        health.get('lexical_generation'), health.get('lexical_delta_generation'))
         return (manifest.get('version'),manifest.get('semantic_generation'),lexical)
-    def search(self, query, limit=10, offset=0, library_id=None, available_at_library=False, _attempt=0):
+    def search(self, query, limit=10, offset=0, library_id=None, available_at_library=False, _attempt=0, *, category='', author=''):
         if not 1 <= limit <= SEARCH_MAX_RETURN_RESULTS or not 0 <= offset <= SEARCH_RANKED_POOL_SIZE or offset+limit > SEARCH_RANKED_POOL_SIZE:
             raise ValueError('limit must be 1–50 and offset + limit must not exceed 50.')
         if available_at_library and not library_id:
@@ -47,7 +47,7 @@ class RankedSearchPages:
         # A publication during ranking must not label old-generation results current.
         if self.generation() != generation:
             if _attempt >= 2: raise RuntimeError("Catalogue changed repeatedly during ranking; retry.")
-            return self.search(query, limit, offset, library_id, available_at_library, _attempt+1)
+            return self.search(query, limit, offset, library_id, available_at_library, _attempt+1, category=category, author=author)
         hydrate_start = perf_counter()
         ids = [row['work_id'] for row in pool['ranked']]
         metadata = current_books(self.engine.books_collection, ids)
@@ -56,6 +56,14 @@ class RankedSearchPages:
         for rank_row in pool['ranked']:
             wid=rank_row['work_id']; book=metadata.get(wid)
             if book is None: continue
+            # Filter the complete accepted ranked pool before pagination. Ranking,
+            # HNSW candidate depth and model behavior are unchanged.
+            subjects = book.get('subjects') or ''
+            tokens = subjects if isinstance(subjects, list) else subjects.split('|')
+            if category and category.casefold() not in {str(s).strip().casefold() for s in tokens}: continue
+            authors = book.get('authors') or ''
+            authors = '; '.join(authors) if isinstance(authors, list) else authors
+            if author and author.casefold() not in authors.casefold(): continue
             inv=inventory.get(wid)
             available=book.get('available_copies',0)
             if available_at_library and (not inv or available <= 0): continue

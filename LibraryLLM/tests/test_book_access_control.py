@@ -182,24 +182,11 @@ def test_logout_or_user_switch_has_no_server_side_entitlement_leak(access_contex
     assert_http(403, lambda: service.authorize_reader(99, "OL1W"))
 
 
-def test_issue_creation_wrapper_serializes_racing_borrow_requests(monkeypatch):
-    state_lock = Lock()
-    active = 0
-    maximum_active = 0
-
-    def fake_issue(user_id, work_id, library_id):
-        nonlocal active, maximum_active
-        with state_lock:
-            active += 1
-            maximum_active = max(maximum_active, active)
-        sleep(0.02)
-        with state_lock:
-            active -= 1
-        return {"user_id": user_id, "work_id": work_id, "library_id": library_id}
-
-    monkeypatch.setattr(issue_service, "_issue_book", fake_issue)
-    monkeypatch.setattr(issue_service, "borrow_locks_collection", FakeBorrowLocks())
+def test_retired_issue_service_cannot_write_under_concurrency():
+    from fastapi import HTTPException
+    def retired(_):
+        try: issue_service.issue_book(1, 'OL1W')
+        except HTTPException as error: return error.status_code
+        raise AssertionError('Legacy issue unexpectedly writable')
     with ThreadPoolExecutor(max_workers=2) as pool:
-        results = list(pool.map(lambda _: issue_service.issue_book(1, "OL1W"), range(2)))
-    assert len(results) == 2
-    assert maximum_active == 1
+        assert list(pool.map(retired, range(2))) == [410, 410]

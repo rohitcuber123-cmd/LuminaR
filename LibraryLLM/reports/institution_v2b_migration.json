@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "default": "Read-only plan. Apply requires explicit UUID library/verified legacy alias, --apply --writers-stopped --idempotency-key.",
+    "old_data": "Legacy issues/inventory retained; no dual writing.",
+    "refusal": "Unknown scope, multiple mapped books, duplicate user/book loans, copy allocations, inconsistent snapshot.",
+    "production": "No library activated/migrated in production."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_boundaries::test_cutover_migrates_explicit_legacy_source_and_reconciles",
+    "tests.institution_v2b.test_recovery_edges::test_recovery_and_rollback_require_stopped_writers",
+    "tests.institution_v2b.test_recovery_edges::test_invalid_migration_preflight_does_not_block_a_healthy_library",
+    "tests.institution_v2b.test_recovery_edges::test_snapshot_cannot_masquerade_as_copy_circulation"
+  ],
+  "live_scenarios": [],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

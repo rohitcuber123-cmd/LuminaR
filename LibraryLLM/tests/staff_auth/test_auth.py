@@ -38,6 +38,9 @@ def isolated(monkeypatch):
     database.users_collection.find.return_value.limit.return_value = []
     database.users_collection.list_indexes.return_value = [
         {'key':{'email':1},'unique':True}, {'key':{'user_id':1},'unique':True}]
+    database.db.platform_role_assignments.find.return_value=[]
+    database.db.__getitem__.return_value.find.return_value=[]
+    database.db.__getitem__.return_value.find_one.return_value=None
     yield
 
 def account(role='GENERAL_USER', **fields):
@@ -86,6 +89,7 @@ def test_existing_malformed_token_rejected():
 @pytest.mark.parametrize('role',['ADMIN','LIBRARIAN'])
 def test_staff_login(role, caplog):
     account(role)
+    database.db.__getitem__.return_value.find_one.return_value={'role':'LIBRARIAN','status':'ACTIVE'}
     response=client.post('/auth/staff-login',json={'email':'reader@example.com','password':PASSWORD})
     assert response.status_code == 200
     assert response.json()['user']['role'] == role
@@ -118,7 +122,7 @@ def test_non_admin_rejected_from_every_staff_api(role):
     account(role)
     for method,path,body in [('GET','/staff/',None),('POST','/staff/librarians',{'name':'New','email':'new@example.com'}),('PATCH','/staff/2',{'is_active':False}),('POST','/staff/2/resend-verification',None)]:
         result=client.request(method,path,headers=headers(role),**({'json':body} if body else {}))
-        assert result.status_code == 403
+        assert result.status_code == 410
     database.users_collection.insert_one.assert_not_called()
     database.users_collection.update_one.assert_not_called()
 
@@ -126,11 +130,11 @@ def test_reader_denied_existing_staff_apis():
     account()
     for path in ['/issues/all','/reservations/all','/fines/all','/activity/all']:
         assert client.get(path,headers=headers()).status_code == 403
-    assert client.post('/inventory/',headers=headers(),json={'library_id':'TEST','work_id':'OL1W'}).status_code == 403
+    assert client.post('/inventory/',headers=headers(),json={'library_id':'TEST','work_id':'OL1W'}).status_code == 410
 
 def test_stored_role_overrides_signed_stale_or_forged_role():
     account('GENERAL_USER')
-    assert client.get('/staff/',headers=headers('ADMIN')).status_code == 403
+    assert client.get('/staff/',headers=headers('ADMIN')).status_code == 410
     assert client.delete('/books/OL1W',headers=headers('ADMIN')).status_code == 403
 
 def test_disabled_existing_token_rejected():
@@ -149,7 +153,7 @@ def test_public_signup_rejects_all_privilege_fields(extra):
 def test_staff_creation_rejects_hidden_privilege_fields(extra):
     account('ADMIN')
     result=client.post('/staff/librarians',headers=headers('ADMIN'),json={'name':'New','email':'new@example.com',**extra})
-    assert result.status_code == 422
+    assert result.status_code == 410
     database.users_collection.insert_one.assert_not_called()
 
 def test_staff_login_role_field_rejected():
@@ -157,14 +161,12 @@ def test_staff_login_role_field_rejected():
     assert client.post('/auth/staff-login',json={'email':'reader@example.com','password':PASSWORD,'role':'ADMIN'}).status_code == 422
 
 def test_admin_staff_directory_whitelists_fields():
-    user=account('ADMIN')
-    database.users_collection.find.return_value.sort.return_value.skip.return_value.limit.return_value=[{**user,'otp':'not-for-output','token':'not-for-output'}]
-    database.users_collection.count_documents.return_value=1
-    result=client.get('/staff/',headers=headers('ADMIN'))
-    assert result.status_code == 200
-    row=result.json()['users'][0]
-    assert set(row) == {'user_id','name','email','role','is_email_verified','is_active','created_at'}
-    assert row['is_active'] is True
+    account('ADMIN')
+    assert client.get('/staff/',headers=headers('ADMIN')).status_code == 410
+    assert client.post('/staff/librarians',headers=headers('ADMIN'),json={'name':'Staff','email':'new@example.com'}).status_code == 410
+    assert client.patch('/staff/2',headers=headers('ADMIN'),json={'name':'Renamed'}).status_code == 410
+    database.users_collection.insert_one.assert_not_called()
+    database.users_collection.update_one.assert_not_called()
 
 class AtomicCounter:
     def __init__(self): self.seq=0; self.lock=Lock()
@@ -185,35 +187,23 @@ def test_numeric_ids_are_atomic_and_respect_existing_floor():
 
 def test_bootstrap_duplicate_email_refused():
     from backend.scripts.bootstrap_admin import bootstrap_first_admin
-    account()
-    with pytest.raises(ValueError,match='Email already registered'):
-        bootstrap_first_admin('Admin','reader@example.com',PASSWORD)
+    with pytest.raises(ValueError,match='retired'): bootstrap_first_admin('Admin','new@example.com',PASSWORD)
     database.users_collection.insert_one.assert_not_called()
 
 def test_bootstrap_existing_admin_refused():
     from backend.scripts.bootstrap_admin import bootstrap_first_admin
-    database.users_collection.find_one.side_effect=lambda query,*a,**k: {'user_id':1} if query == {'role':'ADMIN'} else None
-    with pytest.raises(ValueError,match='already exists'):
-        bootstrap_first_admin('Admin','new@example.com',PASSWORD)
+    with pytest.raises(ValueError,match='retired'): bootstrap_first_admin('Admin','new@example.com',PASSWORD)
     database.users_collection.insert_one.assert_not_called()
 
 def test_bootstrap_atomic_single_winner_lock():
     from backend.scripts.bootstrap_admin import bootstrap_first_admin
-    from pymongo.errors import DuplicateKeyError
-    database.db.__getitem__.return_value.insert_one.side_effect=DuplicateKeyError('locked')
-    with pytest.raises(ValueError,match='in progress'):
-        bootstrap_first_admin('Admin','new@example.com',PASSWORD)
+    with pytest.raises(ValueError,match='retired'): bootstrap_first_admin('Admin','new@example.com',PASSWORD)
     database.users_collection.insert_one.assert_not_called()
 
 def test_bootstrap_creates_only_admin_with_hashed_password(monkeypatch):
-    from backend.scripts import bootstrap_admin
-    monkeypatch.setattr(bootstrap_admin,'next_user_id',lambda:10)
-    result=bootstrap_admin.bootstrap_first_admin('Admin','NEW@example.com',PASSWORD)
-    document=database.users_collection.insert_one.call_args.args[0]
-    assert document['role'] == 'ADMIN' and document['is_email_verified'] and document['is_active']
-    assert bcrypt.checkpw(PASSWORD.encode(),document['password_hash'].encode())
-    assert set(result)=={'email','role'} and result['email']=='new@example.com'
-    database.db.__getitem__.return_value.delete_one.assert_not_called()
+    from backend.scripts.bootstrap_admin import bootstrap_first_admin
+    with pytest.raises(ValueError,match='retired'): bootstrap_first_admin('Admin','new@example.com',PASSWORD)
+    database.users_collection.insert_one.assert_not_called()
 
 def test_missing_identity_indexes_fail_without_creating_indexes():
     from backend.services.identity_service import next_user_id
@@ -222,39 +212,28 @@ def test_missing_identity_indexes_fail_without_creating_indexes():
     database.users_collection.create_index.assert_not_called()
 
 def test_admin_creates_librarian_invitation(monkeypatch):
-    from backend.services import staff_service
     account('ADMIN')
-    monkeypatch.setattr(staff_service,'email_exists',lambda email:False)
-    monkeypatch.setattr(staff_service,'next_user_id',lambda:12)
-    sent=[]
-    monkeypatch.setattr(staff_service,'resend_verification_otp',lambda email:sent.append(email))
-    result=client.post('/staff/librarians',headers=headers('ADMIN'),json={'name':'Librarian','email':'NEW@example.com'})
-    assert result.status_code == 201
-    document=database.users_collection.insert_one.call_args.args[0]
-    assert document['role']=='LIBRARIAN' and not document['is_email_verified']
-    assert document['password_setup_required'] is True and sent==['new@example.com']
-    assert 'password_hash' not in result.json()['user']
+    assert client.get('/staff/',headers=headers('ADMIN')).status_code == 410
+    assert client.post('/staff/librarians',headers=headers('ADMIN'),json={'name':'Staff','email':'new@example.com'}).status_code == 410
+    assert client.patch('/staff/2',headers=headers('ADMIN'),json={'name':'Renamed'}).status_code == 410
+    database.users_collection.insert_one.assert_not_called()
+    database.users_collection.update_one.assert_not_called()
 
 def test_email_failure_leaves_honest_pending_invitation(monkeypatch):
-    from backend.services import staff_service
     account('ADMIN')
-    monkeypatch.setattr(staff_service,'email_exists',lambda email:False)
-    monkeypatch.setattr(staff_service,'next_user_id',lambda:12)
-    def failed(email): raise RuntimeError('delivery unavailable')
-    monkeypatch.setattr(staff_service,'resend_verification_otp',failed)
-    result=client.post('/staff/librarians',headers=headers('ADMIN'),json={'name':'Librarian','email':'new@example.com'})
-    assert result.status_code == 201 and result.json()['verification_sent'] is False
-    assert result.json()['user']['is_email_verified'] is False
+    assert client.get('/staff/',headers=headers('ADMIN')).status_code == 410
+    assert client.post('/staff/librarians',headers=headers('ADMIN'),json={'name':'Staff','email':'new@example.com'}).status_code == 410
+    assert client.patch('/staff/2',headers=headers('ADMIN'),json={'name':'Renamed'}).status_code == 410
+    database.users_collection.insert_one.assert_not_called()
+    database.users_collection.update_one.assert_not_called()
 
 def test_admin_can_update_librarian_but_not_admin(monkeypatch):
     account('ADMIN')
-    admin=database.users_collection.find_one.return_value
-    database.users_collection.find_one.side_effect=lambda query,*a,**k: (None if query.get('role')=='LIBRARIAN' and query.get('user_id')==1 else {**admin,'user_id':2,'role':'LIBRARIAN'}) if 'role' in query else admin
-    response=client.patch('/staff/2',headers=headers('ADMIN'),json={'name':'Renamed','is_active':False})
-    assert response.status_code == 200
-    assert database.users_collection.update_one.call_args.args[0]=={'user_id':2,'role':'LIBRARIAN'}
-    assert client.patch('/staff/1',headers=headers('ADMIN'),json={'is_active':False}).status_code==404
-    assert client.patch('/staff/2',headers=headers('ADMIN'),json={'role':'ADMIN'}).status_code==422
+    assert client.get('/staff/',headers=headers('ADMIN')).status_code == 410
+    assert client.post('/staff/librarians',headers=headers('ADMIN'),json={'name':'Staff','email':'new@example.com'}).status_code == 410
+    assert client.patch('/staff/2',headers=headers('ADMIN'),json={'name':'Renamed'}).status_code == 410
+    database.users_collection.insert_one.assert_not_called()
+    database.users_collection.update_one.assert_not_called()
 
 def test_staff_setup_consumes_otp_and_sets_own_password():
     account('LIBRARIAN',is_email_verified=False,password_setup_required=True)

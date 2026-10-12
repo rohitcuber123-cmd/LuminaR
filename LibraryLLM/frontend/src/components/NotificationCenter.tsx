@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { Bell, X } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { coreRequest, BORROW_STATE_CHANGED } from '../lib/api'
 import { useAuthStore } from '../store/useAuthStore'
-import { noticeDelta, type Notice } from '../lib/notifications'
+import { noticeDelta, resolveNotificationAction, type Notice } from '../lib/notifications'
 
 interface Inbox { notifications: Notice[]; count: number; unread_count: number }
 
 export function NotificationCenter() {
+  const navigate=useNavigate()
   const user = useAuthStore(s => s.user)
   const token = useAuthStore(s => s.token)
   const scope = `${user?.user_id ?? user?.id ?? ''}:${token ?? ''}`
@@ -74,6 +76,19 @@ export function NotificationCenter() {
     } catch { setError('Unable to update read status. Try again.') }
     finally { setBusy(false) }
   }
+  async function follow(notice:Notice) {
+    const owner=scope
+    setBusy(true)
+    try {
+      const fresh=await coreRequest<Notice>(`/notifications/${encodeURIComponent(notice.notification_id)}/action`)
+      if(session.current.scope!==owner) return
+      const route=resolveNotificationAction(fresh)
+      if(!route) {setInbox(value=>({...value,notifications:value.notifications.map(n=>n.notification_id===fresh.notification_id?fresh:n)}));return}
+      await coreRequest(`/notifications/${encodeURIComponent(notice.notification_id)}/read`,{method:'PATCH'})
+      if(session.current.scope===owner) {setOpen(false);navigate(route);bell.current?.focus();void refresh.current()}
+    } catch {if(session.current.scope===owner) setError('Unable to open notification. Try again.')}
+    finally {if(session.current.scope===owner) setBusy(false)}
+  }
   if (!enabled) return null
   return <div className="notification-root">
     <button ref={bell} type="button" className="notification-bell" aria-label={`Notifications${inbox.unread_count ? `, ${inbox.unread_count} unread` : ''}`} aria-expanded={open} aria-controls="notification-center" onClick={() => { setOpen(v => !v); void refresh.current() }}><Bell size={19} />{inbox.unread_count > 0 && <span className="notification-count">{inbox.unread_count > 99 ? '99+' : inbox.unread_count}</span>}</button>
@@ -82,7 +97,7 @@ export function NotificationCenter() {
       <button className="notification-read" disabled={busy || !inbox.unread_count} onClick={() => void mark()}>Mark all as read</button>
       {error && <p role="alert">{error} <button onClick={() => void refresh.current()}>Retry</button></p>}
       {!inbox.notifications.length && !error && <p className="notification-empty">No notifications yet.</p>}
-      <ul>{inbox.notifications.map(n => <li key={n.notification_id} className={n.resolved_at ? 'notification-resolved' : n.read_at ? '' : 'notification-unread'}><h3>{n.title}</h3><p>{n.message}</p>{n.resolved_at && <p className="notification-resolution">Resolved — {(n.resolution_reason || 'loan updated').replaceAll('_', ' ').toLowerCase()}</p>}<time dateTime={n.created_at}>{new Date(n.created_at).toLocaleString()}</time>{!n.read_at && !n.resolved_at && <button disabled={busy} className="notification-read" onClick={() => void mark(n.notification_id)}>Mark as read</button>}</li>)}</ul>
+      <ul>{inbox.notifications.map(n => <li key={n.notification_id} className={n.resolved_at ? 'notification-resolved' : n.read_at ? '' : 'notification-unread'}><p className="notification-scope">{n.scope==='LIBRARY' ? n.library_name || 'Library' : n.scope==='PLATFORM' ? 'Platform' : n.scope==='GLOBAL' ? 'Account' : 'Source needs review'}</p><h3>{n.title}</h3><p>{n.message}</p>{n.resolved_at && <p className="notification-resolution">Resolved — {(n.resolution_reason || 'loan updated').replaceAll('_', ' ').toLowerCase()}</p>}{n.action_unavailable && <p className="notification-resolution">{n.action_unavailable}</p>}{resolveNotificationAction(n) && <button className="notification-read" disabled={busy} onClick={()=>void follow(n)} aria-label={'Open '+n.title+' in '+(n.library_name || 'library')}>Open</button>}<time dateTime={n.created_at}>{new Date(n.created_at).toLocaleString()}</time>{!n.read_at && !n.resolved_at && <button disabled={busy} className="notification-read" onClick={() => void mark(n.notification_id)}>Mark as read</button>}</li>)}</ul>
       <div className="notification-pages"><button disabled={!offset} onClick={() => setOffset(v => Math.max(0, v - 20))}>Previous</button><span>{inbox.count ? `${offset + 1}–${Math.min(offset + 20, inbox.count)} of ${inbox.count}` : '0 notifications'}</span><button disabled={offset + 20 >= inbox.count} onClick={() => setOffset(v => v + 20)}>Next</button></div>
     </div>}
     {toast && <div className="notification-toast" role="status"><div><strong>{toast.title}</strong><p>{toast.message}</p></div><button aria-label="Close notification toast" onClick={() => setToast(null)}><X size={18} /></button></div>}

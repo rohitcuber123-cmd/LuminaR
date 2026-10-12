@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "evidence_type": "derived from completed test artifacts, not a new test run",
+  "backend_evidence": "institution_v1_backend.xml",
+  "backend_total_passed": 56,
+  "matched_backend_cases": 15,
+  "tests": [
+    "test_registration_models_owner_and_global_identity[False]",
+    "test_registration_models_owner_and_global_identity[True]",
+    "test_registration_mass_assignment[owner_user_id]",
+    "test_registration_mass_assignment[owner_role]",
+    "test_registration_mass_assignment[created_by]",
+    "test_registration_mass_assignment[admin_user_id]",
+    "test_registration_mass_assignment[is_owner]",
+    "test_registration_mass_assignment[is_admin]",
+    "test_registration_mass_assignment[user_id]",
+    "test_registration_mass_assignment[membership_status]",
+    "test_registration_invalid_access_and_secret_safe_errors[body0]",
+    "test_registration_invalid_access_and_secret_safe_errors[body1]",
+    "test_registration_invalid_access_and_secret_safe_errors[body2]",
+    "test_registration_invalid_access_and_secret_safe_errors[body3]",
+    "test_duplicate_normalized_slug_and_duplicate_names"
+  ],
+  "frontend_evidence": "institution_v1_frontend.log (28 institution component tests)",
+  "live_evidence": "institution_v1_live.json (A-J, real uvicorn + HTTP + disposable Mongo)",
+  "live_status": "PASS",
+  "browser_status": "PASS",
+  "assertions": [
+    "Public/private registration",
+    "Server-derived owner and ACTIVE ADMIN membership",
+    "No global role escalation",
+    "Unique normalized slug; duplicate names allowed",
+    "Strict forbidden fields and secret-safe validation"
+  ],
+  "limitations": [
+    "No organization verification or institution creation quota yet."
+  ],
+  "note": "Feature subsets intentionally overlap; do not add subset counts as unique tests."
+}

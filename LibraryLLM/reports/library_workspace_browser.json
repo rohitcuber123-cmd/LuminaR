@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-09T04:03:31.504Z",
+  "frontend": "http://127.0.0.1:5184",
+  "checks": [
+    "A ADMIN opens tenant staff workspace without patron navigation",
+    "A staff inventory shows management actions and no personal book request",
+    "A direct patron loans URL redirects to the ADMIN staff workspace",
+    "B LIBRARIAN opens staff workspace without patron or ADMIN controls",
+    "B direct ADMIN URL redirects to LIBRARIAN workspace despite global ADMIN",
+    "C GENERAL_USER opens My Library without staff navigation",
+    "C inventory offers Request Book and hides staff editing controls",
+    "C patron request succeeds against the real API and creates a pending hold",
+    "C direct staff fees URL redirects to patron My Library",
+    "A → B → C → A preserves the account and restores the corresponding workspace"
+  ],
+  "screenshots": [
+    "library_workspace_admin.png",
+    "library_workspace_librarian.png",
+    "library_workspace_patron.png",
+    "library_workspace_patron_request.png"
+  ],
+  "production_mutations": 0
+}

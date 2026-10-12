@@ -1,0 +1,39 @@
+# Improvement review — current delivery and future intelligence
+
+## Delivered and remaining measurements
+
+V1 replaces generic patron catalogue surfaces with a canonical tenant reader and one normalized display path. It removes card-by-card availability/request/reservation/shelf HTTP loading. It keeps existing Part 2B/C commands and moves only their pure availability calculation into a shared function. Source derivation, zero-result behavior and cross-library ownership have explicit tests.
+
+Measure large real tenant collections before introducing materialized read models: source count, subject facets, popularity window scan, tenant lock contention and p50/p95 under concurrent readers/commands. Current measurements use 0/4/10-book disposable libraries and constant round trips, not large-tenant throughput. An eventual revision-bound aggregate read model must invalidate after canonical inventory/loan/reservation changes and preserve the same membership checks. Avoid caching personal lending state globally.
+
+The frozen global metadata endpoint still computes legacy stock values internally that discovery immediately discards. A later separately approved metadata-only global reader could avoid those unnecessary internal lookups. Global search/categories use the accepted existing pipeline; genres currently expose its existing top-category feed. The global Search service must be running for live fallback queries. Normal inventory edits have created_at, not an acquisition-date editor; consider audited acquisition date support in a separate inventory change. Bundle splitting can be reviewed separately; current main bundle keeps the existing size warning. Structural axe tests exclude color contrast and outside-page landmark rules; keyboard focus and responsive geometry were checked in the live browser. This is not a full external accessibility certification.
+
+## Future tenant catalogue generations — REVIEW ONLY
+
+Create immutable per-library dataset generations from canonical active metadata and holdings, with generation ID, sorted stable library_book_id mapping, catalogue revision/watermark, schema/pipeline version, row count, snapshot digest and snapshot time. Include only fields allowed by that library's privacy policy. A public OpenLibrary work ID is optional metadata, never the tenant identity. Snapshot membership or patron borrowing history is not input to a metadata search/graph build. Record later mutations as staleness against the generation watermark rather than modifying ready artifacts in place.
+
+## Durable jobs and authority
+
+A future Admin click must only validate fresh LibraryMembership, write an idempotent durable job and return its ID. It must not synchronously run a Python builder inside an HTTP request. Proposed path: click → durable job → background worker → immutable catalogue snapshot → isolated artifact build → validation → atomic publication → READY. Jobs carry library ID, requested generation, build kind, pipeline/model fingerprint, actor, idempotency key, state, lease/heartbeat, attempts, cancellation flag, stage progress, error code and artifact manifest. Use bounded QUEUED/RUNNING/VALIDATING/PUBLISHING/READY/FAILED/CANCELLED states and an append-only audit trail.
+
+Default authority: active library ADMIN may enqueue/cancel/retry. LIBRARIAN can inspect readiness/staleness; build authority requires a separately reviewed explicit policy, not legacy User.role. PlatformRoleAssignment permits global oversight of resource/job health and separately audited operational intervention; it does not grant access to private catalogue contents or tenant operations. Revocation is checked at enqueue and publication. A worker's service identity is restricted to its leased tenant job, with no tenant authority inferred from a platform role.
+
+## Worker, concurrency and recovery
+
+Run dedicated background processes outside core/search HTTP workers. Permit one build/publication per library and impose global concurrency plus per-library quotas. Budget CPU threads, RAM, GPU time, disk bytes, maximum records, queue length, duration and retained generations. Lease fencing prevents an expired worker from publishing after takeover. Progress reports durable phase/count totals, not guessed percentage. Cancellation is checked at chunk boundaries and before publication; it keeps the last ready generation. Retry uses bounded backoff and stable snapshot identity. A crash leaves a recoverable staged manifest; expired leases are reclaimed, completed validated artifacts can be reused, and partial files are quarantined/removed under the job's own path. No runaway background loop or request-time builder.
+
+## Future tenant HNSW — REVIEW ONLY
+
+Use a per-library artifact root and stable scoped book UUID labels. Model/tokenizer/preprocessing fingerprints, dimensions, normalization and snapshot checksums belong in the manifest. Encode bounded batches with privacy-safe local model execution, then build an isolated HNSW artifact; never insert tenant records into global 5M HNSW. Build means first validated generation; Rebuild means a new complete generation, retaining the current ready one until publish. Validate vector count, finite vectors, label uniqueness/mapping cardinality, tenant isolation, sample retrieval and file SHA-256 digests. Use fsync plus an atomic generation pointer update guarded by lease fencing and generation compare-and-set.
+
+Search loaders use library_id + source + generation, validate manifests/checksums, and keep a ready snapshot reference for each request. Swap loaded generations atomically; drain old references before releasing memory. Loading failure keeps the previous ready snapshot or the ordinary tenant-local search. A populated library without a tenant index continues its canonical local lexical catalogue; it must never present global books as owned. Global discovery remains explicitly separate, and zero-local-record libraries continue the existing global fallback. This review does not implement tenant routing/private vectors.
+
+## Future tenant Knowledge Graph — REVIEW ONLY
+
+Build deterministic metadata edges from the same immutable catalogue snapshot: scoped book UUID to normalized author/subject/publisher concepts with explicit provenance. Namespace nodes by library; optional public global_work_id links do not join private graphs across tenants. Record schema, normalization version, snapshot fingerprint, node/edge counts, ID mapping, build resource use and artifact checksums. Validate that every book node belongs to that generation/library, edge endpoints exist, duplicate/self edges meet policy, and no private metadata enters the global KG. Missing ISBN/work IDs remain valid local graph nodes.
+
+A separate KG worker job uses the same durable queue, cancellation, retry, lease fencing and publication protocol. Publish a validated immutable graph plus manifest by atomic generation pointer; graph loaders select only the current authorized library generation. Keep the last ready graph while rebuilding; a missing graph yields an honest no-graph/local discovery state, with separately labelled global discovery where permitted. There is no synchronous graph builder, ordinary staff technical dashboard, or Build/Rebuild UI in this delivery.
+
+## Deployment and evidence limits
+
+No production data migration, existing-service restart or deployment was performed. Production collection counts and 196 recorded artifact size/mtime values are preserved; this is not a full content hash of every database row or multi-GB artifact. Windows host scaling produces a one-pixel difference at some requested breakpoints, recorded in browser evidence. All agent-created databases/services/tabs were cleaned up. Saved screenshots from the successful live matrix remain the visual evidence; later screenshot capture became unavailable after a tool-runtime reset, while fresh DOM verification succeeded.

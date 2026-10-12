@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "evidence_type": "derived from completed test artifacts, not a new test run",
+  "backend_evidence": "institution_v1_backend.xml",
+  "backend_total_passed": 56,
+  "matched_backend_cases": 8,
+  "tests": [
+    "test_private_code_case_sensitive_and_brute_force",
+    "test_staff_rotation_preserves_members_invalidates_old_code[ADMIN]",
+    "test_staff_rotation_preserves_members_invalidates_old_code[LIBRARIAN]",
+    "test_access_mode_conversion_preserves_existing_members",
+    "test_general_user_denied_staff_operations",
+    "test_concurrent_private_attempt_budget_and_20_user_context_isolation",
+    "test_partial_grants_and_crashed_mutations_fail_closed",
+    "test_access_code_long_unicode_is_not_bcrypt_truncated"
+  ],
+  "frontend_evidence": "institution_v1_frontend.log (28 institution component tests)",
+  "live_evidence": "institution_v1_live.json (A-J, real uvicorn + HTTP + disposable Mongo)",
+  "live_status": "PASS",
+  "browser_status": "PASS",
+  "assertions": [
+    "Argon2id salted password hash only",
+    "Case-sensitive 8-128 Unicode character codes",
+    "Owner/Admin/Librarian rotation",
+    "Old credential invalid; new credential valid; memberships preserved",
+    "Public-private conversion requires code; private-public clears hash",
+    "Persistent account/library and library-wide fixed-window verification budgets"
+  ],
+  "limitations": [
+    "Shared code proves possession, not individual affiliation.",
+    "Fixed windows can allow adjacent-window bursts; all verification attempts consume budget."
+  ],
+  "note": "Feature subsets intentionally overlap; do not add subset counts as unique tests."
+}

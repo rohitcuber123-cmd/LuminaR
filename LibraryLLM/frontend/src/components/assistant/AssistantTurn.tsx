@@ -1,3 +1,5 @@
+import { useProductContext } from '../../hooks/useProductContext'
+import { productBookPath } from '../../lib/productContext'
 import { Link } from 'react-router-dom'
 import { BookmarkPlus, BookmarkMinus, BookmarkCheck, Lightbulb, ChevronDown, MoreHorizontal } from 'lucide-react'
 import { BookCover } from '../BookCover'
@@ -5,6 +7,7 @@ import { BookSelectButton } from '../BookSelectButton'
 import { BookDiscoveryMenu } from '../BookDiscoveryMenu'
 import { WhyRelated } from '../RelatedBookCard'
 import { displayText, recommendationHeading } from '../../lib/assistant'
+import { money } from '../../lib/libraryReservationsFees'
 import type { AssistantAction, AssistantAvailability, AssistantBook, AssistantComparison, AssistantResponse } from '../../lib/assistantTypes'
 
 const label = (key: string) => key.replaceAll('_', ' ').replace(/^./, first => first.toUpperCase())
@@ -69,6 +72,7 @@ export function ComparisonView({ comparison, availability, onAction, busy }: {
 function ReadingListView({ books, onAction, busy }: {
   books: AssistantBook[]; onAction: (action: AssistantAction, book?: AssistantBook) => void; busy: boolean
 }) {
+  const context=useProductContext()
   if (!books.length) return <p className="text-xs text-ink-soft">Your reading list is empty. Add books using the "Add to reading list" button on any book card.</p>
   return <section aria-label="Your reading list" className="space-y-2">
     {books.map(book => {
@@ -83,7 +87,7 @@ function ReadingListView({ books, onAction, busy }: {
         <div className="flex shrink-0 gap-1">
           <BookSelectButton book={book} />
           <BookDiscoveryMenu workId={book.work_id} />
-          <Link className="assistant-button text-xs" to={`/book/${encodeURIComponent(book.work_id)}`}>View</Link>
+          <Link className="assistant-button text-xs" to={context.personalPath(productBookPath(book.work_id,context.libraryId))}>View</Link>
           <button className="assistant-icon-button text-ink-soft" disabled={busy}
             aria-label={`Remove ${book.title || book.work_id} from reading list`}
             onClick={() => onAction({ type: 'REMOVE_FROM_READING_LIST', work_id: book.work_id }, book)}>
@@ -100,6 +104,7 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
   onAction: (action: AssistantAction, book?: AssistantBook) => void
   onChoice: (book: AssistantBook) => void
 }) {
+  const context=useProductContext()
   const pending = response.pending_action
   const confirmationLabel = pending ? ({ BORROW_BOOK: 'borrowing', RESERVE_BOOK: 'reservation', RETURN_BOOK: 'return', ADD_TO_READING_LIST: 'add to reading list', REMOVE_FROM_READING_LIST: 'remove from reading list' } as Partial<Record<AssistantResponse['intent'], string>>)[pending.type] || 'action' : 'action'
   const pendingExpired = pending ? Date.parse(pending.expires_at) <= now : false
@@ -144,7 +149,7 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
         {primaryActions.some(a => ['SELECT_BOOK', 'UNSELECT_BOOK'].includes(a.type)) && <BookSelectButton book={book} compact />}
         {/* View and Recommend Similar always visible */}
         {primaryActions.filter(a => ['VIEW_BOOK', 'RECOMMEND_SIMILAR'].includes(a.type)).map(action => action.type === 'VIEW_BOOK'
-          ? <Link key={action.type} className="assistant-button" aria-label="View book" to={`/book/${encodeURIComponent(book.work_id)}`}>View</Link>
+          ? <Link key={action.type} className="assistant-button" aria-label="View book" to={context.personalPath(productBookPath(book.work_id,context.libraryId))}>View</Link>
           : <button key={action.type} className="assistant-button" aria-label={ACTION_LABELS[action.type]} title={ACTION_LABELS[action.type]} disabled={busy} onClick={() => onAction(action, book)}>Similar</button>)}
         {/* Reading list icon button */}
         {readingListActions.length > 0 && <button
@@ -230,7 +235,7 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
         {!account[key]?.length && <p className="mt-1 text-xs text-ink-soft">No {key === 'issues' ? 'loans' : key} recorded.</p>}
         {account[key]?.map((record, index) => <dl key={index} className="mt-2 border-t border-line pt-2 text-xs">{Object.entries(record).filter(([field, value]) => !['user_id', '_id'].includes(field) && value != null).map(([field, value]) => <div key={field} className="flex flex-wrap gap-x-2"><dt className="font-medium">{label(field)}:</dt><dd><LongValue field={field} value={value} /></dd></div>)}</dl>)}
       </div>)}
-      {!accountGroups.length && <dl className="mt-2 text-xs">{Object.entries(account).filter(([field]) => !['user_id', '_id', 'total_unpaid'].includes(field)).map(([field, value]) => <div key={field}><dt className="font-medium">{label(field)}</dt><dd><LongValue field={field} value={value} /></dd></div>)}</dl>}
+      {account.library_id && account.results ? <div className="mt-2 text-xs"><p>Selected library records · <Link to={response.intent === 'USER_FEES' ? '/libraries/'+account.library_id+'/fees' : '/libraries/'+account.library_id+'/reservations'}>View in My Library</Link></p>{response.intent === 'USER_FEES' && <p>Payment is handled by the library.</p>}{account.results.map((row, index) => <div key={index} className="mt-2 border-t border-line pt-2"><p>{row.title} · {row.status}</p>{typeof row.balance_minor === 'number' && <p>Balance: {money(row.balance_minor, typeof row.currency === 'string' ? row.currency : 'INR')}</p>}{typeof row.queue_position === 'number' && <p>Queue position: {row.queue_position}</p>}</div>)}</div> : !accountGroups.length && <dl className="mt-2 text-xs">{Object.entries(account).filter(([field]) => !['user_id', '_id', 'total_unpaid'].includes(field)).map(([field, value]) => <div key={field}><dt className="font-medium">{label(field)}</dt><dd><LongValue field={field} value={value} /></dd></div>)}</dl>}
     </section>}
     {response.rag && <section aria-label="Source answer" className="border border-line p-3">
       <h3 className="font-display text-sm">From your source</h3>

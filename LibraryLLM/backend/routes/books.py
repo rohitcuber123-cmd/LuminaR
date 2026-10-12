@@ -1,14 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query, Depends
+from typing import Literal
 from pydantic import BaseModel
 
-from backend.services.book_service import (
-    get_books,
-    get_top_categories,
-    get_book_by_work_id,
-    create_book,
-    update_book,
-    delete_book
-)
 
 from backend.services.book_service import (
     get_books,
@@ -21,7 +14,8 @@ from backend.services.book_service import (
     delete_book
 )
 
-from backend.dependencies import get_current_user, require_roles
+from backend.dependencies import get_current_user
+from backend.platform_dependencies import require_platform_admin, has_platform_admin
 from backend.services.book_capability_service import (
     with_capabilities, catalog_capabilities, get_readable_book,
 )
@@ -43,8 +37,8 @@ class BookCreateRequest(BaseModel):
     rating_count: int = 0
     reading_log_count: int = 0
     shelf_location: str | None = None
-    total_copies: int = 1
-    available_copies: int = 1
+    total_copies: int = 0
+    available_copies: int = 0
 
 
 class BookUpdateRequest(BaseModel):
@@ -63,19 +57,24 @@ class BookUpdateRequest(BaseModel):
 @router.get("/")
 def books(
     limit: int = Query(20, ge=1, le=100),
-    offset: int = Query(0, ge=0)
+    offset: int = Query(0, ge=0),
+    category: str = Query('', max_length=200),
+    author: str = Query('', max_length=150),
+    sort: Literal['catalogue', 'new_arrivals', 'popular'] = 'catalogue'
 ):
 
     results, total_count = get_books(
-        limit,
-        offset
+        limit + 1,
+        offset, category=category, author=author, sort=sort
     )
 
     return {
         "count": total_count,
         "limit": limit,
         "offset": offset,
-        "results": with_capabilities(results)
+        "has_more": len(results) > limit,
+        "count_status": "EXACT" if total_count is not None and (category or author) else "ESTIMATED" if total_count is not None else "UNAVAILABLE",
+        "results": with_capabilities(results[:limit])
     }
 
 
@@ -154,10 +153,7 @@ def book(work_id: str):
 def create(
     request: BookCreateRequest,
     current_user=Depends(
-        require_roles(
-            "ADMIN",
-            "LIBRARIAN"
-        )
+        require_platform_admin
     )
 ):
 
@@ -185,10 +181,7 @@ def update(
     work_id: str,
     request: BookUpdateRequest,
     current_user=Depends(
-        require_roles(
-            "ADMIN",
-            "LIBRARIAN"
-        )
+        require_platform_admin
     )
 ):
 
@@ -225,7 +218,7 @@ def update(
 def delete(
     work_id: str,
     current_user=Depends(
-        require_roles("ADMIN")
+        require_platform_admin
     )
 ):
 

@@ -41,7 +41,7 @@ beforeEach(() => {
 })
 afterEach(() => { cleanup(); globalThis.fetch = fetcher })
 function mount(path = '/') { return render(<MemoryRouter initialEntries={[path]}><AIChatWidget /></MemoryRouter>) }
-function open() { fireEvent.click(screen.getByRole('button', { name: 'Open LuminaR AI' })) }
+function open() { fireEvent.click(screen.getByRole('button', { name: 'Ask LuminaR' })) }
 function shortcuts() { fireEvent.click(screen.getByText('Quick actions', {selector:'summary'})) }
 async function submit(text: string) { fireEvent.change(screen.getByLabelText('Message LuminaR AI'), { target: { value: text } }); fireEvent.click(screen.getByRole('button', { name: 'Send message' })); await waitFor(() => assert.equal(store.getState().busy, false)) }
 async function select(count: number) { await act(async () => { for (let i = 1; i <= count; i++) store.getState().select(book(`OL${i}W`)) }) }

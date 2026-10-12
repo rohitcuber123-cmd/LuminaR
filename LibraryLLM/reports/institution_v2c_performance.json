@@ -1,0 +1,293 @@
+{
+  "environment": "Windows/local standalone Mongo; disposable library fixture; actual HTTP timings in ms",
+  "scale_claim": false,
+  "percentile_method": "Nearest rank: ceil(0.90 * n).",
+  "measurement_notes": {
+    "queue_conversion_with_stock_increase": "Actual journaled stock increase including exactly one FIFO hold conversion; not an isolated queue-only microbenchmark.",
+    "fee_creation_with_physical_return": "Actual new overdue fee and ledger creation in the same physical-return journal; includes return authorization and stock release.",
+    "fee_calculation_pure": "In-process pure calculation on a policy-snapshotted fixture loan, without HTTP or writes.",
+    "fee_generation_idempotent": "Actual HTTP reconciliation of an already-created fee; measures the idempotent generation path."
+  },
+  "operations": {
+    "reservation_create": {
+      "n": 32,
+      "median_ms": 68.5125,
+      "p90_ms": 89.425,
+      "samples_ms": [
+        51.726,
+        89.425,
+        52.743,
+        81.127,
+        68.25,
+        43.021,
+        66.739,
+        67.663,
+        65.143,
+        68.519,
+        68.506,
+        71.016,
+        173.688,
+        110.539,
+        91.904,
+        80.443,
+        73.148,
+        81.671,
+        76.411,
+        72.261,
+        75.932,
+        62.379,
+        60.473,
+        65.614,
+        60.954,
+        63.692,
+        62.223,
+        70.903,
+        80.125,
+        62.418,
+        60.351,
+        85.112
+      ]
+    },
+    "queue_read": {
+      "n": 21,
+      "median_ms": 95.463,
+      "p90_ms": 117.921,
+      "samples_ms": [
+        54.764,
+        50.143,
+        40.176,
+        42.023,
+        70.991,
+        93.077,
+        41.713,
+        73.545,
+        18.168,
+        88.608,
+        95.463,
+        101.878,
+        179.726,
+        117.921,
+        112.493,
+        133.754,
+        107.323,
+        103.508,
+        108.626,
+        104.465,
+        111.205
+      ]
+    },
+    "return_confirmation_combined": {
+      "n": 19,
+      "median_ms": 65.862,
+      "p90_ms": 75.336,
+      "samples_ms": [
+        60.717,
+        75.32,
+        78.134,
+        73.814,
+        61.919,
+        37.413,
+        63.424,
+        61.758,
+        65.862,
+        74.366,
+        73.11,
+        75.336,
+        72.113,
+        60.366,
+        60.805,
+        58.969,
+        71.889,
+        58.649,
+        74.381
+      ]
+    },
+    "reservation_cancel": {
+      "n": 13,
+      "median_ms": 62.656,
+      "p90_ms": 74.015,
+      "samples_ms": [
+        60.594,
+        61.563,
+        65.496,
+        66.402,
+        96.65,
+        69.764,
+        70.324,
+        74.015,
+        57.658,
+        58.547,
+        58.106,
+        62.656,
+        59.115
+      ]
+    },
+    "staff_fee_list": {
+      "n": 17,
+      "median_ms": 55.353,
+      "p90_ms": 72.974,
+      "samples_ms": [
+        55.058,
+        55.251,
+        44.602,
+        20.555,
+        49.089,
+        47.457,
+        61.767,
+        55.353,
+        62.74,
+        57.746,
+        58.677,
+        53.341,
+        55.75,
+        55.248,
+        64.287,
+        74.323,
+        72.974
+      ]
+    },
+    "fee_waive": {
+      "n": 7,
+      "median_ms": 62.497,
+      "p90_ms": 71.434,
+      "samples_ms": [
+        71.377,
+        59.509,
+        62.497,
+        61.769,
+        71.434,
+        53.096,
+        67.252
+      ]
+    },
+    "payment_record": {
+      "n": 8,
+      "median_ms": 64.8355,
+      "p90_ms": 94.413,
+      "samples_ms": [
+        94.413,
+        68.235,
+        71.023,
+        66.038,
+        63.633,
+        60.393,
+        53.1,
+        54.988
+      ]
+    },
+    "queue_conversion_with_stock_increase": {
+      "n": 12,
+      "median_ms": 86.15299999999999,
+      "p90_ms": 105.483,
+      "samples_ms": [
+        87.46,
+        83.522,
+        84.846,
+        146.158,
+        88.443,
+        105.483,
+        95.151,
+        76.769,
+        75.134,
+        76.094,
+        93.843,
+        75.659
+      ]
+    },
+    "fee_calculation_pure": {
+      "n": 12,
+      "median_ms": 0.027049999999999998,
+      "p90_ms": 0.0329,
+      "samples_ms": [
+        0.0275,
+        0.0329,
+        0.0314,
+        0.0303,
+        0.0624,
+        0.0256,
+        0.0266,
+        0.0296,
+        0.0232,
+        0.0221,
+        0.0222,
+        0.0226
+      ]
+    },
+    "fee_creation_with_physical_return": {
+      "n": 12,
+      "median_ms": 64.643,
+      "p90_ms": 74.366,
+      "samples_ms": [
+        63.424,
+        61.758,
+        65.862,
+        74.366,
+        73.11,
+        75.336,
+        72.113,
+        60.366,
+        60.805,
+        58.969,
+        71.889,
+        58.649
+      ]
+    },
+    "fee_generation_idempotent": {
+      "n": 12,
+      "median_ms": 50.373999999999995,
+      "p90_ms": 52.302,
+      "samples_ms": [
+        46.985,
+        44.38,
+        49.471,
+        51.933,
+        51.277,
+        52.302,
+        51.392,
+        42.867,
+        42.556,
+        43.155,
+        51.859,
+        58.67
+      ]
+    },
+    "own_fee_list": {
+      "n": 12,
+      "median_ms": 46.521,
+      "p90_ms": 54.343,
+      "samples_ms": [
+        41.418,
+        41.217,
+        48.623,
+        46.129,
+        46.913,
+        50.472,
+        54.343,
+        43.822,
+        45.769,
+        44.964,
+        66.492,
+        53.197
+      ]
+    },
+    "staff_reservation_list": {
+      "n": 12,
+      "median_ms": 242.1645,
+      "p90_ms": 272.039,
+      "samples_ms": [
+        155.404,
+        166.633,
+        247.188,
+        233.415,
+        220.642,
+        241.388,
+        284.748,
+        261.994,
+        272.039,
+        271.818,
+        241.618,
+        242.711
+      ]
+    }
+  }
+}

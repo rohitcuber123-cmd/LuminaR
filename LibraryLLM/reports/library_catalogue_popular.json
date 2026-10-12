@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "window_days": 90,
+  "signals": {
+    "ACTIVE_or_RETURNED_loan": 8,
+    "APPROVED_or_COMPLETED_borrow_request": 2,
+    "WAITING_CONVERTED_or_FULFILLED_reservation": 1
+  },
+  "timestamps": {
+    "loans": "borrowed_at",
+    "borrow_requests": "reviewed_at",
+    "reservations": "requested_at"
+  },
+  "tie_break": "Score descending, loan count descending, book UUID ascending.",
+  "scope": "Each signal starts with current-library match; only current usable owned metadata is returned.",
+  "notes": "An approved borrowing can contribute both its loan and approved-request signal. Pending/unapproved requests and cancelled reservations do not count.",
+  "no_activity": "Hide home section; Popular page shows no recent activity and Explore Collection.",
+  "ml": false,
+  "live_A_real_activity": true,
+  "live_C_no_activity": true,
+  "product_consistency_phase": {
+    "verified_at": "2026-10-09T13:57:53.138920+00:00",
+    "test_library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+    "test_books": 150,
+    "catalogue_source": "LIBRARY_LOCAL",
+    "live_evidence": "product_consistency_live.json",
+    "browser_evidence": "product_consistency_browser.json",
+    "test_real_activity_books": 1,
+    "fabricated_seed_activity": false,
+    "pending_and_cancelled_qa_not_counted": true
+  }
+}

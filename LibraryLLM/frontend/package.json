@@ -9,18 +9,42 @@
     "lint": "oxlint",
     "test:read-now": "node --experimental-strip-types --test tests/read-now.test.ts",
     "test:routing": "node --experimental-strip-types --test tests/general-user-routing.test.ts",
-    "test": "node --experimental-strip-types --test tests/read-now.test.ts tests/general-user-routing.test.ts && npm run test:assistant && npm run test:knowledge",
+    "test": "node --experimental-strip-types --test tests/read-now.test.ts tests/general-user-routing.test.ts && npm run test:assistant && npm run test:knowledge && npm run test:institutions && npm run test:inventory && npm run test:lending && npm run test:reservations-fees && npm run test:workspaces && npm run test:management && npm run test:catalogue && npm run test:product-consistency && npm run test:navigation && npm run test:convergence && npm run test:platform-completion && npm run test:events-notifications && npm run test:analytics && npm run test:assets && npm run test:activity && npm run test:critical-closure",
+    "test:institutions": "tsx --tsconfig tsconfig.app.json --test tests/institutions.test.tsx",
+    "test:inventory": "tsx --tsconfig tsconfig.app.json --test tests/institution-inventory.test.tsx",
     "test:knowledge": "tsx --tsconfig tsconfig.app.json --test tests/knowledge-artifacts.test.tsx",
     "preview": "vite preview",
-    "test:assistant": "tsx --tsconfig tsconfig.app.json --test tests/assistant.test.tsx"
+    "test:assistant": "tsx --tsconfig tsconfig.app.json --test tests/assistant.test.tsx",
+    "test:rag-formatting": "tsx --tsconfig tsconfig.app.json --test tests/rag-answer.test.tsx",
+    "test:lending": "tsx --tsconfig tsconfig.app.json --test tests/institution-lending.test.tsx",
+    "test:reservations-fees": "tsx --tsconfig tsconfig.app.json --test tests/institution-reservations-fees.test.tsx",
+    "test:workspaces": "tsx --tsconfig tsconfig.app.json --test tests/library-workspaces.test.tsx",
+    "test:management": "tsx --tsconfig tsconfig.app.json --test tests/dashboard-convergence.test.tsx",
+    "test:product-consistency": "tsx --tsconfig tsconfig.app.json --test tests/product-consistency.test.tsx",
+    "test:catalogue": "tsx --tsconfig tsconfig.app.json --test tests/library-catalogue.test.tsx",
+    "test:navigation": "tsx --tsconfig tsconfig.app.json --test tests/navigation-context.test.tsx",
+    "test:convergence": "tsx --tsconfig tsconfig.app.json --test tests/full-product-convergence.test.tsx",
+    "test:platform-completion": "tsx --tsconfig tsconfig.app.json --test tests/platform-completion.test.tsx",
+    "test:events-notifications": "tsx --tsconfig tsconfig.app.json --test tests/institution-events-notifications.test.tsx",
+    "test:analytics": "tsx --tsconfig tsconfig.app.json --test tests/institution-analytics.test.tsx",
+    "test:assets": "tsx --tsconfig tsconfig.app.json --test tests/institution-assets.test.tsx",
+    "test:activity": "tsx --tsconfig tsconfig.app.json --test tests/institution-activity.test.tsx",
+    "test:critical-closure": "tsx --tsconfig tsconfig.app.json --test tests/institution-critical-closure.test.tsx"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "katex": "0.19.0",
     "lucide-react": "^1.33.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-markdown": "10.1.0",
     "react-router-dom": "^7.18.2",
+    "rehype-katex": "7.0.1",
+    "remark-gfm": "4.0.1",
+    "remark-math": "6.0.0",
+    "remark-parse": "11.0.0",
     "tailwindcss": "^4.3.3",
+    "unified": "11.0.5",
     "zustand": "^5.0.15"
   },
   "devDependencies": {
@@ -37,5 +61,8 @@
     "tsx": "^4.23.15",
     "typescript": "~6.0.2",
     "vite": "^8.2.0"
+  },
+  "overrides": {
+    "katex": "$katex"
   }
 }

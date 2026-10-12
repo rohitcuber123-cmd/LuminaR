@@ -1,0 +1,79 @@
+{
+  "document": "CN UNIT-2 notes, original 29-page PDF",
+  "renderer_additional_model_calls": 0,
+  "responses": [
+    {
+      "query": "differences between pure and slotted aloha",
+      "verdict": "SUPPORTED",
+      "source_count": 7,
+      "characters": 1417,
+      "backend_ms": 69751.4,
+      "answer_sha256": "d5e58d611ab00597016b087ee8acbd36797324ae0a06c72bd47342b6b8b6a1ef",
+      "has_markdown_heading": true,
+      "has_qwen_math_delimiters": true,
+      "binary_literals": []
+    },
+    {
+      "query": "what is sfd",
+      "verdict": "NOT_SUPPORTED",
+      "source_count": 7,
+      "characters": 62,
+      "backend_ms": 16892.6,
+      "answer_sha256": "48367659c3b45ea7affa81baa62d88d13268f71874369c3b5e14ef1cbb4d50ad",
+      "has_markdown_heading": false,
+      "has_qwen_math_delimiters": false,
+      "binary_literals": []
+    },
+    {
+      "query": "explain vulnerable time",
+      "verdict": "SUPPORTED",
+      "source_count": 7,
+      "characters": 278,
+      "backend_ms": 25151.8,
+      "answer_sha256": "ca6f63fd80c8609bafa5bc41352c0dba0a39e576d76cdd7c4ca9242984cceeb6",
+      "has_markdown_heading": false,
+      "has_qwen_math_delimiters": true,
+      "binary_literals": []
+    },
+    {
+      "query": "compare flow control and error control",
+      "verdict": "SUPPORTED",
+      "source_count": 7,
+      "characters": 1319,
+      "backend_ms": 61043.8,
+      "answer_sha256": "acfab949b1e756655e7d136b00830c60c5766dc21436b67bae044db093e0e041",
+      "has_markdown_heading": true,
+      "has_qwen_math_delimiters": false,
+      "binary_literals": []
+    },
+    {
+      "query": "What is the SFD bit pattern? Include the exact binary string from the document.",
+      "verdict": "SUPPORTED",
+      "source_count": 7,
+      "characters": 46,
+      "backend_ms": 22946.8,
+      "answer_sha256": "cb710e98849e6cd4c5e5876d40b9bafc6cdf9adf3238f1cfb49d5485183eae97",
+      "has_markdown_heading": false,
+      "has_qwen_math_delimiters": false,
+      "binary_literals": [
+        "10100011"
+      ]
+    }
+  ],
+  "formatting_status": "PASS",
+  "content_quality_findings": [
+    {
+      "query": "what is sfd",
+      "finding": "Existing backend returns NOT_SUPPORTED; UI preserves Unsupported badge."
+    },
+    {
+      "query": "What is the SFD bit pattern? Include the exact binary string from the document.",
+      "finding": "Existing generator returns 10100011 although original PDF contains 10101011. Renderer faithfully preserves backend 10100011; source accuracy is a separate backend defect, not silently corrected by presentation.",
+      "backend_literal": "10100011",
+      "source_literal": "10101011",
+      "backend_literal_occurrences_in_pdf": 0,
+      "source_literal_occurrences_in_pdf": 1
+    }
+  ],
+  "numeric_fidelity_scope": "Frontend compares backend answer literals and math annotations exactly; this does not certify factual accuracy of backend generations."
+}

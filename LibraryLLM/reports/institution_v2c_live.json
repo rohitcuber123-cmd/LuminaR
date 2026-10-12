@@ -1,0 +1,241 @@
+{
+  "status": "PASS",
+  "database": "luminar_institution_v2c_live_7d8f06b22c9a4dcb8d228a2452c1a68e",
+  "scenarios": [
+    {
+      "code": "A",
+      "scenario": "Unavailable Aurora book: two members enter FIFO positions 1 and 2",
+      "status": "PASS",
+      "reservation_ids": [
+        "aa050e15-a832-40e4-8199-ae531dabac62",
+        "73d4a9c6-b4e0-4413-9642-87006ffa36b0"
+      ]
+    },
+    {
+      "code": "B",
+      "scenario": "Physical return converts only FIFO head to one canonical hold",
+      "status": "PASS",
+      "borrow_request_id": "75fca9b8-59bc-56d7-98bb-d909332c7c01"
+    },
+    {
+      "code": "C",
+      "scenario": "Waiting cancellation advances the next member without allocating stock",
+      "status": "PASS"
+    },
+    {
+      "code": "D",
+      "scenario": "One global work has independent Aurora and Orion queues",
+      "status": "PASS"
+    },
+    {
+      "code": "E",
+      "scenario": "Local-only book reserves and converts without global catalogue identity",
+      "status": "PASS"
+    },
+    {
+      "code": "F",
+      "scenario": "Overdue physical return creates one final fee with policy provenance",
+      "status": "PASS",
+      "fee_id": "b2e687c0-a191-5a7a-a7a3-ed79c55b91b9"
+    },
+    {
+      "code": "G",
+      "scenario": "Valid return requested on due UTC day; next-day staff receipt creates no charge under configured valid-request policy",
+      "status": "PASS",
+      "synthetic_date_fixture": true
+    },
+    {
+      "code": "H",
+      "scenario": "Rejected fake return does not stop accrual",
+      "status": "PASS"
+    },
+    {
+      "code": "I",
+      "scenario": "Admin waiver retains the charge and immutable history",
+      "status": "PASS"
+    },
+    {
+      "code": "J",
+      "scenario": "Librarian records partial/full manual payments; retry does not duplicate or process money",
+      "status": "PASS"
+    },
+    {
+      "code": "K",
+      "scenario": "Same member and work produce separate library queues and fees",
+      "status": "PASS"
+    }
+  ],
+  "real_jwt_login_users": [
+    1,
+    2,
+    3,
+    4,
+    30
+  ],
+  "synthetic_overdue_timestamps": true,
+  "production_mutations": 0,
+  "reconciliation": [
+    {
+      "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+      "ok": true,
+      "problems": [],
+      "holdings": [
+        {
+          "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+          "library_book_id": "00e76686-0263-4cd9-9c2e-d5b4d6dd6613",
+          "holding_id": "b39c5e0d-d27f-4576-a022-10bc053cabce",
+          "total": 0,
+          "requestable": 0,
+          "physical_available": 0,
+          "waiting_queue_has_priority": true,
+          "pending_holds": 0,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        },
+        {
+          "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+          "library_book_id": "0d075060-4b28-4553-a6f5-34ce069cb389",
+          "holding_id": "a0f5e9ec-fbf4-42d9-b13e-f961a0f3f25c",
+          "total": 1,
+          "requestable": 1,
+          "physical_available": 1,
+          "waiting_queue_has_priority": false,
+          "pending_holds": 0,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        },
+        {
+          "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+          "library_book_id": "3d651352-b8af-41f9-918c-3b542e602243",
+          "holding_id": "b39f4564-a14b-478a-90e1-eac1051908a5",
+          "total": 0,
+          "requestable": 0,
+          "physical_available": 0,
+          "waiting_queue_has_priority": false,
+          "pending_holds": 0,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        },
+        {
+          "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+          "library_book_id": "3ff8b689-9dcc-4855-a198-d18af2348695",
+          "holding_id": "9bd66155-553c-4569-bcba-5c8d6c42653f",
+          "total": 1,
+          "requestable": 1,
+          "physical_available": 1,
+          "waiting_queue_has_priority": false,
+          "pending_holds": 0,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        },
+        {
+          "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+          "library_book_id": "50c1ca2a-e119-4dfa-80b0-43a3dd3a486e",
+          "holding_id": "2bc4c89c-ba25-4b96-950b-fa2b8506dd95",
+          "total": 0,
+          "requestable": 0,
+          "physical_available": 0,
+          "waiting_queue_has_priority": false,
+          "pending_holds": 0,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        },
+        {
+          "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+          "library_book_id": "8678f70d-9605-479e-91e4-89d7371f01a9",
+          "holding_id": "b207adb5-3182-4a46-8412-37b475632059",
+          "total": 0,
+          "requestable": 0,
+          "physical_available": 0,
+          "waiting_queue_has_priority": true,
+          "pending_holds": 0,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        },
+        {
+          "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+          "library_book_id": "b29b0ab2-2c13-4739-a0b2-bb8bdb09746e",
+          "holding_id": "191295b8-c3ed-4bd1-b461-5d4615815abc",
+          "total": 1,
+          "requestable": 1,
+          "physical_available": 1,
+          "waiting_queue_has_priority": false,
+          "pending_holds": 0,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        },
+        {
+          "library_id": "64eec16a-1add-4c62-a93a-995bf90f9ea1",
+          "library_book_id": "ee2d5da2-c3f0-416f-a7bf-5e1e5962d5cf",
+          "holding_id": "70a74584-879b-430a-a65e-f0f938872e0d",
+          "total": 1,
+          "requestable": 0,
+          "physical_available": 0,
+          "waiting_queue_has_priority": true,
+          "pending_holds": 1,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        }
+      ],
+      "reservation_count": 31,
+      "fee_count": 16
+    },
+    {
+      "library_id": "d7883133-9b8e-483e-9a3e-831aaa95041f",
+      "ok": true,
+      "problems": [],
+      "holdings": [
+        {
+          "library_id": "d7883133-9b8e-483e-9a3e-831aaa95041f",
+          "library_book_id": "854cf385-11e1-4ffc-b39e-26032ede1d2f",
+          "holding_id": "950790a7-3eb8-4df7-b09c-0af7aa173b42",
+          "total": 1,
+          "requestable": 1,
+          "physical_available": 1,
+          "waiting_queue_has_priority": false,
+          "pending_holds": 0,
+          "active_loans": 0,
+          "unavailable_stock": 0,
+          "allocation_mode": "AGGREGATE",
+          "circulation_status": "CIRCULATING",
+          "shelf_location": "Room 2 / Shelf B",
+          "call_number": null
+        }
+      ],
+      "reservation_count": 1,
+      "fee_count": 1
+    }
+  ]
+}

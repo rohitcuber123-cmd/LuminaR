@@ -14,16 +14,10 @@ interface LibraryState {
   issues: any[]
   userDataLoading: boolean
   userDataLoaded: boolean
-  searchQuery: string
-  categoryFilter: string
-  formatFilter: string
 
   addToList: (workId: string) => Promise<void>
   removeFromList: (workId: string) => Promise<void>
   toggleList: (workId: string) => Promise<void>
-  setSearchQuery: (query: string) => void
-  setCategoryFilter: (category: string) => void
-  setFormatFilter: (format: string) => void
   isInList: (workId: string) => boolean
   isReserved: (workId: string) => boolean
   fetchUserData: () => Promise<void>
@@ -39,9 +33,6 @@ export const useLibraryStore = create<LibraryState>((set, get) => ({
   issues: [],
   userDataLoading: false,
   userDataLoaded: false,
-  searchQuery: '',
-  categoryFilter: '',
-  formatFilter: '',
 
   fetchUserData: async () => {
     const sessionToken = getToken()
@@ -58,7 +49,7 @@ export const useLibraryStore = create<LibraryState>((set, get) => ({
       
       if (sessionToken !== getToken() || version !== sessionVersion || request !== requestVersion) return
       set({
-        ...(readingListData.status === 'fulfilled' ? { readingList: readingListData.value.items.map((item: any) => item.work_id) } : {}),
+        ...(readingListData.status === 'fulfilled' ? { readingList: readingListData.value.items.map((item: any) => item.target_key || item.work_id).filter(Boolean) } : {}),
         ...(issuesData.status === 'fulfilled' ? { issues: issuesData.value.issues } : {}),
         ...(reservationsData.status === 'fulfilled' ? { reservations: reservationsData.value.reservations } : {}),
         userDataLoading: false,
@@ -88,12 +79,13 @@ export const useLibraryStore = create<LibraryState>((set, get) => ({
     const sessionToken = getToken()
     const version = sessionVersion
     try {
-      await addToReadingList(workId)
+      const result = await addToReadingList(workId)
+      const canonicalKey = result.target_key || workId
       if (sessionToken !== getToken() || version !== sessionVersion) return
       set((state) => ({
-        readingList: state.readingList.includes(workId)
+        readingList: state.readingList.includes(canonicalKey)
           ? state.readingList
-          : [...state.readingList, workId],
+          : [...state.readingList, canonicalKey],
       }))
     } catch (err) {
       console.error('Failed to add to reading list', err)
@@ -125,9 +117,6 @@ export const useLibraryStore = create<LibraryState>((set, get) => ({
     }
   },
 
-  setSearchQuery: (query) => set({ searchQuery: query }),
-  setCategoryFilter: (category) => set({ categoryFilter: category }),
-  setFormatFilter: (format) => set({ formatFilter: format }),
 
   isInList: (workId) => get().readingList.includes(workId),
   isReserved: (workId) => {

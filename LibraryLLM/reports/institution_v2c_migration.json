@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "default": "Read-only plan/dry run",
+  "apply_requires": [
+    "--apply",
+    "--writers-stopped",
+    "--idempotency-key UUID",
+    "Proven legacy alias and canonical Part 2B lending"
+  ],
+  "reservation_proof": "Explicit record library alias + exactly one tenant global-work\u2192library-book mapping + borrower + reliable reserved_at.",
+  "queue_order": "Legacy reserved_at then legacy integer ID; appended behind retained canonical persistent sequences.",
+  "reservation_quarantine": [
+    "Missing tenant evidence",
+    "Ambiguous/missing local work mapping",
+    "READY_FOR_PICKUP physical allocation",
+    "Duplicate active queue",
+    "Existing canonical active loan or pending hold",
+    "Unknown lifecycle"
+  ],
+  "fine_proof": "Verified tenant alias + unique migrated legacy issue\u2192canonical loan + matching borrower. Legacy fines have no library_id; globally unique migrated issue evidence can prove tenancy.",
+  "fine_quarantine": [
+    "No unique proven loan",
+    "Contradictory tenant evidence",
+    "Borrower mismatch",
+    "Existing canonical overdue charge",
+    "Duplicate fine for loan",
+    "Unsafe decimal amount",
+    "Unknown payment status/date"
+  ],
+  "financial_preservation": "Original legacy INR amount converted exactly with Decimal into minor units; paid history retained through charge/payment entries; no retrospective recalculation.",
+  "legacy_retained": true,
+  "idempotent_apply": true,
+  "production_applied": false,
+  "cutover": "Per-library CANONICAL reservation/fee config after mapped legacy rows and full reconciliation; only tenant ADMIN/OWNER can activate.",
+  "legacy_guard": "Canonical same-tenant mutations denied on legacy endpoints. Unmatched legacy history remains in legacy collections.",
+  "rollback": "Explicit offline only before queue/fee/new-loan use; after canonical history, recover/reconcile and retain authority.",
+  "evidence": {
+    "junit": "institution_v2c_backend.xml",
+    "passing_test_cases": [
+      "test_queue_head_request_limit_blocks_direct_bypass",
+      "test_migration_dryrun_quarantine_order_idempotency",
+      "test_paid_fine_migration_preserves_history_missing_loan_quarantine",
+      "test_migration_quarantines_active_canonical_allocation",
+      "test_reconciliation_detects_corrupt_history_without_writes[counter]",
+      "test_reconciliation_detects_corrupt_history_without_writes[policy]",
+      "test_reconciliation_detects_corrupt_history_without_writes[terminal_link]",
+      "test_reconciliation_detects_corrupt_history_without_writes[legacy_charge]",
+      "test_active_canonical_cross_library_idor_and_unaffiliated_global_admin",
+      "test_canonical_legacy_reservation_and_payment_bypass_denied"
+    ]
+  }
+}

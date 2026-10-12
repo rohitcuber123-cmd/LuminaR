@@ -1,0 +1,143 @@
+{
+  "status": "PASS",
+  "gates": [
+    {
+      "gate": 1,
+      "requirement": "Separate Explore TEST presentation retired",
+      "status": "PASS",
+      "evidence": "App.tsx routes the Patron index to Home context=library; no production LibraryCatalogueHome or CatalogueRail remains."
+    },
+    {
+      "gate": 2,
+      "requirement": "Original Home visual system reused",
+      "status": "PASS",
+      "evidence": "HomeSections renders Hero, ForYou, PopularBooks, CategoryExplorer, AlsoLikeTicker and NewArrivals for both contexts."
+    },
+    {
+      "gate": 3,
+      "requirement": "Global Home intact",
+      "status": "PASS",
+      "evidence": "Same six section classes, typography, cover sizes, global fetches, recommendations pagination and original global card actions; global_before/global_after screenshots."
+    },
+    {
+      "gate": 4,
+      "requirement": "Empty library full global discovery",
+      "status": "PASS",
+      "evidence": "Disposable GLOBAL_FALLBACK displayed all six shared sections and 84 global detail links."
+    },
+    {
+      "gate": 5,
+      "requirement": "No fallback physical ownership",
+      "status": "PASS",
+      "evidence": "Zero physical actions and zero owned IDs in empty Home; global nonowned detail has zero shelf/accession/copy claims."
+    },
+    {
+      "gate": 6,
+      "requirement": "Automatic source swap with same UI",
+      "status": "PASS",
+      "evidence": "First canonical Add switched source 0→1; identical six section classes before/after. Browser reloaded to observe an API-side Add; no server restart or flag. Add/import event and focus invalidation tests prove already-open page refresh."
+    },
+    {
+      "gate": 7,
+      "requirement": "TEST collection powers primary sections",
+      "status": "PASS",
+      "evidence": "150 active canonical TEST records remain; every rendered candidate resolves to a TEST canonical ID."
+    },
+    {
+      "gate": 8,
+      "requirement": "Local showcase",
+      "status": "PASS",
+      "evidence": "12 local titles repeated only for the original continuous marquee animation."
+    },
+    {
+      "gate": 9,
+      "requirement": "Scoped For You including local-only",
+      "status": "PASS",
+      "evidence": "Global candidate intersection plus canonical acquisition fallback; all four TEST local-only titles appeared."
+    },
+    {
+      "gate": 10,
+      "requirement": "Local New Arrivals",
+      "status": "PASS",
+      "evidence": "Acquisition date if valid, otherwise canonical created_at; browser checked 20 canonical arrivals IDs."
+    },
+    {
+      "gate": 11,
+      "requirement": "Truthful Popular",
+      "status": "PASS",
+      "evidence": "Only tenant loans/approved requests/reservations enter popularity. With fewer than four activity titles, shared Popular geometry says Discover More and uses local arrivals."
+    },
+    {
+      "gate": 12,
+      "requirement": "Local subjects",
+      "status": "PASS",
+      "evidence": "Canonical subjects/counts and canonical preview books; browser subject click remained TEST scoped."
+    },
+    {
+      "gate": 13,
+      "requirement": "Local Browse",
+      "status": "PASS",
+      "evidence": "Canonical scoped read, original consumer grid geometry and shared branded cover/card frame; no Staff Inventory table."
+    },
+    {
+      "gate": 14,
+      "requirement": "Local Search",
+      "status": "PASS",
+      "evidence": "Tenant catalogue search with explicit No matching books in TEST and a separate global action; no global filler."
+    },
+    {
+      "gate": 15,
+      "requirement": "No silent global filler",
+      "status": "PASS",
+      "evidence": "60 rendered record instances, 25 distinct canonical IDs, all verified against TEST; zero primary global links."
+    },
+    {
+      "gate": 16,
+      "requirement": "Global works preserved independently",
+      "status": "PASS",
+      "evidence": "Same work continues to exist globally; nonowned global detail remains explicitly nonowned in TEST."
+    },
+    {
+      "gate": 17,
+      "requirement": "Canonical library actions",
+      "status": "PASS",
+      "evidence": "Home CTA created a PENDING request, zero loans; normal detail cancellation restored availability. Waitlist HTTP/action tests passed."
+    },
+    {
+      "gate": 18,
+      "requirement": "Role separation",
+      "status": "PASS",
+      "evidence": "ADMIN/LIBRARIAN stay Staff Workspace; membership route/security regression and live staff/patron 403 checks passed."
+    },
+    {
+      "gate": 19,
+      "requirement": "Activity routes retained",
+      "status": "PASS",
+      "evidence": "My Library, Reservations and Fees remain accessible through main header/compact context links."
+    },
+    {
+      "gate": 20,
+      "requirement": "No HNSW rebuild",
+      "status": "PASS",
+      "evidence": "Protected code and artifact records unchanged; no builder command executed."
+    },
+    {
+      "gate": 21,
+      "requirement": "No KG rebuild",
+      "status": "PASS",
+      "evidence": "Protected code and artifact records unchanged; no builder command executed."
+    },
+    {
+      "gate": 22,
+      "requirement": "Global 5M preserved",
+      "status": "PASS",
+      "evidence": "5,000,000 before/after, 146 full sampled documents unchanged; preservation limits documented."
+    },
+    {
+      "gate": 23,
+      "requirement": "TEST retained",
+      "status": "PASS",
+      "evidence": "150 ACTIVE books, canonical holdings and existing memberships/history kept; exact disposable fixture cleaned up."
+    }
+  ]
+}

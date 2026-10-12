@@ -69,40 +69,11 @@ export function BookCarousel({ children, gap = 24 }: BookCarouselProps) {
     }, 300)
   }
 
-  return (
-    <div className="relative">
-      {/* Left Arrow */}
-      {canScrollLeft && (
-        <button
-          onClick={() => scroll('left')}
-          disabled={isTransitioning}
-          className="absolute left-0 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-paper shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all hover:bg-brand hover:text-paper hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Scroll left"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-      )}
-
-      {/* Carousel Container */}
-      <div
-        ref={scrollRef}
-        className="flex gap-6 overflow-x-auto pb-4 no-scrollbar scroll-smooth"
-        style={{ gap: `${gap}px` }}
-      >
-        {children}
-      </div>
-
-      {/* Right Arrow */}
-      {canScrollRight && (
-        <button
-          onClick={() => scroll('right')}
-          disabled={isTransitioning}
-          className="absolute right-0 top-1/2 z-10 translate-x-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-paper shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-all hover:bg-brand hover:text-paper hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)] disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Scroll right"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
-      )}
-    </div>
-  )
+  return <div className="product-carousel">
+    <div ref={scrollRef} className="product-book-rail flex overflow-x-auto no-scrollbar scroll-smooth" style={{gap:`${gap}px`}}>{children}</div>
+    {(canScrollLeft || canScrollRight) && <div className="product-rail-controls" role="group" aria-label="Book rail navigation">
+      <button onClick={()=>scroll('left')} disabled={!canScrollLeft || isTransitioning} aria-label="Scroll left"><ChevronLeft size={20}/></button>
+      <button onClick={()=>scroll('right')} disabled={!canScrollRight || isTransitioning} aria-label="Scroll right"><ChevronRight size={20}/></button>
+    </div>}
+  </div>
 }

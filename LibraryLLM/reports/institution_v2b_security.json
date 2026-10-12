@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "authority": "Current active account, active library and membership; scoped library+book+request+loan IDs; STAFF tenant roles only.",
+    "private_data": "Member lists own rows; aggregate availability reveals no other borrower identity; staff receives only needed borrower name/email/membership.",
+    "legacy": "Global ADMIN is not tenant staff; canonical legacy issue/return/renew bypass denied."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_boundaries::test_legacy_bypass_rejected_after_activation",
+    "tests.institution_v2b.test_lending::test_borrower_revalidated_and_hold_released[REMOVED]",
+    "tests.institution_v2b.test_lending::test_borrower_revalidated_and_hold_released[SUSPENDED]",
+    "tests.institution_v2b.test_lending::test_borrower_revalidated_and_hold_released[ACCOUNT_DISABLED]",
+    "tests.institution_v2b.test_lending::test_staff_membership_recheck_global_role_spoof_and_idor",
+    "tests.institution_v2b.test_recovery_edges::test_current_staff_authority_rechecked[SUSPENDED]",
+    "tests.institution_v2b.test_recovery_edges::test_current_staff_authority_rechecked[REMOVED]",
+    "tests.institution_v2b.test_recovery_edges::test_current_staff_authority_rechecked[DISABLED]",
+    "tests.institution_v2b.test_recovery_edges::test_librarian_can_issue_and_confirm_without_global_role",
+    "tests.institution_v2b.test_recovery_edges::test_member_privacy_and_queue_bounded_filters"
+  ],
+  "live_scenarios": [],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

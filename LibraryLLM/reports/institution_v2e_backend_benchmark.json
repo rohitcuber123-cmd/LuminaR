@@ -1,0 +1,224 @@
+{
+  "status": "PASS",
+  "database": "isolated disposable database",
+  "synthetic_only": true,
+  "production_TEST_writes": false,
+  "books": 3000,
+  "holding_quantity": 6000,
+  "timings_ms": {
+    "collection": [
+      795.177,
+      772.362,
+      789.659
+    ],
+    "circulation": [
+      2.698,
+      2.244,
+      2.164
+    ],
+    "full_dashboard": [
+      859.221,
+      829.091,
+      851.124
+    ]
+  },
+  "query_plans": {
+    "library_books": {
+      "winning_plan": {
+        "isCached": false,
+        "stage": "FETCH",
+        "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_library_books",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_library_books",
+          "keyPattern": {
+            "library_id": 1,
+            "status": 1,
+            "accession_sequence": 1
+          },
+          "indexName": "library_id_1_status_1_accession_sequence_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "library_id": [],
+            "status": [],
+            "accession_sequence": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "library_id": [
+              "[\"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\", \"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\"]"
+            ],
+            "status": [
+              "[\"ACTIVE\", \"ACTIVE\"]"
+            ],
+            "accession_sequence": [
+              "[MinKey, MaxKey]"
+            ]
+          }
+        }
+      },
+      "total_docs_examined": 3000,
+      "total_keys_examined": 3000
+    },
+    "loans": {
+      "winning_plan": {
+        "isCached": false,
+        "stage": "FETCH",
+        "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_loans",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_loans",
+          "keyPattern": {
+            "library_id": 1,
+            "borrowed_at": -1,
+            "library_book_id": 1
+          },
+          "indexName": "library_id_1_borrowed_at_-1_library_book_id_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "library_id": [],
+            "borrowed_at": [],
+            "library_book_id": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "library_id": [
+              "[\"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\", \"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\"]"
+            ],
+            "borrowed_at": [
+              "[new Date(9223372036854775807), new Date(1789171200000)]"
+            ],
+            "library_book_id": [
+              "[MinKey, MaxKey]"
+            ]
+          }
+        }
+      },
+      "total_docs_examined": 30,
+      "total_keys_examined": 30
+    },
+    "audit": {
+      "winning_plan": {
+        "isCached": false,
+        "stage": "FETCH",
+        "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_audit",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_audit",
+          "keyPattern": {
+            "library_id": 1,
+            "created_at": -1
+          },
+          "indexName": "library_id_1_created_at_-1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "library_id": [],
+            "created_at": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "library_id": [
+              "[\"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\", \"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\"]"
+            ],
+            "created_at": [
+              "[new Date(9223372036854775807), new Date(1789171200000)]"
+            ]
+          }
+        }
+      },
+      "total_docs_examined": 2,
+      "total_keys_examined": 2
+    },
+    "fee_ledger": {
+      "winning_plan": {
+        "isCached": false,
+        "stage": "FETCH",
+        "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_fee_ledger",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_fee_ledger",
+          "keyPattern": {
+            "library_id": 1,
+            "user_id": 1,
+            "status": 1
+          },
+          "indexName": "library_id_1_user_id_1_status_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "library_id": [],
+            "user_id": [],
+            "status": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "library_id": [
+              "[\"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\", \"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\"]"
+            ],
+            "user_id": [
+              "[MinKey, MaxKey]"
+            ],
+            "status": [
+              "[MinKey, MaxKey]"
+            ]
+          }
+        }
+      },
+      "total_docs_examined": 0,
+      "total_keys_examined": 0
+    },
+    "notification_outbox": {
+      "winning_plan": {
+        "isCached": false,
+        "stage": "FETCH",
+        "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_notification_outbox",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nss": "luminar_institution_v2e_test_ec39055db0b64d0a917e496cca253c0d.institution_notification_outbox",
+          "keyPattern": {
+            "library_id": 1,
+            "operation_id": 1
+          },
+          "indexName": "library_id_1_operation_id_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "library_id": [],
+            "operation_id": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "library_id": [
+              "[\"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\", \"6787d646-f8e6-4152-8cc9-e1ef8393dd1c\"]"
+            ],
+            "operation_id": [
+              "[MinKey, MaxKey]"
+            ]
+          }
+        }
+      },
+      "total_docs_examined": 0,
+      "total_keys_examined": 0
+    }
+  },
+  "new_indexes": [],
+  "existing_indexes_sufficient": true
+}

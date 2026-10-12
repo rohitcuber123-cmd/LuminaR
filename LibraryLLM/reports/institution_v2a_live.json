@@ -1,0 +1,216 @@
+{
+  "status": "PASS",
+  "transport": "real HTTP + uvicorn + MongoDB + Vite",
+  "database": "luminar_institution_v2a_live_86baa3787ba14686843ee548b09979d7",
+  "production_database_modified": false,
+  "scenarios": [
+    {
+      "number": 1,
+      "scenario": "Title + subject creates UUID, accession and holding without ISBN/work/author",
+      "status": "PASS",
+      "accession": "AUR-000001"
+    },
+    {
+      "number": 2,
+      "scenario": "Optional author does not require global identity",
+      "status": "PASS"
+    },
+    {
+      "number": 3,
+      "scenario": "Existing trusted global work links to local holding",
+      "status": "PASS",
+      "global_work_id": "OL109579W"
+    },
+    {
+      "number": 4,
+      "scenario": "100 title + subject rows preview without allocation, apply unique automatic accessions",
+      "status": "PASS",
+      "repeated_samples": 3
+    },
+    {
+      "number": 5,
+      "scenario": "Mixed identifiers, local-only rows and isolated missing-subject error",
+      "status": "PASS",
+      "counts": {
+        "created_records": 3,
+        "invalid_rows": 1
+      }
+    },
+    {
+      "number": 6,
+      "scenario": "Same title flags review and creates separate identities without silent merge",
+      "status": "PASS"
+    },
+    {
+      "number": 7,
+      "scenario": "Concurrent imports into two libraries preserve independent counters",
+      "status": "PASS",
+      "rows_per_library": 100
+    },
+    {
+      "number": 8,
+      "scenario": "Private tenant isolation and global ADMIN bypass denied; GENERAL member reads only",
+      "status": "PASS"
+    },
+    {
+      "number": 9,
+      "scenario": "Later verified link and unlink preserve local UUID/accession",
+      "status": "PASS"
+    },
+    {
+      "number": 10,
+      "scenario": "Explicit LIB001 alias: 4 legacy rows \u2192 3 ready, 1 missing subject; dry/apply/repeat reconcile",
+      "status": "PASS"
+    }
+  ],
+  "concurrent_manual": [
+    {
+      "workers": 10,
+      "requests": 10,
+      "unique_accessions": 10,
+      "duplicate_accessions": 0
+    },
+    {
+      "workers": 100,
+      "requests": 100,
+      "unique_accessions": 100,
+      "duplicate_accessions": 0
+    }
+  ],
+  "concurrent_imports": {
+    "libraries": 2,
+    "rows_each": 100,
+    "duplicates": 0
+  },
+  "large_import": {
+    "rows": 1000,
+    "created": 1000,
+    "duplicates": 0,
+    "idempotent_replay": true
+  },
+  "isolation_workers": 20,
+  "isolation_reads": [
+    {
+      "user_id": 1,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 2,
+      "private_inventory_status": 200
+    },
+    {
+      "user_id": 3,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 4,
+      "private_inventory_status": 200
+    },
+    {
+      "user_id": 5,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 6,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 7,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 8,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 9,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 10,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 11,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 12,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 13,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 14,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 15,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 16,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 17,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 18,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 19,
+      "private_inventory_status": 404
+    },
+    {
+      "user_id": 20,
+      "private_inventory_status": 404
+    }
+  ],
+  "prefix_rename_stable": true,
+  "current_account_revocation_denied": true,
+  "reconciliation": [
+    {
+      "status": "PASS",
+      "library_id": "d1ef6b62-ccfa-431e-9f74-bf72dc54a9ee",
+      "books": 1518,
+      "holdings": 1518,
+      "copies": 0,
+      "sequence_value": 1528,
+      "highest_issued_sequence": 1518,
+      "errors": [],
+      "read_only": true
+    },
+    {
+      "status": "PASS",
+      "library_id": "2e0869cd-c614-4d82-b8a2-1aad8a493231",
+      "books": 102,
+      "holdings": 102,
+      "copies": 0,
+      "sequence_value": 102,
+      "highest_issued_sequence": 102,
+      "errors": [],
+      "read_only": true
+    },
+    {
+      "status": "PASS",
+      "library_id": "69bc79cc-60ed-4d56-9372-18ab55b3e55e",
+      "books": 3,
+      "holdings": 3,
+      "copies": 1,
+      "sequence_value": 3,
+      "highest_issued_sequence": 3,
+      "errors": [],
+      "read_only": true
+    }
+  ],
+  "legacy_domain_counts": {
+    "issues": 0,
+    "reservations": 0,
+    "fines": 0
+  }
+}

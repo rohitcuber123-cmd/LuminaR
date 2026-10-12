@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "resolver": "backend/services/library_catalogue_experience.py:source_locked",
+  "rule": "ACTIVE meaningful LibraryBookRecord joined to same-library LibraryHolding; positive usable record count => LIBRARY_LOCAL, zero => GLOBAL_FALLBACK.",
+  "no_manual_flag": true,
+  "derived_on_each_read": true,
+  "filter_zero_does_not_change_source": true,
+  "fields": [
+    "library_id",
+    "library_name",
+    "catalogue_source",
+    "local_book_count",
+    "capabilities",
+    "circulation_state",
+    "discovery_notice"
+  ],
+  "live_counts": [
+    10,
+    0,
+    4
+  ],
+  "holding_stock_zero_is_valid_owned_record": true,
+  "no_global_or_snapshot_stock_truth": true,
+  "caps": "Source capabilities express authority/activation; individual card actions additionally use canonical status, counts and own state."
+}

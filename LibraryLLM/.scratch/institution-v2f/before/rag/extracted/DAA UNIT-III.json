@@ -1,0 +1,811 @@
+{
+  "document_id": "DAA UNIT-III",
+  "filename": "DAA UNIT-III.pdf",
+  "page_count": 134,
+  "pages": [
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 1,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 1 \n \nSyllabus: \n \nBreadth First Traversal and Depth First Traversal: BFS Introduction, Applications: Find All \nThe Lonely Nodes, Max Area of Island, Number of Distinct Islands. DFS Introduction, \nApplications: The Maze, Boundary of Binary Tree. \n \nTrees: Binary Tree Introduction, Applications: Symmetric Tree, Balanced Binary Tree, Average \nof Levels in Binary Tree, Find Largest Value in Each Tree Row, Binary Tree Right Side View. \n \nBacktracking: General method, Applications: N Queens Problem, Hamiltonian Cycle, \nBrace Expansion, Gray Code, Path with Maximum Gold, Generalized Abbreviation, \nCampus Bikes II. \n \nPart-I: Breadth First Traversal and Depth First Traversal. \n \n \nPage No: 2 \nPart-II: Trees. \n \n \n \n \n \n \n \n \nPage No: 58 \nPart-III: Backtracking. \n \n \n \n \n \n \n \nPage No: 94"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 2,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 2 \n \nPart-I: Breadth First Traversal and Depth First Traversal. \n What Is Graph Traversal Algorithms in Data Structure? \n \n Graph traversal is a search technique to find a vertex in a graph. In the search process, \ngraph traversal is also used to determine the order in which it visits vertices. Without \nproducing loops, a graph traversal finds the edges to be employed in the search process. \nThat is, utilizing graph traversal, you can visit all the graph's vertices without going \nthrough a looping path. \n There are two methods for traversing graphs, which are as follows: \n1. Breadth-First Search or BFS Algorithm \n2. Depth- First Search or DFS Algorithm \n \n1. Breadth-First Search or BFS Algorithm \n \n Breadth-First Search Algorithm or BFS is the most widely utilized method. \n BFS is a graph traversal approach in which you start at a source node and layer by layer \nthrough the graph, analyzing the nodes directly related to the source node. Then, in BFS \ntraversal, you must move on to the next-level neighbor nodes. \n According to the BFS, you must traverse the graph in a breadthwise direction: \n \n To begin, move horizontally and visit all the current layer's nodes. \n Continue to the next layer. \n \n \n Breadth-First Search uses a queue data structure to store the node and mark it as \n\"visited\" until it marks all the neighboring vertices directly related to it. \n The queue operates on the First In First Out (FIFO) principle, so the node's neighbors \nwill be viewed in the order in which it inserts them in the node, starting with the node \nthat was inserted first."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 3,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 3 \n \nWhy Do You Need Breadth-First Search Algorithm? \n \nThere are several reasons why you should use the BFS Algorithm to traverse graph data \nstructure. The following are some of the essential features that make the BFS algorithm \nnecessary: \n The BFS algorithm has a simple and reliable architecture. \n The BFS algorithm helps evaluate nodes in a graph and determines the shortest path to \ntraverse nodes. \n The BFS algorithm can traverse a graph in the fewest number of iterations possible. \n The iterations in the BFS algorithm are smooth, and there is no way for this method to get \nstuck in an infinite loop. \n In comparison to other algorithms, the BFS algorithm's result has a high level of accuracy. \n \n \nPseudo code:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 4,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 4 \n \n \nExample of Breadth-First Search Algorithm: \n \n In a tree-like structure, graph traversal requires the algorithm to visit, check, and update \nevery single un-visited node. The sequence in which graph traversals visit the nodes on \nthe graph categorizes them. \n The BFS algorithm starts at the first starting node in a graph and travels it entirely. After \ntraversing the first node successfully, it visits and marks the next non-traversed vertex in \nthe graph. \n \n \nStep 1: In the graph, every vertex or node is known. First, initialize a queue."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 5,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 5 \n \nStep 2: In the graph, start from source node A and mark it as visited. \n \nStep 3: Then you can observe B and E, which are unvisited nearby nodes from A. You have \ntwo nodes in this example, but here choose B, mark it as visited, and enqueue it \nalphabetically. \n \nStep 4: Node E is the next unvisited neighboring node from A. You enqueue it after \nmarking it as visited."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 6,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 6 \n \nStep 5: A now has no unvisited nodes in its immediate vicinity. As a result, you dequeue \nand locate A. \n \nStep 6: Node C is an unvisited neighboring node from B. You enqueue it after marking it as \nvisited. \n \nStep 7: Node D is an unvisited neighboring node from C. You enqueue it after marking it as visited. \n \n \nStep 8: If all of D's adjacent nodes have already been visited, remove D from the queue."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 7,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 7 \n \nStep 9: Similarly, all nodes near E, B, and C nodes have already been visited; therefore, \nyou must remove them from the queue. \n \nStep 10: Because the queue is now empty, the bfs traversal has ended. \nComplexity Of Breadth-First Search Algorithm: \n \n The time complexity of the breadth-first search algorithm: The time complexity of \nthe breadth-first search algorithm can be stated as O(|V|+|E|) because, in the worst case, it \nwill explore every vertex and edge. The number of vertices in the graph is |V|, while the \nedges are |E|. \n The space complexity of the breadth-first search algorithm: You can define the space \ncomplexity as O(|V|), where |V| is the number of vertices in the graph, and different data \nstructures are needed to determine which vertices have already been added to the queue. \nThis is also the space necessary for the graph, which varies depending on the graph \nrepresentation used by the algorithm's implementation. \n \n \nHow to create the Graph using LinkedList: \n \nstep-1 \n------- \nprivate LinkedList<Integer> adjacency[]; \n \nadjacency= new LinkedList[v]; \n \nThis creates an array of LinkedList references of length v. \n \nAt this point, every element is null. \n \nExample: if v = 4 \n \nadjacency → [null, null, null, null] \n index: 0 1 2 3"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 8,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 8 \n \nStep 2: The for-loop initialization \n--------------------------------------- \nfor (int i = 0; i < v; i++) \n{ \n adjacency[i] = new LinkedList<Integer>(); \n \n} \n \nNow, the loop runs from i = 0 to i = v-1 and fills each slot: \n \nIteration 1: i = 0 \n--------------------- \n \nadjacency[0] = new LinkedList<Integer>(); \n \nCreates a new empty linked list for vertex 0. \n \nadjacency → [[ ], null, null, null] \n \nIteration 2: i = 1 \n-------------------- \nadjacency[1] = new LinkedList<Integer>(); \n \nCreates a new empty linked list for vertex 1. \nadjacency → [[], [], null, null] \n. \n. \n. \nafter all iterations \n----------------------- \nadjacency → [[ ], [ ], [ ], [ ]] \nindex 0 1 2 3 \n \n \naddedge method working: \n---------------------------------- \npublic void insertedge(int s,int d) \n{ \n adjacency[s].add(d); //First line: \n adjacency[d].add(s); //Second line: \n}"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 9,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 9 \n \nExample-1: Add edge between vertex 0 and 1 \n--------------------------------------- \ninsertedge(0, 1); \n \n1. First line: \n--------------- \nadjacency[0].add(1); \n \nGo to the list at index 0 → [] \n \nAdd 1 into it. \n \nNow: \nadjacency → [[1], [ ], [ ], [ ]] \nindex \n0 1 2 3 \n \n2.Second line: \n--------------- \nadjacency[1].add(0); \n \nGo to the list at index 1 → [ ] \n \nAdd 0 into it. \n \nNow: \nadjacency → [[1], [0], [ ], [ ]] \nindex \n 0 1 2 3 \n \nThis ensures the graph is undirected (both directions are stored). \n \n \nExample-2:Add another edge: (1, 2) \n---------------------------------- \ninsertedge(1, 2); \n \nadjacency[1].add(2); \n---------------------- \n \nadjacency → [[1], [0, 2], [ ], [ ]] \nindex \n 0 1 2 3 \n \nadjacency[2].add(1); \n------------------------- \nadjacency → [[1], [0, 2], [1], [ ]] \nindex 0 1 2 3"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 10,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 10 \n \nExample-3: Add another edge: (2, 3) \n------------------------------------- \ninsertedge(2, 3); \n \nadjacency[2].add(3); \n \nadjacency → [[1], [0, 2], [1, 3], [ ]] \nindex 0 1 2 3 \n \nadjacency[3].add(2); \n \nadjacency → [[1], [0, 2], [1, 3], [2]] \nindex 0 1 2 3 \n \n \nFinal graph representation \n---------------------------- \nNow the adjacency list represents this graph: \n0: [1] \n1: [0, 2] \n2: [1, 3] \n3: [2] \n \n \nJava program for BFS_Graph: BFS_Algo.java \n \nimport java.io.*; \nimport java.util.*; \n \npublic class BFS_Algo \n{ \n private LinkedList<Integer> adjacency[]; \n //adjacency list \n public BFS_Algo (int v) \n { \n adjacency= new LinkedList[v]; \n for (int i=0; i<v; i++) \n { \n adjacency[i] = new LinkedList<Integer>(); \n } \n } \n public void insertedge(int s,int d) \n { \n adjacency[s].add(d);"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 11,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 11 \n \n adjacency[d].add(s); \n } \n public void bfs(int source) \n { \n boolean visited_nodes[] = new boolean[adjacency.length]; //initialize boolean array for \nholding the data \n int parent_nodes[]=new int[adjacency.length]; \n Queue<Integer> q=new LinkedList<>(); \n q.add(source); \n visited_nodes[source]=true; \n parent_nodes[source]=-1; \n System.out.println(\"The Breadth First Traversal of the graph is as follows\"); \n while (!q.isEmpty()) \n { \n int p=q.poll(); //remove the top element of the queue \n System.out.print(p); //print the top element of the queue \n \n for (int i:adjacency[p]) \n { \n if (visited_nodes[i]!=true) //only insert nodes into queue if they have not been \nexplored already \n { \n visited_nodes[i] = true; \n q.add(i); \n parent_nodes[i]=p; \n } \n } \n } \n } \n public static void main(String args[]) \n { \n Scanner sc=new Scanner(System.in); \n System.out.println(\"enter number of vertices and edges\"); \n \n int v=sc.nextInt(); \n int e=sc.nextInt(); \n \n BFS_Algo t = new BFS_Algo(v); \n System.out.println(\"enter edges\"); \n for(int i=0;i<e;i++) \n {"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 12,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 12 \n \n int firstend=sc.nextInt(); \n int secondend=sc.nextInt(); \n t.insertedge(firstend,secondend); \n } \n System.out.println(\"enter source for bfs traversal\"); \n int source=sc.nextInt(); \n t.bfs(source); \n } \n} \ninput= \nenter number of vertices and edges \n5 \n6 \nenter edges \n0 1 \n0 2 \n2 3 \n3 4 \n2 4 \n1 4 \nenter source for bfs traversal \n2 \noutput= \nThe Breadth First Traversal of the graph is as follows \n20341 \n \nMethod-1:Binary tree Creation using BFS(Level order)- \n \nExample: inputs: 10 20 30 40 50 -1 60 \nNote: -1 indicates no node \n------------------------------ \n \nclass BinaryTreeNode \n{ \n \n \npublic int data; \n \npublic BinaryTreeNode left, right; \n \npublic BinaryTreeNode(int data){ \n \n \nthis.data = data; \n \n \nleft = null; \n \n \nright = null; \n \n} \n} \npublic class Treecreation \n{ \n \nstatic BinaryTreeNode root;"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 13,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 13 \n \n \nvoid insert(BinaryTreeNode temp, int key) \n { \n if (temp == null) { \n temp = new BinaryTreeNode(key); \n return; \n } \n Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>(); \n q.add(temp); \n \n // Do level order traversal until we find \n // an empty place. \n while (!q.isEmpty()) { \n temp = q.peek(); \n q.remove(); \n if (temp.left == null) { \n temp.left = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.left); \n if (temp.right == null) { \n temp.right = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.right); \n } \n } \n \npublic static void main(String args[]) \n \n{ \n \n \nScanner sc=new Scanner(System.in); \n \n \nTreecreation ln=new Treecreation(); \n \n \n \n \n \n \n \nString str[]=sc.nextLine().split(\" \"); \n \n \nroot=new BinaryTreeNode(Integer.parseInt(str[0])); \n \n \nfor(int i=1; i<str.length; i++) \n \n \n \nln.insert(root,Integer.parseInt(str[i])); this is u do with 10 20 30 40 50 -1 \n60 values stepy by step with every iteration \n } \n} \n \nExplanation: \n---------------- \nStep-by-step (each call to insert(root, key)) \nInitial (before loop) \n \nroot = node(10)"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 14,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 14 \n \n \nTree: \n----- \n10 \n \nIteration 1 — insert 20 \n------------------------ \nCall: insert(root, 20) \nLocal queue q starts as: [10] \ntemp = q.peek() → temp = 10; remove it → q = [] \ntemp.left == null? Yes → set 10.left = new Node(20) and break. \n \nTree now: \n 10 \n / \n 20 \n \nLevel-order: [10, 20] \n \nIteration 2 — insert 30 \n------------------------- \nCall: insert(root, 30) \nq = [10] \n \ntemp = 10 (removed) \nleft != null → q.add(20) → q = [20] \nright == null → set 10.right = new Node(30) and break. \n \nTree now: \n 10 \n / \\ \n 20 30 \n \nLevel-order: [10, 20, 30] \n \nIteration 3 — insert 40 \n-------------------------- \nCall: insert(root, 40) \nq = [10] \ntemp = 10 (removed) \nleft != null → q.add(20) → q = [20] \nright != null → q.add(30) → q = [20, 30] \n \nNext loop: temp = 20 (removed) \nleft == null → set 20.left = new Node(40) and break."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 15,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 15 \n \nTree now: \n 10 \n / \\ \n 20 30 \n / \n 40 \n \nLevel-order: [10, 20, 30, 40] \n \nIteration 4 — insert 50 \n-------------------------- \nCall: insert(root, 50) \nq = [10] \ntemp = 10 (removed) → add 20, 30 → q = [20, 30] \ntemp = 20 (removed) \nleft != null (40) → q.add(40) → q = [30, 40] \nright == null → set 20.right = new Node(50) and break. \nTree now: \n \n 10 \n / \\ \n 20 30 \n / \\ \n 40 50 \n \nLevel-order: [10, 20, 30, 40, 50] \n \nIteration 5 — insert -1 \n-------------------------- \nCall: insert(root, -1) \n \nNote: -1 here is treated as a normal node value. (If you intended -1 to mean “no node”, you must \nhandle that explicitly — this code will still insert a node with data -1.) \n \nq = [10] \ntemp = 10 (removed) → add 20, 30 → q = [20, 30] \ntemp = 20 (removed) → add 40, 50 → q = [30, 40, 50] \ntemp = 30 (removed) \nleft == null → set 30.left = new Node(-1) and break. \n \nTree now: \n 10 \n / \\ \n 20 30 \n / \\ / \n 40 50 -1 \nLevel-order: [10, 20, 30, 40, 50, -1]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 16,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 16 \n \nIteration 6 — insert 60 \n------------------------- \nCall: insert(root, 60) \nq = [10] \ntemp = 10 (removed) → add 20, 30 → q = [20, 30] \ntemp = 20 (removed) → add 40, 50 → q = [30, 40, 50] \ntemp = 30 (removed) \nleft != null (it is -1) → q.add(node(-1)) → q = [40, 50, -1] \nright == null → set 30.right = new Node(60) and break. \n \nFinal tree: \n 10 \n / \\ \n 20 30 \n / \\ / \\ \n 40 50 -1 60 \n \nFinal level-order: [10, 20, 30, 40, 50, -1, 60] \n \nMethod-2: Binary Tree Creation \n \nimport java.util.*; \n \nclass BinaryTreeNode { \n public int data; \n public BinaryTreeNode left, right; \n \n public BinaryTreeNode(int data) { \n this.data = data; \n left = null; \n right = null; \n } \n} \n \npublic class TreeCreation \n{ \n static BinaryTreeNode root; \n \n // Modified to return the updated root \n BinaryTreeNode insertLevelOrder(String[] arr, int i) { \n \n// Base case for recursion \n if (i >= arr.length || arr[i].equals(\"-1\")) { \n return null; \n } \n BinaryTreeNode root = new BinaryTreeNode(Integer.parseInt(arr[i]));"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 17,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 17 \n \n // insert left child \n root.left = insertLevelOrder(arr, 2 * i + 1); \n \n // insert right child \n root.right = insertLevelOrder(arr, 2 * i + 2); \n \n return root; \n } \n public static void main(String args[]) { \n Scanner sc = new Scanner(System.in); \n LonelyNodes_BFS ln = new LonelyNodes_BFS(); \n TreeOperations sol = new TreeOperations(); \n \n // Reading input \n String str[] = sc.nextLine().split(\" \"); \n root = ln.insertLevelOrder(str, 0); \n } \n} \n \nExplanation: \n \nExample Input: 1 2 3 4 5 -1 6 \nIndex positions: \n i: 0 1 2 3 4 5 6 \n arr: 1 2 3 4 5 -1 6 \nFor any node at index i: \n• Left child index = 2*i + 1 \n• Right child index = 2*i + 2 \n \nStep-by-Step Tree Construction (Recursion Flow): \n \nINPUT: 1 2 3 4 5 -1 6 \n \nIndex: 0 1 2 3 4 5 6 \nValue: 1 2 3 4 5 -1 6 \n \nSTEP 1: \ninsertLevelOrder(arr, 0) \narr[0] = 1 → create node 1. \n \nSTEP 2: \nFor node 1, LEFT = 2*0+1 = 1 \n→ insertLevelOrder(arr, 1) \n \nSTEP 3: \narr[1] = 2 → create node 2."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 18,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 18 \n \n \nSTEP 4: \nFor node 2, LEFT = 2*1+1 = 3 \n→ insertLevelOrder(arr, 3) \n \nSTEP 5: \narr[3] = 4 → create node 4. \nLEFT = 2*3+1 = 7 → 7 >= 7 → NULL \nRIGHT = 2*3+2 = 8 → 8 >= 7 → NULL \nNode 4 complete. \n \nSTEP 6: \nReturn to node 2. \n2.left = 4 \nRIGHT = 2*1+2 = 4 \n→ insertLevelOrder(arr, 4) \n \nSTEP 7: \narr[4] = 5 → create node 5. \nLEFT = 2*4+1 = 9 → NULL \nRIGHT = 2*4+2 = 10 → NULL \nNode 5 complete. \n \nSTEP 8: \nReturn to node 2. \n2.left = 4 \n2.right = 5 \nNode 2 complete. \n \nSTEP 9: \nReturn to node 1. \n1.left = 2 \nRIGHT = 2*0+2 = 2 \n→ insertLevelOrder(arr, 2) \n \nSTEP 10: \narr[2] = 3 → create node 3. \n \nSTEP 11: \nFor node 3, LEFT = 2*2+1 = 5 \n→ insertLevelOrder(arr, 5) \n \nSTEP 12: \narr[5] = -1 \n\"-1\" means NO NODE \n→ return NULL"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 19,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 19 \n \nTherefore: 3.left = NULL \n \nSTEP 13: \nReturn to node 3. \nRIGHT = 2*2+2 = 6 \n→ insertLevelOrder(arr, 6) \n \nSTEP 14: \narr[6] = 6 → create node 6. \nLEFT = 2*6+1 = 13 → NULL \nRIGHT = 2*6+2 = 14 → NULL \nNode 6 complete. \n \nSTEP 15: \nReturn to node 3. \n3.left = NULL \n3.right = 6 \nNode 3 complete. \n \nSTEP 16: \nReturn to node 1. \n1.left = 2 \n1.right = 3 \n \nSTEP 17: \ninsertLevelOrder(arr, 0) returns root. \n \nFINAL BINARY TREE: \n \n 1 \n / \\ \n 2 3 \n / \\ \\ \n 4 5 6 \n \nCALL SEQUENCE: \n \ninsert(0) → 1 \n ↓ \ninsert(1) → 2 \n ↓ \ninsert(3) → 4 \n ↓ \ninsert(7) → NULL \ninsert(8) → NULL"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 20,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 20 \n \n ↓ \ninsert(4) → 5 \n ↓ \ninsert(9) → NULL \ninsert(10) → NULL \n ↓ \ninsert(2) → 3 \n ↓ \ninsert(5) → NULL \n ↓ \ninsert(6) → 6 \n ↓ \ninsert(13) → NULL \ninsert(14) → NULL"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 21,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 21 \n \nApplication of Breadth-First Search Algorithm: \n \n1. Find All The Lonely Nodes. \n2. Max Area of Island. \n3. Number of Distinct Islands. \n \n1. Find All The Lonely Nodes: \n \nIn a binary tree, a lonely node is a node that is the only child of its parent node. The root of the \ntree is not lonely because it does not have a parent node. Given the root of a binary tree, return an \narray containing the values of all lonely nodes in the tree. Return the list in any order. \nExample 1: \n \nInput: root = [1,2,3,null,4] \nOutput: [4] \nExplanation: Light blue node is the only lonely node. \nNode 1 is the root and is not lonely. \nNodes 2 and 3 have the same parent and are not lonely. \n \n \nExample 2: \n \nInput: root = [7,1,4,6,null,5,3,null,null,null,null,null,2] \nOutput: [6,2] \nExplanation: Light blue nodes are lonely nodes. Please remember that order doesn’t matter, \n[2,6] is also an acceptable answer."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 22,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 22 \n \nExample 3: \nInput: root = [11,99,88,77,null,null,66,55,null,null,44,33,null,null,22] \nOutput: [77,55,33,66,44,22] \nExplanation: Nodes 99 and 88 share the same parent. Node 11 is the root. All other nodes are \nlonely. \n \n \nExample 4: \nInput: root = [197] \nOutput: [] \nExample 5: \nInput: root = [31,null,78,null,28] \nOutput: [78,28] \nConstraints: \nThe number of nodes in the tree is in the range [1, 1000]. \nEach node’s value is between [1, 10^6]. \nHints: \nDo a simple tree traversal, try to check if the current node is lonely or not. \nNode is lonely if at least one of the left/right pointers is null. \nProcedure: \nInput: root — root of a binary tree (null means empty). \nOutput: a list of node values that are lonely (a node is lonely if it’s the only child of its parent). \n1. Prepare result and queue \no Create an empty list result to store lonely node values. \no If root is null, return result (empty). \n2. Initialize BFS \no Create an empty queue q. \no Enqueue the root node into q. \n3. Process nodes level-by-level \no While q is not empty: \n1. Dequeue a node current from q. \n2. Check children of current:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 23,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 23 \n \n \nIf current.left != null and current.right == null → \ncurrent.left is lonely → append current.left.data to \nresult. \n \nIf current.right != null and current.left == null → \ncurrent.right is lonely → append current.right.data to \nresult. \n3. Enqueue children for further processing: \n \nIf current.left != null → q.enqueue(current.left) \n \nIf current.right != null → q.enqueue(current.right) \no Repeat until the queue is empty. \n4. Return result \no After the loop finishes, result contains all lonely node values. Return it. \nJava Program for Find the all lonely nodes using BFS: LonelyNodes.java \nimport java.util.*; \n \nclass BinaryTreeNode { \n public int data; \n public BinaryTreeNode left, right; \n \n public BinaryTreeNode(int data) { \n this.data = data; \n left = null; \n right = null; \n } \n} \nclass TreeOperations \n { \n static public List<Integer> getLonelyNodes(BinaryTreeNode root) \n { \n ArrayList<Integer> list = new ArrayList<>(); \n if(root == null) return list; \n LinkedList<BinaryTreeNode> queue = new LinkedList<>(); \n queue.offer(root); \n while(!queue.isEmpty()) \n { \n BinaryTreeNode cur = queue.poll(); \n if(cur.left != null && cur.right == null) \n { \n list.add(cur.left.data); \n queue.offer(cur.left); \n } else if(cur.left == null && cur.right != null) \n { \n list.add(cur.right.data); \n queue.offer(cur.right);"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 24,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 24 \n \n } else if(cur.left != null && cur.right != null) \n { \n queue.offer(cur.left); \n queue.offer(cur.right); \n } \n } \n return list; \n } \n} \npublic class LonelyNodes \n{ \n static BinaryTreeNode root; \n // Modified to return the updated root \n BinaryTreeNode insertLevelOrder(String[] arr, int i) { \n // Base case for recursion \n if (i >= arr.length || arr[i].equals(\"-1\")) { \n return null; \n } \n BinaryTreeNode root = new BinaryTreeNode(Integer.parseInt(arr[i])); \n // insert left child \n root.left = insertLevelOrder(arr, 2 * i + 1); \n // insert right child \n root.right = insertLevelOrder(arr, 2 * i + 2); \n return root; \n } \n public static void main(String args[]) { \n Scanner sc = new Scanner(System.in); \n LonelyNodes ln = new LonelyNodes (); \n TreeOperations sol = new TreeOperations(); \n \n // Reading input \n String str[] = sc.nextLine().split(\" \"); \n root = ln.insertLevelOrder(str, 0); \n \n List<Integer> result = sol.getLonelyNodes(root); \n Collections.sort(result); // Sort the result in ascending order \n System.out.println(result); \n } \n} \nExample =1 \ninput =2 3 4 -1 5 \noutput =[5] \n \nExample =2 \ninput =11 99 88 77 -1 -1 66 55 -1 -1 -1 -1 -1 -1 44 \noutput =[44, 55, 66, 77]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 25,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 25 \n \n2. Max Area of Island: \n \nYou are given an m x n binary matrix grid. An island is a group of 1's (representing land) \nconnected 4-directionally (horizontal or vertical.) You may assume all four edges of the grid are \nsurrounded by water. \nThe area of an island is the number of cells with a value 1 in the island. \nReturn the maximum area of an island in grid. If there is no island, return 0. \nExample 1: \n \nInput: grid = \n[[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,\n0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,\n0,0,1,1,0,0,0,0]] \nOutput: 6 \nExplanation: The answer is not 11, because the island must be connected 4-\ndirectionally. \nExample 2: \nInput: grid = [[0,0,0,0,0,0,0,0]] \nOutput: 0"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 26,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 26 \n \nAlgorithm: \n \nstep-1:Traverse the 2D grid a perform BFS traversal from each of the cells containing 1. \nstep-2:Mark the current cell as visited by changing cell value to 0. \nstep-3:The area of the island starting from the current cell is 1. \nstep-4:Iteratively visit all the neighbors (up-right-down-left) of current cells that contain 1, \nmark these neighbors as visited, and also increase the area by 1 for every valid neighbor \n (cells with value 1) visited(by changing cell value to 0). \nstep-5:After traversal is complete return the area obtained. \nstep-6:Perform steps 2,3,4 and 5 for each of the cells (of the matrix) containing 1 and return a \nmaximum of all the area values obtained. \n \nProcedure: \nwe start from the left-most and top-most cell of the largest island that has value 1 \n(by now, all the cells above and left of this cell have already been visited) and perform BFS \ntraversal. \n \nBFS traversal first visits all the neighbor cells (up-right-down-left) of a particular cell and \nthen iteratively visits neighbors of these neighbors. \n \nJava Program For Max Area of Islands using BFS: Max_AreaOf_Isalnds.java \n \nimport java.util.*; \n \nclass Max_AreaOf_Isalnd \n{ \n public int maxAreaOfIsland(int[][] grid) \n { \n if (grid == null || grid.length == 0) return 0; \n int res = 0; \n int curr = 0; \n for (int i = 0; i < grid.length; i++){ \n for (int j = 0; j <grid[0].length; j++){ \n if (grid[i][j] == 1) { \n grid[i][j] = 0; \n curr = bfs(grid, i, j); \n res = Math.max(curr, res); \n } \n } \n } \n return res; \n }"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 27,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 27 \n \n \n private int bfs(int[][] grid, int k, int l) \n { \n Queue<int[]> q = new LinkedList<>(); \n q.offer(new int[]{k, l}); \n int res = 0; \n \n while(!q.isEmpty()){ \n int[] curr = q.poll(); \n res++; \n final int[][] neigs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; \n for (int[] neig : neigs){ \n int i = curr[0] + neig[0]; \n int j = curr[1] + neig[1]; \n if (i >= 0 && i < grid.length && j >= 0 && j < grid[0].length && grid[i][j] == 1) \n { \n grid[i][j] = 0; \n q.offer(new int[]{i, j}); \n } \n } \n } \n \n return res; \n } \n \n public static void main (String args[]) \n { \n Max_AreaOf_Isalnd t =new Max_AreaOf_Isalnd (); \n \n Scanner sc =new Scanner (System.in); \n \n //System.out.println(\"enter 2d matrix\"); \n System.out.println(\"enter 2d matrix row size \"); \n \n int x=sc.nextInt(); \n System.out.println(\"enter 2d matrix coloumn size \"); \n \n int y=sc.nextInt(); \n System.out.println(\"enter 2D matrix Elements \"); \n \n int matrix[][]=new int[x][y]; \n for(int i=0;i<x;i++) \n { \n for(int j=0;j<y;j++) \n { \n matrix[i][j]=sc.nextInt(); \n }"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 28,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 28 \n \n } \n System.out.println(\"Max Area of island is \" + t.maxAreaOfIsland(matrix)); \n } \n \n} \nExample-1: \ninput= \nenter 2d matrix row size \n7 \nenter 2d matrix coloumn size \n7 \nenter 2D matrix Elements \n0 1 1 0 1 0 0 \n0 1 0 0 1 1 0 \n0 1 0 0 1 1 0 \n0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 \n0 0 0 0 0 0 0 \noutput= \nMax Area of island is 5 \n \nExample-2: \ninput= \nenter 2d matrix row size \n1 \nenter 2d matrix coloumn size \n6 \nenter 2D matrix Elements \n0 0 0 0 0 0 \noutput= \nMax Area of island is 0"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 29,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 29 \n \n3. Number of Distinct Islands: \nGiven a boolean 2D matrix grid of size n * m. You have to find the number of distinct \nislands where a group of connected 1s (horizontally or vertically) forms an island. Two \nislands are considered to be distinct if and only if one island is equal to another (not rotated \nor reflected). \nExample 1: \nInput: \n \nOutput: 1 \nExplanation: Island at the top left corner is the same as the island at the bottom right corner. \n \nExample 2: \nInput: \n \nOutput: 3 \nExplanation: Island at the top right corner is the same as the island at the bottom left corner."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 30,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 30 \n \n \n \nExpected Time Complexity: O(n * m) \nExpected Space Complexity: O(n * m) \n \nSolution \nIntuition: \nConsider the following example, the two islands in the first figure might look identical but they \nare rotated so you can’t say they are the same, hence 2 distinct islands; whereas in the second \nfigure, both islands are the same so only 1 distinct island; resulting in overall 3 distinct islands. \n \nConsider another example, the two islands in the first figure and another two islands in the \nsecond figure are the same, hence total of 2 distinct islands."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 31,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 31 \n \n \nDepending on the shape of the island formed, we count the number of islands. \nThe question arises how to store these shapes? \nWe can store the shapes in a set data structure, then the set will return unique islands. We can \nstore the coordinates in a vector or a list. \n \nBut how to figure out if the coordinates stored in the set data structure are identical? We can call \none of the starting points a base, and subtract the base coordinates from the land’s coordinates \n(Cell Coordinates – Base coordinates). Now the list will be similar as illustrated."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 32,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 32 \n \n \nNOTE: Make sure to follow a particular traversal and a particular order pattern, so that list \nordering remains the same for every cell. \nHow do store distinct islands? \nWe’ve done this type of problem on a number of islands. This is an expansion of the number of \nislands so refer to that article for the same. \nApproach: \n The main idea to solve this problem is to use Breadth-First Search. \n Perform the Breadth-First Search in the matrix and find all the islands (connected \ncomponents of 1’s). \n How to find the count of islands? How to handle the case where two or more islands have \nthe same shape? \n \nConsider the set of coordinates that form the island. \n \nFind the minimum x coordinate and minimum y coordinate among the set of \ncoordinates, this coordinate will be the base coordinate for all the sets of coordinates \nconstituting the island. \n \nFind all the new coordinates for the current island with respect to the base \ncoordinate. \n \nTwo or more islands have the same shape if they have the exact same set of \ncoordinates with respect to their base coordinates. \n Store all such array of coordinates in a Set, finally set size is our answer since a set will store \nall distinct sets of coordinates which is a set of all distinct islands."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 33,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 33 \n \n \nHow do set boundaries for 4 directions? \nThe 4 neighbors will have the following indexes: \n \nNow, either we can apply 4 conditions or follow the following method. From the above image, it \nis clear that the delta change in the row is -1, +0, +1, +0. Similarly, the delta change in the \ncolumn is 0, +1, +0, -1. So we can apply the same logic to find the neighbors of a particular \npixel (<row, column>)."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 34,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 34 \n \nJava Program for Number of Distinct Islands Using BFS: NumberOfDistinctIslands.java \n \nimport java.util.LinkedList; \nimport java.util.*; \n \nclass NumbrofIDistinctslands_BFS \n{ \n final int WATER = 0, LAND = 1; \n int m, n; \n int baseRow, baseCol; \n int[][] grid; \n final int[][] DIRECTIONS = {{1,0}, {-1, 0}, {0, 1}, {0,-1}}; \n \n public int numDistinctIslands(int[][] grid) \n { \n m = grid.length; \n n = grid[0].length; \n Set<String> shapes = new HashSet<>(); \n this.grid = grid; \n \n //Find each islands \n for(int row = 0; row < m; row++){ \n for(int col = 0; col < n; col++){ \n if(grid[row][col] == WATER) continue; \n baseRow = row; \n baseCol = col; \n StringBuilder sb = new StringBuilder(); \n bfs(row, col, sb); \n shapes.add(sb.toString()); \n } \n } \n //return unique islands \n return shapes.size(); \n } \n private void bfs(int row, int col, StringBuilder sb) \n{ \n Queue<int[]> queue = new LinkedList<>(); \n queue.add(new int[]{row, col}); \n grid[row][col] = WATER; \n \n //Perform BFS"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 35,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 35 \n \n while(!queue.isEmpty()) \n { \n //Get first position \n int[] curPos = queue.poll(); \n sb.append(curPos[0] - baseRow); \n sb.append(curPos[1] - baseCol); \n //Add all its neighbors (all 4 directions) \n for(int[] direction : DIRECTIONS){ \n int curRow = curPos[0] + direction[0]; \n int curCol = curPos[1] + direction[1]; \n if(validPosition(curRow, curCol)) \n { \n queue.add(new int[] {curRow, curCol}); \n grid[curRow][curCol] = WATER; \n } \n } \n } \n } \n private boolean validPosition(int row, int col){ \n if(row < 0 || col < 0 || row == m || col == n) return false; \n \n if(grid[row][col] == WATER) return false; \n \n return true; \n } \n \n public static void main (String args[]) \n { \n NumbrofIDistinctslands_BFS t =new NumbrofIDistinctslands_BFS (); \n Scanner sc =new Scanner (System.in); \n \n //System.out.println(\"enter 2d matrix\"); \n System.out.println(\"enter 2d matrix row size \"); \n \n int x=sc.nextInt(); \n System.out.println(\"enter 2d matrix coloumn size \"); \n \n int y=sc.nextInt(); \n System.out.println(\"enter 2D matrix Elements \"); \n \n int matrix[][]=new int[x][y];"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 36,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 36 \n \n for(int i=0;i<x;i++) \n { \n for(int j=0;j<y;j++) \n { \n matrix[i][j]=sc.nextInt(); \n } \n } \n System.out.println(\"Number of Distinct islands:\" + t.numDistinctIslands(matrix)); \n } \n} \nExample-1: \ninput= \nenter 2d matrix row size \n4 \nenter 2d matrix coloumn size \n5 \nenter 2D matrix Elements \n1 1 0 1 1 \n1 0 0 0 0 \n0 0 0 0 1 \n1 1 0 1 1 \noutput= \nNumber of Distinct islands 3 \n \nExample-2: \ninput= \nenter 2d matrix row size \n4 \nenter 2d matrix coloumn size \n5 \nenter 2D matrix Elements \n1 1 0 0 0 \n1 1 0 0 0 \n0 0 0 1 1 \n0 0 0 1 1 \noutput= \nNumber of Distinct islands 1"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 37,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 37 \n \n2. Depth First Search Introduction \n \nDepth first Search or Depth first traversal is a recursive algorithm for searching all the vertices of \na graph or tree data structure. Traversal means visiting all the nodes of a graph. \n \nDepth First Search Algorithm: \n \nA standard DFS implementation puts each vertex of the graph into one of two categories: \n1. \nVisited \n2. \nNot Visited \n \nThe purpose of the algorithm is to mark each vertex as visited while avoiding cycles. \nThe DFS algorithm works as follows: \n \n1. \nStart by putting any one of the graph's vertices on top of a stack. \n2. \nTake the top item of the stack and add it to the visited list. \n3. \nCreate a list of that vertex's adjacent nodes. Add the ones which aren't in the visited list to \nthe top of the stack. \n4. \nKeep repeating steps 2 and 3 until the stack is empty. \n \n \n \nWe start from vertex 0, the DFS algorithm starts by putting it in the Visited list and putting all its \nadjacent vertices in the stack. \n \nVisit the element and put it in the visited list"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 38,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 38 \n \nNext, we visit the element at the top of stack i.e. 1 and go to its adjacent nodes. Since 0 has \nalready been visited, we visit 2 instead. \n \n \nVisit the element at the top of stack \nVertex 2 has an unvisited adjacent vertex in 4, so we add that to the top \nof the stack and visit it. \n \nVertex 2 has an unvisited adjacent vertex in 4, so we add that to the top of the stack and visit \nit. \n \nVertex 2 has an unvisited adjacent vertex in 4, so we add that to the top of the stack and visit \nit."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 39,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 39 \n \nAfter we visit the last element 3, it doesn't have any unvisited adjacent \nnodes, so we have completed the Depth First Traversal of the graph. \n \nAfter we visit the last element 3, it doesn't have any unvisited adjacent nodes, so we have \ncompleted the Depth First Traversal of the graph. \n \nPseudo code For DFS \n \n \n \nThe time complexity of DFS traversal is O(V + E), where V and E are the total number of \nvertices and edges in the graph, respectively. \nPlease note that O(E) may vary between O(1) and O(V2), depending on how dense the graph is."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 40,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 40 \n \nJava Program for DFS using Recursion: DFS_Recursion.java \n \nimport java.io.*; \nimport java.util.*; \n \nclass DFS_Recursion \n{ \n private int V; //number of nodes \n private LinkedList<Integer> adj[]; //adjacency list \n \n public DFS_Recursion (int v) \n { \n V = v; \n adj = new LinkedList[v]; \n for (int i = 0; i < v; ++i) \n { \n adj[i] = new LinkedList(); \n } \n } \n \n void addEdge(int v, int w) \n { \n adj[v].add(w); \n adj[w].add(v); \n //adding an edge to the adjacency list (edges are bidirectional in this example) \n } \n void DFSUtil(int vertex, boolean nodes[]) \n { \n nodes[vertex] = true; //mark the node as explored \n System.out.print(vertex + \" \"); \n int a = 0; \n \n //iterate through the linked list and then propagate to the next few nodes \n \n for (int i = 0; i < adj[vertex].size(); i++) \n { \n a = adj[vertex].get(i); \n//only propagate to next nodes which haven't been explored \n \n if (!nodes[a]) \n { \n DFSUtil(a, nodes); \n } \n } \n }"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 41,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 41 \n \n \n void DFS(int v) \n { \n//initialize a new boolean array to store the details of explored nodes \n \n boolean already[] = new boolean[V]; \n DFSUtil(v, already); \n } \n public static void main(String args[]) \n { \n Scanner sc=new Scanner(System.in); \n System.out.println(\"enter number of vertices and edges\"); \n \n int v=sc.nextInt(); \n int e=sc.nextInt(); \n \n DFS_Recursion t = new DFS_Recursion (v); \n System.out.println(\"enter edges\"); \n for(int i=0;i<e;i++) \n { \n int end1=sc.nextInt(); \n int end2=sc.nextInt(); \n t.addEdge(end1,end2); \n } \n System.out.println(\"enter source for DFS traversal\"); \n int source=sc.nextInt(); \n System.out.println(\"Following is Depth First Traversal: \"); \n \n t.DFS(source); \n } \n} \ninput: \nenter number of vertices and edges \n6 6 \nenter edges \n0 1 \n0 2 \n1 3 \n2 3 \n3 4 \n3 5 \noutput: \nenter source for DFS traversal \n0 \nFollowing is Depth First Traversal: \n0 1 3 2 4 5"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 42,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 42 \n \nIterative Implementation of DFS: \n \nThe non-recursive implementation of DFS is similar to the non-recursive implementation of BFS \nbut differs from it in two ways: \n \nIt uses a stack instead of a queue. \nThe DFS should mark discovered only after popping the vertex, not before pushing it. \nIt uses a reverse iterator instead of an iterator to produce the same results as recursive DFS. \n \nThe time complexity of DFS traversal is O(V + E), where V and E are the total number of \nvertices and edges in the graph, respectively. \nPlease note that O(E) may vary between O(1) and O(V2), depending on how dense the graph is. \n \nThe space complexity is the maximum size of the stack at any point of time. \nSince this can extend to V slots for a linear graph, the maximum space complexity is O(V). \n \nJava Program for DFS using Iteration: \n \n \n DFS_Iteration.java \n \nimport java.util.*; \n \n class DFS_Iteration \n { \n int V; //number of nodes \n LinkedList<Integer>[] adj; //adjacency list \n \n DFS_Iteration(int V) \n { \n this.V = V; \n adj = new LinkedList[V]; \n \n for (int i = 0; i < adj.length; i++) \n adj[i] = new LinkedList<Integer>(); \n } \n void addEdge(int v, int w) \n { \n//adding an edge to the adjacency list (edges are bidirectional in this example) \n \n adj[v].add(w); \n } \n void DFS(int n) \n { \n boolean nodes[] = new boolean[V]; \n Stack<Integer> stack = new Stack<>(); stack.push(n); //push \nroot node to the stack \n int a = 0;"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 43,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 43 \n \n while(!stack.empty()) \n { \n n = stack.peek(); //extract the top element of the stack \n stack.pop(); //remove the top element from the stack \n \n if(nodes[n] == false) \n { \n System.out.print(n + \" \"); \n nodes[n] = true; \n } \n \n for (int i = 0; i < adj[n].size(); i++) //iterate through the linked list and then propagate \nto the next few nodes \n { \n a = adj[n].get(i); \n if (!nodes[a]) //only push those nodes to the stack which aren't in it already \n { \n stack.push(a); //push the top element to the stack \n } \n } \n } \n } \n public static void main(String args[]) \n { \n Scanner sc=new Scanner(System.in); \n System.out.println(\"enter number of vertices and edges\"); \n \n int v=sc.nextInt(); \n int e=sc.nextInt(); \n \n DFS_Iteration t = new DFS_Iteration (v); \n System.out.println(\"enter edges\"); \n for(int i=0;i<e;i++) \n { \n int end1=sc.nextInt(); \n int end2=sc.nextInt(); \n t.addEdge(end1,end2); \n } \n System.out.println(\"enter source for DFS traversal\"); \n int source=sc.nextInt(); \n System.out.println(\"Following is Depth First Traversal: \"); \n t.DFS(source); \n } \n}"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 44,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 44 \n \ninput= \nenter number of vertices and edges \n6 6 \nenter edges \n0 1 \n0 2 \n1 3 \n2 3 \n3 4 \n3 5 \nenter source for DFS traversal \n0 \noutput= \nFollowing is Depth First Traversal: \n0 2 3 5 4 1 \n \nDFS Applications: \n1. The Maze \n2. Boundary of Binary Tree. \n \n1. The Maze: \n There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces \nby rolling up, down, left or right, but it won't stop rolling until hitting a wall. When the ball \nstops, it could choose the next direction. \n Given the ball's start position, the destination and the maze, determine whether the ball \ncould stop at the destination. \n The maze is represented by a binary 2D array. 1 means the wall and 0 means the empty \nspace. You may assume that the borders of the maze are all walls. The start and destination \ncoordinates are represented by row and column indexes. \nExample 1 \nInput 1: a maze represented by a 2D array \n0 0 1 0 0 \n0 0 0 0 0 \n0 0 0 1 0 \n1 1 0 1 1 \n0 0 0 0 0 \nInput 2: start coordinate (rowStart, colStart) = (0, 4) \nInput 3: destination coordinate (rowDest, colDest) = (4, 4) \n \nOutput: true \nExplanation: One possible way is: left -> down -> left -> down -> right -> down -> right."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 45,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 45 \n \n \n \nExample 2 \nInput 1: a maze represented by a 2D array \n0 0 1 0 0 \n0 0 0 0 0 \n0 0 0 1 0 \n1 1 0 1 1 \n0 0 0 0 0 \nInput 2: start coordinate (rowStart, colStart) = (0, 4) \nInput 3: destination coordinate (rowDest, colDest) = (3, 2) \n \nOutput: false \nExplanation: There is no way for the ball to stop at the destination. \n \nNote: \n1.There is only one ball and one destination in the maze. \n2.Both the ball and the destination exist on an empty space, and they will not be at the same \nposition initially. \n3.The given maze does not contain border (like the red rectangle in the example pictures), but \nyou could assume \nthe border of the maze are all walls. \n4.The maze contains at least 2 empty spaces, and both the width and height of the maze won't \nexceed 100."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 46,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 46 \n \nProcedure using DFS: \n Depth-first search is an algorithm that can be used to generate a maze. The idea is really \nsimple and easy to implement using recursive method or stack. \n Basically, you start from a random point and keep digging paths in one of 4 directions (up, \nright, down, left) until you can’t go any further. Once you are stuck, you take a step back \nuntil you find an open path. You would continue digging from there. It’s just the repetition of \nthese. \n First of all, I would like to explain the general idea a little deeper which you can apply using \nyour choice of programming language. After you have the picture in your mind, you can take \na look at the sample code and applet in java. \n Explanation \n Create a 2-dimensional int array with odd row and column size. 0 represents paths(orange \ncell) and 1 would be walls(black cell). \n \nSet all cells to 1(wall). There are no paths right now. \n \nNext, let’s set the starting point. Generate odd numbers for row and col. Set that cell to 0. Use \nrow and col variables to keep track of current location. On the picture above, it would be row = \n3, col = 5. For clarity, I will be filling the current cell with red. \n \nNow, choose a random direction(up, right, down, or left) you are moving to. You will always be \nmoving by 2 cells. The picture above illustrates the current cell moving down. There are couple \nthings you need to check when you move. First, you need to check if 2 cells ahead of that \ndirection is outside of the maze. Then, you check if 2 cells ahead is a path(0) or wall(1). If it’s a"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 47,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 47 \n \nwall, you can move by setting these 2 cells to 0(path). Update your current location which is \nrow=5, col=5 at this moment. \n \nAs you keep digging as above, you notice that you get to a dead end. In this case, keep moving \nyour current cell to previous cells until you are able to move to a new direction. This is called \nbacktracking. Current location is at row=7, col=7, so you would be moving back to row=7, col=5 \non the picture above. You can implement this logic using recursive method or stack. \n \nSo you keep digging as the picture demonstrates. For better visual, I changed the color of arrow \nevery time it hits a dead end. \n \nLastly, this is the final result. With this size, it’s just natural that the maze gets too simple. The \nbigger the maze, the more complicated it will get. \nUsing Recursive Method \nAfter you choose your starting point, pass that information to the recursive method. In the \nrecursive method, you can do the following… \n1. Generate an int array with 4 random numbers to represent directions. \n2. Start a for loop to go for 4 times. \n3. Set up a switch statement to take care of 4 directions. \n4. For that direction, check if the new cell will be out of maze or if it’s a path already open. If \nso, do nothing. \n5. If the cell in that direction is a wall, set that cell to path and call recursive method passing the \nnew current row and column. \n6. Done."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 48,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 48 \n \nComplexity Analysis \n1. Time complexity : O(m*n). \nComplete traversal of maze will be done in the worst case. Here, m and n refers to the \nnumber of rows and columns of the maze. \n2. Space complexity : O(m*n). \nvisited array of size m*n is used. \n \nJava Program for The Maze Application using DFSU: Themaze.java \nimport java.util.*; \nclass Themaze \n{ \n public boolean hasPath(int[][] maze, int[] start, int[] destination) \n { \n boolean[][] visited = new boolean[maze.length][maze[0].length]; \n return dfs(maze, start, destination, visited); \n } \n public boolean dfs(int[][] maze, int[] position, int[] destination, boolean[][] visited) \n { \n if (visited[position[0]][position[1]]) \n { \n return false; \n } \n if (position[0] == destination[0] && position[1] == destination[1]) \n { \n return true; \n } \n // mark the point has been visited \n visited[position[0]][position[1]] = true; \n // Learn form BFS's code, we can write the code more concise \n int[][] dirs = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}}; \n for (int[] dir : dirs) \n { \n int x = position[0]; \n int y = position[1]; \n while (x >= 0 && y >= 0 && x < maze.length && y < maze[0].length && maze[x][y] == 0) \n { \n x += dir[0]; \n y += dir[1]; \n } \n // Roll Back - When the program break from while loop above, \n // it means that x, y has been added dir[0], dir[1] one more time."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 49,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 49 \n \n // But the correct answer (in the range) is less than it, so we should minus dir[0] and \ndir[1] here. \n \n if (dfs(maze, new int[]{x - dir[0], y - dir[1]}, destination, visited)) \n { \n return true; \n } \n } \n return false; \n } \n public static void main(String args[]) \n { \n Scanner sc=new Scanner(System.in); \n System.out.println(\"enter 2d matrix row size \"); \n int x=sc.nextInt(); \n System.out.println(\"enter 2d matrix coloumn size \"); \n int y=sc.nextInt(); \n System.out.println(\"enter 2D matrix Elements \"); \n int maze[][]=new int[x][y]; \n int start[]=new int[2]; \n int destination[]=new int[2]; \n for(int i=0;i<x;i++) \n { \n for(int j=0;j<y;j++) \n { \n maze[i][j]=sc.nextInt(); \n } \n } \n System.out.println(\"enter starting point coordinates\"); \n for(int i=0;i<2;i++) \n { \n start[i]=sc.nextInt(); \n } \n System.out.println(\"enter Destination point coordinates\"); \n for(int i=0;i<2;i++) \n { \n destination[i]=sc.nextInt(); \n } \n System.out.println(new Themaze().hasPath(maze,start,destination)); \n } \n}"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 50,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 50 \n \nExample-1: \nInput= \nenter 2d matrix row size \n5 \nenter 2d matrix coloumn size \n5 \nenter 2D matrix Elements \n0 0 1 0 0 \n0 0 0 0 0 \n0 0 0 1 0 \n1 1 0 1 1 \n0 0 0 0 0 \nenter starting point coordinates \n0 \n4 \nenter Destination point coordinates \n4 \n4 \nOutput= \ntrue \nExample-2: \nInput= \nenter 2d matrix row size \n5 \nenter 2d matrix coloumn size \n5 \nenter 2D matrix Elements \n0 0 1 0 0 \n0 0 0 0 0 \n0 0 0 1 0 \n1 1 0 1 1 \n0 0 0 0 0 \nenter starting point coordinates \n0 \n4 \nenter Destination point coordinates \n3 \n2 \nOutput= \nFalse"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 51,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 51 \n \n2. Boundary of Binary Tree: \n Given a binary tree, return the values of its boundary in anti-clockwise direction starting \nfrom root. Boundary includes left boundary, leaves, and right boundary in order without \nduplicate nodes. (The values of the nodes may still be duplicates.) \n Left boundary is defined as the path from root to the left-most node. Right boundary is \ndefined as the path from root to the right-most node. If the root doesn't have left subtree or \nright subtree, then the root itself is left boundary or right boundary. Note this definition only \napplies to the input binary tree, and not applies The left-most node is defined as a leaf node \nyou could reach when you always firstly travel to the left subtree if exists. If not, travel to the \nright subtree. Repeat until you reach a leaf node. \n The right-most node is also defined by the same way with left and right exchanged. \n \nExample 1 \nInput: \n 1 \n \\ \n 2 \n / \\ \n 3 4 \nOuput: \n[1, 3, 4, 2] \n \nExplanation: The root doesn't have left subtree, so the root itself is left boundary. \nThe leaves are node 3 and 4. \nThe right boundary are node 1,2,4. Note the anti-clockwise direction means you should \noutput reversed right boundary. \nSo order them in anti-clockwise without duplicates and we have [1,3,4,2]. \n \nExample 2 \nInput: \n____1_____ \n / \\ \n 2 3 \n / \\ / \n4 5 6 \n / \\ / \\ \n 7 8 9 10 \n \nOuput: \n[1,2,4,7,8,9,10,6,3] \n \nExplanation:The left boundary are node 1,2,4. (4 is the left-most node according to \ndefinition)ans The leaves are node 4,7,8,9,10. \nThe right boundary are node 1,3,6,10. (10 is the right-most node). \nSo order them in anti-clockwise without duplicate nodes we have [1,2,4,7,8,9,10,6,3]."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 52,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 52 \n \nBoundary traversal in an anti-clockwise direction can be described as a traversal consisting of \nthree parts: \nPart 1: Left Boundary of the tree (excluding the leaf nodes). \nPart 2: All the leaf nodes travelled in the left to right direction. \nPart 3: Right Boundary of the tree (excluding the leaf nodes), traversed in the reverse direction. \n \nSolution: \nWe take a simple data structure like a vector/Arraylist to store the Boundary Traversal. The root \nnode is coming from both the boundaries (left and right). Therefore, to avoid any confusion, we \npush it on our list at the very start. \n \nWe will now see the approach to finding these three parts."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 53,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 53 \n \nPart 1: Left Boundary \n \nTo traverse the left boundary, we can set a simple iteration. Initially, we make the cur pointer \npoint to the root’s left. In every iteration, if the cur node is not a leaf node, we print it. Then we \nalways try to move left of the cur pointer. If there is no left child, then we move to the right of \ncur and in the next iteration, again try to move to the left first. We stop our execution when cur is \npointing to NULL. \n \nPart 2: Leaf nodes \n \nTo print the leaf nodes, we can do a simple preorder traversal, and check if the current node is a \nleaf node or not. If it is a leaf node just print it."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 54,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 54 \n \nPlease note that we want the leaves to come in a specific order which is bottom-left to top-right, \ntherefore a level order traversal will not work because it will print the upper-level leaves first. \nTherefore, we use a preorder traversal. \n \nPart 3: Right Boundary \n \nWe need to print the right boundary in the Reverse direction. It is very similar to the left \nboundary traversal. We initialize our cur pointer to the right child of the root node and set an \niterative loop. To achieve the reverse direction, we take an auxiliary list. In every iteration, we \ncheck if the current node is not a leaf node then we push it to the auxiliary list. Then we first try \nto move right of cur, if there is no right child only then we move left. We stop our execution \nonce cur points to NULL. \nNow the auxiliary list contains the nodes of the right boundary. We iterate from the end to start \noff this list and in every iteration, push the value to our main boundary traversal list. This way \nwe get the nodes in the reverse direction."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 55,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 55 \n \nJava Program for Boundary of Binary tree using DFS: BondaryOfBT,java \nimport java.util.*; \n \nclass BondaryOfBTNode \n{ \n \npublic int data; \n \npublic BondaryOfBTNode left, right; \n \npublic BondaryOfBTNode(int data) \n { \n \n \nthis.data = data; \n \n \nleft = null; \n \n \nright = null; \n \n} \n} \nclass Solution \n{ \n List<Integer> nodes = new ArrayList<>(1000); \n public List<Integer> compoundWall(BondaryOfBTNode root) \n { \n if(root == null || root.data==-1) return nodes; \n nodes.add(root.data); \n leftBoundary(root.left); \n leaves(root.left); \n leaves(root.right); \n rightBoundary(root.right); \n \n return nodes; \n } \n public void leftBoundary(BondaryOfBTNode root) \n { \n if((root == null || root.data==-1)|| ((root.left == null ||root.left.data==-1)&& (root.right == \nnull||root.right.data==-1))) \n return; \n nodes.add(root.data); \n if(root.left == null||root.left.data==-1) leftBoundary(root.right); \n else leftBoundary(root.left); \n } \n public void rightBoundary(BondaryOfBTNode root) \n {"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 56,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 56 \n \n if((root == null ||root.data==-1)|| ((root.left == null ||root.left.data==-1)&& (root.right == \nnull||root.right.data==-1))) \n return; \n \n if(root.right == null || root.right.data==-1) \n rightBoundary(root.left); \n else \n rightBoundary(root.right); \n nodes.add(root.data); // add after child visit(reverse) \n } \n public void leaves(BondaryOfBTNode root) \n { \n if(root == null || root.data==-1) return; \n if((root.left == null ||root.left.data==-1)&& (root.right == null||root.right.data==-1)) { \n nodes.add(root.data); \n return; \n } \n leaves(root.left); \n leaves(root.right); \n } \n} \npublic class BondaryOfBT \n{ \nstatic BondaryOfBTNode root; \n \nstatic BondaryOfBTNode temp = root; \n void insert(BondaryOfBTNode temp, int key) \n { \n if (temp == null) \n { \n root = new BondaryOfBTNode(key); \n return; \n } \n Queue<BondaryOfBTNode> q = new LinkedList<BondaryOfBTNode>(); \n q.add(temp); \n // Do level order traversal until we find \n // an empty place. \n while (!q.isEmpty()) \n { \n temp = q.peek(); \n q.remove();"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 57,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 57 \n \n if (temp.left == null) \n { \n temp.left = new BondaryOfBTNode(key); \n break; \n } \n else \n q.add(temp.left); \n \n if (temp.right == null) \n { \n temp.right = new BondaryOfBTNode(key); \n break; \n } \n else \n q.add(temp.right); \n } \n } \n \npublic static void main(String args[]) \n \n{ \n \n \nScanner sc=new Scanner(System.in); \n \n \nString str[]=sc.nextLine().split(\" \"); \n \n \nBondaryOfBT bt=new BondaryOfBT(); \n \n \nroot=new BondaryOfBTNode(Integer.parseInt(str[0])); \n \n \nfor(int i=1; i<str.length; i++) \n \n \n \nbt.insert(root,Integer.parseInt(str[i])); \n \n \nSolution sol= new Solution(); \n \n \nSystem.out.println(sol.compoundWall(root)); \n \n} \n} \nExample-1: \ninput =2 1 3 6 4 -1 9 \noutput =[2, 1, 6, 4, 9, 3] \n \nExample-2: \ninput =5 2 4 7 9 8 1 \noutput =[5, 2, 7, 9, 8, 1, 4] \n \nExample-3: \ninput =1 \noutput =[1]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 58,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 58 \n \nPart-II: Trees: \n \nApplications: \n \n1. Symmetric Tree. \n2. Balanced Binary Tree. \n3. Average of Levels in Binary Tree. \n4. Find Largest Value in Each Tree Row. \n5. Binary Tree Right Side View. \n \n \nTrees: \n \nA tree is a nonlinear hierarchical data structure that consists of nodes connected by edges. \n \nA Tree \nWhy Tree Data Structure? \nOther data structures such as arrays, linked list, stack, and queue are linear data structures that \nstore data sequentially. In order to perform any operation in a linear data structure, the time \ncomplexity increases with the increase in the data size. But, it is not acceptable in today's \ncomputational world. \nDifferent tree data structures allow quicker and easier access to the data as it is a non-linear data \nstructure. \nTree Terminologies \nNode \nA node is an entity that contains a key or value and pointers to its child nodes. \nThe last nodes of each path are called leaf nodes or external nodes that do not contain a \nlink/pointer to child nodes. \nThe node having at least a child node is called an internal node. \nEdge \nIt is the link between any two nodes."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 59,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 59 \n \n \nNodes and edges of a tree \nRoot \nIt is the topmost node of a tree. \nHeight of a Node \nThe height of a node is the number of edges from the node to the deepest leaf (ie. the longest \npath from the node to a leaf node). \nDepth of a Node \nThe depth of a node is the number of edges from the root to the node. \nHeight of a Tree \nThe height of a Tree is the height of the root node or the depth of the deepest node. \n \n \nHeight and depth of each node in a tree \nDegree of a Node \nThe degree of a node is the total number of branches of that node. \nForest \nA collection of disjoint trees is called a forest."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 60,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 60 \n \nCreating forest from a tree \nAdvantages of Trees: \nTrees are so useful and frequently used, because they have some very serious advantages: \n Trees reflect structural relationships in the data. \n Trees are used to represent hierarchies. \n Trees provide an efficient insertion and searching. \n Trees are very flexible data, allowing to move subtrees around with minumum effort. \n \n \nBinary Tree Introduction: \nA binary tree is a tree-type non-linear data structure with a maximum of two children for \neach parent. Every node in a binary tree has a left and right reference along with the data \nelement. The node at the top of the hierarchy of a tree is called the root node. The nodes that hold \nother sub-nodes are the parent nodes. \nA parent node has two child nodes: the left child and right child. Hashing, routing data for \nnetwork traffic, data compression, preparing binary heaps, and binary search trees are some of \nthe applications that use a binary tree. \n \nUnderstanding Properties of Binary Tree Or What Is Binary Tree? \nAt every level of it, the maximum number allowed for nodes stands at 2i. \nThe height of a binary tree stands defined as the longest path emanating from a root node to the \ntree’s leaf node. \n \nWhat Is Binary Tree– More Than The Binary Tree Definition \n Say a binary tree placed at a height equal to 3. In that case, the highest number of nodes \nfor this height 3 stands equal to 15, that is, (1+2+4+8) = 15. In basic terms, the maximum \nnode number possible for this height h is (20 + 21 + 22+….2h) = 2h+1 -1. \n Now, for the minimum node number that is possible at this height h, it comes as equal to \nh+1. \n If there are a minimum number of nodes, then the height of a binary tree would stand aa \nmaximum. On the other hand, when there is a number of a node at its maximum, then the \nbinary tree m height will be minimum. If there exists around ‘n’ number nodes in a \nbinary tree, here is a calculation to clarify the binary tree definition. \n \nThe tree’s minimum height is computed as: \nn = 2h+1 -1"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 61,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 61 \n \nn+1 = 2h+1 \nTaking log for both sides now, \nlog2(n+1) = log2(2h+1) \nlog2(n+1) = h+1 \nh = log2(n+1) – 1 \nThe highest height will be computed as: \nn = h+1 \nh= n-1 \n \n \nBinary Tree Components: \nThere are three binary tree components. Every binary tree node has these three components \nassociated with it. It becomes an essential concept for programmers to understand these \nthree binary tree components: \n1. Data element \n2. Pointer to left subtree \n3. Pointer to right subtree \n \nTypes of Binary Trees (Based on Structure) \n1. Rooted binary tree: It has a root node and every node has atmost two children. \n2. Full binary tree: It is a tree in which every node in the tree has either 0 or 2 children. \n \n The number of nodes, n, in a full binary tree is at least n = 2h – 1, and at \nmost n = 2h+1 – 1, where h is the height of the tree."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 62,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 62 \n \n The number of leaf nodes l, in a full binary tree is number, L of internal nodes + \n1, i.e, l = L+1. \n \n3. Perfect binary tree: It is a binary tree in which all interior nodes have two children and \nall leaves have the same depth or same level. \n \n \n A perfect binary tree with l leaves has n = 2l-1 nodes. \n In perfect full binary tree, l = 2h and n = 2h+1 - 1 where, n is number of nodes, h is \nheight of tree and l is number of leaf nodes \n \n4. Complete binary tree: It is a binary tree in which every level, except possibly the last, is \ncompletely filled, and all nodes are as far left as possible. \n \n The number of internal nodes in a complete binary tree of n nodes is floor(n/2). \n \n \n \n \n5. Balanced binary tree: A binary tree is height balanced if it satisfies the following \nconstraints: \n1. The left and right subtrees' heights differ by at most one, AND"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 63,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 63 \n \n2. The left subtree is balanced, AND \n3. The right subtree is balanced \nAn empty tree is height balanced. \n \n The height of a balanced binary tree is O(Log n) where n is number of nodes. \n \n6. Degenerate tree: It is a tree is where each parent node has only one child node. It \nbehaves like a linked list."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 64,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 64 \n \n1. Symmetric Tree: \nA binary tree is considered symmetric if it is a mirror image of itself, i.e, it is symmetric \naround its root node. Given the root node of a binary tree, determine whether it's symmetric. \nTwo trees mirror each other if all the following conditions are satisfied: \n \nBoth trees are empty, or both are non-empty. \n \nThe left subtree is the mirror of the right subtree. \n \nThe right subtree is the mirror of the left subtree. \nExample:1 \n \nInput: root = [1, 2, 2, 3, 4, 4, 3] \nOutput: true \nExample:2 \n \nInput: root = [1, 2, 2, null, 3, null, 3] \nOutput: false"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 65,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 65 \n \nConstraints: \n The number of nodes in the tree is in the range [1, 1000]. \n -100 <= Node.val <= 100 \nTime Complexity: O(N): \nReason: We are doing simple tree traversal and changing both root1 and root2 simultaneously. \nSpace Complexity: O(N) \nReason: In the worst case (skewed tree), space complexity can be O(N). \nSolution: \n We need to understand the property of the mirror. We can ignore the root node as it is \nlying on the mirror line. In the next level, for a symmetric tree, the node at the root’s left \nshould be equal to the node at the root’s right. \n If we take two variables root1 and root2 to represent the left child of root and right child \nof the root, then \n \n Further, we need to understand that when root1’s value is equal to root2’s value, we need \nto further check for its children. \n As we are concerned about node positions through a mirror, root1’s left child should be \nchecked with root2’s right child and root1’s right child should be checked with root2’s \nleft child."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 66,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 66 \n \n \n \nApproach: \nThe algorithm steps can be summarized as follows:: \n We take two variables root1 and root2 initially both pointing to the root. \n Then we use any tree traversal to traverse the nodes. We will simultaneously change root1 and \nroot2 in this traversal function. \n For the base case, if both are pointing to NULL, we return true, whereas if only one points to \nNULL and other to a node, we return false. \n If both points to a node, we first compare their value, if it is the same we check for the lower \nlevels of the tree. \n We recursively call the function to check the root1’s left child with root2’s right child; then we \nagain recursively check the root1’s right child with root2’s left child. \n When all three conditions ( node values of left and right and two recursive calls) return true, we \nreturn true from our function else we return false."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 67,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 67 \n \n \nJava program for Symmetric tree: SymmetricTree.java \nimport java.util.*; \n \nclass BinaryTreeNode \n{ \n \npublic int data; \n \npublic BinaryTreeNode left, right; \n \npublic BinaryTreeNode(int data) \n { \n \n \nthis.data = data; \n \n \nleft = null; \n \n \nright = null; \n \n} \n} \nclass Solution \n{ \n public boolean isSelfMirrorTree(BinaryTreeNode root) \n { \n return root==null || isSelfMirrorTreeHelp(root.left, root.right); \n } \n \n private boolean isSelfMirrorTreeHelp(BinaryTreeNode left, BinaryTreeNode right) \n { \n if(left==null || right==null) \n return left==right; \n if(left.data!=right.data) \n return false; \n return isSelfMirrorTreeHelp(left.left, right.right) && isSelfMirrorTreeHelp(left.right, \nright.left); \n } \n} \n \npublic class SymmetricTree \n{"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 68,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 68 \n \n \nstatic BinaryTreeNode root; \n \nstatic BinaryTreeNode temp = root; \n void insert(BinaryTreeNode temp, int key) \n { \n \n if (temp == null) \n { \n root = new BinaryTreeNode(key); \n return; \n } \n Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>(); \n q.add(temp); \n \n // Do level order traversal until we find \n // an empty place. \n while (!q.isEmpty()) \n { \n temp = q.peek(); \n q.remove(); \n \n if (temp.left == null) \n { \n temp.left = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.left); \n \n if (temp.right == null) \n { \n temp.right = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.right); \n } \n } \n \npublic static void main(String args[]) \n \n{ \n \n \nScanner sc=new Scanner(System.in); \n \n \nString str[]=sc.nextLine().split(\" \"); \n \n \nSymmetricTree st=new SymmetricTree(); \n \n \nroot=new BinaryTreeNode(Integer.parseInt(str[0])); \n \n \nfor(int i=1; i<str.length; i++) \n \n \n \nst.insert(root,Integer.parseInt(str[i])); \n \n \nSolution sol= new Solution();"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 69,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 69 \n \n \n \nSystem.out.println(sol.isSelfMirrorTree(root)); \n \n} \n} \n \nExample-1: \nInput= \n2 1 1 2 3 3 2 \nOutput= \ntrue \nExample-2: \nInput= \n2 1 1 -1 3 -1 3 \nOutput= \nfalse"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 70,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 70 \n \n2. Balanced Binary Tree: \n A binary tree is balanced if, for all nodes in the tree, the difference between left and right \nsubtree height is not more than 1. Check whether the given Binary Tree is a Balanced \nBinary Tree or not. \nExamples: \nInput Format: Given the root of Binary Tree \n \nResult: False \nExplanation: At Node 4, Left Height = 1 & Right Height = 3, Absolute Difference is 2 which is \ngreater than 1, Hence, not a balanced tree. \nInput Format: Given the root of Binary Tree \n \n \nResult: True"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 71,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 71 \n \nExplanation: All Nodes in the tree have an Absolute Difference of Left Height & Right Height \nnot more than 1. \n \nSolution-1: \nFor a Balanced Binary Tree, Check left subtree height and right subtree height for every node \npresent in the tree. Hence, traverse the tree recursively and calculate the height of left and right \nsubtree from every node, and whenever the condition of Balanced tree violates, simply return \nfalse. \nCondition for Balanced Binary Tree \nFor all Nodes , Absolute( Left Subtree Height – Right Subtree Height ) <= 1"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 72,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 72 \n \nStart traversing the tree, the example given in above diagram: \n \n Reach on Node 4, call Height Function , Left height = 3 , Right height = 4 so Absolute \nDifference between two is Abs(3 – 4) = 1. \n Reach on Node 7, call Height Function , Left height = 2 , Right height = 1 so Absolute \nDifference between two is Abs(2 – 1) = 1. \n Reach on Node 2, call Height Function , Left height = 1 , Right height = 0 so Absolute \nDifference between two is Abs(1 – 0) = 1. \n Reach on Node 0, call Height Function , Left height = 0 , Right height = 0 so Absolute \nDifference between two is Abs(0 – 0) = 0. \n Now, on PostOrder of Node 0, the left subtree (null) gives true & right subtree (null) gives true \n, as both are true , return true. \n Now, on PostOrder of Node 2, the left subtree (0) gives true & right subtree (null) gives true , \nas both are true , return true. \n Reach on Node 11, call Height Function , Left height = 0 , Right height = 0 so Absolute \nDifference between two is Abs(0 – 0) = 0. \n Now , on PostOrder of Node 11, the left subtree (null) gives true & right subtree (null) gives \ntrue , as both are true , return true. \n Now ,on PostOrder of Node 7, the left subtree (2) gives true & right subtree (11) gives true , as \nboth are true , return true. \n Reach on Node 8, call Height Function , Left height = 3 , Right height = 1 so Absolute \nDifference between two is Abs(3 – 1) = 2. Here Condition violates , simply return false, no need \nto call further \n Now , on PostOrder of Node 4, the left subtree (7) gives true & right subtree (8) gives false , so \nany one of subtree gives false , return false. \nTime Complexity: O(N*N) ( For every node, Height Function is called which takes O(N) Time. \nHence for every node it becomes N*N ) \nSpace Complexity: O(1) ( Extra Space ) + O(H) ( Recursive Stack Space where “H” is the \nheight of tree )"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 73,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 73 \n \n \nSolution-2: Using Post Order Traversal \n \nIntuition: Can we optimize the above brute force solution? Which operation do you think can be \nskipped to optimize the time complexity? \nAin’t we traversing the subtrees again and again in the above example? \nYes, so can we skip the repeated traversals? \nWhat if we can make use of post-order traversal? \n \nSo, the idea is to use post-order traversal. Since, in post order traversal, we first traverse the left \nand right sub trees and then visit the parent node, similarly instead of calculating the height of \nthe left subtree and right subtree every time at the root node, use post-order traversal, and keep \ncalculating the heights of the left and right subtrees and perform the validation. \n \nApproach: \n \n Start traversing the tree recursively and do work in Post Order. \n For each call, caculate the height of the root node, and return it to previous calls. \n Simultaneously, in the Post Order of every node , Check for condition of balance as information \nof left and right subtree height is available. \n If it is balanced , simply return height of current node and if not then return -1. \n Whenever the subtree result is -1 , simply keep on returning -1. \nTime Complexity: O(N) \nSpace Complexity: O(1) Extra Space + O(H) Recursion Stack space (Where “H” is the \nheight of binary tree)"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 74,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 74 \n \nIn Post Order, Start traversing the tree on the example given in below diagram \n \n \nReach on Node 0, Left child = null so 0 Height , Right child = null so 0 Height , Difference \nis 0-0 = 0 , ( 0 <= 1 ) so return height , i.e. Max(0,0) + 1 = 1. \n \nReach on Node 2 , Left subtree height = 1 , Right subtree height = 0, Difference is 1-0 = 1 , \n( 1 <= 1 ) so return height , i.e. Max(1,0) + 1 = 2. \n \nReach on Node 11 , Left child = null so 0 Height , Right child = null so 0 Height , \nDifference is 0-0 = 0 , ( 0 <= 1 ) so return height , i.e. Max(0,0) + 1 = 1. \n \nReach on Node 7 , Left subtree height = 2 , Right subtree height = 1, Difference is 2-1 = 1 , \n( 1 <= 1 ) so return height , i.e. Max(2,1) + 1 = 3."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 75,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 75 \n \n Reach on Node 5 , Left child = null so 0 Height , Right child = null so 0 Height , Difference is \n0-0 = 0 , ( 0 <= 1 ) so return height , i.e. Max(0,0) + 1 = 1. \n Reach on Node 3 , Left subtree height = 1 , Right subtree height = 0, Difference is 1-0 = 1 , ( \n1 <= 1 ) so return height , i.e. Max(1,0) + 1 = 2. \n Reach on Node 1 , Left subtree height = 2 , Right subtree height = 0, Difference is 2-0 = 2 , ( \n2 > 1 ) i.e. Tree is not Balanced , so return -1. \n Reach on Node 8 , Left subtree height = -1 , indicates that tree is not balanced, simply return \n-1; \n Reach on Node 4 , Left subtree height = 3 , Right subtree height = -1, therefore indicates that \ntree is not balanced , simply return -1; \n In the Main function , If the final Height of tree is -1 return false as tree is not balanced , else \nreturn true. \nJava program for Balanced Binary Tree: BalancedTree.java \nimport java.util.*; \nclass BinaryTreeNode \n{ \n \npublic int data; \n \npublic BinaryTreeNode left, right; \n \npublic BinaryTreeNode(int data) \n { \n \n \nthis.data = data; \n \n \nleft = null; \n \n \nright = null; \n \n} \n} \nclass Solution \n{ \npublic boolean isBalanced(BinaryTreeNode root) \n{ \n if(root == null || root.data==-1) \n { \n return true; \n } \n return helper(root) != -1; \n } \n private int helper(BinaryTreeNode root) \n { \n if(root == null || root.data==-1) \n {"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 76,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 76 \n \n return 0; \n } \n int left = helper(root.left); \n int right = helper(root.right); \n if(left == -1 || right == -1 || Math.abs(left - right) > 1) \n { \n return -1; \n } \n return Math.max(left, right) + 1; \n } \n} \npublic class BalancedTree \n{ \n \nstatic BinaryTreeNode root; \n \nstatic BinaryTreeNode temp = root; \n \nvoid insert(BinaryTreeNode temp, int key) \n { \n if (temp == null) \n { \n root = new BinaryTreeNode(key); \n return; \n } \n Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>(); \n q.add(temp); \n \n // Do level order traversal until we find \n // an empty place. \n while (!q.isEmpty()) { \n temp = q.peek(); \n q.remove(); \n if (temp.left == null) \n { \n temp.left = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.left); \n \n if (temp.right == null) { \n temp.right = new BinaryTreeNode(key); \n break;"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 77,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 77 \n \n } \n else \n q.add(temp.right); \n } \n } \n \npublic static void main(String args[]) \n \n{ \n \n \nScanner sc=new Scanner(System.in); \n \n \nString str[]=sc.nextLine().split(\" \"); \n \n \nBalancedTree st=new BalancedTree(); \n \n \nroot=new BinaryTreeNode(Integer.parseInt(str[0])); \n \n \nfor(int i=1; i<str.length; i++) \n \n \n \nst.insert(root,Integer.parseInt(str[i])); \n \n \nSolution sol= new Solution(); \n \n \nSystem.out.println(sol.isBalanced(root)); \n \n} \n} \nExample-1: \nInput= \n2 1 1 2 3 3 2 \nOutput= \nTrue \nExample-2: \nInput= \n1 2 3 4 5 -1 -1 6 7 \nOutput= \nFalse"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 78,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 78 \n \n3. \nAverage of Levels in Binary Tree: \n \nGiven the root of a binary tree, return the average value of the nodes on each level in the \nform of an array. Answers within 10-5 of the actual answer will be accepted. \n \n \n \nInput: root = [3, 9, 20, null, null, 15, 7] \nOutput: [3.00000, 14.50000, 11.00000] \nExplanation: The average value of nodes on level 0 is 3, on level 1 is 14.5, and on level 2 is 11. \nHence return [3, 14.5, 11]. \n \n \nInput: root = [3,9,20,15,7] \nOutput: [3.00000,14.50000,11.00000]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 79,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 79 \n \nApproach: \nYou must have read about the Level Order Traversal in a tree that is used to traverse \nin a binary tree. The level order traversal is similar to BFS traversal where the starting point is \nthe root node. We can use this traversal technique here. \nHow can we use Level Order Traversal Technique to solve the problem? \nWe will use a Queue that will store the nodes of each level. We will enqueue all the nodes of \nthe current level while storing their sum in a variable. The total number of nodes in the current \nlevel will be equal to the queue size. Using them we can find the average of the current level \nand store it in the result array. Afterwards, we will dequeue all the nodes from Queue and \nenqueue the children of the dequeued nodes which will represent the next level of the tree. \nSolution Step \n1. Create a Queue and push the root node in it. Create an empty result array and append \nthe root node value in it. \n2. Find the length of the Queue and store it in a currLevelNoOfNodes variable \n Dequeue all the nodes of Queue and enqueue all the children of the dequeued \nnodes. \n During enqueue, keep a sum variable that will store the sum of all the nodes of \nthe current level. \n For each such step, append the value (sum/currLevelNoOfNodes) in the result \narray. \n3. Repeat step 2 until the Queue becomes empty. \n \n \nComplexity Analysis: \n \nTime Complexity: O(n) \nSpace Complexity: O(n) \nJava program for Average of Levels in Binary Tree: AvgOfLvlsBT.java \n \nimport java.util.*; \n \nclass BinaryTreeNode{ \n \npublic int data; \n \npublic BinaryTreeNode left, right; \n \npublic BinaryTreeNode(int data){ \n \n \nthis.data = data; \n \n \nleft = null; \n \n \nright = null; \n \n} \n}"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 80,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 80 \n \n \nclass Solution { \n \npublic List<Double> averageOfLevels(BinaryTreeNode root) { \n \n \nList<Double> result = new ArrayList<>(); \n \n \nQueue<BinaryTreeNode> q = new LinkedList<>(); \n \n \n \n \n \nif(root == null||root.data==-1) return result; \n \n \nq.add(root); \n \n \nwhile(!q.isEmpty()) { \n \n \n \nint n = q.size(); \n \n \n \ndouble sum = 0.0; \n \n \n \nfor(int i = 0; i < n; i++) { \n \n \n \n \nBinaryTreeNode node = q.poll(); \n \n \n \n \nsum += node.data; \n \n \n \n \nif(node.left != null && node.left.data!=-1) q.offer(node.left); \n \n \n \n \nif(node.right != null && node.right.data!=-1) q.offer(node.right); \n \n \n \n} \n \n \n \nresult.add(sum / n); \n \n \n} \n \n \nreturn result; \n \n} \n} \n \npublic class AvgOfLvlsBT{ \n \nstatic BinaryTreeNode root; \n \nstatic BinaryTreeNode temp = root; \n \nvoid insert(BinaryTreeNode temp, int key) \n { \n \n if (temp == null) { \n root = new BinaryTreeNode(key); \n return; \n } \n Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>(); \n q.add(temp); \n \n // Do level order traversal until we find \n // an empty place. \n while (!q.isEmpty()) { \n temp = q.peek(); \n q.remove();"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 81,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 81 \n \n \n if (temp.left == null) { \n temp.left = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.left); \n \n if (temp.right == null) { \n temp.right = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.right); \n } \n } \n \npublic static void main(String args[]) \n \n{ \n \n \nScanner sc=new Scanner(System.in); \n \n \nString str[]=sc.nextLine().split(\" \"); \n \n \nAvgOfLvlsBT st=new AvgOfLvlsBT(); \n \n \nroot=new BinaryTreeNode(Integer.parseInt(str[0])); \n \n \nfor(int i=1; i<str.length; i++) \n \n \n \nst.insert(root,Integer.parseInt(str[i])); \n \n \nSolution sol= new Solution(); \n \n \nSystem.out.println(sol.averageOfLevels(root)); \n \n} \n} \n \nExample-1: \nInput: \n3 8 4 3 5 -1 7 \nOutput: \n[3.0, 6.0, 5.0]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 82,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 82 \n \n \n4. \nFind Largest Value in Each Tree Row: \n \nGiven the root of a binary tree, return an array of the largest value in each row of the tree (0-\nindexed). \n \nExample 1: \n \n \n \nInput: root = [1,3,2,5,3,null,9] \nOutput: [1,3,9] \n \nExample 2: \nInput: root = [1,2,3] \nOutput: [1,3] \n \nConstraints: \n \nThe number of nodes in the tree will be in the range [0, 104]. \n \n-231 <= Node.val <= 231 - 1 \n \nTime Complexity: O(n) — We touch every node once \nSpace Complexity: O(n) — The last level of a full and complete binary tree can have N/2 \nnodes. The queue stores every level. \nBFS Approach: \n1. We can use a BFS traversal with a queue to process each level. \n2. Start by enqueuing the root node. \n3. While the queue is not empty, process the nodes of the current level: \na. For each node in the current level, update the maximum value seen so far. \nb. If the node has left and right children, enqueue them. \n4. After processing all nodes in a level, add the maximum value to the result list. \n5. Continue this process until the queue is empty, which means all levels are processed."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 83,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 83 \n \n \nDFS Approach: \n1. The largest Values function is the main entry point. It initializes an empty List ‘res’ to \nstore the largest values at each level and calls the dfs (depth-first search) function to \ntraverse the binary tree. \n \n2. The dfs function is a recursive helper function. It takes two parameters: the current node \nand the depth of the current node. \n \n3. Inside the dfs function, it first checks if the current node is nullptr, indicating a leaf node \nor an empty subtree. If so, it returns without making any changes. \n \n4. If the depth is equal to the size of the ‘res’ List it means that we are at a new level in the \ntree. In this case, it pushes the value of the current node into the ‘res’ List at the \ncorresponding level. \n \n5. If the depth is not equal to the size of the’res’ List, it means we have visited this level \nbefore. In this case, it updates the value at the corresponding level by taking the \nmaximum of the existing value and the current node's value. \n \n6. The dfs function then makes two recursive calls to process the left and right children of \nthe current node, incrementing the depth by 1 for each call. \n \n7. Once the dfs function completes its traversal, the largestValues function returns the ‘res’ \nList, which contains the largest values at each level of the binary tree. \nWrite a java program for Find Largest Value in Each Tree Row using BFS: \nMaxValInEachLevel_bfs.java \n \nimport java.util.*; \nclass BinaryTreeNode \n{ \n \npublic int data; \n \npublic BinaryTreeNode left, right; \n \npublic BinaryTreeNode(int data) \n \n{ \n \n \nthis.data = data; \n \n \nleft = null; \n \n \nright = null; \n \n} \n} \n \nclass Solution"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 84,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 84 \n \n{ \n \n public List<Integer> largestValues(BinaryTreeNode root) \n { \n Queue<BinaryTreeNode> queue = new LinkedList<>(); \n List<Integer> ans = new ArrayList<>(); \n queue.offer(root); \n if(root==null) return ans; \n while(!queue.isEmpty()) \n { \n int level = queue.size(); \n int max = Integer.MIN_VALUE; \n for(int i=0;i<level;i++) \n { \n BinaryTreeNode temp =queue.poll(); \n if(temp.left!=null) \n { \n queue.offer(temp.left); \n } \n if(temp.right!=null) \n { \n queue.offer(temp.right); \n } \n max= Math.max(max, temp.data); \n } \n ans.add(max); \n } \n return ans; \n } \n } \n \npublic class MaxValInEachLevel \n{ \n \nstatic BinaryTreeNode root; \n \nvoid insert(BinaryTreeNode temp, int key) \n { \n if (temp == null) { \n temp = new BinaryTreeNode(key); \n return; \n } \n Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 85,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 85 \n \n q.add(temp); \n \n // Do level order traversal until we find an empty place. \n while (!q.isEmpty()) \n \n \n{ \n temp = q.remove(); \n \n if (temp.left == null) { \n temp.left = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.left); \n \n if (temp.right == null) { \n temp.right = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.right); \n } \n } \n \n \npublic static void main(String args[]) \n \n{ \n \n \nScanner sc=new Scanner(System.in); \n \n \nMaxValInEachLevel ln=new MaxValInEachLevel(); \n \n \nSolution sol= new Solution(); \n \n \n \n \n \nString str[]=sc.nextLine().split(\" \"); \n \n \nroot=new BinaryTreeNode(Integer.parseInt(str[0])); \n \n \nfor(int i=1; i<str.length; i++) \n \n \n \nln.insert(root,Integer.parseInt(str[i])); \n \n \n \nSystem.out.println(sol.largestValues(root)); \n \n} \n} \nExample-1: \ninput =2 4 3 6 4 -1 9 \noutput =[2, 4, 9]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 86,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 86 \n \n5. Binary Tree Right Side View: \n \nGiven the root of a binary tree, imagine yourself standing on the right side of it, return the \nvalues of the nodes you can see ordered from top to bottom. \n \nExample 1: \n \n \nInput: root = [1,2,3,null,5,null,4] \nOutput: [1,3,4] \n \nExample 2: \nInput: root = [1,null,3] \nOutput: [1,3] \n \nExample 3: \nInput: root = [] \nOutput: [] \n \n \nTime Complexity: O(n) \n \nSpace Complexity : O(n) \n \nExplanation: \nWe can define the level of a binary tree as the set of nodes that have an equal number of edges \nbetween themselves and the root node (that is, nodes equidistant from the root). \nFor example, consider the tree with root node as 1:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 87,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 87 \n \n \nThe nodes present in each level are given as: \nLevel \nNodes \n0 \n1 \n1 \n2, 3 \n2 \n6, 7, 5, 4 \n3 \n9, 8 \nPlease note that you can start labelling the levels from either 0 or 1. \n \nExample of Right View of Binary Tree \nConsider again the tree we used above. As we said earlier, the rightmost node of each level will \nbe part of our right view of the binary tree. That is: \nLevel \nNodes \nRightmost Node \n0 \n1 \n1 \n1 \n2, 3 \n3 \n2 \n6, 7, 5, 4 \n4 \n3 \n9, 8 \n8 \nTherefore, the right view of the binary tree is \n1 3 4 8 \nOr, visually, the right view of the binary tree is as follows:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 88,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 88 \n \n \nTaking another example, consider the tree shown below: \n \nLevel \nNodes \nRightmost Node \n0 \n1 \n1 \n1 \n2, 3 \n3 \n2 \n5, 4 \n4 \n3 \n6 \n6 \n4 \n7 \n7 \n5 \n8 \n8 \nTherefore, the right view of the given binary tree is \n1 3 4 6 7 8 \n \nAlgorithm"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 89,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 89 \n \nRecursive / DFS Approach \nIntuition \n1. DFS is one of the most basic traversal techniques for a graph/tree, therefore, we can try \nsolving our problem using it. \n2. Suppose I am in a given level, it appears that the algorithm should consider the right \nsubtree with higher importance than the left one, since we have to print the rightmost \nnode. This can be achieved by a right-oriented pre-order traversal, that is, current node, \nfollowed by right subtree, followed by the left subtree. \n3. In any given level, the algorithm must ONLY print the rightmost node, and if it has been \nprinted, the algorithm must not print any other node (in that level). \n4. It can be achieved by using a variable which keeps track of the last level for which the \nrightmost node has been printed. \n5. Now, if that variable's value is less than the value of the given level, it means that we are \nin a level whose rightmost node has not been printed. Therefore, we must print whatever \nnode we first encounter/process in this level. \n6. Since our traversal is right oriented (see point 2), then we will always reach the rightmost \nnode of a level before other nodes of that level. \nNow, let's see the algorithm where we used all the points we discussed above. \nThe Recursive Algorithm \n1. Initialize two variables: \na. curr_level: The current level of the tree we are currently present in during the traversal \nb. last_printed_level: The last level for which the rightmost node has been printed/stored. \n2. Process the following sequentially in a recursive manner: \na. Current node \nb. Right subtree \nc. Left subtree \n3. At the current node (if it is not null) check whether the current level > last printed level. \na. If Yes: Print / store the current node and update the value \nof last_printed_level to curr_level. \nb. If No: Continue \n4. Before calling the function recursively on the right and left subtree, increase the value \nof level by 1."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 90,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 90 \n \n5. Note: \n6. The variable last_printed_level should either be a global variable (not recommended) or \nbe passed by reference to function calls (recommended). This is done to ensure that the \ncurrent level is compared to most recently updated value of last_printed_level. \nIterative / BFS Approach \nIntuition \nThis, perhaps, is the most intuitive way of solving this problem. \n1. We travel the entire tree level by level (from right to left). \n2. At each level, we print/store the right most node. \n3. After the algorithm is done processing the entire tree, we will obtain the right view of the \nbinary tree given to us. \nThe Iterative Algorithm \n1. Initialize a queue data structure ((commonly used in BFS algorithm) with the root node \nand a LevelEnd character to mark a level's end in the queue. \nCommonly, nullptr or NULL is used as LevelEnd in C/C++, while None is used in \nPython. \n2. While the queue is not empty, do the following: \na. Pop the front of the queue, and call it frontVal \nb. If frontVal is LevelEnd, and the resultant queue is not empty, pop and print the front \nvalue of the resultant queue (this is the rightmost node of the given level), and also push \na LevelEnd character into the queue. \nc. If frontVal is LevelEnd and the resultant queue is empty, break out of the while loop. \nd. If frontVal is not LevelEnd, then push its right child followed by left child into the \nqueue (they must exist, of course). \nExplanation \n1. The above stated algorithm is just a right-oriented version of the standard Level-Order-\nTraversal algorithm. \n2. Between any two LevelEnd characters, an entire level of the given tree is present (except, \nof course, the level 0, that is, the root node) \n3. Since we give priority to the right child node over the left child node while pushing into \nthe queue (see step 2.c of the algorithm) we ensure that the queue contains levels in a \nright to left fashion with respect to the binary tree given. \n4. Because of the above point, we can be sure that the node just after the LevelEnd character \nin the queue is the rightmost node in the given binary tree's level. Therefore, we printed it \nin step (2.b) of the algorithm."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 91,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 91 \n \nNote: \nPlease note that it is not necessary to push the right child first. If we had pushed the left \nchild of the current node into the queue, then in step (2.b) we would print the node just \nbefore the LevelEnd characters instead of other way round. \nThe reason for this is that the resultant queue will contain levels in left to right fashion \nwith respect to the given binary tree. \nJava program for Binary Tree Right Side View: BTRightSideView.java \n \n \nimport java.util.*; \n \nclass BinaryTreeNode{ \n \npublic int data; \n \npublic BinaryTreeNode left, right; \n \npublic BinaryTreeNode(int data){ \n \n \nthis.data = data; \n \n \nleft = null; \n \n \nright = null; \n \n} \n} \n \nclass Solution { \n \npublic List<Integer> rightSideView(BinaryTreeNode root) { \n List<Integer> result = new ArrayList<Integer>(); \n rightView(root, result, 0); \n return result; \n } \n \n public void rightView(BinaryTreeNode curr, List<Integer> result, int currDepth){ \n if(curr == null || curr.data==-1){ \n return; \n } \n if(currDepth == result.size()){ \n result.add(curr.data); \n } \n \n rightView(curr.right, result, currDepth + 1); \n rightView(curr.left, result, currDepth + 1);"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 92,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 92 \n \n } \n} \n \npublic class Test \n{ \n \nstatic BinaryTreeNode root; \n \nstatic BinaryTreeNode temp = root; \n \nvoid insert(BinaryTreeNode temp, int key) \n { \n \n if (temp == null) { \n root = new BinaryTreeNode(key); \n return; \n } \n Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>(); \n q.add(temp); \n \n // Do level order traversal until we find \n // an empty place. \n while (!q.isEmpty()) { \n temp = q.peek(); \n q.remove(); \n \n if (temp.left == null) { \n temp.left = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.left); \n \n if (temp.right == null) { \n temp.right = new BinaryTreeNode(key); \n break; \n } \n else \n q.add(temp.right); \n } \n } \n \n \n \npublic static void main(String args[]) \n \n{"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 93,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 93 \n \n \n \nScanner sc=new Scanner(System.in); \n \n \nString str[]=sc.nextLine().split(\" \"); \n \n \nTest bt=new Test(); \n \n \nroot=new BinaryTreeNode(Integer.parseInt(str[0])); \n \n \nfor(int i=1; i<str.length; i++) \n \n \n \nbt.insert(root,Integer.parseInt(str[i])); \n \n \nSolution sol= new Solution(); \n \n \nSystem.out.println(sol.rightSideView(root)); \n \n} \n} \n \nExample-1: \ninput =1 2 3 5 -1 -1 5 \noutput =[1, 3, 5] \n \nExample-2: \ninput =3 2 -1 1 -1 -1 -1 4 5 \noutput =[3, 2, 1, 5]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 94,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 94 \n \nIII. \nBacktracking: General method, Applications: N Queens Problem, Hamiltonian Cycle, \nBrace Expansion, Gray Code, Path with Maximum Gold, Generalized Abbreviation, Campus \nBikes II. \nGeneral method: \nBacktracking is a type of technique that is based on a particular algorithm to solve a basic \nproblem. It basically uses the recursive call function to get a particular solution by creating or \nbuilding a solution stepwise with increasing values and time. \nThis algorithm is applied to the particular specific types of problems: \n1. Problems that require decision-making and are used to find a good solution for the problem. \n2. The problems that can be optimized and are used to find the better solution that can be applied. \n3. In the case of enumeration kind of problems, the algorithm is used to find the set of all easy \nand workable solutions for the given problem. \nFor Backtracking problems, the algorithm finds a path sequence for the solution of the problem \nthat keeps some checkpoints,i.e, a point from where the given problem can take a backtrack if no \nworkable solution is found out for the problem. \nBacktracking – a schematic process of trying out different types of sequences of the various \ndecision until it reaches the conclusion. \nSome terms related to backtracking are : \n Live Node: Nodes that can further generate are known live nodes. \n E Node: the nodes whose children are generated and become a successor node. \n Success Node: if the node provides a solution that is feasible. \n Dead Node: A node that cannot be further generated and does not provide a particular \nsolution. \n \nThere are many problems that can be solved by the use of a backtracking algorithm, and \nit can be used over a complex set of variables or constraints, they are basically of two \ntypes : \n1. Implicit constraint: a particular rule used to check how many each element is in a \nproper sequence is related to each other. \n2. Explicit constraint: the rule that restricts every element to get chosen from the \nparticular set."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 95,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 95 \n \n \nRecursive Backtracking Algorithm: \n \n \nIterative Backtracking Algorithm:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 96,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 96"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 97,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 97"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 98,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 98 \n \n \n \n \n DEPTH FIRST NODE GENERATION- \nIn this, as soon as a new child ‘C’ of the current E-node ‘R’ is generated, ‘C’ will become \nthe new E-node. \n BOUNDING FUNCTION - will be used to kill live nodes without generating all their \nchildren. \n BACTRACKING-is depth – first node generation with bounding functions. \n \n• \nBRANCH-and-BOUND is a method in which E-node remains E-node until it is dead. \n• \nBREADTH-FIRST-SEARCH : Branch-and Bound with each new node placed in a \nqueue .The front of the queen becomes the new E-node. \n• \nDEPTH-SEARCH (D-Search) : New nodes are placed in to a stack.The last node added \nis the first to be explored."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 99,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 99 \n \nApplications: \n1. N Queens Problem. \n2. Hamiltonian Cycle. \n3. Brace Expansion. \n4. Gray Code. \n5. Path with Maximum Gold. \n6. Generalized Abbreviation. \n7. Campus Bikes II. \n \n1. N Queens Problem: \nN Queen problem is the classical Example of backtracking. N-Queen problem is defined as, \n“given N x N chess board, arrange N queens in such a way that no two queens attack each other \nby being in same row, column or diagonal”. \n For N = 1, this is trivial case. For N = 2 and N = 3, solution is not possible. So we start \nwith N = 4 and we will generalize it for N queens. \n \nExample: 4-Queen Problem \nProblem : Given 4 x 4 chessboard, arrange four queens in a way, such that no two \nqueens attack each other. That is, no two queens are placed in the same row, column, or \ndiagonal. \n \n We have to arrange four queens, Q1, Q2, Q3 and Q4 in 4 x 4 chess board. We will put \nith queen in ith row. Let us start with position (1, 1). Q1 is the only queen, so there is no \nissue. partial solution is <1> \n We cannot place Q2 at positions (2, 1) or (2, 2). Position (2, 3) is acceptable. partial \nsolution is <1, 3>. \n Next, Q3 cannot be placed in position (3, 1) as Q1 attacks her. And it cannot be placed at \n(3, 2), (3, 3) or (3, 4) as Q2 attacks her. There is no way to put Q3 in third row. Hence, \nthe algorithm backtracks and goes back to the previous solution and readjusts the position \nof queen Q2. Q2 is moved from positions (2, 3) to \n(2, 4). Partial solution is <1, 4> \n Now, Q3 can be placed at position (3, 2). Partial solution is <1, 4, 3>. \n Queen Q4 cannot be placed anywhere in row four. So again, backtrack to the previous \nsolution and readjust the position of Q3. Q3 cannot be placed on (3, 3) or(3, 4). So the \nalgorithm backtracks even further. \n All possible choices for Q2 are already explored, hence the algorithm goes back to partial \nsolution <1> and moves the queen Q1 from (1, 1) to (1, 2). And this process continues \nuntil a solution is found. \n All possible solutions for 4-queen are shown in fig (a) & fig. (b)"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 100,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 100 \n \n \n We can see that backtracking is a simple brute force approach, but it applies some \nintelligence to cut out unnecessary computation. The solution tree for the 4-queen \nproblem is shown in Fig. (7.2)"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 101,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 101 \n \n \nFig. (7.6) describes the backtracking sequence for the 4-queen problem. \n \n The solution of the 4-queen problem can be seen as four tuples (x1, x2, x3, x4), where \nxi represents the column number of queen Qi. Two possible solutions for the 4-queen \nproblem are (2, 4, 1, 3) and (3, 1, 4, 2). \n \nTimeComplexity: O(N!) \nAuxiliary Space: O(N2)"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 102,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 102 \n \n \nPseudo Code of N-Queen Problem:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 103,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 103 \n \nJava Program for N-Queen Application: NQueenProblem.java \n \nimport java.util.*; \n \npublic class NQueenProblem \n{ \n int N; \n void printSolution(int board[][]) \n { \n for (int i = 0; i < N; i++) \n { \n for (int j = 0; j < N; j++) \n System.out.print(board[i][j]); \n System.out.println(); \n } \n } \n \n boolean isSafe(int board[][], int row, int col) \n { \n int i, j; \n \n for (i = 0; i < col; i++) \n if (board[row][i] == 1) \n return false; \n \n for (i = row, j = col; i >= 0 && j >= 0; i--, j--) \n if (board[i][j] == 1) \n return false; \n \n for (i = row, j = col; j >= 0 && i < N; i++, j--) \n if (board[i][j] == 1) \n return false; \n \n return true; \n } \n \n boolean solveNQUtil(int board[][], int col) \n { \n if (col >= N) \n return true;"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 104,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 104 \n \n for (int i = 0; i < N; i++) \n{ \n if (isSafe(board, i, col)). \n{ \n board[i][col] = 1; \n \n if (solveNQUtil(board, col + 1) == true) \n return true; \n \n board[i][col] = 0; \n } \n } \n \n return false; \n } \n boolean solveNQ() \n { \n int board[][] = new int[N][N]; \n \n if (solveNQUtil(board, 0) == false) \n{ \n System.out.print(\"No Solution\"); \n return false; \n } \n \n printSolution(board); \n return true; \n } \n public static void main(String args[]) \n { \n Scanner sc=new Scanner(System.in); \n NQueenProblem Queen = new NQueenProblem(); \n Queen.N=sc.nextInt(); \n Queen.solveNQ(); \n } \n} \nExample-1: \ninput =1 \noutput =\"1\""
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 105,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 105 \n \nExample-2: \ninput =3 \noutput =\"\" \n \nExample-3: \ninput =4 \noutput =\"0100 \n0001 \n1000 \n0010\" \noutput =\"0010 \n1000 \n0001 \n0100\""
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 106,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 106 \n \n2. Hamiltonian Cycle: \nThe Hamiltonian cycle is the cycle in the graph which visits all the vertices in graph exactly \nonce and terminates at the starting node. It may not include all the edges \n \nThe Hamiltonian cycle problem is the problem of finding a Hamiltonian cycle in a graph if \nthere exists any such cycle. \n \nThe input to the problem is an undirected, connected graph. For the graph shown in Figure \n(a), a path A – B – C – D – E – F—G—H—A forms a Hamiltonian cycle. It visits all the \nvertices exactly once. \n \n \n \nThe Hamiltonian cycle problem is also both, decision problem and an optimization \nproblem. A decision problem is stated as, “Given a path, is it a Hamiltonian cycle of the \ngraph?”. \n \nThe optimization problem is stated as, “Given graph G, find the Hamiltonian cycle for the \ngraph.” \n \nWe can define the constraint for the Hamiltonian cycle problem as follows: \n \nIn any path, vertex i and (i + 1) must be adjacent. \n \n1st and (n – 1)th vertex must be adjacent (nth of cycle is the initial vertex itself). \n \nVertex i must not appear in the first (i – 1) vertices of any path. \n \nWith the adjacency matrix representation of the graph, the adjacency of two vertices can be \nverified in constant time. \nComplexity Analysis: \nLooking at the state space graph, in worst case, total number of nodes in tree would be, \nT(n) = 1 + (n – 1) + (n – 1)2 + (n – 1)3 + … + (n – 1)n – 1 \n = frac{(n-1)^n - 1}{n - 2}=frac(n−1)n−1n−2 \nT(n) = O(nn). Thus, the Hamiltonian cycle algorithm runs in exponential time. \n \nPseudo Code Of Hamiltonian Cycle:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 107,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 107"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 108,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 108 \n \nExample: Consider a graph G = (V, E) shown in fig. we have to find a Hamiltonian circuit using \nBacktracking method. \n \n \nFirstly, we start our search with vertex 'a.' this vertex 'a' becomes the root of our implicit \ntree. \n \nNext, we choose vertex 'b' adjacent to 'a' as it comes first in lexicographical order (b, c, d). \n \nNext, we select 'c' adjacent to 'b.' \n \nNext, we select 'd' adjacent to 'c.'"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 109,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 109 \n \n \n \nNext, we select 'e' adjacent to 'd.' \n \n \nNext, we select vertex 'f' adjacent to 'e.' The vertex adjacent to 'f' is d and e, but they have already \nvisited. Thus, we get the dead end, and we backtrack one step and remove the vertex 'f' from \npartial solution."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 110,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 110 \n \n \n \nFrom backtracking, the vertex adjacent to 'e' is b, c, d, and f from which vertex 'f' has already \nbeen checked, and b, c, d have already visited. So, again we backtrack one step. Now, the vertex \nadjacent to d are e, f from which e has already been checked, and adjacent of 'f' are d and e. If 'e' \nvertex, revisited them we get a dead state. So again we backtrack one step. \nNow, adjacent to c is 'e' and adjacent to 'e' is 'f' and adjacent to 'f' is 'd' and adjacent to 'd' is 'a.' \nHere, we get the Hamiltonian Cycle as all the vertex other than the start vertex 'a' is visited only \nonce. (a - b - c - e - f -d - a)."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 111,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 111 \n \n \n \n \nAgain Backtrack \n \n \nHere we have generated one Hamiltonian circuit, but another Hamiltonian circuit can \nalso be obtained by considering another vertex."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 112,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 112 \n \nJava Program for Hamiltonian cycle: HamiltonianCycle.java \n \nimport java.util.*; \n \nclass HamiltonianCycle \n{ \n static int V ; \n int path[]; \n \n boolean isSafe(int v, int graph[][], int path[], int pos) \n { \n if (graph[path[pos - 1]][v] == 0) \n return false; \n \n for (int i = 0; i < pos; i++) \n if (path[i] == v) \n return false; \n \n return true; \n } \n \n boolean hamCycleUtil(int graph[][], int path[], int pos) \n { \n if (pos == V) \n { \n if (graph[path[pos - 1]][path[0]] == 1) \n return true; \n else \n return false; \n } \n \n for (int v = 1; v < V; v++) \n { \n if (isSafe(v, graph, path, pos)) \n { \n path[pos] = v; \n \n if (hamCycleUtil(graph, path, pos + 1) == true) \n return true; \n \n path[pos] = -1; \n } \n } \n \n return false; \n }"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 113,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 113 \n \n \n int hamCycle(int graph[][]) \n { \n path = new int[V]; \n for (int i = 0; i < V; i++) \n path[i] = -1; \n \n path[0] = 0; \n if (hamCycleUtil(graph, path, 1) == false) \n { \n System.out.println(\"\\nNo Solution\"); \n return 0; \n } \n \n printSolution(path); \n return 1; \n } \n \n void printSolution(int path[]) \n { \n for (int i = 0; i < V; i++) \n System.out.print(\" \" + path[i] + \" \"); \n \n System.out.println(\" \" + path[0] + \" \"); \n } \n \n public static void main(String args[]) \n { \n Scanner sc=new Scanner(System.in); \n V = sc.nextInt() \n int graph[][]=new int[V][V]; \n for(int i=0;i<V;i++) \n for(int j=0;j<V;j++) \n graph[i][j]=sc.nextInt(); \n System.out.println(new HamiltonianCycle().hamCycle(graph)); \n } \n} \n \nSample Input-1: \n--------------- \n5 \n0 1 0 1 0 \n1 0 1 1 1 \n0 1 0 0 1 \n1 1 0 0 1 \n0 1 1 1 0"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 114,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 114 \n \n \nSample Output-1: \n---------------- \n0 1 2 4 3 0 \n \nSample Input-2: \n--------------- \n5 \n0 1 0 1 0 \n1 0 1 1 1 \n0 1 0 0 1 \n1 1 0 0 0 \n0 1 1 0 0 \n \nSample Output-2: \n---------------- \nNo Solution"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 115,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 115 \n \n \n3. Brace Expansion: \nYou are given a string s representing a list of words. Each letter in the word has one or more \noptions. \n \nIf there is one option, the letter is represented as is. \n \nIf there is more than one option, then curly braces delimit the options. For \nexample, \"{a,b,c}\" represents options [\"a\", \"b\", \"c\"]. \nFor example, if s = \"a{b,c}\", the first character is always 'a', but the second character can \nbe 'b' or 'c'. The original list is [\"ab\", \"ac\"]. \nReturn all words that can be formed in this manner, sorted in lexicographical order. \nExample 1: \nInput: s = \"{a,b}c{d,e}f\" \n \nOutput: [\"acdf\",\"acef\",\"bcdf\",\"bcef\"] \n \nExample 2: \nInput: s = \"abcd\" \n \nOutput: [\"abcd\"] \n \nExample Walkthrough \nLet's work through a simple example to illustrate the solution approach. We will apply the DFS \nstrategy on the input string s = \"k{a,b}{n,m}\". \n1. Parsing the input: \no The convert function scans the string from left to right. \no It identifies 'k' as a normal character, so it is included as ['k']. \no The function finds {a,b} and splits the options into a list ['a', 'b']. \no Then it finds {n,m} and similarly creates the list ['n', 'm']. \no We end up with items = [['k'], ['a', 'b'], ['n', 'm']]. \n2. Depth-first search (DFS): \no We begin the DFS by calling the function dfs with i = 0 and an empty list t = []. \no At items[0], we have one option 'k'. We add it to t making it ['k']. \no We call dfs(i + 1, t) with i = 1. Here, we have two options 'a' and 'b'. \no First, we choose 'a', update t to ['k', 'a'], and call dfs(i + 1, t) to proceed to the next \nitem. \no At items[2], we again have two choices 'n' and 'm'."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 116,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 116 \n \no We pick 'n', make t ['k', 'a', 'n'], and reach the base case of our DFS (i == \nlen(items)). We add 'kan' to ans. \no We backtrack by popping 'n' from t, and now t is back to ['k', 'a']. \no Next, we pick 'm' and go through a similar process, resulting in 'kam' being added \nto ans. \no Backtracking again to ['k'], we return to the choice at items[1] and pick 'b' this \ntime. \no We repeat the process for 'n' and 'm' with the new prefix 'kb', resulting \nin 'kbn' and 'kbm' being added to ans. \n3. Backtracking: \no The backtracking is done after each option is explored. It allows us to remove the \nlast choice and explore other paths. \no This is seen in the example as we pop the last character of t after exploring \noptions 'n' and 'm'. \n4. Sorting and returning the result: \no Once all the paths are explored, we have ans = ['kan', 'kam', 'kbn', 'kbm']. \no We sort ans to get ['kam', 'kan', 'kbm', 'kbn']. \no The sorted list is the final output, containing all combinations in lexicographical \norder. \nHere's a step-by-step visualization of dfs execution for our example input: \n('k') -> ('ka') -> ('kan') - Add to ans and backtrack \n -> ('kam') - Add to ans and backtrack to ('k') \n -> ('kb') -> ('kbn') - Add to ans and backtrack \n -> ('kbm') - Add to ans and finish \n \nJava Program for BraceExpansion: BraceExpression.java \nimport java.util.*; \n \npublic class BraceExpression \n{ \n public String[] expand(String S) \n { \n List<String> res = new ArrayList<>(); \n dfs(S, 0, new StringBuilder(), res); \n \n String[] out = new String[res.size()]; \n for (int i = 0; i < res.size(); i++) \n { \n out[i] = res.get(i); \n } \n return out;"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 117,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 117 \n \n } \n \n private void dfs(String s, int index, StringBuilder sb, List<String> res) \n { \n if (index == s.length()) \n { \n if (sb.length() > 0) \n { \n res.add(sb.toString()); \n } \n return; \n } \n \n char c = s.charAt(index); \n int position = sb.length(); \n if (c == '{') \n { \n List<Character> charList = new ArrayList<>(); \n int endIndex = index + 1; \n while (endIndex < s.length() && s.charAt(endIndex) != '}') \n { \n if (Character.isLetter(s.charAt(endIndex))) { charList.add(s.charAt(endIndex)); \n } \n endIndex++; \n } \n \n Collections.sort(charList); \n for (char d : charList) \n { \n sb.append(d); \n dfs(s, endIndex + 1, sb, res); \n sb.setLength(position); \n } \n \n } \n else if (Character.isLetter(c)) \n { \n sb.append(s.charAt(index)); \n dfs(s, index + 1, sb, res); \n } \n }"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 118,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 118 \n \n public static void main(String args[] ) \n { \n Scanner sc = new Scanner(System.in); \n String str=sc.next(); \n System.out.println(Arrays.deepToString(expand(str))); \n } \n} \n \n \nExample-1: \ninput =[a,b,c,d]e[x,y,z] \noutput =[aex, aey, aez, bex, bey, bez, cex, cey, cez, dex, dey, dez] \n \nExample-2: \ninput =[ab,cd]x[y,z] \noutput =[abxy, abxz, cdxy, cdxz]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 119,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 119 \n \n4. Gray Code: \nAn n-bit gray code sequence is a sequence of 2n integers where: \n Every integer is in the inclusive range [0, 2n - 1], \n The first integer is 0, \n An integer appears no more than once in the sequence, \n The binary representation of every pair of adjacent integers differs by exactly one bit, \nand \n The binary representation of the first and last integers differs by exactly one bit. \nGiven an integer n, return any valid n-bit gray code sequence. \nExample 1: \nInput: n = 2 \nOutput: [0,1,3,2] \nExplanation: \nThe binary representation of [0,1,3,2] is [00,01,11,10]. \n- 00 and 01 differ by one bit \n- 01 and 11 differ by one bit \n- 11 and 10 differ by one bit \n- 10 and 00 differ by one bit \n[0,2,3,1] is also a valid gray code sequence, whose binary representation is [00,10,11,01]. \n- 00 and 10 differ by one bit \n- 10 and 11 differ by one bit \n- 11 and 01 differ by one bit \n- 01 and 00 differ by one bit \nExample 2: \nInput: n = 1 \nOutput: [0,1]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 120,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 120 \n \n \nJava program for Gray Code: \n \nGrayCode.java \nimport java.util.*; \n \nclass GrayCode \n { \n int nums = 0; \n public List<Integer> grayCode(int n) \n { \n List<Integer> ret = new ArrayList<>(); \n backTrack(n, ret); \n return ret; \n } \n private void backTrack(int n, List<Integer> ret) \n { \n if (n == 0) \n { \n ret.add(nums); \n return; \n } \n else \n { \n backTrack(n - 1, ret); \n nums=nums ^ (1 << n - 1); //using X-OR with left shift \n backTrack(n - 1, ret); \n } \n } \n public static void main( String args[]) \n { \n Scanner sc=new Scanner(System.in); \n int N=sc.nextInt();"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 121,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 121 \n \n System.out.println(new GrayCode().grayCode(N)); \n } \n} \nExample-1: \ninput =2 \noutput =[0, 1, 3, 2] \n \nExample-2: \ninput =3 \noutput =[0, 1, 3, 2, 6, 7, 5, 4]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 122,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 122 \n \n5. Path with Maximum Gold: \nIn a gold mine grid of size m x n, each cell in this mine has an integer representing the amount of \ngold in that cell, 0 if it is empty. \nReturn the maximum amount of gold you can collect under the conditions: \n Every time you are located in a cell you will collect all the gold in that cell. \n From your position, you can walk one step to the left, right, up, or down. \n You can't visit the same cell more than once. \n Never visit a cell with 0 gold. \n You can start and stop collecting gold from any position in the grid that has some gold. \nExample 1: \nInput: grid = [[0,6,0],[5,8,7],[0,9,0]] \nOutput: 24 \nExplanation: \n[[0,6,0], \n [5,8,7], \n [0,9,0]] \nPath to get the maximum gold, 9 -> 8 -> 7. \nExample 2: \nInput: grid = [[1,0,7],[2,0,6],[3,4,5],[0,3,0],[9,0,20]] \nOutput: 28 \nExplanation: \n[[1,0,7], \n [2,0,6], \n [3,4,5], \n [0,3,0], \n [9,0,20]] \nPath to get the maximum gold, 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7. \n Constraints:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 123,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 123 \n \n m == grid.length \n n == grid[i].length \n 1 <= m, n <= 15 \n 0 <= grid[i][j] <= 100 \n There are at most 25 cells containing gold. \nTime Complexity: O(n x m) where n is the number of rows and m is the number of columns of \nthe given input matrix. \nSpace Complexity: O(n x m) \n \n Each cell in this matrix has an amount of gold present at it. We have to start digging from \nthe 0th column and reach the last column and in the procedure, we can move either \ndiagonally one step upward (called \"d1\") or one step forward in the same row (called \n\"d2\") or diagonally one step downward (called \"d3\") collecting the gold at the cell we \nreach. So, we have to find the paths with the maximum gold. \n For instance, in the matrix shown above, the maximum gold that we can collect is 18 and \nthere are 3 different paths to reach 18 as shown in the image below:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 124,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 124 \n \n \n As you can see, the maximum amount of gold is 18. The first path is \"2 d1 d2 d3\". This \nmeans that we are starting from the 2nd row and the path is \"d1 d2 d3\". \n We have already discussed the meaning of \"d1\", \"d2\" and \"d3\". Why are we mentioning \nonly the starting row and not the starting column in the paths? This is because we have \nalready been told in the question that we have to start from the 0th column only. \nJava program for Path with Maximum Gold: \n \nGetMaximumGold.java \nimport java.util.*; \n \nclass GetMaximumGold \n{ \n public int getMaximumGold(int[][] grid) \n { \n int maxGold = 0; \n for (int i = 0; i < grid.length; i++) { \n for (int j = 0; j < grid[0].length; j++) { \n maxGold = Math.max(maxGold, getMaximumGoldBacktrack(grid, i, j, 0)); \n } \n } \n return maxGold; \n } \n \n private int getMaximumGoldBacktrack(int[][] grid, int i, int j, int curGold) { \n if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0) \n return curGold; \n curGold += grid[i][j];"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 125,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 125 \n \n int temp = grid[i][j]; \n int maxGold = curGold; \n \n grid[i][j] = 0; \n maxGold = Math.max(maxGold, getMaximumGoldBacktrack(grid, i+1, j, curGold)); \n maxGold = Math.max(maxGold, getMaximumGoldBacktrack(grid, i, j+1, curGold)); \n maxGold = Math.max(maxGold, getMaximumGoldBacktrack(grid, i-1, j, curGold)); \n maxGold = Math.max(maxGold, getMaximumGoldBacktrack(grid, i, j-1, curGold)); \n grid[i][j] = temp; \n \n return maxGold; \n } \n \n public static void main(String args[]) \n { \n Scanner sc=new Scanner(System.in); \n int m=sc.nextInt(); \n int n=sc.nextInt(); \n int grid[][]=new int[m][n]; \n for(int i=0;i<m;i++) \n for(int j=0;j<n;j++) \n grid[i][j]=sc.nextInt(); \n System.out.println(new GetMaximumGold().getMaximumGold(grid)); \n } \n} \n \nExmaple-1: \ninput =3 3 \n0 6 0 \n5 8 7 \n0 9 0 \noutput =24 \nExample-2: \ninput =5 3 \n1 0 7 \n2 0 6 \n3 4 5 \n0 3 0 \n9 0 20 \noutput =28"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 126,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 126 \n \n6. Generalized Abbreviation: \nWrite a function to generate the generalized abbreviations of a word. \n Note: The order of the output does not matter. \n Example: \n Input: \"word\" \nOutput: \n[\"word\", \"1ord\", \"w1rd\", \"wo1d\", \"wor1\", \"2rd\", \"w2d\", \"wo2\", \"1o1d\", \"1or1\", \"w1r1\", \n\"1o2\", \"2r1\", \"3d\", \"w3\", \"4\"] \n \nUnderstanding the problem: \n1. You are given a word. \n2. You have to generate all abbreviations of that word. \nFor example: \nSample Input-> pep \nSample Output-> pep pe1 p1p p2 1ep 1e1 2p 3 (in different lines) \nHOW? \nFirst of all, generate all the binaries of the length equal to the length of the input string. \nBinaries - \n000 -> pep \n001 -> pe1 \n010 -> p1p \n011 -> p2 \n100 -> 1ep \n101 -> 1e1 \n110 -> 2p \n111 -> 3"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 127,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 127 \n \nApproach: \n We can observe that whenever the bit is OFF (zero), we will use the character of the \nstring at that position and whenever the bit is ON (one), we will count all the ON (one) \nbits that are together and then replace them with the count of the ON (one) bits. \n The number of abbreviations will be equal to 2^n, where n = length of the string (as the \nnumber of binaries with given n is equal to 2^n ). \n In the above example n = 3, therefore the number of abbreviations will be 8 (2^3 = 8). \n We can see that this question is like the subsequence problem, we must maintain one \nmore variable which will count the characters that were not included in the subsequence. \nLet's try to draw the recursion tree diagram for the word, \"pep\". In recursion \ndiagram, (a | b | c) a represents the test string, b represents the answer so far \nand c represents the count. \n \n In the above diagram, (pep|.|0) has two options, either it can include the first p in the answer \nor not. If it includes the p in the answer then p is concatenated in the answer so far string \nand count remains 0. \n Then at (pep|p|0), we further explore the options for character e. It has two options, either it \ncan include e in the answer or not. If it includes e in the answer then e is concatenated in the \nanswer so far string and count remains 0. \n Then at (pep|pe|0), we further explore the options for character p (second p). It has two \noptions, either it can include p in the answer or not. If it includes p in the answer then p is \nconcatenated \nin \nthe \nanswer \nso \nfar \nstring \nand \ncount \nremains \n0. \nSince we have reached the end of the string, and the count is 0, therefore, the asf i.e. \npep is the first possible output. \n Then we come back at (pep|pe|0) and explore the path if the second p is not added in the asf. \nIn this case, p will not be added in psf and therefore count will become 1."
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 128,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 128 \n \nAnd again, we have reached the end of the string, but count is 1 this time, therefore, \nthis count will be concatenated at the end of the asf, which will give us the next possible \noutput, pe1. \n We have explored both the possibilities via (pep|pe|0) therefore, we go back at (pep|p|0), and \nsee what happens if e was not added to asf. \n First of all count becomes 1, and we reach (pep|p|1). \n Then at (pep|p|1), we further explore the options for character p (second p). It has two \noptions, either it can include p in the answer or not. If p is to be included in the answer then \nwe see that our previous count is not 0, so we concatenate the previous count in the asf and \nthen \nsecond \np. \nSince we have reached the end of the string, and the count is 0, therefore, the asf i.e. \np1p is the next possible output. \n Then we come back at (pep|p|1) and explore the path if the second p is not added in the asf. \nIn this case, p will not be added in psf and therefore count will become 2. \nAnd again, we have reached the end of the string, but count is 2 this time, therefore, \nthis count will be concatenated at the end of the asf, which will give us the next possible \noutput, p2. \n We have explored both the possibilities via (pep|p|1) therefore; we go back at (pep|p|0). \n (pep|p|0) has also explored both the options, if \"e\" were added or not) therefore; we go back \nat (pep|.|0). \n At (pep|.|0), now we explore the possibilities of, if first p were not added in the asf. \nIf \"p\" is not added in the answer so far then count becomes 1. \n Then at (pep|.|1), we further explore the options for character e. It has two options, either it \ncan include e in the answer or not. If it includes e in the answer then e is concatenated with \nthe current count in the answer so far string and count is set to 0. \n Then at (pep|1e|0), we further explore the options for character p (second p). \nIt has two options, either it can include p in the answer or not. If it includes p in the answer \nthen p is concatenated in the answer so far string and count remains 0. \n Since we have reached the end of the string, and the count is 0, therefore, the asf i.e. 1ep is \nthe next possible output. \n Then we come back at (pep|1e|0) and explore the path if the second p is not added in the asf. \nIn this case, p will not be added in psf and therefore count will become 1. \nAnd again, we have reached the end of the string, but count is 1 this time, therefore, \nthis count will be concatenated at the end of the asf, which will give us the next possible \noutput, 1e1. \n We have explored both the possibilities via (pep|1e|0) therefore, we go back at (pep|.|1), and \nsee what happens if e was not added to asf. \n Then at (pep|.|2), we further explore the options for character p (second p). It has two \noptions, \neither \nit \ncan \ninclude \np \nin \nthe \nanswer \nor \nnot. \nIf p is to be included in the answer then we see that our previous count is not 0, so we \nconcatenate \nthe \nprevious \ncount \n(2) \nin \nthe \nasf \nand \nthen \nsecond \np. \nSince we have reached the end of the string, and the count is 0, therefore, the asf i.e. 2p \nis the next possible output. \n Then we come back at (pep|.|2) and explore the path if the second p is not added in the asf. \nIn this case, p will not be added in psf and therefore count will become 3. \nAnd again, we have reached the end of the string, but count is 3 this time, therefore,"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 129,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 129 \n \nthis count will be concatenated at the end of the asf (empty at this stage), which will \ngive us the next possible output, 3. \n We have explored both the possibilities via (pep|.|2) therefore; we go back at (pep|.|1). \n (pep|.|1) has also explored both the options, if \"e\" were added or not) therefore; we go back \nat (pep|.|0). \n At (pep|.|0), we have explored both the possibilities that is if first p were not added in the \nasf. \n \nJava Program for Generalized Abbreviations: \n \nGenerateAbbreviations.java \nimport java.util.*; \n \nclass GenerateAbbreviations \n{ \n public List<String> makeShortcutWords(String word) \n{ \n List<String> ret = new ArrayList<String>(); \n backtrack(ret, word, 0, \"\", 0); \n Collections.sort(ret); \n return ret; \n } \n \n private void backtrack(List<String> ret, String word, int pos, String cur, int count) \n { \n if(pos==word.length()) \n { \n if(count > 0) cur += count; \n ret.add(cur); \n } \n else{ \n backtrack(ret, word, pos + 1, cur, count + 1); \n backtrack(ret, word, pos+1, cur + (count>0 ? count : \"\") + word.charAt(pos), 0); \n } \n } \n \n public static void main(String args[]) \n { \n Scanner sc=new Scanner(System.in); \n String s=sc.next(); \n System.out.println(new GenerateAbbreviations().makeShortcutWords(s)); \n } \n}"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 130,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 130 \n \n \nExample-1: \ninput =kmit \noutput =[1m1t, 1m2, 1mi1, 1mit, 2i1, 2it, 3t, 4, k1i1, k1it, k2t, k3, km1t, km2, kmi1, kmit] \n \nExample-2: \ninput =cse \noutput =[1s1, 1se, 2e, 3, c1e, c2, cs1, cse] \n \nExample-3: \ninput =elite \noutput =[1l1t1, 1l1te, 1l2e, 1l3, 1li1e, 1li2, 1lit1, 1lite, 2i1e, 2i2, 2it1, 2ite, 3t1, 3te, 4e, 5, e1i1e, \ne1i2, e1it1, e1ite, e2t1, e2te, e3e, e4, el1t1, el1te, el2e, el3, eli1e, eli2, elit1, elite] \n \nExample-5: \ninput =r \noutput =[1, r]"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 131,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 131 \n \n \n7. Campus Bikes II: \n \n On a campus represented as a 2D grid, there are N workers and M bikes, with N <= M. Each \nworker and bike is a 2D coordinate on this grid. \n We assign one unique bike to each worker so that the sum of the Manhattan distances between \neach worker and their assigned bike is minimized. \n The Manhattan distance between two points p1 and p2 is Manhattan(p1, p2) = |p1.x - p2.x| + \n|p1.y - p2.y|. \n Return the minimum possible sum of Manhattan distances between each worker and their \nassigned bike. \nExample 1: \n \nInput: workers = [[0,0],[2,1]], bikes = [[1,2],[3,3]] \nOutput: 6 \nExplanation: \nWe assign bike 0 to worker 0, bike 1 to worker 1. The Manhattan distance of both assignments is 3, so \nthe output is 6. \n \nExample 2:"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 132,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 132 \n \nInput: workers = [[0,0],[1,1],[2,0]], bikes = [[1,0],[2,2],[2,1]] \nOutput: 4 \nExplanation: \nWe first assign bike 0 to worker 0, then assign bike 1 to worker 1 or worker 2, bike 2 to worker 2 or \nworker 1. Both assignments lead to sum of the Manhattan distances as 4. \nNote: \n1. 0 <= workers[i][0], workers[i][1], bikes[i][0], bikes[i][1] < 1000 \n2. All worker and bike locations are distinct. \n3. 1 <= workers.length <= bikes.length <= 10 \nSolution: \nTo solve this, we will follow these steps − \n Define a function helper(). This will take a,b \no return |a[0]-b[0]| + |a[1] - b[1]| \n Define a function solve(). This will take bikes, workers,bikev,i:= 0 \n info := a list with i and bikev \n if info is present in memo, then \no return memo[info] \n if i is same as size of workers, then \no return 0 \n temp := infinity \n for j in range 0 to size of bikes, do \no if not bikev[j] is non-zero, then \n \nbikev[j]:= 1 \n \ntemp := minimum of temp, helper(workers[i], bikes[j]) +solve(bikes, \nworkers, bikev, i+1) \n \nbikev[j]:= 0 \n memo[info]:= temp \n return temp \n Define a function assignBikes(). This will take workers, bikes \n bikev := a list whose size is same as the size of bikes, fill this with false \n memo:= a new map \n return solve(bikes, workers, bikev)"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 133,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 133 \n \n \n \nJava program for Campus Bikes-II: \nCampusBikes.java \nimport java.util.*; \n \nclass CampusBikes \n{ \n int min = Integer.MAX_VALUE; \n public int assignBikes(int[][] workers, int[][] bikes) \n { \n backtrack(new boolean[bikes.length],0,workers,bikes,0); \n return min; \n } \n \n void backtrack(boolean[] visited, int i, int[][] workers, int[][] bikes, int distance) \n { \n if (i==workers.length && distance < min) min = distance; \n if (i>=workers.length) return; \n if (distance>min) return; \n for (int j=0; j<bikes.length; j++) \n { \n if (visited[j]) continue; \n visited[j] = true; \n backtrack(visited, i+1, workers, bikes, distance+dist(i,j,workers,bikes)); \n visited[j] = false; \n } \n } \n \n int dist(int i, int j, int[][] workers, int[][] bikes) \n { \n return Math.abs(workers[i][0]-bikes[j][0])+Math.abs(workers[i][1]-bikes[j][1]); \n } \n public static void main(String[] args) \n { \n Scanner sc=new Scanner(System.in); \n int m=sc.nextInt(); \n int n=sc.nextInt(); \n int bikes[][]=new int[n][2]; \n int men[][]=new int[m][2];"
+    },
+    {
+      "document_id": "DAA UNIT-III",
+      "filename": "DAA UNIT-III.pdf",
+      "page": 134,
+      "text": "DESIGN AND ANALYSIS OF ALGORITHMS UNIT-III KR24 Regulations \n \nKMIT (AUTONOMUS) Page No: 134 \n \n for(int i=0;i<m;i++){ \n men[i][0]=sc.nextInt(); \n men[i][1]=sc.nextInt(); \n } \n for(int i=0;i<n;i++) \n { \n bikes[i][0]=sc.nextInt(); \n bikes[i][1]=sc.nextInt(); \n } \n System.out.println(new CampusBikes().assignBikes(men,bikes)); \n } \n} \nSample Input-1: \n--------------- \n3 3 //No of workers and vehicles \n0 1 // co-ordinates of workers \n1 2 \n1 3 \n4 5 // co-ordinates of vehicles \n2 5 \n3 6 \n \nSample Output-1: \n---------------- \n17 \n \nSample Input-2: \n--------------- \n2 2 \n//No of workers and vehicles \n0 0 // co-ordinates of workers \n2 1 \n1 2 // co-ordinates of vehicles \n3 3 \nSample Output-2: \n--------------- \n6"
+    }
+  ]
+}

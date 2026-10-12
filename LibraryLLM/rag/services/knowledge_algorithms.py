@@ -1,10 +1,10 @@
-"""Bounded, source-grounded document algorithms. Standard library only."""
+"""Compatibility source parsers; production artifacts render the shared model."""
 import hashlib
 import math
 import re
 from collections import Counter
 
-VERSION = '1.0.0'
+VERSION = '3.0.0'
 MAX_CHUNKS = 1200
 MAX_SENTENCES = 6000
 MAX_CANDIDATES = 30000
@@ -233,18 +233,6 @@ def quiz(cards):
     return {'questions': questions}
 
 
-def generate(kind, chunks, title, options):
-    rows = sentences(chunks)
-    keys = concepts(rows, chunks)
-    if kind == 'KEY_CONCEPTS':
-        return {'concepts': keys}
-    if kind == 'EXTRACTIVE_SUMMARY':
-        return summary(rows, keys, options['mode'])
-    if kind == 'FLASHCARDS':
-        return flashcards(rows, keys)
-    if kind == 'MIND_MAP':
-        return mind_map(keys, chunks, title)
-    if kind == 'QUIZ':
-        from rag.services.knowledge_quiz import generate_quiz
-        return generate_quiz(rows, keys, options, chunks)
-    raise ValueError('Unsupported artifact type')
+def generate(kind, chunks, title, options, knowledge=None):
+    from rag.services import document_knowledge
+    return document_knowledge.generate(kind, knowledge or document_knowledge.build(chunks), title, options)

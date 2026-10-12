@@ -1,8 +1,13 @@
-import { useState, useEffect, useRef } from 'react'
+import { useProductContext } from '../hooks/useProductContext'
+import { useHomeCatalogue, displayToHomeBook, homeBookPath } from './HomeCatalogueContext'
+import { patronPath } from '../lib/libraryWorkspace'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { BookCover } from '@/components/BookCover'
-import { getCategories, type Category } from '@/lib/api'
+import { getCategories, type Category as GlobalCategory } from '@/lib/api'
 import { PALETTES, type CoverVariant } from '@/data/books'
+
+type Category = Omit<GlobalCategory, 'preview_book'> & { preview_book: GlobalCategory['preview_book'] | null }
 
 const ROTATION_INTERVAL = 120000 // 2 minutes
 const DISPLAY_COUNT = 13 // Number of categories to show at once
@@ -45,6 +50,8 @@ function selectRandomSubset(
 }
 
 export function CategoryExplorer() {
+  const context = useHomeCatalogue()
+  const productNavigation=useProductContext()
   const [allCategories, setAllCategories] = useState<Category[]>([])
   const [displayedCategories, setDisplayedCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
@@ -57,6 +64,7 @@ export function CategoryExplorer() {
 
   // Fetch all categories once
   useEffect(() => {
+    if (context) return
     let isMounted = true
 
     async function fetchCategories() {
@@ -90,7 +98,7 @@ export function CategoryExplorer() {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [context])
 
   // Rotate categories periodically
   useEffect(() => {
@@ -121,7 +129,13 @@ export function CategoryExplorer() {
     return () => clearInterval(interval)
   }, [allCategories])
 
-  if (loading) {
+  const localCategories = useMemo(() => context ? selectRandomSubset(context.data.subjects.map(row => ({
+    name: row.subject, count: row.count, preview_book: row.preview_book ? displayToHomeBook(row.preview_book) : null
+  })), DISPLAY_COUNT, new Set()) : [], [context])
+  const visibleCategories = context ? localCategories : displayedCategories
+  const visibleLoading = context ? false : loading
+  const visibleError = context ? false : error
+  if (visibleLoading) {
     return (
       <section className="relative overflow-hidden border-t border-line bg-panel py-20 md:py-28">
         <h2 className="font-display mb-12 text-center text-[0.8rem] tracking-[0.25em] text-ink-soft md:mb-16">
@@ -136,7 +150,7 @@ export function CategoryExplorer() {
     )
   }
 
-  if (error || displayedCategories.length === 0) {
+  if (visibleError || visibleCategories.length === 0) {
     return (
       <section className="relative overflow-hidden border-t border-line bg-panel py-20 md:py-28">
         <h2 className="font-display mb-12 text-center text-[0.8rem] tracking-[0.25em] text-ink-soft md:mb-16">
@@ -149,12 +163,12 @@ export function CategoryExplorer() {
     )
   }
 
-  const activeCategory = displayedCategories[activeIndex] || displayedCategories[0]
+  const activeCategory = visibleCategories[activeIndex] || visibleCategories[0]
   const corner = activeIndex % 2 === 0 ? 'top-right' : 'bottom-left'
   const activeBook = activeCategory.preview_book
 
   function handleCategoryClick(categoryName: string) {
-    navigate(`/catalog?category=${encodeURIComponent(categoryName)}`)
+    navigate(context ? patronPath(context.data.source.library_id, `catalogue?subject=${encodeURIComponent(categoryName)}`) : `/catalog?category=${encodeURIComponent(categoryName)}`)
   }
 
   return (
@@ -177,7 +191,7 @@ export function CategoryExplorer() {
         >
           {activeBook ? (
             <div className="animate-[fadeIn_0.5s_ease-out] pointer-events-auto">
-              <Link to={`/book/${activeBook.work_id}`} className="block transition-transform hover:-translate-y-2 hover:scale-[1.02]">
+              <Link to={productNavigation.personalPath(homeBookPath(context, activeBook.work_id))} data-library-book-id={context?.data.source.catalogue_source === 'LIBRARY_LOCAL' ? activeBook.work_id : undefined} className="block transition-transform hover:-translate-y-2 hover:scale-[1.02]">
                 <BookCover 
                   title={activeBook.title}
                   author={activeBook.authors || 'Unknown Author'}
@@ -204,14 +218,14 @@ export function CategoryExplorer() {
             transition: 'opacity 300ms ease-out, transform 300ms ease-out'
           }}
         >
-          {displayedCategories.map((cat, i) => (
+          {visibleCategories.map((cat, i) => (
             <li key={cat.name}>
               <button
                 onMouseEnter={() => setActiveIndex(i)}
                 onFocus={() => setActiveIndex(i)}
                 onClick={() => handleCategoryClick(cat.name)}
                 className={`font-display w-full py-1.5 text-[clamp(1.3rem,4.4vw,2.1rem)] leading-none tracking-tight transition-all duration-300 ${
-                  i === activeIndex ? 'text-brand' : 'text-ink/25 hover:text-ink/50'
+                  i === activeIndex ? 'text-brand' : 'text-ink-soft hover:text-ink'
                 }`}
               >
                 {cat.name}

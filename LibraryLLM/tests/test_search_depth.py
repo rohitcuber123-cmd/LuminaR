@@ -82,6 +82,17 @@ def test_short_pool_has_no_false_more(system):
     result=system.pages.search('query')
     assert result['returned']==7 and not result['has_more'] and result['next_offset'] is None
 
+
+def test_category_and_author_filter_entire_ranked_pool_before_page(system):
+    for i, row in enumerate(system.books.rows.values()):
+        row.update(subjects='Other|Wanted' if i % 2 == 0 else 'Wantedness', authors='Ada' if i % 3 == 0 else 'Grace')
+    first=system.pages.search('query',5,category='wanted',author='ada')
+    second=system.pages.search('query',5,5,category='wanted',author='ada')
+    assert ids(first)==[f'OL{i:03}W' for i in (0,6,12,18,24)]
+    assert ids(second)==[f'OL{i:03}W' for i in (30,36,42,48)]
+    assert first['total_ranked_candidates']==9 and not second['has_more']
+    assert system.calls.count(('rerank',50))==1
+
 def test_ttl_and_bounded_cache():
     clock=[0];cache=RankedResultCache(ttl=10,maximum=2,clock=lambda:clock[0])
     assert cache.get_or_create('a',lambda:1)==(1,False)

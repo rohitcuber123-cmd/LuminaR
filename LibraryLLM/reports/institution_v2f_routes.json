@@ -1,0 +1,58 @@
+{
+  "phase": "Institution Part 2F",
+  "inventory_date": "2026-10-12",
+  "basis": "Static inspection of canonical implemented source; browser/API execution outcomes are reported separately.",
+  "service_mounts": {
+    "core": { "development_port": 8002, "browser_proxy": "/api", "source": "backend/main.py", "router": "backend/routes/library_assets.py" },
+    "rag": { "development_port": 8005, "browser_proxy": "/rag-api", "source": "rag/api.py", "router": "rag/services/library_asset_routes.py" },
+    "frontend": { "development_port": 5173, "source": "frontend/src/App.tsx", "proxy_source": "frontend/vite.config.ts" }
+  },
+  "common_authorization": {
+    "tenant_authority": "Fresh eligible account, ACTIVE canonical library, exact ACTIVE LibraryMembership; historical User.role and PlatformRoleAssignment alone confer no permission.",
+    "staff": "ADMIN or LIBRARIAN in the exact library.",
+    "reader": "Staff can read STAFF_ONLY or MEMBERS; GENERAL_USER can read only READY MEMBERS assets.",
+    "asset_identity": "Every asset lookup includes both canonical library UUID and canonical asset UUID.",
+    "deleted": "DELETING and DELETED deny normal protected access.",
+    "rag": "READY artifacts, tenant/generation integrity and current authorization before reads/retrieval and again before returning output.",
+    "authority_source": "backend/services/library_asset_service.py:fresh_guard,authorize_asset",
+    "rag_source": "rag/services/library_asset_pipeline.py:prepared,recheck"
+  },
+  "core_routes": [
+    { "method": "GET", "path": "/libraries/{library_id}/assets", "operation": "Bounded metadata list", "authority": "reader; patron rows additionally restricted to READY MEMBERS", "handler": "listing", "query": { "search": "max 150 characters, escaped title/filename/linked-book metadata", "visibility": ["STAFF_ONLY", "MEMBERS"], "status": ["UPLOADING", "PROCESSING", "READY", "FAILED", "DELETING", "DELETED"], "library_book_id": "Optional canonical same-library book UUID", "offset": "0..100000", "limit": "1..100, default 20" } },
+    { "method": "POST", "path": "/libraries/{library_id}/assets", "operation": "PDF upload and durable processing submission", "authority": "staff", "handler": "upload", "success_status": 202, "body": "Multipart file, title, visibility, optional library_book_id", "required_header": "X-Luminar-Upload canonical UUID for acknowledgement-loss retry identity" },
+    { "method": "GET", "path": "/libraries/{library_id}/assets/{asset_id}", "operation": "Metadata and processing detail", "authority": "reader", "handler": "detail" },
+    { "method": "PATCH", "path": "/libraries/{library_id}/assets/{asset_id}", "operation": "Title, visibility and same-library book link update", "authority": "staff", "handler": "update" },
+    { "method": "DELETE", "path": "/libraries/{library_id}/assets/{asset_id}", "operation": "Revoke retrieval, retire artifacts/source, retain deleted metadata and audit", "authority": "staff", "handler": "delete" },
+    { "method": "POST", "path": "/libraries/{library_id}/assets/{asset_id}/reprocess", "operation": "Idempotent outstanding-job reuse or durable retry", "authority": "staff", "handler": "reprocess", "success_status": 202 },
+    { "method": "GET", "path": "/libraries/{library_id}/assets/{asset_id}/file", "operation": "Authorized streamed PDF access", "authority": "reader, READY", "handler": "file", "query": { "download": "Boolean; inline by default, attachment when true" }, "response": "FileResponse with private no-store, nosniff and restrictive sandbox headers; storage paths excluded" }
+  ],
+  "rag_routes": [
+    { "method": "POST", "path": "/libraries/{library_id}/assets/{asset_id}/rag", "operation": "Explicit one-asset document Q&A", "authority": "reader, READY, fresh authorization before retrieval and before output", "handler": "ask", "body": { "query_or_question": "Matching aliases, nonempty, max 8000 characters", "depth": ["concise", "normal", "detailed", "comprehensive"] } },
+    { "method": "GET", "path": "/libraries/{library_id}/assets/{asset_id}/artifacts", "operation": "Validated scoped study artifacts", "authority": "reader, READY", "handler": "artifacts" },
+    { "method": "POST", "path": "/libraries/{library_id}/assets/{asset_id}/artifacts/quiz", "operation": "Shared existing quiz generation", "authority": "reader, READY", "handler": "quiz", "body": "Existing QuizRequest mode, questionTypes and questionCount" },
+    { "method": "POST", "path": "/libraries/{library_id}/assets/{asset_id}/artifacts/{kind}", "operation": "Shared existing study tool generation", "authority": "reader, READY", "handler": "generate", "kind": ["key-concepts", "summary", "flashcards", "mindmap"] },
+    { "method": "GET", "path": "/libraries/{library_id}/assets/{asset_id}/artifacts/{artifact_id}", "operation": "Read one validated artifact", "authority": "reader, READY", "handler": "artifact" },
+    { "method": "DELETE", "path": "/libraries/{library_id}/assets/{asset_id}/artifacts/{artifact_id}", "operation": "Remove shared generated study artifact", "authority": "staff, READY", "handler": "delete" },
+    { "method": "GET", "path": "/libraries/{library_id}/assets/{asset_id}/sources/{chunk_id}", "operation": "Bounded source preview from this asset's validated chunks", "authority": "reader, READY", "handler": "source" },
+    { "method": "POST", "path": "/libraries/{library_id}/assets/{asset_id}/artifacts/{artifact_id}/cloze/{item_id}/grade", "operation": "Existing evidence-bound cloze grading", "authority": "reader, READY; quiz/item and final access rechecked", "handler": "grade" }
+  ],
+  "frontend_routes": [
+    { "path": "/staff/libraries/:libraryId/assets", "component": "LibraryAssetsPage staff", "shell": "StaffLibraryShell", "navigation": "Digital Assets", "authority": "Exact library ADMIN/LIBRARIAN; server remains authoritative" },
+    { "path": "/staff/libraries/:libraryId/assets/:assetId", "component": "LibraryAssetDetailPage staff", "shell": "StaffLibraryShell", "authority": "Exact library ADMIN/LIBRARIAN; server remains authoritative" },
+    { "path": "/libraries/:libraryId/resources", "component": "LibraryAssetsPage", "shell": "PatronLibraryShell", "navigation": "Resources", "authority": "Exact library GENERAL_USER patron workspace; READY MEMBERS resources only" },
+    { "path": "/libraries/:libraryId/resources/:assetId", "component": "LibraryAssetDetailPage", "shell": "PatronLibraryShell", "authority": "Exact library GENERAL_USER patron workspace; READY MEMBERS asset only" }
+  ],
+  "existing_route_integration": [
+    { "path": "/libraries/:libraryId/books/:bookId", "integration": "LibraryBookResources rendered only for canonical owned library book; bounded same-library READY MEMBERS asset lookup", "source": "frontend/src/pages/LibraryCatalogue.tsx,frontend/src/pages/LibraryAssets.tsx" },
+    { "path": "/book/:workId", "integration": "No tenant resource lookup mounted on global Book Detail", "source": "frontend/src/pages/BookDetailPage.tsx" },
+    { "path": "/rag/ask", "integration": "Existing global Book RAG and personal/session document dispatch retained; library asset UUID is not a personal registration or global work selection", "source": "rag/api.py" }
+  ],
+  "deliberately_absent": [
+    "World-public document publishing route",
+    "Personal-to-library sharing or promotion route",
+    "Cross-document library RAG or semantic search route",
+    "Tenant catalogue HNSW/KG build or rebuild route",
+    "Alternate legacy digital-assets console",
+    "Typed LIBRARY_ASSET entry in frozen global Select for AI schema"
+  ]
+}

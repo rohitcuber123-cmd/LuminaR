@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "shelf": "Add/edit prominent Shelf Location and Call Number; staff changes journal both book and holding.",
+    "stock": "Visible initial Copies(default1) and Circulation Status; canonical total/other-unavailable safe editor, no editable derived count.",
+    "floor": "Total cannot undercut active+pending+unavailable or existing copy identities.",
+    "copy_mode": "All units must be verified and unallocated before mode conversion."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_boundaries::test_canonical_metadata_creation_receipts",
+    "tests.institution_v2b.test_lending::test_stock_shelf_status_and_copy_mode",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-approve]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-cancel]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-create]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-confirm]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-renew]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-stock]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-shelf]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-approve]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-cancel]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-create]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-confirm]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-renew]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-stock]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-shelf]",
+    "tests.institution_v2b.test_recovery_edges::test_known_copy_conditions_and_stock_floor"
+  ],
+  "live_scenarios": [
+    {
+      "code": "J",
+      "scenario": "Reference-only record remains visible but cannot be requested",
+      "status": "PASS"
+    },
+    {
+      "code": "K",
+      "scenario": "Shelf change is visible to member availability and staff queue",
+      "status": "PASS"
+    },
+    {
+      "code": "L",
+      "scenario": "Stock increase safely creates requestable capacity",
+      "status": "PASS"
+    },
+    {
+      "code": "M",
+      "scenario": "Stock decrease below pending/active allocation is denied",
+      "status": "PASS"
+    }
+  ],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

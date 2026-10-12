@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "identity": [
+    "fee_id UUID",
+    "library_id UUID",
+    "loan_id UUID",
+    "library_book_id UUID",
+    "borrower/user_id"
+  ],
+  "money": {
+    "representation": "Strict integer INR minor units",
+    "minor_units_per_major": 100,
+    "maximum_minor": 1000000000000,
+    "floats_strings_booleans_rejected": true
+  },
+  "provenance": [
+    "Immutable original_amount_minor",
+    "policy_id and complete policy_snapshot",
+    "Calculation timestamps/rate/grace/days",
+    "source_event"
+  ],
+  "balances": "current_amount = CHARGE - CREDIT - WAIVER; paid_amount = PAYMENT_RECORD; balance = current_amount - paid_amount.",
+  "new_fee_idempotency": "Unique library/loan/fee_type and deterministic overdue fee/initial charge UUIDs.",
+  "actual_types_created": [
+    "OVERDUE"
+  ],
+  "future_type_filters_only": [
+    "DAMAGE",
+    "LOST",
+    "MANUAL_ADJUSTMENT"
+  ],
+  "states": [
+    "OPEN",
+    "PARTIALLY_PAID",
+    "PAID",
+    "WAIVED",
+    "CANCELLED"
+  ],
+  "cancelled_state": "Reserved for future workflows; no Part 2C fee cancellation API.",
+  "active_loan_estimate": "ESTIMATED, nonpayable; final charge exists only after confirmed physical receipt.",
+  "unpaid_fee_return": "Physical receipt/stock release is not blocked by financial balance.",
+  "evidence": {
+    "junit": "institution_v2c_backend.xml",
+    "passing_test_cases": [
+      "test_return_confirmation_fee_generation_race_one_charge",
+      "test_overdue_disabled_future_policy_no_charge",
+      "test_reconciliation_detects_corrupt_history_without_writes[counter]",
+      "test_reconciliation_detects_corrupt_history_without_writes[policy]",
+      "test_reconciliation_detects_corrupt_history_without_writes[terminal_link]",
+      "test_reconciliation_detects_corrupt_history_without_writes[legacy_charge]",
+      "test_grace_disabled_estimate_and_waiting_expiry",
+      "test_fee_final_policy_snapshot_and_duplicate_generation",
+      "test_valid_return_staff_delay_and_rejected_fake[PHYSICAL_RECEIPT-1000]",
+      "test_valid_return_staff_delay_and_rejected_fake[FIRST_VALID_RETURN_REQUEST-500]",
+      "test_money_strict_integer[1.5]",
+      "test_money_strict_integer[True]",
+      "test_money_strict_integer[-1]",
+      "test_money_strict_integer[0]",
+      "test_money_strict_integer[1000000000001]"
+    ]
+  }
+}

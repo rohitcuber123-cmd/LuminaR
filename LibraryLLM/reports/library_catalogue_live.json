@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "initial_api_run": "library_catalogue_live_api_initial.json",
+  "final_api_run": "library_catalogue_live_api.json",
+  "A": "Ten real local books; local hero/rails/subjects/shelf/availability.",
+  "B": "Empty library; actual read-only 5M metadata fallback.",
+  "C": "Local-only books render branded covers without ISBN/work ID.",
+  "D": "Global non-owned cards/details have no shelf/counts/physical actions.",
+  "E": "Same real global work owned A/non-owned B; browser and API verified.",
+  "F": "Library switch and immediate home-to-B navigation; stale delayed A response also tested explicitly in frontend.",
+  "G": "Canonical approved loans/reservations produce real Popular.",
+  "H": "Four-book no-activity collection is not padded and has no invented Popular.",
+  "layout_checks": 48,
+  "final_interaction_checks": 15,
+  "failed_final_checks": 0,
+  "initial_probe_failure": "One heading probe used an unsupported role-level option. The supported read-only h2 selector passed on a fresh fixture; the original failed probe remains in browser evidence.",
+  "responsive_targets": [
+    "1440x900",
+    "1366x768",
+    "1024x768",
+    "768x1024",
+    "390x844",
+    "375x812"
+  ],
+  "viewport_limit": "Windows 125% host scaling yields +/-1 CSS pixel at some requested desktop/tablet dimensions; actual dimensions are recorded per check. 1024-width boundary additionally observed.",
+  "global_search_limit": "Existing Search service port 8003 is not running; adapter/routing covered by frontend and frozen Search regression, no fake engine or index build.",
+  "cleanup": [
+    {
+      "database": "luminar_catalogue_live_a4fcb44f091b4b949a3d04ffca1bc4c9",
+      "dropped": true,
+      "service_ports_confirmed_stopped": [
+        8087,
+        5187
+      ],
+      "original_core_pid": 8864,
+      "reason": "Long-running exec session ended; explicit disposable cleanup completed."
+    },
+    {
+      "fixture_database": "luminar_catalogue_live_fdc8840528414a07a45b4d90155540a1",
+      "fixture_database_dropped": true,
+      "own_services_stopped": true,
+      "production_modified": false
+    }
+  ],
+  "browser": "Own tabs closed; viewport and prior visibility restored. User-owned 5182 tab untouched.",
+  "screenshots": [
+    "library_catalogue_home_desktop.png",
+    "library_catalogue_home_mobile.png",
+    "library_catalogue_fallback_mobile.png",
+    "library_catalogue_owned_detail.png",
+    "library_catalogue_owned_detail_desktop.png",
+    "library_catalogue_global_detail.png",
+    "library_catalogue_staff_summary.png"
+  ]
+}

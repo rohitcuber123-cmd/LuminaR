@@ -141,6 +141,31 @@ class AssistantLoanTool:
     async def return_book(self, issue_id):
         return await self.transport.call('core', 'POST', f'/issues/return/{issue_id}')
 
+    async def library_book(self, library_id, book_id):
+        return await self.transport.call('core', 'GET', f'/libraries/{library_id}/inventory/books/{book_id}')
+
+    async def library_resolve(self, library_id, work_id):
+        return await self.transport.call('core', 'GET', f'/libraries/{library_id}/lending/resolve', params={'global_work_id': work_id})
+
+    async def library_loans(self, library_id):
+        # Explicit bounded pages, never a global work-only issue fallback.
+        rows = []
+        for offset in range(0, 10000, 100):
+            result = await self.transport.call('core', 'GET', f'/libraries/{library_id}/me/loans', params={'offset': offset, 'limit': 100})
+            rows.extend(result['results'])
+            if len(rows) >= result['total']:
+                return rows
+        raise ToolFailure('core', 'TOO_MANY_LOANS', 'Choose the exact loan in My Library.')
+
+    async def library_request(self, pending):
+        base = f'/libraries/{pending.library_id}'
+        if pending.type == Intent.BORROW_BOOK:
+            result = await self.transport.call('core', 'POST', base + '/lending/borrow-requests',
+                json={'library_book_id': str(pending.library_book_id), 'idempotency_key': str(pending.idempotency_key)})
+            return {**result, 'message': 'Book requested. Awaiting librarian approval; no active loan or due date has started.'}
+        result = await self.transport.call('core', 'POST', base + f'/loans/{pending.loan_id}/return-request', json={'idempotency_key': str(pending.idempotency_key)})
+        return {**result, 'message': 'Return requested. Your loan remains active until library staff physically confirms receipt.'}
+
 
 class AssistantReservationTool:
     def __init__(self, transport):
@@ -152,6 +177,34 @@ class AssistantReservationTool:
     async def reserve(self, work_id):
         return await self.transport.call('core', 'POST', '/reservations/', json={'work_id': work_id})
 
+    async def library_status(self, library_id, book_id):
+        return await self.transport.call('core', 'GET', f'/libraries/{library_id}/inventory/{book_id}/reservation-status')
+
+    async def library_config(self, library_id):
+        return await self.transport.call('core', 'GET', f'/libraries/{library_id}/reservations-fees/config')
+
+    async def library_reservations(self, library_id):
+        rows = []
+        for offset in range(0, 10000, 100):
+            data = await self.transport.call('core', 'GET', f'/libraries/{library_id}/me/reservations', params={'offset': offset, 'limit': 100})
+            rows.extend(data['results'])
+            if len(rows) >= data['total']: return rows
+        raise ToolFailure('core', 'TOO_MANY_RESERVATIONS', 'Open My Library to select the exact reservation.')
+
+    async def library_account(self, library_id):
+        config = await self.library_config(library_id)
+        if config['state'] == 'LEGACY':
+            return {**await self.reservations(), 'scope': 'LEGACY_ACCOUNT'}
+        return {'library_id': library_id, 'results': await self.library_reservations(library_id)}
+
+    async def library_mutate(self, pending):
+        base = f'/libraries/{pending.library_id}/reservations'
+        path = base + f'/{pending.reservation_id}/cancel' if pending.reservation_id else base
+        body = {'idempotency_key': str(pending.idempotency_key)}
+        if not pending.reservation_id: body['library_book_id'] = str(pending.library_book_id)
+        result = await self.transport.call('core', 'POST', path, json=body)
+        return {**result, 'message': 'Waiting reservation cancelled.' if pending.reservation_id else 'Joined this library’s waiting queue. An available unit will become a Borrow Request for staff approval.'}
+
 
 class AssistantFeeTool:
     def __init__(self, transport):
@@ -159,6 +212,13 @@ class AssistantFeeTool:
 
     async def fees(self):
         return await self.transport.call('core', 'GET', '/fines/my')
+
+    async def library_fees(self, library_id):
+        config = await self.transport.call('core', 'GET', f'/libraries/{library_id}/reservations-fees/config')
+        if config['state'] == 'LEGACY':
+            return {**await self.fees(), 'scope': 'LEGACY_ACCOUNT'}
+        result = await self.transport.call('core', 'GET', f'/libraries/{library_id}/me/fees', params={'limit': 100})
+        return {**result, 'library_id': library_id, 'scope': 'OWN_ACTIVE_LIBRARY', 'payment_processing': 'HANDLED_BY_LIBRARY'}
 
 
 class AssistantReadingListTool:

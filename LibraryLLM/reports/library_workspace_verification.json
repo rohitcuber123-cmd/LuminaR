@@ -1,0 +1,111 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-09T04:26:41.495825+00:00",
+  "policy": "Active library membership determines workspace. ADMIN/LIBRARIAN: staff only. GENERAL_USER: Patron/My Library only.",
+  "scope": "Frontend workspace routes, navigation, and controls. Existing backend patron API role policy is unchanged. Legacy global dashboards remain available when no library is selected.",
+  "frontend_tests": {
+    "passed": 293,
+    "failed": 0,
+    "groups": {
+      "read-now-and-routing": 31,
+      "assistant": 93,
+      "knowledge": 52,
+      "institutions": 28,
+      "inventory": 26,
+      "lending": 23,
+      "reservations-fees": 17,
+      "workspaces": 23
+    }
+  },
+  "build": "PASS",
+  "lint": {
+    "errors": 0,
+    "existing_warnings": 19
+  },
+  "live_browser_checks": 10,
+  "live_api_role_authority": "PASS",
+  "cleanup": {
+    "fixture_database": "luminar_workspace_live_69df92143b9c4e00ae85e140bac72907",
+    "fixture_database_dropped": true,
+    "own_services_stopped": true,
+    "production_modified": false,
+    "cleanup_method": "Verified fixture identity and recovered cleanup after runner exit."
+  },
+  "preservation": {
+    "unchanged_accepted_source_files": 820,
+    "unexpected_source_changes": [],
+    "accepted_part2b_reports_unchanged": 69
+  },
+  "changed": [
+    {
+      "path": "frontend/package.json",
+      "sha256": "69d69cfe566c35aec633a45ae290fd5d1de6cf9f1568fdd84b4ae71827d325b4"
+    },
+    {
+      "path": "frontend/src/App.tsx",
+      "sha256": "810301b93bf7cd8460284c9d73eaf5bc5c5ef751f49ca54c8be07b275aceeca5"
+    },
+    {
+      "path": "frontend/src/components/Header.tsx",
+      "sha256": "da2e5edca7bfd2d1afc42480367a61cd9acb806a7a9a208902ecdc7fd32825f9"
+    },
+    {
+      "path": "frontend/src/components/ProtectedRoute.tsx",
+      "sha256": "ddd33f8d113e8362a2eff2bf46ce5b12bc2e789212f1106d294106677daaad58"
+    },
+    {
+      "path": "frontend/src/components/LibrarySwitcher.tsx",
+      "sha256": "0c7b7809e51ba40c1d842dc422ea7d1dc210048fc8825ab8add74706e67b2483"
+    },
+    {
+      "path": "frontend/src/pages/CorePages.tsx",
+      "sha256": "d4a215630b6d8eb7696e08e50774e54284e064da89924b57b603d5e760934329"
+    },
+    {
+      "path": "frontend/src/pages/StaffDashboard.tsx",
+      "sha256": "7450c11d6a856793c68474b43022041004d9774a968c9042dbd6f2ca0f23a216"
+    },
+    {
+      "path": "frontend/src/pages/InstitutionPanel.tsx",
+      "sha256": "46a47679d9a9fe37ebe9e02b4ba09963880df0e9c7306501ac86e4cf3aeeb41a"
+    },
+    {
+      "path": "frontend/src/pages/LibraryInventory.tsx",
+      "sha256": "4b1b97f9cf664034751b1bc44db488e02a71b42ed4a7279c695b6e416c70df61"
+    },
+    {
+      "path": "frontend/src/pages/Institutions.tsx",
+      "sha256": "0d81f5cb560b5aadd2af4b03b68dc1f1a88224a496b35bfa1cb2123265aa6d2c"
+    },
+    {
+      "path": "frontend/src/store/useInstitutionStore.ts",
+      "sha256": "0ff0612c02e3f4391aca3cc387772ba044224e1b81e1cd143a81eaf3707fb30e"
+    },
+    {
+      "path": "frontend/tests/institution-lending.test.tsx",
+      "sha256": "c701d20983ec7f014979c476f39609a65222219b074ee695947aa81ec9599f85"
+    }
+  ],
+  "added": [
+    {
+      "path": "frontend/src/components/LibraryWorkspaceRoute.tsx",
+      "sha256": "4ab894c8fc77b09b8adc2b0387e01a2616c0b532f42c6aa7b615cd8e8abeee99"
+    },
+    {
+      "path": "frontend/src/lib/libraryWorkspace.ts",
+      "sha256": "d6af2e332839dfcadc6a139e1bb22a30dce95e3ef0a03bf8115961a55f879387"
+    },
+    {
+      "path": "frontend/tests/library-workspaces.test.tsx",
+      "sha256": "41fa9a0e327d39106dcb8f247b090a703de80880d866ff87fa6ca3de7329be44"
+    },
+    {
+      "path": "scripts/check_library_workspaces.py",
+      "sha256": "776e33d9d4c43792a347109013f0018939a571fcaa922d11c2fe2e833401017f"
+    }
+  ],
+  "resolved_test_findings": [
+    "One unrelated document-answer UI timing timeout passed on standalone recheck and the final full run.",
+    "Four inventory patron tests now explicitly use GENERAL_USER membership; their prior ADMIN fixture no longer exposes personal request controls."
+  ]
+}

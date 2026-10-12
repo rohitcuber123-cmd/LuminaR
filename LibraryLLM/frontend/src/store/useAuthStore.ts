@@ -2,6 +2,7 @@ import { finishDocumentLogout } from "../lib/documentCacheApi";
 import { useAssistantStore } from "./useAssistantStore";
 import { create } from "zustand";
 import { useLibraryStore } from "./useLibraryStore";
+import { useInstitutionStore } from './useInstitutionStore';
 
 import {
   login as apiLogin,
@@ -118,10 +119,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
       if (!user || !["GENERAL_USER", "LIBRARIAN", "ADMIN"].includes(user.role))
         throw new Error("Login did not return a supported user role.");
-      if (staff && !['ADMIN', 'LIBRARIAN'].includes(user.role))
-        throw new Error('This account is not authorized for staff access.');
 
       useLibraryStore.getState().clearUserData();
+      useInstitutionStore.getState().reset();
       localStorage.setItem("luminar_token", token);
 
       if (user) {
@@ -261,6 +261,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   // ========================================================
 
   logout: async () => {
+    useInstitutionStore.getState().reset();
     const token = get().token;
     set({ loading: true });
     const removed = token ? await finishDocumentLogout(token) : true;

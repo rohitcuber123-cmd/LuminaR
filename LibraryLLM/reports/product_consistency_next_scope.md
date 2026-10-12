@@ -1,0 +1,7 @@
+# Recommended next scope — Events + Notifications Tenancy V1
+
+Review only; implementation has not started. Actual remaining global dependencies include backend/routes/events.py and backend/services/event_service.py, frontend/src/pages/EventsPage.tsx and components/events/EventMonitor.tsx, backend/routes/notifications.py, services/notification_service.py and notification_worker.py, plus frontend/lib/notifications.ts and NotificationCenter.tsx. Header Events still routes to the accepted global /events surface; existing notifications retain their accepted account/global behavior.
+
+A separately approved phase should distinguish global platform events/announcements from library-specific events and operational notices. Require fresh LibraryMembership for tenant writers/readers and PlatformRoleAssignment for global operations, without global roles creating tenant authority. Model tenant-scoped recipients and seen/unseen state; use a durable transactional/journal-compatible outbox and idempotent delivery worker.
+
+Prioritize borrow approval/rejection, physical return confirmation, reservation-ready, borrow-request expiry, due/overdue and staff operational notifications. Define expiry/scheduling, retries/backoff, revocation/privacy, deduplication and recovery before UI integration. Preserve existing global event/notification regressions and compatibility authority. No Events, Notifications, Analytics, digital-asset, tenant HNSW/KG or private-vector implementation was added here.

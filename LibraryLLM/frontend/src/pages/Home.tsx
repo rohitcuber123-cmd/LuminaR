@@ -7,6 +7,11 @@ import { AlsoLikeTicker } from '@/components/AlsoLikeTicker'
 import { NewArrivals } from '@/components/NewArrivals'
 import { getBooks, type BackendBook } from '@/lib/api'
 import { AlertCircle, Loader2 } from 'lucide-react'
+import { HomeCatalogueContext, displayToHomeBook } from '../components/HomeCatalogueContext'
+import { useLibraryCatalogue } from '../hooks/useLibraryCatalogue'
+import type { CatalogueHome } from '../lib/libraryCatalogue'
+import { StatePanel } from '../components/WorkspaceUI'
+import { LibraryUpcomingEvents } from '../components/events/LibraryUpcomingEvents'
 
 
 function HomeSkeleton() {
@@ -22,7 +27,21 @@ function HomeSkeleton() {
 }
 
 
-export function Home() {
+export function Home({ context = 'global' }: { context?: 'global' | 'library' }) {
+  return context === 'library' ? <LibraryHomeData /> : <GlobalHomeData />
+}
+
+function LibraryHomeData() {
+  const { data, loading, error, retry } = useLibraryCatalogue<CatalogueHome>('home')
+  if (loading) return <HomeSkeleton />
+  if (error || !data) return <StatePanel title="Unable to load this library catalogue" kind="error" action={<button onClick={retry}>Retry</button>}>{error}</StatePanel>
+  return <HomeCatalogueContext.Provider value={{ data, changed: retry }}>
+    <HomeSections books={data.featured.map(displayToHomeBook)} />
+    <LibraryUpcomingEvents libraryId={data.source.library_id} />
+  </HomeCatalogueContext.Provider>
+}
+
+function GlobalHomeData() {
 
   const [books, setBooks] =
     useState<BackendBook[]>([])
@@ -217,14 +236,11 @@ export function Home() {
   }
 
 
-  /*
-   * Use one real database book for the
-   * "You May Also Enjoy" section.
-   */
-  const spotlightBook =
-    books[5] ?? books[0]
+  return <HomeSections books={books} />
+}
 
-
+export function HomeSections({ books }: { books: BackendBook[] }) {
+  const spotlightBook = books[5] ?? books[0]
   return (
 
     <>

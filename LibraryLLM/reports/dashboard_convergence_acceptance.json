@@ -1,0 +1,197 @@
+{
+  "status": "PASS",
+  "gates_52_80": [
+    {
+      "gate": 52,
+      "status": "PASS",
+      "requirement": "Legacy Librarian is not an independent surface",
+      "evidence": "Deleted StaffDashboard.tsx; App mounts ManagementRedirect only."
+    },
+    {
+      "gate": 53,
+      "status": "PASS",
+      "requirement": "Legacy Staff is not an independent surface",
+      "evidence": "Deleted LegacyStaffDashboard with the old shell; canonical StaffLibraryShell remains."
+    },
+    {
+      "gate": 54,
+      "status": "PASS",
+      "requirement": "Old Librarian navigation removed",
+      "evidence": "nav.ts/AccountMenu use membership destinations; browser oldNav arrays are empty."
+    },
+    {
+      "gate": 55,
+      "status": "PASS",
+      "requirement": "Old Staff navigation removed",
+      "evidence": "App and shared CSS no longer mount the old staff shell or tabs."
+    },
+    {
+      "gate": 56,
+      "status": "PASS",
+      "requirement": "/librarian cannot render old dashboard",
+      "evidence": "ManagementRedirect; real-browser single/multiple/no-membership cases."
+    },
+    {
+      "gate": 57,
+      "status": "PASS",
+      "requirement": "/staff cannot render old dashboard",
+      "evidence": "ManagementRedirect; real-browser single/multiple/no-membership cases."
+    },
+    {
+      "gate": 58,
+      "status": "PASS",
+      "requirement": "Valid Librarian functionality in Staff Workspace",
+      "evidence": "Inventory, circulation, reservations, fees, settings and scoped operational activity; canonical suites and browser activity proof."
+    },
+    {
+      "gate": 59,
+      "status": "PASS",
+      "requirement": "User.role=LIBRARIAN grants no institution authority",
+      "evidence": "Fresh identity + active scoped membership guard; legacy-labeled account without membership denied."
+    },
+    {
+      "gate": 60,
+      "status": "PASS",
+      "requirement": "Old Admin no longer mixed global/library dashboard",
+      "evidence": "Deleted AdminDashboard; global PlatformShell and scoped StaffLibraryShell are separate."
+    },
+    {
+      "gate": 61,
+      "status": "PASS",
+      "requirement": "Every old Admin feature classified",
+      "evidence": "Complete feature table below and machine-readable classification.json; no unknown feature deleted."
+    },
+    {
+      "gate": 62,
+      "status": "PASS",
+      "requirement": "Valid tenant Admin features moved to Staff Workspace",
+      "evidence": "Inventory/import, lending, reservations, fees, members, invitations, settings and audit use canonical library routes."
+    },
+    {
+      "gate": 63,
+      "status": "PASS",
+      "requirement": "Valid platform-global Admin features moved to Platform Console",
+      "evidence": "Catalogue metadata, accounts, global notifications/history/events, health and authority review."
+    },
+    {
+      "gate": 64,
+      "status": "PASS",
+      "requirement": "Obsolete duplicate Admin features removed",
+      "evidence": "Old dashboard/forms/account service removed; duplicate circulation/import writers reduced to read-only/stubs."
+    },
+    {
+      "gate": 65,
+      "status": "PASS",
+      "requirement": "No unexplained old Admin feature",
+      "evidence": "Feature table distinguishes retained personal/offline/history compatibility and unapproved accounts."
+    },
+    {
+      "gate": 66,
+      "status": "PASS",
+      "requirement": "Old tenant mutations do not use global Admin role",
+      "evidence": "All legacy stock/circulation writers return 410. Canonical writers use LibraryMembership."
+    },
+    {
+      "gate": 67,
+      "status": "PASS",
+      "requirement": "New library Admin operations require LibraryMembership",
+      "evidence": "institution_dependencies + canonical services; GENERAL_USER identity with local ADMIN works, global ADMIN without membership fails."
+    },
+    {
+      "gate": 68,
+      "status": "PASS",
+      "requirement": "New platform operations require PlatformRoleAssignment",
+      "evidence": "require_platform_admin checks current identity and approved active unexpired assignment on every request."
+    },
+    {
+      "gate": 69,
+      "status": "PASS",
+      "requirement": "Legacy Admin not automatically Platform Admin",
+      "evidence": "Production dry run creates zero assignments; role-only HTTP tests denied."
+    },
+    {
+      "gate": 70,
+      "status": "PASS",
+      "requirement": "Legacy Librarian not automatically given membership",
+      "evidence": "Production dry run creates zero memberships; no-library browser account denied."
+    },
+    {
+      "gate": 71,
+      "status": "PASS",
+      "requirement": "Ambiguous legacy accounts reported",
+      "evidence": "user_id 2 and 3 UNKNOWN_REVIEW_REQUIRED, retained, no inferred scope."
+    },
+    {
+      "gate": 72,
+      "status": "PASS",
+      "requirement": "Old dashboard compatibility URLs redirects only",
+      "evidence": "Authorized contexts redirect; unsupported context denies. No old UI component exists behind any compatibility URL."
+    },
+    {
+      "gate": 73,
+      "status": "PASS",
+      "requirement": "Multiple memberships never select first library",
+      "evidence": "ManagementRedirect counts active staff memberships and sends >1 to selector, even with remembered Library A."
+    },
+    {
+      "gate": 74,
+      "status": "PASS",
+      "requirement": "Duplicate business logic removed or read-only compatibility",
+      "evidence": "Explicit writer retirement, removed old algorithms, retained own/global historical reads only."
+    },
+    {
+      "gate": 75,
+      "status": "PASS",
+      "requirement": "Old/new inventory cannot both mutate stock",
+      "evidence": "Legacy CRUD/import 410; global metadata rejects stock/shelf and does not rewrite physical counts."
+    },
+    {
+      "gate": 76,
+      "status": "PASS",
+      "requirement": "Old/new lending cannot both mutate canonical lending",
+      "evidence": "Legacy issue/return/renew 410; staff/patron commands share canonical lock, journal and policy."
+    },
+    {
+      "gate": 77,
+      "status": "PASS",
+      "requirement": "Old/new reservations cannot both mutate reservations",
+      "evidence": "Legacy create/cancel 410; canonical membership-scoped reservations service remains."
+    },
+    {
+      "gate": 78,
+      "status": "PASS",
+      "requirement": "Old/new fees cannot both mutate fees",
+      "evidence": "Legacy creation/payment writer removed/410; canonical membership-scoped fees service remains."
+    },
+    {
+      "gate": 79,
+      "status": "PASS",
+      "requirement": "Platform Console cannot mutate library internals without membership",
+      "evidence": "Platform-only fixture receives 404 on library staff endpoints; account API forbids grant fields; tenant commands require local membership."
+    },
+    {
+      "gate": 80,
+      "status": "PASS",
+      "requirement": "Complete legacy_dashboard_removal.md",
+      "evidence": "This report includes classification, exact removal, routes, authority, migration, verification, preservation and remaining compatibility."
+    }
+  ],
+  "unknown_features": [],
+  "unknown_legacy_accounts": [
+    {
+      "user_id": 2,
+      "legacy_role": "LIBRARIAN",
+      "classification": "UNKNOWN_REVIEW_REQUIRED",
+      "automatic_grant": false,
+      "reason": "Legacy labels provide no approved platform scope or explicit library mapping."
+    },
+    {
+      "user_id": 3,
+      "legacy_role": "ADMIN",
+      "classification": "UNKNOWN_REVIEW_REQUIRED",
+      "automatic_grant": false,
+      "reason": "Legacy labels provide no approved platform scope or explicit library mapping."
+    }
+  ],
+  "production_grants_applied": 0
+}

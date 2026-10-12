@@ -1,0 +1,332 @@
+{
+  "status": "PASS",
+  "live": {
+    "status": "PASS",
+    "local_measurements": [
+      {
+        "surface": "TEST full Analytics initial load",
+        "ms": 1320.93
+      },
+      {
+        "surface": "TEST full Analytics initial load",
+        "ms": 824.19
+      },
+      {
+        "surface": "TEST full Analytics initial load",
+        "ms": 1248.08
+      },
+      {
+        "surface": "Empty library combined API",
+        "samples_ms": [
+          61.39,
+          60.65,
+          54.96,
+          82.55,
+          80.94
+        ],
+        "max_ms": 82.55,
+        "response_bytes": 2182
+      },
+      {
+        "surface": "Known operational fixture combined API",
+        "samples_ms": [
+          80.06,
+          96.88,
+          101.5,
+          107.74,
+          100.03
+        ],
+        "max_ms": 107.74,
+        "response_bytes": 3778
+      },
+      {
+        "surface": "TEST combined API",
+        "samples_ms": [
+          134.47,
+          111.39,
+          107.45,
+          103.88,
+          114.61
+        ],
+        "max_ms": 134.47,
+        "response_bytes": 3377
+      }
+    ],
+    "scope": "Local development response timings, not a production load guarantee."
+  },
+  "components": {
+    "status": "PASS",
+    "measurements": [
+      {
+        "library": "Empty library",
+        "component": "collection",
+        "samples_ms": [
+          7.283,
+          6.398,
+          5.76
+        ]
+      },
+      {
+        "library": "Empty library",
+        "component": "circulation",
+        "samples_ms": [
+          3.238,
+          2.709,
+          2.985
+        ]
+      },
+      {
+        "library": "TEST 150 books",
+        "component": "collection",
+        "samples_ms": [
+          58.756,
+          60.596,
+          70.628
+        ]
+      },
+      {
+        "library": "TEST 150 books",
+        "component": "circulation",
+        "samples_ms": [
+          4.061,
+          3.967,
+          4.433
+        ]
+      }
+    ],
+    "overview": "Overview is part of the one combined Analytics request; use measured combined endpoint time, not a fabricated independent endpoint."
+  },
+  "isolated_3000_books": {
+    "status": "PASS",
+    "database": "isolated disposable database",
+    "synthetic_only": true,
+    "production_TEST_writes": false,
+    "books": 3000,
+    "holding_quantity": 6000,
+    "timings_ms": {
+      "collection": [
+        889.359,
+        838.862,
+        952.248
+      ],
+      "circulation": [
+        3.245,
+        2.927,
+        2.464
+      ],
+      "full_dashboard": [
+        1091.243,
+        984.143,
+        1110.684
+      ]
+    },
+    "query_plans": {
+      "library_books": {
+        "winning_plan": {
+          "isCached": false,
+          "stage": "FETCH",
+          "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_library_books",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_library_books",
+            "keyPattern": {
+              "library_id": 1,
+              "status": 1,
+              "accession_sequence": 1
+            },
+            "indexName": "library_id_1_status_1_accession_sequence_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "library_id": [],
+              "status": [],
+              "accession_sequence": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "library_id": [
+                "[\"bac5b50b-028f-4c3e-af03-023a8afe808e\", \"bac5b50b-028f-4c3e-af03-023a8afe808e\"]"
+              ],
+              "status": [
+                "[\"ACTIVE\", \"ACTIVE\"]"
+              ],
+              "accession_sequence": [
+                "[MinKey, MaxKey]"
+              ]
+            }
+          }
+        },
+        "total_docs_examined": 3000,
+        "total_keys_examined": 3000
+      },
+      "loans": {
+        "winning_plan": {
+          "isCached": false,
+          "stage": "FETCH",
+          "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_loans",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_loans",
+            "keyPattern": {
+              "library_id": 1,
+              "borrowed_at": -1,
+              "library_book_id": 1
+            },
+            "indexName": "library_id_1_borrowed_at_-1_library_book_id_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "library_id": [],
+              "borrowed_at": [],
+              "library_book_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "library_id": [
+                "[\"bac5b50b-028f-4c3e-af03-023a8afe808e\", \"bac5b50b-028f-4c3e-af03-023a8afe808e\"]"
+              ],
+              "borrowed_at": [
+                "[new Date(9223372036854775807), new Date(1789171200000)]"
+              ],
+              "library_book_id": [
+                "[MinKey, MaxKey]"
+              ]
+            }
+          }
+        },
+        "total_docs_examined": 30,
+        "total_keys_examined": 30
+      },
+      "audit": {
+        "winning_plan": {
+          "isCached": false,
+          "stage": "FETCH",
+          "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_audit",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_audit",
+            "keyPattern": {
+              "library_id": 1,
+              "created_at": -1
+            },
+            "indexName": "library_id_1_created_at_-1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "library_id": [],
+              "created_at": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "library_id": [
+                "[\"bac5b50b-028f-4c3e-af03-023a8afe808e\", \"bac5b50b-028f-4c3e-af03-023a8afe808e\"]"
+              ],
+              "created_at": [
+                "[new Date(9223372036854775807), new Date(1789171200000)]"
+              ]
+            }
+          }
+        },
+        "total_docs_examined": 2,
+        "total_keys_examined": 2
+      },
+      "fee_ledger": {
+        "winning_plan": {
+          "isCached": false,
+          "stage": "FETCH",
+          "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_fee_ledger",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_fee_ledger",
+            "keyPattern": {
+              "library_id": 1,
+              "user_id": 1,
+              "status": 1
+            },
+            "indexName": "library_id_1_user_id_1_status_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "library_id": [],
+              "user_id": [],
+              "status": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "library_id": [
+                "[\"bac5b50b-028f-4c3e-af03-023a8afe808e\", \"bac5b50b-028f-4c3e-af03-023a8afe808e\"]"
+              ],
+              "user_id": [
+                "[MinKey, MaxKey]"
+              ],
+              "status": [
+                "[MinKey, MaxKey]"
+              ]
+            }
+          }
+        },
+        "total_docs_examined": 0,
+        "total_keys_examined": 0
+      },
+      "notification_outbox": {
+        "winning_plan": {
+          "isCached": false,
+          "stage": "FETCH",
+          "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_notification_outbox",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nss": "luminar_institution_v2e_test_3deffb36a7774b2e9ae812442c4f2c61.institution_notification_outbox",
+            "keyPattern": {
+              "library_id": 1,
+              "operation_id": 1
+            },
+            "indexName": "library_id_1_operation_id_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "library_id": [],
+              "operation_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "library_id": [
+                "[\"bac5b50b-028f-4c3e-af03-023a8afe808e\", \"bac5b50b-028f-4c3e-af03-023a8afe808e\"]"
+              ],
+              "operation_id": [
+                "[MinKey, MaxKey]"
+              ]
+            }
+          }
+        },
+        "total_docs_examined": 0,
+        "total_keys_examined": 0
+      }
+    },
+    "new_indexes": [],
+    "existing_indexes_sufficient": true
+  },
+  "limits": {
+    "aggregation_maxTimeMS": 10000,
+    "popular_books": 10,
+    "subjects": 20,
+    "trend_days": 90,
+    "new_indexes": [],
+    "cache": false
+  },
+  "scope": "Local development measurements and five indexed root predicates; not a production load guarantee. Overview is included in the combined API."
+}

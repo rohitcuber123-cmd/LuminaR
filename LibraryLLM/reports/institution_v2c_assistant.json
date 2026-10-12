@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "order": "Direct API tests passed before additive adapters were integrated.",
+  "actions": [
+    "RESERVE_LIBRARY_BOOK",
+    "CANCEL_LIBRARY_RESERVATION"
+  ],
+  "immutable_pending_scope": [
+    "library_id UUID",
+    "library_book_id UUID",
+    "reservation_id UUID for cancel",
+    "idempotency_key",
+    "5-minute expiry"
+  ],
+  "confirmation": "Explicit confirmation and existing ASSISTANT_MUTATING_ACTIONS_ENABLED gate. Changed confirmation context cannot retarget the proposal.",
+  "read_paths": [
+    "/libraries/{library_id}/me/reservations",
+    "/libraries/{library_id}/me/fees"
+  ],
+  "legacy_mode": "Only explicit LEGACY config retains the global legacy account envelope; errors and recovery states fail closed.",
+  "staff_financial_tools": [],
+  "frozen": [
+    "existing_qwen router",
+    "Selected-context repair",
+    "Retrieval/ranking",
+    "Knowledge tools"
+  ],
+  "ui": "Readable scoped fee/reservation summaries with My Library links.",
+  "evidence": {
+    "junit": "institution_v2c_backend.xml",
+    "passing_test_cases": [
+      "test_assistant_immutable_scoped_reservation_confirmation[False]",
+      "test_assistant_immutable_scoped_reservation_confirmation[True]",
+      "test_assistant_fees_use_own_library_endpoint_and_no_staff_tools"
+    ]
+  },
+  "frozen_assistant_regression": {
+    "group": "assistant",
+    "exit": 0,
+    "tests": 439,
+    "failed": 0,
+    "skipped": 0
+  }
+}

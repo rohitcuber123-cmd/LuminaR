@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "hold_identity": "UUID5(luminar-reservation-request:<reservation UUID>)",
+  "unit_owner": "Only the generated Part 2B PENDING BORROW request owns one aggregate/copy hold.",
+  "same_durable_plan": [
+    "Physical return release",
+    "Overdue fee and initial charge ledger when due",
+    "FIFO reservation conversion",
+    "Copy hold update when COPY mode",
+    "Audit intents"
+  ],
+  "triggers": [
+    "Confirm Received",
+    "Stock increase",
+    "Verified copy restored AVAILABLE",
+    "Waiting cancellation",
+    "Generated request cancellation/rejection/expiry"
+  ],
+  "eligibility_revalidation": [
+    "Current active verified account",
+    "Current ACTIVE membership",
+    "Same local book/holding still circulating",
+    "No duplicate active loan or pending borrow",
+    "Pending request limit"
+  ],
+  "invalid_head": "CANCELLED (EXPIRED for elapsed explicit expiry), then advance.",
+  "temporarily_limited_head": "Blocks later queue entries and direct request bypass; preserves strict FIFO.",
+  "fairness": "The same persistent gate and journal projection allocate queue holds before exposing released stock.",
+  "terminal_behavior": "Approval \u2192 FULFILLED; rejection/cancel \u2192 CANCELLED; generated hold timeout \u2192 EXPIRED. No automatic reinsertion.",
+  "renewal": "Eligible WAITING reservations for another borrower on exactly the same library/local book block renewal.",
+  "evidence": {
+    "junit": "institution_v2c_backend.xml",
+    "passing_test_cases": [
+      "test_reservation_renewal_race_has_serialized_result",
+      "test_queue_head_request_limit_blocks_direct_bypass",
+      "test_same_library_renewal_waiting_blocks_cross_library_does_not",
+      "test_copy_mode_restoration_converts_real_copy",
+      "test_fifo_waiting_no_hold_conversion_return_atomic",
+      "test_converted_terminal_releases_to_next_once[cancel]",
+      "test_converted_terminal_releases_to_next_once[reject]",
+      "test_converted_terminal_releases_to_next_once[expiry]",
+      "test_head_ineligible_advance[REMOVED]",
+      "test_head_ineligible_advance[SUSPENDED]",
+      "test_head_ineligible_advance[DISABLED]",
+      "test_head_ineligible_advance[UNVERIFIED]",
+      "test_stock_increase_allocates_before_exposure_and_cancel_race",
+      "test_partial_plan_replay_restores_compound_fee_queue[0]",
+      "test_partial_plan_replay_restores_compound_fee_queue[1]",
+      "test_partial_plan_replay_restores_compound_fee_queue[2]",
+      "test_partial_plan_replay_restores_compound_fee_queue[3]",
+      "test_partial_plan_replay_restores_compound_fee_queue[4]",
+      "test_partial_plan_replay_restores_compound_fee_queue[5]",
+      "test_partial_plan_replay_restores_compound_fee_queue[8]",
+      "test_partial_plan_replay_restores_compound_fee_queue[12]"
+    ]
+  }
+}

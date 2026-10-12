@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "processing": "MANUAL_RECORD_ONLY",
+  "external_calls": 0,
+  "methods": [
+    "CASH",
+    "EXTERNAL",
+    "OTHER"
+  ],
+  "immutable_fields": [
+    "entry_id UUID",
+    "fee_id",
+    "library_id",
+    "amount_minor",
+    "method",
+    "reference",
+    "reason/note",
+    "actor_user_id",
+    "created_at",
+    "idempotency_key",
+    "receipt_id UUID"
+  ],
+  "authority": {
+    "member": "Own reads only",
+    "LIBRARIAN": "Tenant fee reads and manual payment records",
+    "ADMIN_or_OWNER": "Payment records, adjustment/waiver, policy versions"
+  },
+  "partial_full": "PARTIALLY_PAID then PAID; payment larger than current outstanding balance rejected.",
+  "waiver": "Zeroes only remaining unpaid balance; retains original charge, earlier payments and a reasoned WAIVER entry.",
+  "adjustment": "Reasoned positive CHARGE or CREDIT entry; cannot credit below paid amount or exceed supported amount range.",
+  "retry": "Same library/actor/key/type/payload returns the same receipt; changed payload is a conflict.",
+  "evidence": {
+    "junit": "institution_v2c_backend.xml",
+    "passing_test_cases": [
+      "test_adjustment_waiver_race_keeps_immutable_valid_balance",
+      "test_client_tenant_borrower_amount_policy_spoofing_rejected",
+      "test_stale_staff_credentials_cannot_mutate_finances[REMOVED]",
+      "test_stale_staff_credentials_cannot_mutate_finances[DEMOTED]",
+      "test_stale_staff_credentials_cannot_mutate_finances[DISABLED]",
+      "test_payment_race_with_waive_adjust_balances_valid[waive]",
+      "test_payment_race_with_waive_adjust_balances_valid[adjust]",
+      "test_ledger_partial_full_payment_retry_overpay_and_waive",
+      "test_waiver_retains_charge_history_authority_reason"
+    ]
+  }
+}

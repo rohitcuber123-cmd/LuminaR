@@ -3,11 +3,12 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, ConfigDict
 from backend.dependencies import get_current_user
+from backend.platform_dependencies import require_platform_admin
 from backend.services.identity_service import current_identity
 from backend.services import loan_renewal_service as service
 
 router = APIRouter(prefix='/issues', tags=['Loan renewal'])
-admin_router = APIRouter(prefix='/admin/operations', tags=['Admin renewal'])
+admin_router = APIRouter(prefix='/platform/operations', tags=['Retired legacy renewal'])
 
 
 def account(payload=Depends(get_current_user)):
@@ -21,9 +22,7 @@ def account(payload=Depends(get_current_user)):
 
 
 def admin(user=Depends(account)):
-    if user['role'] != 'ADMIN':
-        raise HTTPException(403, 'Administrator access required.')
-    return user
+    return require_platform_admin(user)
 
 
 class RenewRequest(BaseModel):

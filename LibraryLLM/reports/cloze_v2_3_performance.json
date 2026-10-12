@@ -1,0 +1,81 @@
+{
+  "encoder": "existing cached CPU all-MiniLM-L6-v2",
+  "qwen_calls": 0,
+  "cuda_calls": 0,
+  "gpu_lock_used": false,
+  "levels": [
+    {
+      "concurrency": 1,
+      "requests": 3,
+      "p50_ms": 16.0,
+      "p95_ms": 16.0,
+      "max_ms": 18.15,
+      "max_server_ms": 0.05
+    },
+    {
+      "concurrency": 5,
+      "requests": 15,
+      "p50_ms": 38.34,
+      "p95_ms": 56.51,
+      "max_ms": 57.01,
+      "max_server_ms": 0.86
+    },
+    {
+      "concurrency": 10,
+      "requests": 30,
+      "p50_ms": 74.41,
+      "p95_ms": 81.68,
+      "max_ms": 86.51,
+      "max_server_ms": 0.93
+    },
+    {
+      "concurrency": 20,
+      "requests": 60,
+      "p50_ms": 161.83,
+      "p95_ms": 175.42,
+      "max_ms": 186.14,
+      "max_server_ms": 0.93
+    }
+  ],
+  "first_request_this_run_ms": 120.62,
+  "first_request_this_run_server_ms": 96.69,
+  "model_load_policy": "CPU singleton prepared before HTTP startup completes; distinct phrase stress includes uncached semantic requests.",
+  "hard_750ms_pass": true,
+  "preferred_200ms_pass": true,
+  "workload": "Alternating identity and phrase evidence grades. Repeated phrase keys exercise bounded scalar memoization and coalescing; includes HTTP/auth/SQLite/source checks.",
+  "unique_phrase_levels": [
+    {
+      "concurrency": 1,
+      "requests": 1,
+      "p50_ms": 116.51,
+      "p95_ms": 116.51,
+      "max_ms": 116.51,
+      "max_server_ms": 97.68
+    },
+    {
+      "concurrency": 5,
+      "requests": 5,
+      "p50_ms": 151.21,
+      "p95_ms": 155.61,
+      "max_ms": 158.09,
+      "max_server_ms": 123.13
+    },
+    {
+      "concurrency": 10,
+      "requests": 10,
+      "p50_ms": 311.93,
+      "p95_ms": 313.93,
+      "max_ms": 317.54,
+      "max_server_ms": 252.93
+    },
+    {
+      "concurrency": 20,
+      "requests": 20,
+      "p50_ms": 593.75,
+      "p95_ms": 606.55,
+      "max_ms": 606.86,
+      "max_server_ms": 472.43
+    }
+  ],
+  "unique_phrase_note": "Distinct longer bounded submissions, separate keys at each concurrency level, shared CPU batching of source/context, no previously warmed scalar keys. Stress workload does not assume every submission is correct."
+}

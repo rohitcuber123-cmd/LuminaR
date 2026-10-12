@@ -47,6 +47,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Keep focus visible on shared discovery rails, footer links and disclosures too. */
+:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+
 .font-display {
   font-family: var(--font-display);
   text-transform: uppercase;
@@ -400,3 +403,21 @@ body {
   max-width: 220px;
 }
 
+.assistant-launcher {
+  width: var(--assistant-width); height: var(--assistant-height);
+  right: var(--assistant-right); bottom: var(--assistant-bottom);
+}
+:root {
+  --assistant-width: 204px; --assistant-height: 64px;
+  --assistant-right: 28px; --assistant-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  --assistant-safe-bottom: calc(108px + env(safe-area-inset-bottom, 0px));
+}
+.knowledge-tools-shell { padding-bottom: var(--assistant-safe-bottom); }
+@media (max-width: 639px) {
+  :root {
+    --assistant-width: 52px; --assistant-height: 52px;
+    --assistant-right: 16px; --assistant-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    --assistant-safe-bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  }
+  .assistant-launcher { border-radius: 999px; justify-content: center; padding: 0; }
+}

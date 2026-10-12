@@ -2,6 +2,7 @@ from typing import Literal
 from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query
 from backend.dependencies import get_current_user
+from backend.platform_dependencies import require_platform_admin
 from backend.services.identity_service import current_identity
 from backend.schemas.events import Category, Status, EventCreate, EventPatch, SeenRequest
 from backend.services import event_service as service
@@ -13,11 +14,10 @@ def account(payload=Depends(get_current_user)):
     return user
 
 def staff(user=Depends(account)):
-    if user['role'] not in {'ADMIN','LIBRARIAN'}:raise HTTPException(403,'Library staff access required.')
-    return user
+    return require_platform_admin(user)
 
 router=APIRouter(prefix='/events',tags=['Events'])
-staff_router=APIRouter(prefix='/staff/events',tags=['Staff events'],dependencies=[Depends(staff)])
+staff_router=APIRouter(prefix='/platform/events',tags=['Staff events'],dependencies=[Depends(staff)])
 
 @router.get('/unseen')
 def unseen(user=Depends(account)):

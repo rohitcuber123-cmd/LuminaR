@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "routes": [
+    "/libraries/{id}/catalogue",
+    "/libraries/{id}/catalogue?subject=Networking"
+  ],
+  "filters": [
+    "literal local search_text",
+    "exact subject",
+    "literal partial author",
+    "circulation status"
+  ],
+  "pagination": {
+    "frontend_books": 20,
+    "backend_books_max": 50,
+    "genres_frontend": 50,
+    "genres_backend_max": 100,
+    "max_offset": 100000
+  },
+  "sorts": [
+    "title",
+    "new_arrivals",
+    "popular"
+  ],
+  "local_zero": "Explicit local empty state with a separate global-search link.",
+  "ownership": "Same normalized card/detail; scoped fields hydrated in one bounded tenant response.",
+  "product_consistency_phase": {
+    "verified_at": "2026-10-09T13:57:53.138920+00:00",
+    "test_library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+    "test_books": 150,
+    "catalogue_source": "LIBRARY_LOCAL",
+    "live_evidence": "product_consistency_live.json",
+    "browser_evidence": "product_consistency_browser.json",
+    "test_total": 150,
+    "returned_rows": 20
+  }
+}

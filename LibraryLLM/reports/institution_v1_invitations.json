@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "evidence_type": "derived from completed test artifacts, not a new test run",
+  "backend_evidence": "institution_v1_backend.xml",
+  "backend_total_passed": 56,
+  "matched_backend_cases": 9,
+  "tests": [
+    "test_invitation_secrets_identity_replay_and_pending[ADMIN]",
+    "test_invitation_secrets_identity_replay_and_pending[LIBRARIAN]",
+    "test_unknown_email_verified_new_account_and_normalization",
+    "test_invite_expiry_revocation_decline_reissue_and_cross_library",
+    "test_stale_inviter_cannot_grant_admin_or_manage_existing_admin",
+    "test_concurrent_double_accept_and_duplicate_joins",
+    "test_partial_grants_and_crashed_mutations_fail_closed",
+    "test_cross_library_membership_uuid_and_invitation_mass_assignment",
+    "test_email_change_invalidates_existing_account_invitation"
+  ],
+  "frontend_evidence": "institution_v1_frontend.log (28 institution component tests)",
+  "live_evidence": "institution_v1_live.json (A-J, real uvicorn + HTTP + disposable Mongo)",
+  "live_status": "PASS",
+  "browser_status": "PASS",
+  "assertions": [
+    "256-bit random token hashed with SHA-256",
+    "Known account canonical ID + verified exact email binding",
+    "Unknown account token + subsequently verified exact email",
+    "Expiration, revoke, decline, reissue, duplicate pending protection",
+    "Wrong email/token/library and replay fail",
+    "Acceptance rechecks inviter current authority",
+    "No raw token/hash in lists/audit; manual copy link returned once"
+  ],
+  "limitations": [
+    "No external mail sent; new accounts signup/verify then reopen invitation link.",
+    "Bound invites fail closed after account email change."
+  ],
+  "note": "Feature subsets intentionally overlap; do not add subset counts as unique tests."
+}

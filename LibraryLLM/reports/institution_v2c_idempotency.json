@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "journal_scope": [
+    "library_id",
+    "actor_user_id",
+    "idempotency_key"
+  ],
+  "payload_fingerprint": "Operation kind plus canonical payload; changed kind/payload with same key returns 409.",
+  "durability": "Accepted Part 2B PREPARED absolute effects and stable result persisted with w=1,j=True on standalone Mongo.",
+  "queue_and_fee_ids": "Stable generated borrow, overdue fee, initial charge and migrated record UUID5 identities.",
+  "failure_behavior": "503 RECOVERY_REQUIRED and retained persistent gate on uncertain write acknowledgement; no speculative successor or compensation.",
+  "recovery": "Explicit offline replay with every writer stopped. Reconcile Part 2B and Part 2C invariants before clearing that gate.",
+  "fault_injection_effect_cutpoints": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    12
+  ],
+  "replayed_result": "One physically returned loan, one overdue charge/ledger and one next FIFO hold.",
+  "evidence": {
+    "junit": "institution_v2c_backend.xml",
+    "passing_test_cases": [
+      "test_reservation_receipt_retry_and_key_conflict",
+      "test_migration_dryrun_quarantine_order_idempotency",
+      "test_fee_final_policy_snapshot_and_duplicate_generation",
+      "test_ledger_partial_full_payment_retry_overpay_and_waive",
+      "test_partial_plan_replay_restores_compound_fee_queue[0]",
+      "test_partial_plan_replay_restores_compound_fee_queue[1]",
+      "test_partial_plan_replay_restores_compound_fee_queue[2]",
+      "test_partial_plan_replay_restores_compound_fee_queue[3]",
+      "test_partial_plan_replay_restores_compound_fee_queue[4]",
+      "test_partial_plan_replay_restores_compound_fee_queue[5]",
+      "test_partial_plan_replay_restores_compound_fee_queue[8]",
+      "test_partial_plan_replay_restores_compound_fee_queue[12]"
+    ]
+  }
+}

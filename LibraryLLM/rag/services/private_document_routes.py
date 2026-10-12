@@ -3,6 +3,9 @@ import asyncio
 import contextlib
 import json
 import logging
+import re
+import time
+from threading import Lock
 from pathlib import Path
 
 from fastapi import Depends, File, HTTPException, Request, UploadFile
@@ -19,6 +22,24 @@ class InspectRequest(BaseModel):
 
 
 def install_private_documents(app, service, engine):
+    preparations = {}
+    preparation_lock = Lock()
+
+    def preparation_key(user, key):
+        owner, sid = service.identity(user)
+        if not re.fullmatch(r'[a-fA-F0-9-]{36}', key):
+            raise HTTPException(422, 'Invalid preparation ID.')
+        return owner, sid, key
+
+    @app.get('/rag/preparation/{preparation_id}')
+    def preparation(preparation_id: str, user=Depends(get_current_user)):
+        key = preparation_key(user, preparation_id)
+        with preparation_lock:
+            row = preparations.get(key)
+            if not row:
+                raise HTTPException(404, 'Preparation not found.')
+            return {'stage': row['stage']}
+
     def locked(operation, *args):
         with engine.inference_lock:
             return operation(*args)
@@ -38,18 +59,39 @@ def install_private_documents(app, service, engine):
             yield piece
 
     @app.post('/rag/upload')
-    async def upload(file: UploadFile = File(...), user=Depends(get_current_user)):
-        service.identity(user)
-        filename = Path((file.filename or '').replace('\\', '/')).name
-        if not filename.lower().endswith('.pdf') or len(filename) > 255:
-            raise HTTPException(400, 'Choose a PDF with a filename under 256 characters.')
+    async def upload(request: Request, file: UploadFile = File(...), user=Depends(get_current_user)):
+        key = None
+        registered = False
+        def progress(stage):
+            if key:
+                with preparation_lock:
+                    if key in preparations:
+                        preparations[key]['stage'] = stage
         try:
+            service.identity(user)
+            filename = Path((file.filename or '').replace('\\', '/')).name
+            if not filename.lower().endswith('.pdf') or len(filename) > 255:
+                raise HTTPException(400, 'Choose a PDF with a filename under 256 characters.')
+            preparation_id = request.headers.get('X-Luminar-Preparation')
+            key = preparation_key(user, preparation_id) if preparation_id else None
+            if key:
+                with preparation_lock:
+                    for expired in [k for k,v in preparations.items() if v['created'] < time.time()-600]:
+                        del preparations[expired]
+                    if len(preparations)>=32 or key in preparations:
+                        raise HTTPException(429, 'Document preparation is busy. Please retry shortly.')
+                    preparations[key] = {'stage':'PREPARING_DOCUMENT','created':time.time()}
+                    registered = True
             content = await bounded(pieces(file))
             if not content.startswith(b'%PDF-'):
                 raise HTTPException(400, 'Invalid PDF.')
-            result = await run_in_threadpool(locked, service.ingest, content, filename, user)
+            # CPU extraction/OCR must not hold the interactive RAG/GPU lock.
+            result = await run_in_threadpool(service.ingest, content, filename, user, engine.inference_lock, progress)
             return {'message': 'PDF prepared for this session.', 'document': result}
         finally:
+            if registered:
+                with preparation_lock:
+                    preparations.pop(key, None)
             await file.close()
 
     @app.get('/rag/documents')

@@ -9,10 +9,11 @@ Object.assign(globalThis, { window: dom.window, document: dom.window.document, l
 Object.defineProperty(globalThis, 'navigator', { value: dom.window.navigator, configurable: true })
 const { render, screen, fireEvent, cleanup, waitFor, act } = await import('@testing-library/react')
 const { KnowledgeTools } = await import('../src/components/knowledge/KnowledgeTools.tsx')
+const { Quiz } = await import('../src/components/knowledge/Quiz.tsx')
 const { useAuthStore } = await import('../src/store/useAuthStore.ts')
 const { getSource } = await import('../src/lib/knowledgeArtifacts.ts')
 import type { Artifact } from '../src/lib/knowledgeArtifacts.ts'
-import type { Question, QuizQuestionType } from '../src/lib/knowledgeArtifacts.ts'
+import type { ClozeGrade, Question, QuizQuestionType } from '../src/lib/knowledgeArtifacts.ts'
 const provenance = { sourceChunkIds: ['c1'], pageStart: 4 }
 const cards: Artifact = { id: 'cards', documentId: 'doc1', type: 'FLASHCARDS', options: {}, content: { cards: [
   { id: 'd1', type: 'definition', front: 'What does the document say about paging?', back: 'Paging divides memory into fixed-size pages.', sourceExcerpt: 'Paging divides memory into fixed-size pages.', ...provenance },
@@ -27,6 +28,12 @@ beforeEach(() => {
     calls.push({ url: String(url), method: init.method || 'GET' })
     assert.equal(new Headers(init.headers).get('Authorization'), 'Bearer session1')
     if (status !== 200) return new Response(JSON.stringify({ detail: 'sensitive backend diagnostic' }), { status })
+    if (String(url).includes('/cloze/')) {
+      const itemId=decodeURIComponent(String(url).split('/cloze/')[1].split('/')[0])
+      const q=stored.flatMap(a=>a.content.questions || []).find(q=>q.id===itemId)
+      assert.ok(q && q.type==='fill_blank')
+      return new Response(JSON.stringify({verdict:'CORRECT',canonical_answer:q.correctAnswer,feedback:'Your answer matches the source meaning.',source_pages:[4],source_chunk_ids:['c1']}))
+    }
     if (String(url).includes('/sources/')) return new Response(JSON.stringify({ ...provenance, chunkId: 'c1', filename: 'Manual.pdf', text: 'Paging divides memory into fixed-size pages.' }))
     if (init.method === 'POST') { stored = [cards]; return new Response(JSON.stringify({ artifact: cards, cached: false })) }
     return new Response(JSON.stringify({ artifacts: stored }))
@@ -35,16 +42,76 @@ beforeEach(() => {
 afterEach(() => { cleanup(); globalThis.fetch = originalFetch })
 const mount = () => render(<KnowledgeTools documentId="doc1" title="Manual.pdf" />)
 
+test('card keyboard navigation flips and clamps at deck boundaries', async () => {
+  stored=[cards];mount();await screen.findByText('Card 1 of 2')
+  await act(async () => {})
+  const card=screen.getByLabelText('Flashcard')
+  fireEvent.keyDown(card,{key:'ArrowRight'});assert.ok(screen.getByText('Card 2 of 2'))
+  fireEvent.keyDown(card,{key:'ArrowRight'});assert.ok(screen.getByText('Card 2 of 2'))
+  fireEvent.keyDown(card,{key:' '});assert.ok(screen.getByText('Answer'))
+  fireEvent.keyDown(card,{key:'Enter'});assert.ok(screen.getByText('Front'))
+  fireEvent.keyDown(card,{key:'ArrowLeft'});assert.ok(screen.getByText('Card 1 of 2'))
+})
+
+test('card shortcuts never consume select or button keyboard events', async () => {
+  stored=[cards];mount();await screen.findByText('Card 1 of 2')
+  fireEvent.keyDown(screen.getByRole('combobox'),{key:'ArrowRight'})
+  fireEvent.keyDown(screen.getByRole('button',{name:'Reveal answer'}),{key:' '})
+  assert.ok(screen.getByText('Card 1 of 2'));assert.ok(screen.getByText('Front'))
+})
+
+test('card filtering resets to the first available card', async () => {
+  stored=[cards];mount();await screen.findByText('Card 1 of 2')
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}))
+  fireEvent.change(screen.getByRole('combobox'),{target:{value:'definition'}})
+  assert.ok(screen.getByText('Card 1 of 1'))
+  assert.ok((screen.getByRole('button',{name:'Next →'}) as HTMLButtonElement).disabled)
+})
+
+test('concepts display grounded explanations and page-specific source buttons', async () => {
+  stored = [{ id: 'concepts', documentId: 'doc1', type: 'KEY_CONCEPTS', options: {}, content: { concepts: [
+    { id: 'window', label: 'Sliding Window', explanation: 'A sender can transmit several frames before acknowledgment.',
+      sourceChunkIds: ['page2', 'page7', 'page7duplicate'], pageStart: 2, pageEnd: 7,
+      sources: [{ chunkId: 'page2', page: 2 }, { chunkId: 'page7', page: 7 }, { chunkId: 'page7duplicate', page: 7 }] },
+  ] } }]
+  mount(); await screen.findByRole('button', { name: 'Generate' })
+  fireEvent.click(screen.getByRole('tab', { name: 'Key Concepts' }))
+  assert.ok(screen.getByText('A sender can transmit several frames before acknowledgment.'))
+  assert.equal(screen.getAllByRole('button', { name: 'Page 7' }).length, 1)
+  assert.equal(screen.queryByRole('button', { name: 'View source 1' }), null)
+  fireEvent.click(screen.getByRole('button', { name: 'Page 7' }))
+  await screen.findByRole('complementary', { name: 'Source excerpt' })
+  assert.ok(calls.some(c => c.url.endsWith('/sources/page7')))
+})
+
+test('structured summary renders supported section headings', async () => {
+  stored = [{ id: 'summary', documentId: 'doc1', type: 'EXTRACTIVE_SUMMARY', options: { mode: 'quick' }, content: {
+    sections: [{ title: 'Flow control', sentences: [{ text: 'The sender limits frames in transit.', ...provenance }] }],
+  } }]
+  mount(); await screen.findByRole('button', { name: 'Generate' })
+  fireEvent.click(screen.getByRole('tab', { name: 'Summary' }))
+  assert.ok(screen.getByRole('heading', { name: 'Flow control' }))
+  assert.ok(screen.getByText('The sender limits frames in transit.'))
+})
+
+test('busy admission has a safe retry message', async () => {
+  mount(); await screen.findByRole('button', { name: 'Generate' })
+  status = 429
+  fireEvent.click(screen.getByRole('button', { name: 'Generate' }))
+  assert.ok(await screen.findByText('A study artifact is already being prepared. Please wait, then retry.'))
+  assert.ok(screen.getByRole('button', { name: 'Retry loading' }))
+})
+
 test('loading, explicit generation, flip, navigation, type filter and source preview', async () => {
   mount(); assert.ok(screen.getByText('Loading saved artifacts…'))
   fireEvent.click(await screen.findByRole('button', { name: 'Generate' }))
   fireEvent.click(await screen.findByRole('button', { name: 'Reveal answer' }))
   assert.ok(screen.getByText('Paging divides memory into fixed-size pages.'))
-  fireEvent.click(screen.getByRole('button', { name: 'Next' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Next →' }))
   assert.ok(screen.getByText('_____ divides memory into fixed-size pages.'))
-  fireEvent.click(screen.getByRole('button', { name: 'Previous' }))
+  fireEvent.click(screen.getByRole('button', { name: '← Previous' }))
   fireEvent.change(screen.getByLabelText('Card type'), { target: { value: 'cloze' } })
-  assert.ok(screen.getByText('Card 1 of 1 · cloze'))
+  assert.ok(screen.getByText('Card 1 of 1'))
   fireEvent.click(screen.getByRole('button', { name: 'View source' }))
   assert.ok(await screen.findByRole('complementary', { name: 'Source excerpt' }))
   assert.equal(calls.filter(c => c.method === 'POST').length, 1)
@@ -74,6 +141,16 @@ test('structured map renders selectable nodes, zoom and reset controls', async (
   assert.ok(screen.getByRole('button', { name: 'View source' }))
   fireEvent.click(screen.getByRole('button', { name: 'Zoom in' }))
   fireEvent.click(screen.getByRole('button', { name: 'Reset view' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Fullscreen' }))
+  const dialog = screen.getByRole('dialog', { name: 'Fullscreen mind map' })
+  fireEvent.click(screen.getByRole('button', { name: 'View source' }))
+  const excerpt = await screen.findByRole('complementary', { name: 'Source excerpt' })
+  assert.ok(dialog.contains(excerpt))
+  assert.ok(calls.some(c => c.url.endsWith('/sources/c1')))
+  fireEvent.click(screen.getByRole('button', { name: 'Close source' }))
+  assert.equal(screen.queryByRole('complementary', { name: 'Source excerpt' }), null)
+  fireEvent.keyDown(window, { key: 'Escape' })
+  assert.equal(screen.queryByRole('dialog'), null)
 })
 
 test('quiz checks answers and reveals source only after submission', async () => {
@@ -86,9 +163,9 @@ test('quiz checks answers and reveals source only after submission', async () =>
   assert.equal(screen.queryByText('Paging divides memory.'), null)
   fireEvent.change(screen.getByRole('textbox'), { target: { value: 'paging' } })
   fireEvent.click(screen.getByRole('button', { name: 'Check answer' }))
-  assert.ok(screen.getByText('Correct.')); assert.ok(screen.getByText('Paging divides memory.'))
+  await screen.findByText('✓ Correct'); assert.ok(screen.getByText('Accepted answer: Paging'))
   fireEvent.click(screen.getByRole('button', { name: 'Try again' }))
-  assert.equal(screen.queryByText('Correct.'), null)
+  assert.equal(screen.queryByText('✓ Correct'), null)
 })
 
 const mcq: Question = { id:'mcq1', type:'mcq', question:'Which concept divides memory into pages?',
@@ -107,7 +184,153 @@ const newQuiz = (types: QuizQuestionType[], questions: Question[] = [mcq,blank,m
   options:{questionTypes:types,questionCount:12},content:{questions},
 })
 const openQuiz = async () => { mount(); await screen.findByRole('tab',{name:'Quiz'}); await waitFor(() => assert.equal(screen.queryByText('Loading saved artifacts…'),null)); fireEvent.click(screen.getByRole('tab',{name:'Quiz'})) }
+
+const clozeResult = (verdict: ClozeGrade['verdict']): ClozeGrade => ({verdict,canonical_answer:'Queue',
+  feedback:verdict==='PARTIAL'?'You omitted an important source detail.':'Compare your answer with the source.',source_pages:[4],source_chunk_ids:['c1']})
+
+for (const [verdict,label] of [['CORRECT','✓ Correct'],['PARTIAL','~ Partially correct'],['INCORRECT','× Needs review']] as const) {
+  test(`cloze server ${verdict} verdict controls accessible feedback`, async () => {
+    let sent='';render(<Quiz questions={[blank]} onSource={()=>{}} onGrade={async (_,answer)=>{sent=answer;return clozeResult(verdict)}} />)
+    assert.equal(screen.queryByText('Accepted answer: Queue'),null)
+    assert.equal(screen.queryByRole('button',{name:'View source'}),null)
+    fireEvent.change(screen.getByRole('textbox'),{target:{value:'my natural answer'}})
+    fireEvent.click(screen.getByRole('button',{name:'Check answer'}));await screen.findByText(label)
+    assert.equal(sent,'my natural answer');assert.ok(screen.getByText('Your answer: my natural answer'))
+    assert.ok(screen.getByRole('status').getAttribute('aria-live')==='polite')
+    assert.ok(screen.getByText(`${verdict==='CORRECT'?'Accepted answer':'Expected'}: Queue`))
+  })
+}
+
+test('cloze input submits with Enter and preserves server result through navigation', async () => {
+  let requests=0;render(<Quiz questions={[blank,mcq]} onSource={()=>{}} onGrade={async ()=>{requests++;return clozeResult('PARTIAL')}} />)
+  fireEvent.change(screen.getByRole('textbox'),{target:{value:'natural phrase'}})
+  fireEvent.keyDown(screen.getByRole('textbox'),{key:'Enter'});await screen.findByText('~ Partially correct')
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}));fireEvent.click(screen.getByRole('button',{name:'← Previous'}))
+  assert.equal((screen.getByRole('textbox') as HTMLInputElement).value,'natural phrase')
+  assert.ok(screen.getByText('~ Partially correct'));assert.equal(requests,1)
+})
+
+test('cloze try again clears only the current response and retains mixed quiz scoring', async () => {
+  render(<Quiz questions={[mcq,blank,matching]} onSource={()=>{}} onGrade={async ()=>clozeResult('INCORRECT')} />)
+  fireEvent.click(screen.getByRole('radio',{name:'C. Paging'}));fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}));fireEvent.change(screen.getByRole('textbox'),{target:{value:'wrong'}})
+  fireEvent.click(screen.getByRole('button',{name:'Check answer'}));await screen.findByText('× Needs review')
+  fireEvent.click(screen.getByRole('button',{name:'Try again'}));assert.ok(screen.getByText('Question 2 of 3'))
+  assert.equal((screen.getByRole('textbox') as HTMLInputElement).value,'');assert.equal(screen.queryByText('× Needs review'),null)
+  fireEvent.click(screen.getByRole('button',{name:'← Previous'}));assert.ok(screen.getByText('Correct.'))
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}));fireEvent.click(screen.getByRole('button',{name:'Next →'}))
+  assert.equal(screen.getAllByRole('combobox').length,3)
+})
+
+test('cloze grading failure preserves input and retry does not mark incorrect', async () => {
+  let attempts=0;render(<Quiz questions={[blank]} onSource={()=>{}} onGrade={async ()=>{if(++attempts===1)throw new Error('Checking unavailable. Retry.');return clozeResult('CORRECT')}} />)
+  fireEvent.change(screen.getByRole('textbox'),{target:{value:'  queue  '}});fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  await screen.findByRole('alert');assert.equal(screen.queryByText('× Needs review'),null)
+  assert.equal((screen.getByRole('textbox') as HTMLInputElement).value,'  queue  ')
+  fireEvent.click(screen.getByRole('button',{name:'Retry checking'}));await screen.findByText('✓ Correct');assert.equal(attempts,2)
+})
+
+test('cloze API sends only answer and retains normal page source links', async () => {
+  stored=[newQuiz(['fill_blank'],[blank])];await openQuiz()
+  let body:unknown;const original=globalThis.fetch
+  globalThis.fetch=async (url,init)=>{if(String(url).includes('/cloze/'))body=JSON.parse(String(init?.body));return original(url,init)}
+  fireEvent.change(screen.getByRole('textbox'),{target:{value:'Queue'}});fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  await screen.findByText('✓ Correct');assert.deepEqual(body,{answer:'Queue'})
+  assert.ok(calls.some(c=>c.url.endsWith('/artifacts/quiz-v2/cloze/blank1/grade')))
+  fireEvent.click(screen.getByRole('button',{name:'View source'}));await screen.findByRole('complementary',{name:'Source excerpt'})
+})
+
+test('cloze malformed response remains a retryable failure', async () => {
+  stored=[newQuiz(['fill_blank'],[blank])];await openQuiz()
+  globalThis.fetch=async ()=>new Response(JSON.stringify({unexpected:true}))
+  fireEvent.change(screen.getByRole('textbox'),{target:{value:'Queue'}});fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  await screen.findByText('Answer checking returned an incomplete result. Keep your answer and retry.')
+  assert.equal(screen.queryByText('× Needs review'),null);assert.equal((screen.getByRole('textbox') as HTMLInputElement).value,'Queue')
+})
+
+test('cloze unmount aborts pending answer check and duplicate submission is blocked', async () => {
+  let signal:AbortSignal|undefined;let calls=0
+  const view=render(<Quiz questions={[blank]} onSource={()=>{}} onGrade={async (_,__,current)=>{signal=current;calls++;return new Promise(()=>{})}} />)
+  fireEvent.change(screen.getByRole('textbox'),{target:{value:'Queue'}});fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  fireEvent.keyDown(screen.getByRole('textbox'),{key:'Enter'});assert.equal(calls,1)
+  view.unmount();assert.ok(signal?.aborted)
+})
 const labels = {mcq:'Multiple Choice',fill_blank:'Fill in the Blanks',matching:'Match the Following'}
+
+test('MCQ text identity and checked answer survive next previous without reshuffling', () => {
+  const deck=[mcq,blank,{...mcq,id:'m3'},blank,{...mcq,id:'m5'}]
+  render(<Quiz questions={deck} onSource={()=>{}} />)
+  const order=()=>screen.getAllByRole('radio').map(x=>(x as HTMLInputElement).value)
+  const initial=order();assert.deepEqual(initial,['Queue','Stack','Paging','Tree'])
+  fireEvent.click(screen.getByRole('radio',{name:'C. Paging'}))
+  fireEvent.click(screen.getByRole('button',{name:'Check answer'}));assert.ok(screen.getByText('Correct.'))
+  for(let i=0;i<4;i++)fireEvent.click(screen.getByRole('button',{name:'Next →'}))
+  for(let i=0;i<4;i++)fireEvent.click(screen.getByRole('button',{name:'← Previous'}))
+  assert.deepEqual(order(),initial);assert.ok((screen.getByRole('radio',{name:'C. Paging'}) as HTMLInputElement).checked)
+  assert.ok(screen.getByText('Correct.'))
+})
+
+test('MCQ reordered artifact follows correct text identity and new artifact resets state', () => {
+  const view=render(<Quiz key="old" questions={[mcq]} onSource={()=>{}} />)
+  fireEvent.click(screen.getByRole('radio',{name:'C. Paging'}));fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  const fresh={...mcq,id:'fresh',options:['Tree','Paging','Queue','Stack']}
+  view.rerender(<Quiz key="fresh" questions={[fresh]} onSource={()=>{}} />)
+  assert.equal(screen.queryByText('Correct.'),null)
+  assert.ok(screen.getAllByRole('radio').every(x=>!(x as HTMLInputElement).checked))
+  fireEvent.click(screen.getByRole('radio',{name:'B. Paging'}));fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  assert.ok(screen.getByText('Correct.'))
+})
+
+test('matching stable IDs preserve shuffled order selections and score through navigation', () => {
+  render(<Quiz questions={[matching,mcq]} onSource={()=>{}} />)
+  const order=()=>Array.from((screen.getByRole('combobox',{name:'Match for Stack'}) as HTMLSelectElement).options).map(x=>x.value)
+  const initial=order();assert.deepEqual(initial,['','R2','R3','R1'])
+  fireEvent.change(screen.getByRole('combobox',{name:'Match for Stack'}),{target:{value:'R2'}})
+  fireEvent.change(screen.getByRole('combobox',{name:'Match for Tree'}),{target:{value:'R2'}})
+  fireEvent.change(screen.getByRole('combobox',{name:'Match for Graph'}),{target:{value:'R3'}})
+  assert.equal(screen.queryByText(/expected match/),null)
+  fireEvent.click(screen.getByRole('button',{name:'Check answer'}));assert.ok(screen.getByText('2 / 3 pairs correct.'))
+  assert.ok(screen.getByText('Your match: Connects parent and child nodes.'))
+  assert.ok(screen.getByText('Stack → Removes the most recent value first. (expected match)'))
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}));fireEvent.click(screen.getByRole('button',{name:'← Previous'}))
+  assert.deepEqual(order(),initial);assert.equal((screen.getByRole('combobox',{name:'Match for Stack'}) as HTMLSelectElement).value,'R2')
+  assert.ok(screen.getByText('2 / 3 pairs correct.'))
+})
+
+test('matching family prompt pair allocation and source links are explicit', async () => {
+  const q={...matching,question:'Match each concept to its definition.'}
+  stored=[{...newQuiz(['matching'],[q]),content:{questions:[q],requestedCount:12,learningItemCount:3,generatedCounts:{matching:1},matchingAllocation:{sets:1,pairs:3,requestedPairs:12}}}]
+  await openQuiz();assert.ok(screen.getByText('Generated 3 of 12 requested learning items. 1 matching set · 3 pairs'))
+  assert.ok(screen.getByText('1. Match each concept to its definition.'))
+  for(const [label,value] of [['Stack','R1'],['Tree','R2'],['Graph','R3']])fireEvent.change(screen.getByRole('combobox',{name:`Match for ${label}`}),{target:{value}})
+  fireEvent.click(screen.getByRole('button',{name:'Check answer'}));assert.ok(screen.getByText('Correct.'))
+  assert.ok(screen.getByText('3 / 3 pairs correct.'))
+  fireEvent.click(screen.getAllByRole('button',{name:'View source'})[0]);await screen.findByRole('complementary',{name:'Source excerpt'})
+})
+
+test('quiz pager preserves answers and feedback while moving between questions', async () => {
+  stored=[newQuiz(['mcq','fill_blank','matching'])];await openQuiz()
+  fireEvent.click(screen.getByRole('radio',{name:'C. Paging'}));fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}));assert.ok(screen.getByText('Question 2 of 3'))
+  fireEvent.change(screen.getByRole('textbox'),{target:{value:'Queue'}})
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}));assert.equal(screen.getAllByRole('combobox').length,3)
+  fireEvent.click(screen.getByRole('button',{name:'← Previous'}));assert.equal((screen.getByRole('textbox') as HTMLInputElement).value,'Queue')
+  fireEvent.click(screen.getByRole('button',{name:'← Previous'}));assert.ok(screen.getByText('Correct.'))
+})
+
+test('quiz navigation clamps and try again resets current question', async () => {
+  stored=[newQuiz(['mcq','fill_blank'])];await openQuiz()
+  assert.ok((screen.getByRole('button',{name:'← Previous'}) as HTMLButtonElement).disabled)
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}));fireEvent.click(screen.getByRole('button',{name:'Next →'}))
+  assert.ok((screen.getByRole('button',{name:'Next →'}) as HTMLButtonElement).disabled)
+  fireEvent.click(screen.getByRole('button',{name:'Try again'}));assert.ok(screen.getByText('Question 1 of 3'))
+})
+
+test('partial quiz preserves usable formats and displays exact shortfall counts', async () => {
+  stored=[{...newQuiz(['mcq','matching'],[mcq]),content:{questions:[mcq],requestedCount:12,generatedCounts:{mcq:1,matching:0},messages:['Not enough matching relations.']}}];await openQuiz()
+  assert.ok(screen.getByText('Generated 1 of 12 requested questions. Multiple Choice: 1 · Match the Following: 0'))
+  assert.ok(screen.getByText('Not enough matching relations.'));assert.equal(screen.getAllByRole('radio').length,4)
+})
 
 test('quiz selector uses three checkboxes, defaults, and requires one selection', async () => {
   await openQuiz()
@@ -142,7 +365,8 @@ for (const selection of selections) test(`quiz API passes the exact checkbox sel
   fireEvent.click(screen.getByRole('button',{name:'Generate Quiz'}))
   await screen.findByText('Artifact generated and saved for this session.')
   assert.equal(requests,1)
-  assert.equal(screen.getAllByRole('button',{name:'Check answer'}).length,selection.length)
+  assert.equal(screen.getAllByRole('button',{name:'Check answer'}).length,1)
+  assert.ok(screen.getByText(`Question 1 of ${selection.length}`))
 })
 
 test('MCQ uses the independent answer, not options[0], and supports source feedback', async () => {
@@ -180,17 +404,20 @@ test('matching uses shuffled IDs, requires all pairs, and provides partial feedb
 test('mixed saved quizzes render all formats independently and reload without generation', async () => {
   stored=[newQuiz(['mcq','fill_blank','matching'])]; await openQuiz()
   assert.equal(screen.getAllByRole('radio').length,4)
+  assert.equal(screen.queryByRole('textbox'),null)
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}))
   assert.equal(screen.getAllByRole('textbox').length,1)
-  assert.equal(screen.getAllByRole('combobox').length,3)
   fireEvent.change(screen.getByRole('textbox'),{target:{value:'  QUEUE!! '}})
-  fireEvent.click(screen.getAllByRole('button',{name:'Check answer'})[1])
-  assert.ok(screen.getByText('Correct.'))
+  fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
+  await screen.findByText('✓ Correct')
+  fireEvent.click(screen.getByRole('button',{name:'← Previous'}))
   assert.equal((screen.getByRole('radio',{name:'C. Paging'}) as HTMLInputElement).disabled,false)
   fireEvent.click(screen.getByRole('button',{name:'Try again'}))
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}))
   assert.equal((screen.getByRole('textbox') as HTMLInputElement).value,'')
   cleanup(); await openQuiz()
   assert.equal(screen.getAllByRole('checkbox').every(box => (box as HTMLInputElement).checked),true)
-  assert.equal(calls.filter(call => call.method==='POST').length,0)
+  assert.equal(calls.filter(call => call.method==='POST' && !call.url.includes('/cloze/')).length,0)
 })
 
 test('changing formats hides an incompatible cached quiz', async () => {
@@ -211,8 +438,9 @@ test('legacy true-false and fill artifacts open explicitly without satisfying a 
   fireEvent.click(screen.getByRole('button',{name:'View previously saved quiz'}))
   assert.ok(screen.getByText(/This saved quiz uses the earlier format/))
   assert.ok(screen.getByRole('textbox'))
+  fireEvent.click(screen.getByRole('button',{name:'Next →'}))
   fireEvent.change(screen.getByRole('combobox'),{target:{value:'True'}})
-  fireEvent.click(screen.getAllByRole('button',{name:'Check answer'})[1])
+  fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
   assert.ok(screen.getByText('Correct.'))
 })
 
@@ -315,7 +543,9 @@ test('Know More opens Knowledge Tools for uploaded documents and preserves Ask D
   const input = screen.getByRole('textbox')
   fireEvent.change(input, { target: { value: 'Explain paging' } })
   fireEvent.keyDown(input, { key: 'Enter' })
-  assert.ok(await screen.findByText('Independent document answer.'))
+  // The answer renderer is lazy-loaded; a cold module import can exceed the
+  // default one-second DOM query deadline on this Windows development host.
+  assert.ok(await screen.findByText('Independent document answer.', {}, { timeout: 10000 }))
   fireEvent.click(screen.getByRole('button', { name: 'Knowledge Tools' }))
   await screen.findByRole('button', { name: 'Reveal answer' })
 })

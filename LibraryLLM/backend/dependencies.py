@@ -26,19 +26,7 @@ def get_current_user(
 
 def require_roles(*allowed_roles):
 
-    def role_checker(
-        current_user=Depends(get_current_user)
-    ):
-
-        user_role = current_user.get("role")
-
-        if user_role not in allowed_roles:
-
-            raise HTTPException(
-                status_code=403,
-                detail="Insufficient permissions"
-            )
-
-        return current_user
-
-    return role_checker
+    """Deprecated: User.role never grants tenant or platform management authority."""
+    def denied(current_user=Depends(get_current_user)):
+        raise HTTPException(403, "Legacy account roles do not grant management authority.")
+    return denied

@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "book_key": [
+    "library_id",
+    "library_book_id"
+  ],
+  "unique_holding_per_book": true,
+  "invariant": "0 <= available_copies <= total_copies; strict integers",
+  "quantity_semantics": "INVENTORY_SNAPSHOT_NOT_CIRCULATION",
+  "legacy_dual_write": false,
+  "copy_foundation": "UUID copy/holding/book references, monotonic local copy ordinal, optional same-tenant unique barcode; aggregate quantities are not expanded.",
+  "legacy_barcode_status": "UNVERIFIED",
+  "reconciliation": [
+    {
+      "status": "PASS",
+      "library_id": "d1ef6b62-ccfa-431e-9f74-bf72dc54a9ee",
+      "books": 1518,
+      "holdings": 1518,
+      "copies": 0,
+      "sequence_value": 1528,
+      "highest_issued_sequence": 1518,
+      "errors": [],
+      "read_only": true
+    },
+    {
+      "status": "PASS",
+      "library_id": "2e0869cd-c614-4d82-b8a2-1aad8a493231",
+      "books": 102,
+      "holdings": 102,
+      "copies": 0,
+      "sequence_value": 102,
+      "highest_issued_sequence": 102,
+      "errors": [],
+      "read_only": true
+    },
+    {
+      "status": "PASS",
+      "library_id": "69bc79cc-60ed-4d56-9372-18ab55b3e55e",
+      "books": 3,
+      "holdings": 3,
+      "copies": 1,
+      "sequence_value": 3,
+      "highest_issued_sequence": 3,
+      "errors": [],
+      "read_only": true
+    }
+  ],
+  "test_artifact": "institution_v2a_backend_final.xml",
+  "test_cases": [
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[authors]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[isbn]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[global_work_id]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[publisher]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[publication_year]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[edition]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[language]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[description]",
+    "tests.institution_v2a.test_catalogue::test_quantity_invariants[-1-0]",
+    "tests.institution_v2a.test_catalogue::test_quantity_invariants[1--1]",
+    "tests.institution_v2a.test_catalogue::test_quantity_invariants[1-2]",
+    "tests.institution_v2a.test_catalogue::test_quantity_invariants[1.5-1]",
+    "tests.institution_v2a.test_catalogue::test_quantity_invariants[True-1]",
+    "tests.institution_v2a.test_catalogue::test_zero_quantity_and_optional_fields_without_placeholder",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[holding_id-5e1706dd-a3b2-482f-9f86-2279b744c718]",
+    "tests.institution_v2a.test_catalogue::test_metadata_edit_holding_invariants_and_no_legacy_dual_write",
+    "tests.institution_v2a.test_catalogue::test_copy_foundation_optional_barcode_and_same_tenant_references",
+    "tests.institution_v2a.test_identity_edges::test_migration_known_barcode_unverified_and_existing_quantity_policy",
+    "tests.institution_v2a.test_import_migration::test_strong_verified_identity_import_policy_explicit_and_idempotent[increase_quantity-3]",
+    "tests.institution_v2a.test_import_migration::test_reconciliation_detects_foreign_refs_invalid_quantity_and_sequence",
+    "tests.institution_v2a.test_legacy_compatibility::test_legacy_inventory_crud_still_uses_legacy_collection"
+  ],
+  "live_scenarios": [
+    {
+      "number": 1,
+      "scenario": "Title + subject creates UUID, accession and holding without ISBN/work/author",
+      "status": "PASS",
+      "accession": "AUR-000001"
+    },
+    {
+      "number": 3,
+      "scenario": "Existing trusted global work links to local holding",
+      "status": "PASS",
+      "global_work_id": "OL109579W"
+    },
+    {
+      "number": 10,
+      "scenario": "Explicit LIB001 alias: 4 legacy rows \u2192 3 ready, 1 missing subject; dry/apply/repeat reconcile",
+      "status": "PASS"
+    }
+  ]
+}

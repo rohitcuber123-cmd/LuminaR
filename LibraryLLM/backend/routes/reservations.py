@@ -1,9 +1,9 @@
+from backend.platform_dependencies import require_platform_admin, has_platform_admin
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from backend.dependencies import (
     get_current_user,
-    require_roles
 )
 
 from backend.services.reservation_service import (
@@ -82,10 +82,7 @@ def my_reservations(
 @router.get("/all")
 def all_reservations(
     current_user=Depends(
-        require_roles(
-            "ADMIN",
-            "LIBRARIAN"
-        )
+        require_platform_admin
     )
 ):
 
@@ -129,10 +126,7 @@ def reservation_details(
         )
 
     # Admin and librarian can view any reservation
-    if current_user["role"] in [
-        "ADMIN",
-        "LIBRARIAN"
-    ]:
+    if has_platform_admin(current_user):
 
         return reservation
 
@@ -195,10 +189,7 @@ def cancel(
 def next_reservation(
     work_id: str,
     current_user=Depends(
-        require_roles(
-            "ADMIN",
-            "LIBRARIAN"
-        )
+        require_platform_admin
     )
 ):
 

@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "identity": [
+    "library_id UUID",
+    "library_book_id UUID",
+    "reservation_id UUID",
+    "global canonical user_id"
+  ],
+  "global_work_id": "Optional metadata; never queue authority.",
+  "local_only_supported": true,
+  "states": [
+    "WAITING",
+    "CONVERTED",
+    "FULFILLED",
+    "CANCELLED",
+    "EXPIRED"
+  ],
+  "ordering": "Per-library/per-book persistent monotonic counter journaled under the durable library gate; sequence gaps retained.",
+  "max_active_per_member_per_library": 5,
+  "active_states": [
+    "WAITING",
+    "CONVERTED"
+  ],
+  "creation_eligibility": [
+    "Active verified account",
+    "ACTIVE library membership",
+    "ACTIVE book and CIRCULATING holding",
+    "No active loan or pending borrow for the same local book",
+    "No existing WAITING reservation for the same local book",
+    "No immediately requestable unit, or existing strict FIFO head temporarily blocks general requestability"
+  ],
+  "waiting_expiry": "None by default. Explicit imported/operator expires_at is lazily enforced.",
+  "position": "Count WAITING records at/before sequence within same library/book; no other member identity exposed to members.",
+  "physical_allocation": "WAITING never creates a hold or decrements physical_available.",
+  "evidence": {
+    "junit": "institution_v2c_backend.xml",
+    "passing_test_cases": [
+      "test_client_tenant_borrower_amount_policy_spoofing_rejected",
+      "test_active_canonical_cross_library_idor_and_unaffiliated_global_admin",
+      "test_same_library_renewal_waiting_blocks_cross_library_does_not",
+      "test_grace_disabled_estimate_and_waiting_expiry",
+      "test_reservation_limit_per_library_and_idempotency_key_conflict",
+      "test_fifo_waiting_no_hold_conversion_return_atomic",
+      "test_concurrent_sequence_duplicate_and_cancel_head",
+      "test_cross_library_private_and_global_admin_denied"
+    ]
+  }
+}

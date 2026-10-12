@@ -80,6 +80,21 @@ class AssistantOrchestrator:
                 state.pending_issue_id = None
                 state.pending_deadline = 0
 
+                if request.action in {'RESERVE_LIBRARY_BOOK', 'CANCEL_LIBRARY_RESERVATION'}:
+                    if not request.lending_context:
+                        raise NeedsClarification('Select the exact library book or waiting reservation.')
+                    from assistant.reservation_boundary import propose
+                    await propose(request, state, tools, response, enabled=enabled('ASSISTANT_MUTATING_ACTIONS_ENABLED'), cancel=request.action == 'CANCEL_LIBRARY_RESERVATION')
+                    return response
+
+                if request.action in {'REQUEST_BOOK', 'REQUEST_RETURN'}:
+                    if not request.lending_context:
+                        raise NeedsClarification('Select the exact library book or loan before requesting circulation.')
+                    from assistant.lending_boundary import propose
+                    await propose(request, state, tools, response, Intent.BORROW_BOOK if request.action == 'REQUEST_BOOK' else Intent.RETURN_BOOK,
+                                  enabled=enabled('ASSISTANT_MUTATING_ACTIONS_ENABLED'))
+                    return response
+
                 # ── Phase 7/8 – Explicit explain actions (lazy, Qwen-backed) ──────────────
                 if request.action == 'EXPLAIN_RECOMMENDATION':
                     await self._explain_recommendation(request, state, tools, response)
@@ -470,6 +485,8 @@ class AssistantOrchestrator:
     def ground_operational_message(response):
         if response.pending_action:
             pending = response.pending_action
+            if pending.library_id:
+                return
             title = ', '.join(b.title or b.work_id for b in response.books) or pending.work_id
             if pending.type in READING_LIST_PENDING:
                 response.message = (f'Add {title} to your reading list?' if pending.type == Intent.ADD_TO_READING_LIST
@@ -499,7 +516,7 @@ class AssistantOrchestrator:
         elif response.intent == Intent.USER_READING_LIST:
             count = len(response.reading_list or [])
             response.message = (f'Your reading list has {count} book{"s" if count != 1 else ""}.'
-                                if count else 'Your reading list is empty.')
+                                if count else 'No global works are saved.' if response.message else 'Your reading list is empty.') + (' ' + response.message if response.message else '')
         elif response.intent == Intent.ADD_TO_READING_LIST:
             added = len(response.books)
             response.message = (f'Added {added} book{"s" if added != 1 else ""} to your reading list.'
@@ -754,6 +771,15 @@ class AssistantOrchestrator:
             elif intent in MUTATING:
                 if len(books) != 1:
                     raise NeedsClarification('Choose one book for this action.', books)
+                if request.lending_context and intent == Intent.RESERVE_BOOK and (await tools.reservations.library_config(str(request.lending_context.library_id)))['state'] == 'CANONICAL':
+                    from assistant.reservation_boundary import propose
+                    await propose(request, state, tools, response, work_id=books[0].work_id, enabled=enabled('ASSISTANT_MUTATING_ACTIONS_ENABLED'))
+                    return
+                if request.lending_context and intent in {Intent.BORROW_BOOK, Intent.RETURN_BOOK}:
+                    from assistant.lending_boundary import propose
+                    await propose(request, state, tools, response, intent, work_id=books[0].work_id,
+                                  enabled=enabled('ASSISTANT_MUTATING_ACTIONS_ENABLED'))
+                    return
                 issue_id = None
                 if intent == Intent.RETURN_BOOK:
                     loans = await tools.loans.loans()
@@ -784,15 +810,20 @@ class AssistantOrchestrator:
             response.message = response.rag.get('answer', '')
 
         elif intent in {Intent.USER_LOANS, Intent.USER_HISTORY}:
-            response.account = await tools.loans.loans(history=intent == Intent.USER_HISTORY)
+            if request.lending_context:
+                rows = await tools.loans.library_loans(str(request.lending_context.library_id))
+                rows = rows if intent == Intent.USER_HISTORY else [r for r in rows if r['status'] == 'ACTIVE']
+                response.account = {'count': len(rows), 'issues': [{**r, 'due_date': r['due_at'], 'work_id': r.get('global_work_id')} for r in rows]}
+            else:
+                response.account = await tools.loans.loans(history=intent == Intent.USER_HISTORY)
             if intent == Intent.USER_LOANS and 'due_date' in parsed.comparison_fields:
                 self.due_first(response)
 
         elif intent == Intent.USER_RESERVATIONS:
-            response.account = await tools.reservations.reservations()
+            response.account = await tools.reservations.library_account(str(request.lending_context.library_id)) if request.lending_context else await tools.reservations.reservations()
 
         elif intent == Intent.USER_FEES:
-            response.account = await tools.fees.fees()
+            response.account = await tools.fees.library_fees(str(request.lending_context.library_id)) if request.lending_context else await tools.fees.fees()
 
         # ── Phase 3: Reading list intents ────────────────────────────────────
         elif intent == Intent.USER_READING_LIST:
@@ -802,6 +833,9 @@ class AssistantOrchestrator:
             ids = list(dict.fromkeys(item['work_id'] for item in items if item.get('work_id')))
             rl_books = await tools.catalogue.books(ids)
             response.reading_list = rl_books
+            local_count = sum(item.get('target_type') == 'LIBRARY_BOOK' for item in items)
+            if local_count:
+                response.message = f'{local_count} local library book(s) are saved on your Reading List page. AI selection requires a linked global work.'
             response.intent = Intent.USER_READING_LIST
 
         elif intent == Intent.ADD_TO_READING_LIST:
@@ -849,7 +883,7 @@ class AssistantOrchestrator:
             if request.action != 'CLEAR_READING_LIST':
                 raise NeedsClarification('Use the Clear reading list button to remove all saved books.')
             raw = await tools.reading_list.get()
-            work_ids = [item['work_id'] for item in raw.get('items', []) if item.get('work_id')]
+            work_ids = [item.get('target_key') or item['work_id'] for item in raw.get('items', []) if item.get('target_key') or item.get('work_id')]
             if work_ids:
                 await tools.reading_list.clear(work_ids)
             response.intent = Intent.CLEAR_READING_LIST
@@ -901,7 +935,11 @@ class AssistantOrchestrator:
         # Consume before sending: a timeout may have committed at Core. Never auto-retry.
         state.pending = None
         state.pending_deadline = 0
-        if pending.type == Intent.BORROW_BOOK:
+        if pending.library_id and pending.type == Intent.RESERVE_BOOK:
+            result = await tools.reservations.library_mutate(pending)
+        elif pending.library_id and pending.type in {Intent.BORROW_BOOK, Intent.RETURN_BOOK}:
+            result = await tools.loans.library_request(pending)
+        elif pending.type == Intent.BORROW_BOOK:
             result = await tools.loans.borrow(pending.work_id)
         elif pending.type == Intent.RESERVE_BOOK:
             result = await tools.reservations.reserve(pending.work_id)

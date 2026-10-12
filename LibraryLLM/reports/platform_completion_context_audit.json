@@ -1,0 +1,1946 @@
+{
+  "status": "PASS",
+  "calls_audited": 193,
+  "context_bugs_found": 25,
+  "context_bugs_fixed": 25,
+  "classification_counts": {
+    "GLOBAL_INTENTIONAL": 95,
+    "PERSONAL_WITH_RETURN_CONTEXT": 41,
+    "STAFF_WORKSPACE": 24,
+    "PATRON_WORKSPACE": 17,
+    "CONTEXT_AWARE_REQUIRED": 13,
+    "OBSOLETE": 3
+  },
+  "rows": [
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 54,
+      "component": "LegacyEventRedirect",
+      "destination": "to={'/platform/events/' + encodeURIComponent(eventId) + '/edit'}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 63,
+      "component": "DashboardLayout",
+      "destination": "navigate(clean,{replace:true})",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 78,
+      "component": "DashboardLayout",
+      "destination": "to=\"/account/history\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 136,
+      "component": "DashboardLayout",
+      "destination": "to=\"/platform/events\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 137,
+      "component": "DashboardLayout",
+      "destination": "to=\"/platform/events/new\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 176,
+      "component": "DashboardLayout",
+      "destination": "to=\"/profile\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 177,
+      "component": "DashboardLayout",
+      "destination": "to=\"/profile\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/App.tsx",
+      "line": 295,
+      "component": "App",
+      "destination": "to=\"/account/setup\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AIChatWidget.tsx",
+      "line": 86,
+      "component": "AIChatWidget",
+      "destination": "navigate(product.personalPath(productBookPath(id,product.libraryId)))",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/AIChatWidget.tsx",
+      "line": 169,
+      "component": "AIChatWidget",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 20,
+      "component": "AccountMenu",
+      "destination": "to={context.personalPath(to)}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 23,
+      "component": "AccountMenu",
+      "destination": "link('/account/profile', 'Profile', true)",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 23,
+      "component": "AccountMenu",
+      "destination": "link('/reading-list', 'Saved / Reading list')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 23,
+      "component": "AccountMenu",
+      "destination": "link('/account/libraries', 'My libraries')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 24,
+      "component": "AccountMenu",
+      "destination": "link('/platform', 'Platform Administration')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 24,
+      "component": "AccountMenu",
+      "destination": "to={libraryWorkspaceHome(l)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 24,
+      "component": "AccountMenu",
+      "destination": "link('/account/libraries?group=patron', 'View all patron libraries')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 25,
+      "component": "AccountMenu",
+      "destination": "to={libraryWorkspaceHome(l)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 25,
+      "component": "AccountMenu",
+      "destination": "link('/account/libraries?group=staff', 'View all staff workspaces')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 26,
+      "component": "AccountMenu",
+      "destination": "link('/invitations', 'Pending Invitations')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 26,
+      "component": "AccountMenu",
+      "destination": "link('/libraries', 'Explore Libraries')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 26,
+      "component": "AccountMenu",
+      "destination": "link('/libraries/register', 'Register a Library')",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 26,
+      "component": "AccountMenu",
+      "destination": "link('/account/libraries', 'View all libraries')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AccountMenu.tsx",
+      "line": 27,
+      "component": "AccountMenu",
+      "destination": "navigate('/login')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/AlsoLikeTicker.tsx",
+      "line": 44,
+      "component": "AlsoLikeTicker",
+      "destination": "to={productNavigation.personalPath(homeBookPath(context, spotlightBook.work_id))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/AlsoLikeTicker.tsx",
+      "line": 60,
+      "component": "AlsoLikeTicker",
+      "destination": "to={productNavigation.personalPath(homeBookPath(context, spotlightBook.work_id))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/AlsoLikeTicker.tsx",
+      "line": 65,
+      "component": "AlsoLikeTicker",
+      "destination": "to={productNavigation.personalPath(homeBookPath(context, spotlightBook.work_id))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/BookCapabilities.tsx",
+      "line": 13,
+      "component": "BookCapabilities",
+      "destination": "to={'/login?next='+encodeURIComponent(location.pathname+location.search)}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/BookCapabilities.tsx",
+      "line": 16,
+      "component": "BookCapabilities",
+      "destination": "to={context.personalPath('/book/'+encodeURIComponent(book.work_id)+'/read')}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/BookCapabilities.tsx",
+      "line": 17,
+      "component": "BookCapabilities",
+      "destination": "to={context.personalPath('/llm?book='+encodeURIComponent(book.work_id))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/BookCard.tsx",
+      "line": 22,
+      "component": "BookCard",
+      "destination": "to={path}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Destination already prepared by scoped parent/navigation model; external/document URLs retain existing entitlement guard.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/BookConnectionGraph.tsx",
+      "line": 50,
+      "component": "BookConnectionGraph",
+      "destination": "to={context.personalPath(`/experimental/kg?seed=${encodeURIComponent(target)}`)}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/BookDetailView.tsx",
+      "line": 17,
+      "component": "BookDetailView",
+      "destination": "to={backPath}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/BookDiscoveryMenu.tsx",
+      "line": 9,
+      "component": "BookDiscoveryMenu",
+      "destination": "to={context.personalPath(withPatronContext(`/book/${encodeURIComponent(workId)}?related=1#more-like-this`, libraryId || context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/BookPersonalActions.tsx",
+      "line": 18,
+      "component": "save",
+      "destination": "navigate(`/login?next=${encodeURIComponent(location.pathname + location.search)}`)",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/BorrowedBookActions.tsx",
+      "line": 27,
+      "component": "BorrowedBookActions",
+      "destination": "to={`/book/${encodeURIComponent(issue.work_id)}/read`}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/BorrowedBookActions.tsx",
+      "line": 35,
+      "component": "BorrowedBookActions",
+      "destination": "to={`/llm?book=${encodeURIComponent(issue.work_id)}`}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/CatalogueBookActions.tsx",
+      "line": 32,
+      "component": "CatalogueBookActions",
+      "destination": "to={bookPath(book)}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Shared product destination preserves explicit workspace context.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/CatalogueBookActions.tsx",
+      "line": 33,
+      "component": "CatalogueBookActions",
+      "destination": "to={patronPath(book.library_id, 'my-library')}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/CategoryExplorer.tsx",
+      "line": 171,
+      "component": "handleCategoryClick",
+      "destination": "navigate(context ? patronPath(context.data.source.library_id, `catalogue?subject=${encodeURIComponent(categoryName)}`) : `/catalog?category=${encodeURIComponent(categoryName)}`)",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/CategoryExplorer.tsx",
+      "line": 194,
+      "component": "CategoryExplorer",
+      "destination": "to={productNavigation.personalPath(homeBookPath(context, activeBook.work_id))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/DiscoveryBookFrame.tsx",
+      "line": 9,
+      "component": "DiscoveryBookFrame",
+      "destination": "to={path}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Destination already prepared by scoped parent/navigation model; external/document URLs retain existing entitlement guard.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Footer.tsx",
+      "line": 6,
+      "component": "Footer",
+      "destination": "to:context.cataloguePath",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Central resolver: staff /staff/libraries/:id; patron /libraries/:id; platform /platform; explicit global /.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Footer.tsx",
+      "line": 6,
+      "component": "Footer",
+      "destination": "to:context.libraryId ? '/libraries/'+context.libraryId+'/new-arrivals' : context.personalPath('/catalog?sort=new_arrivals')",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/Footer.tsx",
+      "line": 6,
+      "component": "Footer",
+      "destination": "to:context.personalPath('/reading-list')",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Footer.tsx",
+      "line": 6,
+      "component": "Footer",
+      "destination": "to:context.personalPath('/account/libraries')",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Footer.tsx",
+      "line": 6,
+      "component": "Footer",
+      "destination": "to:context.personalPath('/events')",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Footer.tsx",
+      "line": 6,
+      "component": "Footer",
+      "destination": "to:context.personalPath('/llm')",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Footer.tsx",
+      "line": 7,
+      "component": "Footer",
+      "destination": "to={context.homePath}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Central resolver: staff /staff/libraries/:id; patron /libraries/:id; platform /platform; explicit global /.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Footer.tsx",
+      "line": 7,
+      "component": "Footer",
+      "destination": "to={link.to}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Destination already prepared by scoped parent/navigation model; external/document URLs retain existing entitlement guard.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ForYou.tsx",
+      "line": 127,
+      "component": "ForYou",
+      "destination": "to={productNavigation.personalPath(homeCataloguePath(context, 'catalogue?view=for-you'))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 14,
+      "component": "module",
+      "destination": "to: '/experimental/kg'",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 14,
+      "component": "module",
+      "destination": "to: '/catalog'",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 14,
+      "component": "module",
+      "destination": "to: '/#new-arrivals'",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 14,
+      "component": "module",
+      "destination": "to: '/events'",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 14,
+      "component": "module",
+      "destination": "to: '/#about'",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 14,
+      "component": "module",
+      "destination": "to: '/llm'",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 23,
+      "component": "Header",
+      "destination": "to: patronPath(scopedPatronId, 'catalogue')",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 23,
+      "component": "Header",
+      "destination": "to: patronPath(scopedPatronId, 'new-arrivals')",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 23,
+      "component": "Header",
+      "destination": "to: context.personalPath(link.to)",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 24,
+      "component": "Header",
+      "destination": "to: scopedPatronId ? patronPath(scopedPatronId, 'my-library') : selectedPatron ? patronPath(selectedPatron.library_id, 'my-library') : patrons.length === 1 ? patronPath(patrons[0].library_id, 'my-library') : '/account/libraries?group=patron'",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 25,
+      "component": "Header",
+      "destination": "to={link.to}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Destination already prepared by scoped parent/navigation model; external/document URLs retain existing entitlement guard.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 26,
+      "component": "Header",
+      "destination": "href=\"#main-content\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 26,
+      "component": "Header",
+      "destination": "to={context.homePath}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Central resolver: staff /staff/libraries/:id; patron /libraries/:id; platform /platform; explicit global /.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 29,
+      "component": "Header",
+      "destination": "to={context.personalPath('/reading-list')}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 30,
+      "component": "Header",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 30,
+      "component": "Header",
+      "destination": "to=\"/signup\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 32,
+      "component": "Header",
+      "destination": "navigate(scopedPatronId ? patronPath(scopedPatronId, `catalogue?search=${encodeURIComponent(search.trim())}`) : context.personalPath(`/search?q=${encodeURIComponent(search.trim())}`))",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 33,
+      "component": "Header",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Header.tsx",
+      "line": 33,
+      "component": "Header",
+      "destination": "to=\"/signup\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/Hero.tsx",
+      "line": 48,
+      "component": "Hero",
+      "destination": "to={productNavigation.personalPath(homeBookPath(context, book.work_id))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 47,
+      "component": "StaffLibraryShell",
+      "destination": "to={staffPath(id, path)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 50,
+      "component": "StaffLibraryShell",
+      "destination": "to={staffPath(id)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 57,
+      "component": "StaffOverviewPage",
+      "destination": "to={staffPath(library.library_id, 'inventory?action=add')}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 57,
+      "component": "StaffOverviewPage",
+      "destination": "to={staffPath(library.library_id, 'inventory?action=import')}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 57,
+      "component": "StaffOverviewPage",
+      "destination": "to={staffPath(library.library_id, 'members')}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 57,
+      "component": "StaffOverviewPage",
+      "destination": "to={staffPath(library.library_id, 'inventory?action=add')}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 57,
+      "component": "StaffOverviewPage",
+      "destination": "to={staffPath(library.library_id, 'inventory?action=import')}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 57,
+      "component": "StaffOverviewPage",
+      "destination": "to={staffPath(library.library_id, 'circulation')}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 57,
+      "component": "StaffOverviewPage",
+      "destination": "to={staffPath(library.library_id, 'circulation?tab=return')}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 57,
+      "component": "StaffOverviewPage",
+      "destination": "to={staffPath(library.library_id, 'members')}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 66,
+      "component": "PatronLibraryShell",
+      "destination": "to={patronPath(id)}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 68,
+      "component": "PatronLibraryShell",
+      "destination": "to={patronPath(id, 'my-library')}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 68,
+      "component": "PatronLibraryShell",
+      "destination": "to={patronPath(id, 'reservations')}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibraryShells.tsx",
+      "line": 68,
+      "component": "PatronLibraryShell",
+      "destination": "to={patronPath(id, 'fees')}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/LibrarySwitcher.tsx",
+      "line": 10,
+      "component": "LibrarySwitcher",
+      "destination": "navigate(libraryWorkspaceHome(row))",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ManagementRoutes.tsx",
+      "line": 10,
+      "component": "PlatformRoute",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ManagementRoutes.tsx",
+      "line": 13,
+      "component": "PlatformRoute",
+      "destination": "to=\"/account/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ManagementRoutes.tsx",
+      "line": 21,
+      "component": "ManagementRedirect",
+      "destination": "to=\"/platform\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ManagementRoutes.tsx",
+      "line": 23,
+      "component": "ManagementRedirect",
+      "destination": "to={libraryWorkspaceHome(memberships[0])}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ManagementRoutes.tsx",
+      "line": 24,
+      "component": "ManagementRedirect",
+      "destination": "to=\"/account/libraries?group=staff\"",
+      "classification": "OBSOLETE",
+      "expected": "Compatibility redirect only, or read-only historical account page; no independent dashboard.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ManagementRoutes.tsx",
+      "line": 25,
+      "component": "ManagementRedirect",
+      "destination": "to=\"/account/libraries\"",
+      "classification": "OBSOLETE",
+      "expected": "Compatibility redirect only, or read-only historical account page; no independent dashboard.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/MoreLikeThisSection.tsx",
+      "line": 20,
+      "component": "MoreLikeThisSection",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/MoreLikeThisSection.tsx",
+      "line": 26,
+      "component": "MoreLikeThisSection",
+      "destination": "to={context.personalPath(`/experimental/kg?seed=${encodeURIComponent(workId)}`)}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/NewArrivals.tsx",
+      "line": 15,
+      "component": "NewArrivals",
+      "destination": "to={productNavigation.personalPath(homeCataloguePath(context,'new-arrivals'))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/PopularBooks.tsx",
+      "line": 91,
+      "component": "PopularBooks",
+      "destination": "to={productNavigation.personalPath(homeCataloguePath(context, discover ? 'catalogue' : 'popular'))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/ProtectedRoute.tsx",
+      "line": 9,
+      "component": "ProtectedRoute",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ProtectedRoute.tsx",
+      "line": 13,
+      "component": "ProtectedRoute",
+      "destination": "to=\"/account/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/ProtectedRoute.tsx",
+      "line": 14,
+      "component": "ProtectedRoute",
+      "destination": "to={libraryWorkspaceHome(library)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/RelatedBookCard.tsx",
+      "line": 33,
+      "component": "RelatedBookCard",
+      "destination": "to={context.personalPath(productBookPath(book.work_id,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/RelatedBookCard.tsx",
+      "line": 42,
+      "component": "RelatedBookCard",
+      "destination": "to={context.personalPath(productBookPath(book.work_id,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/Toast.tsx",
+      "line": 53,
+      "component": "ToastContainer",
+      "destination": "to={toast.href}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Destination already prepared by scoped parent/navigation model; external/document URLs retain existing entitlement guard.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/WorkspaceRoute.tsx",
+      "line": 22,
+      "component": "WorkspaceRoute",
+      "destination": "to=\"/account/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/WorkspaceRoute.tsx",
+      "line": 24,
+      "component": "WorkspaceRoute",
+      "destination": "to=\"/account/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/WorkspaceRoute.tsx",
+      "line": 25,
+      "component": "WorkspaceRoute",
+      "destination": "to={libraryWorkspaceHome(library)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/WorkspaceRoute.tsx",
+      "line": 30,
+      "component": "AdminLibraryRoute",
+      "destination": "to={libraryWorkspaceHome(library)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/WorkspaceRoute.tsx",
+      "line": 38,
+      "component": "LegacyWorkspaceRedirect",
+      "destination": "to={isLibraryStaff(library) ? staffPath(library.library_id, section === 'catalogue' ? 'inventory' : section) : patronPath(library.library_id, section === 'inventory' ? 'catalogue' : section)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/WorkspaceRoute.tsx",
+      "line": 39,
+      "component": "LegacyWorkspaceRedirect",
+      "destination": "to=\"/account/libraries\"",
+      "classification": "OBSOLETE",
+      "expected": "Compatibility redirect only, or read-only historical account page; no independent dashboard.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/WorkspaceRoute.tsx",
+      "line": 46,
+      "component": "AccountLanding",
+      "destination": "to=\"/platform\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/WorkspaceRoute.tsx",
+      "line": 47,
+      "component": "AccountLanding",
+      "destination": "to={libraries.length === 1 ? libraryWorkspaceHome(libraries[0]) : libraries.length ? '/account/libraries' : '/'}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/assistant/AssistantTurn.tsx",
+      "line": 90,
+      "component": "ReadingListView",
+      "destination": "to={context.personalPath(productBookPath(book.work_id,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/assistant/AssistantTurn.tsx",
+      "line": 152,
+      "component": "AssistantTurn",
+      "destination": "to={context.personalPath(productBookPath(book.work_id,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/assistant/AssistantTurn.tsx",
+      "line": 238,
+      "component": "AssistantTurn",
+      "destination": "to={response.intent === 'USER_FEES' ? '/libraries/'+account.library_id+'/fees' : '/libraries/'+account.library_id+'/reservations'}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/events/EventUI.tsx",
+      "line": 13,
+      "component": "RelatedBook",
+      "destination": "to={context.personalPath(productBookPath(book.work_id,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/components/events/EventUI.tsx",
+      "line": 17,
+      "component": "EventCard",
+      "destination": "to={context.personalPath('/events/' + event.event_id)}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/components/events/EventUI.tsx",
+      "line": 17,
+      "component": "EventCard",
+      "destination": "to={context.personalPath('/events/' + event.event_id)}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/lib/nav.ts",
+      "line": 4,
+      "component": "getRoleNavLinks",
+      "destination": "to: '/account/libraries'",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/AccountPages.tsx",
+      "line": 13,
+      "component": "AccountProfilePage",
+      "destination": "to={context.personalPath('/account/libraries')}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/AccountPages.tsx",
+      "line": 13,
+      "component": "AccountProfilePage",
+      "destination": "to={context.personalPath('/reading-list')}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/AccountPages.tsx",
+      "line": 13,
+      "component": "AccountProfilePage",
+      "destination": "to={context.personalPath('/account/history')}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/AccountPages.tsx",
+      "line": 13,
+      "component": "AccountProfilePage",
+      "destination": "to=\"/platform\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/AccountPages.tsx",
+      "line": 25,
+      "component": "MyLibrariesPage",
+      "destination": "to={libraryWorkspaceHome(l)}",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/AccountPages.tsx",
+      "line": 26,
+      "component": "MyLibrariesPage",
+      "destination": "to=\"/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/AccountPages.tsx",
+      "line": 26,
+      "component": "MyLibrariesPage",
+      "destination": "to=\"/libraries/register\"",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/AccountSetupPage.tsx",
+      "line": 24,
+      "component": "AccountSetupPage",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/BookReaderPage.tsx",
+      "line": 14,
+      "component": "BookReaderPage",
+      "destination": "to={context.personalPath(productBookPath(workId,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/pages/EventDetailPage.tsx",
+      "line": 21,
+      "component": "EventDetailPage",
+      "destination": "to={context.personalPath('/events')}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/EventDetailPage.tsx",
+      "line": 22,
+      "component": "EventDetailPage",
+      "destination": "to={'/platform/events/' + event.event_id + '/edit'}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/EventEditorPage.tsx",
+      "line": 67,
+      "component": "save",
+      "destination": "navigate('/platform/events')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/EventEditorPage.tsx",
+      "line": 74,
+      "component": "publishSaved",
+      "destination": "navigate('/platform/events')",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/EventEditorPage.tsx",
+      "line": 89,
+      "component": "EventEditorPage",
+      "destination": "to=\"/platform/events\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/EventEditorPage.tsx",
+      "line": 106,
+      "component": "EventEditorPage",
+      "destination": "to=\"/platform/events\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/EventsPage.tsx",
+      "line": 32,
+      "component": "EventsPage",
+      "destination": "to=\"/platform/events\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/EventsPage.tsx",
+      "line": 32,
+      "component": "EventsPage",
+      "destination": "to=\"/platform/events/new\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Home.tsx",
+      "line": 211,
+      "component": "GlobalHomeData",
+      "destination": "window.location.reload()",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/InstitutionPanel.tsx",
+      "line": 16,
+      "component": "InstitutionPanel",
+      "destination": "to=\"/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 40,
+      "component": "submit",
+      "destination": "navigate(libraryWorkspaceHome(activeLibrary(useInstitutionStore.getState())))",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 83,
+      "component": "enter",
+      "destination": "navigate(libraryWorkspaceHome(activeLibrary(useInstitutionStore.getState())))",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 86,
+      "component": "ExploreLibrariesPage",
+      "destination": "to=\"/account/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 86,
+      "component": "ExploreLibrariesPage",
+      "destination": "to=\"/libraries/register\"",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 117,
+      "component": "respond",
+      "destination": "navigate(libraryWorkspaceHome(library))",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 125,
+      "component": "PendingInvitationsPage",
+      "destination": "to=\"/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 133,
+      "component": "InvitationPage",
+      "destination": "window.location.pathname + window.location.search",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 141,
+      "component": "respond",
+      "destination": "navigate(libraryWorkspaceHome(library))",
+      "classification": "STAFF_WORKSPACE",
+      "expected": "Explicit selected library Staff Workspace; active membership required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 146,
+      "component": "InvitationPage",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/Institutions.tsx",
+      "line": 146,
+      "component": "InvitationPage",
+      "destination": "to=\"/signup\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/KnowledgeGraphPage.tsx",
+      "line": 103,
+      "component": "KnowledgeGraphPage",
+      "destination": "to={context.personalPath(productBookPath(selectedBook.work_id,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/pages/KnowledgeGraphPage.tsx",
+      "line": 107,
+      "component": "KnowledgeGraphPage",
+      "destination": "to={context.personalPath(productBookPath(book.work_id,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/pages/KnowledgeGraphPage.tsx",
+      "line": 107,
+      "component": "KnowledgeGraphPage",
+      "destination": "to={context.personalPath(productBookPath(book.work_id,context.libraryId))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/pages/LLMPage.tsx",
+      "line": 1500,
+      "component": "LLMPage",
+      "destination": "to={product.homePath}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Central resolver: staff /staff/libraries/:id; patron /libraries/:id; platform /platform; explicit global /.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryCatalogue.tsx",
+      "line": 32,
+      "component": "LibraryCataloguePage",
+      "destination": "to={patronPath(library.library_id,'genres')}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryCatalogue.tsx",
+      "line": 35,
+      "component": "LibraryCataloguePage",
+      "destination": "to={`/search?q=${encodeURIComponent(search || subject || params.get('author') || '')}`}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryCatalogue.tsx",
+      "line": 45,
+      "component": "LibraryCatalogueGenres",
+      "destination": "navigate(patronPath(library.library_id,`catalogue${value ? '?subject='+encodeURIComponent(value) : ''}`))",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryCirculation.tsx",
+      "line": 39,
+      "component": "LibraryCirculationPage",
+      "destination": "to=\"/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryCirculation.tsx",
+      "line": 145,
+      "component": "Circulation",
+      "destination": "to=\"/account/history\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryCirculation.tsx",
+      "line": 176,
+      "component": "BookRequestControl",
+      "destination": "to={patronPath(libraryId, 'my-library')}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryInventory.tsx",
+      "line": 28,
+      "component": "LibraryInventoryPage",
+      "destination": "to=\"/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryInventory.tsx",
+      "line": 98,
+      "component": "InventoryDetails",
+      "destination": "href={productContext.cataloguePath}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Central resolver: staff /staff/libraries/:id; patron /libraries/:id; platform /platform; explicit global /.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/pages/LibraryInventory.tsx",
+      "line": 131,
+      "component": "BookEditor",
+      "destination": "href={productContext.cataloguePath}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Central resolver: staff /staff/libraries/:id; patron /libraries/:id; platform /platform; explicit global /.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/pages/LibraryInventory.tsx",
+      "line": 147,
+      "component": "InventoryImport",
+      "destination": "href=\"data:text/csv;charset=utf-8,title%2Csubject%0AOperating%20Systems%20Laboratory%20Manual%2COperating%20Systems%0A\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryReservationsFees.tsx",
+      "line": 18,
+      "component": "LibraryReservationsFeesPage",
+      "destination": "to=\"/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryReservationsFees.tsx",
+      "line": 83,
+      "component": "LibraryAccount",
+      "destination": "to={staff ? '/library-circulation' : '/library-loans'}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LibraryReservationsFees.tsx",
+      "line": 118,
+      "component": "ReservationControl",
+      "destination": "to=\"/library-loans\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LoginPage.tsx",
+      "line": 28,
+      "component": "LoginPage",
+      "destination": "to={workspaceDestination(from)}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LoginPage.tsx",
+      "line": 57,
+      "component": "handleSubmit",
+      "destination": "navigate(workspaceDestination(from), { replace: true })",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LoginPage.tsx",
+      "line": 63,
+      "component": "handleSubmit",
+      "destination": "navigate(\"/verify-otp\", { state: { email } })",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/LoginPage.tsx",
+      "line": 182,
+      "component": "LoginPage",
+      "destination": "to=\"/signup\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/ManageEventsPage.tsx",
+      "line": 21,
+      "component": "ManageEventsPage",
+      "destination": "to=\"/events\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/ManageEventsPage.tsx",
+      "line": 21,
+      "component": "ManageEventsPage",
+      "destination": "to=\"/platform/events/new\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/ManageEventsPage.tsx",
+      "line": 24,
+      "component": "ManageEventsPage",
+      "destination": "to={'/platform/events/' + event.event_id + '/edit'}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/ManageEventsPage.tsx",
+      "line": 24,
+      "component": "ManageEventsPage",
+      "destination": "to={'/events/' + event.event_id}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/PlatformConsole.tsx",
+      "line": 17,
+      "component": "PlatformShell",
+      "destination": "to={'/platform' + (s.path ? '/' + s.path : '')}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/PlatformConsole.tsx",
+      "line": 19,
+      "component": "PlatformShell",
+      "destination": "to=\"/platform\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/PlatformConsole.tsx",
+      "line": 26,
+      "component": "PlatformOverview",
+      "destination": "to=\"/platform/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/PlatformConsole.tsx",
+      "line": 26,
+      "component": "PlatformOverview",
+      "destination": "to={productContext.personalPath('/account/libraries?group=staff')}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/pages/PlatformConsole.tsx",
+      "line": 53,
+      "component": "PlatformCatalogue",
+      "destination": "to={productContext.personalPath('/book/' + encodeURIComponent(row.work_id))}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": true
+    },
+    {
+      "file": "frontend/src/pages/PlatformLibraries.tsx",
+      "line": 43,
+      "component": "PlatformLibrariesPage",
+      "destination": "to={'/platform/libraries/'+row.library_id}",
+      "classification": "PATRON_WORKSPACE",
+      "expected": "Explicit library target or invitation/discovery; workspace route verifies role and corrects staff away from patron.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/PlatformLibraries.tsx",
+      "line": 81,
+      "component": "PlatformLibraryDetailPage",
+      "destination": "to=\"/platform/libraries\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/PlatformOperations.tsx",
+      "line": 124,
+      "component": "LegacyOperationHistory",
+      "destination": "to={`/book/${encodeURIComponent(r.book.work_id)}`}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Canonical Platform Console route; explicit platform authority required.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/ProfilePage.tsx",
+      "line": 23,
+      "component": "LegacyProfilePage",
+      "destination": "to={context.personalPath('/account/libraries?group=patron')}",
+      "classification": "PERSONAL_WITH_RETURN_CONTEXT",
+      "expected": "Preserve explicit URL workspace return context through centralized product resolver.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/ProfilePage.tsx",
+      "line": 25,
+      "component": "ProfilePage",
+      "destination": "to=\"/my-library\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/ReadingListPage.tsx",
+      "line": 21,
+      "component": "ReadingListPage",
+      "destination": "to={context.cataloguePath}",
+      "classification": "CONTEXT_AWARE_REQUIRED",
+      "expected": "Central resolver: staff /staff/libraries/:id; patron /libraries/:id; platform /platform; explicit global /.",
+      "fixed": "YES",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/SignUpPage.tsx",
+      "line": 19,
+      "component": "SignUpPage",
+      "destination": "to=\"/\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/SignUpPage.tsx",
+      "line": 60,
+      "component": "handleSubmit",
+      "destination": "navigate('/verify-otp', { state: { email } })",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/SignUpPage.tsx",
+      "line": 194,
+      "component": "SignUpPage",
+      "destination": "to=\"/login\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/StaffLoginPage.tsx",
+      "line": 30,
+      "component": "StaffLoginPage",
+      "destination": "to={workspaceDestination()}",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/StaffLoginPage.tsx",
+      "line": 37,
+      "component": "submit",
+      "destination": "navigate(workspaceDestination(), { replace: true })",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/VerifyOTPPage.tsx",
+      "line": 33,
+      "component": "VerifyOTPPage",
+      "destination": "to=\"/\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/VerifyOTPPage.tsx",
+      "line": 38,
+      "component": "VerifyOTPPage",
+      "destination": "to=\"/signup\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/VerifyOTPPage.tsx",
+      "line": 86,
+      "component": "handleSubmit",
+      "destination": "navigate('/login', { replace: true, state: { verified: true }, })",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/VerifyOTPPage.tsx",
+      "line": 126,
+      "component": "handleResend",
+      "destination": "navigate('/login', { replace: true })",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/pages/VerifyOTPPage.tsx",
+      "line": 222,
+      "component": "VerifyOTPPage",
+      "destination": "to=\"/signup\"",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Authentication clears previous context, or same-page accessible anchor.",
+      "fixed": "NO",
+      "bug_fixed": false
+    },
+    {
+      "file": "frontend/src/store/useAssistantStore.ts",
+      "line": 80,
+      "component": "module",
+      "destination": "window.location.pathname + window.location.search",
+      "classification": "GLOBAL_INTENTIONAL",
+      "expected": "Explicit global route or authentication destination; no library inference.",
+      "fixed": "NO",
+      "bug_fixed": false
+    }
+  ]
+}

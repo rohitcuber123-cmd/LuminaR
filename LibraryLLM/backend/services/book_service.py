@@ -3,6 +3,8 @@ from search.sync_queue import catalogue_mutation
 from contextlib import nullcontext
 from datetime import datetime, timezone
 from pymongo import ReturnDocument
+from pymongo.errors import ExecutionTimeout
+import re
 
 from backend.database.mongodb import (
     books_collection,
@@ -12,6 +14,7 @@ from backend.database.mongodb import (
 )
 from backend.services.availability_service import (
     with_authoritative_availability,
+    with_batch_availability,
 )
 
 
@@ -19,29 +22,37 @@ from backend.services.availability_service import (
 # GET BOOKS
 # ============================================================
 
-def get_books(limit=20, offset=0):
+def get_books(limit=20, offset=0, *, category='', author='', sort='catalogue'):
+
+    query = {}
+    if category:
+        # Subjects are pipe-delimited catalogue tokens. Match the complete token,
+        # not a subset of an already paginated window or unrelated substring.
+        query['subjects'] = {'$regex': r'(^|\|)\s*' + re.escape(category.strip()) + r'\s*(\||$)', '$options': 'i'}
+    if author:
+        query['authors'] = {'$regex': re.escape(author.strip()), '$options': 'i'}
+    ordering = [('created_at', -1), ('book_id', 1)] if sort == 'new_arrivals' else [('reading_log_count', -1), ('average_rating', -1), ('rating_count', -1), ('book_id', 1)] if sort == 'popular' else [('book_id', 1)]
 
     books = list(
         books_collection.find(
-            {},
+            query,
             {
                 "_id": 0
             }
         )
-        .sort("book_id", 1)
+        .sort(ordering)
         .skip(offset)
         .limit(limit)
     )
 
-    total_count = (
-        books_collection
-        .estimated_document_count()
-    )
+    # Exact filtered counts can scan all five million records. Bound that work;
+    # clients paginate by the extra result rather than inventing a total.
+    try:
+        total_count = books_collection.count_documents(query, maxTimeMS=1000) if query else books_collection.estimated_document_count()
+    except ExecutionTimeout:
+        total_count = None
 
-    return [
-        with_authoritative_availability(book)
-        for book in books
-    ], total_count
+    return with_batch_availability(books), total_count
 
 
 # ============================================================
@@ -93,10 +104,7 @@ def get_popular_books(limit=10):
         .limit(limit)
     )
 
-    return [
-        with_authoritative_availability(book)
-        for book in books
-    ]
+    return with_batch_availability(books)
 
 
 # ============================================================
@@ -124,10 +132,7 @@ def get_new_arrivals(limit=10):
         .limit(limit)
     )
 
-    return [
-        with_authoritative_availability(book)
-        for book in books
-    ]
+    return with_batch_availability(books)
 
 
 # ============================================================
@@ -177,7 +182,7 @@ def create_book(data):
 
     total_copies = data.get(
         "total_copies",
-        1
+        0
     )
 
     available_copies = data.get(
@@ -185,10 +190,8 @@ def create_book(data):
         total_copies
     )
 
-    if total_copies < 1:
-        raise ValueError(
-            "Total copies must be at least 1"
-        )
+    if total_copies != 0 or available_copies != 0 or data.get("shelf_location"):
+        raise ValueError("Physical stock and shelf belong to a library membership workspace.")
 
     if available_copies < 0:
         raise ValueError(
@@ -243,6 +246,8 @@ def create_book(data):
 # ============================================================
 
 def update_book(work_id, data):
+    if set(data) & {"total_copies", "available_copies", "shelf_location"}:
+        raise ValueError("Physical stock and shelf belong to a library membership workspace.")
 
     if "work_id" in data and data["work_id"] != work_id:
         raise ValueError("work_id cannot be changed")
@@ -255,34 +260,6 @@ def update_book(work_id, data):
 
     if existing_book is None:
         return None
-
-    total_copies = data.get(
-        "total_copies",
-        existing_book["total_copies"]
-    )
-
-    available_copies = data.get(
-        "available_copies",
-        existing_book["available_copies"]
-    )
-
-    if total_copies < 1:
-        raise ValueError(
-            "Total copies must be at least 1"
-        )
-
-    if available_copies < 0:
-        raise ValueError(
-            "Available copies cannot be negative"
-        )
-
-    if available_copies > total_copies:
-        raise ValueError(
-            "Available copies cannot exceed total copies"
-        )
-
-    data["total_copies"] = total_copies
-    data["available_copies"] = available_copies
 
     relevant = bool(set(data) & (SEARCH_EMBEDDING_FIELDS | SEARCH_ELIGIBILITY_FIELDS))
     with catalogue_mutation([work_id]) if relevant else nullcontext([]) as committed:

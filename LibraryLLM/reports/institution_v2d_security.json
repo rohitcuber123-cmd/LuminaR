@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "Patron mutation, private outsider and platform-only event access denied",
+      "status": "PASS"
+    },
+    {
+      "check": "Previously rendered notice revalidates membership before navigation; history remains readable",
+      "status": "PASS"
+    },
+    {
+      "check": "Lifecycle suspend from ACTIVE retains events/inbox and guards tenant access",
+      "status": "PASS"
+    },
+    {
+      "check": "Lifecycle restore from SUSPENDED retains events/inbox and guards tenant access",
+      "status": "PASS"
+    },
+    {
+      "check": "Lifecycle remove from ACTIVE retains events/inbox and guards tenant access",
+      "status": "PASS"
+    },
+    {
+      "check": "Lifecycle restore from REMOVED retains events/inbox and guards tenant access",
+      "status": "PASS"
+    },
+    {
+      "check": "Account ownership, cross-library and platform separation",
+      "status": "PASS",
+      "http_statuses": {
+        "other_user_read": 404,
+        "other_user_mark": 404,
+        "cross_library_notice": 404,
+        "platform_event_mutation": 404,
+        "platform_private_event": 404,
+        "library_admin_platform": 403
+      }
+    },
+    {
+      "check": "Librarian membership suspension immediately blocks events and staff notice actions",
+      "status": "PASS"
+    }
+  ],
+  "QA_roles": {
+    "A": "GENERAL_USER",
+    "B": "ADMIN",
+    "C": "LIBRARIAN"
+  },
+  "runtime_errors": []
+}

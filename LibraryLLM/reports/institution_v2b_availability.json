@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "formula": "physical_total - active_loans - pending_borrow_holds - unavailable_stock - known unavailable copy conditions",
+    "circulation_rule": "Requestable is zero unless ACTIVE book and CIRCULATING holding.",
+    "authority": "Canonical tenant holding/copy/request/loan records; no global books availability or LIB001 fallback."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_lending::test_pending_hold_then_issue_does_not_decrement_twice",
+    "tests.institution_v2b.test_lending::test_stock_shelf_status_and_copy_mode",
+    "tests.institution_v2b.test_recovery_edges::test_expiry_backlog_releases_bounded_batches_without_abandoning_gate",
+    "tests.institution_v2b.test_recovery_edges::test_known_copy_conditions_and_stock_floor"
+  ],
+  "live_scenarios": [
+    {
+      "code": "A",
+      "scenario": "Aggregate request holds without a loan; approval converts the same allocation",
+      "status": "PASS",
+      "loan_id": "ac706840-3059-48df-a4e5-b45ad2ae11de"
+    },
+    {
+      "code": "H",
+      "scenario": "Same global work uses independent library holdings",
+      "status": "PASS"
+    },
+    {
+      "code": "J",
+      "scenario": "Reference-only record remains visible but cannot be requested",
+      "status": "PASS"
+    },
+    {
+      "code": "L",
+      "scenario": "Stock increase safely creates requestable capacity",
+      "status": "PASS"
+    },
+    {
+      "code": "M",
+      "scenario": "Stock decrease below pending/active allocation is denied",
+      "status": "PASS"
+    }
+  ],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

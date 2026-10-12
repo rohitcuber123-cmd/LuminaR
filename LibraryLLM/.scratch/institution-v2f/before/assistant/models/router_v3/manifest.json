@@ -1,0 +1,104 @@
+{
+  "version": "3.0.0",
+  "created_at": "2026-10-05T05:38:39.814378+00:00",
+  "dataset_sha256": "396c7cf158fbd7721c34383cdabca6718880c9114e411fc962f6e3fd9cb48119",
+  "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+  "dimension": 384,
+  "feature_dimension": 24,
+  "feature_version": "bounded-context-v1",
+  "label_sets": {
+    "intent_family": [
+      "ACCOUNT",
+      "BOOK",
+      "COMPARE",
+      "CONTENT",
+      "CONTEXT",
+      "DISCOVER",
+      "HELP",
+      "UNKNOWN"
+    ],
+    "intent_subtypes": [
+      "ADD_LIST",
+      "ALTERNATIVES",
+      "AVAILABILITY",
+      "BOOK_CONTENT",
+      "BORROW",
+      "CLEAR_LIST",
+      "DETAILS",
+      "DOCUMENT_CONTENT",
+      "FACTUAL",
+      "FEES",
+      "FIELD",
+      "HELP",
+      "HISTORY",
+      "LOANS",
+      "PREFERENCE",
+      "READING_LIST",
+      "RECOMMEND",
+      "REFINE",
+      "REMOVE_LIST",
+      "RESERVATIONS",
+      "RESERVE",
+      "RETURN",
+      "SEARCH",
+      "SHOW_MORE",
+      "SIMILAR",
+      "UNKNOWN"
+    ],
+    "reference": [
+      "AMBIGUOUS",
+      "EXPLICIT",
+      "NONE",
+      "PAGE",
+      "PREVIOUS_COMPARISON",
+      "PREVIOUS_RECOMMENDATIONS",
+      "RECENT",
+      "SELECTION"
+    ],
+    "position": [
+      "ALL",
+      "FIRST",
+      "FOCUS",
+      "LAST",
+      "OTHER",
+      "SECOND"
+    ],
+    "fields": [
+      "NONE",
+      "authors",
+      "availability",
+      "average_rating",
+      "description",
+      "rating_count",
+      "subjects"
+    ],
+    "criterion": [
+      "ABSENT",
+      "PRESENT"
+    ]
+  },
+  "architecture": {
+    "intent_family": "mlp64",
+    "intent_subtypes": "mlp64",
+    "reference": "mlp64",
+    "position": "mlp64",
+    "fields": "mlp64",
+    "criterion": "linear"
+  },
+  "parameter_count": 135273,
+  "artifact_bytes": 656104,
+  "artifact_sha256": {
+    "calibration.json": "6e4c3c652c78dfb3e5d7b287494417c2429c8fb7118b8d08bc84e7859ce30541",
+    "criterion.pt": "b93e18c1ed73ce93f965d2cba9f628a925399ecb6021be0bfa1d3f3b714f9f3c",
+    "fields.pt": "106d7aa08ba8e41a0a0793c4b1da67dac407740645f14d9fbb79bf08b9c331cd",
+    "intent_family.pt": "f70a622f0e311df2661bf6e814cf4a05b598f3fa12aea99b472566fe508c357d",
+    "intent_subtypes.pt": "1510447d659ac940bed1691817f3283edaf3ca97ac7437fe163cd3103409ea39",
+    "labels.json": "7f9a2a0bdcf430a1dd5001bb030a11293bf73ca071dbd1a2ebc0539118e93041",
+    "position.pt": "740fe13e8d98de9b7fe7298d10db65f062898cc80cee1bc9e140c6652a9ac2a9",
+    "reference.pt": "88212291f64113cdfe08452c0d7bc0ea63def193b8fc1a7889a9d51eb9bc9462"
+  },
+  "thresholds": "calibration.json",
+  "evaluation_version": "frozen-116-and-121-v1",
+  "activation": "explicit opt-in; existing_qwen default",
+  "miniLM_frozen": true
+}

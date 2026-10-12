@@ -80,6 +80,6 @@ def user_activity(user_id):
     return normalize_dates({'user': user, 'loans': page('issues', {'status': 'ISSUED'}, 'issued_at'),
             'reservations': page('reservations', {'status': {'$in': ['ACTIVE', 'READY_FOR_PICKUP']}}, 'reserved_at'),
             'fines': page('fines', {}, 'created_at'), 'activity': operations(user_id=user_id),
-            'notifications': {'records': list(db['notifications'].find({'user_id': user_id},
+            'notifications': {'records': list(db['notifications'].find({'user_id': user_id, 'library_id': None, 'scope': {'$ne': 'LIBRARY'}},
                 {'_id': 0, 'dedupe_key': 0}).sort('created_at', -1).limit(20)),
-                'count': db['notifications'].count_documents({'user_id': user_id})}})
+                'count': db['notifications'].count_documents({'user_id': user_id, 'library_id': None, 'scope': {'$ne': 'LIBRARY'}})}})

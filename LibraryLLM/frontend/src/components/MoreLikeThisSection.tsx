@@ -1,3 +1,4 @@
+import { useProductContext } from '../hooks/useProductContext'
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { RelatedBookCard } from './RelatedBookCard'
@@ -5,6 +6,7 @@ import { useAssistantStore } from '@/store/useAssistantStore'
 import type { useMoreLikeThis } from '@/hooks/useMoreLikeThis'
 
 export function MoreLikeThisSection({ workId, related }: { workId: string; related: ReturnType<typeof useMoreLikeThis> }) {
+  const context=useProductContext()
   const ref = useRef<HTMLElement>(null)
   const currentStatus = related.state?.status
   useEffect(() => {
@@ -21,7 +23,7 @@ export function MoreLikeThisSection({ workId, related }: { workId: string; relat
         const assistant = useAssistantStore.getState(); assistant.setOpen(true)
         void assistant.send('Recommend Similar', { work_id: workId }, { action: 'RECOMMEND_SIMILAR', action_work_ids: [workId] })
       }}>Try Recommend Similar</button></div> : <div className="mt-6 grid min-w-0 grid-cols-1 gap-4 lg:grid-cols-2">{data.recommendations.map(book => <RelatedBookCard key={book.work_id} book={book} seed={data.seed} />)}</div>}
-      <div className="mt-6 flex flex-wrap gap-4 text-xs"><button className="text-moss underline" onClick={() => void related.load()}>Refresh related books</button><Link className="text-moss underline" to={`/experimental/kg?seed=${encodeURIComponent(workId)}`}>Explore full graph →</Link></div>
+      <div className="mt-6 flex flex-wrap gap-4 text-xs"><button className="text-moss underline" onClick={() => void related.load()}>Refresh related books</button><Link className="text-moss underline" to={context.personalPath(`/experimental/kg?seed=${encodeURIComponent(workId)}`)}>Explore full graph →</Link></div>
     </>}
   </section>
 }

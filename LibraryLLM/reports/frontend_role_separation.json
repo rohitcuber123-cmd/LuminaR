@@ -1,0 +1,100 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-09T05:58:42.982929+00:00",
+  "authority": "ACTIVE library membership; global account role is irrelevant",
+  "matrix": [
+    {
+      "membership": "GENERAL_USER",
+      "workspace": "PATRON",
+      "staff_access": false,
+      "personal_borrowing": true
+    },
+    {
+      "membership": "LIBRARIAN",
+      "workspace": "STAFF",
+      "personal_borrowing": false,
+      "member_admin": false
+    },
+    {
+      "membership": "ADMIN",
+      "workspace": "STAFF",
+      "personal_borrowing": false,
+      "member_admin": true
+    },
+    {
+      "membership": "ADMIN + owner status",
+      "workspace": "STAFF",
+      "personal_borrowing": false,
+      "owner_semantics": "unchanged"
+    },
+    {
+      "membership": "inactive/missing",
+      "workspace": null,
+      "personal_borrowing": false
+    }
+  ],
+  "same_library_dual_role": false,
+  "impersonation": false,
+  "global_admin_override": false,
+  "personal_guard": "backend/institution_dependencies.py: require_library_patron",
+  "guarded_operations": [
+    "borrow create",
+    "cancel own borrow",
+    "return request",
+    "renew",
+    "personal requests/loans",
+    "create/cancel own reservation",
+    "personal reservation status",
+    "personal fees/details"
+  ],
+  "existing_library_locks_preserved": true,
+  "staff_operational_endpoints_preserved": true,
+  "staff_loans_endpoint": "GET /libraries/:id/staff/loans",
+  "workspace_authorization_tests": 13,
+  "mixed_account_live": {
+    "passed": true,
+    "sequence": "A admin → C librarian → B patron → D patron → C librarian",
+    "staffSelection": "Library C",
+    "patronSelection": "Library D",
+    "librarianMemberAdministrationVisible": false
+  },
+  "real_http": {
+    "status": "PASS",
+    "verified_at": "2026-10-09T05:14:57.533560+00:00",
+    "database": "luminar_fw_live_2455cfe17d634beda2f0b33f4236c929",
+    "account_user_id": 1,
+    "account_global_role": "ADMIN",
+    "libraries": [
+      {
+        "library_id": "9b4ba0ab-4300-428c-ac57-e6c14ab1ea7c",
+        "name": "Library A",
+        "role": "ADMIN"
+      },
+      {
+        "library_id": "86829ed8-0d3c-43c5-aa73-ab308bf113cb",
+        "name": "Library B",
+        "role": "GENERAL_USER"
+      },
+      {
+        "library_id": "8f614fed-fa03-4a8b-97f7-0b565c4779ed",
+        "name": "Library C",
+        "role": "LIBRARIAN"
+      },
+      {
+        "library_id": "bfe4626b-4253-48f0-b4eb-34d5a6801682",
+        "name": "Library D",
+        "role": "GENERAL_USER"
+      },
+      {
+        "library_id": "0e546c36-8d3c-4a5e-b6ca-f03c6ba3eb4c",
+        "name": "Library E",
+        "role": "LIBRARIAN"
+      }
+    ],
+    "existing_tenant_api_authority_verified": true,
+    "production_mutations": 0,
+    "workspace_policy": "Active GENERAL_USER patron endpoints; ADMIN/LIBRARIAN operational endpoints. Separate route contexts."
+  },
+  "intentional_compatibility_change": "Staff memberships receive 403 from same-library personal patron endpoints.",
+  "test_fixture_adjustment": "Existing V2C tests now use real GENERAL_USER actors for personal cross-library probes; owner reserve expects 403."
+}

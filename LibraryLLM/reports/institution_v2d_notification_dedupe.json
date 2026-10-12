@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "live_checks": [
+    {
+      "check": "Committed domain commands, worker delivery, approval/return replay dedupe, reservation-ready and fee waiver",
+      "status": "PASS",
+      "clock_fixture": "Disposable A loan only, two days overdue",
+      "mixed_libraries": 3
+    },
+    {
+      "check": "Notification types materialized",
+      "status": "PASS",
+      "mixed": [
+        "BORROW_REQUEST_APPROVED",
+        "BORROW_REQUEST_CREATED",
+        "FEE_ASSESSED",
+        "FEE_WAIVED",
+        "RETURN_CONFIRMED",
+        "RETURN_REQUEST_CREATED"
+      ],
+      "borrower": [
+        "BORROW_REQUEST_APPROVED",
+        "RESERVATION_CREATED",
+        "RESERVATION_READY"
+      ]
+    },
+    {
+      "check": "Bell action uses source library and role A",
+      "status": "PASS",
+      "destination": "/libraries/72429203-bf22-4987-a784-a8558361dc05/my-library"
+    },
+    {
+      "check": "Bell action uses source library and role A",
+      "status": "PASS",
+      "destination": "/libraries/72429203-bf22-4987-a784-a8558361dc05/my-library"
+    },
+    {
+      "check": "Bell action uses source library and role B",
+      "status": "PASS",
+      "destination": "/staff/libraries/4a78677e-2f48-4703-82fd-fc02909a2749/circulation"
+    },
+    {
+      "check": "Bell action uses source library and role C",
+      "status": "PASS",
+      "destination": "/staff/libraries/ccf21564-f47b-437f-a744-e5e5c259d958/circulation?tab=return"
+    },
+    {
+      "check": "Bell keyboard open, Escape and focus restore",
+      "status": "PASS"
+    },
+    {
+      "check": "Mark-all read is account-owned and badge updates",
+      "status": "PASS"
+    },
+    {
+      "check": "Rejection, physical return and desk payment emit canonical deduplicated patron notices",
+      "status": "PASS",
+      "clock_fixture": "Disposable C loan only"
+    }
+  ],
+  "live_outbox_rows": 19,
+  "unique_dedupe_keys": 19,
+  "all_delivered": true,
+  "recovery_tests": "institution_v2d_tests.xml"
+}

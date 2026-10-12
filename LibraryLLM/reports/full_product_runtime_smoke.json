@@ -1,0 +1,61 @@
+{
+  "checks": [
+    {
+      "name": "frontend",
+      "url": "http://127.0.0.1:5173/",
+      "status_code": 200,
+      "seconds": 0.09
+    },
+    {
+      "name": "core",
+      "url": "http://127.0.0.1:8002/health",
+      "status_code": 200,
+      "seconds": 0.589,
+      "service_status": "healthy",
+      "router_mode": null
+    },
+    {
+      "name": "search",
+      "url": "http://127.0.0.1:8003/health",
+      "status_code": 200,
+      "seconds": 0.102,
+      "service_status": "degraded",
+      "router_mode": null
+    },
+    {
+      "name": "recommendation",
+      "url": "http://127.0.0.1:8004/docs",
+      "status_code": 200,
+      "seconds": 0.12
+    },
+    {
+      "name": "rag",
+      "url": "http://127.0.0.1:8005/health",
+      "status_code": 200,
+      "seconds": 0.023,
+      "service_status": "healthy",
+      "router_mode": null
+    },
+    {
+      "name": "global_catalogue",
+      "url": "http://127.0.0.1:5173/api/books/?limit=20&offset=0",
+      "status_code": 200,
+      "seconds": 1.466,
+      "count": 5000000,
+      "count_status": "ESTIMATED",
+      "results": 20,
+      "has_more": true
+    },
+    {
+      "name": "filtered_catalogue",
+      "url": "http://127.0.0.1:5173/api/books/?limit=20&offset=0&category=Fiction",
+      "status_code": 200,
+      "seconds": 1.714,
+      "count": null,
+      "count_status": "UNAVAILABLE",
+      "results": 20,
+      "has_more": true
+    }
+  ],
+  "scope": "HTTP process/API readiness only; not browser rendering or authenticated patron walkthrough"
+}

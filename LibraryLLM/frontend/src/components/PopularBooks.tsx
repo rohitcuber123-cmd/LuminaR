@@ -1,257 +1,13 @@
+import { useProductContext } from '../hooks/useProductContext'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BookCover } from '@/components/BookCover'
-import {
-  getPopularBooks,
-  issueBook,
-  reserveBook,
-  type BackendBook,
-} from '@/lib/api'
-import { PALETTES, type CoverVariant } from '@/data/books'
-import { useLibraryStore } from '@/store/useLibraryStore'
-import { useInView } from '@/lib/useInView'
-import { showToast } from '@/components/Toast'
-import { useBookActionState } from '@/hooks/useBookActionState'
-import { useNavigate } from 'react-router-dom'
-import { BookSelectButton } from '@/components/BookSelectButton'
-
-
-function PopularBookCard({
-  book,
-  index,
-}: {
-  book: BackendBook
-  index: number
-}) {
-
-  const {
-    ref,
-    inView,
-  } = useInView<HTMLDivElement>()
-
-  const navigate = useNavigate()
-
-  const {
-    toggleList,
-    isInList,
-    fetchUserData,
-  } = useLibraryStore()
-
-
-  const stringId =
-    book.work_id
-
-  const inList =
-    isInList(stringId)
-
-  const { action, adjustedAvailable } = useBookActionState(book)
-
-  const [actionLoading, setActionLoading] = useState(false)
-
-  const handleAction = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    if (action === 'SIGN_IN') {
-      navigate('/login')
-      return
-    }
-
-    if (action === 'BORROWED' || action === 'RESERVED') {
-      navigate('/profile')
-      return
-    }
-
-    try {
-      setActionLoading(true)
-      if (action === 'BORROW') {
-        await issueBook(stringId)
-        showToast(`Successfully borrowed "${book.title}"`, 'success')
-      } else if (action === 'RESERVE') {
-        await reserveBook(stringId)
-        showToast(`Reserved "${book.title}"`, 'success')
-      }
-      await fetchUserData()
-    } catch (err: any) {
-      showToast(err.message || `Failed to ${action.toLowerCase()} book.`, 'warning')
-    } finally {
-      setActionLoading(false)
-    }
-  }
-
-
-  const availability =
-    adjustedAvailable === 0
-      ? 'All copies on loan'
-      : adjustedAvailable ===
-        book.total_copies
-        ? 'Available now'
-        : `${adjustedAvailable} of ${book.total_copies} available`
-
-
-  const paletteIndex =
-    book.book_id %
-    PALETTES.length
-
-  const variants: CoverVariant[] = [
-    'circle',
-    'ring',
-    'split',
-    'stripe',
-  ]
-
-  const variant =
-    variants[
-    book.book_id %
-    variants.length
-    ]
-
-  const displayCategory =
-    book.subjects
-      ? book.subjects
-        .split('|')[0]
-        .trim()
-      : 'Book'
-
-  const displayAuthor =
-    book.authors ||
-    'Unknown Author'
-
-
-  return (
-    <div
-      ref={ref}
-      className={`group reveal-up ${inView ? 'is-visible' : ''
-        }`}
-      style={{
-        transitionDelay:
-          `${(index % 4) * 90}ms`,
-      }}
-    >
-
-      <Link
-        to={`/book/${book.work_id}`}
-      >
-
-        <p
-          className="mb-3 truncate text-[0.68rem] uppercase tracking-wide text-ink-soft"
-          title={displayCategory}
-        >
-          {displayCategory}
-        </p>
-
-
-        <div className="relative overflow-hidden rounded-[2px]">
-
-          <BookCover
-            title={book.title}
-            author={displayAuthor}
-            paletteIndex={paletteIndex}
-            variant={variant}
-            className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-[1.03]"
-          />
-
-
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex translate-y-3 flex-wrap items-center justify-center gap-2 bg-gradient-to-t from-ink/85 to-transparent px-3 pb-3 pt-8 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
-
-            <span
-              className="font-display pointer-events-auto cursor-pointer rounded-sm bg-brand px-3 py-1.5 text-[0.62rem] tracking-wide text-paper transition-opacity hover:opacity-90 flex items-center justify-center"
-              onClick={handleAction}
-            >
-              {actionLoading
-                ? 'PROCESSING...'
-                : action === 'BORROW'
-                  ? 'BORROW'
-                  : action === 'RESERVE'
-                    ? 'RESERVE'
-                    : action === 'BORROWED'
-                      ? 'BORROWED ✓'
-                      : action === 'RESERVED'
-                        ? 'RESERVED ✓'
-                        : 'SIGN IN'}
-            </span>
-
-            <BookSelectButton
-              book={book}
-              compact
-              className="pointer-events-auto"
-            />
-
-            <span
-              className="font-display pointer-events-auto cursor-pointer rounded-sm border border-paper/70 px-3 py-1.5 text-[0.62rem] tracking-wide text-paper transition-opacity hover:opacity-90"
-              onClick={(e) => {
-
-                e.preventDefault()
-                e.stopPropagation()
-
-                toggleList(
-                  stringId
-                )
-
-                showToast(
-                  inList
-                    ? `Removed "${book.title}" from list`
-                    : `Added "${book.title}" to list`,
-                  inList
-                    ? 'info'
-                    : 'success'
-                )
-              }}
-            >
-              {
-                inList
-                  ? 'In List ✓'
-                  : 'Add to List'
-              }
-            </span>
-
-          </div>
-
-        </div>
-
-      </Link>
-
-
-      <Link
-        to={`/book/${book.work_id}`}
-      >
-
-        <p
-          className="font-display mt-4 truncate text-[0.95rem] leading-tight text-ink"
-          title={book.title}
-        >
-          {book.title}
-        </p>
-
-        <p
-          className="mt-1 truncate text-[0.8rem] text-ink-soft"
-          title={displayAuthor}
-        >
-          {displayAuthor}
-        </p>
-
-      </Link>
-
-
-      <p
-        className={`mt-2 text-[0.72rem] font-medium ${adjustedAvailable === 0
-            ? 'text-ink-soft/70'
-            : 'text-moss'
-          }`}
-      >
-        {availability}
-      </p>
-
-    </div>
-  )
-}
-
-
-// ============================================================
-// COMPONENT
-// ============================================================
-
+import { getPopularBooks, type BackendBook } from '../lib/api'
+import { globalBookPresentation } from '../lib/bookPresentation'
+import { BookCard } from './BookCard'
+import { useHomeCatalogue, displayToHomeBook, homeCataloguePath } from './HomeCatalogueContext'
 export function PopularBooks() {
+  const context = useHomeCatalogue()
+  const productNavigation=useProductContext()
 
   const [books, setBooks] =
     useState<BackendBook[]>([])
@@ -264,7 +20,7 @@ export function PopularBooks() {
 
 
   useEffect(() => {
-
+    if (context) return
     let cancelled = false
 
 
@@ -313,7 +69,13 @@ export function PopularBooks() {
       cancelled = true
     }
 
-  }, [])
+  }, [context])
+
+  const discover = !!context && context.data.source.catalogue_source === 'LIBRARY_LOCAL' && context.data.popular.length < 4
+  const visibleBooks = context ? (discover ? context.data.new_arrivals : context.data.popular).map(displayToHomeBook) : books
+  const visibleLoading = context ? false : loading
+  const visibleError = context ? false : error
+
 
 
   return (
@@ -322,11 +84,11 @@ export function PopularBooks() {
       <div className="mb-10 flex items-end justify-between border-b border-line pb-6">
 
         <h2 className="font-display text-[clamp(1.6rem,3.4vw,2.3rem)] text-ink">
-          Popular Right Now
+          {discover ? 'Discover More' : 'Popular Right Now'}
         </h2>
 
         <Link
-          to="/catalog"
+          to={productNavigation.personalPath(homeCataloguePath(context, discover ? 'catalogue' : 'popular'))}
           className="font-display shrink-0 text-[0.75rem] tracking-wide text-brand hover:underline"
         >
           View all
@@ -337,7 +99,7 @@ export function PopularBooks() {
 
       {/* LOADING */}
 
-      {loading && (
+      {visibleLoading && (
 
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
 
@@ -370,8 +132,8 @@ export function PopularBooks() {
 
       {/* ERROR */}
 
-      {!loading &&
-        error && (
+      {!visibleLoading &&
+        visibleError && (
 
           <div className="py-12 text-center">
 
@@ -385,9 +147,9 @@ export function PopularBooks() {
 
       {/* EMPTY */}
 
-      {!loading &&
-        !error &&
-        books.length === 0 && (
+      {!visibleLoading &&
+        !visibleError &&
+        visibleBooks.length === 0 && (
 
           <div className="py-12 text-center">
 
@@ -401,19 +163,19 @@ export function PopularBooks() {
 
       {/* BOOKS */}
 
-      {!loading &&
-        !error &&
-        books.length > 0 && (
+      {!visibleLoading &&
+        !visibleError &&
+        visibleBooks.length > 0 && (
 
           <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
 
-            {books.map(
+            {visibleBooks.map(
               (book, index) => (
 
-                <PopularBookCard
-                  key={book.book_id}
-                  book={book}
-                  index={index}
+                <BookCard
+                  key={book.work_id}
+                  book={context ? (discover ? context.data.new_arrivals : context.data.popular)[index] : globalBookPresentation(book)}
+                  changed={context?.changed}
                 />
 
               )

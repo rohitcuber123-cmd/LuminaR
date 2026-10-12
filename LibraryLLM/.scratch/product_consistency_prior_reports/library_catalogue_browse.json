@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "routes": [
+    "/libraries/{id}/catalogue",
+    "/libraries/{id}/catalogue?subject=Networking"
+  ],
+  "filters": [
+    "literal local search_text",
+    "exact subject",
+    "literal partial author",
+    "circulation status"
+  ],
+  "pagination": {
+    "frontend_books": 20,
+    "backend_books_max": 50,
+    "genres_frontend": 50,
+    "genres_backend_max": 100,
+    "max_offset": 100000
+  },
+  "sorts": [
+    "title",
+    "new_arrivals",
+    "popular"
+  ],
+  "local_zero": "Explicit local empty state with a separate global-search link.",
+  "ownership": "Same normalized card/detail; scoped fields hydrated in one bounded tenant response."
+}

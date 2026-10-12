@@ -375,7 +375,7 @@ def test_nonsemantic_and_noop_updates_do_not_sync(book_service):
     service, collection, sync = book_service
     collection.find_one.return_value = book('A')
     collection.find_one_and_update.return_value = book('A')
-    service.update_book('A', {'available_copies': 0})
+    with pytest.raises(ValueError): service.update_book('A', {'available_copies': 0})
     service.update_book('A', {'title':'Title A'})
     sync.assert_not_called()
 
@@ -408,10 +408,10 @@ def test_create_delete_hooks_and_failed_mongo(book_service):
     collection.find_one.return_value = None
     collection.insert_one.side_effect = RuntimeError('failed')
     with pytest.raises(RuntimeError):
-        service.create_book(book('C'))
+        service.create_book({**book('C'), 'total_copies':0, 'available_copies':0})
     sync.assert_not_called()
     collection.insert_one.side_effect = None
-    service.create_book(book('C'))
+    service.create_book({**book('C'), 'total_copies':0, 'available_copies':0})
     sync.assert_called_once_with(['C'])
     sync.reset_mock()
     collection.delete_one.return_value.deleted_count = 0
@@ -548,10 +548,11 @@ def test_queue_fallback_durable_retry(setup, monkeypatch):
 
 
 def test_inventory_import_confirmation_does_not_sync(monkeypatch):
-    # This import edits physical copies only, not the searchable corpus.
+    # Retired import has no physical or semantic writer.
     fake = types.ModuleType('backend.database.mongodb')
     for name in ['books','library_inventory','inventory_preview']:
         setattr(fake, name+'_collection', MagicMock())
+    fake.users_collection=MagicMock();fake.db=MagicMock()
     monkeypatch.setitem(sys.modules, 'backend.database.mongodb', fake)
     import importlib
     service = importlib.import_module('backend.services.inventory_import_service')
@@ -563,8 +564,10 @@ def test_inventory_import_confirmation_does_not_sync(monkeypatch):
     from search import sync_queue
     sync = MagicMock()
     monkeypatch.setattr(sync_queue, 'request_catalogue_sync', sync)
-    result = service.confirm_inventory_import('preview','LIB001')
-    assert result['imported'] == 1
+    from fastapi import HTTPException
+    with pytest.raises(HTTPException) as retired: service.confirm_inventory_import('preview','LIB001')
+    assert retired.value.status_code == 410
+    fake.library_inventory_collection.insert_one.assert_not_called()
     sync.assert_not_called()
 
 

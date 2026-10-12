@@ -1,8 +1,10 @@
+import { useProductContext } from '../hooks/useProductContext'
 import { Link } from 'react-router-dom'
 import { Sun } from 'lucide-react'
 import { BookCover } from '@/components/BookCover'
 import { type BackendBook } from '@/lib/api'
 import { PALETTES, type CoverVariant } from '@/data/books'
+import { useHomeCatalogue, homeBookPath } from './HomeCatalogueContext'
 
 interface AlsoLikeTickerProps {
   spotlightBook?: BackendBook
@@ -11,6 +13,8 @@ interface AlsoLikeTickerProps {
 const TICKER_ITEMS = Array.from({ length: 6 })
 
 export function AlsoLikeTicker({ spotlightBook }: AlsoLikeTickerProps) {
+  const context = useHomeCatalogue()
+  const productNavigation=useProductContext()
   if (!spotlightBook) return null
 
   const displayAuthor = spotlightBook.authors || 'Unknown Author'
@@ -37,7 +41,8 @@ export function AlsoLikeTicker({ spotlightBook }: AlsoLikeTickerProps) {
 
       <div className="mx-auto mt-16 grid max-w-[64rem] grid-cols-1 items-center gap-10 px-6 md:grid-cols-[minmax(0,15rem)_1fr] md:gap-16">
         <Link 
-          to={`/book/${spotlightBook.work_id}`} 
+          to={productNavigation.personalPath(homeBookPath(context, spotlightBook.work_id))}
+          data-library-book-id={context?.data.source.catalogue_source === 'LIBRARY_LOCAL' ? spotlightBook.work_id : undefined}
           className="mx-auto w-[65%] rotate-[-4deg] transition-transform duration-500 hover:rotate-0 hover:scale-105 sm:w-[55%] md:w-full block"
         >
           <BookCover
@@ -49,15 +54,15 @@ export function AlsoLikeTicker({ spotlightBook }: AlsoLikeTickerProps) {
           />
         </Link>
         <div className="text-center md:text-left">
-          <p className="font-display mb-4 text-[0.75rem] tracking-[0.2em] text-brand uppercase">Staff Pick</p>
+          <p className="font-display mb-4 text-[0.75rem] tracking-[0.2em] text-brand uppercase">{context ? 'Discover More' : 'Staff Pick'}</p>
           <p className="text-[1rem] leading-relaxed text-ink-soft">
-            Every month our librarians surface a title that deserves a second look. This time, it's{' '}
-            <Link to={`/book/${spotlightBook.work_id}`} className="text-ink font-medium hover:underline">{spotlightBook.title}</Link> by {displayAuthor} — pulled from the{' '}
-            {displayCategory} shelf for readers chasing something quietly unforgettable. Reserve your
-            copy before the hold list fills up.
+            {context ? 'Take a closer look at ' : <>Every month our librarians surface a title that deserves a second look. This time, it's{' '}</>}
+            <Link to={productNavigation.personalPath(homeBookPath(context, spotlightBook.work_id))} className="text-ink font-medium hover:underline">{spotlightBook.title}</Link> by {displayAuthor}
+            {context ? <>. Explore this {displayCategory} title {context.data.source.catalogue_source === 'LIBRARY_LOCAL' ? 'in your library’s collection.' : 'in the Global Catalogue.'}</> : <> — pulled from the{' '}
+              {displayCategory} shelf for readers chasing something quietly unforgettable. Reserve your copy before the hold list fills up.</>}
           </p>
           <Link
-            to={`/book/${spotlightBook.work_id}`}
+            to={productNavigation.personalPath(homeBookPath(context, spotlightBook.work_id))}
             className="font-display mt-6 inline-block text-[0.78rem] tracking-wide text-brand hover:underline"
           >
             Explore this Pick &rarr;

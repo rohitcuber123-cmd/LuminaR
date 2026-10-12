@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "environment": "Disposable real Mongo / JWT login / Vite fixture",
+  "synthetic_accounts_only": true,
+  "checks": [
+    "Owner approves shared global work; queue clears; ACTIVE loan created",
+    "Member request holds one Timing Fixture unit, with no ACTIVE loan",
+    "Request UI completes after StrictMode effect replay fix",
+    "Member cancellation confirmed; hold released",
+    "Pending return visible in Current Loans; direct and assistant return plus renewal disabled",
+    "Library switch to Orion clears Aurora requests and loans",
+    "Owner Confirm Received clears return queue and releases local-book allocation",
+    "Member returned loan appears under Loan History; request and physical receipt timestamps displayed",
+    "Staff changes Timing Fixture total from 3 to 4; all 4 units requestable when unallocated",
+    "Staff shelf change East Room / B-12 visible in inventory",
+    "Add local Browser Local Manual with Title and Subject plus optional shelf; 1 copy, CIRCULATING default",
+    "Reference-only item Request Book disabled",
+    "Approval and receipt dialogs explain physical transition",
+    "Staff queue responsive at six recorded viewports without horizontal overflow",
+    "Rechecked after UTC response normalization: pending loan due/request time and returned history display correct local dates; approval preview uses same timezone convention."
+  ],
+  "artifacts": [
+    "institution_v2b_approval_dialog.png",
+    "institution_v2b_receipt_dialog.png",
+    "institution_v2b_member_return_pending.png",
+    "institution_v2b_member_returned.png",
+    "institution_v2b_stock_shelf.png",
+    "institution_v2b_add_book.png"
+  ],
+  "observations": [
+    "A config read concurrent with a gated request-list read returned 503; explicit Refresh recovered with correct history. Reads remain fail closed."
+  ],
+  "limitations": [
+    "No external model inference or hardware scan",
+    "Part 2B fixture only; production tenant activation not performed"
+  ],
+  "timestamp_fix_rechecked": true
+}

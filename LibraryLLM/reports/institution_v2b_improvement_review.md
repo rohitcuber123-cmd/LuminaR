@@ -1,0 +1,28 @@
+# Part 2B improvement review
+
+No Part2C work is implemented by this review. Current release blockers were repaired and validated within Part2B.
+
+| TITLE | WHY | CURRENT LIMITATION | RECOMMENDATION | PRIORITY | IMPLEMENT | BREAKING | MIGRATION |
+|---|---|---|---|---|---|---|---|
+| READY_FOR_PICKUP stage | Separate review from handing over only if staffed pickup is needed. | Approval currently means physical issue. | Keep current flow; evaluate pickup expiry and collected transition with product evidence. | MEDIUM | LATER | YES | YES |
+| Request priority / queueing | Fairness must be explicit. | Oldest pending first; no priority policy or unavailable-book queue. | Design tenant reservation ordering and auditable priority exceptions. | HIGH | PART_2C | NO | YES |
+| Library-specific expiry | Libraries have different opening hours. | Server-wide bounded24-hour default. | Version per-library policy and snapshot the chosen expiry on requests. | MEDIUM | LATER | NO | YES |
+| Maximum pending requests | Prevent excessive abandoned holds. | Bounded server maximum5 exists. | Keep bound now; later tenant overrides with a reviewed cap. | MEDIUM | LATER | NO | YES |
+| Member borrowing limits | Physical capacity and fairness differ by membership. | Duplicate same-book and pending cap enforced; no overall ACTIVE-loan cap. | Add tenant policy across ACTIVE loans and held requests with staff exception audit. | HIGH | LATER | NO | YES |
+| Fine return timestamp policy | Staff processing delay should not unfairly penalize a borrower. | Both request/received dates retained; no canonical fine calculation. | Specify verified hand-in evidence, rejected requests and staff delay before choosing charge-stop time. | HIGH | PART_2C | YES | YES |
+| Barcode issue/return | Exact physical identity improves staff accuracy. | Known optional genuine barcodes; no scan lookup/hardware workflow. | Prefer barcode lookup scoped to library and copy; open matching request, retain confirmation and key. | HIGH | LATER | NO | NO |
+| QR scanning | Can open an exact request on a phone. | No QR payload/signature lifecycle. | Use scoped signed short-lived lookup links after barcode flow; never encode authority in a QR. | LOW | LATER | NO | NO |
+| Batch issue/return | Reduce staff repetition. | Single request reviewed per operation. | Use explicit per-item receipts and validation; partial batch outcomes must remain visible. | MEDIUM | LATER | NO | NO |
+| Self-check kiosk | Useful for large circulation desks. | No kiosk credentials or device trust. | Design restricted devices and staff approval; keep physical transitions authorized. | LOW | LATER | NO | YES |
+| Email/push decisions | Members should learn review outcomes promptly. | Queue badges and My Library states; journal audit intents, no external delivery. | Add deduplicated tenant delivery outbox and preference-aware retries within existing notification design. | MEDIUM | LATER | NO | YES |
+| Copy-condition return notes | Physical verification needs a condition record. | Safe current condition management exists; receipt defaults to AVAILABLE. | Allow staff receipt condition/note in the same durable operation; keep notes bounded/private. | MEDIUM | LATER | NO | YES |
+| Damage/lost workflow | Exceptional losses affect responsibility and fees. | Unallocated copies may be marked LOST/DAMAGED; allocated copies cannot be rewritten. | Add explicit exceptional loan closure, condition history and reviewed charges after fee tenancy. | HIGH | PART_2C | NO | YES |
+| Reservation conversion | A waiting queue must not allocate stock twice. | Global work-based reservations remain separate. | Convert eligible tenant queue entry into one BORROW hold under the same gate and journal. | HIGH | PART_2C | YES | YES |
+| Fine tenancy | Charges require a real library and loan source. | Legacy fine records use integer issue_id and no library_id. | Canonical fine UUID with library_id, loan_id and charge policy provenance; explicit legacy mapping only. | HIGH | PART_2C | YES | YES |
+| Receipt printing | Useful for physical circulation evidence. | Journal/API receipt and UI dates; no printable staff receipt. | Add printable accessible loan/return receipt without borrower data outside tenant authorization. | LOW | LATER | NO | NO |
+| Branch/campus shelves | Free text cannot enforce transfers. | Prominent bounded shelf/call text on book and holding. | Introduce optional canonical locations when branches need transfer tracking; preserve old text. | MEDIUM | LATER | NO | YES |
+| Institution due policies | Different libraries need different loan periods. | Existing14-day issue and configurable renewal policy reused. | Version tenant due policy; snapshot borrowed policy on loan; do not recompute old due dates. | MEDIUM | LATER | NO | YES |
+| Holiday adjustment | Due dates may land on closed days. | No tenant calendar adjustment. | Add versioned calendars after tenant due policies; deterministic timezone and closure handling. | LOW | LATER | NO | YES |
+| Replica-set transactions | Improve multi-document atomicity and reduce recovery work. | Standalone durable journal/gate; per-library serialization limits throughput. | Benchmark a supported replica-set deployment and retain durable command receipts/audit recovery. | MEDIUM | LATER | NO | YES |
+
+Barcode lookup fits the genuine copy foundation. Start with keyboard-style scanner input and tenant-scoped barcode/accession lookup; accession alone identifies a book, so copy selection must remain explicit when multiple copies exist. Barcode and QR data select a record; they never replace staff authorization or confirmation. No hardware integration or READY_FOR_PICKUP is added in Part2B.

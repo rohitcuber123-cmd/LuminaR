@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "reads": "ACTIVE members of the selected library, including GENERAL_USER; public inventory also uses this conservative rule.",
+  "writes": "ACTIVE ADMIN/LIBRARIAN membership; owner holds ADMIN. JWT global role never supplies tenant authority.",
+  "current_account": "Active, email-verified, known global identity role, no pending password setup; checked again inside inventory mutation gate.",
+  "outsider_response": 404,
+  "general_write_response": 403,
+  "revoked_account_response": 401,
+  "trusted_actor_and_tenant": "Server JWT identity and path UUID; body library_id/actor/book UUID/accession/role are forbidden.",
+  "search": "Literal escaped regex inside mandatory library predicate; no global/private vector insertion.",
+  "audit": "Allowlisted IDs, migration/version and numeric count summaries; no raw CSV rows, secrets or tokens.",
+  "legacy_scope_limit": "Legacy /inventory GET routes remain legacy compatibility behavior and are not claimed to provide private inventory isolation. They cannot query new canonical collections.",
+  "test_artifact": "institution_v2a_backend_final.xml",
+  "test_cases": [
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[library_id-60683df6-798a-4966-b7de-96c37e6cfd69]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[library_book_id-59ee6747-834a-47f8-a04c-ae55e4cbecf8]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[accession_number-FAKE-1]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[accession_sequence-999]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[created_by_user_id-99]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[holding_id-5e1706dd-a3b2-482f-9f86-2279b744c718]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[role-ADMIN]",
+    "tests.institution_v2a.test_catalogue::test_current_membership_roles_and_private_cross_library_guards[ADMIN]",
+    "tests.institution_v2a.test_catalogue::test_current_membership_roles_and_private_cross_library_guards[LIBRARIAN]",
+    "tests.institution_v2a.test_catalogue::test_current_membership_roles_and_private_cross_library_guards[GENERAL_USER]",
+    "tests.institution_v2a.test_catalogue::test_private_inventory_membership_loss_denied[SUSPENDED]",
+    "tests.institution_v2a.test_catalogue::test_private_inventory_membership_loss_denied[REMOVED]",
+    "tests.institution_v2a.test_identity_edges::test_inventory_current_account_revocation_blocks_read_write_and_apply[change0]",
+    "tests.institution_v2a.test_identity_edges::test_inventory_current_account_revocation_blocks_read_write_and_apply[change1]",
+    "tests.institution_v2a.test_identity_edges::test_inventory_current_account_revocation_blocks_read_write_and_apply[change2]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,subject,library_id\\nx,y,spoof\\n]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,name,subject\\nx,y,z\\n]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,title,subject\\nx,y,z\\n]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,subject,accession_number\\nx,y,FAKE1\\n]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title\\nx\\n]",
+    "tests.institution_v2a.test_import_migration::test_file_row_column_and_encoding_bounds",
+    "tests.institution_v2a.test_import_migration::test_preview_is_bound_to_library_account_expiry_and_rechecks_staff"
+  ],
+  "live_scenarios": [
+    {
+      "number": 8,
+      "scenario": "Private tenant isolation and global ADMIN bypass denied; GENERAL member reads only",
+      "status": "PASS"
+    }
+  ]
+}

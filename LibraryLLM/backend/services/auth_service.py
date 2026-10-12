@@ -153,14 +153,14 @@ def complete_staff_setup(email, otp, password):
     if len(password) < 8 or len(password.encode("utf-8")) > 72:
         raise ValueError("Password must contain at least 8 characters and at most 72 UTF-8 bytes.")
     user = find_user_by_email(email)
-    if (not user or user.get("role") != "LIBRARIAN" or not user.get("password_setup_required")
+    if (not user or not user.get("password_setup_required")
             or user.get("is_email_verified") or user.get("is_active", True) is not True):
         raise ValueError("Invalid or expired setup code.")
     password_hash = hash_password(password)
     if not consume_verification_otp(user["user_id"], otp):
         raise ValueError("Invalid or expired setup code.")
     changed = users_collection.update_one(
-        {"user_id": user["user_id"], "role": "LIBRARIAN", "password_setup_required": True,
+        {"user_id": user["user_id"], "password_setup_required": True,
          "is_email_verified": False, "is_active": {"$ne": False}},
         {"$set": {"password_hash": password_hash, "is_email_verified": True, "password_setup_required": False}},
     )

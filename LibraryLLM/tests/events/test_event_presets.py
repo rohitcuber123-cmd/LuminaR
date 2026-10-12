@@ -11,7 +11,7 @@ def attempt(fixture, fields):
     draft = create(fixture, **fields)
     assert draft.status_code == 201
     row = draft.json()
-    response = http(fixture).post('/staff/events/' + row['event_id'] + '/publish')
+    response = http(fixture).post('/platform/events/' + row['event_id'] + '/publish')
     return row, response
 
 
@@ -26,7 +26,7 @@ def test_all_categories_allow_incomplete_drafts(isolated, category):
 def test_book_required_only_on_publication(isolated, category):
     row, response = attempt(isolated, {'category': category})
     assert response.status_code == 422 and 'at least one' in response.json()['detail']
-    path = '/staff/events/' + row['event_id']
+    path = '/platform/events/' + row['event_id']
     assert http(isolated).patch(path, json={'related_work_ids': ['OL1W', 'OL2W']}).status_code == 200
     published = http(isolated).post(path + '/publish')
     assert published.status_code == 200 and published.json()['related_work_ids'] == ['OL1W', 'OL2W']
@@ -59,7 +59,7 @@ def test_optional_categories_keep_base_contract(isolated, category):
 def test_published_category_correction_preserves_publication_and_seen_state(isolated):
     unseen(isolated)
     _, response = attempt(isolated, {'category':'WORKSHOP','start_at':NOW.isoformat(),'description':'Talk','location':'Hall','related_work_ids':['OL2W','OL1W']})
-    row = response.json(); path = '/staff/events/' + row['event_id']
+    row = response.json(); path = '/platform/events/' + row['event_id']
     before = unseen(isolated)
     updated = http(isolated, 2).patch(path, json={'category':'COMMUNITY_EVENT'}).json()
     assert updated['published_at'] == row['published_at'] and updated['status'] == 'PUBLISHED'
@@ -73,14 +73,14 @@ def test_published_category_correction_preserves_publication_and_seen_state(isol
 
 def test_published_edit_cannot_remove_required_fields_or_adopt_invalid_category(isolated):
     _, response = attempt(isolated, {'category':'NEW_ARRIVALS','related_work_ids':['OL1W']})
-    path = '/staff/events/' + response.json()['event_id']
+    path = '/platform/events/' + response.json()['event_id']
     assert http(isolated).patch(path, json={'related_work_ids':[]}).status_code == 422
     assert http(isolated).patch(path, json={'category':'CLOSURE'}).status_code == 422
     assert http(isolated).get(path).json()['category'] == 'NEW_ARRIVALS'
 
 
 def test_legacy_v1_publication_can_be_corrected_without_backfill(isolated):
-    row = create(isolated, category='WORKSHOP').json(); path = '/staff/events/' + row['event_id']
+    row = create(isolated, category='WORKSHOP').json(); path = '/platform/events/' + row['event_id']
     isolated[0].events.update_one({'event_id':row['event_id']},{'$set':{'status':'PUBLISHED','published_at':NOW}})
     assert http(isolated).patch(path, json={'summary':'Corrected existing V1 notice'}).status_code == 200
     assert http(isolated).patch(path, json={'category':'CLOSURE'}).status_code == 422

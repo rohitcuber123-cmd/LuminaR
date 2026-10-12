@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "required": [
+    "title",
+    "subjects (one or more)"
+  ],
+  "optional": [
+    "authors",
+    "ISBN",
+    "global_work_id",
+    "publisher",
+    "publication_year",
+    "edition",
+    "language",
+    "description",
+    "shelf",
+    "call number",
+    "tags",
+    "note",
+    "barcode"
+  ],
+  "quantity_default": 1,
+  "unknown_isbn": null,
+  "unknown_global_work": null,
+  "unknown_authors": [],
+  "invented_metadata_or_ids": false,
+  "metadata_sources": [
+    "Explicit submitted metadata",
+    "Verified existing global metadata fallback in legacy migration only"
+  ],
+  "test_artifact": "institution_v2a_backend_final.xml",
+  "test_cases": [
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[authors]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[isbn]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[global_work_id]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[publisher]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[publication_year]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[edition]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[language]",
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[description]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[0-306-40615-2-0306406152]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[978-0-306-40615-7-9780306406157]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[0-8044-2957-X-080442957X]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[None-None]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[-None]",
+    "tests.institution_v2a.test_catalogue::test_zero_quantity_and_optional_fields_without_placeholder",
+    "tests.institution_v2a.test_catalogue::test_optional_isbn_lookup_unavailable_keeps_local_and_trusted_match_links",
+    "tests.institution_v2a.test_catalogue::test_copy_foundation_optional_barcode_and_same_tenant_references",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[title-subject]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[book_title-genre]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[name-category]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[title-subjects]",
+    "tests.institution_v2a.test_import_migration::test_large_minimum_import_auto_numbering_idempotence_and_reconciliation[100]",
+    "tests.institution_v2a.test_import_migration::test_large_minimum_import_auto_numbering_idempotence_and_reconciliation[1000]",
+    "tests.institution_v2a.test_import_migration::test_mixed_identifiers_subject_delimiters_optional_metadata_and_row_error_isolation"
+  ],
+  "live_scenarios": [
+    {
+      "number": 1,
+      "scenario": "Title + subject creates UUID, accession and holding without ISBN/work/author",
+      "status": "PASS",
+      "accession": "AUR-000001"
+    },
+    {
+      "number": 2,
+      "scenario": "Optional author does not require global identity",
+      "status": "PASS"
+    },
+    {
+      "number": 4,
+      "scenario": "100 title + subject rows preview without allocation, apply unique automatic accessions",
+      "status": "PASS",
+      "repeated_samples": 3
+    },
+    {
+      "number": 5,
+      "scenario": "Mixed identifiers, local-only rows and isolated missing-subject error",
+      "status": "PASS",
+      "counts": {
+        "created_records": 3,
+        "invalid_rows": 1
+      }
+    }
+  ]
+}

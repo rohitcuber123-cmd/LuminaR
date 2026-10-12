@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="9" skipped="0" tests="28" time="8.544" timestamp="2026-10-09T14:34:43.567978+05:30" hostname="Rohit-pc"><testcase classname="tests.dashboard_convergence.test_authority" name="test_legacy_role_never_grants_platform_or_library[ADMIN]" time="1.871"><failure message="AssertionError: assert 404 == 403&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code&#10; +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/99f832b1-936a-4513-af45-cc834b3dc02f' + '/staff/loans'), headers={'x-test-user': '3'})&#10; +      where get = &lt;starlette.testclient.TestClient object at 0x000002852FF9C8D0&gt;.get&#10; +      and   {'x-test-user': '3'} = h(3)">client = &lt;starlette.testclient.TestClient object at 0x000002852FF9C8D0&gt;
+libraries = [{'id': '99f832b1-936a-4513-af45-cc834b3dc02f', 'base': '/libraries/99f832b1-936a-4513-af45-cc834b3dc02f', 'book': '47...': '/libraries/8bf63748-b9d7-4da2-8e89-3c315c599031', 'book': '02e4e52c-dc14-4c83-be0f-012b10eacf9f', 'owner': 2, ...}]
+role = 'ADMIN'
+
+    @pytest.mark.parametrize('role', ['ADMIN', 'LIBRARIAN', 'GENERAL_USER'])
+    def test_legacy_role_never_grants_platform_or_library(client, libraries, role):
+        db.users.update_one({'user_id': 3}, {'$set': {'role': role}})
+        assert client.get('/me/platform-access', headers=h(3)).json() == {'roles': []}
+        for url in ['/platform/accounts', '/platform/summary', '/platform/migration-review', '/platform/health', '/platform/events', '/issues/all', '/fines/all']:
+            assert client.get(url, headers=h(3)).status_code == 403, url
+&gt;       assert client.get(libraries[0]['base'] + '/staff/loans', headers=h(3)).status_code == 403
+E       AssertionError: assert 404 == 403
+E        +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+E        +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/99f832b1-936a-4513-af45-cc834b3dc02f' + '/staff/loans'), headers={'x-test-user': '3'})
+E        +      where get = &lt;starlette.testclient.TestClient object at 0x000002852FF9C8D0&gt;.get
+E        +      and   {'x-test-user': '3'} = h(3)
+
+tests\dashboard_convergence\test_authority.py:22: AssertionError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_legacy_role_never_grants_platform_or_library[LIBRARIAN]" time="0.542"><failure message="AssertionError: assert 404 == 403&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code&#10; +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/fb385d84-539a-4225-a02d-200c2848ed6b' + '/staff/loans'), headers={'x-test-user': '3'})&#10; +      where get = &lt;starlette.testclient.TestClient object at 0x0000028531BAF310&gt;.get&#10; +      and   {'x-test-user': '3'} = h(3)">client = &lt;starlette.testclient.TestClient object at 0x0000028531BAF310&gt;
+libraries = [{'id': 'fb385d84-539a-4225-a02d-200c2848ed6b', 'base': '/libraries/fb385d84-539a-4225-a02d-200c2848ed6b', 'book': '7e...': '/libraries/8ac0226a-5c17-46c2-b61e-131c5dee6252', 'book': '70c24bf8-d942-420c-b41e-66f1554d28bb', 'owner': 2, ...}]
+role = 'LIBRARIAN'
+
+    @pytest.mark.parametrize('role', ['ADMIN', 'LIBRARIAN', 'GENERAL_USER'])
+    def test_legacy_role_never_grants_platform_or_library(client, libraries, role):
+        db.users.update_one({'user_id': 3}, {'$set': {'role': role}})
+        assert client.get('/me/platform-access', headers=h(3)).json() == {'roles': []}
+        for url in ['/platform/accounts', '/platform/summary', '/platform/migration-review', '/platform/health', '/platform/events', '/issues/all', '/fines/all']:
+            assert client.get(url, headers=h(3)).status_code == 403, url
+&gt;       assert client.get(libraries[0]['base'] + '/staff/loans', headers=h(3)).status_code == 403
+E       AssertionError: assert 404 == 403
+E        +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+E        +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/fb385d84-539a-4225-a02d-200c2848ed6b' + '/staff/loans'), headers={'x-test-user': '3'})
+E        +      where get = &lt;starlette.testclient.TestClient object at 0x0000028531BAF310&gt;.get
+E        +      and   {'x-test-user': '3'} = h(3)
+
+tests\dashboard_convergence\test_authority.py:22: AssertionError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_legacy_role_never_grants_platform_or_library[GENERAL_USER]" time="0.558"><failure message="AssertionError: assert 404 == 403&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code&#10; +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/86c0f75f-866a-4a05-b98e-c36fffb8b39e' + '/staff/loans'), headers={'x-test-user': '3'})&#10; +      where get = &lt;starlette.testclient.TestClient object at 0x0000028531AA5190&gt;.get&#10; +      and   {'x-test-user': '3'} = h(3)">client = &lt;starlette.testclient.TestClient object at 0x0000028531AA5190&gt;
+libraries = [{'id': '86c0f75f-866a-4a05-b98e-c36fffb8b39e', 'base': '/libraries/86c0f75f-866a-4a05-b98e-c36fffb8b39e', 'book': 'a6...': '/libraries/e764c3fc-efe4-4f54-9e41-70ad0418ba67', 'book': '885e8460-6c2b-44a5-bade-af9359809f26', 'owner': 2, ...}]
+role = 'GENERAL_USER'
+
+    @pytest.mark.parametrize('role', ['ADMIN', 'LIBRARIAN', 'GENERAL_USER'])
+    def test_legacy_role_never_grants_platform_or_library(client, libraries, role):
+        db.users.update_one({'user_id': 3}, {'$set': {'role': role}})
+        assert client.get('/me/platform-access', headers=h(3)).json() == {'roles': []}
+        for url in ['/platform/accounts', '/platform/summary', '/platform/migration-review', '/platform/health', '/platform/events', '/issues/all', '/fines/all']:
+            assert client.get(url, headers=h(3)).status_code == 403, url
+&gt;       assert client.get(libraries[0]['base'] + '/staff/loans', headers=h(3)).status_code == 403
+E       AssertionError: assert 404 == 403
+E        +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+E        +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/86c0f75f-866a-4a05-b98e-c36fffb8b39e' + '/staff/loans'), headers={'x-test-user': '3'})
+E        +      where get = &lt;starlette.testclient.TestClient object at 0x0000028531AA5190&gt;.get
+E        +      and   {'x-test-user': '3'} = h(3)
+
+tests\dashboard_convergence\test_authority.py:22: AssertionError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes0]" time="0.103" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes1]" time="0.096" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes2]" time="0.096" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes3]" time="0.104" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_separate_explicit_authorities_and_fresh_revocation" time="0.457"><failure message="AssertionError: assert 404 == 403&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code&#10; +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/e83b2665-9184-4f79-b57f-1930a92aed4a' + '/staff/loans'), headers={'x-test-user': '3'})&#10; +      where get = &lt;starlette.testclient.TestClient object at 0x00000285302C7150&gt;.get&#10; +      and   {'x-test-user': '3'} = h(3)">client = &lt;starlette.testclient.TestClient object at 0x00000285302C7150&gt;
+libraries = [{'id': 'e83b2665-9184-4f79-b57f-1930a92aed4a', 'base': '/libraries/e83b2665-9184-4f79-b57f-1930a92aed4a', 'book': 'b9...': '/libraries/ef703b6a-b252-4e21-957e-eedf0b3a1a15', 'book': '258b894b-3146-4f49-99e0-c11d33e2db6f', 'owner': 2, ...}]
+
+    def test_separate_explicit_authorities_and_fresh_revocation(client, libraries):
+        grant()
+        assert client.get('/platform/accounts', headers=h(3)).status_code == 200
+        assert client.get('/platform/summary', headers=h(3)).status_code == 200
+&gt;       assert client.get(libraries[0]['base'] + '/staff/loans', headers=h(3)).status_code == 403
+E       AssertionError: assert 404 == 403
+E        +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+E        +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/e83b2665-9184-4f79-b57f-1930a92aed4a' + '/staff/loans'), headers={'x-test-user': '3'})
+E        +      where get = &lt;starlette.testclient.TestClient object at 0x00000285302C7150&gt;.get
+E        +      and   {'x-test-user': '3'} = h(3)
+
+tests\dashboard_convergence\test_authority.py:36: AssertionError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_identity_status_revokes_platform_access" time="0.096" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_no_api_role_or_membership_grant" time="0.107" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/issues/issue-body0]" time="0.092" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/issues/return/1-body1]" time="0.097" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/reservations/reserve-body2]" time="0.108"><failure message="AssertionError: ('/reservations/reserve', '{&quot;detail&quot;:&quot;Method Not Allowed&quot;}')&#10;assert 405 == 410&#10; +  where 405 = &lt;Response [405 Method Not Allowed]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x00000285302AF710&gt;
+url = '/reservations/reserve', body = {'work_id': 'W'}
+
+    @pytest.mark.parametrize('url,body', [('/issues/issue', {'work_id': 'W'}), ('/issues/return/1', {}), ('/reservations/reserve', {'work_id': 'W'}), ('/reservations/cancel/1', {}), ('/fines/pay/1', {}), ('/inventory/', {'library_id': 'LIB001', 'work_id': 'W'}), ('/loans/1/renew', {'request_id': str(uuid4())})])
+    def test_retired_endpoints_cannot_write(client, url, body):
+        before = {name: db[name].count_documents({}) for name in ['issues','reservations','fines','library_inventory','institution_loans']}
+        response = client.post(url, headers=h(), json=body)
+&gt;       assert response.status_code == 410, (url, response.text)
+E       AssertionError: ('/reservations/reserve', '{"detail":"Method Not Allowed"}')
+E       assert 405 == 410
+E        +  where 405 = &lt;Response [405 Method Not Allowed]&gt;.status_code
+
+tests\dashboard_convergence\test_authority.py:60: AssertionError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/reservations/cancel/1-body3]" time="0.114" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/fines/pay/1-body4]" time="0.097" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/inventory/-body5]" time="0.101" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/loans/1/renew-body6]" time="0.091"><failure message="AssertionError: ('/loans/1/renew', '{&quot;detail&quot;:&quot;Not Found&quot;}')&#10;assert 404 == 410&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x0000028531BD16D0&gt;
+url = '/loans/1/renew'
+body = {'request_id': '81010393-f420-4dac-80a6-1c48aa163cb8'}
+
+    @pytest.mark.parametrize('url,body', [('/issues/issue', {'work_id': 'W'}), ('/issues/return/1', {}), ('/reservations/reserve', {'work_id': 'W'}), ('/reservations/cancel/1', {}), ('/fines/pay/1', {}), ('/inventory/', {'library_id': 'LIB001', 'work_id': 'W'}), ('/loans/1/renew', {'request_id': str(uuid4())})])
+    def test_retired_endpoints_cannot_write(client, url, body):
+        before = {name: db[name].count_documents({}) for name in ['issues','reservations','fines','library_inventory','institution_loans']}
+        response = client.post(url, headers=h(), json=body)
+&gt;       assert response.status_code == 410, (url, response.text)
+E       AssertionError: ('/loans/1/renew', '{"detail":"Not Found"}')
+E       assert 404 == 410
+E        +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+
+tests\dashboard_convergence\test_authority.py:60: AssertionError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_compatibility_admin_api_redirects_only" time="0.092" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_direct_retired_services_have_no_second_writer" time="0.084"><failure message="TypeError: renew_loan() missing 1 required positional argument: 'expected_due_date'">client = &lt;starlette.testclient.TestClient object at 0x0000028531B75850&gt;
+
+    def test_direct_retired_services_have_no_second_writer(client):
+        from backend.services import issue_service, reservation_service, fine_service, inventory_service, loan_renewal_service
+        for call in [lambda: issue_service.issue_book(1,'W'), lambda: issue_service.return_book(1,1), lambda: reservation_service.create_reservation(1,'W'), lambda: reservation_service.cancel_reservation(1,1), lambda: fine_service.pay_fine(1,1), lambda: inventory_service.add_inventory('LIB001','W'), lambda: loan_renewal_service.renew_loan(1,1,'key')]:
+&gt;           with pytest.raises(HTTPException) as raised: call()
+                                                         ^^^^^^
+
+tests\dashboard_convergence\test_authority.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+&gt;   for call in [lambda: issue_service.issue_book(1,'W'), lambda: issue_service.return_book(1,1), lambda: reservation_service.create_reservation(1,'W'), lambda: reservation_service.cancel_reservation(1,1), lambda: fine_service.pay_fine(1,1), lambda: inventory_service.add_inventory('LIB001','W'), lambda: loan_renewal_service.renew_loan(1,1,'key')]:
+                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: renew_loan() missing 1 required positional argument: 'expected_due_date'
+
+tests\dashboard_convergence\test_authority.py:72: TypeError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_migration_dry_run_never_infers_legacy_roles" time="0.079" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_migration_separates_explicit_grants" time="0.475"><failure message="AssertionError: assert 404 == 403&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code&#10; +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/72d172e9-918b-41c3-bab3-5a4e58bf2092' + '/staff/loans'), headers={'x-test-user': '3'})&#10; +      where get = &lt;starlette.testclient.TestClient object at 0x0000028531D559D0&gt;.get&#10; +      and   {'x-test-user': '3'} = h(3)">client = &lt;starlette.testclient.TestClient object at 0x0000028531D559D0&gt;
+libraries = [{'id': 'bb62ea77-4505-492e-aced-74adc27414fc', 'base': '/libraries/bb62ea77-4505-492e-aced-74adc27414fc', 'book': '7b...': '/libraries/4c3c12e7-16e3-4d08-8dd9-0e612d349cb9', 'book': '0a8352f8-7276-4b1e-b200-7a73827f7760', 'owner': 2, ...}]
+
+    def test_migration_separates_explicit_grants(client, libraries):
+        mapping = {'platform_assignments': [approved()], 'library_memberships': [approved(user_id=3, role='LIBRARIAN', library_id=libraries[0]['id'], legacy_library_id='REVIEWED-LEGACY')]}
+        proposal = migration.plan(db, mapping)
+        assert db.platform_role_assignments.count_documents({}) == 0
+        migration.apply(db, proposal)
+        assert client.get('/platform/accounts', headers=h(3)).status_code == 200
+        assert client.get(libraries[0]['base']+'/staff/loans', headers=h(3)).status_code == 200
+&gt;       assert client.get(libraries[1]['base']+'/staff/loans', headers=h(3)).status_code == 403
+E       AssertionError: assert 404 == 403
+E        +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+E        +    where &lt;Response [404 Not Found]&gt; = get(('/libraries/72d172e9-918b-41c3-bab3-5a4e58bf2092' + '/staff/loans'), headers={'x-test-user': '3'})
+E        +      where get = &lt;starlette.testclient.TestClient object at 0x0000028531D559D0&gt;.get
+E        +      and   {'x-test-user': '3'} = h(3)
+
+tests\dashboard_convergence\test_authority.py:95: AssertionError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_migration_rejects_unapproved_or_ambiguous[change0]" time="0.089" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_migration_rejects_unapproved_or_ambiguous[change1]" time="0.105" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_migration_rejects_unapproved_or_ambiguous[change2]" time="0.109" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_migration_rejects_unapproved_or_ambiguous[change3]" time="0.107" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_assisted_renewal_and_receipt_use_canonical_journal" time="0.778" /><testcase classname="tests.dashboard_convergence.test_authority" name="test_platform_alone_and_cross_tenant_cannot_receive_or_renew" time="0.601"><failure message="AssertionError: assert 404 == 403&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code&#10; +    where &lt;Response [404 Not Found]&gt; = post('/libraries/2f464dd9-7d1d-4247-8b60-2b356edba175/staff/loans/fe2ddbb4-cbe0-4dc0-932d-734e662e8872/renew', headers={'x-test-user': '2'}, json={'idempotency_key': '010074a1-0a29-4231-a412-86ce783ba255', 'expected_due_at': '2026-10-23T09:04:51.334000+00:00'})&#10; +      where post = &lt;starlette.testclient.TestClient object at 0x0000028531E37090&gt;.post&#10; +      and   {'x-test-user': '2'} = h(2)&#10; +      and   {'idempotency_key': '010074a1-0a29-4231-a412-86ce783ba255', 'expected_due_at': '2026-10-23T09:04:51.334000+00:00'} = cmd(**{'expected_due_at': '2026-10-23T09:04:51.334000+00:00'})">client = &lt;starlette.testclient.TestClient object at 0x0000028531E37090&gt;
+libraries = [{'id': '2f464dd9-7d1d-4247-8b60-2b356edba175', 'base': '/libraries/2f464dd9-7d1d-4247-8b60-2b356edba175', 'book': 'd8...': '/libraries/1cb2c8ad-6ec2-4fd0-be20-2d9e25cb6aae', 'book': '9df2f049-63f8-4ec4-9448-bd81f142ea4b', 'owner': 2, ...}]
+
+    def test_platform_alone_and_cross_tenant_cannot_receive_or_renew(client,libraries):
+        row=loan(client,libraries[0]); grant(2)
+        for action,values in [('renew',{'expected_due_at':row['due_at']}),('receive',{})]:
+            url=libraries[0]['base']+'/staff/loans/'+row['loan_id']+'/'+action
+&gt;           assert client.post(url,headers=h(2),json=cmd(**values)).status_code == 403
+E           AssertionError: assert 404 == 403
+E            +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+E            +    where &lt;Response [404 Not Found]&gt; = post('/libraries/2f464dd9-7d1d-4247-8b60-2b356edba175/staff/loans/fe2ddbb4-cbe0-4dc0-932d-734e662e8872/renew', headers={'x-test-user': '2'}, json={'idempotency_key': '010074a1-0a29-4231-a412-86ce783ba255', 'expected_due_at': '2026-10-23T09:04:51.334000+00:00'})
+E            +      where post = &lt;starlette.testclient.TestClient object at 0x0000028531E37090&gt;.post
+E            +      and   {'x-test-user': '2'} = h(2)
+E            +      and   {'idempotency_key': '010074a1-0a29-4231-a412-86ce783ba255', 'expected_due_at': '2026-10-23T09:04:51.334000+00:00'} = cmd(**{'expected_due_at': '2026-10-23T09:04:51.334000+00:00'})
+
+tests\dashboard_convergence\test_authority.py:137: AssertionError</failure></testcase><testcase classname="tests.dashboard_convergence.test_authority" name="test_existing_patron_return_can_be_received_without_duplicate" time="0.724" /></testsuite></testsuites>

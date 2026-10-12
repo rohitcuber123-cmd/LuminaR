@@ -1,0 +1,93 @@
+{
+  "captured_at": "2026-10-10T08:04:35.371148+00:00",
+  "services": [
+    {
+      "service": "frontend",
+      "url": "http://127.0.0.1:5173/",
+      "status": 200,
+      "health": "HTML available"
+    },
+    {
+      "service": "core",
+      "url": "http://127.0.0.1:8002/health",
+      "status": 200,
+      "health": {
+        "status": "healthy",
+        "system": "LuminaR",
+        "service": "core",
+        "port": 8002
+      }
+    },
+    {
+      "service": "search",
+      "url": "http://127.0.0.1:8003/health",
+      "status": 200,
+      "health": {
+        "status": "degraded",
+        "index_status": "STALE",
+        "retry_attempts": 0,
+        "retry_at": 0.0,
+        "active_vectors": 5000000,
+        "deleted_vectors": 16,
+        "mapping_count": 5000016,
+        "mutation_count_since_rebuild": 29,
+        "last_full_rebuild": null,
+        "index_size_bytes": 9040742251,
+        "baseline_verified": false,
+        "index_version": "48febcfde9924d818fdfe2d3c759fae9",
+        "semantic_generation": 30,
+        "pending": false,
+        "system": "LuminaR",
+        "device": "cuda",
+        "hnsw_vectors": 5000000,
+        "lexical": {
+          "lexical_enabled": true,
+          "lexical_available": true,
+          "lexical_version": "431a7a84921b408bb8cde14957e72166",
+          "lexical_generation": 1,
+          "lexical_schema_version": 2,
+          "lexical_file_size": 1270255616,
+          "lexical_last_build": "2026-09-25T07:45:55.822448+00:00",
+          "lexical_last_sync": null,
+          "lexical_pending": false,
+          "lexical_last_error": null,
+          "lexical_base_version": "431a7a84921b408bb8cde14957e72166",
+          "lexical_base_generation": 1,
+          "lexical_base_size": 1270255616,
+          "lexical_worker_configured": false,
+          "lexical_worker_enabled": false,
+          "lexical_ranking_enabled": false,
+          "lexical_delta_generation": 1,
+          "lexical_source_event_checkpoint": 30,
+          "lexical_retry_attempts": 0,
+          "lexical_retry_at": 0.0,
+          "lexical_delta_version": 1,
+          "lexical_delta_size": 32768
+        }
+      }
+    },
+    {
+      "service": "recommendations",
+      "url": "http://127.0.0.1:8004/docs",
+      "status": 200,
+      "health": "HTML available"
+    },
+    {
+      "service": "rag_assistant",
+      "url": "http://127.0.0.1:8005/health",
+      "status": 200,
+      "health": {
+        "status": "healthy",
+        "system": "LuminaR",
+        "module": "RAG",
+        "model_loading_ms": 48608.19,
+        "llm": "Qwen2.5-3B-Instruct",
+        "retrieval": "MiniLM + FAISS",
+        "reranker": "CrossEncoder",
+        "device": "cuda:0",
+        "vectors": 3959,
+        "private_document_cache_enabled": true
+      }
+    }
+  ]
+}

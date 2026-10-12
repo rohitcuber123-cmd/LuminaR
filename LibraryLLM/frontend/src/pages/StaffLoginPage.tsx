@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent, type ReactNode } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { BookOpen, LockKeyhole } from 'lucide-react'
 import { useAuthStore } from '../store/useAuthStore'
+import { workspaceDestination } from '../lib/authDestination'
 
 export function StaffAuthLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -25,15 +26,15 @@ export function StaffLoginPage() {
   const { loginStaff, isAuthenticated, user, loading } = useAuthStore()
   const navigate = useNavigate()
   const [email, setEmail] = useState(''), [password, setPassword] = useState(''), [error, setError] = useState('')
-  if (isAuthenticated && user && ['ADMIN', 'LIBRARIAN'].includes(user.role))
-    return <Navigate to={user.role === 'ADMIN' ? '/admin' : '/librarian'} replace />
+  if (isAuthenticated && user)
+    return <Navigate to={workspaceDestination()} replace />
   async function submit(event: FormEvent) {
     event.preventDefault()
     setError('')
     try {
-      const response = await loginStaff(email, password)
+      await loginStaff(email, password)
       setPassword('')
-      navigate(response.user.role === 'ADMIN' ? '/admin' : '/librarian', { replace: true })
+      navigate(workspaceDestination(), { replace: true })
     } catch (reason) {
       setPassword('')
       setError(reason instanceof Error ? reason.message : 'Unable to sign in.')

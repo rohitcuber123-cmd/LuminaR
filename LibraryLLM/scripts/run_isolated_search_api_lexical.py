@@ -34,6 +34,18 @@ def run():
         from search.lexical_build import build_snapshot
         from search.lexical_delta import LexicalOverlayStore,initialize_delta,DELTA_FILENAME
         from search.sync_queue import SyncQueue,index_root
+        # This lexical HTTP fixture already supplies its own semantic vectors
+        # and reranker below. Import-only GPU DLLs can exhaust Windows commit
+        # memory while the real global Search service runs. Refuse model use
+        # explicitly rather than loading unused production ML dependencies.
+        def forbidden_model(*args, **kwargs):
+            raise AssertionError('The isolated lexical fixture must not load semantic models.')
+        torch_stub = types.ModuleType('torch')
+        torch_stub.cuda = types.SimpleNamespace(is_available=lambda: False)
+        model_stub = types.ModuleType('sentence_transformers')
+        model_stub.SentenceTransformer = model_stub.CrossEncoder = forbidden_model
+        sys.modules['torch'] = torch_stub
+        sys.modules['sentence_transformers'] = model_stub
         import search.luminar_search as lm
 
         mongo=MongoClient(os.getenv('MONGO_URI','mongodb://localhost:27017'),
@@ -64,6 +76,7 @@ def run():
                                          'role':'ADMIN','is_email_verified':True,'is_active':True})
             books_collection.insert_many(doc for doc in docs if doc['work_id']!='X')
             core=TestClient(core_app)
+            users_collection.database.platform_role_assignments.insert_one({'user_id':1,'role':'PLATFORM_ADMIN','status':'ACTIVE','approved_by':'isolated-test','approval_ref':'TEST-REVIEW','approved_at':__import__('datetime').datetime.now(__import__('datetime').timezone.utc)})
             login=core.post('/auth/staff-login',json={'email':email,'password':password})
             assert login.status_code==200,login.json().get('detail')
             headers={'Authorization':'Bearer '+login.json()['access_token']}

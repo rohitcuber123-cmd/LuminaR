@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { activeLibrary, useInstitutionStore } from '../store/useInstitutionStore'
 import { useAuthStore } from '../store/useAuthStore'
-import { categories, eventApi, author, EVENTS_CHANGED, type EventInput, type EventBook, type EventCategory, type LibraryEvent } from '../lib/events'
+import { categories, eventApiFor, author, EVENTS_CHANGED, type EventInput, type EventBook, type EventCategory, type LibraryEvent } from '../lib/events'
 import { searchBooks } from '../lib/api'
 import { BookCover } from '../components/BookCover'
 import { Modal } from '../components/StaffUI'
@@ -23,8 +24,8 @@ function BookPicker({ selected, change, disabled, label, helper, invalid }: { se
   </section>
 }
 export function EventEditorPage() {
-  const { eventId } = useParams(), token = useAuthStore(s => s.token), navigate = useNavigate()
-  const key = `${token}:${eventId || 'new'}`
+  const { eventId, libraryId } = useParams(), api=useMemo(()=>eventApiFor(libraryId),[libraryId]), base=libraryId ? `/staff/libraries/${libraryId}/events` : '/platform/events', library=useInstitutionStore(activeLibrary), token = useAuthStore(s => s.token), navigate = useNavigate()
+  const key = `${token}:${libraryId}:${eventId || 'new'}`
   const [owner, setOwner] = useState(''), [form, setForm] = useState<EventInput>(empty)
   const [books, setBooks] = useState<EventBook[]>([]), [loaded, setLoaded] = useState<LibraryEvent | null>(null)
   const [savedId, setSavedId] = useState<string | null>(null), [error, setError] = useState('')
@@ -32,14 +33,14 @@ export function EventEditorPage() {
   const [publish, setPublish] = useState(false), [nextType, setNextType] = useState<EventCategory | null>(null), lock = useRef(false)
   useEffect(() => {
     const controller = new AbortController()
-    void (eventId ? eventApi.detail(eventId, true, controller.signal) : Promise.resolve(null)).then(event => {
+    void (eventId ? api.detail(eventId, true, controller.signal) : Promise.resolve(null)).then(event => {
       if (controller.signal.aborted || useAuthStore.getState().token !== token) return
-      setForm(event ? { title: event.title, category: event.category, summary: event.summary, description: event.description, start_at: localTime(event.start_at), end_at: localTime(event.end_at), location: event.location, featured: event.featured, related_work_ids: event.related_work_ids } : empty())
+      setForm(event ? { title: event.title, category: event.category, summary: event.summary, description: event.description, start_at: localTime(event.start_at), end_at: localTime(event.end_at), location: event.location, featured: event.featured, related_work_ids: event.related_work_ids, ...(libraryId ? {visibility:event.visibility || 'LIBRARY_MEMBERS'} : {}) } : {...empty(),...(libraryId ? {visibility:'LIBRARY_MEMBERS' as const}: {})})
       setBooks(event ? [...event.related_books, ...(event.missing_related_work_ids || []).map(work_id => ({ work_id, title: 'Unavailable book: ' + work_id }))] : [])
       setLoaded(event); setSavedId(event?.event_id || null); setOwner(key); setError(''); setErrors([]); setPublish(false); setNextType(null)
     }).catch(e => { if (!controller.signal.aborted) { setOwner(key); setError(e instanceof Error ? e.message : 'Event unavailable.') } })
     return () => controller.abort()
-  }, [eventId, token, key])
+  }, [eventId, token, key, libraryId, api])
   const preset = EVENT_PRESETS[form.category], requirements = EVENT_PUBLISH_REQUIREMENTS[form.category]
   const immutable = loaded?.status === 'ARCHIVED', disabled = busy || Boolean(immutable)
   const current: EventInput = { ...form, related_work_ids: books.map(b => b.work_id) }
@@ -61,17 +62,17 @@ export function EventEditorPage() {
     lock.current = true; setBusy(true)
     try {
       const payload: EventInput = { ...current, start_at: form.start_at ? new Date(form.start_at).toISOString() : null, end_at: form.end_at ? new Date(form.end_at).toISOString() : null, location: form.location?.trim() || null }
-      const event = savedId ? await eventApi.edit(savedId, payload) : await eventApi.create(payload)
+      const event = savedId ? await api.edit(savedId, payload) : await api.create(payload)
       if (useAuthStore.getState().token !== token) return
       setSavedId(event.event_id); setLoaded(event)
-      if (andPublish) setPublish(true); else navigate('/staff/events')
+      if (andPublish) setPublish(true); else navigate(base)
     } catch (e) { setError(e instanceof Error ? e.message : 'Unable to save event.') }
     finally { lock.current = false; setBusy(false) }
   }
   async function publishSaved() {
     if (!savedId || lock.current) return
     lock.current = true; setBusy(true); setError('')
-    try { await eventApi.action(savedId, 'publish'); if (useAuthStore.getState().token !== token) return; window.dispatchEvent(new Event(EVENTS_CHANGED)); navigate('/staff/events') }
+    try { await api.action(savedId, 'publish'); if (useAuthStore.getState().token !== token) return; window.dispatchEvent(new Event(EVENTS_CHANGED)); navigate(base) }
     catch (e) { setError(e instanceof Error ? e.message : 'Unable to publish event.') }
     finally { lock.current = false; setBusy(false) }
   }
@@ -86,8 +87,8 @@ export function EventEditorPage() {
   </section>
   const picker = <BookPicker selected={books} change={setBooks} disabled={disabled} label={preset.booksLabel} helper={preset.booksHelper} invalid={Boolean(invalid('related_work_ids'))} />
   return <div className="events-shell event-editor-shell">
-    <Link className="event-link" to="/staff/events">← Manage Events</Link>
-    <header className="events-heading"><div><span className="event-eyebrow">LIBRARY STAFF</span><h1>{eventId ? 'Edit Event' : 'Create Event'}</h1><p>{loaded?.status === 'PUBLISHED' ? 'Corrections preserve the first publication date and do not notify users again.' : 'Save an incomplete draft, then publish when it is ready.'}</p></div></header>
+    <Link className="event-link" to={base}>← Manage Events</Link>
+    <header className="events-heading"><div><span className="event-eyebrow">{libraryId ? 'STAFF WORKSPACE' : 'PLATFORM ADMIN'}</span><h1>{eventId ? 'Edit Event' : 'Create Event'}</h1><p>{loaded?.status === 'PUBLISHED' ? 'Corrections preserve the first publication date and do not notify users again.' : 'Save an incomplete draft, then publish when it is ready.'}</p></div></header>
     {owner !== key ? <EventSkeleton /> : <form noValidate className="event-editor event-preset-editor" onSubmit={e => { e.preventDefault(); void save(false) }}>
       <section className="event-type-selector">
         <label htmlFor="event-category">What kind of event are you publishing?<select id="event-category" aria-label="Event Type" value={form.category} disabled={disabled} onChange={e => changeType(e.target.value as EventCategory)}>{Object.entries(categories).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
@@ -100,14 +101,14 @@ export function EventEditorPage() {
         <label htmlFor="event-description">{preset.descriptionLabel}{required('description')}<textarea id="event-description" aria-label="Event description" aria-invalid={invalid('description')} rows={4} maxLength={5000} value={form.description} disabled={disabled} onChange={e => setForm({ ...form, description: e.target.value })} /><small>{preset.descriptionHelper} · {form.description.length}/5000</small></label>
       </section>
       {preset.order.map(section => section === 'schedule' ? <div key="schedule">{preset.scheduleCollapsed ? <details className="event-optional"><summary>Optional Schedule &amp; Location</summary>{schedule}</details> : schedule}</div> : <div key="books">{preset.booksMode === 'hidden' ? books.length > 0 && <p className="event-muted">{books.length} previously linked books are retained. Choose another event type to manage them.</p> : preset.booksMode === 'collapsed' ? <details className="event-optional"><summary>Optional Related Books ({books.length})</summary>{picker}</details> : picker}</div>)}
-      <section className="event-editor-section event-editor-footer">
+      <section className="event-editor-section event-editor-footer">{libraryId && <label>Event visibility<select aria-label="Event visibility" value={form.visibility || 'LIBRARY_MEMBERS'} disabled={disabled} onChange={e=>setForm({...form,visibility:e.target.value as 'LIBRARY_MEMBERS'|'PUBLIC'})}><option value="LIBRARY_MEMBERS">Library members</option>{library?.library_type==='PUBLIC_LIBRARY' && library.access_mode==='PUBLIC' && <option value="PUBLIC">Public</option>}</select></label>}
         <label className="event-checkbox"><input type="checkbox" checked={form.featured} disabled={disabled} onChange={e => setForm({ ...form, featured: e.target.checked })} />Featured event</label>
         {Boolean(loaded?.missing_related_work_ids?.length) && <p role="status" className="event-error">Some linked books have left the catalogue. Remove unavailable links before saving.</p>}
-        <div className="events-actions"><button className="event-button primary" disabled={disabled}>{busy ? 'Saving…' : loaded && loaded.status !== 'DRAFT' ? 'Save changes' : 'Save Draft'}</button>{(!loaded || loaded.status === 'DRAFT') && <button type="button" className="event-button" disabled={disabled} onClick={() => void save(true)}>Publish Now</button>}<Link className="event-button" to="/staff/events">Cancel editing</Link></div>
+        <div className="events-actions"><button className="event-button primary" disabled={disabled}>{busy ? 'Saving…' : loaded && loaded.status !== 'DRAFT' ? 'Save changes' : 'Save Draft'}</button>{(!loaded || loaded.status === 'DRAFT') && <button type="button" className="event-button" disabled={disabled} onClick={() => void save(true)}>Publish Now</button>}<Link className="event-button" to={base}>Cancel editing</Link></div>
         {loaded && <details className="event-optional event-audit"><summary>Event history · {loaded.status}</summary><p>Created by {loaded.created_by?.email || 'Unavailable staff account'}</p><p>Last updated by {loaded.updated_by?.email || 'Unavailable staff account'}</p>{loaded.published_at && <p>Published {new Date(loaded.published_at).toLocaleString()}</p>}</details>}
       </section>
     </form>}
-    {publish && <Modal title="Publish this event?" busy={busy} onClose={() => setPublish(false)}><p>It will become visible to library users and create a new-event badge.</p><EventPublishSummary event={current} />{error && <p role="alert">{error}</p>}<div className="events-actions"><button className="event-button" disabled={busy} onClick={() => setPublish(false)}>Keep as draft</button><button className="event-button primary" disabled={busy} onClick={() => void publishSaved()}>{busy ? 'Publishing…' : 'Publish event'}</button></div></Modal>}
+    {publish && <Modal title="Publish this event?" busy={busy} onClose={() => setPublish(false)}><p>It will become visible according to this event’s visibility. Global publication also updates the global event badge.</p><EventPublishSummary event={current} />{error && <p role="alert">{error}</p>}<div className="events-actions"><button className="event-button" disabled={busy} onClick={() => setPublish(false)}>Keep as draft</button><button className="event-button primary" disabled={busy} onClick={() => void publishSaved()}>{busy ? 'Publishing…' : 'Publish event'}</button></div></Modal>}
     {nextType && <Modal title="Change published event type?" busy={busy} onClose={() => setNextType(null)}><p>Change event type from {categories[form.category]} to {categories[nextType]}?</p><p>Entered values will be kept. Saving this correction will not publish it again or notify readers.</p><div className="events-actions"><button className="event-button" onClick={() => setNextType(null)}>Keep current type</button><button className="event-button primary" onClick={() => { setForm(value => ({ ...value, category: nextType })); setNextType(null); setErrors([]); setError('') }}>Change event type</button></div></Modal>}
   </div>
 }

@@ -1,0 +1,258 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-09T05:58:42.982929+00:00",
+  "sections": {
+    "A": {
+      "title": "Final result",
+      "result": "PASS — the verified overhaul is complete; no future module was started."
+    },
+    "B": {
+      "title": "Old frontend information architecture",
+      "result": "Persistent mixed institution navigation and one broad active-library selection."
+    },
+    "C": {
+      "title": "New frontend information architecture",
+      "result": "Product header + grouped avatar + account selector + separate URL-scoped patron/staff workspaces."
+    },
+    "D": {
+      "title": "Role separation model",
+      "result": "ACTIVE GENERAL_USER → patron; ACTIVE ADMIN/LIBRARIAN → staff only for that library. Global role grants no override."
+    },
+    "E": {
+      "title": "Patron workspace",
+      "result": "Selected-library Home, Browse Books, My Library, existing Reservations and Fees."
+    },
+    "F": {
+      "title": "Staff workspace",
+      "result": "Overview, Inventory, Circulation, existing Reservations/Fees, Settings and authorized administration."
+    },
+    "G": {
+      "title": "Owner / Admin behavior",
+      "result": "Owner remains ADMIN with existing owner status; staff-only, with Members & Staff and Audit."
+    },
+    "H": {
+      "title": "Librarian behavior",
+      "result": "Staff operational workspace; no same-library patron borrowing or ADMIN member/audit controls."
+    },
+    "I": {
+      "title": "General user behavior",
+      "result": "Patron personal workflows; no staff inventory mutation or operational workspace."
+    },
+    "J": {
+      "title": "Mixed multi-library account behavior",
+      "result": "Real global-ADMIN fixture successfully switched ADMIN A / LIBRARIAN C / GENERAL_USER B and D without cross-context changes."
+    },
+    "K": {
+      "title": "User menu",
+      "result": "Grouped membership lists, three previews per group, View all, profile/saved/invitations/explore/register/sign out; keyboard accessible."
+    },
+    "L": {
+      "title": "Patron library switcher",
+      "result": "Only active GENERAL_USER libraries; patronLibraryId remains independent."
+    },
+    "M": {
+      "title": "Staff library switcher",
+      "result": "Only active ADMIN/LIBRARIAN libraries; staffLibraryId remains independent."
+    },
+    "N": {
+      "title": "Route architecture",
+      "result": "Explicit /libraries/:id and /staff/libraries/:id trees; fresh server context before mount, wrong-mode redirects, legacy aliases."
+    },
+    "O": {
+      "title": "Backend patron guards",
+      "result": "Central require_library_patron inside existing locked access paths; staff personal endpoints return 403; staff operations preserved."
+    },
+    "P": {
+      "title": "Global header",
+      "result": "Permanent institution strip removed; global navigation, search, saved books, notifications and avatar retained."
+    },
+    "Q": {
+      "title": "Staff sidebar",
+      "result": "232px desktop sidebar at >=1024 CSS pixels; accessible native drawer below that breakpoint."
+    },
+    "R": {
+      "title": "Staff Overview",
+      "result": "Actual inventory/queue/loan counts, authorized membership total, empty-library onboarding and contextual quick actions."
+    },
+    "S": {
+      "title": "Inventory UX",
+      "result": "Compact staff table, canonical Requestable counts, filters, row overflow actions, Add/Upload, honest LEGACY/PREPARING states."
+    },
+    "T": {
+      "title": "Circulation UX",
+      "result": "Borrow Requests, Return Requests and operational Loans; existing physical receipt, stock, renewal and idempotency semantics retained."
+    },
+    "U": {
+      "title": "My Library UX",
+      "result": "Personal requests/current loans/history; pending return keeps the loan active until physical staff receipt."
+    },
+    "V": {
+      "title": "Registration flow",
+      "result": "Owner registration opens Staff Overview; live empty-library add with Title/Subject only succeeded."
+    },
+    "W": {
+      "title": "Invitation flow",
+      "result": "Accepted staff invitation opens the correct staff workspace; live GENERAL_USER B + LIBRARIAN onboarding-library account verified."
+    },
+    "X": {
+      "title": "Design system",
+      "result": "Existing LuminaR paper/rust/ink palette extended through shared tokens/components/focus treatment."
+    },
+    "Y": {
+      "title": "Forms",
+      "result": "Consistent labelled controls, errors and dialogs; inventory Title/Subject required, optional fields collapsed."
+    },
+    "Z": {
+      "title": "Tables",
+      "result": "Consistent headers, compact rows, actions, filters, paging and contained mobile scrolling."
+    },
+    "AA": {
+      "title": "Empty / loading / error states",
+      "result": "Shared StatePanel and useful page-specific empty actions, status announcements and Retry."
+    },
+    "AB": {
+      "title": "Responsive",
+      "result": "54 checks across six requested viewport sizes passed; three observed dimensions differ by at most one CSS pixel."
+    },
+    "AC": {
+      "title": "Accessibility",
+      "result": "Five structural axe surfaces passed; menu/drawer/dialog focus behavior verified; 390 rendered text checks, minimum contrast 4.90:1."
+    },
+    "AD": {
+      "title": "Ask LuminaR collision check",
+      "result": "Zero collisions across 54 final checks; staff hidden, account gateways compact, patron content bottom space."
+    },
+    "AE": {
+      "title": "Context / stale request isolation",
+      "result": "Owner/session-scoped independent selections, sequence/abort guards, queued old-account rejection, logout/account reset; login query/hash retained."
+    },
+    "AF": {
+      "title": "Backend tests",
+      "result": "1,580 passed; 10 pre-existing security skips; zero failures. Includes V1, 2A, 2B, pre-existing 2C and 13 new authorization cases."
+    },
+    "AG": {
+      "title": "Frontend tests",
+      "result": "422 passed, zero failures: 335 npm test plus 87 additional search/recommendation/events/RAG checks; 65 workspace cases included."
+    },
+    "AH": {
+      "title": "Browser validation",
+      "result": "54 final layouts plus mixed roles, registration, inventory add, invitations, pending return, authorized deep links and logout tested in an isolated real fixture."
+    },
+    "AI": {
+      "title": "Build / lint",
+      "result": "Build passes; lint zero errors/19 existing warnings; existing bundle warning documented."
+    },
+    "AJ": {
+      "title": "Exact files changed",
+      "result": "See frontend_workspace_manifest.json and frontend_workspace_changed_files.md, compared with the start-of-task source hashes rather than unrelated dirty Git state."
+    },
+    "AK": {
+      "title": "Reports created",
+      "result": "All 13 required reports plus source manifest, completion, commands, preservation, cleanup, browser geometry, contrast, logs/XML and screenshots."
+    },
+    "AL": {
+      "title": "Known limitations",
+      "result": "See the explicit limitations below; no unresolved failing check remains in the verified scope."
+    },
+    "AM": {
+      "title": "Improvement review",
+      "result": "All 20 requested topics classified with title, why, current limitation, recommendation, priority, timing and breaking impact."
+    },
+    "AN": {
+      "title": "Recommended next UX improvements",
+      "result": "Prioritize route code splitting/bundle reduction and route error boundaries; then searchable switchers, screen-reader walkthroughs and a real-state onboarding checklist."
+    },
+    "AO": {
+      "title": "Exact run commands",
+      "result": "See frontend_workspace_commands.md; no Router V1–V5 research, production migration, commit or deployment occurred."
+    }
+  },
+  "known_limitations": [
+    "Three requested desktop/tablet viewport dimensions were tested within +/-1 CSS pixel because of the Windows 125% DPI/integer-host API; exact observed dimensions are recorded.",
+    "Build retains an existing >500 kB chunk warning; main JS is 675.72 kB (184.69 kB gzip).",
+    "Lint retains 19 existing warnings, zero errors; backend security suite retains 10 existing skips.",
+    "Native library switchers are not searchable; the complete My libraries page supports search.",
+    "Original platform staff tools retain their distinct global-role domain and explicit legacy access.",
+    "Per-library frontend sequencing avoids one browser competing with itself; existing server busy responses remain possible across clients.",
+    "No external screen-reader user study or full large-tenant rendering benchmark was performed."
+  ],
+  "required_reports": [
+    "frontend_workspace_overhaul_baseline.json",
+    "frontend_workspace_architecture.md",
+    "frontend_role_separation.json",
+    "frontend_user_menu.json",
+    "frontend_patron_workspace.json",
+    "frontend_staff_workspace.json",
+    "frontend_design_system.md",
+    "frontend_inventory_overhaul.json",
+    "frontend_responsive.json",
+    "frontend_accessibility.json",
+    "frontend_live.json",
+    "frontend_regression.json",
+    "frontend_workspace_improvement_review.md"
+  ],
+  "backend": {
+    "tests": 1590,
+    "passed": 1580,
+    "failed": 0,
+    "skipped": 10
+  },
+  "frontend": {
+    "tests": 422,
+    "passed": 422,
+    "failed": 0,
+    "workspace_tests": 65,
+    "structural_axe_surfaces": 5,
+    "extra_product_tests": 87
+  },
+  "preservation": {
+    "status": "PASS",
+    "prior_report_count": 999,
+    "prior_reports_changed": [],
+    "baseline_counts": {
+      "books": 5000000,
+      "library_inventory": 3,
+      "issues": 39,
+      "reservations": 11,
+      "institution_libraries": 1,
+      "institution_library_books": 0,
+      "institution_holdings": 0,
+      "institution_copies": 0,
+      "fines": 5,
+      "institution_lending_config": 0,
+      "institution_lending_operations": 0,
+      "institution_lending_requests": 0,
+      "institution_loans": 0
+    },
+    "current_counts": {
+      "books": 5000000,
+      "library_inventory": 3,
+      "issues": 39,
+      "reservations": 11,
+      "institution_libraries": 1,
+      "institution_library_books": 0,
+      "institution_holdings": 0,
+      "institution_copies": 0,
+      "fines": 5,
+      "institution_lending_config": 0,
+      "institution_lending_operations": 0,
+      "institution_lending_requests": 0,
+      "institution_loans": 0
+    },
+    "production_counts_unchanged": true,
+    "fixture_absent": true
+  },
+  "cleanup": {
+    "fixture_database": "luminar_fw_live_2455cfe17d634beda2f0b33f4236c929",
+    "fixture_database_dropped": true,
+    "own_services_stopped": true,
+    "owned_pids": [
+      4008,
+      29488
+    ],
+    "cleanup_method": "Owned server processes were already stopped; exact disposable fixture database verified and dropped. No other process stopped.",
+    "production_modified": false,
+    "temporary_browser_tab_closed": true,
+    "browser_viewport_reset": true
+  }
+}

@@ -57,23 +57,31 @@ export function Table({
   children,
   empty,
   count,
+  label = 'Scrollable results',
+  className = '',
+  widths,
 }: {
   headers: string[];
   children: ReactNode;
   empty: string;
   count: number;
+  label?: string;
+  className?: string;
+  widths?: string[];
 }) {
   return count ? (
     <div
       className="staff-table-wrap"
       tabIndex={0}
-      aria-label="Scrollable results"
+      role="region"
+      aria-label={label}
     >
-      <table className="staff-table">
+      <table className={`staff-table ${className}`} aria-label={label}>
+        {widths && <colgroup>{widths.map((width, index) => <col key={index} style={{ width }} />)}</colgroup>}
         <thead>
           <tr>
             {headers.map((h) => (
-              <th key={h}>{h}</th>
+              <th key={h} scope="col">{h}</th>
             ))}
           </tr>
         </thead>
@@ -89,14 +97,16 @@ export function Pager({
   count,
   onChange,
   size = 20,
+  label = 'Results pagination',
 }: {
   page: number;
   count: number;
   onChange: (page: number) => void;
   size?: number;
+  label?: string;
 }) {
   return (
-    <div className="staff-pager">
+    <div className="staff-pager" role="navigation" aria-label={label}>
       <span>
         {count
           ? `${page * size + 1}–${Math.min((page + 1) * size, count)} of ${count}`
@@ -132,6 +142,7 @@ export function Modal({
     const previous = document.activeElement as HTMLElement;
     const dialog = ref.current;
     dialog?.showModal();
+    dialog?.querySelector<HTMLElement>('[data-autofocus]')?.focus();
     return () => {
       dialog?.close();
       previous?.focus();
@@ -140,14 +151,29 @@ export function Modal({
   return (
     <dialog
       ref={ref}
-      className={`staff-dialog ${className}`}
+      className={`staff-dialog ui-dialog ${className}`}
       aria-label={title}
+      onKeyDown={e => {
+        if (e.key === 'Escape') { e.preventDefault(); if (!busy) onClose(); }
+        if(e.key === 'Tab') {
+          const focusable=[...e.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(element=>element.getClientRects().length>0)
+          const first=focusable[0],last=focusable.at(-1)
+          if(first && (e.shiftKey && document.activeElement===first || !e.shiftKey && document.activeElement===last)) {
+            e.preventDefault();(e.shiftKey?last:first)?.focus()
+          }
+        }
+      }}
+      onClick={e => {
+        if (e.target !== e.currentTarget || busy) return;
+        const bounds = e.currentTarget.getBoundingClientRect();
+        if (e.clientX < bounds.left || e.clientX > bounds.right || e.clientY < bounds.top || e.clientY > bounds.bottom) onClose();
+      }}
       onCancel={(e) => {
         e.preventDefault();
         if (!busy) onClose();
       }}
     >
-      <header>
+      <header role="presentation">
         <h2>{title}</h2>
         <button aria-label="Close dialog" disabled={busy} onClick={onClose}>
           ×

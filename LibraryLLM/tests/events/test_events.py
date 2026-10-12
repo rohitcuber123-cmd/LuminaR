@@ -17,6 +17,8 @@ NOW=datetime(2026,10,6,12,tzinfo=timezone.utc)
 def isolated(monkeypatch):
     name='luminar_events_test_'+uuid4().hex
     db=mongo[name]
+    from backend.database import mongodb
+    monkeypatch.setattr(mongodb,'db',db)
     monkeypatch.setattr(es,'db',db);monkeypatch.setattr(es,'events',db.events);monkeypatch.setattr(es,'states',db.event_user_state)
     monkeypatch.setattr(es,'books_collection',db.books);monkeypatch.setattr(es,'users_collection',db.users)
     monkeypatch.setattr(identity_service,'users_collection',db.users)
@@ -24,6 +26,7 @@ def isolated(monkeypatch):
     db.users.insert_many([{'user_id':uid,'name':'Test','email':f'u{uid}@test.invalid','role':role,
         'is_active':True,'is_email_verified':True} for uid,role in [(1,'ADMIN'),(2,'LIBRARIAN'),(3,'GENERAL_USER'),(4,'GENERAL_USER')]])
     db.books.insert_many([{'work_id':f'OL{i}W','title':f'Book {i}','authors':'Test Author'} for i in range(1,15)])
+    db.platform_role_assignments.insert_many([{'user_id':uid,'role':'PLATFORM_ADMIN','status':'ACTIVE','approved_by':'test-operator','approval_ref':'TEST-REVIEW','approved_at':datetime.now(timezone.utc)} for uid in (1,2)])
     es.ensure_indexes()
     app=FastAPI();app.include_router(router);app.include_router(staff_router)
     yield db,app
@@ -35,11 +38,11 @@ def http(fixture,uid=1,sid='session',claimed='ADMIN'):
     return TestClient(app)
 
 def create(fixture,uid=1,**fields):
-    return http(fixture,uid).post('/staff/events',json={'title':'Library program','category':'OTHER',**fields})
+    return http(fixture,uid).post('/platform/events',json={'title':'Library program','category':'OTHER',**fields})
 
 def publish(fixture,uid=1,**fields):
     row=create(fixture,uid,**fields).json()
-    return http(fixture,uid).post('/staff/events/'+row['event_id']+'/publish')
+    return http(fixture,uid).post('/platform/events/'+row['event_id']+'/publish')
 
 def unseen(fixture,uid=3):
     return http(fixture,uid).get('/events/unseen').json()
@@ -57,18 +60,18 @@ def test_event_create_admin_and_librarian(isolated,uid):
 @pytest.mark.parametrize('action',['create','edit','publish','cancel','archive','delete','manage','detail'])
 def test_general_user_cannot_manage_even_with_claimed_admin(isolated,action):
     row=create(isolated).json();id=row['event_id'];client=http(isolated,3,claimed='ADMIN')
-    responses={'create':lambda:client.post('/staff/events',json={'title':'Test Event','category':'OTHER'}),
-        'edit':lambda:client.patch('/staff/events/'+id,json={'title':'Edited Event'}),
-        'delete':lambda:client.delete('/staff/events/'+id),'manage':lambda:client.get('/staff/events'),
-        'detail':lambda:client.get('/staff/events/'+id)}
-    response=responses[action]() if action in responses else client.post('/staff/events/'+id+'/'+action)
+    responses={'create':lambda:client.post('/platform/events',json={'title':'Test Event','category':'OTHER'}),
+        'edit':lambda:client.patch('/platform/events/'+id,json={'title':'Edited Event'}),
+        'delete':lambda:client.delete('/platform/events/'+id),'manage':lambda:client.get('/platform/events'),
+        'detail':lambda:client.get('/platform/events/'+id)}
+    response=responses[action]() if action in responses else client.post('/platform/events/'+id+'/'+action)
     assert response.status_code==403
 
 @pytest.mark.parametrize('field',['created_by_user_id','updated_by_user_id','status','published_at','event_id','user_id'])
 def test_audit_and_status_fields_cannot_be_spoofed(isolated,field):
     assert create(isolated,**{field:1}).status_code==422
     row=create(isolated).json()
-    assert http(isolated).patch('/staff/events/'+row['event_id'],json={field:1}).status_code==422
+    assert http(isolated).patch('/platform/events/'+row['event_id'],json={field:1}).status_code==422
 
 def test_draft_not_public_and_defaults_safe(isolated):
     row=create(isolated).json()
@@ -82,27 +85,27 @@ def test_publish_sets_immutable_date_and_current_metadata(isolated):
     result=http(isolated,3).get('/events/'+row['event_id']).json()
     assert result['related_books'][0]['title']=='Current title'
     assert 'created_by_user_id' not in result and 'created_by' not in result
-    edited=http(isolated,1).patch('/staff/events/'+row['event_id'],json={'description':'Correction','location':'New room'})
+    edited=http(isolated,1).patch('/platform/events/'+row['event_id'],json={'description':'Correction','location':'New room'})
     assert edited.status_code==200 and edited.json()['published_at']==row['published_at']
     assert edited.json()['created_by_user_id']==2 and edited.json()['updated_by_user_id']==1
-    assert http(isolated).post('/staff/events/'+row['event_id']+'/publish').json()['published_at']==row['published_at']
+    assert http(isolated).post('/platform/events/'+row['event_id']+'/publish').json()['published_at']==row['published_at']
 
 def test_delete_only_draft(isolated):
     row=create(isolated).json()
-    assert http(isolated).delete('/staff/events/'+row['event_id']).status_code==200
+    assert http(isolated).delete('/platform/events/'+row['event_id']).status_code==200
     row=publish(isolated).json()
-    assert http(isolated).delete('/staff/events/'+row['event_id']).status_code==409
+    assert http(isolated).delete('/platform/events/'+row['event_id']).status_code==409
 
 def test_cancel_and_archive_history_visibility(isolated):
     row=publish(isolated).json();id=row['event_id']
-    assert http(isolated,2).post('/staff/events/'+id+'/cancel').json()['status']=='CANCELLED'
+    assert http(isolated,2).post('/platform/events/'+id+'/cancel').json()['status']=='CANCELLED'
     assert http(isolated,3).get('/events/'+id).json()['status']=='CANCELLED'
     assert http(isolated,3).get('/events').json()['count']==0
-    assert http(isolated,2).post('/staff/events/'+id+'/archive').json()['status']=='ARCHIVED'
+    assert http(isolated,2).post('/platform/events/'+id+'/archive').json()['status']=='ARCHIVED'
     assert http(isolated,3).get('/events/'+id).status_code==404
-    assert http(isolated).patch('/staff/events/'+id,json={'title':'Edited archive'}).status_code==409
-    assert http(isolated).post('/staff/events/'+id+'/publish').status_code==409
-    assert http(isolated).get('/staff/events?status=ARCHIVED').json()['count']==1
+    assert http(isolated).patch('/platform/events/'+id,json={'title':'Edited archive'}).status_code==409
+    assert http(isolated).post('/platform/events/'+id+'/publish').status_code==409
+    assert http(isolated).get('/platform/events?status=ARCHIVED').json()['count']==1
 
 @pytest.mark.parametrize('fields',[{'title':'a'},{'title':' '},{'title':'x'*141},{'summary':'x'*301},
     {'description':'x'*5001},{'location':'x'*201},{'category':'FREE_TEXT'},{'featured':'yes'},
@@ -115,14 +118,14 @@ def test_event_validation(isolated,fields):
 def test_patch_merged_date_validation_and_utc(isolated):
     row=create(isolated,start_at='2026-10-08T17:30:00+05:30',end_at='2026-10-08T18:30:00+05:30').json()
     assert datetime.fromisoformat(row['start_at'])==datetime(2026,10,8,12,tzinfo=timezone.utc)
-    assert http(isolated).patch('/staff/events/'+row['event_id'],json={'end_at':'2026-10-08T11:00:00Z'}).status_code==422
-    assert http(isolated).patch('/staff/events/'+row['event_id'],json={'start_at':None,'end_at':None}).status_code==200
+    assert http(isolated).patch('/platform/events/'+row['event_id'],json={'end_at':'2026-10-08T11:00:00Z'}).status_code==422
+    assert http(isolated).patch('/platform/events/'+row['event_id'],json={'start_at':None,'end_at':None}).status_code==200
 
 def test_unknown_related_set_rejected_and_removed_catalogue_at_publish(isolated):
     assert create(isolated,related_work_ids=['OL1W','bad']).status_code==422
     row=create(isolated,related_work_ids=['OL1W']).json()
     isolated[0].books.delete_one({'work_id':'OL1W'})
-    assert http(isolated).post('/staff/events/'+row['event_id']+'/publish').status_code==422
+    assert http(isolated).post('/platform/events/'+row['event_id']+'/publish').status_code==422
     assert isolated[0].events.find_one({'event_id':row['event_id']})['status']=='DRAFT'
 
 def test_upcoming_past_featured_category_search_pagination(isolated):
@@ -147,7 +150,7 @@ def test_new_publish_unseen_mark_seen_equal_timestamp_race_and_edit(isolated):
     assert unseen(isolated)['count']==0
     unseen(isolated,4)
     draft=create(isolated).json();assert unseen(isolated)['count']==0
-    http(isolated).post('/staff/events/'+draft['event_id']+'/publish')
+    http(isolated).post('/platform/events/'+draft['event_id']+'/publish')
     snapshot=unseen(isolated);assert snapshot['count']==1
     # A new publication shares exactly the same millisecond but isn't in the
     # issued receipt; advancing state must not hide it.
@@ -156,7 +159,7 @@ def test_new_publish_unseen_mark_seen_equal_timestamp_race_and_edit(isolated):
     assert result.json()['count']==1 and result.json()['latest_event']['event_id']==second['event_id']
     assert unseen(isolated,4)['count']==2
     assert http(isolated,3).post('/events/mark-seen',json={'cursor':result.json()['seen_cursor']}).json()['count']==0
-    http(isolated).patch('/staff/events/'+second['event_id'],json={'description':'Correction'})
+    http(isolated).patch('/platform/events/'+second['event_id'],json={'description':'Correction'})
     assert unseen(isolated)['count']==0 and isolated[0].event_user_state.count_documents({})==2
     assert isolated[0]['notifications'].count_documents({})==0
 
@@ -174,9 +177,9 @@ def test_cancelled_archived_unseen_and_new_user_backlog(isolated):
     row=publish(isolated).json()
     assert unseen(isolated)['count']==1
     assert unseen(isolated,4)['count']==0  # First access seeds historic backlog.
-    http(isolated).post('/staff/events/'+row['event_id']+'/cancel')
+    http(isolated).post('/platform/events/'+row['event_id']+'/cancel')
     assert unseen(isolated)['count']==0
-    http(isolated).post('/staff/events/'+row['event_id']+'/archive')
+    http(isolated).post('/platform/events/'+row['event_id']+'/archive')
     assert unseen(isolated)['count']==0
 
 def test_seen_window_and_bounded_state(isolated):

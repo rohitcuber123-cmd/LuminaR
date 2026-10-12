@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "evidence_type": "derived from completed test artifacts, not a new test run",
+  "backend_evidence": "institution_v1_backend.xml",
+  "backend_total_passed": 56,
+  "matched_backend_cases": 4,
+  "tests": [
+    "test_discovery_search_filter_pagination_and_safe_metadata",
+    "test_inactive_library_denies_members_and_discovery[SUSPENDED]",
+    "test_inactive_library_denies_members_and_discovery[ARCHIVED]",
+    "test_pagination_bounds_and_uuid_authorization"
+  ],
+  "frontend_evidence": "institution_v1_frontend.log (28 institution component tests)",
+  "live_evidence": "institution_v1_live.json (A-J, real uvicorn + HTTP + disposable Mongo)",
+  "live_status": "PASS",
+  "browser_status": "PASS",
+  "assertions": [
+    "Escaped literal Mongo name/slug/city/region search",
+    "All/public/private/mine filters",
+    "Bounded limit/offset",
+    "Safe display metadata and requesting-user membership only",
+    "Inactive libraries excluded"
+  ],
+  "limitations": [
+    "Literal regex/offset search is not a 10k-library scale benchmark; directory profiles are public."
+  ],
+  "note": "Feature subsets intentionally overlap; do not add subset counts as unique tests."
+}

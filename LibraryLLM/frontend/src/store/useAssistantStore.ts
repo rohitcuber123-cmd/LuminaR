@@ -2,6 +2,9 @@ import { create } from 'zustand'
 import { ApiError, getToken, BORROW_STATE_CHANGED } from '../lib/api.ts'
 import { assistantChat, uniqueIds, validWorkId, recentIds, MAX_SELECTION_MESSAGE, sanitizePageContext } from '../lib/assistant.ts'
 import type { AssistantBook, AssistantChatMessage, AssistantPageContext, AssistantRequest } from '../lib/assistantTypes.ts'
+import { useInstitutionStore } from './useInstitutionStore.ts'
+import { productLibraryId } from '../lib/productContext.ts'
+import { libraryRole } from '../lib/libraryWorkspace.ts'
 
 type SelectedBook = Pick<AssistantBook, 'work_id' | 'title' | 'authors'>
 interface SavedSession { owner: string | null; selected: SelectedBook[]; conversationId: string | null }
@@ -25,7 +28,7 @@ const initial = restore()
 let sequence = 0
 let controller: AbortController | null = null
 let revision = 0
-export type SendOptions = Pick<AssistantRequest, 'action' | 'pending_action_id' | 'action_work_ids' | 'result_offset'>
+export type SendOptions = Pick<AssistantRequest, 'action' | 'pending_action_id' | 'action_work_ids' | 'result_offset' | 'lending_context'>
 interface AssistantState extends SavedSession {
   sessionToken: string | null
   open: boolean; messages: AssistantChatMessage[]; recent: string[]; busy: boolean; startedAt: number | null; selectionNotice: string
@@ -73,11 +76,17 @@ export const useAssistantStore = create<AssistantState>((set, get) => ({
       get().syncSession(currentOwner(), getToken())
     }
     const snapshot = get()
+    const memberships = useInstitutionStore.getState()
+    const route = snapshot.pagePath || window.location.pathname + window.location.search
+    const [pathname, search = ''] = route.split('?')
+    const libraryId = productLibraryId(pathname, search)
+    const library = memberships.session === getToken() ? memberships.libraries.find(l => l.library_id === libraryId && libraryRole(l) === 'GENERAL_USER') : undefined
     const request: AssistantRequest = {
       message, conversation_id: snapshot.conversationId, selected_work_ids: uniqueIds(snapshot.selected.map(b => b.work_id), 4),
       ...(options.action_work_ids?.length ? { action_work_ids: uniqueIds(options.action_work_ids, 4) } : {}),
       recent_work_ids: [...snapshot.recent], page_context: sanitizePageContext(context), action: options.action ?? null, pending_action_id: options.pending_action_id ?? null,
       ...(options.result_offset ? { result_offset: options.result_offset } : {}),
+      ...(options.lending_context ? { lending_context: options.lending_context } : library?.membership?.status === 'ACTIVE' ? { lending_context: { library_id: library.library_id } } : {}),
     }
     const version = revision, token = getToken(), startedAt = Date.now()
     controller = new AbortController()

@@ -70,6 +70,21 @@ def test_ciphertext_contains_no_content_filename_or_key(env):
     assert env.cache.scope('1') != env.cache.scope('2')
 
 
+def test_ocr_metadata_survives_encrypted_cache_without_repreparing(env,monkeypatch):
+    row,chunks,vectors=env.service.prepared(env.doc['document_id'],env.a)
+    chunks[0]['extraction_method']='OCR'
+    path=env.service.directory(env.doc['document_id'])/'chunks.json';path.write_text(json.dumps(chunks))
+    blob,descriptor=env.service.export(env.doc['document_id'],env.a)
+    monkeypatch.setattr(env.service.processor,'extract_pdf',lambda *_:pytest.fail('Restored document reparsed'))
+    monkeypatch.setattr(env.service.processor,'embed_chunks',lambda *_:pytest.fail('Restored document reembedded'))
+    restored=env.service.restore(blob,env.a2)
+    assert restored['ocr']['ocr_pages']==1 and restored['ocr']['restored']
+    _,portable,_=env.service.prepared(restored['document_id'],env.a2)
+    assert portable[0]['extraction_method']=='OCR' and portable[0]['page']==1
+    assert env.service.purge(restored['document_id'])
+    assert not env.service.directory(restored['document_id']).exists()
+
+
 def test_cross_account_descriptor_and_bundle_rejected(env):
     for action in [lambda: env.cache.inspect('2', env.metadata['encrypted_descriptor']), lambda: env.service.restore(env.blob, env.b)]:
         with pytest.raises(HTTPException) as exc: action()

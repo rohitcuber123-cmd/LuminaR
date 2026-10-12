@@ -46,14 +46,13 @@ def test_definition_quality_and_duplicates():
     assert any(c['concept'].lower() == 'retention policy' for c in definitions)
 
 
-def test_cloze_exact_restoration_and_no_generic_masks():
+def test_cards_have_independent_prompts_and_distinct_supported_facts():
     cards = a.generate('FLASHCARDS', chunks(), 'Manual', {})['cards']
-    cloze = [c for c in cards if c['type'] == 'cloze']
-    assert cloze
-    for c in cloze:
-        assert c['front'].count('_____') == 1
-        assert c['front'].replace('_____', c['back']) == c['sourceExcerpt']
-        assert c['sourceExcerpt'] in TEXT and a.valid_phrase(c['back'])
+    assert cards
+    assert len({c['knowledgeItemId'] for c in cards}) == len(cards)
+    assert len({c['sourceExcerpt'] for c in cards}) == len(cards)
+    assert all(c['concept'] in c['front'] and c['sourceExcerpt'] in TEXT for c in cards)
+    assert all(c['back'] == c['sourceExcerpt'] for c in cards)
 
 
 def test_ambiguous_cloze_templates_rejected():
@@ -80,7 +79,7 @@ def test_map_limits_edges_and_hierarchy_without_embeddings():
     assert all(e['source'] in ids and e['target'] in ids for e in graph['edges'])
     assert {'chapter', 'section', 'concept', 'document'} <= {n['type'] for n in graph['nodes']}
     flat = a.generate('MIND_MAP', chunks(), 'Manual', {})
-    assert all(e['source'] == 'document' for e in flat['edges'])
+    assert all(e['relation'] == 'document topic' or e['sourceChunkIds'] for e in flat['edges'])
 
 
 def test_quiz_grounding_and_safe_fallback():
@@ -91,7 +90,9 @@ def test_quiz_grounding_and_safe_fallback():
         if q['type'] == 'fill_blank':
             assert q['correctAnswer'] in q['sourceExcerpt']
         else:
-            assert q['type'] == 'true_false' and q['correctAnswer'] == 'True'
+            assert q['type'] == 'mcq' and q['correctAnswer'] in q['options']
+            assert len(q['options']) == len(set(q['options'])) == 4
+            assert all(source['sourceExcerpt'] in TEXT for source in q['optionSources'].values())
 
 
 def test_empty_missing_structure_and_large_document():
@@ -108,7 +109,7 @@ def test_empty_missing_structure_and_large_document():
 
 
 def test_generation_modules_have_only_allowed_dependencies():
-    allowed = {'hashlib', 'math', 're', 'collections', 'json', 'time', 'uuid', 'fastapi', 'rag.services', 'typing', 'pydantic', 'backend.dependencies', 'rag.services.knowledge_quiz'}
+    allowed = {'hashlib', 'math', 're', 'collections', 'json', 'time', 'uuid', 'fastapi', 'rag.services', 'typing', 'pydantic', 'backend.dependencies', 'rag.services.knowledge_quiz', 'threading', 'concurrent.futures'}
     for name in ('knowledge_algorithms.py', 'knowledge_artifacts.py', 'knowledge_routes.py'):
         tree = ast.parse((Path(__file__).parents[1] / 'rag/services' / name).read_text())
         for node in ast.walk(tree):

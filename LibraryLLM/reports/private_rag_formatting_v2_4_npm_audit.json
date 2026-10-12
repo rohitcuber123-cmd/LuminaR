@@ -1,0 +1,145 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "katex": {
+      "name": "katex",
+      "severity": "low",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1241206,
+          "name": "katex",
+          "dependency": "katex",
+          "title": "KaTeX: Existing prototype pollution can bypass trust restrictions",
+          "url": "https://github.com/advisories/GHSA-238p-pmpm-9mq7",
+          "severity": "low",
+          "cwe": [
+            "CWE-807"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": ">=0.11.0 <0.18.2"
+        }
+      ],
+      "effects": [
+        "micromark-extension-math",
+        "rehype-katex"
+      ],
+      "range": "0.11.0 - 0.18.1",
+      "nodes": [
+        "node_modules/micromark-extension-math/node_modules/katex",
+        "node_modules/rehype-katex/node_modules/katex"
+      ],
+      "fixAvailable": {
+        "name": "rehype-katex",
+        "version": "1.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "micromark-extension-math": {
+      "name": "micromark-extension-math",
+      "severity": "low",
+      "isDirect": false,
+      "via": [
+        "katex"
+      ],
+      "effects": [
+        "remark-math"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/micromark-extension-math"
+      ],
+      "fixAvailable": {
+        "name": "remark-math",
+        "version": "3.0.1",
+        "isSemVerMajor": true
+      }
+    },
+    "rehype-katex": {
+      "name": "rehype-katex",
+      "severity": "low",
+      "isDirect": true,
+      "via": [
+        "katex"
+      ],
+      "effects": [],
+      "range": ">=2.0.0",
+      "nodes": [
+        "node_modules/rehype-katex"
+      ],
+      "fixAvailable": {
+        "name": "rehype-katex",
+        "version": "1.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "remark-math": {
+      "name": "remark-math",
+      "severity": "low",
+      "isDirect": true,
+      "via": [
+        "micromark-extension-math"
+      ],
+      "effects": [],
+      "range": ">=4.0.0",
+      "nodes": [
+        "node_modules/remark-math"
+      ],
+      "fixAvailable": {
+        "name": "remark-math",
+        "version": "3.0.1",
+        "isSemVerMajor": true
+      }
+    },
+    "source-map-js": {
+      "name": "source-map-js",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1241209,
+          "name": "source-map-js",
+          "dependency": "source-map-js",
+          "title": "source-map-js allows event-loop denial of service through indexed source-map section offsets",
+          "url": "https://github.com/advisories/GHSA-68fv-2mgg-jv7q",
+          "severity": "high",
+          "cwe": [
+            "CWE-1284"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": ">=1.0.0 <1.2.2"
+        }
+      ],
+      "effects": [],
+      "range": "1.0.0 - 1.2.1",
+      "nodes": [
+        "node_modules/source-map-js"
+      ],
+      "fixAvailable": true
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 4,
+      "moderate": 0,
+      "high": 1,
+      "critical": 0,
+      "total": 5
+    },
+    "dependencies": {
+      "prod": 170,
+      "dev": 76,
+      "optional": 95,
+      "peer": 12,
+      "peerOptional": 0,
+      "total": 321
+    }
+  }
+}

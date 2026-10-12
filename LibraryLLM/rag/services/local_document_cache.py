@@ -117,7 +117,8 @@ class LocalDocumentCache:
     def pack(self, document, chunks, vectors, cache_id):
         vector_file = io.BytesIO()
         np.save(vector_file, vectors, allow_pickle=False)
-        portable = [{k: c[k] for k in ('chunk_id', 'page', 'text')} for c in chunks]
+        portable = [{**{k: c[k] for k in ('chunk_id', 'page', 'text')},
+                     **({'extraction_method':c['extraction_method']} if c.get('extraction_method') in {'NATIVE','OCR'} else {})} for c in chunks]
         source_map = [{'chunk_id': c['chunk_id'], 'page': c['page']} for c in portable]
         entries = {'chunks.json': canonical(portable), 'embeddings.npy': vector_file.getvalue(), 'source_map.json': canonical(source_map)}
         manifest = {'format_version': FORMAT, 'cache_id': cache_id, 'document_sha256': document['document_sha256'],
@@ -186,7 +187,8 @@ class LocalDocumentCache:
             chunks = json.loads(contents['chunks.json'])
             if not isinstance(chunks, list) or len(chunks) != manifest['chunk_count']:
                 fail()
-            if any(set(c) != {'chunk_id', 'page', 'text'} or not isinstance(c['text'], str) or not 0 < len(c['text']) <= 3000
+            if any(not isinstance(c, dict) or set(c) not in ({'chunk_id', 'page', 'text'}, {'chunk_id', 'page', 'text', 'extraction_method'})
+                   or ('extraction_method' in c and c['extraction_method'] not in {'NATIVE','OCR'}) or not isinstance(c['text'], str) or not 0 < len(c['text']) <= 3000
                    or type(c['page']) is not int or not 1 <= c['page'] <= manifest['pages']
                    or not isinstance(c['chunk_id'], str) or len(c['chunk_id']) > 100 for c in chunks):
                 fail()

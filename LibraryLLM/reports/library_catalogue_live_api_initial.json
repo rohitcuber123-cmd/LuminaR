@@ -1,0 +1,205 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-09T10:59:21.492112+00:00",
+  "database": "luminar_catalogue_live_a4fcb44f091b4b949a3d04ffca1bc4c9",
+  "libraries": [
+    {
+      "library_id": "50a7d708-ff79-4f61-b710-c2a302fbeba4",
+      "name": "Catalogue Library A",
+      "book_ids": [
+        "f7fc9b5d-a745-4c14-9892-25f7e62241f2",
+        "5be51efe-efa2-40d7-b629-e4ababe71421",
+        "bb4cf31c-27c6-4bda-b5da-9faa777852ab",
+        "62908601-a07d-44a6-9ae1-1db3464176b4",
+        "e3f78758-7525-49c4-9d57-912b5897543c",
+        "91a3b69f-552d-4820-9919-f50316f9422d",
+        "47907f88-0817-480a-9db3-b04e9d01668f",
+        "43625143-2ada-41c5-89d4-093009d80f07",
+        "cc98ede9-27e9-4da9-97be-5017b06833d4",
+        "e87526eb-530b-4174-8a87-8f91028d51d5"
+      ]
+    },
+    {
+      "library_id": "90a9ac96-1489-49b4-918e-b0f0ed4699b5",
+      "name": "Catalogue Library B",
+      "book_ids": []
+    },
+    {
+      "library_id": "9004d508-1e5c-4d9c-a926-233da7cb59c2",
+      "name": "Catalogue Library C",
+      "book_ids": [
+        "b5c0e77a-826c-4671-9f24-e3670a039c52",
+        "0e508834-ede8-4864-ac63-97f6ab72622f",
+        "1803c92a-e1b2-464b-a331-a1d44b9e658f",
+        "c9abd725-9ab6-4a67-80ae-9545b0f5fd91"
+      ]
+    }
+  ],
+  "global_work_id": "OL19545719W",
+  "global_title": "Fundamentals of Deep Learning",
+  "global_catalogue_count": 5000000,
+  "scenarios": {
+    "A": "10 real local books",
+    "B": "zero books; existing 5M read-only fallback",
+    "C": "local-only records without ISBN/work ID",
+    "D": "non-owned global context returns no physical holding",
+    "E": "same global work owned A / non-owned B",
+    "G": "real borrowing/reservation activity",
+    "H": "four-book collection with no popularity"
+  },
+  "home_counts": [
+    10,
+    0,
+    4
+  ],
+  "own_state_summary": {
+    "pending_requests": 1,
+    "active_loans": 1,
+    "waiting_reservations": 1
+  },
+  "staff_sources": [
+    {
+      "library_id": "50a7d708-ff79-4f61-b710-c2a302fbeba4",
+      "library_name": "Catalogue Library A",
+      "catalogue_source": "LIBRARY_LOCAL",
+      "local_book_count": 10,
+      "capabilities": {
+        "physical_actions": false,
+        "reservations": false,
+        "local_search": true,
+        "global_discovery": false
+      },
+      "circulation_state": "CANONICAL",
+      "discovery_notice": null
+    },
+    {
+      "library_id": "90a9ac96-1489-49b4-918e-b0f0ed4699b5",
+      "library_name": "Catalogue Library B",
+      "catalogue_source": "GLOBAL_FALLBACK",
+      "local_book_count": 0,
+      "capabilities": {
+        "physical_actions": false,
+        "reservations": false,
+        "local_search": false,
+        "global_discovery": true
+      },
+      "circulation_state": "CANONICAL",
+      "discovery_notice": "Global Catalogue \u00b7 Not currently held by this library."
+    }
+  ],
+  "api_timings": [
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/home",
+      "elapsed_ms": 80.04,
+      "bytes": 28928
+    },
+    {
+      "path": "/libraries/90a9ac96-1489-49b4-918e-b0f0ed4699b5/catalogue/home",
+      "elapsed_ms": 23.86,
+      "bytes": 541
+    },
+    {
+      "path": "/libraries/9004d508-1e5c-4d9c-a926-233da7cb59c2/catalogue/home",
+      "elapsed_ms": 45.52,
+      "bytes": 9852
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/global-books/OL19545719W",
+      "elapsed_ms": 52.6,
+      "bytes": 1498
+    },
+    {
+      "path": "/libraries/90a9ac96-1489-49b4-918e-b0f0ed4699b5/catalogue/global-books/OL19545719W",
+      "elapsed_ms": 21.85,
+      "bytes": 388
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/books",
+      "elapsed_ms": 64.01,
+      "bytes": 12304
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/books?sort=new_arrivals",
+      "elapsed_ms": 54.61,
+      "bytes": 12304
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/books?sort=popular",
+      "elapsed_ms": 52.24,
+      "bytes": 4363
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/genres",
+      "elapsed_ms": 43.19,
+      "bytes": 452
+    },
+    {
+      "path": "/libraries/90a9ac96-1489-49b4-918e-b0f0ed4699b5/catalogue/books",
+      "elapsed_ms": 21.68,
+      "bytes": 438
+    },
+    {
+      "path": "/libraries/90a9ac96-1489-49b4-918e-b0f0ed4699b5/catalogue/books?sort=new_arrivals",
+      "elapsed_ms": 19.41,
+      "bytes": 438
+    },
+    {
+      "path": "/libraries/90a9ac96-1489-49b4-918e-b0f0ed4699b5/catalogue/books?sort=popular",
+      "elapsed_ms": 19.37,
+      "bytes": 438
+    },
+    {
+      "path": "/libraries/90a9ac96-1489-49b4-918e-b0f0ed4699b5/catalogue/genres",
+      "elapsed_ms": 33.28,
+      "bytes": 438
+    },
+    {
+      "path": "/libraries/9004d508-1e5c-4d9c-a926-233da7cb59c2/catalogue/books",
+      "elapsed_ms": 33.47,
+      "bytes": 5048
+    },
+    {
+      "path": "/libraries/9004d508-1e5c-4d9c-a926-233da7cb59c2/catalogue/books?sort=new_arrivals",
+      "elapsed_ms": 32.18,
+      "bytes": 5048
+    },
+    {
+      "path": "/libraries/9004d508-1e5c-4d9c-a926-233da7cb59c2/catalogue/books?sort=popular",
+      "elapsed_ms": 24.33,
+      "bytes": 381
+    },
+    {
+      "path": "/libraries/9004d508-1e5c-4d9c-a926-233da7cb59c2/catalogue/genres",
+      "elapsed_ms": 23.23,
+      "bytes": 415
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/books?search=unmatched-catalogue-phrase",
+      "elapsed_ms": 40.75,
+      "bytes": 382
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/home",
+      "elapsed_ms": 7.22,
+      "bytes": 46
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/home",
+      "elapsed_ms": 6.13,
+      "bytes": 40
+    },
+    {
+      "path": "/libraries/50a7d708-ff79-4f61-b710-c2a302fbeba4/catalogue/source",
+      "elapsed_ms": 38.37,
+      "bytes": 311
+    },
+    {
+      "path": "/libraries/90a9ac96-1489-49b4-918e-b0f0ed4699b5/catalogue/source",
+      "elapsed_ms": 19.86,
+      "bytes": 365
+    }
+  ],
+  "production_mutations": 0,
+  "isolation": "Only fixture DB writes; production books/categories wrapped in method-whitelisted ReadOnly collections.",
+  "global_search_live_limit": "Existing Search service port 8003 is not running; adapter/routing covered by frontend and frozen Search regression, no fake engine or index build."
+}

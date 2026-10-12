@@ -1,0 +1,2700 @@
+{
+  "phase": "IMPLEMENTED_WITH_BROWSER_GATE_PENDING",
+  "features": [
+    {
+      "id": "home",
+      "feature": "Home",
+      "global_implementation": "Home + HomeCatalogueContext + shared cards",
+      "library_implementation": "Home + HomeCatalogueContext + shared cards",
+      "account_implementation": null,
+      "backend_endpoints": "/books/; /books/popular; /books/new-arrivals; /libraries/{id}/catalogue/home; /recommendations",
+      "data_source": "home",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "Home + HomeCatalogueContext + shared cards",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Existing accepted shared composition; audit every rail action.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "logo",
+      "feature": "LUMINAR logo",
+      "global_implementation": "useProductContext / productHomePath",
+      "library_implementation": "useProductContext / productHomePath",
+      "account_implementation": null,
+      "backend_endpoints": "frontend URL state; /libraries/{id}/context",
+      "data_source": "navigation",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "useProductContext / productHomePath",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "personal URL preserves library logo and catalogue despite stale remembered library",
+          "global URL ignores remembered and forged query contexts",
+          "personal back and global reset survive browser-style navigation"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Explicit patron URL, including return context on personal pages; global / remains global.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "header",
+      "feature": "Header navigation",
+      "global_implementation": "Header + useProductContext",
+      "library_implementation": "Header + useProductContext",
+      "account_implementation": null,
+      "backend_endpoints": "frontend URL state; /libraries/{id}/context",
+      "data_source": "navigation",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "Header + useProductContext",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "personal URL preserves library logo and catalogue despite stale remembered library",
+          "GLOBAL shared navigation preserves only explicit return context",
+          "LIBRARY shared navigation preserves only explicit return context"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Same header family; data-specific destinations; account context should be explicit.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "switcher",
+      "feature": "Patron library switcher",
+      "global_implementation": "PatronLibraryShell / verified memberships",
+      "library_implementation": "PatronLibraryShell / verified memberships",
+      "account_implementation": null,
+      "backend_endpoints": "/me/libraries; /libraries/{id}/context; /invitations",
+      "data_source": "institutions",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "PatronLibraryShell / verified memberships",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institutions.test.tsx",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institutions.test.tsx",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Only active GENERAL_USER memberships enter Patron mode; staff identities stay separate.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "catalogue",
+      "feature": "Catalog / Browse Books",
+      "global_implementation": "GlobalCatalogue / LibraryCataloguePage + CatalogueSurface",
+      "library_implementation": "GlobalCatalogue / LibraryCataloguePage + CatalogueSurface",
+      "account_implementation": null,
+      "backend_endpoints": "/books/?category&author&sort&offset; /libraries/{id}/catalogue/books; /libraries/{id}/catalogue/genres",
+      "data_source": "catalogue",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "GlobalCatalogue / LibraryCataloguePage + CatalogueSurface",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "global filter pagination uses server filters and does not invent a total"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Retain mature global composition with tenant data adapter.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "search",
+      "feature": "Header / catalogue Search",
+      "global_implementation": "CatalogueSurface + BookCard / distinct semantic and local data adapters",
+      "library_implementation": "CatalogueSurface + BookCard / distinct semantic and local data adapters",
+      "account_implementation": null,
+      "backend_endpoints": "Search API POST /search; tenant GET /libraries/{id}/catalogue/books?search",
+      "data_source": "search",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "PARTIAL",
+      "library_works": "YES",
+      "feature_parity": "NO",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "CatalogueSurface + BookCard / distinct semantic and local data adapters",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/search-depth.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/search-depth.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Global semantic search and scoped local lexical search remain intentionally distinct. Runtime index STALE/baseline_verified=false with 5M vectors and no pending updates; no rebuild. Authenticated browser search pending.",
+      "baseline_duplicated": "YES",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "results",
+      "feature": "Search results",
+      "global_implementation": "BookCard",
+      "library_implementation": "BookCard",
+      "account_implementation": null,
+      "backend_endpoints": "Search API POST /search; tenant GET /libraries/{id}/catalogue/books?search",
+      "data_source": "search",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "BookCard",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/search-depth.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/search-depth.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Use the same BookCard and catalogue results family.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "detail",
+      "feature": "Book Detail",
+      "global_implementation": "BookDetailView / BookDetailSkeleton",
+      "library_implementation": "BookDetailView / BookDetailSkeleton",
+      "account_implementation": null,
+      "backend_endpoints": "/books/{work_id}; /libraries/{id}/catalogue/books/{library_book_id}",
+      "data_source": "detail",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "BookDetailView / BookDetailSkeleton",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/kg-product.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/kg-product.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL detail has truthful facts and accessible personal actions",
+          "LIBRARY detail has truthful facts and accessible personal actions",
+          "local-only save is visible while AI limitation is explicit"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "One BookDetailView; new authoritative tenant facts and commands.",
+      "baseline_duplicated": "YES",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "cards",
+      "feature": "Book cards",
+      "global_implementation": "BookCard / DiscoveryBookFrame",
+      "library_implementation": "BookCard / DiscoveryBookFrame",
+      "account_implementation": null,
+      "backend_endpoints": "normalized book responses; no per-card API",
+      "data_source": "cards",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "BookCard / DiscoveryBookFrame",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL save and AI selection share the global identity",
+          "LIBRARY save and AI selection share the global identity"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "One BookCard with grid/rail variants; wrappers only adapt data.",
+      "baseline_duplicated": "YES",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "covers",
+      "feature": "Book covers",
+      "global_implementation": "BookCoverArt / BookCover",
+      "library_implementation": "BookCoverArt / BookCover",
+      "account_implementation": null,
+      "backend_endpoints": "response cover_url / deterministic local renderer",
+      "data_source": "covers",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "BookCoverArt / BookCover",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL detail has truthful facts and accessible personal actions",
+          "LIBRARY detail has truthful facts and accessible personal actions"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "One cover renderer with safe remote URL and deterministic fallback.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "subjects",
+      "feature": "Categories / subject chips",
+      "global_implementation": "CategoryChips + actual facets",
+      "library_implementation": "CategoryChips + actual facets",
+      "account_implementation": null,
+      "backend_endpoints": "/books/?category&author&sort&offset; /libraries/{id}/catalogue/books; /libraries/{id}/catalogue/genres",
+      "data_source": "catalogue",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "CategoryChips + actual facets",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "global filter pagination uses server filters and does not invent a total"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Shared CategoryChips; actual local subjects/counts and global subjects stay scoped.",
+      "baseline_duplicated": "YES",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "genre",
+      "feature": "Genre filtering",
+      "global_implementation": "CategoryChips + scoped URL",
+      "library_implementation": "CategoryChips + scoped URL",
+      "account_implementation": null,
+      "backend_endpoints": "/books/?category&author&sort&offset; /libraries/{id}/catalogue/books; /libraries/{id}/catalogue/genres",
+      "data_source": "catalogue",
+      "baseline_global_works": "PARTIAL",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "CategoryChips + scoped URL",
+      "action": "REPLACE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Global category filter must query all matching records, not only current page.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "YES"
+    },
+    {
+      "id": "author",
+      "feature": "Author filtering",
+      "global_implementation": "CatalogueFilters + backend query",
+      "library_implementation": "CatalogueFilters + backend query",
+      "account_implementation": null,
+      "backend_endpoints": "/books/?category&author&sort&offset; /libraries/{id}/catalogue/books; /libraries/{id}/catalogue/genres",
+      "data_source": "catalogue",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "CatalogueFilters + backend query",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "global filter pagination uses server filters and does not invent a total"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Reusable filter field; backend-specific operations.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "status",
+      "feature": "Circulation status filter",
+      "global_implementation": "none",
+      "library_implementation": "LibraryCataloguePage",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/inventory/*",
+      "data_source": "inventory",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-inventory.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-inventory.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Library-only holding status; no false global stock ownership.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "pagination",
+      "feature": "Pagination",
+      "global_implementation": "ProductPagination + URL state",
+      "library_implementation": "ProductPagination + URL state",
+      "account_implementation": null,
+      "backend_endpoints": "/books/?category&author&sort&offset; /libraries/{id}/catalogue/books; /libraries/{id}/catalogue/genres",
+      "data_source": "catalogue",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "ProductPagination + URL state",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "global filter pagination uses server filters and does not invent a total"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "One accessible control; URL state and data-specific cursor/offset.",
+      "baseline_duplicated": "YES",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "arrivals",
+      "feature": "New Arrivals",
+      "global_implementation": "NewArrivals + BookCard",
+      "library_implementation": "NewArrivals + BookCard",
+      "account_implementation": null,
+      "backend_endpoints": "/books/; /books/popular; /books/new-arrivals; /libraries/{id}/catalogue/home; /recommendations",
+      "data_source": "home",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "NewArrivals + BookCard",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL shared navigation preserves only explicit return context",
+          "LIBRARY shared navigation preserves only explicit return context"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Arrival cards retain personal actions and canonical owned physical actions.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "popular",
+      "feature": "Popular",
+      "global_implementation": "PopularBooks + BookCard / tenant signals",
+      "library_implementation": "PopularBooks + BookCard / tenant signals",
+      "account_implementation": null,
+      "backend_endpoints": "/books/; /books/popular; /books/new-arrivals; /libraries/{id}/catalogue/home; /recommendations",
+      "data_source": "home",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "PopularBooks + BookCard / tenant signals",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Shared cards; tenant truth never filled from unrelated global popularity.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "for-you",
+      "feature": "For You / recommendations",
+      "global_implementation": "ForYou + BookCard / unchanged ranker and tenant intersection",
+      "library_implementation": "ForYou + BookCard / unchanged ranker and tenant intersection",
+      "account_implementation": null,
+      "backend_endpoints": "/books/; /books/popular; /books/new-arrivals; /libraries/{id}/catalogue/home; /recommendations",
+      "data_source": "home",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "ForYou + BookCard / unchanged ranker and tenant intersection",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "recommendation View All selects recommendation data"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Algorithm unchanged; expose shared personal actions and scoped owned books.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "view-all",
+      "feature": "View All",
+      "global_implementation": "homeCataloguePath + actual sort/view data",
+      "library_implementation": "homeCataloguePath + actual sort/view data",
+      "account_implementation": null,
+      "backend_endpoints": "frontend URL state; /libraries/{id}/context",
+      "data_source": "navigation",
+      "baseline_global_works": "PARTIAL",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "homeCataloguePath + actual sort/view data",
+      "action": "REPLACE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "recommendation View All selects recommendation data"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "View All should render the requested arrival/popular/recommendation dataset.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "YES"
+    },
+    {
+      "id": "related",
+      "feature": "Related books / More actions",
+      "global_implementation": "BookDiscoveryMenu / MoreLikeThisSection / return context",
+      "library_implementation": "BookDiscoveryMenu / MoreLikeThisSection / return context",
+      "account_implementation": null,
+      "backend_endpoints": "GET /kg/books/{work_id}/related; existing KG API",
+      "data_source": "kg",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "BookDiscoveryMenu / MoreLikeThisSection / return context",
+      "action": "PORT",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/kg-product.test.tsx",
+          "frontend/tests/knowledge-graph.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/kg-product.test.tsx",
+          "frontend/tests/knowledge-graph.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Global KG relationships reused for linked works; explicit global discoveries with return context.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "reading-list",
+      "feature": "Reading List / bookmark / saved books",
+      "global_implementation": "reading_list_service / useLibraryStore / ReadingListPage / BookPersonalActions",
+      "library_implementation": "reading_list_service / useLibraryStore / ReadingListPage / BookPersonalActions",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "GET /reading-list/my; POST /reading-list/; DELETE /reading-list/{target_key}",
+      "data_source": "reading-list",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "NO",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "reading_list_service / useLibraryStore / ReadingListPage / BookPersonalActions",
+      "action": "PORT",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL save and AI selection share the global identity",
+          "LIBRARY save and AI selection share the global identity",
+          "saved local-only deep link and revoked target remain safe",
+          "GLOBAL personal Reading List has shared selection, removal and safe detail navigation",
+          "LIBRARY personal Reading List has shared selection, removal and safe detail navigation"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Bookmark is navigation to the same personal list, not a second saved concept.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "YES",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "saved-linked",
+      "feature": "Saved linked local book",
+      "global_implementation": "unique user_id + global work_id",
+      "library_implementation": "unique user_id + global work_id",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "GET /reading-list/my; POST /reading-list/; DELETE /reading-list/{target_key}",
+      "data_source": "reading-list",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "NO",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "unique user_id + global work_id",
+      "action": "PORT",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL save and AI selection share the global identity",
+          "LIBRARY save and AI selection share the global identity",
+          "failed save preserves state and reports the error",
+          "saving while session changes cannot populate the new account",
+          "GLOBAL personal Reading List has shared selection, removal and safe detail navigation",
+          "LIBRARY personal Reading List has shared selection, removal and safe detail navigation"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Same user/work identity prevents duplicate saved entries.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "YES",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "saved-local",
+      "feature": "Saved local-only book",
+      "global_implementation": "namespaced local target / same personal service",
+      "library_implementation": "namespaced local target / same personal service",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "GET /reading-list/my; POST /reading-list/; DELETE /reading-list/{target_key}",
+      "data_source": "reading-list",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "NO",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "namespaced local target / same personal service",
+      "action": "PORT",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "local-only save is visible while AI limitation is explicit",
+          "saved local-only deep link and revoked target remain safe"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Extend existing personal service with a namespaced local target; validate active patron membership.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "YES",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "ai",
+      "feature": "Select for AI linked work",
+      "global_implementation": "BookSelectButton / useAssistantStore",
+      "library_implementation": "BookSelectButton / useAssistantStore",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "POST /assistant/chat; shared selected store",
+      "data_source": "assistant",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "NO",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "BookSelectButton / useAssistantStore",
+      "action": "PORT",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL save and AI selection share the global identity",
+          "LIBRARY save and AI selection share the global identity",
+          "GLOBAL personal Reading List has shared selection, removal and safe detail navigation",
+          "LIBRARY personal Reading List has shared selection, removal and safe detail navigation"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Use actual global_work_id; never use local record UUID as an OpenLibrary work.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "YES",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "ai-local",
+      "feature": "Select for AI local-only",
+      "global_implementation": "not applicable",
+      "library_implementation": "unsupported",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "POST /assistant/chat; shared selected store",
+      "data_source": "assistant",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "NO",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "local-only save is visible while AI limitation is explicit"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Intentionally unsupported: Assistant accepts OL work IDs and global metadata. Local-only UUID is not fabricated as an OL identity. Detail explains limitation; personal saving works.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "counter",
+      "feature": "Selected-book counter",
+      "global_implementation": "AIChatWidget / one selected store",
+      "library_implementation": "AIChatWidget / one selected store",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "POST /assistant/chat; shared selected store",
+      "data_source": "assistant",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "NO",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "AIChatWidget / one selected store",
+      "action": "PORT",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL save and AI selection share the global identity",
+          "LIBRARY save and AI selection share the global identity",
+          "GLOBAL personal Reading List has shared selection, removal and safe detail navigation",
+          "LIBRARY personal Reading List has shared selection, removal and safe detail navigation"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Shared store and canonical work identity synchronize count everywhere.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "YES",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "assistant",
+      "feature": "Ask LuminaR",
+      "global_implementation": "existing_qwen / accepted Assistant / URL-bound lending context",
+      "library_implementation": "existing_qwen / accepted Assistant / URL-bound lending context",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "POST /assistant/chat; shared selected store",
+      "data_source": "assistant",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing_qwen / accepted Assistant / URL-bound lending context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Keep existing router, selected-context binding, confirmations and scoped commands.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "assistant-page",
+      "feature": "Assistant page context",
+      "global_implementation": "useAssistantPageContext / linked global IDs",
+      "library_implementation": "useAssistantPageContext / linked global IDs",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "POST /assistant/chat; shared selected store",
+      "data_source": "assistant",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "NO",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "useAssistantPageContext / linked global IDs",
+      "action": "PORT",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/part3-contract.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Bind global work IDs from tenant display metadata; local-only IDs omitted explicitly.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "YES",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "know-more",
+      "feature": "Know More / Book RAG",
+      "global_implementation": "LLMPage / legacy digital entitlement",
+      "library_implementation": "same page",
+      "account_implementation": null,
+      "backend_endpoints": "existing RAG /documents /knowledge and /books/{work_id}/read routes",
+      "data_source": "rag",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/knowledge-artifacts.test.tsx",
+          "frontend/tests/document-cache.test.tsx",
+          "frontend/tests/rag-answer.test.tsx",
+          "frontend/tests/mind-map.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/knowledge-artifacts.test.tsx",
+          "frontend/tests/document-cache.test.tsx",
+          "frontend/tests/rag-answer.test.tsx",
+          "frontend/tests/mind-map.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL shared navigation preserves only explicit return context",
+          "LIBRARY shared navigation preserves only explicit return context"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Preserve explicit return context; library physical loans do not create new digital entitlement.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "graph",
+      "feature": "Graph Lab",
+      "global_implementation": "KnowledgeGraphPage / KG API",
+      "library_implementation": "global graph entered from local context",
+      "account_implementation": null,
+      "backend_endpoints": "GET /kg/books/{work_id}/related; existing KG API",
+      "data_source": "kg",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/kg-product.test.tsx",
+          "frontend/tests/knowledge-graph.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/kg-product.test.tsx",
+          "frontend/tests/knowledge-graph.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL shared navigation preserves only explicit return context",
+          "LIBRARY shared navigation preserves only explicit return context"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Global graph; preserve return context on linked-book navigation; no tenant KG.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "my-library",
+      "feature": "My Library",
+      "global_implementation": "membership selection / legacy history",
+      "library_implementation": "LibraryCirculationPage",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/lending/*; /libraries/{id}/me/loans",
+      "data_source": "lending",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "GENERAL_USER membership; canonical tenant loans and request states.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "request",
+      "feature": "Borrow Request",
+      "global_implementation": "no direct physical action",
+      "library_implementation": "CatalogueBookActions / Part 2B",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/lending/*; /libraries/{id}/me/loans",
+      "data_source": "lending",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Only library-owned circulating requestable stock; global direct Borrow stays retired.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "cancel-request",
+      "feature": "Cancel Borrow Request",
+      "global_implementation": "not applicable",
+      "library_implementation": "CatalogueBookActions / circulation",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/lending/*; /libraries/{id}/me/loans",
+      "data_source": "lending",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Idempotent cancellation; library-scoped identity.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "return",
+      "feature": "Return Request",
+      "global_implementation": "legacy read-only history",
+      "library_implementation": "LibraryCirculationPage / Part 2B",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/lending/*; /libraries/{id}/me/loans",
+      "data_source": "lending",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Active loan until staff confirms physical receipt.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "renewal",
+      "feature": "Renewal",
+      "global_implementation": "legacy read-only account history",
+      "library_implementation": "LibraryCirculationPage",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/lending/*; /libraries/{id}/me/loans",
+      "data_source": "lending",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-lending.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Accepted canonical renewal semantics remain intact.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "reservations",
+      "feature": "Reservations / waitlist",
+      "global_implementation": "legacy history read only",
+      "library_implementation": "LibraryReservationsFeesPage / Part 2C",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/reservations; /libraries/{id}/me/reservations",
+      "data_source": "reservations",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-reservations-fees.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-reservations-fees.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "No obsolete global writer is reopened.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "fees",
+      "feature": "Fees",
+      "global_implementation": "legacy history read only",
+      "library_implementation": "LibraryReservationsFeesPage / Part 2C",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/me/fees; /libraries/{id}/staff/fees",
+      "data_source": "fees",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-reservations-fees.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-reservations-fees.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Existing audited fees and staff settlement, no new payment processing.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "history",
+      "feature": "Loan / activity history",
+      "global_implementation": "LegacyProfilePage",
+      "library_implementation": "LibraryCirculationPage / LibraryActivityPage",
+      "account_implementation": null,
+      "backend_endpoints": "/issues/my; /activity/my; /libraries/{id}/activity",
+      "data_source": "history",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/loan-renewal.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/loan-renewal.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Personal legacy history explicitly separate from tenant activity.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "notifications",
+      "feature": "Notifications bell",
+      "global_implementation": "NotificationCenter / global APIs",
+      "library_implementation": "same global bell",
+      "account_implementation": null,
+      "backend_endpoints": "/notifications; /platform/notifications",
+      "data_source": "notifications",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/admin-notifications.test.tsx",
+          "frontend/tests/events.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/admin-notifications.test.tsx",
+          "frontend/tests/events.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Accepted global notifications only; tenancy is excluded.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "events",
+      "feature": "Events",
+      "global_implementation": "EventsPage / EventDetailPage",
+      "library_implementation": "same global events",
+      "account_implementation": null,
+      "backend_endpoints": "/events; /platform/events",
+      "data_source": "events",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/events.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/events.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL shared navigation preserves only explicit return context",
+          "LIBRARY shared navigation preserves only explicit return context"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Global feature; platform management guard; tenancy excluded.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "profile",
+      "feature": "Profile / account",
+      "global_implementation": "AccountProfilePage / withPatronContext",
+      "library_implementation": "AccountProfilePage / withPatronContext",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "/auth/login; /auth/me; /auth/logout; /me/libraries",
+      "data_source": "auth",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "AccountProfilePage / withPatronContext",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "personal URL preserves library logo and catalogue despite stale remembered library",
+          "GLOBAL shared navigation preserves only explicit return context",
+          "LIBRARY shared navigation preserves only explicit return context"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Keep explicit return context on personal links.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "libraries",
+      "feature": "My Libraries",
+      "global_implementation": "MyLibrariesPage",
+      "library_implementation": "same account membership list",
+      "account_implementation": null,
+      "backend_endpoints": "/me/libraries; /libraries/{id}/context; /invitations",
+      "data_source": "institutions",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institutions.test.tsx",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institutions.test.tsx",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "personal URL preserves library logo and catalogue despite stale remembered library"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Group by actual memberships; never choose first of several.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "login",
+      "feature": "Login redirect",
+      "global_implementation": "LoginPage / authDestination",
+      "library_implementation": "explicit allowed next path",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "/auth/login; /auth/me; /auth/logout; /me/libraries",
+      "data_source": "auth",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Normal authenticated route resolution; retain safe explicit target URL.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "logout",
+      "feature": "Logout / session isolation",
+      "global_implementation": "session resets / scoped toasts",
+      "library_implementation": "session resets / scoped toasts",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "/auth/login; /auth/me; /auth/logout; /me/libraries",
+      "data_source": "auth",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "session resets / scoped toasts",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "saving while session changes cannot populate the new account",
+          "late failed save cannot expose the old account error toast"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Personal and library state scoped to the current account/token.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "deep-links",
+      "feature": "Deep links",
+      "global_implementation": "global work path",
+      "library_implementation": "scoped local path / WorkspaceRoute",
+      "account_implementation": null,
+      "backend_endpoints": "frontend URL state; /libraries/{id}/context",
+      "data_source": "navigation",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "personal URL preserves library logo and catalogue despite stale remembered library",
+          "global URL ignores remembered and forged query contexts",
+          "GLOBAL personal Reading List has shared selection, removal and safe detail navigation",
+          "LIBRARY personal Reading List has shared selection, removal and safe detail navigation"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "URL context beats remembered selection.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "reload",
+      "feature": "Browser reload",
+      "global_implementation": "URL state",
+      "library_implementation": "URL tenant and filters",
+      "account_implementation": null,
+      "backend_endpoints": "frontend URL state; /libraries/{id}/context",
+      "data_source": "navigation",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "PARTIAL",
+      "library_works": "PARTIAL",
+      "feature_parity": "NO",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "personal URL preserves library logo and catalogue despite stale remembered library"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Canonical query filters and explicit return context survive reload. Real-browser six-viewport/focus/contrast/history/reload validation NOT_VERIFIED.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "history-nav",
+      "feature": "Browser Back / Forward",
+      "global_implementation": "router history",
+      "library_implementation": "router history / filter params",
+      "account_implementation": null,
+      "backend_endpoints": "frontend URL state; /libraries/{id}/context",
+      "data_source": "navigation",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "PARTIAL",
+      "library_works": "PARTIAL",
+      "feature_parity": "NO",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/navigation-context.test.tsx",
+          "frontend/tests/general-user-routing.test.ts",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "personal back and global reset survive browser-style navigation"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Share URL-based filter state; no stale uncontrolled author/subject values. Real-browser six-viewport/focus/contrast/history/reload validation NOT_VERIFIED.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "errors",
+      "feature": "404 / error / retry states",
+      "global_implementation": "StatePanel / wildcard / retry",
+      "library_implementation": "StatePanel / wildcard / retry",
+      "account_implementation": null,
+      "backend_endpoints": "shared StatePanel / skeleton composition",
+      "data_source": "states",
+      "baseline_global_works": "PARTIAL",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "StatePanel / wildcard / retry",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/events.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/events.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "failed save preserves state and reports the error",
+          "late failed save cannot expose the old account error toast"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Use shared StatePanel and explicit 404 fallback.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "YES"
+    },
+    {
+      "id": "loading",
+      "feature": "Loading state",
+      "global_implementation": "shared skeletons / keyed response guards",
+      "library_implementation": "shared skeletons / keyed response guards",
+      "account_implementation": null,
+      "backend_endpoints": "shared StatePanel / skeleton composition",
+      "data_source": "states",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "shared skeletons / keyed response guards",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/events.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/events.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL detail has truthful facts and accessible personal actions",
+          "LIBRARY detail has truthful facts and accessible personal actions"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Reuse detail/grid skeletons; never expose stale tenant result while changing contexts.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "empty",
+      "feature": "Empty states",
+      "global_implementation": "StatePanel / explicit Search all LuminaR",
+      "library_implementation": "StatePanel / explicit Search all LuminaR",
+      "account_implementation": null,
+      "backend_endpoints": "shared StatePanel / skeleton composition",
+      "data_source": "states",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "StatePanel / explicit Search all LuminaR",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/events.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/events.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "saved local-only deep link and revoked target remain safe"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "One state family; explicit Search all LuminaR, no silent result merging.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "mobile",
+      "feature": "Mobile navigation / layout",
+      "global_implementation": "Header Modal / global responsive classes",
+      "library_implementation": "same header + tenant shell",
+      "account_implementation": null,
+      "backend_endpoints": "shared product composition",
+      "data_source": "css",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "PARTIAL",
+      "library_works": "PARTIAL",
+      "feature_parity": "NO",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Same responsive compositions; verify six viewports. Real-browser six-viewport/focus/contrast/history/reload validation NOT_VERIFIED.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "accessibility",
+      "feature": "Accessibility / keyboard / focus",
+      "global_implementation": "Modal + existing focus controls",
+      "library_implementation": "same Modal / mixed action spans",
+      "account_implementation": null,
+      "backend_endpoints": "shared product composition",
+      "data_source": "css",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "PARTIAL",
+      "library_works": "PARTIAL",
+      "feature_parity": "NO",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "GLOBAL detail has truthful facts and accessible personal actions",
+          "LIBRARY detail has truthful facts and accessible personal actions"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Use real buttons, pressed states, labels, headings, visible focus and keyboard-accessible actions. Real-browser six-viewport/focus/contrast/history/reload validation NOT_VERIFIED.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "transport",
+      "feature": "API transport",
+      "global_implementation": "lib/api.request / api/core alias",
+      "library_implementation": "institutionApi over same transport",
+      "account_implementation": null,
+      "backend_endpoints": "lib/api.request and thin typed wrappers",
+      "data_source": "api",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institutions.test.tsx",
+          "frontend/tests/product-consistency.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institutions.test.tsx",
+          "frontend/tests/product-consistency.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Thin service-specific wrappers are intentional; no duplicate auth/retry transport.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "session",
+      "feature": "Auth / selected context / caches",
+      "global_implementation": "distinct account-scoped stores / dead filter fields removed",
+      "library_implementation": "distinct account-scoped stores / dead filter fields removed",
+      "account_implementation": "shared personal service",
+      "backend_endpoints": "account/token-scoped Zustand stores",
+      "data_source": "state",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "distinct account-scoped stores / dead filter fields removed",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/document-cache.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/document-cache.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "matrix_generated_tests": [
+          "saving while session changes cannot populate the new account",
+          "late failed save cannot expose the old account error toast"
+        ],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Different concepts, no duplicate authoritative memberships or selection stores.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "inventory",
+      "feature": "Inventory / import / copies",
+      "global_implementation": "retired compatibility writers",
+      "library_implementation": "LibraryInventoryPage / canonical tenant services",
+      "account_implementation": null,
+      "backend_endpoints": "/libraries/{id}/inventory/*",
+      "data_source": "inventory",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "NO",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/institution-inventory.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/institution-inventory.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Staff-only inventory; global catalogue is not tenant stock.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "staff",
+      "feature": "Staff Workspace",
+      "global_implementation": "ManagementRedirect compatibility",
+      "library_implementation": "StaffLibraryShell",
+      "account_implementation": null,
+      "backend_endpoints": "LibraryMembership / PlatformRoleAssignment",
+      "data_source": "authority",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx",
+          "frontend/tests/navigation-context.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx",
+          "frontend/tests/navigation-context.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Library ADMIN/LIBRARIAN only; no global role authority.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "platform",
+      "feature": "Platform Console",
+      "global_implementation": "PlatformShell / PlatformRoute",
+      "library_implementation": "no implicit tenant access",
+      "account_implementation": null,
+      "backend_endpoints": "LibraryMembership / PlatformRoleAssignment",
+      "data_source": "authority",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx",
+          "frontend/tests/navigation-context.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx",
+          "frontend/tests/navigation-context.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Explicit PlatformRoleAssignment; membership required for library internals.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "legacy",
+      "feature": "Legacy management URLs / writers",
+      "global_implementation": "redirects / 410",
+      "library_implementation": "canonical destinations",
+      "account_implementation": null,
+      "backend_endpoints": "LibraryMembership / PlatformRoleAssignment",
+      "data_source": "authority",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "COMPATIBILITY_ONLY",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx",
+          "frontend/tests/navigation-context.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/dashboard-convergence.test.tsx",
+          "frontend/tests/library-workspaces.test.tsx",
+          "frontend/tests/navigation-context.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Read-only old history and retirement paths stay; obsolete unused dashboard placeholder removed.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "css",
+      "feature": "CSS / design system",
+      "global_implementation": "product.css / mature composition / existing tokens",
+      "library_implementation": "product.css / mature composition / existing tokens",
+      "account_implementation": null,
+      "backend_endpoints": "shared product composition",
+      "data_source": "css",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "PARTIAL",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "product.css / mature composition / existing tokens",
+      "action": "MERGE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/product-consistency.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "One product book family; remove only selectors with audited retired callers.",
+      "baseline_duplicated": "YES",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "document-rag",
+      "feature": "Document RAG / Knowledge Tools / private cache",
+      "global_implementation": "LLMPage / DeviceDocuments / knowledge components",
+      "library_implementation": "same account feature",
+      "account_implementation": null,
+      "backend_endpoints": "existing RAG /documents /knowledge and /books/{work_id}/read routes",
+      "data_source": "rag",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/knowledge-artifacts.test.tsx",
+          "frontend/tests/document-cache.test.tsx",
+          "frontend/tests/rag-answer.test.tsx",
+          "frontend/tests/mind-map.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/knowledge-artifacts.test.tsx",
+          "frontend/tests/document-cache.test.tsx",
+          "frontend/tests/rag-answer.test.tsx",
+          "frontend/tests/mind-map.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Accepted privacy/entitlement and existing models untouched.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "reader",
+      "feature": "Read Now / digital entitlement",
+      "global_implementation": "BookCapabilities / protected BookReaderPage / no direct Borrow",
+      "library_implementation": "BookCapabilities / protected BookReaderPage / no direct Borrow",
+      "account_implementation": null,
+      "backend_endpoints": "existing RAG /documents /knowledge and /books/{work_id}/read routes",
+      "data_source": "rag",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "BookCapabilities / protected BookReaderPage / no direct Borrow",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/knowledge-artifacts.test.tsx",
+          "frontend/tests/document-cache.test.tsx",
+          "frontend/tests/rag-answer.test.tsx",
+          "frontend/tests/mind-map.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/assistant.test.tsx",
+          "frontend/tests/knowledge-artifacts.test.tsx",
+          "frontend/tests/document-cache.test.tsx",
+          "frontend/tests/rag-answer.test.tsx",
+          "frontend/tests/mind-map.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Legacy active issue required; no direct Borrow after retirement.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "more-actions",
+      "feature": "More actions on book cards",
+      "global_implementation": "BookDiscoveryMenu",
+      "library_implementation": "BookDiscoveryMenu",
+      "account_implementation": null,
+      "backend_endpoints": "GET /kg/books/{work_id}/related; existing KG API",
+      "data_source": "kg",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "NO",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "YES",
+      "classification": "SHARED",
+      "canonical_implementation": "BookDiscoveryMenu",
+      "action": "PORT",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/kg-product.test.tsx",
+          "frontend/tests/knowledge-graph.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/kg-product.test.tsx",
+          "frontend/tests/knowledge-graph.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "Shared related discovery navigation for a valid global work.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "YES",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "format",
+      "feature": "Format filtering",
+      "global_implementation": "Unsupported schema capability; misleading note/dead fields removed",
+      "library_implementation": "Unsupported schema capability; misleading note/dead fields removed",
+      "account_implementation": null,
+      "backend_endpoints": "/books/?category&author&sort&offset; /libraries/{id}/catalogue/books; /libraries/{id}/catalogue/genres",
+      "data_source": "catalogue",
+      "baseline_global_works": "NO",
+      "baseline_library_works": "NO",
+      "global_works": "NO",
+      "library_works": "NO",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "Unsupported schema capability; misleading note/dead fields removed",
+      "action": "REMOVE",
+      "test_coverage": {
+        "status": "AUTOMATED_PASS_BROWSER_PENDING",
+        "global": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "library": [
+          "frontend/tests/library-catalogue.test.tsx",
+          "frontend/tests/full-product-convergence.test.tsx",
+          "frontend/tests/search-depth.test.tsx"
+        ],
+        "matrix_generated_tests": [],
+        "browser": "NOT_VERIFIED",
+        "scope": "Executed shared composition and source-specific adapter suites; not a claim of every real-browser transition or visual pixel result."
+      },
+      "notes": "No authoritative format fields in either source; unsupported both contexts. No fake filter or patron-facing implementation note.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    },
+    {
+      "id": "data-preservation",
+      "feature": "Catalogue / HNSW / KG preservation",
+      "global_implementation": "5M catalogue",
+      "library_implementation": "TEST 150 ACTIVE records",
+      "account_implementation": null,
+      "backend_endpoints": "read-only Mongo counts + artifact metadata",
+      "data_source": "preservation",
+      "baseline_global_works": "YES",
+      "baseline_library_works": "YES",
+      "global_works": "YES",
+      "library_works": "YES",
+      "feature_parity": "YES",
+      "duplicated": "NO",
+      "missing_from_new": "NO",
+      "missing_from_old": "NO",
+      "can_share_implementation": "NO",
+      "classification": "CONTEXT_SPECIFIC",
+      "canonical_implementation": "existing implementation with explicit context",
+      "action": "KEEP",
+      "test_coverage": {
+        "status": "PASS",
+        "evidence": "full_product_preservation.json"
+      },
+      "notes": "Baseline and after evidence; no index/model build or global catalogue writes.",
+      "baseline_duplicated": "NO",
+      "baseline_missing_from_new": "NO",
+      "baseline_missing_from_old": "NO"
+    }
+  ],
+  "updated_at": "2026-10-09T20:39:49.379635+00:00",
+  "status": "PARTIAL",
+  "limits": "Source/automated capability evidence; real-browser history/reload/visual/six-viewport overflow not verified."
+}

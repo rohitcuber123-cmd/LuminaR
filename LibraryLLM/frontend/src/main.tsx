@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 
 import './index.css'
+import 'katex/dist/katex.min.css'
+import './components/rag/RAGAnswer.css'
 import './components/Notifications.css'
 
 import { useAuthStore } from './store/useAuthStore'

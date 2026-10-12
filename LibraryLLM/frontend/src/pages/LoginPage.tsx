@@ -4,7 +4,7 @@ import { Eye, EyeOff, LogIn, AlertCircle, ShieldCheck } from "lucide-react";
 import { AuthLayout } from "@/components/AuthLayout";
 import { useAuthStore } from "@/store/useAuthStore";
 
-import { destination } from "@/lib/authDestination";
+import { workspaceDestination } from "@/lib/authDestination";
 
 export function LoginPage() {
   const { login, loading, isAuthenticated, user } = useAuthStore();
@@ -21,10 +21,11 @@ export function LoginPage() {
     ? "Your account has been verified. Please sign in."
     : "";
 
-  // If already logged in, redirect based on role
+  // The account landing page resolves current memberships and approved platform access.
   if (isAuthenticated && user) {
-    const from = (location.state as any)?.from?.pathname;
-    return <Navigate to={destination(user.role, from)} replace />;
+    const origin = (location.state as any)?.from;
+    const from = origin?.pathname ? origin.pathname + (origin.search || '') + (origin.hash || '') : undefined;
+    return <Navigate to={workspaceDestination(from)} replace />;
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -47,13 +48,13 @@ export function LoginPage() {
     }
 
     try {
-      const response = await login(email, password);
+      await login(email, password);
 
       // Role-based redirect
-      const from = (location.state as any)?.from?.pathname;
-      const role = response?.user?.role;
+      const origin = (location.state as any)?.from;
+      const from = origin?.pathname ? origin.pathname + (origin.search || '') + (origin.hash || '') : undefined;
 
-      navigate(destination(role, from), { replace: true });
+      navigate(workspaceDestination(from), { replace: true });
     } catch (err: any) {
       const message = err?.message || "";
 

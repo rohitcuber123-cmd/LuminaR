@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "required_roles": [
+    "ACTIVE ADMIN",
+    "ACTIVE LIBRARIAN"
+  ],
+  "routes": [
+    "/staff/libraries/:libraryId",
+    "/staff/libraries/:libraryId/inventory",
+    "/staff/libraries/:libraryId/circulation",
+    "/staff/libraries/:libraryId/reservations",
+    "/staff/libraries/:libraryId/fees",
+    "/staff/libraries/:libraryId/settings",
+    "/staff/libraries/:libraryId/members",
+    "/staff/libraries/:libraryId/audit"
+  ],
+  "sidebar": {
+    "desktop_min_css_width": 1024,
+    "width": 232,
+    "smaller": "Native dialog drawer"
+  },
+  "navigation": [
+    "Overview",
+    "Inventory",
+    "Circulation",
+    "Reservations",
+    "Fees",
+    "Library Settings"
+  ],
+  "admin_only_navigation": [
+    "Members & Staff",
+    "Audit / Activity"
+  ],
+  "owner": "Existing ADMIN membership plus owner status; owner-only protections preserved",
+  "selector": "Active ADMIN/LIBRARIAN only; independent staffLibraryId",
+  "overview_counts": [
+    "Inventory records",
+    "Pending borrow requests",
+    "Pending return requests",
+    "Current loans",
+    "Authorized membership total"
+  ],
+  "fake_charts": false,
+  "legacy_counts": "Circulation counters display Not enabled",
+  "new_library_onboarding": [
+    "Add first book",
+    "Upload inventory",
+    "Invite librarian (ADMIN)"
+  ],
+  "quick_actions": [
+    "Add Book",
+    "Upload Inventory",
+    "Review Borrow Requests",
+    "Review Returns"
+  ],
+  "circulation_views": [
+    "Borrow Requests",
+    "Return Requests",
+    "Loans"
+  ],
+  "personal_patron_controls": false,
+  "registration_and_staff_invitation_landing": "Staff Overview",
+  "fixture_flow": {
+    "passed": true,
+    "registrationStaffLanding": "http://127.0.0.1:5184/staff/libraries/2601b6bb-e061-440e-8382-16a0adb5ace3",
+    "requiredMetadataOnlyBookCreated": true,
+    "overviewRefreshedAfterAdd": true,
+    "separateAccountDidNotInheritContexts": true,
+    "singleMembershipLogin": "Patron Library B",
+    "pendingReturnKeepsLoanActive": true,
+    "staffInvitationAccepted": "Librarian staff overview",
+    "productionMutations": 0
+  }
+}

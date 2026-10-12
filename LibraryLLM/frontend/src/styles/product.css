@@ -1,0 +1,61 @@
+/* Shared product surfaces; only tenant authority/facts come from workspace CSS. */
+.product-catalogue,.book-detail-view { min-width:0; }
+.product-catalogue-search { display:flex;align-items:center;gap:12px;margin:24px 0 32px;padding:10px 14px;border:1px solid var(--color-line);border-radius:12px;background:var(--color-panel); }
+.product-catalogue-search:focus-within { border-color:var(--color-brand); }
+.product-catalogue-search input { flex:1;min-width:0;min-height:44px;background:transparent;font-size:.85rem;outline:none; }
+.product-catalogue-search > svg { flex-shrink:0;color:var(--color-ink-soft); }
+.catalogue-clear { display:grid;place-items:center;min-width:44px;min-height:44px; }
+.category-chips { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:24px 0 32px; }
+.category-chips > span { font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin-right:4px; }
+.category-chips button { max-width:100%;border-radius:999px;background:var(--color-panel);color:var(--color-ink-soft);font-family:var(--font-display);font-size:.72rem;text-transform:uppercase;min-height:38px;padding:8px 16px;overflow-wrap:anywhere;text-align:left; }
+.category-chips button:hover { background:var(--color-line); }
+.category-chips button.is-active { background:var(--color-brand);color:var(--color-paper); }
+.category-chips small { font-family:var(--font-sans);font-size:.65rem;margin-left:8px;opacity:.8; }
+.category-chips a { font-size:.8rem;color:var(--color-brand);padding:10px; }
+.catalogue-filter-row { display:flex;gap:16px;flex-wrap:wrap;margin-bottom:28px; }
+.catalogue-filter-row label { flex:1 1 180px;font-size:.8rem;min-width:0; }
+.catalogue-filter-row input,.catalogue-filter-row select { width:100%;min-height:44px;border:1px solid var(--color-line);border-radius:4px;padding:10px;background:var(--color-paper);margin-top:8px; }
+.product-book-grid { align-items:start; }
+.product-book-card { min-width:0; }
+.book-cover-art { container-type:inline-size;isolation:isolate; }
+.book-cover-title { font-size:calc(clamp(.8rem,8cqw,1.15rem)*var(--cover-type-scale,1));line-height:1.08;overflow-wrap:anywhere; }
+.book-cover-author { font-size:calc(.62rem*var(--cover-type-scale,1));line-height:1.2;overflow-wrap:anywhere; }
+.book-cover-copy { min-width:0;width:fit-content;max-width:100%; }
+.assistant-launcher.is-compact { width:52px;height:52px;min-width:52px;padding:14px;border-radius:50%;justify-content:center; }
+.assistant-launcher.is-compact > div { display:none; }
+.product-book-rail { scroll-snap-type:x proximity;scroll-padding-inline:4px 84px;padding:4px 84px 8px 4px; }
+.product-book-rail > .product-book-card { scroll-snap-align:start; }
+.product-rail-controls { display:flex;justify-content:flex-end;gap:12px;margin-top:8px; }
+.product-rail-controls button { display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--color-line);border-radius:50%;background:var(--color-paper); }
+.product-rail-controls button:hover { color:var(--color-brand);border-color:var(--color-brand); }
+.product-book-card .book-personal-actions > * { max-width:100%; }
+.product-book-card .book-personal-actions summary { overflow-wrap:anywhere; }
+.book-personal-actions { display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px; }
+.book-personal-actions .assistant-button,.book-detail-view .assistant-button { min-height:38px;font-family:var(--font-display); }
+.book-personal-actions .mt-2 { margin-top:0; }
+.book-save-button.is-saved { background:color-mix(in srgb,var(--color-brand) 7%,transparent);border-color:var(--color-brand);color:var(--color-brand-dark); }
+.book-capability-note { width:100%;font-size:.75rem;color:var(--color-ink-soft);line-height:1.6; }
+.book-detail-view h1,.book-detail-view .book-description { overflow-wrap:anywhere; }
+.book-detail-view .book-detail-body { min-width:0; }
+.book-detail-view .book-facts { display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin:24px 0;font-size:.85rem; }
+.book-facts dt { color:var(--color-ink-soft);font-size:.72rem;margin-bottom:4px; }
+.book-facts dd { margin:0;overflow-wrap:anywhere; }
+.product-pagination { display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;border-top:1px solid var(--color-line);padding-top:28px;margin-top:48px;font-size:.8rem; }
+.product-pagination button { display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--color-line);border-radius:50%; }
+.product-pagination button:disabled { opacity:.4; }
+.product-pagination button:not(:disabled):hover { border-color:var(--color-brand);color:var(--color-brand); }
+.product-catalogue :focus-visible,.book-detail-view :focus-visible,.product-book-card :focus-visible { outline:2px solid var(--color-brand);outline-offset:3px; }
+@media(max-width:480px) { .product-catalogue-search { flex-wrap:wrap;gap:8px;padding:8px; }.product-catalogue-search .ui-button { font-size:.75rem;padding:10px; }.product-catalogue-search > svg { display:none; }.book-personal-actions { gap:6px; }.book-personal-actions .assistant-button { padding:7px 8px;font-size:.68rem; }.book-detail-view .book-facts { grid-template-columns:minmax(0,1fr); }.product-book-grid { column-gap:16px; } }
+.catalogue-context { display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:.85rem;color:var(--color-ink-soft);margin:20px 0 32px; }
+.catalogue-cover { width:100%;aspect-ratio:2/3; }
+.catalogue-actions { display:flex;flex-wrap:wrap;gap:8px;margin-top:14px; }
+.catalogue-actions p { width:100%;margin:0 0 8px;font-size:.8rem;line-height:1.6; }
+.catalogue-actions .ui-button { min-height:44px;font-size:.75rem;padding:10px 12px; }
+@media(max-width:639px) {
+  .category-chips button,.book-personal-actions .assistant-button,.book-detail-view .assistant-button { min-height:44px; }
+  .book-personal-actions summary { display:inline-flex;align-items:center;min-height:44px;min-width:44px; }
+  .product-book-card a.bg-brand { display:flex;align-items:center;justify-content:center;min-height:44px; }
+  .global-logo { min-height:44px; }
+  .patron-context-links a { display:inline-flex;align-items:center;min-height:44px; }
+  .workspace-switcher select { min-height:44px; }
+}

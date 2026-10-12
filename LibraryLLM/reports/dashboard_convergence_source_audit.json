@@ -1,0 +1,520 @@
+{
+  "status": "PASS",
+  "old_product_callers": [],
+  "require_roles_product_callers": [],
+  "legacy_role_usages": [
+    {
+      "file": "scripts/migrate_management_authority.py",
+      "remaining_usages": [
+        {
+          "line": 1,
+          "source": "\"\"\"Reviewed, explicit grants only. Default is a dry run; no legacy role inference.\"\"\""
+        },
+        {
+          "line": 33,
+          "source": "allowed = {'user_id', 'role', 'approved', 'approved_by', 'approval_ref', 'reason'}"
+        },
+        {
+          "line": 43,
+          "source": "role = row.get('role')"
+        },
+        {
+          "line": 45,
+          "source": "if role != 'PLATFORM_ADMIN':"
+        },
+        {
+          "line": 48,
+          "source": "old = database.platform_role_assignments.find_one({'user_id': user_id, 'role': role})"
+        },
+        {
+          "line": 49,
+          "source": "query = {'user_id': user_id, 'role': role}"
+        },
+        {
+          "line": 51,
+          "source": "if role not in {'ADMIN', 'LIBRARIAN'}:"
+        },
+        {
+          "line": 69,
+          "source": "if old and (old.get('status') != 'ACTIVE' or old.get('role') != role):"
+        },
+        {
+          "line": 73,
+          "source": "grants.append({'kind': kind, 'query': query, 'role': role, 'already_present': bool(old),"
+        },
+        {
+          "line": 85,
+          "source": "# Run only after full plan validation. No role is inferred and no existing grant is overwritten."
+        },
+        {
+          "line": 93,
+          "source": "row = {**query, 'role': grant['role'], 'status': 'ACTIVE', 'approved_by': grant['approved_by'],"
+        },
+        {
+          "line": 99,
+          "source": "target.create_index([('user_id', 1), ('role', 1)], unique=True)"
+        },
+        {
+          "line": 132,
+          "source": "review = [{'user_id': u['user_id'], 'legacy_role': u['role'], 'classification': 'UNKNOWN_REVIEW_REQUIRED',"
+        },
+        {
+          "line": 134,
+          "source": "for u in db.users.find({'role': {'$in': ['ADMIN', 'LIBRARIAN']}}, {'_id': 0, 'user_id': 1, 'role': 1})]"
+        }
+      ],
+      "reason": "Offline manual legacy-account review query. Grant role fields identify independently approved membership/assignment models; no User.role inference.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/services/identity_service.py",
+      "remaining_usages": [
+        {
+          "line": 7,
+          "source": "READER_ROLE = 'GENERAL_USER'"
+        },
+        {
+          "line": 8,
+          "source": "STAFF_ROLES = ('ADMIN', 'LIBRARIAN')"
+        },
+        {
+          "line": 9,
+          "source": "ROLES = (READER_ROLE, *STAFF_ROLES)"
+        },
+        {
+          "line": 46,
+          "source": "return {key:user[key] for key in ('user_id','name','email','role','is_email_verified')}"
+        },
+        {
+          "line": 52,
+          "source": "'_id':0, 'email':1, 'role':1, 'is_email_verified':1,"
+        },
+        {
+          "line": 55,
+          "source": "if (not user or user.get('role') not in ROLES or not user.get('is_email_verified')"
+        },
+        {
+          "line": 58,
+          "source": "return {**payload, 'sub':str(user_id), 'role':user['role'], 'email':user['email']}"
+        }
+      ],
+      "reason": "Legacy identity schema, supported label validation and public identity serialization; never a grant.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/services/auth_service.py",
+      "remaining_usages": [
+        {
+          "line": 4,
+          "source": "READER_ROLE, ROLES, find_user_by_email, email_exists, normalize_email,"
+        },
+        {
+          "line": 62,
+          "source": "\"role\": READER_ROLE,"
+        },
+        {
+          "line": 112,
+          "source": "\"role\": \"GENERAL_USER\","
+        },
+        {
+          "line": 256,
+          "source": "\"role\": user[\"role\"],"
+        },
+        {
+          "line": 276,
+          "source": "if user.get('is_active', True) is not True or user.get('role') not in ROLES or user.get('password_setup_required'):"
+        },
+        {
+          "line": 288,
+          "source": "\"role\": user[\"role\"],"
+        }
+      ],
+      "reason": "Personal sign-in/signup/setup identity metadata. New identities use GENERAL_USER; no management grant.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/routes/auth.py",
+      "remaining_usages": [
+        {
+          "line": 216,
+          "source": "role=user[\"role\"]"
+        },
+        {
+          "line": 238,
+          "source": "staff_membership = collection('memberships').find_one({'user_id': user['user_id'], 'status': 'ACTIVE', 'role': {'$in': ['ADMIN', 'LIBRARIAN']}})"
+        },
+        {
+          "line": 242,
+          "source": "token = create_access_token(user['user_id'], user['email'], user['role'])"
+        }
+      ],
+      "reason": "JWT identity metadata; staff sign-in eligibility uses a LibraryMembership query or explicit platform assignment, not User.role.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/utils/jwt_utils.py",
+      "remaining_usages": [
+        {
+          "line": 20,
+          "source": "def create_access_token(user_id, email, role):"
+        },
+        {
+          "line": 23,
+          "source": "minutes=30 if role in ('ADMIN', 'LIBRARIAN') else ACCESS_TOKEN_EXPIRE_MINUTES"
+        },
+        {
+          "line": 29,
+          "source": "\"role\": role,"
+        }
+      ],
+      "reason": "Historical JWT role claim and conservative shorter lifetime for legacy labels. Claims cannot authorize management.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/dependencies.py",
+      "remaining_usages": [
+        {
+          "line": 29,
+          "source": "\"\"\"Deprecated: User.role never grants tenant or platform management authority.\"\"\""
+        }
+      ],
+      "reason": "Deprecated require_roles always denies. There are no product callers.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/routes/models/user.py",
+      "remaining_usages": [
+        {
+          "line": 21,
+          "source": "role TEXT NOT NULL DEFAULT 'GENERAL_USER',"
+        }
+      ],
+      "reason": "Historical SQL identity schema default; no tenant/platform authority.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/routes/platform.py",
+      "remaining_usages": [
+        {
+          "line": 76,
+          "source": "query = {'role': {'$in': ['ADMIN', 'LIBRARIAN']}}"
+        },
+        {
+          "line": 77,
+          "source": "rows = list(db.users.find(query, {'_id': 0, 'user_id': 1, 'role': 1}).sort('user_id', 1).skip(offset).limit(limit))"
+        },
+        {
+          "line": 79,
+          "source": "row['legacy_role'] = row.pop('role')"
+        }
+      ],
+      "reason": "Legacy-account classification query/display for manual review. Assignment lookup is separate.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/services/platform_account_service.py",
+      "remaining_usages": [
+        {
+          "line": 10,
+          "source": "FIELDS = {'_id': 0, 'user_id': 1, 'name': 1, 'email': 1, 'role': 1, 'is_email_verified': 1, 'is_active': 1, 'created_at': 1}"
+        },
+        {
+          "line": 33,
+          "source": "'password_hash': hash_password(secrets.token_urlsafe(32)), 'role': 'GENERAL_USER',"
+        }
+      ],
+      "reason": "Account directory metadata and GENERAL_USER-only identity creation. No role-edit fields or privilege creation.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/services/notification_service.py",
+      "remaining_usages": [
+        {
+          "line": 14,
+          "source": "USER_FIELDS = {'_id': 0, 'user_id': 1, 'name': 1, 'email': 1, 'role': 1}"
+        }
+      ],
+      "reason": "Legacy identity label projection for recipient/actor presentation; no role-based authorization.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/services/admin_operation_service.py",
+      "remaining_usages": [],
+      "reason": "Legacy read-only operation/actor projection, not a management permission.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/scripts/bootstrap_admin.py",
+      "remaining_usages": [
+        {
+          "line": 1,
+          "source": "\"\"\"Retired legacy role bootstrap. Provision identity, then approve explicit authority.\"\"\""
+        },
+        {
+          "line": 7,
+          "source": "raise SystemExit('Legacy ADMIN bootstrap is retired. Use an explicitly approved management authority mapping; no global role grants authority.')"
+        }
+      ],
+      "reason": "Retired role bootstrap with no account or authority creation.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/scripts/reset_admin_password.py",
+      "remaining_usages": [
+        {
+          "line": 10,
+          "source": "ADMIN_ROLE = \"ADMIN\""
+        },
+        {
+          "line": 11,
+          "source": "SAFE_ADMIN_FIELDS = {\"_id\": 0, \"name\": 1, \"email\": 1, \"user_id\": 1, \"role\": 1}"
+        },
+        {
+          "line": 16,
+          "source": "administrators = list(users_collection.find({\"role\": ADMIN_ROLE}, SAFE_ADMIN_FIELDS))"
+        },
+        {
+          "line": 24,
+          "source": "print(f\"role: {administrator.get('role', '')}\")"
+        },
+        {
+          "line": 53,
+          "source": "{\"user_id\": user_id, \"role\": ADMIN_ROLE},"
+        },
+        {
+          "line": 87,
+          "source": "print(f\"role: {administrator['role']}\")"
+        },
+        {
+          "line": 109,
+          "source": "print(f\"role: {ADMIN_ROLE}\")"
+        }
+      ],
+      "reason": "Offline personal credential recovery selector for legacy labels. Not run; creates no management grants.",
+      "management_authority": false
+    },
+    {
+      "file": "backend/scripts/migrate_users.py",
+      "remaining_usages": [
+        {
+          "line": 25,
+          "source": "role,"
+        },
+        {
+          "line": 62,
+          "source": "role,"
+        },
+        {
+          "line": 72,
+          "source": "\"role\": role,"
+        }
+      ],
+      "reason": "Offline SQL identity metadata import only. Not run; no membership/assignment provision.",
+      "management_authority": false
+    },
+    {
+      "file": "frontend/src/store/useAuthStore.ts",
+      "remaining_usages": [
+        {
+          "line": 19,
+          "source": "export type UserRole = \"GENERAL_USER\" | \"LIBRARIAN\" | \"ADMIN\";"
+        },
+        {
+          "line": 32,
+          "source": "role: UserRole;"
+        },
+        {
+          "line": 75,
+          "source": "if (!localStorage.getItem(\"luminar_token\") || !user || typeof user.email !== \"string\" || ![\"GENERAL_USER\", \"LIBRARIAN\", \"ADMIN\"].includes(user.role)) throw new Error(\"Invalid stored session\");"
+        },
+        {
+          "line": 120,
+          "source": "if (!user || ![\"GENERAL_USER\", \"LIBRARIAN\", \"ADMIN\"].includes(user.role))"
+        },
+        {
+          "line": 121,
+          "source": "throw new Error(\"Login did not return a supported user role.\");"
+        }
+      ],
+      "reason": "Identity type/session supported-label validation only. Workspace and console permissions come from separate fresh server stores.",
+      "management_authority": false
+    },
+    {
+      "file": "frontend/src/components/ProtectedRoute.tsx",
+      "remaining_usages": [
+        {
+          "line": 2,
+          "source": "import { useAuthStore, type UserRole } from '../store/useAuthStore'"
+        },
+        {
+          "line": 7,
+          "source": "export default function ProtectedRoute({ libraryRoles, children }: { libraryRoles?: UserRole[]; children?: React.ReactNode }) {"
+        },
+        {
+          "line": 12,
+          "source": "const library = activeLibrary(state), role = libraryRole(library)"
+        },
+        {
+          "line": 13,
+          "source": "if (!role) return <Navigate to=\"/account/libraries\" replace />"
+        },
+        {
+          "line": 14,
+          "source": "if (!libraryRoles.includes(role)) return <Navigate to={libraryWorkspaceHome(library)} replace />"
+        }
+      ],
+      "reason": "UserRole is a type alias for the same literal values; runtime role comes from activeLibrary.membership, not identity.",
+      "management_authority": false
+    },
+    {
+      "file": "frontend/src/components/BookCapabilities.tsx",
+      "remaining_usages": [
+        {
+          "line": 16,
+          "source": "const role = useAuthStore(state => state.user?.role)"
+        },
+        {
+          "line": 29,
+          "source": "role,"
+        }
+      ],
+      "reason": "Unrelated legacy digital read UI helper input, with backend document capability checks; no institution authority.",
+      "management_authority": false
+    },
+    {
+      "file": "frontend/src/lib/readNow.ts",
+      "remaining_usages": [
+        {
+          "line": 5,
+          "source": "role?: string"
+        },
+        {
+          "line": 16,
+          "source": "if (input.role !== 'GENERAL_USER') return 'HIDDEN'"
+        }
+      ],
+      "reason": "Personal historical digital-reading UI compatibility predicate; no lending/inventory writes and no library grant.",
+      "management_authority": false
+    },
+    {
+      "file": "frontend/src/lib/nav.ts",
+      "remaining_usages": [
+        {
+          "line": 3,
+          "source": "export function getRoleNavLinks(role?: string): NavLink[] {"
+        },
+        {
+          "line": 4,
+          "source": "return role ? [{ label: 'My Libraries', to: '/account/libraries' }] : []"
+        }
+      ],
+      "reason": "Deprecated role-named helper returns only My Libraries for any identity; no role-specific dashboard navigation.",
+      "management_authority": false
+    },
+    {
+      "file": "frontend/src/lib/authDestination.ts",
+      "remaining_usages": [
+        {
+          "line": 4,
+          "source": "/** Library membership, rather than global User.role, resolves the default after login. */"
+        }
+      ],
+      "reason": "Deprecated role argument is ignored; membership-based account landing chooses context.",
+      "management_authority": false
+    },
+    {
+      "file": "frontend/src/pages/PlatformAccounts.tsx",
+      "remaining_usages": [
+        {
+          "line": 6,
+          "source": "user_id: number; name: string; email: string; role: string;"
+        },
+        {
+          "line": 76,
+          "source": "<td>{user.name}</td><td>{user.email}</td><td>{user.role}</td><td>{user.is_email_verified ? 'Verified' : 'Pending'}</td><td>{user.is_active ? 'Active' : 'Disabled'}</td><td>{date(user.created_at)}</td>"
+        }
+      ],
+      "reason": "Explicitly marked legacy label display in migrated account directory; no authority editor.",
+      "management_authority": false
+    },
+    {
+      "file": "frontend/src/pages/PlatformOperations.tsx",
+      "remaining_usages": [
+        {
+          "line": 8,
+          "source": "export interface Account { user_id: number; email: string; name: string; role?: string }"
+        },
+        {
+          "line": 136,
+          "source": "{detail && <Modal title={`Activity for ${detail.user.email}`} onClose={() => setDetail(null)}><p>{detail.user.name} · {detail.user.role}</p><h3>Current Loans ({detail.loans.count})</h3>{detail.loans.records.map((l, i) => <p key={i}>{l.title} · Due {date(l.due_date)}</p>)}<h3>Reservations ({detail.reservations.count})</h3>{detail.reservations.records.map((l, i) => <p key={i}>{l.title} · {l.status}</p>)}<h3>Fees ({detail.fines.count})</h3>{detail.fines.records.map((l, i) => <p key={i}>{l.title} · ₹{l.amount} · {l.status}</p>)}<h3>Notification History ({detail.notifications.count})</h3>{detail.notifications.records.map(n => <p key={n.notification_id}>{n.title}: {n.message}</p>)}<p className=\"staff-note\">Each summary shows up to 20 records. Recent operation history is filtered to this account behind this panel.</p></Modal>}"
+        }
+      ],
+      "reason": "Historical account label display in migrated read-only inspection; no authority or lending mutation.",
+      "management_authority": false
+    }
+  ],
+  "retired_writer_stubs": {
+    "backend/services/issue_service.py": [
+      {
+        "function": "issue_book",
+        "line": 42
+      },
+      {
+        "function": "return_book",
+        "line": 46
+      }
+    ],
+    "backend/services/reservation_service.py": [
+      {
+        "function": "create_reservation",
+        "line": 56
+      },
+      {
+        "function": "cancel_reservation",
+        "line": 60
+      }
+    ],
+    "backend/services/fine_service.py": [
+      {
+        "function": "pay_fine",
+        "line": 53
+      }
+    ],
+    "backend/services/inventory_service.py": [
+      {
+        "function": "add_inventory",
+        "line": 11
+      },
+      {
+        "function": "update_inventory",
+        "line": 44
+      },
+      {
+        "function": "delete_inventory",
+        "line": 55
+      }
+    ],
+    "backend/services/inventory_import_service.py": [
+      {
+        "function": "create_preview",
+        "line": 5
+      },
+      {
+        "function": "confirm_inventory_import",
+        "line": 8
+      }
+    ],
+    "backend/services/loan_renewal_service.py": [
+      {
+        "function": "renew_loan",
+        "line": 50
+      }
+    ]
+  },
+  "scope_notes": [
+    "Canonical membership.role and PlatformRoleAssignment.role are separate authority models, not User.role.",
+    "HTML accessibility role attributes and chat message user/assistant roles are unrelated.",
+    "Historical report generator scripts may mention deleted filenames as frozen audit evidence; they are not product callers.",
+    "Shared StaffUI tables/dialogs and scoped InstitutionPanel remain legitimate canonical components; old shells/navigation are removed."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "journal": "WriteConcern(w=1,j=True); PREPARED absolute effect plan then COMMITTED verified receipt.",
+    "unknown": "HTTP503, retained non-expiring gate; config RECOVERY_REQUIRED when journal can be written; no stock fallback.",
+    "apply": "Explicit stopped writers required; replay unfinished plans, reconcile, then clear gate.",
+    "failure_injection": "Before effects, after first effect and after committed receipt; nine circulation transitions plus request creation.",
+    "limitation": "Injected acknowledgement interruption is tested; no OS power-loss or storage-corruption test. Missing/tampered plans require operator review."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_lending::test_unknown_commit_recovery_replays_exactly_once[after_plan]",
+    "tests.institution_v2b.test_lending::test_unknown_commit_recovery_replays_exactly_once[after_effect]",
+    "tests.institution_v2b.test_lending::test_unknown_commit_recovery_replays_exactly_once[after_commit]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-approve]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-cancel]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-create]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-confirm]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-renew]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-stock]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-shelf]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-approve]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-cancel]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-create]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-confirm]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-renew]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-stock]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-shelf]",
+    "tests.institution_v2b.test_recovery_edges::test_recovery_and_rollback_require_stopped_writers",
+    "tests.institution_v2b.test_recovery_edges::test_invalid_migration_preflight_does_not_block_a_healthy_library"
+  ],
+  "live_scenarios": [],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

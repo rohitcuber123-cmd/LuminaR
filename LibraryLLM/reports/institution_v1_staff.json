@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "evidence_type": "derived from completed test artifacts, not a new test run",
+  "backend_evidence": "institution_v1_backend.xml",
+  "backend_total_passed": 56,
+  "matched_backend_cases": 7,
+  "tests": [
+    "test_general_user_denied_staff_operations",
+    "test_roles_differ_by_library_and_librarian_limits",
+    "test_admin_chaining_and_owner_protection",
+    "test_staff_loses_authority_and_can_be_reactivated[SUSPENDED]",
+    "test_staff_loses_authority_and_can_be_reactivated[REMOVED]",
+    "test_stale_inviter_cannot_grant_admin_or_manage_existing_admin",
+    "test_owner_last_admin_concurrent_protection"
+  ],
+  "frontend_evidence": "institution_v1_frontend.log (28 institution component tests)",
+  "live_evidence": "institution_v1_live.json (A-J, real uvicorn + HTTP + disposable Mongo)",
+  "live_status": "PASS",
+  "browser_status": "PASS",
+  "assertions": [
+    "Owner can manage non-owner staff and invite Admin",
+    "Non-owner Admin can manage member/Librarian, not Admin",
+    "Librarian cannot manage staff",
+    "Owner cannot be removed/suspended/demoted",
+    "Serialized active-owner and last-admin invariant",
+    "Suspended/removed membership immediately loses authority"
+  ],
+  "limitations": [
+    "Ownership transfer and account recovery are deferred.",
+    "No additional fine-grained staff permission enum."
+  ],
+  "note": "Feature subsets intentionally overlap; do not add subset counts as unique tests."
+}

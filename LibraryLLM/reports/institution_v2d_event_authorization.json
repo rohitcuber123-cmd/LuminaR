@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "Librarian creates private-to-members draft; patron draft read denied",
+      "status": "PASS",
+      "event_id": "563525b7-8b45-4b78-b2c7-f00c1e3a835d"
+    },
+    {
+      "check": "Librarian edit/publish; same title in two libraries stays isolated",
+      "status": "PASS"
+    },
+    {
+      "check": "Staff upcoming/draft/past/cancelled tabs",
+      "status": "PASS"
+    },
+    {
+      "check": "Cancel requires a reason and retains event identity",
+      "status": "PASS",
+      "library": "A"
+    },
+    {
+      "check": "Patron cancelled detail reason, no staff controls, library home retained",
+      "status": "PASS"
+    },
+    {
+      "check": "Bounded Patron Home upcoming events opens the canonical library list",
+      "status": "PASS"
+    },
+    {
+      "check": "Legacy global event remains global; tenant events excluded",
+      "status": "PASS"
+    },
+    {
+      "check": "Event validation exposes errors before create/publish; native dialog initial focus checked",
+      "status": "PASS"
+    },
+    {
+      "check": "Admin created and published private library event through browser",
+      "status": "PASS",
+      "evidence": [
+        "institution_v2d_admin_event_published.png",
+        "institution_v2d_patron_event_detail.png"
+      ],
+      "event_id": "1a13836f-eee3-4a94-8a68-c427f493ae0d"
+    },
+    {
+      "check": "Patron mutation, private outsider and platform-only event access denied",
+      "status": "PASS"
+    },
+    {
+      "check": "Previously rendered notice revalidates membership before navigation; history remains readable",
+      "status": "PASS"
+    },
+    {
+      "check": "Lifecycle suspend from ACTIVE retains events/inbox and guards tenant access",
+      "status": "PASS"
+    },
+    {
+      "check": "Lifecycle restore from SUSPENDED retains events/inbox and guards tenant access",
+      "status": "PASS"
+    },
+    {
+      "check": "Lifecycle remove from ACTIVE retains events/inbox and guards tenant access",
+      "status": "PASS"
+    },
+    {
+      "check": "Lifecycle restore from REMOVED retains events/inbox and guards tenant access",
+      "status": "PASS"
+    },
+    {
+      "check": "Account ownership, cross-library and platform separation",
+      "status": "PASS",
+      "http_statuses": {
+        "other_user_read": 404,
+        "other_user_mark": 404,
+        "cross_library_notice": 404,
+        "platform_event_mutation": 404,
+        "platform_private_event": 404,
+        "library_admin_platform": 403
+      }
+    },
+    {
+      "check": "Librarian membership suspension immediately blocks events and staff notice actions",
+      "status": "PASS"
+    }
+  ],
+  "backend_suite": "institution_v2d_tests.xml"
+}

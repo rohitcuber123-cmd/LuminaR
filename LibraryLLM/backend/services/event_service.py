@@ -8,8 +8,9 @@ from fastapi import HTTPException
 from jose import jwt, JWTError
 from pydantic import ValidationError
 from pymongo import ReturnDocument
+from pymongo.write_concern import WriteConcern
 from backend.database.mongodb import db, books_collection, users_collection
-from backend.schemas.events import EventCreate
+from backend.schemas.events import EventCreate, TenantEventCreate
 from backend.utils.jwt_utils import JWT_SECRET_KEY, JWT_ALGORITHM
 
 events=db['events']
@@ -17,7 +18,7 @@ states=db['event_user_state']
 WINDOW_DAYS=14
 WINDOW_LIMIT=500
 EDIT_FIELDS=set(EventCreate.model_fields)
-PUBLIC_FIELDS=EDIT_FIELDS | {'event_id','status','created_at','updated_at','published_at','cancelled_at','archived_at'}
+PUBLIC_FIELDS=EDIT_FIELDS | {'event_id','status','created_at','updated_at','published_at','cancelled_at','archived_at','scope','library_id','visibility','cancellation_reason'}
 
 def now():
     return datetime.now(timezone.utc)
@@ -46,8 +47,19 @@ def validate_books(ids):
         if found!=set(ids):
             raise HTTPException(422,'One or more related books no longer exist in the catalogue.')
 
-def document(event_id):
-    row=events.find_one({'event_id':str(event_id)})
+def scope_match(library_id=None):
+    # Legacy global records are read-only classified by their original global API.
+    # Any tenant identifier without an explicit scope is quarantined from discovery.
+    return {'scope': 'LIBRARY', 'library_id': library_id} if library_id else {
+        'library_id': None, '$or': [{'scope': 'GLOBAL'}, {'scope': {'$exists': False}}]}
+
+
+def storage(library_id=None):
+    return events.with_options(write_concern=WriteConcern(w=1, j=True)) if library_id else events
+
+
+def document(event_id, library_id=None):
+    row=events.find_one({'event_id':str(event_id), **scope_match(library_id)})
     if not row:
         raise HTTPException(404,'Event not found.')
     return row
@@ -64,6 +76,8 @@ def hydrate(rows,staff=False):
     output=[]
     for row in rows:
         result={k:utc(v) if isinstance(v,datetime) else v for k,v in row.items() if k in PUBLIC_FIELDS}
+        result['scope'] = row.get('scope', 'GLOBAL')
+        result['library_id'] = row.get('library_id')
         result['related_books']=[books[wid] for wid in row.get('related_work_ids',[]) if wid in books]
         result['missing_related_work_ids']=[wid for wid in row.get('related_work_ids',[]) if wid not in books]
         if staff:
@@ -72,38 +86,42 @@ def hydrate(rows,staff=False):
         output.append(result)
     return output
 
-def create(body,actor):
+def create(body,actor,library_id=None):
     data=body.model_dump(mode='python')
     data['category']=body.category.value
     validate_books(data['related_work_ids'])
     stamp=now()
     row={**data,'event_id':str(uuid4()),'status':'DRAFT','created_by_user_id':actor,'updated_by_user_id':actor,
-         'created_at':stamp,'updated_at':stamp,'published_at':None,'cancelled_at':None,'archived_at':None,'revision':0}
-    events.insert_one(row)
+         'created_at':stamp,'updated_at':stamp,'published_at':None,'cancelled_at':None,'archived_at':None,'revision':0, 'scope':'LIBRARY' if library_id else 'GLOBAL', 'library_id':library_id}
+    if library_id:
+        row['visibility'] = body.visibility.value
+    storage(library_id).insert_one(row)
     return hydrate([row],True)[0]
 
-def edit(event_id,body,actor):
-    old=document(event_id)
+def edit(event_id,body,actor,library_id=None):
+    old=document(event_id,library_id)
     if old['status']=='ARCHIVED':
         raise HTTPException(409,'Archived events are read-only.')
     changes=body.model_dump(exclude_unset=True,mode='python')
     try:
-        merged=EventCreate.model_validate({**{k:utc(v) if isinstance(v,datetime) else v for k,v in old.items() if k in EDIT_FIELDS},**changes})
+        model = TenantEventCreate if library_id else EventCreate
+        merged=model.model_validate({**{k:utc(v) if isinstance(v,datetime) else v for k,v in old.items() if k in model.model_fields},**changes})
     except ValidationError as error:
         raise HTTPException(422,'Invalid event fields or date range. End time cannot be before start time.') from error
     validate_books(merged.related_work_ids)
     values=merged.model_dump(mode='python');values['category']=merged.category.value
+    if library_id: values['visibility']=merged.visibility.value
     if old['status']=='PUBLISHED' and requires_published_validation(old,values):
         validate_publish(values)
     values.update(updated_at=now(),updated_by_user_id=actor)
-    row=events.find_one_and_update({'event_id':str(event_id),'revision':old['revision']},
+    row=storage(library_id).find_one_and_update({'event_id':str(event_id),'revision':old['revision'], **scope_match(library_id)},
         {'$set':values,'$inc':{'revision':1}},return_document=ReturnDocument.AFTER)
     if not row:
         raise HTTPException(409,'The event changed. Refresh before editing again.')
     return hydrate([row],True)[0]
 
-def transition(event_id,operation,actor):
-    old=document(event_id)
+def transition(event_id,operation,actor,library_id=None,reason=None):
+    old=document(event_id,library_id)
     target={'publish':'PUBLISHED','cancel':'CANCELLED','archive':'ARCHIVED'}[operation]
     allowed={'publish':{'DRAFT'},'cancel':{'PUBLISHED'},'archive':{'PUBLISHED','CANCELLED'}}[operation]
     if old['status']==target:
@@ -115,23 +133,27 @@ def transition(event_id,operation,actor):
         validate_books(old['related_work_ids'])
     stamp=now()
     field={'publish':'published_at','cancel':'cancelled_at','archive':'archived_at'}[operation]
-    row=events.find_one_and_update({'event_id':str(event_id),'revision':old['revision'],'status':old['status']},
-        {'$set':{'status':target,field:stamp,'updated_at':stamp,'updated_by_user_id':actor},'$inc':{'revision':1}},
+    values={'status':target,field:stamp,'updated_at':stamp,'updated_by_user_id':actor}
+    if library_id and operation=='cancel':
+        values.update(cancelled_by_user_id=actor,cancellation_reason=reason)
+    row=storage(library_id).find_one_and_update({'event_id':str(event_id),'revision':old['revision'],'status':old['status'], **scope_match(library_id)},
+        {'$set':values,'$inc':{'revision':1}},
         return_document=ReturnDocument.AFTER)
     if not row:
         raise HTTPException(409,'The event changed. Refresh before trying again.')
     return hydrate([row],True)[0]
 
-def delete_draft(event_id):
-    row=document(event_id)
+def delete_draft(event_id,library_id=None):
+    row=document(event_id,library_id)
     if row['status']!='DRAFT':
         raise HTTPException(409,'Only drafts can be deleted. Cancel or archive published events.')
-    if events.delete_one({'event_id':str(event_id),'status':'DRAFT','revision':row['revision']}).deleted_count!=1:
+    if storage(library_id).delete_one({'event_id':str(event_id),'status':'DRAFT','revision':row['revision'], **scope_match(library_id)}).deleted_count!=1:
         raise HTTPException(409,'The event changed. Refresh before trying again.')
     return {'deleted':True}
 
-def listing(view,category,query,featured,page,page_size,status=None,sort='updated',staff=False):
-    match={}
+def listing(view,category,query,featured,page,page_size,status=None,sort='updated',staff=False,library_id=None,public_only=False):
+    match={'$and':[scope_match(library_id)]}
+    if public_only: match['visibility']='PUBLIC'
     if category:match['category']=category
     if query.strip():
         pattern=re.escape(query.strip())
@@ -140,15 +162,20 @@ def listing(view,category,query,featured,page,page_size,status=None,sort='update
     stamp=now()
     if staff:
         if status:match['status']=status
+        if library_id and view:
+            match['status']='CANCELLED' if view=='cancelled' else 'PUBLISHED'
+            if view!='cancelled':
+                dated={'$or':[{'end_at':{'$gte':stamp}}, {'end_at':None,'start_at':{'$gte':stamp}}, {'end_at':None,'start_at':None}]} if view=='upcoming' else {'$or':[{'end_at':{'$lt':stamp}}, {'end_at':None,'start_at':{'$lt':stamp}}]}
+                match['$and'].append(dated)
         ordering={'updated':[('updated_at',-1),('event_id',1)],'created':[('created_at',-1),('event_id',1)],
                   'start':[('start_at',1),('event_id',1)]}[sort]
         rows=list(events.find(match).sort(ordering).skip((page-1)*page_size).limit(page_size))
     else:
-        match['status']='PUBLISHED'
+        match['status']='CANCELLED' if library_id and view=='cancelled' else 'PUBLISHED'
         dated={'$or':[{'end_at':{'$gte':stamp}}, {'end_at':None,'start_at':{'$gte':stamp}},
                       {'end_at':None,'start_at':None}]} if view=='upcoming' else {
             '$or':[{'end_at':{'$lt':stamp}}, {'end_at':None,'start_at':{'$lt':stamp}}]}
-        match={'$and':[match,dated]}
+        match={'$and':[match,dated]} if view!='cancelled' else match
         pipeline=[{'$match':match},{'$addFields':{'effective_date':{'$ifNull':['$end_at','$start_at']},
                   'upcoming_sort':{'$ifNull':['$start_at',datetime(9999,1,1,tzinfo=timezone.utc)]}}},
                   {'$sort':{'featured':-1,'upcoming_sort':1,'published_at':-1,'event_id':1} if view=='upcoming'
@@ -159,7 +186,7 @@ def listing(view,category,query,featured,page,page_size,status=None,sort='update
     return {'events':hydrate(rows,staff),'count':count,'page':page,'page_size':page_size,'has_more':page*page_size<count}
 
 def recent():
-    return list(events.find({'status':'PUBLISHED','published_at':{'$gte':now()-timedelta(days=WINDOW_DAYS)}},
+    return list(events.find({**scope_match(),'status':'PUBLISHED','published_at':{'$gte':now()-timedelta(days=WINDOW_DAYS)}},
                 {'_id':0,'event_id':1,'title':1,'category':1,'published_at':1})
                 .sort([('published_at',-1),('event_id',1)]).limit(WINDOW_LIMIT+1))
 

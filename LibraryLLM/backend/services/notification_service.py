@@ -4,13 +4,16 @@ from uuid import uuid4
 import re
 import time
 from pymongo.errors import DuplicateKeyError
+from pymongo.write_concern import WriteConcern
+from backend.schemas.notifications import NotificationScope
 from backend.database.mongodb import db, users_collection, issues_collection
 from backend.services.identity_service import find_user_by_email
 
 notifications = db['notifications']
 PUBLIC_FIELDS = {'_id': 0, 'notification_id': 1, 'type': 1, 'title': 1, 'message': 1,
                  'created_at': 1, 'read_at': 1, 'source': 1, 'source_ref': 1, 'priority': 1,
-                 'resolved_at': 1, 'resolution_reason': 1}
+                 'resolved_at': 1, 'resolution_reason': 1, 'scope': 1, 'library_id': 1,
+                 'audience': 1, 'source_type': 1, 'source_id': 1, 'action_route': 1}
 USER_FIELDS = {'_id': 0, 'user_id': 1, 'name': 1, 'email': 1, 'role': 1}
 
 
@@ -57,18 +60,25 @@ def recipients(ids, emails):
     return sorted(wanted)
 
 
-def insert_notice(user_id, kind, title, message, key, source='SYSTEM', source_ref=None, sender=None, now=None):
+def insert_notice(user_id, kind, title, message, key, source='SYSTEM', source_ref=None, sender=None, now=None,
+                  *, scope='GLOBAL', library_id=None, audience=None, source_type=None, source_id=None, action_route=None):
+    tenancy = NotificationScope(user_id=user_id, scope=scope, library_id=library_id)
     notice = {'notification_id': uuid4().hex, 'user_id': user_id, 'type': kind,
               'title': title, 'message': message, 'created_at': now or datetime.now(timezone.utc),
               'read_at': None, 'resolved_at': None, 'resolution_reason': None,
               'source': source, 'source_ref': source_ref or {},
-              'priority': 'NORMAL', 'dedupe_key': key, 'created_by_user_id': sender}
+              'priority': 'NORMAL', 'dedupe_key': key, 'created_by_user_id': sender,
+              'scope': scope, 'library_id': str(tenancy.library_id) if tenancy.library_id else None,
+              'audience': audience, 'source_type': source_type, 'source_id': source_id, 'action_route': action_route}
     try:
-        result = notifications.update_one({'dedupe_key': key}, {'$setOnInsert': notice}, upsert=True)
+        result = notifications.with_options(write_concern=WriteConcern(w=1, j=True)).update_one({'dedupe_key': key}, {'$setOnInsert': notice}, upsert=True)
         created = result.upserted_id is not None
     except DuplicateKeyError:
         created = False
-    return notifications.find_one({'dedupe_key': key}, {'_id': 0}), created
+    stored = notifications.find_one({'dedupe_key': key}, {'_id': 0})
+    if not stored or stored['user_id'] != user_id:
+        raise ValueError('Notification dedupe provenance requires review.')
+    return stored, created
 
 
 def send_admin(actor, ids, emails, title, message, request_id):
@@ -80,7 +90,7 @@ def send_admin(actor, ids, emails, title, message, request_id):
     delivered = []
     for uid, key in zip(targets, keys):
         notice, created = insert_notice(uid, 'ADMIN_MESSAGE', title, message, key,
-                                       source='ADMIN', sender=actor)
+                                       source='ADMIN', sender=actor, scope='PLATFORM')
         delivered.append({'notification_id': notice['notification_id'], 'user_id': uid,
                           'status': 'STORED', 'created': created})
     return {'deliveries': delivered, 'recipient_count': len(delivered)}
@@ -95,7 +105,7 @@ def list_own(user_id, limit=20, offset=0):
     if len(rows) < limit:
         rows += list(notifications.find({**query, 'resolved_at': {'$ne': None}}, PUBLIC_FIELDS)
             .sort(order).skip(max(0, offset - current_count)).limit(limit - len(rows)))
-    return normalize_dates({'notifications': rows,
+    return normalize_dates({'notifications': present_own(rows, user_id),
         'count': notifications.count_documents(query), 'unread_count': unread(user_id),
         'limit': limit, 'offset': offset})
 
@@ -109,7 +119,66 @@ def mark_read(user_id, notification_id):
     if not notifications.find_one(query, {'_id': 1}):
         raise LookupError('Notification not found.')
     notifications.update_one({**query, 'read_at': None}, {'$set': {'read_at': datetime.now(timezone.utc)}})
-    return normalize_dates(notifications.find_one(query, PUBLIC_FIELDS))
+    return normalize_dates(present_own([notifications.find_one(query, PUBLIC_FIELDS)], user_id)[0])
+
+
+def present_own(rows, user_id):
+    """Account-owned history; actions revalidate current explicit membership.
+
+    Generic tenant messages contain no loan titles, fee amounts or secrets.
+    Missing legacy tenancy is labelled for review and never guessed from work_id.
+    """
+    from uuid import UUID
+    from backend.services.institution_repository import collection
+    from backend.services.library_inventory_access import require_library_staff, require_library_patron
+    from backend.services.tenant_notification_service import KINDS, ALIASES, action_route
+    from fastapi import HTTPException
+    allowed = {ALIASES.get(kind, kind): (audience, page) for kind, (audience, _, _, page) in KINDS.items()}
+    states = {}
+    output = []
+    for original in rows:
+        row = dict(original)
+        row['action_route'] = None
+        if not row.get('scope'):
+            row['scope'] = 'PLATFORM' if row.get('source') == 'ADMIN' and not row.get('library_id') else 'LEGACY_AMBIGUOUS'
+        if row['scope'] == 'LIBRARY':
+            row['action_unavailable'] = 'Library unavailable'
+            try:
+                library_id = str(UUID(row['library_id']))
+                expected = allowed.get(row['type'])
+                audience = row.get('audience')
+                if not expected or expected[0] != audience:
+                    raise ValueError('Unrecognized tenant action')
+                key = (library_id, audience)
+                if key not in states:
+                    try:
+                        guard = require_library_staff if audience == 'STAFF' else require_library_patron
+                        library, _ = guard(library_id, {'sub': str(user_id)})
+                        states[key] = library
+                    except HTTPException:
+                        states[key] = None
+                library = states[key]
+                row['library_name'] = library['name'] if library else 'Library unavailable'
+                if library:
+                    row['action_route'] = action_route(library_id, audience, expected[1])
+                    row['action_unavailable'] = None
+            except (ValueError, TypeError, KeyError):
+                row['library_name'] = 'Library unavailable'
+        elif row['scope'] not in ['GLOBAL', 'PLATFORM'] or row.get('library_id'):
+            row['scope'] = 'LEGACY_AMBIGUOUS'
+            row['action_unavailable'] = 'Source context requires review'
+        output.append(row)
+    return output
+
+
+def get_own(user_id, notification_id, library_id=None):
+    query = {'user_id': user_id, 'notification_id': notification_id}
+    if library_id:
+        query.update(library_id=library_id, scope='LIBRARY')
+    row = notifications.find_one(query, PUBLIC_FIELDS)
+    if not row:
+        raise LookupError('Notification not found.')
+    return normalize_dates(present_own([row], user_id)[0])
 
 
 def read_all(user_id):

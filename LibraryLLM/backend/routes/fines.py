@@ -1,8 +1,8 @@
+from backend.platform_dependencies import require_platform_admin, has_platform_admin
 from fastapi import APIRouter, Depends, HTTPException
 
 from backend.dependencies import (
     get_current_user,
-    require_roles
 )
 
 from backend.services.fine_service import (
@@ -53,10 +53,7 @@ def my_fines(
 @router.get("/all")
 def all_fines(
     current_user=Depends(
-        require_roles(
-            "ADMIN",
-            "LIBRARIAN"
-        )
+        require_platform_admin
     )
 ):
 
@@ -97,10 +94,7 @@ def fine_details(
         )
 
     # Admin and librarian can view any fine
-    if current_user["role"] in [
-        "ADMIN",
-        "LIBRARIAN"
-    ]:
+    if has_platform_admin(current_user):
 
         return fine
 

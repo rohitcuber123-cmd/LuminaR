@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "boundary": "Explicit REQUEST_BOOK/REQUEST_RETURN adapter; active library/book/loan UUIDs bound in frozen PendingAction with a durable key.",
+    "confirmation": "Mandatory existing Confirm/Cancel action; later library context cannot retarget it.",
+    "local_only": "Real library record; no fake global catalogue ID or RAG book link.",
+    "preserved": "Existing router, selected-context repair and Qwen/model paths unchanged.",
+    "validation": "Real backend API transport via TestClient; adapter request and confirm tests; external model not invoked.",
+    "feature_flag": "Existing mutation enable flag/default retained; tests enable it explicitly."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_boundaries::test_assistant_immutable_library_confirmation[REQUEST_BOOK]",
+    "tests.institution_v2b.test_boundaries::test_assistant_immutable_library_confirmation[REQUEST_RETURN]"
+  ],
+  "live_scenarios": [],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

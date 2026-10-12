@@ -82,6 +82,8 @@ private_documents = PrivateDocuments(Path(__file__).resolve().parent / 'private_
 install_private_documents(app, private_documents, engine)
 from rag.services.knowledge_routes import install_knowledge_artifacts
 install_knowledge_artifacts(app, private_documents)
+from rag.services.library_asset_routes import install_library_assets
+install_library_assets(app, engine)
 book_runtime = BookRuntime(engine.reranker.retriever, loaded_book_revision)
 optional_auth = HTTPBearer(auto_error=False)
 service_loading_ms = (perf_counter() - service_loading_started) * 1000

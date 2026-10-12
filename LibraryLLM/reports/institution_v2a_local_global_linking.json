@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "local_identity": "UUID library_book_id is primary even for global-linked books",
+  "global_metadata": "The existing books collection remains the shared catalogue; no clone of five million records.",
+  "isbn_lookup": "Optional existing read-only DuckDB mapping; only a unique work with compatible metadata and a verified live Mongo work can link. Missing/ambiguous mapping stays local.",
+  "isbn_validation": "ASCII ISBN-10/13 checksum, 978/979 prefix for ISBN-13, X only as ISBN-10 final check character; strips whitespace/hyphens only.",
+  "later_link_unlink": "Preserves UUID, accession, holding and local metadata",
+  "title_only_global_link": false,
+  "isbn_fabricated": false,
+  "display_precedence": "Explicit library-local metadata; linked work is a reference, not a live field-overwrite source.",
+  "test_artifact": "institution_v2a_backend_final.xml",
+  "test_cases": [
+    "tests.institution_v2a.test_catalogue::test_only_title_subject_required_optional_metadata_and_default_quantity_one[isbn]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[0-306-40615-2-0306406152]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[978-0-306-40615-7-9780306406157]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[0-8044-2957-X-080442957X]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[None-None]",
+    "tests.institution_v2a.test_catalogue::test_isbn_optional_check_digits_and_normalization[-None]",
+    "tests.institution_v2a.test_catalogue::test_malformed_isbn_not_verified[1234567890]",
+    "tests.institution_v2a.test_catalogue::test_malformed_isbn_not_verified[9780306406158]",
+    "tests.institution_v2a.test_catalogue::test_malformed_isbn_not_verified[123-abc]",
+    "tests.institution_v2a.test_catalogue::test_malformed_isbn_not_verified[\\uff19\\uff17\\uff18\\uff10\\uff13\\uff10\\uff16\\uff14\\uff10\\uff16\\uff11\\uff15\\uff17]",
+    "tests.institution_v2a.test_catalogue::test_malformed_isbn_not_verified[9791234567890]",
+    "tests.institution_v2a.test_catalogue::test_malformed_isbn_not_verified[978030640615X]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[library_id-60683df6-798a-4966-b7de-96c37e6cfd69]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[library_book_id-59ee6747-834a-47f8-a04c-ae55e4cbecf8]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[accession_number-FAKE-1]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[accession_sequence-999]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[created_by_user_id-99]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[holding_id-5e1706dd-a3b2-482f-9f86-2279b744c718]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[role-ADMIN]",
+    "tests.institution_v2a.test_catalogue::test_work_id_link_valid_invalid_and_later_link_stable",
+    "tests.institution_v2a.test_catalogue::test_title_only_does_not_link_or_merge_and_duplicates_are_flagged",
+    "tests.institution_v2a.test_catalogue::test_strong_duplicate_work_or_compatible_isbn_detected",
+    "tests.institution_v2a.test_catalogue::test_optional_isbn_lookup_unavailable_keeps_local_and_trusted_match_links",
+    "tests.institution_v2a.test_catalogue::test_failed_validation_and_duplicate_do_not_reuse_identity_or_sequence",
+    "tests.institution_v2a.test_identity_edges::test_real_read_only_isbn_lookup_unique_and_ambiguous",
+    "tests.institution_v2a.test_identity_edges::test_migration_known_barcode_unverified_and_existing_quantity_policy",
+    "tests.institution_v2a.test_identity_edges::test_reconciliation_malformed_accession_reports_without_crashing",
+    "tests.institution_v2a.test_identity_edges::test_inventory_current_account_revocation_blocks_read_write_and_apply[change0]",
+    "tests.institution_v2a.test_identity_edges::test_inventory_current_account_revocation_blocks_read_write_and_apply[change1]",
+    "tests.institution_v2a.test_identity_edges::test_inventory_current_account_revocation_blocks_read_write_and_apply[change2]",
+    "tests.institution_v2a.test_identity_edges::test_migration_invalid_list_metadata_is_quarantined_per_row",
+    "tests.institution_v2a.test_import_migration::test_strong_verified_identity_import_policy_explicit_and_idempotent[skip-1]",
+    "tests.institution_v2a.test_import_migration::test_strong_verified_identity_import_policy_explicit_and_idempotent[increase_quantity-3]",
+    "tests.institution_v2a.test_import_migration::test_apply_revalidates_global_link_and_duplicate_changes_since_preview"
+  ],
+  "live_scenarios": [
+    {
+      "number": 1,
+      "scenario": "Title + subject creates UUID, accession and holding without ISBN/work/author",
+      "status": "PASS",
+      "accession": "AUR-000001"
+    },
+    {
+      "number": 3,
+      "scenario": "Existing trusted global work links to local holding",
+      "status": "PASS",
+      "global_work_id": "OL109579W"
+    },
+    {
+      "number": 5,
+      "scenario": "Mixed identifiers, local-only rows and isolated missing-subject error",
+      "status": "PASS",
+      "counts": {
+        "created_records": 3,
+        "invalid_rows": 1
+      }
+    },
+    {
+      "number": 9,
+      "scenario": "Later verified link and unlink preserve local UUID/accession",
+      "status": "PASS"
+    }
+  ]
+}

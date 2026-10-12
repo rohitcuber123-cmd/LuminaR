@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "policy": "Existing enabled/days/max renewal policy; expected_due_at compare and durable key.",
+    "blocked": "Overdue, exhausted, disabled policy or pending return.",
+    "reservations": "Only explicit canonical library_id or verified Part2A alias can block; unknown and other tenant reservations ignored."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_boundaries::test_return_confirm_race_and_renew_return_race",
+    "tests.institution_v2b.test_lending::test_renewal_proven_tenant_reservations_only",
+    "tests.institution_v2b.test_lending::test_same_library_reservation_blocks_renewal",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-approve]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-cancel]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-create]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-confirm]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-return-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-renew]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-stock]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[False-shelf]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-approve]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-cancel]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-create]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-confirm]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-return-reject]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-renew]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-stock]",
+    "tests.institution_v2b.test_recovery_edges::test_each_transition_recovers_absolute_effects[True-shelf]"
+  ],
+  "live_scenarios": [],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

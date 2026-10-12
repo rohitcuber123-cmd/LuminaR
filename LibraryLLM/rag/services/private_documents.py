@@ -6,6 +6,7 @@ import logging
 import shutil
 import sqlite3
 import time
+from threading import Semaphore
 from pathlib import Path
 from uuid import uuid4
 
@@ -15,6 +16,7 @@ from fastapi import HTTPException
 
 from backend.services.login_sessions import is_revoked, revoke
 from rag.services.document_service import DocumentService
+from rag.services import private_document_ocr
 from rag.services.local_document_cache import LocalDocumentCache, DIMENSION, MAX_CHUNKS
 
 
@@ -28,6 +30,7 @@ class PrivateDocuments:
         self.cache = cache or LocalDocumentCache()
         self.processor = DocumentService.__new__(DocumentService)
         self.processor.model = model
+        self._preparations = Semaphore(2)
         self.metrics = {'uploads': 0, 'parse_calls': 0, 'chunk_calls': 0, 'embedding_calls': 0, 'faiss_builds': 0, 'ingest_seconds_total': 0.0, 'restore_seconds_total': 0.0, 'export_seconds_total': 0.0}
         with self.db() as db:
             db.execute('CREATE TABLE IF NOT EXISTS documents (id TEXT PRIMARY KEY, owner TEXT NOT NULL, sid TEXT NOT NULL, expires REAL NOT NULL, state TEXT NOT NULL, cache_id TEXT, metadata TEXT NOT NULL)')
@@ -74,7 +77,7 @@ class PrivateDocuments:
 
     def public(self, row):
         meta = json.loads(row['metadata'])
-        return {k: meta[k] for k in ('document_id', 'filename', 'pages', 'chunks', 'status')}
+        return {k: meta[k] for k in ('document_id', 'filename', 'pages', 'chunks', 'status', 'ocr', 'warnings') if k in meta}
 
     def list(self, user):
         owner, sid = self.identity(user)
@@ -110,7 +113,15 @@ class PrivateDocuments:
             db.execute("UPDATE documents SET state='ACTIVE',metadata=? WHERE id=? AND state='INGESTING'", (json.dumps(meta), meta['document_id']))
         return elapsed
 
-    def ingest(self, content, filename, user):
+    def ingest(self, content, filename, user, embedding_lock=None, progress=None):
+        if not self._preparations.acquire(blocking=False):
+            raise HTTPException(429, 'Document preparation is busy. Please retry shortly.')
+        try:
+            return self._ingest(content, filename, user, embedding_lock, progress)
+        finally:
+            self._preparations.release()
+
+    def _ingest(self, content, filename, user, embedding_lock, progress):
         started = time.perf_counter()
         meta = self.begin(user, filename, hashlib.sha256(content).hexdigest())
         path = self.directory(meta['document_id'])
@@ -121,14 +132,22 @@ class PrivateDocuments:
             pages = self.processor.extract_pdf(raw)
             if not 0 < len(pages) <= 10000:
                 raise HTTPException(413, 'Document has too many pages.')
+            pages, ocr = private_document_ocr.prepare(raw, pages, progress=progress)
+            meta['ocr'] = ocr
+            meta['warnings'] = ['Some scanned pages could not be read.'] if ocr['failed_pages'] else []
             self.metrics['chunk_calls'] += 1
             chunks = self.processor.create_chunks(meta['document_id'], filename, pages)
+            for chunk in chunks:
+                chunk['extraction_method'] = pages[chunk['page']-1]['extraction_method']
             if not 0 < len(chunks) <= MAX_CHUNKS:
-                raise HTTPException(400, 'No usable text, or document exceeds the chunk limit.')
+                raise HTTPException(400, 'No usable text was found. Scanned PDFs require local English OCR language data; see the OCR setup guide.' if not chunks else 'Document exceeds the chunk limit.')
             meta['pages'] = len(pages)
             (path / 'extracted.json').write_text(json.dumps(pages, ensure_ascii=False), encoding='utf-8')
             self.metrics['embedding_calls'] += 1
-            vectors = self.processor.embed_chunks(chunks)
+            if progress:
+                progress('PREPARING_DOCUMENT')
+            with embedding_lock or contextlib.nullcontext():
+                vectors = self.processor.embed_chunks(chunks)
             faiss_time = self.publish(meta, chunks, vectors, user)
             self.metrics['uploads'] += 1
             self.metrics['ingest_seconds_total'] += time.perf_counter() - started
@@ -175,6 +194,10 @@ class PrivateDocuments:
         if existing:
             return {**self.public(existing), 'already_active': True}
         meta = self.begin(user, manifest['filename'], manifest['document_sha256'], manifest['pages'], len(chunks), header['cache_id'])
+        if any(c.get('extraction_method')=='OCR' for c in chunks):
+            ocr_pages={c['page'] for c in chunks if c.get('extraction_method')=='OCR'}
+            native_pages={c['page'] for c in chunks if c.get('extraction_method')=='NATIVE'}
+            meta['ocr']={'native_pages':len(native_pages),'ocr_pages':len(ocr_pages),'failed_pages':0,'restored':True}
         try:
             faiss_time = self.publish(meta, chunks, vectors, user)
             self.cache.metrics['restores'] += 1

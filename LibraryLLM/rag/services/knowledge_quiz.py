@@ -8,7 +8,7 @@ from rag.services.knowledge_algorithms import (
 )
 from rag.services.knowledge_quiz_sources import note_facts, term
 
-VERSION = '2.1.0'
+VERSION = '3.2.2'
 QUESTION_TYPES = ('mcq', 'fill_blank', 'matching')
 DEFAULT_TYPES = ('mcq', 'fill_blank')
 DEFAULT_COUNT = 12
@@ -219,3 +219,84 @@ def generate_quiz(rows, keys, options, chunks=()):
     if len(questions) < count:
         messages.append(f'Generated {len(questions)} of {count} requested questions; only distinct, grounded facts were used.')
     return {'questions': questions, 'generatedCounts': counts, 'requestedCount': count, 'messages': messages}
+
+
+def generate_from_knowledge(model, options):
+    """Study formats consume accepted facts, never re-read or extract raw chunks."""
+    options = quiz_options(options.get('questionTypes'), options.get('questionCount', DEFAULT_COUNT))
+    types, count = options['questionTypes'], options['questionCount']
+    import rag.services.knowledge_quiz_evidence as evidence
+    import rag.services.knowledge_quiz_relations as relations
+    import rag.services.knowledge_mcq as mcq
+    import rag.services.knowledge_match as match_formats
+    import rag.services.knowledge_cloze as cloze
+    evidence.attach(model)
+    relations.attach(model)
+    facts = model.quiz_evidence
+    rejections = dict(model.quiz_rejections)
+    cards = []
+    for fact in model.facts:
+        label = fact['concept']
+        pattern = re.compile(r'(?<!\w)' + r'\s+'.join(re.escape(w) for w in label.split()) + r'(?!\w)', re.I)
+        matches = list(pattern.finditer(fact['text']))
+        if len(matches) != 1 or len(normalize(fact['text']).split()) - len(label.split()) < 6:
+            continue
+        match = matches[0]
+        cards.append({'id': identifier('card', fact['id']), 'type': 'cloze',
+                      'front': fact['text'][:match.start()] + '_____' + fact['text'][match.end():],
+                      'back': match.group(), 'concept': label, 'sourceExcerpt': fact['text'],
+                      **provenance_from_row(fact)})
+    templates = {}
+    for card in cards:
+        templates.setdefault(normalize(card['front']), []).append(card)
+    cards = [v[0] for v in templates.values() if len(v) == 1]
+    seed = identifier('quiz_seed', '|'.join(r['id'] for r in model.quiz_relations) + str(count))
+    pools = {'mcq': mcq.candidates(model.quiz_relations, rejections, seed) if 'mcq' in types else [],
+             'matching': match_formats.candidates(model.quiz_relations, rejections, seed) if 'matching' in types else [],
+             'fill_blank': cloze.candidates(fill_blanks(cards, facts), model) if 'fill_blank' in types else fill_blanks(cards, facts)}
+    questions, used_facts, used_concepts = [], set(), set()
+    used_relations = set()
+    used_sections = set()
+    # A scarce format should not be drowned out by many easy clozes.
+    balanced_limit = max(1, (count + len(types) - 1) // len(types))
+    def accept(items):
+        for item in items:
+            used_facts.update(item['_facts']); used_concepts.update(item['_concepts'])
+            used_relations.update(item.get('_relations', set()));used_sections.update(item.get('_sections', set()))
+            questions.append({key:value for key,value in item.items() if not key.startswith('_')})
+    # Reserve a genuine bijective relation set, then globally select MCQs using
+    # the remaining evidence. Matching allocation is pair-level, not block-level.
+    match_metrics={'sets':0,'pairs':0,'requestedPairs':balanced_limit if 'matching' in types else 0}
+    if 'matching' in types:
+        # Keep one validated MCQ relation available when formats compete for a
+        # small pool. Its target is still fixed before matching/distractor work.
+        reserved=[]
+        if 'mcq' in types:
+            reserved,_=mcq.finalize_mcq_quiz(pools['mcq'],1,model.quiz_relations)
+        reserve_facts=set().union(*(x['_facts'] for x in reserved)) if reserved else set()
+        reserve_concepts=set().union(*(x['_concepts'] for x in reserved)) if reserved else set()
+        sets,match_metrics=match_formats.select(pools['matching'],balanced_limit,reserve_facts,reserve_concepts)
+        accept(sets)
+    mcq_metrics={}
+    if 'mcq' in types:
+        chosen,mcq_metrics=mcq.finalize_mcq_quiz(pools['mcq'],balanced_limit,model.quiz_relations,used_facts,used_concepts)
+        accept(chosen)
+    if 'fill_blank' in types:
+        for item in sorted(pools['fill_blank'],key=lambda x:not bool(x.get('_sections',set())-used_sections)):
+            if sum(q['type']=='fill_blank' for q in questions)>=balanced_limit: break
+            if item['_facts'].isdisjoint(used_facts) and item['_concepts'].isdisjoint(used_concepts):accept([item])
+    counts = {kind: sum(q['type'] == kind for q in questions) for kind in types}
+    names = {'mcq': 'Multiple Choice', 'fill_blank': 'Fill in the Blanks', 'matching': 'Match the Following'}
+    messages = [f'Not enough reliable source material was available for {names[kind]}.' for kind in types if not counts[kind]]
+    learning_items=sum(len(q['leftItems']) if q['type']=='matching' else 1 for q in questions)
+    if learning_items < count:
+        unit='learning items' if 'matching' in types else 'questions'
+        messages.append(f'Generated {learning_items} of {count} requested {unit} from reliable source material.')
+    if 'matching' in types:
+        noun='set' if match_metrics['sets']==1 else 'sets'
+        messages.append(f'{match_metrics["sets"]} matching {noun} · {match_metrics["pairs"]} pairs. Matching is allocated by pairs, not by question blocks.')
+    return {'questions': questions, 'generatedCounts': counts, 'requestedCount': count, 'messages': messages,
+            'learningItemCount':learning_items,**({'matchingAllocation':match_metrics} if 'matching' in types else {}),
+            'coverage': {'candidateFacts': len(facts), 'candidateFrames': {k:len(v) for k,v in pools.items()},
+                         'rejections': rejections,'relationRejections':model.quiz_relation_rejections,
+                         'mcqDiversity':mcq_metrics,'matchDiversity':match_metrics,'qwenCalls': 0}}

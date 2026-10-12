@@ -1,0 +1,117 @@
+backend\utils\jwt_utils.py:23:        minutes=30 if role in ('ADMIN', 'LIBRARIAN') else ACCESS_TOKEN_EXPIRE_MINUTES
+backend\schemas\institution_models.py:51:    role: Literal['ADMIN', 'LIBRARIAN']
+backend\institution_dependencies.py:55:    return require_library_role(library_id, current_user, 'ADMIN', 'LIBRARIAN', locked=locked)
+backend\institution_dependencies.py:59:    library, membership = require_library_role(library_id, current_user, 'ADMIN', locked=locked)
+backend\dependencies.py:27:def require_roles(*allowed_roles):
+backend\dependencies.py:33:        user_role = current_user.get("role")
+backend\schemas\institutions.py:9:    GENERAL_USER = 'GENERAL_USER'
+backend\schemas\institutions.py:10:    LIBRARIAN = 'LIBRARIAN'
+backend\schemas\institutions.py:11:    ADMIN = 'ADMIN'
+backend\schemas\institutions.py:87:    role: str = Field(pattern=r'^(ADMIN|LIBRARIAN)$')
+backend\routes\activity.py:5:    require_roles
+backend\routes\activity.py:42:# ADMIN + LIBRARIAN
+backend\routes\activity.py:48:        require_roles(
+backend\routes\activity.py:49:            "ADMIN",
+backend\routes\activity.py:50:            "LIBRARIAN"
+backend\routes\activity.py:85:    if current_user["role"] in [
+backend\routes\activity.py:86:        "ADMIN",
+backend\routes\activity.py:87:        "LIBRARIAN"
+backend\services\auth_service.py:112:        "role": "GENERAL_USER",
+backend\services\auth_service.py:156:    if (not user or user.get("role") != "LIBRARIAN" or not user.get("password_setup_required")
+backend\services\auth_service.py:163:        {"user_id": user["user_id"], "role": "LIBRARIAN", "password_setup_required": True,
+backend\routes\events.py:16:    if user['role'] not in {'ADMIN','LIBRARIAN'}:raise HTTPException(403,'Library staff access required.')
+backend\services\notification_service.py:76:    keys = [f'ADMIN_MESSAGE:{actor}:{request_id}:{uid}' for uid in targets]
+backend\services\notification_service.py:82:        notice, created = insert_notice(uid, 'ADMIN_MESSAGE', title, message, key,
+backend\services\notification_service.py:83:                                       source='ADMIN', sender=actor)
+backend\services\notification_service.py:124:    query = {'source': 'ADMIN'}
+backend\scripts\reset_admin_password.py:10:ADMIN_ROLE = "ADMIN"
+backend\scripts\reset_admin_password.py:11:SAFE_ADMIN_FIELDS = {"_id": 0, "name": 1, "email": 1, "user_id": 1, "role": 1}
+backend\scripts\reset_admin_password.py:16:    administrators = list(users_collection.find({"role": ADMIN_ROLE}, SAFE_ADMIN_FIELDS))
+backend\scripts\reset_admin_password.py:53:        {"user_id": user_id, "role": ADMIN_ROLE},
+backend\scripts\reset_admin_password.py:109:    print(f"role: {ADMIN_ROLE}")
+backend\services\identity_service.py:7:READER_ROLE = 'GENERAL_USER'
+backend\services\identity_service.py:8:STAFF_ROLES = ('ADMIN', 'LIBRARIAN')
+backend\services\identity_service.py:58:    return {**payload, 'sub':str(user_id), 'role':user['role'], 'email':user['email']}
+backend\routes\staff.py:3:from backend.dependencies import require_roles
+backend\routes\staff.py:6:router=APIRouter(prefix='/staff', tags=['Staff management'], dependencies=[Depends(require_roles('ADMIN'))])
+backend\routes\staff.py:23:def create(request: CreateLibrarianRequest, actor=Depends(require_roles('ADMIN'))):
+backend\routes\staff.py:32:def update(user_id: int, request: UpdateLibrarianRequest, actor=Depends(require_roles('ADMIN'))):
+backend\routes\staff.py:41:def resend(user_id: int, actor=Depends(require_roles('ADMIN'))):
+backend\routes\inventory.py:4:from backend.dependencies import require_roles
+backend\routes\inventory.py:61:        require_roles(
+backend\routes\inventory.py:62:            "ADMIN",
+backend\routes\inventory.py:63:            "LIBRARIAN"
+backend\routes\inventory.py:159:        require_roles(
+backend\routes\inventory.py:160:            "ADMIN",
+backend\routes\inventory.py:161:            "LIBRARIAN"
+backend\routes\inventory.py:206:        require_roles("ADMIN")
+backend\routes\inventory.py:234:        require_roles(
+backend\routes\inventory.py:235:            "ADMIN",
+backend\routes\inventory.py:236:            "LIBRARIAN"
+backend\routes\inventory.py:264:        require_roles("ADMIN", "LIBRARIAN")
+backend\scripts\bootstrap_admin.py:22:    if users_collection.find_one({'role':'ADMIN'}, {'_id':1}):
+backend\scripts\bootstrap_admin.py:32:        if users_collection.find_one({'role':'ADMIN'}, {'_id':1}):
+backend\scripts\bootstrap_admin.py:35:                'password_hash':hash_password(password), 'role':'ADMIN',
+backend\scripts\bootstrap_admin.py:43:        return {'email':email,'role':'ADMIN'}
+backend\scripts\bootstrap_admin.py:68:    print('role: ADMIN')
+backend\services\staff_service.py:18:            'librarian_count':users_collection.count_documents({'role':'LIBRARIAN'}), 'limit':limit,'offset':offset}
+backend\services\staff_service.py:24:          'password_hash':hash_password(secrets.token_urlsafe(32)), 'role':'LIBRARIAN',
+backend\services\staff_service.py:40:    user=users_collection.find_one({'user_id':user_id, 'role':'LIBRARIAN'}, STAFF_FIELDS)
+backend\services\staff_service.py:48:    users_collection.update_one({'user_id':user_id,'role':'LIBRARIAN'}, {'$set':allowed})
+backend\routes\books.py:24:from backend.dependencies import get_current_user, require_roles
+backend\routes\books.py:157:        require_roles(
+backend\routes\books.py:158:            "ADMIN",
+backend\routes\books.py:159:            "LIBRARIAN"
+backend\routes\books.py:188:        require_roles(
+backend\routes\books.py:189:            "ADMIN",
+backend\routes\books.py:190:            "LIBRARIAN"
+backend\routes\books.py:228:        require_roles("ADMIN")
+backend\routes\reservations.py:6:    require_roles
+backend\routes\reservations.py:79:# ADMIN + LIBRARIAN
+backend\routes\reservations.py:85:        require_roles(
+backend\routes\reservations.py:86:            "ADMIN",
+backend\routes\reservations.py:87:            "LIBRARIAN"
+backend\routes\reservations.py:132:    if current_user["role"] in [
+backend\routes\reservations.py:133:        "ADMIN",
+backend\routes\reservations.py:134:        "LIBRARIAN"
+backend\routes\reservations.py:191:# ADMIN + LIBRARIAN
+backend\routes\reservations.py:198:        require_roles(
+backend\routes\reservations.py:199:            "ADMIN",
+backend\routes\reservations.py:200:            "LIBRARIAN"
+backend\routes\fines.py:5:    require_roles
+backend\routes\fines.py:50:# ADMIN + LIBRARIAN
+backend\routes\fines.py:56:        require_roles(
+backend\routes\fines.py:57:            "ADMIN",
+backend\routes\fines.py:58:            "LIBRARIAN"
+backend\routes\fines.py:100:    if current_user["role"] in [
+backend\routes\fines.py:101:        "ADMIN",
+backend\routes\fines.py:102:        "LIBRARIAN"
+backend\routes\models\user.py:21:                role TEXT NOT NULL DEFAULT 'GENERAL_USER',
+backend\routes\issues.py:6:    require_roles
+backend\routes\issues.py:89:# ADMIN + LIBRARIAN
+backend\routes\issues.py:95:        require_roles(
+backend\routes\issues.py:96:            "ADMIN",
+backend\routes\issues.py:97:            "LIBRARIAN"
+backend\routes\issues.py:142:    if current_user["role"] in [
+backend\routes\issues.py:143:        "ADMIN",
+backend\routes\issues.py:144:        "LIBRARIAN"
+backend\routes\notifications.py:21:    if identity['role'] != 'ADMIN':
+backend\routes\notifications.py:75:            'librarians': db['users'].count_documents({'role': 'LIBRARIAN', 'is_active': {'$ne': False}}),
+backend\routes\renewals.py:24:    if user['role'] != 'ADMIN':
+backend\services\institution_service.py:51:def membership_document(library_id, user_id, role='GENERAL_USER', created_by=None):
+backend\services\institution_service.py:67:    member = membership_document(library_id, user_id, 'ADMIN', user_id)
+backend\services\institution_service.py:203:    require_library_role(library_id, current_user, 'ADMIN')
+backend\services\institution_service.py:206:        library, _ = require_library_role(library_id, current_user, 'ADMIN', locked=True)
+backend\services\institution_service.py:221:        require_library_role(library_id, current_user, 'ADMIN', locked=True)
+backend\services\institution_service.py:228:    if target_role == 'ADMIN' and library['owner_user_id'] != actor_id(current_user):
+backend\services\institution_service.py:243:        library, _ = require_library_role(library_id, current_user, 'ADMIN', locked=True)
+backend\services\institution_service.py:317:        require_library_role(library_id, inviter, 'ADMIN', locked=True)
+backend\services\institution_service.py:340:    library, _ = require_library_role(library_id, current_user, 'ADMIN')
+backend\services\institution_service.py:343:        query['role'] = {'$in': ['ADMIN', 'LIBRARIAN']}
+backend\services\institution_service.py:352:    require_library_role(library_id, current_user, 'ADMIN')
+backend\services\institution_service.py:360:        library, _ = require_library_role(library_id, current_user, 'ADMIN', locked=True)
+backend\services\institution_service.py:375:        library, _ = require_library_role(library_id, current_user, 'ADMIN', locked=True)
+backend\services\institution_service.py:385:        owner = collection('memberships').find_one({'library_id': library_id, 'user_id': library['owner_user_id'], 'role': 'ADMIN', 'status': 'ACTIVE'})
+backend\services\institution_service.py:388:        if target['role'] == 'ADMIN' and target['status'] == 'ACTIVE' and (role != 'ADMIN' or status != 'ACTIVE'):
+backend\services\institution_service.py:389:            if collection('memberships').count_documents({'library_id': library_id, 'role': 'ADMIN', 'status': 'ACTIVE'}) <= 1:
+backend\services\institution_service.py:407:    require_library_role(library_id, current_user, 'ADMIN')

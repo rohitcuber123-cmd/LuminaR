@@ -1,7 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 
-from backend.dependencies import require_roles
+from backend.platform_dependencies import retirement
+from backend.dependencies import get_current_user
+from backend.institution_dependencies import require_library_staff
+from backend.services.institution_repository import collection
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from backend.services.inventory_service import (
     add_inventory,
@@ -58,30 +61,11 @@ def create_inventory(
     request: InventoryCreateRequest,
 
     current_user=Depends(
-        require_roles(
-            "ADMIN",
-            "LIBRARIAN"
-        )
+        get_current_user
     )
 ):
 
-    try:
-
-        result = add_inventory(
-            **request.model_dump()
-        )
-
-    except ValueError as error:
-
-        raise HTTPException(
-            status_code=400,
-            detail=str(error)
-        )
-
-    return {
-        "message": "Book added to library inventory",
-        "inventory": result
-    }
+    retirement()
 
 
 # ============================================================
@@ -91,6 +75,7 @@ def create_inventory(
 @router.get("/")
 def list_inventory(
     library_id: str,
+    current_user=Depends(get_current_user),
 
     limit: int = Query(
         20,
@@ -104,6 +89,7 @@ def list_inventory(
     )
 ):
 
+    legacy_staff_context(library_id, current_user)
     results = get_inventory(
         library_id,
         limit,
@@ -126,9 +112,11 @@ def list_inventory(
 @router.get("/{library_id}/{work_id}")
 def get_one_inventory_book(
     library_id: str,
-    work_id: str
+    work_id: str,
+    current_user=Depends(get_current_user)
 ):
 
+    legacy_staff_context(library_id, current_user)
     result = get_inventory_book(
         library_id,
         work_id
@@ -156,41 +144,11 @@ def update_one_inventory_book(
     request: InventoryUpdateRequest,
 
     current_user=Depends(
-        require_roles(
-            "ADMIN",
-            "LIBRARIAN"
-        )
+        get_current_user
     )
 ):
 
-    try:
-
-        result = update_inventory(
-            library_id,
-            work_id,
-            **request.model_dump(
-                exclude_unset=True
-            )
-        )
-
-    except ValueError as error:
-
-        raise HTTPException(
-            status_code=400,
-            detail=str(error)
-        )
-
-    if result is None:
-
-        raise HTTPException(
-            status_code=404,
-            detail="Book is not present in this library's inventory"
-        )
-
-    return {
-        "message": "Library inventory updated",
-        "inventory": result
-    }
+    retirement()
 
 
 # ============================================================
@@ -203,83 +161,36 @@ def delete_one_inventory_book(
     work_id: str,
 
     current_user=Depends(
-        require_roles("ADMIN")
+        get_current_user
     )
 ):
 
-    try:
-        result = delete_inventory(library_id, work_id)
-    except ValueError as error:
-        raise HTTPException(
-            status_code=404 if str(error) == "Inventory record not found" else 409,
-            detail=str(error),
-        )
-
-    if result is None:
-
-        raise HTTPException(
-            status_code=404,
-            detail="Book is not present in this library's inventory"
-        )
-
-    return {
-        "message": "Book removed from library inventory"
-    }
+    retirement()
 @router.post("/import/preview")
 async def preview_inventory_import(
     library_id: str,
     file: UploadFile = File(...),
 
     current_user=Depends(
-        require_roles(
-            "ADMIN",
-            "LIBRARIAN"
-        )
+        get_current_user
     )
 ):
 
-    try:
-
-        file_bytes = await file.read()
-
-        result = create_preview(
-            library_id,
-            file.filename,
-            file_bytes
-        )
-
-        return result
-
-    except ValueError as error:
-
-        raise HTTPException(
-            status_code=400,
-            detail=str(error)
-        )
+    retirement()
 @router.post("/import/confirm")
 def confirm_import(
     preview_id: str = Form(...),
     library_id: str = Form(...),
     current_user=Depends(
-        require_roles("ADMIN", "LIBRARIAN")
+        get_current_user
     ),
 ):
-    try:
-        result = confirm_inventory_import(
-            preview_id=preview_id,
-            library_id=library_id,
-        )
+    retirement()
 
-        return result
 
-    except ValueError as exc:
-        raise HTTPException(
-            status_code=400,
-            detail=str(exc),
-        )
-
-    except Exception as exc:
-        raise HTTPException(
-            status_code=500,
-            detail=str(exc),
-        )
+def legacy_staff_context(library_id, actor):
+    alias = collection('library_aliases').find_one({'legacy_library_id': library_id})
+    canonical = alias['canonical_library_id'] if alias else library_id
+    if not collection('libraries').find_one({'library_id': canonical, 'status': 'ACTIVE'}):
+        retirement()
+    return require_library_staff(canonical, actor)

@@ -1,7 +1,7 @@
 import os
 from fastapi import FastAPI, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from search.luminar_search import LuminaRSearchEngine
 
@@ -101,6 +101,8 @@ class SearchRequest(BaseModel):
 
     # Save search in user's search history
     save_history: bool = True
+    category: str = Field(default='', max_length=200)
+    author: str = Field(default='', max_length=150)
 
 
 # ============================================================
@@ -273,7 +275,8 @@ def search(
 
             available_at_library=(
                 request.available_at_library
-            )
+            ),
+            **({'category': request.category, 'author': request.author} if request.category or request.author else {})
         )
 
         # ----------------------------------------------------

@@ -82,3 +82,21 @@ class EventPatch(EventCreate):
 class SeenRequest(BaseModel):
     model_config=ConfigDict(extra='forbid')
     cursor: str=Field(min_length=1,max_length=40000)
+
+
+class Visibility(str, Enum):
+    LIBRARY_MEMBERS = 'LIBRARY_MEMBERS'
+    PUBLIC = 'PUBLIC'
+
+
+class TenantEventCreate(EventCreate):
+    visibility: Visibility = Visibility.LIBRARY_MEMBERS
+
+
+class TenantEventPatch(EventPatch):
+    visibility: Visibility | None = None
+
+
+class EventCancellation(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    reason: str = Field(min_length=1, max_length=500)

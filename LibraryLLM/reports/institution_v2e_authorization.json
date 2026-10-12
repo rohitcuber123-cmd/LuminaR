@@ -1,0 +1,404 @@
+{
+  "status": "PASS",
+  "authority": "Fresh LibraryMembership ADMIN/LIBRARIAN; canonical UUID; current eligible identity and active library, revalidated before response.",
+  "admin_only": [
+    "aggregate membership role breakdown",
+    "waived/settled amount aggregates",
+    "outbox state counters"
+  ],
+  "not_authority": [
+    "legacy User.role",
+    "PlatformRoleAssignment alone",
+    "first membership",
+    "global_work_id"
+  ],
+  "backend": [
+    {
+      "name": "test_admin_can_view_own_library_analytics",
+      "result": "PASS"
+    },
+    {
+      "name": "test_general_user_cannot_view_staff_analytics",
+      "result": "PASS"
+    },
+    {
+      "name": "test_librarian_can_view_operational_analytics",
+      "result": "PASS"
+    },
+    {
+      "name": "test_platform_admin_without_membership_denied",
+      "result": "PASS"
+    },
+    {
+      "name": "test_legacy_admin_without_membership_denied",
+      "result": "PASS"
+    },
+    {
+      "name": "test_cross_library_analytics_denied",
+      "result": "PASS"
+    },
+    {
+      "name": "test_revoked_membership_denied[REVOKED]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_revoked_membership_denied[SUSPENDED]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_revoked_membership_denied[REMOVED]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_suspended_removed_library_analytics_denied[SUSPENDED]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_suspended_removed_library_analytics_denied[REMOVED]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_requires_canonical_uuid[LIB001]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_requires_canonical_uuid[first]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_requires_canonical_uuid[not-a-uuid]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_range_bounded[31d]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_range_bounded[-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_range_bounded[999d]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_range_bounded[2026-10-11]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_overview_empty_library",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_overview_known_fixture",
+      "result": "PASS"
+    },
+    {
+      "name": "test_overview_library_scoped",
+      "result": "PASS"
+    },
+    {
+      "name": "test_collection_exact_counts[active_books-3]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_collection_exact_counts[total_holding_quantity-10]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_collection_exact_counts[local_only_books-2]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_collection_exact_counts[globally_linked_books-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_collection_exact_counts[recent_acquisitions-3]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_collection_exact_counts[requestable_units-0]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_collection_status_counts",
+      "result": "PASS"
+    },
+    {
+      "name": "test_collection_subject_distribution",
+      "result": "PASS"
+    },
+    {
+      "name": "test_withdrawal_retains_actual_acquisition_history",
+      "result": "PASS"
+    },
+    {
+      "name": "test_legacy_reservation_rows_cannot_affect_canonical_requestable_units",
+      "result": "PASS"
+    },
+    {
+      "name": "test_missing_circulation_status_reuses_accepted_default",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_exact_counts[pending_borrow_requests-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_exact_counts[pending_return_requests-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_exact_counts[active_loans-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_exact_counts[requested_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_exact_counts[approved_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_exact_counts[rejected_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_exact_counts[returns_confirmed_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_exact_counts[renewals_in_range-2]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_renewals_uses_persisted_history",
+      "result": "PASS"
+    },
+    {
+      "name": "test_circulation_time_range",
+      "result": "PASS"
+    },
+    {
+      "name": "test_uncommitted_history_excluded",
+      "result": "PASS"
+    },
+    {
+      "name": "test_reservation_exact_counts[active-3]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_reservation_exact_counts[waiting-2]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_reservation_exact_counts[ready-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_reservation_exact_counts[created_in_range-2]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_reservation_exact_counts[fulfilled_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_reservation_exact_counts[cancelled_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_reservation_exact_counts[expired_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_reservation_exact_counts[average_queue_depth-2.0]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_exact_counts[open_count-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_exact_counts[open_balance_minor-697]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_exact_counts[assessed_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_exact_counts[assessed_minor-1001]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_exact_counts[payments_minor-203]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_exact_counts[waived_minor-101]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_exact_counts[settled_minor-0]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_exact_money_semantics",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fee_invalid_ledger_fails_closed",
+      "result": "PASS"
+    },
+    {
+      "name": "test_fractional_minor_units_never_presented_as_exact_money",
+      "result": "PASS"
+    },
+    {
+      "name": "test_settled_total_requires_actual_paid_transition",
+      "result": "PASS"
+    },
+    {
+      "name": "test_requestable_copy_projection_and_unavailable_conditions",
+      "result": "PASS"
+    },
+    {
+      "name": "test_copy_mode_allocation_inconsistency_fails_closed",
+      "result": "PASS"
+    },
+    {
+      "name": "test_platform_dual_authority_uses_independent_membership",
+      "result": "PASS"
+    },
+    {
+      "name": "test_account_disabled_denied_on_next_request",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_response_not_cached",
+      "result": "PASS"
+    },
+    {
+      "name": "test_mid_read_event_revision_change_rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "test_event_exact_counts[upcoming-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_event_exact_counts[published_in_range-3]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_event_exact_counts[cancelled_in_range-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_event_exact_counts[completed-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_event_exact_counts[drafts-1]",
+      "result": "PASS"
+    },
+    {
+      "name": "test_event_global_and_other_library_excluded",
+      "result": "PASS"
+    },
+    {
+      "name": "test_member_role_aggregate",
+      "result": "PASS"
+    },
+    {
+      "name": "test_member_analytics_contains_no_private_history",
+      "result": "PASS"
+    },
+    {
+      "name": "test_popular_books_uses_tenant_activity",
+      "result": "PASS"
+    },
+    {
+      "name": "test_popular_books_cross_library_isolated",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_does_not_query_global_books_for_tenant_collection",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_read_only_no_mutation_commands",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_never_runs_lazy_expiry_or_queue_maintenance",
+      "result": "PASS"
+    },
+    {
+      "name": "test_legacy_cutover_unavailable_not_fake_zero",
+      "result": "PASS"
+    },
+    {
+      "name": "test_retained_lock_or_recovery_state_fails_closed",
+      "result": "PASS"
+    },
+    {
+      "name": "test_mid_read_activity_change_rejected",
+      "result": "PASS"
+    },
+    {
+      "name": "test_mid_read_revocation_denied",
+      "result": "PASS"
+    },
+    {
+      "name": "test_utc_boundaries_inclusive_start_exclusive_end",
+      "result": "PASS"
+    },
+    {
+      "name": "test_all_time_trends_remain_bounded_and_real",
+      "result": "PASS"
+    },
+    {
+      "name": "test_no_cache_can_cross_library",
+      "result": "PASS"
+    },
+    {
+      "name": "test_analytics_top_lists_bounded_and_isolated_large_benchmark",
+      "result": "PASS"
+    },
+    {
+      "name": "test_source_metric_reports_from_exact_fixture",
+      "result": "PASS"
+    }
+  ],
+  "live": [
+    {
+      "check": "GENERAL_USER, cross-library ADMIN and Platform-only API denied",
+      "status": "PASS"
+    },
+    {
+      "check": "GENERAL_USER, cross-library ADMIN and Platform-only API denied",
+      "status": "PASS"
+    },
+    {
+      "check": "TEST GENERAL_USER direct Staff Analytics route denied",
+      "status": "PASS"
+    },
+    {
+      "check": "Platform-only browser has no TEST Analytics access",
+      "status": "PASS"
+    },
+    {
+      "check": "Same JWT loses Analytics immediately after membership revocation",
+      "status": "PASS"
+    },
+    {
+      "check": "Suspended/removed Analytics denied and restores retain tenant data",
+      "status": "PASS"
+    }
+  ],
+  "read_only_live_digests": "institution_v2e_browser.json"
+}

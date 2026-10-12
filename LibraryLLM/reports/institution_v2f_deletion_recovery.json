@@ -1,0 +1,160 @@
+{
+  "status": "PASS",
+  "tests": [
+    {
+      "suite": "tests.institution_v2f.test_activity_identity",
+      "name": "test_missing_actor_fallback",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_activity_identity",
+      "name": "test_deleted_actor_history_still_renders",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_activity_identity",
+      "name": "test_activity_existing_event_email_snapshot_fallback",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_pipeline",
+      "name": "test_worker_acknowledgement_loss_does_not_duplicate",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_pipeline",
+      "name": "test_fenced_publication_retires_only_own_generation",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_pipeline",
+      "name": "test_delete_racing_late_generation_is_cleaned",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_pipeline",
+      "name": "test_processing_exception_retires_unpublished_generation",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_pipeline",
+      "name": "test_knowledge_artifact_delete_requires_staff",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_pipeline",
+      "name": "test_deleted_asset_cannot_retrieve_or_reopen_cached_tools",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_default_read_only_consistent",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_missing_source_and_artifact_no_auto_deletion",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_revokes_invalid_ready_only_with_flag",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_reports_partial_publication_job_ack_without_retiring_ready",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_ready_job_identity_mismatch_never_guesses_or_republishes",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_source_checksum_and_chunk_identity",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_orphan_source_and_index_no_guess",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_interrupted_source_move_requires_explicit_verified_repair",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_asset_recovery",
+      "name": "test_reconcile_wrong_checksum_part_never_moves",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_assets",
+      "name": "test_same_upload_acknowledgement_retry_is_idempotent",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_assets",
+      "name": "test_upload_db_insert_failure_keeps_orphan_non_public",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_assets",
+      "name": "test_deleted_asset_cannot_be_resurrected_by_worker",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_assets",
+      "name": "test_delete_revokes_read_retires_source_removes_rag_audits",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_assets",
+      "name": "test_partial_delete_denies_immediately_and_retries",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_assets",
+      "name": "test_delete_audit_failure_remains_denied_then_retries",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_assets",
+      "name": "test_missing_ready_artifact_fails_closed[source]",
+      "status": "PASS"
+    },
+    {
+      "suite": "tests.institution_v2f.test_assets",
+      "name": "test_missing_ready_artifact_fails_closed[artifact]",
+      "status": "PASS"
+    }
+  ],
+  "live_checks": [
+    {
+      "check": "Browser safely retries same upload acknowledgement id",
+      "status": "PASS",
+      "library_id": "72bc8c6e-6433-41d0-89a4-505b2ed44aff",
+      "asset_id": "615631b5-9a65-4267-9fc2-598819cbb4d3"
+    },
+    {
+      "check": "Staff asset surfaces and upload/edit/delete dialogs pass six viewports and keyboard trap/Escape/focus restore",
+      "status": "PASS"
+    }
+  ],
+  "authoritative_full_suite": "institution_v2f_regression_institution_v2f.xml",
+  "audit_events": [
+    "ASSET_DELETED",
+    "ASSET_LINKED_BOOK_CHANGED",
+    "ASSET_METADATA_CHANGED",
+    "ASSET_PROCESSING_FAILED",
+    "ASSET_PROCESSING_STARTED",
+    "ASSET_READY",
+    "ASSET_REPROCESSED",
+    "ASSET_UPLOADED",
+    "ASSET_VISIBILITY_CHANGED"
+  ],
+  "scope": "Local development canonical library/asset boundaries; no private document text or credentials in evidence."
+}

@@ -1,0 +1,9 @@
+# Part 2F.1 generated-cover regression
+
+The visible rectangles came from the shared `book-cover-text-scrim` node, which applied an opaque palette background around title/author content. Removing that node fixes all generated-cover consumers through the shared BookCover/BookCoverArt renderer. Title, author, copy wrapper and branding have no background panel or pseudo-element backdrop.
+
+The first repair also introduced adaptive foreground selection and a clipped duplicate text layer. The user's subsequent reference explicitly rejected those colour changes. The final implementation therefore restores the original palette foreground, original brand/author opacity and original circle/ring/split/stripe geometry from commit `c449f54` (`LibraryLLM/frontend/src/components/BookCover.tsx`). It removes adaptive foreground selection and duplicate text layers entirely. There is exactly one title and one optional author. Decorative colours and shapes remain the existing palette/overlay geometry; text does not change colour when crossing a decorative region.
+
+The only retained fit adjustment scales typography when real text would otherwise collide with the brand within the cover. Titles wrap, remain visible and have transparent backgrounds. It does not add a title box, mask a box with opacity, truncate text to conceal overlap or use arbitrary z-index layering. Global and library cards use the same renderer, palette and cover seed contract.
+
+The user reference screenshot is the visual authority for the final palette behavior. Earlier `institution_v2f1_covers_after_initial.png` is historical evidence of the superseded first repair and must not be treated as the final colour acceptance screenshot. Final browser screenshots and measurements are recorded in `institution_v2f1_cover_visual_validation.json`.

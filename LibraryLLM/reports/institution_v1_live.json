@@ -1,0 +1,254 @@
+{
+  "status": "PASS",
+  "transport": "real uvicorn + HTTP + MongoDB",
+  "database": "luminar_institution_live_a2c13c1b3f844b99be8d798f6f003a97",
+  "production_database_modified": false,
+  "scenarios": [
+    {
+      "scenario": "A: public registration/discovery/join",
+      "status": "PASS"
+    },
+    {
+      "scenario": "B: private outsider guard, wrong/correct code",
+      "status": "PASS"
+    },
+    {
+      "scenario": "C: same global user belongs to two libraries",
+      "status": "PASS"
+    },
+    {
+      "scenario": "D: per-library role differs",
+      "status": "PASS"
+    },
+    {
+      "scenario": "E: librarian rotates, old fails, new works, members remain",
+      "status": "PASS"
+    },
+    {
+      "scenario": "F: cross-library mutations denied",
+      "status": "PASS"
+    },
+    {
+      "scenario": "G: private-resource guard",
+      "status": "PASS"
+    },
+    {
+      "scenario": "H: public to private preserves members",
+      "status": "PASS"
+    },
+    {
+      "scenario": "I: private to public clears hash",
+      "status": "PASS"
+    },
+    {
+      "scenario": "J: owner/admin/librarian invitation matrix",
+      "status": "PASS"
+    }
+  ],
+  "concurrency": {
+    "workers": 20,
+    "reads": [
+      {
+        "user_id": 1,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": [
+          1
+        ]
+      },
+      {
+        "user_id": 2,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": [
+          2
+        ]
+      },
+      {
+        "user_id": 3,
+        "statuses": [
+          200,
+          200,
+          200
+        ],
+        "membership_user_ids": [
+          3
+        ]
+      },
+      {
+        "user_id": 4,
+        "statuses": [
+          200,
+          200,
+          200
+        ],
+        "membership_user_ids": [
+          4,
+          4
+        ]
+      },
+      {
+        "user_id": 5,
+        "statuses": [
+          200,
+          200,
+          200
+        ],
+        "membership_user_ids": [
+          5
+        ]
+      },
+      {
+        "user_id": 6,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": [
+          6
+        ]
+      },
+      {
+        "user_id": 7,
+        "statuses": [
+          200,
+          200,
+          200
+        ],
+        "membership_user_ids": [
+          7
+        ]
+      },
+      {
+        "user_id": 8,
+        "statuses": [
+          200,
+          200,
+          200
+        ],
+        "membership_user_ids": [
+          8
+        ]
+      },
+      {
+        "user_id": 9,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 10,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 11,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 12,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 13,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 14,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 15,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 16,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 17,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 18,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 19,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      },
+      {
+        "user_id": 20,
+        "statuses": [
+          200,
+          200,
+          404
+        ],
+        "membership_user_ids": []
+      }
+    ],
+    "private_join_statuses": {
+      "403": 5,
+      "429": 15
+    }
+  }
+}

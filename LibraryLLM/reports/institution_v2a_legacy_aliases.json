@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "source_collection": "library_inventory",
+  "alias_collection": "institution_library_aliases",
+  "explicit_only": true,
+  "default_legacy_identifier": "No default in new inventory; LIB001 requires explicit UUID mapping.",
+  "ambiguous": "Quarantine/report; never infer from library names or global roles.",
+  "production_aliases_created": false,
+  "disposable_alias_apply": {
+    "LIB001": [
+      "69bc79cc-60ed-4d56-9372-18ab55b3e55e"
+    ]
+  },
+  "test_artifact": "institution_v2a_backend_final.xml",
+  "test_cases": [
+    "tests.institution_v2a.test_identity_edges::test_migration_known_barcode_unverified_and_existing_quantity_policy",
+    "tests.institution_v2a.test_identity_edges::test_migration_invalid_list_metadata_is_quarantined_per_row",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[title-subject]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[book_title-genre]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[name-category]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[title-subjects]",
+    "tests.institution_v2a.test_import_migration::test_large_minimum_import_auto_numbering_idempotence_and_reconciliation[100]",
+    "tests.institution_v2a.test_import_migration::test_large_minimum_import_auto_numbering_idempotence_and_reconciliation[1000]",
+    "tests.institution_v2a.test_import_migration::test_mixed_identifiers_subject_delimiters_optional_metadata_and_row_error_isolation",
+    "tests.institution_v2a.test_import_migration::test_same_title_no_silent_merge_preview_possible_duplicate",
+    "tests.institution_v2a.test_import_migration::test_strong_verified_identity_import_policy_explicit_and_idempotent[skip-1]",
+    "tests.institution_v2a.test_import_migration::test_strong_verified_identity_import_policy_explicit_and_idempotent[increase_quantity-3]",
+    "tests.institution_v2a.test_import_migration::test_same_work_within_file_detected_and_skipped_without_new_accession",
+    "tests.institution_v2a.test_import_migration::test_csv_encoding_bom_xlsx_and_formula_not_executed",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,subject,library_id\\nx,y,spoof\\n]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,name,subject\\nx,y,z\\n]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,title,subject\\nx,y,z\\n]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,subject,accession_number\\nx,y,FAKE1\\n]",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title\\nx\\n]",
+    "tests.institution_v2a.test_import_migration::test_file_row_column_and_encoding_bounds",
+    "tests.institution_v2a.test_import_migration::test_preview_is_bound_to_library_account_expiry_and_rechecks_staff",
+    "tests.institution_v2a.test_import_migration::test_apply_revalidates_global_link_and_duplicate_changes_since_preview",
+    "tests.institution_v2a.test_import_migration::test_concurrent_import_two_libraries_independent_sequences",
+    "tests.institution_v2a.test_import_migration::test_concurrent_two_imports_same_library_no_duplicate_numbers",
+    "tests.institution_v2a.test_import_migration::test_new_inventory_audit_whitelist_does_not_dump_rows_or_nested_secrets",
+    "tests.institution_v2a.test_import_migration::test_migration_explicit_alias_missing_fields_dry_apply_repeat_preserve_legacy",
+    "tests.institution_v2a.test_import_migration::test_migration_alias_ambiguous_and_cross_library_not_guessed",
+    "tests.institution_v2a.test_import_migration::test_real_cli_dry_run_no_collection_or_index_side_effects_and_assignment_idempotence",
+    "tests.institution_v2a.test_import_migration::test_reconciliation_detects_foreign_refs_invalid_quantity_and_sequence",
+    "tests.institution_v2a.test_import_migration::test_indexes_unique_idempotent_without_dropping_existing"
+  ],
+  "live_scenarios": [
+    {
+      "number": 10,
+      "scenario": "Explicit LIB001 alias: 4 legacy rows \u2192 3 ready, 1 missing subject; dry/apply/repeat reconcile",
+      "status": "PASS"
+    }
+  ]
+}

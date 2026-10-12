@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "behavior": {
+    "new_loan": "UUID loan created only on authorized Approve & Issue, with borrower, reviewer, request, holding, copy and provenance.",
+    "due_policy": "Existing14-day issue policy starts at approval.",
+    "migration_exception": "Proven historical physical issues preserve borrowed/due dates; no invented original reviewer, request or copy.",
+    "timestamps": "BSON-decoded UTC dates regain explicit UTC timezone at lending receipts/list boundaries; preview and stored due instants agree."
+  },
+  "test_artifact": "institution_v2b_backend.xml",
+  "test_cases": [
+    "tests.institution_v2b.test_boundaries::test_cutover_migrates_explicit_legacy_source_and_reconciles",
+    "tests.institution_v2b.test_lending::test_pending_hold_then_issue_does_not_decrement_twice",
+    "tests.institution_v2b.test_lending::test_lending_receipts_and_lists_keep_explicit_utc_timezone",
+    "tests.institution_v2b.test_lending::test_return_request_remains_active_reject_re_request_confirm",
+    "tests.institution_v2b.test_lending::test_stock_shelf_status_and_copy_mode"
+  ],
+  "live_scenarios": [
+    {
+      "code": "A",
+      "scenario": "Aggregate request holds without a loan; approval converts the same allocation",
+      "status": "PASS",
+      "loan_id": "ac706840-3059-48df-a4e5-b45ad2ae11de"
+    },
+    {
+      "code": "F",
+      "scenario": "Return request stays active; physical confirmation moves it to history and releases once",
+      "status": "PASS"
+    },
+    {
+      "code": "H",
+      "scenario": "Same global work uses independent library holdings",
+      "status": "PASS"
+    },
+    {
+      "code": "I",
+      "scenario": "Local-only record completes the full request/issue/physical-return cycle",
+      "status": "PASS"
+    }
+  ],
+  "limits": "Isolated fixture validation; no production migration performed."
+}

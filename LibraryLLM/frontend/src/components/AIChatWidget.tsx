@@ -1,3 +1,5 @@
+import { useProductContext } from '../hooks/useProductContext'
+import { productBookPath } from '../lib/productContext'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { MessageCircle, Search, Send, Sparkles, X, BookOpen } from 'lucide-react'
@@ -25,6 +27,7 @@ export function SelectedBooksTray({ onSend, busy }: { onSend: (message: string, 
 }
 
 export function AIChatWidget() {
+  const product=useProductContext()
   const state = useAssistantStore()
   const authenticated = useAuthStore(s => s.isAuthenticated)
   const { pathname, search } = useLocation()
@@ -37,6 +40,46 @@ export function AIChatWidget() {
   const shortcutsRef = useRef<HTMLDetailsElement>(null)
   const closeShortcuts = () => shortcutsRef.current?.removeAttribute('open')
   const pathKey = pathname + search
+  const [controlsVisible, setControlsVisible] = useState(false)
+  const [launcherLift,setLauncherLift]=useState(0),liftRef=useRef(0)
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return
+    const visible=new Set<Element>(), watched=new Set<Element>()
+    const observer=new IntersectionObserver(entries => {
+      for(const entry of entries) { if(entry.isIntersecting) visible.add(entry.target);else visible.delete(entry.target) }
+      setControlsVisible(visible.size>0)
+    })
+    const observe=() => {
+      for(const element of watched) if(!element.isConnected) { observer.unobserve(element);watched.delete(element);visible.delete(element) }
+      document.querySelectorAll('.product-book-card,.book-personal-actions,.catalogue-actions,.product-book-card a.bg-brand').forEach(element=>{
+        if(!watched.has(element)) { watched.add(element);observer.observe(element) }
+      })
+      setControlsVisible(visible.size>0)
+    }
+    const mutations=new window.MutationObserver(observe)
+    mutations.observe(document.getElementById('main-content') || document.body,{childList:true,subtree:true})
+    queueMicrotask(observe)
+    return ()=>{observer.disconnect();mutations.disconnect()}
+  },[pathKey])
+  useEffect(()=>{
+    if(state.open)return
+    let timer:number|undefined
+    const update=()=>{
+      const launcher=launcherRef.current;if(!launcher||!launcher.clientWidth||document.activeElement===launcher)return
+      const box=launcher.getBoundingClientRect(),baseBottom=parseFloat(window.getComputedStyle(launcher).bottom)-liftRef.current
+      const controls=[...document.querySelectorAll<HTMLElement>('.product-book-card button,.product-book-card summary,.product-book-card a.bg-brand,.product-book-card a.ui-button,.product-book-card h3,.book-cover-title,.book-cover-author')].filter(e=>e.getClientRects().length).map(e=>e.getBoundingClientRect())
+      let next=0
+      if(controlsVisible)for(let lift=0;lift<window.innerHeight-box.height-88;lift+=64){
+        const top=window.innerHeight-baseBottom-box.height-lift,bottom=top+box.height
+        if(!controls.some(r=>Math.min(box.right,r.right)>Math.max(box.left,r.left)&&Math.min(bottom,r.bottom)>Math.max(top,r.top))){next=lift;break}
+      }
+      if(next!==liftRef.current){liftRef.current=next;setLauncherLift(next)}
+    }
+    const schedule=()=>{if(timer!==undefined)window.clearTimeout(timer);timer=window.setTimeout(update,0)}
+    const observer=new window.MutationObserver(schedule);observer.observe(document.getElementById('main-content')||document.body,{childList:true,subtree:true})
+    document.addEventListener('scroll',schedule,true);window.addEventListener('resize',schedule);schedule()
+    return()=>{observer.disconnect();document.removeEventListener('scroll',schedule,true);window.removeEventListener('resize',schedule);if(timer!==undefined)window.clearTimeout(timer)}
+  },[controlsVisible,state.open,pathKey])
   const bookMatch = pathname.match(/^\/book\/([A-Za-z0-9_-]+)(?:\/read)?$/)
   const context: AssistantPageContext = state.pagePath === pathKey ? state.pageContext : bookMatch ? { work_id: bookMatch[1] } : {}
   useEffect(() => { if (state.open) inputRef.current?.focus() }, [state.open])
@@ -56,11 +99,11 @@ export function AIChatWidget() {
     return () => window.clearInterval(timer)
   }, [state.open])
   const close = () => { state.setOpen(false); window.setTimeout(() => launcherRef.current?.focus(), 0) }
-  const send = (message: string, options?: SendOptions) => { if (!state.busy && authenticated) { setInput(''); void state.send(message, context, options) } }
+  const send = (message: string, options?: SendOptions) => { if (!state.busy && authenticated) { setInput(''); void state.send(message, context, {...options,...(product.libraryId ? {lending_context:{library_id:product.libraryId}} : {})}) } }
   const onAction = (action: AssistantAction, book?: AssistantBook) => {
     const id = action.work_id || book?.work_id
     switch (action.type) {
-      case 'VIEW_BOOK': if (id) navigate(`/book/${encodeURIComponent(id)}`); break
+      case 'VIEW_BOOK': if (id) navigate(product.personalPath(productBookPath(id,product.libraryId))); break
       case 'SELECT_BOOK': if (book) state.select(book); break
       case 'UNSELECT_BOOK': if (id) state.unselect(id); break
       case 'COMPARE':
@@ -153,9 +196,9 @@ export function AIChatWidget() {
         </form>}
       </div>
     </div>}
-    {!state.open && <button ref={launcherRef} onClick={() => state.setOpen(true)} aria-label="Open LuminaR AI" aria-haspopup="dialog" className="fixed bottom-7 right-7 z-[100] flex items-center gap-3 bg-brand px-4 py-3 text-paper shadow-[0_14px_35px_rgba(189,63,27,0.28)] transition hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">
-      <MessageCircle size={22} /><div className="hidden text-left sm:block"><p className="font-display text-xs">Ask LuminaR</p><p className="mt-1 text-[0.6rem] opacity-70">{state.busy ? 'Working on your request…' : 'AI Library Assistant'}</p></div>
-      {!!state.selected.length && <span className="border border-paper/40 px-1.5 text-xs">{state.selected.length} selected</span>}
+    {!state.open && <button ref={launcherRef} style={launcherLift?{bottom:`calc(var(--assistant-bottom) + ${launcherLift}px)`}:undefined} onClick={() => state.setOpen(true)} aria-label="Ask LuminaR" aria-haspopup="dialog" className={`assistant-launcher${controlsVisible?' is-compact':''} fixed z-[100] flex items-center gap-3 bg-brand px-4 py-3 text-paper shadow-[0_14px_35px_rgba(189,63,27,0.28)] transition hover:bg-brand/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand`}>
+      <MessageCircle size={22} /><div className="hidden text-left sm:block"><p className="font-display text-xs">Ask LuminaR</p><p className="mt-1 text-[0.6rem]">{state.busy ? 'Working on your request…' : 'AI Library Assistant'}</p></div>
+      {!!state.selected.length && <span className="absolute -right-1 -top-2 rounded-full border border-paper bg-brand px-1.5 text-xs" aria-label={`${state.selected.length} selected books`}>{state.selected.length}</span>}
     </button>}
   </>
 }

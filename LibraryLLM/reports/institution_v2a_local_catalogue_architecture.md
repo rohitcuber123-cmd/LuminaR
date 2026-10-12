@@ -1,0 +1,11 @@
+# Local catalogue and global catalogue
+
+The global `books` collection keeps its existing work IDs and five million records. Each library owns a separate local UUID catalogue, including books with no ISBN, author or external identifier. Its holding references the local UUID. A `global_work_id` is an optional verified reference; it is never the tenant book's primary identity.
+
+Local metadata is authoritative for inventory display. An explicit link preserves title, subjects, ISBN and local details, holding, copy IDs, UUID and accession. Unlink preserves the entire local record. A link does not confer PDF access, Borrow/Read eligibility or a digital capability. Those require separate assets/circulation architecture.
+
+ISBN-10/13 validation checks length, ASCII digits/check character, checksum and ISBN-13's 978/979 prefix. Missing values stay null. No leading zeros or ISBNs are fabricated. The [International ISBN Agency](https://www.isbn-international.org/content/what-isbn/10) describes the ISBN structure and check digit. Optional existing read-only DuckDB mappings can identify a unique work, which must also exist in Mongo and have compatible title/authors/publisher/year/edition. Conflicts, missing mappings and ambiguous mappings remain local. Explicit staff links must resolve to a live work. Title alone never supplies a global identity.
+
+Tenant duplicate checks use verified work identity or validated ISBN with compatible metadata. Same-title-only records are retained separately and flagged for review. Work/ISBN indexes are not globally unique local-record constraints: editions, withdrawals and future reviewed reconciliation need a safe representation. Service serialization enforces active strong-identity conflict handling.
+
+Local search requires current membership and always includes canonical `library_id`. It escapes regex input and searches a stored local text field; no user regex or global vector insertion occurs. Tests measure about 1.5k records. The current substring scan is not established as sufficient at 10k/100k. Benchmark indexed tenant/token/text options before larger deployments. A future authorized search overlay should retrieve global semantic results independently, retrieve only the selected authorized local tenant, then combine results in the caller's response. Never put private records in the shared HNSW/FAISS index.

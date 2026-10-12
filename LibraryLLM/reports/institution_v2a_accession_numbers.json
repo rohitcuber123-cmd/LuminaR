@@ -1,0 +1,75 @@
+{
+  "status": "PASS",
+  "format": "PREFIX-000001",
+  "prefix": "First three ASCII alphanumeric uppercase characters of the original library name, or LIB; persisted on first allocation.",
+  "atomic_primitive": "Mongo find_one_and_update + $inc + upsert, ReturnDocument.AFTER",
+  "sequence_key": [
+    "library_id",
+    "BOOK_ACCESSION"
+  ],
+  "immutable": true,
+  "preview_allocates": false,
+  "reuse": false,
+  "padding_minimum": 6,
+  "larger_example": "AUR-1000000",
+  "concurrent_manual": [
+    {
+      "workers": 10,
+      "requests": 10,
+      "unique_accessions": 10,
+      "duplicate_accessions": 0
+    },
+    {
+      "workers": 100,
+      "requests": 100,
+      "unique_accessions": 100,
+      "duplicate_accessions": 0
+    }
+  ],
+  "prefix_stable_on_rename": true,
+  "gaps": "Allowed after issued counters, failures or explicit allocation checks; never decrement/reuse.",
+  "test_artifact": "institution_v2a_backend_final.xml",
+  "test_cases": [
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[library_id-60683df6-798a-4966-b7de-96c37e6cfd69]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[library_book_id-59ee6747-834a-47f8-a04c-ae55e4cbecf8]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[accession_number-FAKE-1]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[accession_sequence-999]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[created_by_user_id-99]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[holding_id-5e1706dd-a3b2-482f-9f86-2279b744c718]",
+    "tests.institution_v2a.test_catalogue::test_client_identity_accession_and_actor_spoof_rejected[role-ADMIN]",
+    "tests.institution_v2a.test_catalogue::test_accession_independent_stable_prefix_not_reused_beyond_six_digits",
+    "tests.institution_v2a.test_catalogue::test_accession_atomic_concurrent_allocation[10]",
+    "tests.institution_v2a.test_catalogue::test_accession_atomic_concurrent_allocation[100]",
+    "tests.institution_v2a.test_catalogue::test_ten_concurrent_book_creations_unique",
+    "tests.institution_v2a.test_catalogue::test_failed_validation_and_duplicate_do_not_reuse_identity_or_sequence",
+    "tests.institution_v2a.test_identity_edges::test_reconciliation_malformed_accession_reports_without_crashing",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[title-subject]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[book_title-genre]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[name-category]",
+    "tests.institution_v2a.test_import_migration::test_minimum_import_column_aliases_no_identifiers_no_preview_accession[title-subjects]",
+    "tests.institution_v2a.test_import_migration::test_same_work_within_file_detected_and_skipped_without_new_accession",
+    "tests.institution_v2a.test_import_migration::test_spoofing_and_ambiguous_or_missing_columns_rejected[title,subject,accession_number\\nx,y,FAKE1\\n]",
+    "tests.institution_v2a.test_import_migration::test_concurrent_import_two_libraries_independent_sequences",
+    "tests.institution_v2a.test_import_migration::test_concurrent_two_imports_same_library_no_duplicate_numbers"
+  ],
+  "live_scenarios": [
+    {
+      "number": 1,
+      "scenario": "Title + subject creates UUID, accession and holding without ISBN/work/author",
+      "status": "PASS",
+      "accession": "AUR-000001"
+    },
+    {
+      "number": 4,
+      "scenario": "100 title + subject rows preview without allocation, apply unique automatic accessions",
+      "status": "PASS",
+      "repeated_samples": 3
+    },
+    {
+      "number": 7,
+      "scenario": "Concurrent imports into two libraries preserve independent counters",
+      "status": "PASS",
+      "rows_per_library": 100
+    }
+  ]
+}

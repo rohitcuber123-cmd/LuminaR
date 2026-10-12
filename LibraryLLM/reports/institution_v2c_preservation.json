@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-09T03:42:38.878321+00:00",
+  "baseline_source_files": 808,
+  "unchanged_baseline_source_files": 793,
+  "narrow_integration_files": [
+    "assistant/orchestrator.py",
+    "assistant/schemas.py",
+    "assistant/tools.py",
+    "backend/main.py",
+    "backend/services/fine_service.py",
+    "backend/services/library_lending_journal.py",
+    "backend/services/library_lending_service.py",
+    "backend/services/reservation_service.py",
+    "frontend/package.json",
+    "frontend/src/App.tsx",
+    "frontend/src/components/LibrarySwitcher.tsx",
+    "frontend/src/components/assistant/AssistantTurn.tsx",
+    "frontend/src/lib/assistantTypes.ts",
+    "frontend/src/pages/LibraryCirculation.tsx",
+    "frontend/src/pages/LibraryInventory.tsx"
+  ],
+  "unexpected_changes": [],
+  "missing_files": [],
+  "accepted_part2b_reports_verified": 69,
+  "accepted_reports_changed": [],
+  "production_database": "luminar_library",
+  "before_counts": {
+    "books": 5000000,
+    "library_inventory": 3,
+    "issues": 39,
+    "reservations": 11,
+    "institution_libraries": 0,
+    "institution_library_books": 0,
+    "institution_holdings": 0,
+    "institution_copies": 0,
+    "fines": 5,
+    "institution_lending_config": 0,
+    "institution_lending_operations": 0,
+    "institution_lending_requests": 0,
+    "institution_loans": 0
+  },
+  "after_counts": {
+    "books": 5000000,
+    "library_inventory": 3,
+    "issues": 39,
+    "reservations": 11,
+    "institution_libraries": 1,
+    "institution_library_books": 0,
+    "institution_holdings": 0,
+    "institution_copies": 0,
+    "fines": 5,
+    "institution_lending_config": 0,
+    "institution_lending_operations": 0,
+    "institution_lending_requests": 0,
+    "institution_loans": 0
+  },
+  "production_part2c_collection_counts": {
+    "reservations": 0,
+    "reservation_counters": 0,
+    "fees": 0,
+    "fee_ledger": 0,
+    "fee_policies": 0,
+    "v2c_config": 0
+  },
+  "production_migrations_applied": false,
+  "observed_baseline_count_differences": {
+    "institution_libraries": {
+      "before": 0,
+      "after": 1
+    }
+  },
+  "existing_libraries_preserved": [
+    {
+      "name": "TEST",
+      "library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+      "created_at": "2026-10-08 21:16:39.771000",
+      "updated_at": "2026-10-08 21:16:49.329000"
+    }
+  ],
+  "count_difference_note": "V1 library TEST was registered at 2026-10-08 21:16:39 UTC, after the baseline. This task used explicitly named disposable databases. Source of the separate registration is not inferred; the record was left intact.",
+  "catalogue_read_method": "Count equality and isolation of every mutation fixture; no claim of hashing five million document bodies.",
+  "utf8_source_check": "All 15 changed and 24 added source files decode as UTF-8.",
+  "frozen_router_search_recommendation_kg_rag_sources": "Hash unchanged relative to pre-Part-2C baseline, except listed additive assistant API/presentation integration files."
+}

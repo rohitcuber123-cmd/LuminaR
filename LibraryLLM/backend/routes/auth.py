@@ -1,6 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, EmailStr, ConfigDict, field_validator
-from backend.services.identity_service import STAFF_ROLES
 from backend.utils.auth_rate_limit import limit_auth_attempts
 from backend.utils.security_audit import security_event
 from backend.utils.jwt_utils import create_access_token
@@ -65,6 +64,7 @@ class StaffSetupRequest(CredentialRequest):
     otp: str
     password: str
 
+@router.post('/account-setup', dependencies=[Depends(limit_auth_attempts)])
 @router.post('/staff-setup', dependencies=[Depends(limit_auth_attempts)])
 def staff_setup(request: StaffSetupRequest):
     if len(request.otp) != 6 or not request.otp.isascii() or not request.otp.isdigit():
@@ -233,7 +233,10 @@ def staff_login(request: LoginRequest):
     if user is None:
         security_event('staff_login_failure')
         raise HTTPException(401, 'Invalid email or password')
-    if user['role'] not in STAFF_ROLES:
+    from backend.platform_dependencies import platform_assignments
+    from backend.services.institution_repository import collection
+    staff_membership = collection('memberships').find_one({'user_id': user['user_id'], 'status': 'ACTIVE', 'role': {'$in': ['ADMIN', 'LIBRARIAN']}})
+    if not staff_membership and not platform_assignments(user['user_id']):
         security_event('staff_login_failure')
         raise HTTPException(403, 'This account is not authorized for staff access.')
     token = create_access_token(user['user_id'], user['email'], user['role'])

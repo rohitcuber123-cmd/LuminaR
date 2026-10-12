@@ -29,7 +29,7 @@ beforeEach(() => {
 afterEach(() => {cleanup();globalThis.fetch=originalFetch})
 async function mountResult(data:any) {
   next=data; render(<MemoryRouter><AIChatWidget/></MemoryRouter>)
-  fireEvent.click(screen.getByRole('button',{name:'Open LuminaR AI'}))
+  fireEvent.click(screen.getByRole('button',{name:'Ask LuminaR'}))
   fireEvent.change(screen.getByLabelText('Message LuminaR AI'),{target:{value:'Fixture query'}})
   fireEvent.click(screen.getByRole('button',{name:'Send message'}))
   await waitFor(() => assert.equal(store.getState().busy,false))

@@ -37,7 +37,9 @@ export interface BackendBook {
 }
 
 export interface BooksResponse {
-  count: number
+  has_more?: boolean
+  count_status?: string
+  count: number | null
   results: BackendBook[]
 }
 
@@ -145,6 +147,8 @@ export interface RAGDocument {
 
   chunks: number
   pages: number
+  warnings?: string[]
+  ocr?: { native_pages: number; ocr_pages: number; failed_pages: number }
 }
 
 export interface RAGDocumentsResponse {
@@ -304,6 +308,9 @@ export async function request<T>(url: string, options: RequestInit = {}): Promis
   // ==========================================================
 
   if (!response.ok) {
+    if(response.status === 403 && url.startsWith(`${CORE_API}/platform/`) && token === getToken()) {
+      window.dispatchEvent(new Event('luminar-platform-access-denied'));
+    }
     const messages: Record<number, string> = {
       401: "Please check your email and password, then try again.",
       403: "Your account does not have permission for this action.",
@@ -433,11 +440,12 @@ export async function resendOTP(
 
 export async function getBooks(
   limit = 20,
-  offset = 0
+  offset = 0,
+  filters: { category?: string; author?: string; sort?: string } = {}
 ): Promise<BooksResponse> {
 
   return request<BooksResponse>(
-    `${CORE_API}/books/?limit=${limit}&offset=${offset}`
+    `${CORE_API}/books/?limit=${limit}&offset=${offset}${Object.entries(filters).filter(([,v])=>!!v).map(([k,v])=>`&${k}=${encodeURIComponent(v!)}`).join('')}`
   )
 }
 
@@ -510,7 +518,8 @@ export async function searchBooks(
   libraryId = 'LIB001',
   availableAtLibrary = true,
   saveHistory = true,
-  offset = 0
+  offset = 0,
+  filters: { category?: string; author?: string } = {}
 ) {
 
   const response = await request<SearchResponse>(
@@ -526,6 +535,7 @@ export async function searchBooks(
         available_at_library:
           availableAtLibrary,
         save_history: saveHistory,
+        ...filters,
       }),
     }
   )
@@ -719,7 +729,7 @@ export async function getReadingList() {
 }
 
 export async function addToReadingList(workId: string) {
-  return request(
+  return request<{ message: string; target_key?: string }>(
     `${CORE_API}/reading-list/`,
     {
       method: 'POST',
@@ -732,7 +742,7 @@ export async function addToReadingList(workId: string) {
 
 export async function removeFromReadingList(workId: string) {
   return request(
-    `${CORE_API}/reading-list/${workId}`,
+    `${CORE_API}/reading-list/${encodeURIComponent(workId)}`,
     {
       method: 'DELETE',
     }
@@ -761,7 +771,8 @@ export async function getRAGBooks() {
 
 
 export async function uploadRAGDocument(
-  file: File
+  file: File,
+  onStage?: (stage: string) => void
 ) {
 
   const formData = new FormData()
@@ -771,13 +782,25 @@ export async function uploadRAGDocument(
     file
   )
 
-  return request(
+  const preparationId = crypto.randomUUID()
+  let stopped = false
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const poll = async () => {
+    try {
+      const result = await request<{ stage: string }>(`${RAG_API}/rag/preparation/${preparationId}`)
+      if (!stopped) onStage?.(result.stage)
+    } catch { /* Status is optional; upload errors come from the upload request. */ }
+    if (!stopped) timer = setTimeout(poll, 700)
+  }
+  if (onStage) timer = setTimeout(poll, 700)
+  try { return await request(
     `${RAG_API}/rag/upload`,
     {
       method: 'POST',
       body: formData,
+      headers: { 'X-Luminar-Preparation': preparationId },
     }
-  )
+  ) } finally { stopped = true; if (timer) clearTimeout(timer) }
 }
 
 

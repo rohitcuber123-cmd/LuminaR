@@ -1,13 +1,18 @@
+import { useProductContext } from '../hooks/useProductContext'
+import { Link } from 'react-router-dom'
 import { KnowledgeTools } from '../components/knowledge/KnowledgeTools'
 import {
   useEffect,
   useCallback,
   useRef,
   useState,
+  lazy,
+  Suspense,
   type ChangeEvent,
   type KeyboardEvent,
   type RefObject,
 } from 'react'
+const RAGAnswer = lazy(() => import('../components/rag/RAGAnswer'))
 import { useSearchParams } from 'react-router-dom'
 
 import {
@@ -58,6 +63,7 @@ type ComposerProps = {
   ) => void
 
   uploading: boolean
+  uploadStage?: string
 
   fileRef:
     RefObject<HTMLInputElement | null>
@@ -120,6 +126,7 @@ function Composer({
   setInput,
 
   uploading,
+  uploadStage,
 
   fileRef,
 
@@ -265,7 +272,7 @@ function Composer({
               "
             >
               {uploading
-                ? 'Uploading...'
+                ? uploadStage || 'Uploading document…'
                 : 'Add Document'
               }
             </span>
@@ -398,12 +405,14 @@ function Composer({
 
 
 export function LLMPage() {
+  const product=useProductContext()
 
   const [searchParams, setSearchParams] = useSearchParams()
   const bookIdFromUrl = searchParams.get('book')
 
   const [sidebarOpen, setSidebarOpen] =
     useState(true)
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   const [input, setInput] =
     useState('')
@@ -473,6 +482,7 @@ export function LLMPage() {
 
   const [uploading, setUploading] =
     useState(false)
+  const [uploadStage, setUploadStage] = useState('Uploading document…')
 
   const [uploadError, setUploadError] =
     useState<string | null>(null)
@@ -589,6 +599,7 @@ export function LLMPage() {
 
 
   function selectSource(id: string | null, isBook = false) {
+    setMobileSidebarOpen(false)
     ++conversationRevision.current
     selectedBookId.current = isBook ? id : null
     setSelectedDocumentId(id)
@@ -645,13 +656,16 @@ export function LLMPage() {
     const uploadToken = token
     setPreviousFile(null)
     setUploading(true)
+    setUploadStage('Uploading document…')
     setUploadError(null)
 
     try {
 
       const result: any =
         await uploadRAGDocument(
-          selected
+          selected, stage => {
+            if (uploadToken === useAuthStore.getState().token) setUploadStage(stage === 'READING_SCANNED_PAGES' ? 'Reading scanned pages…' : 'Preparing document…')
+          }
         )
 
       if (uploadToken !== useAuthStore.getState().token) return
@@ -855,6 +869,7 @@ export function LLMPage() {
 
     <div
       className="
+        relative
         flex
         h-[calc(100dvh-72px)]
         max-h-[calc(100dvh-72px)]
@@ -872,9 +887,11 @@ export function LLMPage() {
         className={`
           ${
             sidebarOpen
-              ? 'w-[270px]'
-              : 'w-0'
+              ? 'lg:w-[270px]'
+              : 'lg:w-0'
           }
+          ${mobileSidebarOpen ? 'absolute inset-y-0 left-0 z-[90] w-[270px] max-w-[calc(100%-48px)]' : 'hidden'}
+          lg:relative lg:block
 
           h-full
           shrink-0
@@ -1157,6 +1174,7 @@ export function LLMPage() {
         </div>
 
       </aside>
+      {mobileSidebarOpen && <button aria-label="Close documents sidebar" className="absolute inset-0 z-[80] bg-ink/20 lg:hidden" onClick={() => setMobileSidebarOpen(false)} />}
 
 
 
@@ -1203,11 +1221,7 @@ export function LLMPage() {
           >
 
             <button
-              onClick={() =>
-                setSidebarOpen(
-                  (value) => !value
-                )
-              }
+              onClick={() => { if (window.innerWidth < 1024) setMobileSidebarOpen(value => !value); else setSidebarOpen(value => !value) }}
 
               aria-label="Toggle sidebar"
 
@@ -1353,6 +1367,7 @@ export function LLMPage() {
             UPLOAD ERROR
         ===================================================== */}
 
+        {documents.find(d => d.document_id === selectedDocumentId)?.warnings?.map(warning => <p key={warning} role="status" className="mx-5 mt-3 border border-line bg-panel p-3 text-sm">{warning}</p>)}
         {uploadError && (
 
           <div
@@ -1482,7 +1497,7 @@ export function LLMPage() {
                   text-brand
                 "
               >
-                LuminaR Document Intelligence
+                <Link to={product.homePath}>Back to {product.libraryId ? 'library' : 'LuminaR'}</Link> · LuminaR Document Intelligence
               </p>
 
 
@@ -1655,6 +1670,7 @@ export function LLMPage() {
                 setInput={setInput}
 
                 uploading={uploading}
+                uploadStage={uploadStage}
 
                 fileRef={fileRef}
 
@@ -1706,7 +1722,7 @@ export function LLMPage() {
               <div
                 className="
                   mx-auto
-                  max-w-[760px]
+                  max-w-[1100px]
                   px-5
                   py-8
                 "
@@ -1843,14 +1859,17 @@ export function LLMPage() {
 
                       <div
                         className="
-                          pl-11
+                          rag-chat-body pl-11
                           text-[0.9rem]
                           leading-7
                           text-ink
-                          whitespace-pre-wrap
                         "
                       >
-                        {message.text}
+                        {message.role === 'assistant' ? (
+                          <Suspense fallback={<span role="status">Preparing answer…</span>}>
+                            <RAGAnswer text={message.text} />
+                          </Suspense>
+                        ) : <span className="whitespace-pre-wrap">{message.text}</span>}
                       </div>
 
 
@@ -1881,7 +1900,7 @@ export function LLMPage() {
 
                           <div
                             className="
-                              flex
+                              rag-chat-sources flex
                               flex-wrap
                               gap-2
                             "
@@ -1959,7 +1978,7 @@ export function LLMPage() {
 
             <div
               className="
-                shrink-0
+                rag-chat-composer shrink-0
                 border-t
                 border-line
                 bg-paper
@@ -1983,6 +2002,7 @@ export function LLMPage() {
                   setInput={setInput}
 
                   uploading={uploading}
+                  uploadStage={uploadStage}
 
                   fileRef={fileRef}
 

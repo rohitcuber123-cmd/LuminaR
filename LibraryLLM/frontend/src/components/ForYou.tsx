@@ -1,27 +1,14 @@
-import { useAuthStore } from '../store/useAuthStore'
+import { useProductContext } from '../hooks/useProductContext'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { BookCover } from '@/components/BookCover'
-import { BookSelectButton } from '@/components/BookSelectButton'
-import { BookDiscoveryMenu } from '@/components/BookDiscoveryMenu'
-import { BookCarousel } from '@/components/BookCarousel'
-import {
-  getRecommendations,
-  getPopularBooks,
-  issueBook,
-  reserveBook,
-  type Recommendation,
-  type BackendBook,
-} from '@/lib/api'
-import { PALETTES, type CoverVariant } from '@/data/books'
-import { useLibraryStore } from '@/store/useLibraryStore'
-import { useInView } from '@/lib/useInView'
-import { showToast } from '@/components/Toast'
-import { useBookActionState } from '@/hooks/useBookActionState'
+import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
-
+import { useAuthStore } from '../store/useAuthStore'
+import { getRecommendations, getPopularBooks, type Recommendation, type BackendBook } from '../lib/api'
+import { globalBookPresentation } from '../lib/bookPresentation'
+import { BookCard } from './BookCard'
+import { BookCarousel } from './BookCarousel'
+import { useHomeCatalogue, displayToHomeBook, homeCataloguePath } from './HomeCatalogueContext'
 const RECOMMENDATION_LIMIT = 10
-
 // Convert Recommendation to BackendBook format for compatibility
 function recommendationToBackendBook(rec: Recommendation): BackendBook {
   return {
@@ -53,133 +40,9 @@ function deduplicateBooks(books: BackendBook[]): BackendBook[] {
   })
 }
 
-function ForYouCard({
-  book,
-  index,
-}: {
-  book: BackendBook
-  index: number
-}) {
-  const { ref, inView } = useInView<HTMLDivElement>()
-  const navigate = useNavigate()
-  const { fetchUserData } = useLibraryStore()
-
-  const stringId = book.work_id
-
-  const { action, adjustedAvailable } = useBookActionState(book)
-  const [actionLoading, setActionLoading] = useState(false)
-
-  const handleAction = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-
-    if (action === 'SIGN_IN') {
-      navigate('/login')
-      return
-    }
-
-    if (action === 'BORROWED' || action === 'RESERVED') {
-      navigate('/profile')
-      return
-    }
-
-    try {
-      setActionLoading(true)
-      if (action === 'BORROW') {
-        await issueBook(stringId)
-        showToast(`Successfully borrowed "${book.title}"`, 'success')
-      } else if (action === 'RESERVE') {
-        await reserveBook(stringId)
-        showToast(`Reserved "${book.title}"`, 'success')
-      }
-      await fetchUserData()
-    } catch (err: any) {
-      showToast(err.message || `Failed to ${action.toLowerCase()} book.`, 'warning')
-    } finally {
-      setActionLoading(false)
-    }
-  }
-
-  const availability =
-    adjustedAvailable === 0
-      ? 'All copies on loan'
-      : adjustedAvailable === book.total_copies
-        ? 'Available now'
-        : `${adjustedAvailable} of ${book.total_copies} available`
-
-  const paletteIndex = book.book_id % PALETTES.length
-  const variants: CoverVariant[] = ['circle', 'ring', 'split', 'stripe']
-  const variantIndex = book.book_id % variants.length
-
-  const actionText = {
-    'BORROW': 'Borrow',
-    'RESERVE': 'Reserve',
-    'BORROWED': 'Borrowed',
-    'RESERVED': 'Reserved',
-    'SIGN_IN': 'Sign in',
-  }[action] || 'Borrow'
-
-  return (
-    <div
-      ref={ref}
-      className="group relative flex-shrink-0 w-[180px] flex flex-col transition-opacity duration-300"
-      style={{
-        opacity: inView ? 1 : 0,
-        transitionDelay: `${Math.min(index * 50, 300)}ms`,
-      }}
-    >
-      <Link
-        to={`/book/${stringId}`}
-        className="block flex-1 flex flex-col"
-      >
-        <div className="mb-4 transform transition-transform duration-300 group-hover:-translate-y-2 group-hover:scale-[1.02]">
-          <BookCover
-            title={book.title}
-            author={book.authors}
-            paletteIndex={paletteIndex}
-            variant={variants[variantIndex]}
-            className="shadow-[0_12px_32px_rgba(0,0,0,0.12)] group-hover:shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
-          />
-        </div>
-
-        <div className="space-y-2 flex-1">
-          <h3 className="line-clamp-2 min-h-[2.5rem] text-sm font-medium leading-snug text-ink transition-colors group-hover:text-brand">
-            {book.title}
-          </h3>
-
-          <p className="text-xs text-ink-soft line-clamp-2 min-h-[2rem]">
-            {book.authors}
-          </p>
-
-          <p className="text-xs text-ink-soft">
-            {availability}
-          </p>
-        </div>
-      </Link>
-
-      <BookSelectButton book={book} />
-        <BookDiscoveryMenu workId={book.work_id} />
-
-      <button
-        onClick={handleAction}
-        disabled={actionLoading}
-        className={`mt-3 w-full rounded-md px-4 py-2 text-xs font-medium transition-all duration-200 ${
-          action === 'BORROW'
-            ? 'bg-brand text-paper hover:bg-brand-dark'
-            : action === 'RESERVE'
-              ? 'bg-ink-soft text-paper hover:bg-ink'
-              : action === 'BORROWED' || action === 'RESERVED'
-                ? 'bg-line text-ink-soft cursor-default'
-                : 'bg-brand text-paper hover:bg-brand-dark'
-        } ${actionLoading ? 'opacity-50 cursor-wait' : ''}`}
-      >
-        {actionLoading ? 'Loading...' : actionText}
-      </button>
-    </div>
-  )
-}
-
 export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
+  const context = useHomeCatalogue()
+  const productNavigation=useProductContext()
   const token = useAuthStore(state => state.token)
   const [page, setPage] = useState({ token, offset: 0 })
   const offset = page.token === token ? page.offset : 0
@@ -189,6 +52,7 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
   const [hasMore, setHasMore] = useState(false)
   const [popular, setPopular] = useState(false)
   useEffect(() => {
+    if (context) return
     let cancelled = false
     async function load() {
       setLoading(true); setError(false)
@@ -211,13 +75,15 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
     }
     void load()
     return () => { cancelled = true }
-  }, [token, offset])
+  }, [token, offset, context])
   function goToPage(next: number) {
     setPage({ token, offset: next })
     document.getElementById('for-you-results')?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
   }
 
-  if (loading) {
+  const visibleBooks = context ? (context.data.for_you || []).map(displayToHomeBook) : books
+  const visibleLoading = context ? false : loading
+  if (visibleLoading) {
     return (
       <section className="border-t border-line bg-panel py-16 md:py-20">
         <div className="mx-auto max-w-screen-2xl px-6 md:px-12">
@@ -244,7 +110,7 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
     )
   }
 
-  if ((error || books.length === 0) && offset === 0) {
+  if (!context && (error || books.length === 0) && offset === 0) {
     return null // Don't show section if no recommendations
   }
 
@@ -258,7 +124,7 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
 
           {showViewAll && (
             <Link
-              to="/catalog"
+              to={productNavigation.personalPath(homeCataloguePath(context, 'catalogue?view=for-you'))}
               className="group flex items-center gap-1 text-xs font-medium text-ink-soft transition-colors hover:text-brand"
             >
               VIEW ALL
@@ -268,15 +134,15 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
         </div>
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4 text-xs text-ink-soft">
-          <p>{popular ? 'Popular books' : books.length ? `Recommendations ${offset + 1}–${offset + books.length}` : error ? 'Recommendations could not be loaded. Try Previous.' : 'No further recommendations.'}</p>
-          {!popular && <nav aria-label="Recommendation pagination" className="flex gap-3">
+          <p>{context ? context.data.source.catalogue_source === 'LIBRARY_LOCAL' ? 'Recommendations from your library’s collection' : 'Global Catalogue discoveries' : popular ? 'Popular books' : books.length ? `Recommendations ${offset + 1}–${offset + books.length}` : error ? 'Recommendations could not be loaded. Try Previous.' : 'No further recommendations.'}</p>
+          {!context && !popular && <nav aria-label="Recommendation pagination" className="flex gap-3">
             <button className="assistant-button disabled:opacity-40" disabled={offset === 0} onClick={() => goToPage(Math.max(0, offset - RECOMMENDATION_LIMIT))}>Previous</button>
             <button className="assistant-button disabled:opacity-40" disabled={!hasMore || error} onClick={() => goToPage(offset + RECOMMENDATION_LIMIT)}>Next Recommendations</button>
           </nav>}
         </div>
         <BookCarousel>
-          {books.map((book, i) => (
-            <ForYouCard key={`${book.work_id}-${i}`} book={book} index={i} />
+          {visibleBooks.map((book, i) => (
+            <BookCard key={`${book.work_id}-${i}`} book={context ? context.data.for_you![i] : globalBookPresentation(book)} changed={context?.changed} rail />
           ))}
         </BookCarousel>
       </div>

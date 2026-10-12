@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "platform_prefix": "/platform",
+  "frontend": [
+    {
+      "path": "/platform",
+      "component": "PlatformOverview",
+      "existing": true
+    },
+    {
+      "path": "/platform/libraries",
+      "component": "PlatformLibrariesPage",
+      "existing": false
+    },
+    {
+      "path": "/platform/libraries/:libraryId",
+      "component": "PlatformLibraryDetailPage",
+      "existing": false
+    }
+  ],
+  "api": [
+    {
+      "method": "GET",
+      "path": "/platform/libraries"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/libraries/{library_id}"
+    },
+    {
+      "method": "GET",
+      "path": "/platform/libraries/{library_id}/audit"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/libraries/{library_id}/suspend"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/libraries/{library_id}/remove"
+    },
+    {
+      "method": "POST",
+      "path": "/platform/libraries/{library_id}/restore"
+    }
+  ],
+  "authority": "Active, explicitly reviewed PlatformRoleAssignment only; shared require_platform_admin.",
+  "duplicate_console": false,
+  "compatibility_platform_aliases_added": []
+}

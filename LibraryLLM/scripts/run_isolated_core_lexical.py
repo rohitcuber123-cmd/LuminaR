@@ -55,6 +55,7 @@ def run():
                                          'email':email,'password_hash':hash_password(password),
                                          'role':'ADMIN','is_email_verified':True,'is_active':True})
             assert api.post('/books/',json={'work_id':work_id,'title':'Unauthorized'}).status_code in (401,403)
+            users_collection.database.platform_role_assignments.insert_one({'user_id':1,'role':'PLATFORM_ADMIN','status':'ACTIVE','approved_by':'isolated-test','approval_ref':'TEST-REVIEW','approved_at':__import__('datetime').datetime.now(__import__('datetime').timezone.utc)})
             login=api.post('/auth/staff-login',json={'email':email,'password':password})
             assert login.status_code==200,login.json().get('detail')
             token=login.json()['access_token']
@@ -71,7 +72,7 @@ def run():
             create=api.post('/books/',headers=headers,json={
                 'work_id':work_id,'title':'Synthetic First Title',
                 'authors':'Synthetic First Author','description':'Synthetic test book',
-                'total_copies':1,'available_copies':1})
+                'total_copies':0,'available_copies':0})
             assert create.status_code==200,create.text
             assert books_collection.count_documents({'work_id':work_id})==1
             assert queue.latest()==1 and writer.process_once()
@@ -83,7 +84,7 @@ def run():
 
             inventory=api.put('/books/'+work_id,headers=headers,
                               json={'available_copies':0})
-            assert inventory.status_code==200,inventory.text
+            assert inventory.status_code==400,inventory.text
             assert queue.latest()==1 and not writer.process_once()
             assert writer.status()['lexical_generation']==generation+1
             assert books_collection.find_one({'work_id':work_id})['available_copies']==0
