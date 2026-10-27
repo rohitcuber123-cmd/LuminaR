@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "boundary_order": "Fresh authorization precedes session/profile/cache use",
+  "context_identity": [
+    "user_id",
+    "JWT sid",
+    "GLOBAL or exact library_id",
+    "workspace"
+  ],
+  "profile_cache_key": [
+    "user_id",
+    "JWT sid",
+    "library_id or GLOBAL",
+    "staff/patron workspace",
+    "saved-canonical-v1"
+  ],
+  "attempts_tested": [
+    "Foreign account context",
+    "Different JWT sid context",
+    "Library A context in B",
+    "Staff vs patron context",
+    "Expired context",
+    "Cleared context",
+    "Private outsider",
+    "Revoked member",
+    "Private Reading List vocabulary in Global/foreign library",
+    "KG/personality against explicit exclusion",
+    "Empty public Search becoming global filler"
+  ],
+  "raw_query_history": "No new permanent history for contextual Search. Current/previous plans and last input live only in bounded TTL context.",
+  "browser_storage": "UUID/active/expiry in sessionStorage, account-keyed opt-in boolean in localStorage",
+  "technical_logging": "QA header gates aggregate timings/cache/provider flags, no raw query, profile vocabulary or user IDs",
+  "client_weights": "Not accepted; weights are server constants",
+  "off_avoids_profile_lookup": true,
+  "logout": "DELETE /search-context before token revocation; 200 observed, dedicated test verifies other users and saved books preserved",
+  "failure_policy": "Profile lookup failure neutral; authorization failure never swallowed; HUMAN scores removed; existing MACHINE contract retained"
+}

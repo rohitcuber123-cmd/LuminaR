@@ -68,9 +68,10 @@
 
 .staff button {
   cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease, transform 120ms ease;
 }
 .staff button:disabled {
-  opacity: 0.45;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 .staff button:hover:not(:disabled) {
@@ -78,7 +79,7 @@
 }
 .staff :focus-visible,
 .staff-header :focus-visible {
-  outline: 2px solid var(--color-ink);
+  outline: 2px solid var(--color-brand);
   outline-offset: 3px;
 }
 .staff-panel {
@@ -109,7 +110,7 @@
 .staff select,
 .staff textarea {
   border: 1px solid var(--color-line);
-  border-radius: 7px;
+  border-radius: 8px;
   background: transparent;
   padding: 10px 12px;
   min-width: 0;
@@ -117,6 +118,7 @@
   font-size: 13px;
   width: 100%;
   color: var(--color-ink);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 .staff-tools input {
   width: 230px;
@@ -188,13 +190,19 @@
 .staff-primary {
   background: var(--color-brand);
   color: var(--color-paper);
-  padding: 11px 16px;
-  border-radius: 6px;
+  padding: 10px 16px;
+  border-radius: 8px;
   font-size: 12px;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 120ms ease, transform 120ms ease;
 }
 .staff button.staff-primary:hover:not(:disabled) {
   background: var(--color-brand-dark);
   color: white;
+  transform: translateY(-1px);
 }
 .staff-danger {
   color: var(--color-brand);
@@ -204,7 +212,7 @@
 }
 .staff-pager {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   align-items: center;
   justify-content: flex-end;
   border-top: 1px solid var(--color-line);
@@ -213,6 +221,30 @@
 }
 .staff-pager span {
   margin-right: auto;
+}
+.staff-pager button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-paper);
+  font-family: var(--font-display);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+  transition: border-color 120ms ease, color 120ms ease;
+}
+.staff-pager button:hover:not(:disabled) {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+.staff-pager button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 .staff-feedback {
   padding: 14px 18px;
@@ -226,36 +258,6 @@
   background: #f7ece5;
   border-color: #d8ad9b;
   color: #923c20;
-}
-.staff-dialog {
-  position: fixed;
-  inset: 0;
-  margin: auto;
-  width: min(620px, calc(100vw - 32px));
-  max-height: 85vh;
-  border: 1px solid var(--color-line);
-  border-radius: 12px;
-  padding: 24px;
-  background: var(--color-paper);
-  color: var(--color-ink-soft);
-  overflow: auto;
-}
-.staff-dialog::backdrop {
-  background: #19171470;
-}
-.staff-dialog header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--color-line);
-  padding-bottom: 16px;
-  margin-bottom: 20px;
-}
-.staff-dialog h2 {
-  font-size: 22px;
-}
-.staff-dialog header button {
-  font-size: 28px;
 }
 .staff-form {
   display: grid;
@@ -391,7 +393,7 @@
     padding: 18px;
   }
 }
-.admin-wrap{white-space:normal!important;overflow-wrap:anywhere;max-width:320px}.admin-account-link{text-align:left;white-space:normal!important;overflow-wrap:anywhere;color:var(--color-moss);text-decoration:underline}.admin-user-picker{grid-column:1/-1;min-width:0}.admin-user-picker ul{max-height:180px;overflow:auto;list-style:none;padding:0}.admin-user-picker li button{display:block;width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere;margin:4px 0}.admin-user-picker small{display:block}.admin-selected{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.admin-selected button{white-space:normal;overflow-wrap:anywhere;max-width:100%}.admin-notification-form{min-width:0}.admin-notification-form textarea{width:100%;min-width:0;resize:vertical}.admin-notification-form p,.admin-notification-form label{grid-column:1/-1}.staff-dialog{max-width:calc(100vw - 32px)}.staff-panel h3{margin:16px 0 8px}.staff-table td button{white-space:normal}.staff-tools select{max-width:100%}
+.admin-wrap{white-space:normal!important;overflow-wrap:anywhere;max-width:320px}.admin-account-link{text-align:left;white-space:normal!important;overflow-wrap:anywhere;color:var(--color-moss);text-decoration:underline}.admin-user-picker{grid-column:1/-1;min-width:0}.admin-user-picker ul{max-height:180px;overflow:auto;list-style:none;padding:0}.admin-user-picker li button{display:block;width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere;margin:4px 0}.admin-user-picker small{display:block}.admin-selected{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.admin-selected button{white-space:normal;overflow-wrap:anywhere;max-width:100%}.admin-notification-form{min-width:0}.admin-notification-form textarea{width:100%;min-width:0;resize:vertical}.admin-notification-form p,.admin-notification-form label{grid-column:1/-1}.staff-panel h3{margin:16px 0 8px}.staff-table td button{white-space:normal}.staff-tools select{max-width:100%}
 
 .loan-renewal-control{display:flex;flex-direction:column;align-items:flex-start;gap:4px;font-size:11px}.loan-renewal-control .renewal-button{border:none}.loan-renewal-control small,.loan-renewal-control p{font-size:11px;line-height:1.4;overflow-wrap:anywhere}.loan-renewal-control p{color:var(--color-brand)}
 

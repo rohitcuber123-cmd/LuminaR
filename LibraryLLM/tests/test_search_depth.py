@@ -31,6 +31,35 @@ def system(monkeypatch):
 
 def ids(response):return [row['work_id'] for row in response['results']]
 
+def test_canonical_metadata_predicate_filters_before_reranking(system):
+    allowed=set(list(system.books.rows)[-5:])
+    response=system.engine.search('topic',top_k=5,metadata_predicate=lambda row:row['work_id'] in allowed)
+    assert set(ids(response))==allowed
+    assert ('rerank',5) in system.calls
+    assert next(count for kind,count in system.calls if kind=='semantic')>=50
+
+def test_kg_secondary_candidates_union_rerank_and_primary_priority(system):
+    system.books.rows['OL000W']['title']='Neural networks primer'
+    system.books.rows['OL001W']['title']='Deep learning primer'
+    system.engine.index_manager.encode=lambda texts:np.ones((1,8),dtype=np.float32)*(-1 if texts[0]=='expanded' else 1)
+    system.snapshot.candidates=lambda vector,count:[{'work_id':'OL000W' if vector[0,0]>0 else 'OL001W','hnsw_score':.9}]
+    seen=[]
+    def rerank(pairs,**kw):seen.extend(pairs);return [1.,100.]
+    system.engine.reranker.predict=rerank
+    response=system.engine.search('neural networks',top_k=10,expansion_query='expanded',primary_predicate=lambda b:'Neural networks' in b['title'],diagnostics=True)
+    assert ids(response)==['OL000W','OL001W'] and len(seen)==2
+    assert response['diagnostics']['expansion_added_candidates']==1 and response['diagnostics']['expansion_reranked_count']==1
+    assert all(pair[0]=='neural networks' for pair in seen)
+
+def test_intent_preferences_use_real_description_in_existing_crossencoder(system):
+    system.books.rows['OL000W']['description']='An introductory beginner guide based on real metadata.'
+    seen=[]
+    def rerank(pairs,**kw):seen.extend(pairs);return [1.]*len(pairs)
+    system.engine.reranker.predict=rerank
+    system.engine.search('networks',top_k=10,rerank_query='introductory beginner guide to networks')
+    assert all(pair[0]=='introductory beginner guide to networks' for pair in seen)
+    assert any('An introductory beginner guide based on real metadata.' in pair[1] for pair in seen)
+
 @pytest.mark.parametrize('limit',[10,20,50])
 def test_search_limit_honored_and_requested_depth_reaches_reranker(system,limit):
     result=system.pages.search('query',limit)

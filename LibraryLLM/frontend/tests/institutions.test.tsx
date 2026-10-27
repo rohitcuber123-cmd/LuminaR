@@ -1,3 +1,4 @@
+import { chooseSelect } from './select-control'
 import assert from 'node:assert/strict'
 import { registerHooks } from 'node:module'
 import { test, beforeEach, afterEach } from 'node:test'
@@ -108,7 +109,7 @@ test('discovery cards show public join, private code, member enter, suspended co
 
 for (const kind of ['public', 'private', 'mine']) test(`discovery ${kind} filter and library search use scoped discovery`, async () => {
   mount(<ExploreLibrariesPage />); await screen.findByText('0 libraries found')
-  fireEvent.change(screen.getByLabelText('Library filter'), { target: { value: kind } })
+  chooseSelect(screen.getByLabelText('Library filter'),kind,fireEvent)
   fireEvent.change(screen.getByLabelText('Search libraries'), { target: { value: 'Hyderabad' } }); fireEvent.click(screen.getByRole('button', { name: 'Search' }))
   await waitFor(() => assert.ok(calls.some(c => c.url.includes(`kind=${kind}&search=Hyderabad`))))
   assert.ok(calls.every(c => !c.url.startsWith('/search-api')))
@@ -136,9 +137,9 @@ test('public join sends no code and adds switcher membership', async () => {
   assert.deepEqual(calls.find(c => c.url.endsWith('/join'))?.body, {})
 })
 
-test('empty local switcher gives a membership selector link', () => {
+test('empty local switcher keeps global catalogue available', () => {
   mount(<LibrarySwitcher />)
-  assert.equal((screen.getByLabelText('Switch patron library') as HTMLSelectElement).disabled, true)
+  assert.equal((screen.getByLabelText('Switch patron library') as HTMLSelectElement).disabled, false)
   assert.equal(screen.queryByLabelText('Active library'), null)
 })
 test('refresh does not silently select a library', async () => {
@@ -146,7 +147,7 @@ test('refresh does not silently select a library', async () => {
   await act(async () => { await store.getState().refresh() })
   assert.equal(store.getState().activeId, null)
   mount(<LibrarySwitcher staff />)
-  assert.equal((screen.getByLabelText('Switch staff library') as HTMLSelectElement).disabled, true)
+  assert.equal((screen.getByLabelText('Switch staff library') as HTMLSelectElement).disabled, false)
 })
 test('explicit patron selection revalidates context and preserves staff identity', async () => {
   const a = scoped(), b = library({ library_id: id2, name: 'Orion Research', membership: member('GENERAL_USER', false) })
@@ -202,14 +203,16 @@ test('librarian has code rotation but no staff actions or access-mode change', a
 
 test('non-owner admin can invite only librarian and cannot change owner membership', async () => {
   scoped('ADMIN', false); mount(<InstitutionPanel />); await screen.findByText('Access Code: SET')
-  assert.deepEqual(Array.from((screen.getByLabelText('Staff Role') as HTMLSelectElement).options).map(o => o.value), ['LIBRARIAN'])
+  fireEvent.click(screen.getByLabelText('Staff Role'))
+  assert.deepEqual(screen.getAllByRole('option').map(o => o.textContent), ['Librarian'])
+  fireEvent.keyDown(screen.getByLabelText('Staff Role'),{key:'Escape'})
   assert.equal(screen.queryByLabelText('Role for owner@example.com'), null)
   assert.equal(within(screen.getByLabelText('Role for staff@example.com')).queryByRole('option', { name: 'Admin' }), null)
 })
 
 test('owner invites admin by email and copy link is shown once', async () => {
   scoped(); mount(<InstitutionPanel />); await screen.findByText('Access Code: SET')
-  fireEvent.change(screen.getByLabelText('Staff Email'), { target: { value: 'new@example.com' } }); fireEvent.change(screen.getByLabelText('Staff Role'), { target: { value: 'ADMIN' } })
+  fireEvent.change(screen.getByLabelText('Staff Email'), { target: { value: 'new@example.com' } }); chooseSelect(screen.getByLabelText('Staff Role'),'ADMIN',fireEvent)
   fireEvent.click(screen.getByRole('button', { name: 'Add Staff' }))
   await screen.findByRole('dialog', { name: 'Copy Invite Link' })
   assert.ok((screen.getByLabelText('Invite Link') as HTMLInputElement).value.includes('#token='))

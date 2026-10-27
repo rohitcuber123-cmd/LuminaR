@@ -38,7 +38,7 @@ function form(mode='Physical'){mount(<BookEditor libraryId={a} onSaved={()=>{}}/
 function fill(){fireEvent.change(screen.getByLabelText('Title *'),{target:{value:'Fixture'}});fireEvent.change(screen.getByLabelText(/Subject \/ Genre/),{target:{value:'Reference'}})}
 function file(){fireEvent.change(screen.getByLabelText('Upload soft copy *'),{target:{files:[new File(['%PDF fixture'],'fixture.pdf',{type:'application/pdf'})]}})}
 
-test('test_staff_header_catalog_is_staff_inventory',()=>{mount(<Header/>,`/staff/libraries/${a}`);assert.equal(screen.getByRole('link',{name:'Catalog',exact:true}).getAttribute('href'),`/staff/libraries/${a}/inventory`)})
+test('test_staff_catalog_route_is_staff_catalogue',()=>{mount(<Header/>,`/staff/libraries/${a}`);assert.equal(screen.getByRole('link',{name:'Catalog',exact:true}).getAttribute('href'),`/staff/libraries/${a}/catalogue`)})
 test('test_staff_catalog_route_contains_library_uuid',()=>{mount(<Header/>,`/staff/libraries/${a}/inventory`);assert.match(screen.getByRole('link',{name:'Catalog',exact:true}).getAttribute('href')!,new RegExp(a))})
 test('test_staff_catalog_does_not_use_global_catalogue',()=>{mount(<Header/>,`/staff/libraries/${a}`);assert.notEqual(screen.getByRole('link',{name:'Catalog',exact:true}).getAttribute('href'),'/catalog')})
 test('test_staff_catalog_no_staff_library_query_hack',()=>{mount(<Header/>,`/reading-list?staff_library=${a}`);assert.ok(!screen.getByRole('link',{name:'Catalog',exact:true}).getAttribute('href')!.includes('?'))})

@@ -5,6 +5,7 @@ from backend.database.mongodb import reading_list_collection, books_collection
 from uuid import UUID
 from backend.services.institution_repository import collection, require_readable
 from backend.services.library_inventory_access import require_library_patron
+from backend.services import library_catalogue_experience as catalogue
 
 
 def local_target(value):
@@ -37,24 +38,30 @@ def get_user_reading_list(user_id: int) -> List[Dict[str, Any]]:
         }
         for record in records
     ]
-    # One access check and bounded metadata query per library, rather than per card.
+    # Resolve saved local identities through the same current-user catalogue as cards.
+    # Saved metadata must never grant a capability after withdrawal or revocation.
     groups = {}
     for item in items:
         if item['target_type'] == 'LIBRARY_BOOK':
             groups.setdefault(item['library_id'], []).append(item)
     for library_id, saved in groups.items():
         try:
-            require_library_patron(library_id, {'sub': str(user_id)})
-            ids = [item['library_book_id'] for item in saved]
-            current = {row['library_book_id']: row for row in collection('library_books').find(
-                {'library_id': library_id, 'library_book_id': {'$in': ids}, 'status': 'ACTIVE'},
-                {'_id': 0, 'library_book_id': 1, 'title': 1, 'authors': 1, 'subjects': 1, 'cover_url': 1})}
-            require_readable(library_id)
+            actor = {'sub': str(user_id)}
+            current = {}
+            with catalogue.read_context(library_id, actor) as (_, _, canonical):
+                for start in range(0, len(saved), 200):
+                    ids = [item['library_book_id'] for item in saved[start:start + 200]]
+                    rows = list(collection('library_books').aggregate([
+                        {'$match': {'library_id': library_id, 'library_book_id': {'$in': ids}}},
+                        *catalogue.usable(library_id), {'$limit': 200}]))
+                    current.update({row['library_book_id']: row for row in
+                        catalogue.hydrate(library_id, actor, rows, canonical)})
         except HTTPException:
             current = {}
         for item in saved:
             row = current.get(item['library_book_id'])
             item['accessible'] = bool(row)
+            item['library_book'] = row
             item.update({'title': row['title'] if row else 'Unavailable library book',
                 'authors': '; '.join(row.get('authors') or []) if row else '',
                 'subjects': '|'.join(row.get('subjects') or []) if row else '',

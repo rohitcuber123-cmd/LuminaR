@@ -394,7 +394,11 @@ class LuminaRSearchEngine:
         top_k=10,
         library_id=None,
         available_at_library=False,
-        diagnostics=False
+        diagnostics=False,
+        metadata_predicate=None,
+        expansion_query=None,
+        rerank_query=None,
+        primary_predicate=None
     ):
 
         query = query.strip()
@@ -437,6 +441,10 @@ class LuminaRSearchEngine:
         faiss.normalize_L2(
             query_vector
         )
+        expansion_vector=None
+        if expansion_query:
+            expansion_vector=np.asarray(self.index_manager.encode([expansion_query]),dtype=np.float32)
+            faiss.normalize_L2(expansion_vector)
 
         # ====================================================
         # 2. HNSW
@@ -455,6 +463,7 @@ class LuminaRSearchEngine:
         while True:
             started = time.perf_counter()
             candidates = snapshot.candidates(query_vector, fetch_k)
+            fetched_primary=list(candidates)
             if 'raw_candidates' not in locals():
                 raw_candidates = list(candidates)
             hnsw_ms += (time.perf_counter() - started) * 1000
@@ -462,14 +471,26 @@ class LuminaRSearchEngine:
             candidate_metadata = current_books(self.books_collection, [c["work_id"] for c in candidates])
             mongo_ms += (time.perf_counter() - started) * 1000
             candidates = [c for c in candidates if c["work_id"] in candidate_metadata]
+            if metadata_predicate is not None:
+                candidates = [c for c in candidates if metadata_predicate(candidate_metadata[c['work_id']])]
             if (len(candidates) >= target or fetch_k >= limit
                     or fetch_k >= max(snapshot.base.ntotal, snapshot.delta.ntotal)):
                 break
             fetch_k = min(limit, fetch_k * factor if factor > 1 else fetch_k + SEMANTIC_MIN_VALID_CANDIDATES)
-        candidates = candidates[:target]
+        expansion_candidates=[];fetched_expansion=[]
+        if expansion_vector is not None:
+            extra=snapshot.candidates(expansion_vector,min(60,limit))
+            fetched_expansion=list(extra)
+            extra_metadata=current_books(self.books_collection,[c['work_id'] for c in extra])
+            primary_ids={c['work_id'] for c in candidates}
+            expansion_candidates=[c for c in extra if c['work_id'] not in primary_ids and c['work_id'] in extra_metadata and (metadata_predicate is None or metadata_predicate(extra_metadata[c['work_id']]))]
+            candidate_metadata.update(extra_metadata)
+            reserve=min(target//5,len(expansion_candidates))
+            candidates=candidates[:target-reserve]+expansion_candidates[:reserve]
+        else:candidates = candidates[:target]
         lexical_ranking = os.getenv('LEXICAL_SEARCH_ENABLED','false').lower()=='true'
         lexical_evidence = {}
-        if lexical_ranking:
+        if lexical_ranking and metadata_predicate is None:
             try:
                 candidates,candidate_metadata,lexical_evidence = merge_lexical_candidates(
                     getattr(self,'lexical_store',None),query,candidates,candidate_metadata,
@@ -512,10 +533,12 @@ class LuminaRSearchEngine:
                 f"Subjects: "
                 f"{str(metadata.get('subjects', ''))}"
             )
+            if rerank_query:
+                book_text+='\nDescription: '+str(metadata.get('description') or '')[:1200]
 
             pairs.append(
                 [
-                    query,
+                    rerank_query or query,
                     book_text
                 ]
             )
@@ -562,6 +585,8 @@ class LuminaRSearchEngine:
         ranked.sort(
             key=lambda x: (-float(x[1]), -float(x[0]["hnsw_score"]), x[0]["work_id"])
         )
+        if primary_predicate is not None:
+            ranked.sort(key=lambda pair:not primary_predicate(candidate_metadata.get(pair[0]['work_id'],{})))
 
         # Structured author intent is a ranking signal only. Semantic matches
         # remain available as fallback and exact-title behavior is untouched.
@@ -758,6 +783,8 @@ class LuminaRSearchEngine:
         # Revalidate after reranking/inventory I/O and before cutting to top-k.
         latest = current_books(self.books_collection, [r["work_id"] for r in results])
         results = [r for r in results if r["work_id"] in latest]
+        if metadata_predicate is not None:
+            results = [r for r in results if metadata_predicate(latest[r['work_id']])]
         for result in results:
             book = latest[result["work_id"]]
             for field in ("title", "authors", "subjects", "description", "shelf_location"):
@@ -855,6 +882,11 @@ class LuminaRSearchEngine:
         if diagnostics:
             response["diagnostics"] = {
                 "raw_hnsw": raw_candidates,
+                "candidate_count":len({c['work_id'] for c in fetched_primary+fetched_expansion}),
+                "primary_candidate_count":len(fetched_primary),
+                "hnsw_generation":getattr(snapshot,'manifest',None),
+                "expansion_added_candidates":len(expansion_candidates),
+                "expansion_reranked_count":sum(c['work_id'] in {e['work_id'] for e in expansion_candidates} for c in candidates),
                 "mongo_validated": candidates,
                 "reranked": [
                     {"work_id": item[0]["work_id"], "score": float(item[1])}

@@ -1,3 +1,4 @@
+import { chooseSelect } from './select-control'
 import assert from 'node:assert/strict'
 import { registerHooks } from 'node:module'
 import { test, beforeEach, afterEach } from 'node:test'
@@ -128,7 +129,7 @@ test('inventory search and local/review filters remain bound to selected library
   mount(<LibraryInventoryPage />); await screen.findByText('Local Laboratory Manual')
   fireEvent.change(screen.getByLabelText('Search library inventory'), { target: { value: 'QA 77' } })
   fireEvent.click(screen.getByRole('button', { name: 'Search' })); await waitFor(() => assert.ok(calls.some(c => c.path.includes('search=QA%2077'))))
-  fireEvent.change(screen.getByLabelText('Record filter'), { target: { value: 'review' } })
+  chooseSelect(screen.getByLabelText('Record filter'),'review',fireEvent)
   await waitFor(() => assert.ok(calls.some(c => c.path.includes('kind=review'))))
   assert.ok(calls.every(c => c.path.includes(`/libraries/${a}/`)))
 })
@@ -191,7 +192,7 @@ test('mixed dataset preview displays global and local paths', async () => {
 test('confirm import sends bound ID and explicit duplicate policy and preserves result after refresh', async () => {
   mount(<LibraryInventoryPage />); await screen.findByText('Local Laboratory Manual')
   fireEvent.click(screen.getByRole('button', { name: 'Upload Inventory' })); await uploadFile()
-  fireEvent.change(screen.getByLabelText('Existing holding policy'), { target: { value: 'increase_quantity' } })
+  chooseSelect(screen.getByLabelText('Existing holding policy'),'increase_quantity',fireEvent)
   fireEvent.click(screen.getByRole('button', { name: 'Confirm Import' }))
   await screen.findByText(/PARTIAL: 2 created/)
   await waitFor(() => assert.ok(calls.filter(c => c.method === 'GET').length >= 2))

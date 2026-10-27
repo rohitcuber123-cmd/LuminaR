@@ -1,0 +1,1220 @@
+{
+  "task": "Independent normative review of150 query-only contexts. Do not infer desired labels from IDs; judge user semantics and actual scope contracts.",
+  "scopes": {
+    "GLOBAL": {
+      "canonical_subjects": [
+        "History",
+        "Fiction",
+        "Physics",
+        "Ecology",
+        "Astronomy",
+        "Computer science",
+        "Mystery",
+        "Wizards"
+      ],
+      "capabilities": {
+        "availability": false,
+        "formats": [
+          "ONLINE"
+        ],
+        "language": false,
+        "rating": true,
+        "year": false
+      },
+      "workspace_type": "GLOBAL"
+    },
+    "PRIVATE_TENANT_PATRON": {
+      "canonical_subjects": [
+        "Fiction",
+        "Mystery",
+        "Neural Networks",
+        "Wizards",
+        "Detective Fiction"
+      ],
+      "capabilities": {
+        "availability": true,
+        "formats": [
+          "PHYSICAL",
+          "ONLINE",
+          "BOTH"
+        ],
+        "language": true,
+        "rating": true,
+        "year": true
+      },
+      "workspace_type": "PATRON"
+    },
+    "PRIVATE_TENANT_STAFF": {
+      "canonical_subjects": [
+        "Fiction",
+        "Mystery",
+        "Neural Networks",
+        "Wizards",
+        "Detective Fiction"
+      ],
+      "capabilities": {
+        "availability": true,
+        "formats": [
+          "PHYSICAL",
+          "ONLINE",
+          "BOTH"
+        ],
+        "language": true,
+        "rating": true,
+        "year": true
+      },
+      "workspace_type": "STAFF"
+    },
+    "PUBLIC_TENANT_PATRON": {
+      "canonical_subjects": [
+        "History",
+        "Fiction",
+        "Physics",
+        "Ecology",
+        "Community archives",
+        "Quantum computing",
+        "Climate change mitigation",
+        "Computer science"
+      ],
+      "capabilities": {
+        "availability": true,
+        "formats": [
+          "PHYSICAL",
+          "ONLINE",
+          "BOTH"
+        ],
+        "language": true,
+        "rating": true,
+        "year": true
+      },
+      "workspace_type": "PATRON"
+    },
+    "PUBLIC_TENANT_STAFF": {
+      "canonical_subjects": [
+        "History",
+        "Fiction",
+        "Physics",
+        "Ecology",
+        "Community archives",
+        "Quantum computing",
+        "Climate change mitigation",
+        "Computer science"
+      ],
+      "capabilities": {
+        "availability": true,
+        "formats": [
+          "PHYSICAL",
+          "ONLINE",
+          "BOTH"
+        ],
+        "language": true,
+        "rating": true,
+        "year": true
+      },
+      "workspace_type": "STAFF"
+    }
+  },
+  "normative_rules": [
+    "Supported mandatory operands must retain meaning; advisory conditions are not hard filters. Background narration is not a requirement.",
+    "Unresolved mandatory alternatives/association => AMBIGUOUS; explicitly missing required value => INCOMPLETE; unenforceable strict aggregate/relational/metadata operation => UNSUPPORTED; incompatible resolved predicates => CONTRADICTORY.",
+    "Clear supported multi-filter intersections execute. Safe unique field/canonical spelling repairs execute with source-backed notice. Unknown bibliography identities must not be invented.",
+    "Author/title quoted field strings are literal contains operands in the native contract, not bibliographic identity proofs. Unowned quoted text stays literal.",
+    "Canonical category exclusions differ from whole-word searchable-text exclusions; do not manufacture Boolean/proximity/aggregate capabilities. Global caps do not support year/language/availability/physical access.",
+    "Every topology feature must represent meaningful requested semantics, no inert padding. Pure structure includes quoted words. Verify actual topology against supplied allowlist. Use multiple topologies, five genuinely different families per stratum; scope substitutions are not extra structural families."
+  ],
+  "schema": {
+    "keys": [
+      "case_id",
+      "query_text",
+      "scope_type",
+      "workspace_type",
+      "search_mode",
+      "decision_stratum",
+      "family_id",
+      "structural_component_id",
+      "shared_semantic_pattern_id",
+      "expected_typed_decision",
+      "expected_executable",
+      "expected_hard_constraints",
+      "metric_applicability",
+      "semantic_justification"
+    ],
+    "masks": "unprefixed scalar field names; mask objects with status and reason. Known absent list=[],scalar=None,bool=False; unknown values UNRESOLVED. Preserve partial resolved common lists explicitly.",
+    "other_fields": "expected_sort enum RELEVANCE/RATING/NEWEST/TITLE; expected_semantic_remainder string only if a definite literal topic is asserted, otherwise null with N/A mask; expected_soft_preferences structured objects separately, no string equivalence; unadapted mandatory assertions preserved separately.",
+    "scalar_fields": [
+      "subjects",
+      "exclude_subjects",
+      "exclude_terms",
+      "author_text",
+      "title_text",
+      "exact_text",
+      "rating_min",
+      "rating_max",
+      "rating_min_exclusive",
+      "rating_max_exclusive",
+      "year_min",
+      "year_max",
+      "year_min_exclusive",
+      "year_max_exclusive",
+      "formats",
+      "exclusive_formats",
+      "excluded_formats",
+      "availability",
+      "language"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "C5ER_C01_GLOBAL",
+      "query_text": "Within the global catalog: Topic: coastal navigation. Find entries by \"Mira Sol\", titled \"Harbor Atlas\", with rating at least 4. Prefer beginner-friendly treatment; sort on highest rating.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C01_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Topic: coastal navigation. Find entries by \"Mira Sol\", titled \"Harbor Atlas\", with rating at least 4. Prefer beginner-friendly treatment; sort on highest rating.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C01_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Topic: coastal navigation. Find entries by \"Mira Sol\", titled \"Harbor Atlas\", with rating at least 4. Prefer beginner-friendly treatment; sort on highest rating.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C01_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Topic: coastal navigation. Find entries by \"Mira Sol\", titled \"Harbor Atlas\", with rating at least 4. Prefer beginner-friendly treatment; sort on highest rating.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C01_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Topic: coastal navigation. Find entries by \"Mira Sol\", titled \"Harbor Atlas\", with rating at least 4. Prefer beginner-friendly treatment; sort on highest rating.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C02_GLOBAL",
+      "query_text": "Within the global catalog: Include category Fiction, require entries titled \"Lantern\", with rating no greater than 4.5; sort on highest rating.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C02_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include category Fiction, require entries titled \"Lantern\", with rating no greater than 4.5; sort on highest rating.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C02_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include category Fiction, require entries titled \"Lantern\", with rating no greater than 4.5; sort on highest rating.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C02_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include category Fiction, require entries titled \"Lantern\", with rating no greater than 4.5; sort on highest rating.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C02_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include category Fiction, require entries titled \"Lantern\", with rating no greater than 4.5; sort on highest rating.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C03_GLOBAL",
+      "query_text": "Within the global catalog: Find entries by \"Ivo March\", titled \"Copper Road\"; exclude the Fiction classification and require digital access.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C03_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Find entries by \"Ivo March\", titled \"Copper Road\"; exclude the Fiction classification and require digital access.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C03_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Find entries by \"Ivo March\", titled \"Copper Road\"; exclude the Fiction classification and require digital access.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C03_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Find entries by \"Ivo March\", titled \"Copper Road\"; exclude the Fiction classification and require digital access.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C03_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Find entries by \"Ivo March\", titled \"Copper Road\"; exclude the Fiction classification and require digital access.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C04_GLOBAL",
+      "query_text": "Within the global catalog: Include subject Fiction, require online access and a rating of at least 3.7, then sort on title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C04_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include subject Fiction, require online access and a rating of at least 3.7, then sort on title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C04_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include subject Fiction, require online access and a rating of at least 3.7, then sort on title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C04_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include subject Fiction, require online access and a rating of at least 3.7, then sort on title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C04_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include subject Fiction, require online access and a rating of at least 3.7, then sort on title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C05_GLOBAL",
+      "query_text": "Within the global catalog: Find entries by \"Sena Vale\", titled \"Glass Orchard\"; include category Fiction. Reference-style exposition would be preferable.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C05_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Find entries by \"Sena Vale\", titled \"Glass Orchard\"; include category Fiction. Reference-style exposition would be preferable.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C05_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Find entries by \"Sena Vale\", titled \"Glass Orchard\"; include category Fiction. Reference-style exposition would be preferable.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C05_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Find entries by \"Sena Vale\", titled \"Glass Orchard\"; include category Fiction. Reference-style exposition would be preferable.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_C05_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Find entries by \"Sena Vale\", titled \"Glass Orchard\"; include category Fiction. Reference-style exposition would be preferable.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S01_GLOBAL",
+      "query_text": "Within the global catalog: Include category Fictiom; find entries by \"Neri Ash\", rating at least 4; exclude the searchable-text whole word \"spoiler\". Online access is required; sort on title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S01_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include category Fictiom; find entries by \"Neri Ash\", rating at least 4; exclude the searchable-text whole word \"spoiler\". Online access is required; sort on title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S01_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include category Fictiom; find entries by \"Neri Ash\", rating at least 4; exclude the searchable-text whole word \"spoiler\". Online access is required; sort on title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S01_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include category Fictiom; find entries by \"Neri Ash\", rating at least 4; exclude the searchable-text whole word \"spoiler\". Online access is required; sort on title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S01_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include category Fictiom; find entries by \"Neri Ash\", rating at least 4; exclude the searchable-text whole word \"spoiler\". Online access is required; sort on title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S02_GLOBAL",
+      "query_text": "Within the global catalog: By \"Oren Dell\", include subject Ficton with rating above 3.8. Prefer introductory treatment; sort on highest rating.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S02_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: By \"Oren Dell\", include subject Ficton with rating above 3.8. Prefer introductory treatment; sort on highest rating.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S02_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: By \"Oren Dell\", include subject Ficton with rating above 3.8. Prefer introductory treatment; sort on highest rating.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S02_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: By \"Oren Dell\", include subject Ficton with rating above 3.8. Prefer introductory treatment; sort on highest rating.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S02_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: By \"Oren Dell\", include subject Ficton with rating above 3.8. Prefer introductory treatment; sort on highest rating.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S03_GLOBAL",
+      "query_text": "Within the global catalog: Include category Fictino, require entries titled \"Silver Meadow\", online access, and rating below 4.8; sort on title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S03_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include category Fictino, require entries titled \"Silver Meadow\", online access, and rating below 4.8; sort on title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S03_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include category Fictino, require entries titled \"Silver Meadow\", online access, and rating below 4.8; sort on title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S03_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include category Fictino, require entries titled \"Silver Meadow\", online access, and rating below 4.8; sort on title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S03_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include category Fictino, require entries titled \"Silver Meadow\", online access, and rating below 4.8; sort on title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S04_GLOBAL",
+      "query_text": "Within the global catalog: By \"Tala Reed\", include category Fictiom. French language and beginner-friendly treatment are merely preferences.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S04_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: By \"Tala Reed\", include category Fictiom. French language and beginner-friendly treatment are merely preferences.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S04_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: By \"Tala Reed\", include category Fictiom. French language and beginner-friendly treatment are merely preferences.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S04_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: By \"Tala Reed\", include category Fictiom. French language and beginner-friendly treatment are merely preferences.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S04_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: By \"Tala Reed\", include category Fictiom. French language and beginner-friendly treatment are merely preferences.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S05_GLOBAL",
+      "query_text": "Within the global catalog: Include subject Ficton and exclude the searchable-text whole word \"appendix\"; rating at most 4.3; sort on title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S05_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include subject Ficton and exclude the searchable-text whole word \"appendix\"; rating at most 4.3; sort on title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S05_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include subject Ficton and exclude the searchable-text whole word \"appendix\"; rating at most 4.3; sort on title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S05_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include subject Ficton and exclude the searchable-text whole word \"appendix\"; rating at most 4.3; sort on title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_S05_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include subject Ficton and exclude the searchable-text whole word \"appendix\"; rating at most 4.3; sort on title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A01_GLOBAL",
+      "query_text": "Within the global catalog: Find entries by either \"Mira Sol\" or \"Niko Vale\"; I have yet to choose which author. Require titled \"Harbor Atlas\" and rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A01_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Find entries by either \"Mira Sol\" or \"Niko Vale\"; I have yet to choose which author. Require titled \"Harbor Atlas\" and rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A01_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Find entries by either \"Mira Sol\" or \"Niko Vale\"; I have yet to choose which author. Require titled \"Harbor Atlas\" and rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A01_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Find entries by either \"Mira Sol\" or \"Niko Vale\"; I have yet to choose which author. Require titled \"Harbor Atlas\" and rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A01_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Find entries by either \"Mira Sol\" or \"Niko Vale\"; I have yet to choose which author. Require titled \"Harbor Atlas\" and rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A02_GLOBAL",
+      "query_text": "Within the global catalog: By \"Kira Moss\", rating at least 4. Exclude the searchable-text whole word \"spoiler\", plus either \"maps\" or \"rivers\"; I have not chosen that extra exclusion. Publication after 2018 is only preferred.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A02_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: By \"Kira Moss\", rating at least 4. Exclude the searchable-text whole word \"spoiler\", plus either \"maps\" or \"rivers\"; I have not chosen that extra exclusion. Publication after 2018 is only preferred.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A02_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: By \"Kira Moss\", rating at least 4. Exclude the searchable-text whole word \"spoiler\", plus either \"maps\" or \"rivers\"; I have not chosen that extra exclusion. Publication after 2018 is only preferred.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A02_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: By \"Kira Moss\", rating at least 4. Exclude the searchable-text whole word \"spoiler\", plus either \"maps\" or \"rivers\"; I have not chosen that extra exclusion. Publication after 2018 is only preferred.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A02_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: By \"Kira Moss\", rating at least 4. Exclude the searchable-text whole word \"spoiler\", plus either \"maps\" or \"rivers\"; I have not chosen that extra exclusion. Publication after 2018 is only preferred.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A03_GLOBAL",
+      "query_text": "Within the global catalog: By \"Lena Frost\", require rating at least 3.5 or at least 4.2; I mean one of those cutoffs and have yet to pick it. Publication after 2018 and available now are preferences only.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A03_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: By \"Lena Frost\", require rating at least 3.5 or at least 4.2; I mean one of those cutoffs and have yet to pick it. Publication after 2018 and available now are preferences only.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A03_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: By \"Lena Frost\", require rating at least 3.5 or at least 4.2; I mean one of those cutoffs and have yet to pick it. Publication after 2018 and available now are preferences only.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A03_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: By \"Lena Frost\", require rating at least 3.5 or at least 4.2; I mean one of those cutoffs and have yet to pick it. Publication after 2018 and available now are preferences only.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A03_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: By \"Lena Frost\", require rating at least 3.5 or at least 4.2; I mean one of those cutoffs and have yet to pick it. Publication after 2018 and available now are preferences only.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A04_GLOBAL",
+      "query_text": "Within the global catalog: Use \"Harbor Atlas\" either as titled text or as an unowned verbatim quote; I have yet to decide its field. Require rating at least 4. Publication after 2018 and French language are preferences only.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A04_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Use \"Harbor Atlas\" either as titled text or as an unowned verbatim quote; I have yet to decide its field. Require rating at least 4. Publication after 2018 and French language are preferences only.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A04_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Use \"Harbor Atlas\" either as titled text or as an unowned verbatim quote; I have yet to decide its field. Require rating at least 4. Publication after 2018 and French language are preferences only.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A04_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Use \"Harbor Atlas\" either as titled text or as an unowned verbatim quote; I have yet to decide its field. Require rating at least 4. Publication after 2018 and French language are preferences only.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A04_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Use \"Harbor Atlas\" either as titled text or as an unowned verbatim quote; I have yet to decide its field. Require rating at least 4. Publication after 2018 and French language are preferences only.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A05_GLOBAL",
+      "query_text": "Within the global catalog: Require titled \"Harbor Atlas\" and \"River Almanac\"; I am unsure whether I mean both fragments together or either fragment. Rating at least 4 is mandatory. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A05_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Require titled \"Harbor Atlas\" and \"River Almanac\"; I am unsure whether I mean both fragments together or either fragment. Rating at least 4 is mandatory. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A05_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Require titled \"Harbor Atlas\" and \"River Almanac\"; I am unsure whether I mean both fragments together or either fragment. Rating at least 4 is mandatory. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A05_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Require titled \"Harbor Atlas\" and \"River Almanac\"; I am unsure whether I mean both fragments together or either fragment. Rating at least 4 is mandatory. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_A05_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Require titled \"Harbor Atlas\" and \"River Almanac\"; I am unsure whether I mean both fragments together or either fragment. Rating at least 4 is mandatory. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I01_GLOBAL",
+      "query_text": "Within the global catalog: Require titled \"Woven Sky\" and rating at least [cutoff deliberately left blank]; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I01_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Require titled \"Woven Sky\" and rating at least [cutoff deliberately left blank]; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I01_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Require titled \"Woven Sky\" and rating at least [cutoff deliberately left blank]; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I01_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Require titled \"Woven Sky\" and rating at least [cutoff deliberately left blank]; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I01_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Require titled \"Woven Sky\" and rating at least [cutoff deliberately left blank]; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I02_GLOBAL",
+      "query_text": "Within the global catalog: Include category [category name deliberately left blank]; require titled \"Stone Garden\", rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I02_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include category [category name deliberately left blank]; require titled \"Stone Garden\", rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I02_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include category [category name deliberately left blank]; require titled \"Stone Garden\", rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I02_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include category [category name deliberately left blank]; require titled \"Stone Garden\", rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I02_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include category [category name deliberately left blank]; require titled \"Stone Garden\", rating at least 4. Publication after 2018 is only a preference.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I03_GLOBAL",
+      "query_text": "Within the global catalog: Require entries titled [title fragment deliberately left blank], rating at least 4. Publication after 2018 and available now are only preferences.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I03_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Require entries titled [title fragment deliberately left blank], rating at least 4. Publication after 2018 and available now are only preferences.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I03_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Require entries titled [title fragment deliberately left blank], rating at least 4. Publication after 2018 and available now are only preferences.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I03_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Require entries titled [title fragment deliberately left blank], rating at least 4. Publication after 2018 and available now are only preferences.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I03_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Require entries titled [title fragment deliberately left blank], rating at least 4. Publication after 2018 and available now are only preferences.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I04_GLOBAL",
+      "query_text": "Within the global catalog: Require titled \"Tidal Paths\", rating at least 4, and an unowned verbatim quote whose text I have left blank. Publication after 2018 is preferred; sort on title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I04_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Require titled \"Tidal Paths\", rating at least 4, and an unowned verbatim quote whose text I have left blank. Publication after 2018 is preferred; sort on title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I04_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Require titled \"Tidal Paths\", rating at least 4, and an unowned verbatim quote whose text I have left blank. Publication after 2018 is preferred; sort on title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I04_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Require titled \"Tidal Paths\", rating at least 4, and an unowned verbatim quote whose text I have left blank. Publication after 2018 is preferred; sort on title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I04_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Require titled \"Tidal Paths\", rating at least 4, and an unowned verbatim quote whose text I have left blank. Publication after 2018 is preferred; sort on title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I05_GLOBAL",
+      "query_text": "Within the global catalog: Include category Fiction, rating at least 4. Exclude the searchable-text whole word [word deliberately left blank]. Publication after 2018 is merely preferred.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I05_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include category Fiction, rating at least 4. Exclude the searchable-text whole word [word deliberately left blank]. Publication after 2018 is merely preferred.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I05_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include category Fiction, rating at least 4. Exclude the searchable-text whole word [word deliberately left blank]. Publication after 2018 is merely preferred.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I05_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include category Fiction, rating at least 4. Exclude the searchable-text whole word [word deliberately left blank]. Publication after 2018 is merely preferred.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_I05_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include category Fiction, rating at least 4. Exclude the searchable-text whole word [word deliberately left blank]. Publication after 2018 is merely preferred.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U01_GLOBAL",
+      "query_text": "Within the global catalog: Require online access. Keep only entries whose rating exceeds the mean rating of all otherwise matching entries; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is only preferred.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U01_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Require online access. Keep only entries whose rating exceeds the mean rating of all otherwise matching entries; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is only preferred.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U01_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Require online access. Keep only entries whose rating exceeds the mean rating of all otherwise matching entries; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is only preferred.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U01_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Require online access. Keep only entries whose rating exceeds the mean rating of all otherwise matching entries; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is only preferred.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U01_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Require online access. Keep only entries whose rating exceeds the mean rating of all otherwise matching entries; exclude the searchable-text whole word \"spoiler\". Publication after 2018 is only preferred.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U02_GLOBAL",
+      "query_text": "Within the global catalog: Require rating at least 4 and require every hit to share a contributor with every other hit. Exclude the searchable-text whole word \"spoiler\". Publication after 2018 and available now are preferences only.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U02_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Require rating at least 4 and require every hit to share a contributor with every other hit. Exclude the searchable-text whole word \"spoiler\". Publication after 2018 and available now are preferences only.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U02_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Require rating at least 4 and require every hit to share a contributor with every other hit. Exclude the searchable-text whole word \"spoiler\". Publication after 2018 and available now are preferences only.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U02_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Require rating at least 4 and require every hit to share a contributor with every other hit. Exclude the searchable-text whole word \"spoiler\". Publication after 2018 and available now are preferences only.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U02_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Require rating at least 4 and require every hit to share a contributor with every other hit. Exclude the searchable-text whole word \"spoiler\". Publication after 2018 and available now are preferences only.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U03_GLOBAL",
+      "query_text": "Within the global catalog: Require no more than 200 pages, rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U03_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Require no more than 200 pages, rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U03_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Require no more than 200 pages, rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U03_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Require no more than 200 pages, rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U03_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Require no more than 200 pages, rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U04_GLOBAL",
+      "query_text": "Within the global catalog: Require the searchable-text words \"cedar\" and \"canal\" to occur within three token positions of each other. Require rating at least 4; exclude the searchable-text whole word \"spoiler\". Publication after 2018 and beginner suitability are preferences only.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U04_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Require the searchable-text words \"cedar\" and \"canal\" to occur within three token positions of each other. Require rating at least 4; exclude the searchable-text whole word \"spoiler\". Publication after 2018 and beginner suitability are preferences only.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U04_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Require the searchable-text words \"cedar\" and \"canal\" to occur within three token positions of each other. Require rating at least 4; exclude the searchable-text whole word \"spoiler\". Publication after 2018 and beginner suitability are preferences only.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U04_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Require the searchable-text words \"cedar\" and \"canal\" to occur within three token positions of each other. Require rating at least 4; exclude the searchable-text whole word \"spoiler\". Publication after 2018 and beginner suitability are preferences only.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U04_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Require the searchable-text words \"cedar\" and \"canal\" to occur within three token positions of each other. Require rating at least 4; exclude the searchable-text whole word \"spoiler\". Publication after 2018 and beginner suitability are preferences only.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U05_GLOBAL",
+      "query_text": "Within the global catalog: Return exactly three hits per creator, require rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred; sort on title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U05_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Return exactly three hits per creator, require rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred; sort on title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U05_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Return exactly three hits per creator, require rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred; sort on title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U05_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Return exactly three hits per creator, require rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred; sort on title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_U05_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Return exactly three hits per creator, require rating at least 4, and exclude the searchable-text whole word \"spoiler\". Publication after 2018 is merely preferred; sort on title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X01_GLOBAL",
+      "query_text": "Within the global catalog: Include category Fiction. Require rating above 4 and rating at most 4 at the same time. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X01_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include category Fiction. Require rating above 4 and rating at most 4 at the same time. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X01_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include category Fiction. Require rating above 4 and rating at most 4 at the same time. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X01_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include category Fiction. Require rating above 4 and rating at most 4 at the same time. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X01_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include category Fiction. Require rating above 4 and rating at most 4 at the same time. Publication after 2018 and beginner suitability are only preferences.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X02_GLOBAL",
+      "query_text": "Within the global catalog: Include category Fiction, require publication after 2024 and before 2010 simultaneously, and rating at least 4; sort on highest rating.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X02_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include category Fiction, require publication after 2024 and before 2010 simultaneously, and rating at least 4; sort on highest rating.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X02_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include category Fiction, require publication after 2024 and before 2010 simultaneously, and rating at least 4; sort on highest rating.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X02_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include category Fiction, require publication after 2024 and before 2010 simultaneously, and rating at least 4; sort on highest rating.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X02_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include category Fiction, require publication after 2024 and before 2010 simultaneously, and rating at least 4; sort on highest rating.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X03_GLOBAL",
+      "query_text": "Within the global catalog: By \"Mira Sol\", require rating at least 4 and online access, while excluding online access for the same entries.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X03_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: By \"Mira Sol\", require rating at least 4 and online access, while excluding online access for the same entries.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X03_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: By \"Mira Sol\", require rating at least 4 and online access, while excluding online access for the same entries.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X03_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: By \"Mira Sol\", require rating at least 4 and online access, while excluding online access for the same entries.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X03_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: By \"Mira Sol\", require rating at least 4 and online access, while excluding online access for the same entries.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X04_GLOBAL",
+      "query_text": "Within the global catalog: By \"Niko Vale\", require rating at least 4. Each hit must be available now and must not be available now, in the same sense and at the same moment.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X04_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: By \"Niko Vale\", require rating at least 4. Each hit must be available now and must not be available now, in the same sense and at the same moment.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X04_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: By \"Niko Vale\", require rating at least 4. Each hit must be available now and must not be available now, in the same sense and at the same moment.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X04_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: By \"Niko Vale\", require rating at least 4. Each hit must be available now and must not be available now, in the same sense and at the same moment.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X04_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: By \"Niko Vale\", require rating at least 4. Each hit must be available now and must not be available now, in the same sense and at the same moment.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X05_GLOBAL",
+      "query_text": "Within the global catalog: Include category Fiction and exclude category Fiction for every hit; require rating at least 4. French language is only a preference.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X05_PRIVATE_TENANT_PATRON",
+      "query_text": "Within my private tenant catalog as a patron: Include category Fiction and exclude category Fiction for every hit; require rating at least 4. French language is only a preference.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X05_PRIVATE_TENANT_STAFF",
+      "query_text": "Within my private tenant catalog as staff: Include category Fiction and exclude category Fiction for every hit; require rating at least 4. French language is only a preference.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X05_PUBLIC_TENANT_PATRON",
+      "query_text": "Within my public tenant catalog as a patron: Include category Fiction and exclude category Fiction for every hit; require rating at least 4. French language is only a preference.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "C5ER_X05_PUBLIC_TENANT_STAFF",
+      "query_text": "Within my public tenant catalog as staff: Include category Fiction and exclude category Fiction for every hit; require rating at least 4. French language is only a preference.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    }
+  ],
+  "output": "reports/search_v2c_c5er_independent_review.json",
+  "source_query_artifact_sha256": "5e6136f7d999103d0b26ccb2668ba5017ee41b9eabd7459b6e76cd7ffdcd6e46"
+}

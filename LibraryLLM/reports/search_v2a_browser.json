@@ -1,0 +1,44 @@
+{
+  "status": "PARTIAL",
+  "reason": "In-app browser access succeeded on the alternate loopback origin http://127.0.0.1:5174 after the original 5173 origin remained denied. Browser scenarios were observed in the authenticated Global, TEST, and Private Archive QA A contexts. The exact six-size responsive matrix and outsider-denial flow remain incomplete.",
+  "server": {
+    "command": "npm run dev -- --host 127.0.0.1 --port 5174 --strictPort",
+    "binding": "127.0.0.1:5174",
+    "browser_origin": "http://127.0.0.1:5174",
+    "status": "RUNNING"
+  },
+  "observed_contexts": [
+    "GLOBAL: authenticated search results, Fiction facet, author intent, exclusion, typo suggestion, rating chip, related concepts disclosure, and Online-only zero-results message",
+    "TEST: library selector listed TEST; selection opened its staff catalogue; local query returned 8 books; category chip and selected facet were visible",
+    "Private Archive QA A: selector listed the private institution; authenticated staff search returned two Online-filtered holdings; online item detail exposed a Know More action"
+  ],
+  "scenarios": {
+    "category_interpretation_global": "PASS: Fiction facet chip and canonical category results rendered",
+    "author_intent": "PASS: books by Ursula K. Le Guin rendered Find author and an Author chip",
+    "typo": "PASS: detectve rendered a truthful Detective and mystery stories suggestion and matching results",
+    "negative": "PASS: science fiction but not romance rendered an Exclude: Romance chip",
+    "rating": "PASS: detective stories at least 4 stars rendered a Rating: >= 4 chip",
+    "related_concepts_disclosure": "PASS: disclosure rendered for eligible semantic search",
+    "online_only_global": "PASS: Find online and Format: Online chips rendered; unsupported Global entitlement showed the empty state",
+    "test_library_switch": "PASS: TEST option selected and the TEST staff catalogue loaded",
+    "private_library_online_and_know_more": "PASS: two private online-filtered holdings shown; online-only detail included Know More",
+    "private_unauthorized_denial": "NOT_RUN in browser; previously verified by live API checks and isolated tests",
+    "actual_kg_contribution": "Covered by prior live API QA; not separately observable in this browser session",
+    "kg_unavailable_fallback": "Covered by prior isolated tests; not separately exercised in browser"
+  },
+  "permission_history": {
+    "origin_5173": "Still denied by saved user permission or managed policy after user removed old settings",
+    "origin_5174": "Browser access granted; no policy bypass used"
+  },
+  "limitations": [
+    "The available in-app browser controls did not expose an explicit viewport override, so the required exact six-size matrix is still pending.",
+    "Visual contrast was not measured in this pass."
+  ],
+  "v2b_closure": {
+    "status": "PASS",
+    "report": "search_v2b_v2a_browser_closure.json",
+    "responsive": "search_v2b_responsive.json",
+    "accessibility": "search_v2b_accessibility.json",
+    "note": "Prior historical status retained. Advanced CUA viewport/CDP was available and used for exact-size validation."
+  }
+}

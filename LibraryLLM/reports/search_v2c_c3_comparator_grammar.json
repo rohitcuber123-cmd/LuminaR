@@ -1,0 +1,172 @@
+{
+  "version": "search-v2c-c3-comparators-1",
+  "review_provenance": {
+    "status": "AI_REVIEWED",
+    "human_reviewed": 0,
+    "development_only": true,
+    "sealed_labels_read": false,
+    "calibration_or_heldout_parser_calls": 0
+  },
+  "rating_operators": {
+    ">": [
+      "greater than",
+      "more than",
+      "higher than",
+      "above",
+      "over",
+      "exceeding",
+      "exceeds",
+      "exceed",
+      ">"
+    ],
+    ">=": [
+      "at least",
+      "no less than",
+      "no lower than",
+      "no fewer than",
+      "not below",
+      "not less than",
+      "minimum",
+      ">=",
+      "\u2265"
+    ],
+    "<": [
+      "less than",
+      "fewer than",
+      "lower than",
+      "below",
+      "under",
+      "<"
+    ],
+    "<=": [
+      "at most",
+      "no more than",
+      "no higher than",
+      "no greater than",
+      "not above",
+      "not more than",
+      "maximum",
+      "<=",
+      "\u2264"
+    ],
+    "=": [
+      "equal to",
+      "equals",
+      "equal",
+      "exactly",
+      "="
+    ]
+  },
+  "year_operators": {
+    ">": [
+      "strictly after",
+      "later than",
+      "after",
+      "following",
+      "follow",
+      "follows",
+      ">"
+    ],
+    ">=": [
+      "no earlier than",
+      "not before",
+      "at or after",
+      "on or after",
+      "since",
+      ">=",
+      "\u2265"
+    ],
+    "<": [
+      "strictly before",
+      "earlier than",
+      "before",
+      "preceding",
+      "precede",
+      "precedes",
+      "<"
+    ],
+    "<=": [
+      "no later than",
+      "not after",
+      "at or before",
+      "on or before",
+      "by",
+      "<=",
+      "\u2264"
+    ],
+    "=": [
+      "dating to",
+      "during",
+      "in",
+      "of",
+      "=",
+      "equal to",
+      "exactly"
+    ]
+  },
+  "rating_values": {
+    "numeric": "Signed decimal operands recognized; invalid values are rejected rather than clamped.",
+    "word_values": [
+      "zero",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five"
+    ],
+    "fractional_words": [
+      "three-and-a-half",
+      "four and a half"
+    ],
+    "regex": "(?<![\\w.])(?:-?(?:\\d+(?:\\.\\d+)?|\\.\\d+)|(?:zero|one|two|three|four|five)(?:[\\s-]+and[\\s-]+a[\\s-]+half)?)(?!\\w|\\.\\d)",
+    "domain": [
+      0,
+      5
+    ]
+  },
+  "year_values": {
+    "domain": [
+      1000,
+      2100
+    ],
+    "integers_only": true,
+    "fractional_years_rejected_without_truncation": true
+  },
+  "intervals": {
+    "between X and Y": "inclusive lower and upper",
+    "from X to Y": "inclusive lower and upper",
+    "from X through Y": "inclusive lower and upper",
+    "within X to Y": "inclusive lower and upper"
+  },
+  "composition": "Resolve all adjacent and/but/comma bounds over the same field; conjunction takes strongest lower and upper bounds. Equality at a shared endpoint is satisfiable only when both are inclusive.",
+  "source_evidence": {
+    "rating": "Explicit rating/rated/review rating/scoring field or star unit. Existing plus notation, pure numeric suffix and pure coordinated comparator phrases remain narrowly supported.",
+    "publication": "Explicit published/released/issued/printed/publication year prefix, reordered publication-year field, or contiguous same-field coordination.",
+    "legacy_year_shorthand": "Preserved pure after/before clauses, nonhistorical format-qualified books and nonhistorical from-Y-onward catalogue construction.",
+    "protected": "Source protected spans cannot be consumed; fieldless star/plus notation inside unresolved explicit author/title phrases is not accepted as a filter.",
+    "topical": "history after1945 and about-events year intervals remain semantic; a publication field does not license a later topical year separated by about/on text."
+  },
+  "helper_api": {
+    "range_contradiction": "(low, high, low_exclusive=False, high_exclusive=False) -> bool",
+    "valid_numeric_domain": "(field, value) -> bool; None is absent; bool/NaN/infinity invalid",
+    "parse_rating_number": "word or signed decimal -> float",
+    "comparator": "known grammar -> exact operator; unknown -> None"
+  },
+  "focused_validation": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_search_v2c_c3_numeric.py tests/test_search_v2c_c2.py tests/test_search_v2b.py tests/test_search_v2c_b_precondition.py tests/test_search_v2c_a.py::test_exact_rating_predicate tests/test_search_v2c_a.py::test_exact_year_predicate -q",
+    "passed": 168,
+    "failed": 0,
+    "seconds": 1.2,
+    "fresh_final_development_evaluation": false
+  },
+  "source_sha256": {
+    "search/query_numeric.py": "d7360d147c31d104f60d3148492eaafcaab7c0fc49207ab38e3f66732a649ab4",
+    "tests/test_search_v2c_c3_numeric.py": "68818778d89162bc781ca1b94b9834c554d3da5560186b58d9306b8d0cf221b5"
+  },
+  "scope": "Shared numeric grammar/helper plus ratings()/years() wrappers only. No authorization or retrieval changes; final full development evaluation is owned by root after freeze.",
+  "root_integration_repair_provenance": "Preserve EXECUTE_WITH_NOTICE for accepted reordered operator/field syntax; source-backed repair provenance restored before freeze.",
+  "final_source_sha256": {
+    "search\\query_numeric.py": "980d2897a94c6c41e78b9251b4da81023ce28f5c32fcf637b8af661d2df7d8dc",
+    "search\\query_constraints.py": "3db9807ee83abeda1e10e02aaa59b4253e1c57f70c11d29a22535bc4121e957e"
+  }
+}

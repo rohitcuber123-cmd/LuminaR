@@ -1,9 +1,6 @@
-import { useProductContext } from '../hooks/useProductContext'
-import { productBookPath } from '../lib/productContext'
-import { useId, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { BookCover } from './BookCover'
-import { BookSelectButton } from './BookSelectButton'
+import { useId, useState } from 'react'import { useProductContext } from '../hooks/useProductContext'import { productBookPath } from '../lib/productContext'
+import { BookCard } from './BookCard'
+import { globalBookPresentation } from '../lib/bookPresentation'
 import { BookConnectionGraph } from './BookConnectionGraph'
 import type { KGBook, ReasonPath, RelatedBook } from '@/lib/knowledgeGraph'
 
@@ -25,21 +22,10 @@ export function WhyRelated({ paths, seedTitle, bookTitle }: { paths: ReasonPath[
     <div id={connectionId} hidden={!showConnection}>{showConnection && <BookConnectionGraph paths={paths} seedTitle={seedTitle} bookTitle={bookTitle} />}</div>
   </div>
 }
-export function RelatedBookCard({ book, seed }: { book: RelatedBook; seed?: KGBook }) {
-  const context=useProductContext()
-  const hash = [...book.work_id].reduce((sum, char) => sum + char.charCodeAt(0), 0)
-  const author = book.authors.join(' · ') || 'Author not recorded'
-  return <article className="min-w-0 rounded-sm border border-line bg-paper p-4" aria-label={book.title}>
-    <Link to={context.personalPath(productBookPath(book.work_id,context.libraryId))} className="flex gap-4">
-      <div className="w-16 shrink-0"><BookCover title={book.title} author={author} paletteIndex={hash} variant="stripe" /></div>
-      <div className="min-w-0"><h3 className="font-display break-words text-base leading-tight text-ink">{book.title}</h3><p className="mt-1 break-words text-xs text-ink-soft">{author}</p>
-        {book.average_rating != null && book.average_rating > 0 && <p className="mt-2 text-xs">★ {book.average_rating.toFixed(1)}{book.rating_count != null && book.rating_count > 0 ? ` (${book.rating_count})` : ''}</p>}
-        <p className={`mt-2 text-xs ${book.available_copies > 0 ? 'text-moss' : 'text-ink-soft'}`}>Global Catalogue</p>
-        
-      </div>
-    </Link>
-    <p className="mt-3 break-words text-xs text-ink-soft">Connected through: {[...new Set(book.reason_paths.map(path => path.label))].slice(0, 3).join(' · ')}</p>
-    <div className="mt-2 flex flex-wrap items-center gap-2"><Link className="assistant-button" to={context.personalPath(productBookPath(book.work_id,context.libraryId))}>View</Link><BookSelectButton book={book} /></div>
+export function RelatedBookCard({ book, seed }: { book: RelatedBook; seed?: KGBook }) {  const context=useProductContext()
+  const presentation=globalBookPresentation({...book,book_id:book.book_id ?? 0,average_rating:book.average_rating ?? undefined,rating_count:book.rating_count ?? undefined,authors:book.authors.join('; '),subjects:book.subjects.join('|')})
+  return <BookCard book={presentation} detailPath={context.personalPath(productBookPath(book.work_id,context.libraryId))}>
+    <p className="related-book-context">Connected through: {[...new Set(book.reason_paths.map(path => path.label))].slice(0, 3).join(' · ')}</p>
     <WhyRelated paths={book.reason_paths} seedTitle={seed?.title} bookTitle={book.title} />
-  </article>
+  </BookCard>
 }

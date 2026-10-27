@@ -1,0 +1,119 @@
+{
+  "prepared": true,
+  "parser_calls": 0,
+  "development_rows": 6881,
+  "parser_rows": 6529,
+  "native_rows": 352,
+  "freeze_exists": false,
+  "required_frozen_files": [
+    "reports/search_v2a_facet_vocabulary.json",
+    "reports/search_v2c_a_gold_queries.jsonl",
+    "reports/search_v2c_a_metamorphic_queries.jsonl",
+    "reports/search_v2c_c2_v2_development.jsonl",
+    "reports/search_v2c_c4_delta_plan_contract_v2.json",
+    "reports/search_v2c_c4_native_contract_v2.json",
+    "reports/search_v2c_c4_reviewed_contract.json",
+    "reports/search_v2c_c_scope_vocabularies.json",
+    "scripts/search_v2c_c4_evaluate.py",
+    "scripts/search_v2c_c4_native_evaluate.py",
+    "scripts/search_v2c_c_evaluate.py",
+    "search/query_calibration.py",
+    "search/query_confidence.py",
+    "search/query_constraints.py",
+    "search/query_execution.py",
+    "search/query_expansion.py",
+    "search/query_interaction.py",
+    "search/query_numeric.py",
+    "search/query_plan.py",
+    "search/query_repair.py",
+    "search/query_session.py",
+    "search/query_suggestions.py",
+    "search/scope_authorization.py",
+    "search/session_store.py",
+    "tests/institution_v2g/test_query_v2c_c4_native.py",
+    "tests/test_search_v2c_a.py"
+  ],
+  "development_override_provenance": {
+    "path": "reports/search_v2c_c4_development_label_overrides.json",
+    "sha256": "c8893c175e623b335eccfbce72b39bfe40a73c8fac5d0641fba94a2e0baf7e12",
+    "cases": 260,
+    "review_status": "AI_REVIEWED",
+    "parser_output_visible": false
+  },
+  "BOTH_proof": {
+    "rule": "formats ONLY: expand BOTH into ONLINE and PHYSICAL; compare conjunctive sets",
+    "source": "search/query_plan.py",
+    "source_sha256": "376224248025cd56008b03febd3e4b60527b2ae8da8c22188c508b058cab1152",
+    "source_conditions": [
+      "fmt in ('ONLINE', 'BOTH') and book.get('has_online') is not True",
+      "fmt in ('PHYSICAL', 'BOTH') and book.get('has_physical') is not True"
+    ],
+    "proof": "matches iterates every format conjunctively. BOTH rejects missing online and missing physical. Two separate ONLINE/PHYSICAL operands impose exactly these same predicates, including unknown/missing values.",
+    "truth_table": [
+      {
+        "has_online": false,
+        "has_physical": false,
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false
+      },
+      {
+        "has_online": false,
+        "has_physical": true,
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false
+      },
+      {
+        "has_online": false,
+        "has_physical": null,
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false
+      },
+      {
+        "has_online": true,
+        "has_physical": false,
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false
+      },
+      {
+        "has_online": true,
+        "has_physical": true,
+        "BOTH_accepts": true,
+        "ONLINE_and_PHYSICAL_accepts": true
+      },
+      {
+        "has_online": true,
+        "has_physical": null,
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false
+      },
+      {
+        "has_online": null,
+        "has_physical": false,
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false
+      },
+      {
+        "has_online": null,
+        "has_physical": true,
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false
+      },
+      {
+        "has_online": null,
+        "has_physical": null,
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false
+      }
+    ],
+    "applied_to": "all expected and actual formats, every row in the representation-normalized view",
+    "does_not_normalize": [
+      "excluded subject versus broad text",
+      "exclusive_formats",
+      "excluded_formats",
+      "decision",
+      "intent"
+    ],
+    "raw_metrics_retained": true,
+    "parser_calls": 0
+  }
+}

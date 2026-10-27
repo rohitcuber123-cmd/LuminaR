@@ -1,0 +1,60 @@
+{
+  "status": "PASS for accepted suites; V2CB session lifecycle FAIL",
+  "tests": {
+    "report": "D:\\SDC\\LibraryLLM\\reports\\search_v2c_b_regression_sessions.xml",
+    "tests": 34,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failed_cases": [],
+    "cases": [
+      "test_global_contradiction_preserves_context_and_skips_retrieval",
+      "test_multi_subject_global_uses_rarest_bounded_ids_and_all_predicates",
+      "test_private_canonical_clause_session_pipeline[False]",
+      "test_private_canonical_clause_session_pipeline[True]",
+      "test_private_clause_vocabulary_not_read_before_auth[actor0]",
+      "test_private_clause_vocabulary_not_read_before_auth[actor1]",
+      "test_revocation_precedes_contradiction_resolution",
+      "test_missing_tenant_subject_not_imported_from_global",
+      "test_public_session_clause_guard[False]",
+      "test_public_session_clause_guard[True]",
+      "test_rejected_plan_never_overwrites_or_creates_context[fiction 4-AMBIGUOUS]",
+      "test_rejected_plan_never_overwrites_or_creates_context[fiction rating above-INCOMPLETE]",
+      "test_rejected_plan_never_overwrites_or_creates_context[books rated above 4 and below 3-CONTRADICTORY]",
+      "test_rejected_plan_never_overwrites_or_creates_context[online only and physical only-CONTRADICTORY]",
+      "test_rejected_plan_never_overwrites_or_creates_context[books under 250 pages-UNSUPPORTED]",
+      "test_old_scoped_plan_readable_and_new_query_revalidated",
+      "test_global_guard_precedes_retrieval_profile_kg_and_commit",
+      "test_authorized_private_guard_and_revocation",
+      "test_private_unauthorized_before_vocabulary[actor0]",
+      "test_private_unauthorized_before_vocabulary[actor1]",
+      "test_natural_strict_rating_filters_canonical_rows",
+      "test_global_unsupported_year_does_not_commit",
+      "test_search_session_persistence_replay_expiry_and_clear",
+      "test_search_session_foreign_user_and_login_denied[foreign0]",
+      "test_search_session_foreign_user_and_login_denied[foreign1]",
+      "test_library_a_b_sessions_and_workspaces_separate",
+      "test_private_search_session_membership_revoked",
+      "test_private_session_outsider_denied_before_resolution",
+      "test_private_session_exclusion_overrides_kg_and_personalization",
+      "test_tenant_profile_cannot_enter_global_or_foreign_tenant",
+      "test_public_tenant_fallback_preserves_session_and_boundaries",
+      "test_global_opt_in_warm_profile_off_and_reason_contract",
+      "test_empty_public_tenant_session_never_becomes_global_filler",
+      "test_logout_context_clear_is_user_scoped_and_preserves_saved_books"
+    ]
+  },
+  "browser": [
+    {
+      "name": "PRIVATE patron personalization explicitly ON; same strict plan and zero eligible online results",
+      "url": "http://127.0.0.1:5174/libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/catalogue?search=online+only&mode=SMART&resolved=1792067498152",
+      "snapshot": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg?patron_library=3eaef2bb-a320-43be-aee4-e80d28ab59d3\n    - link \"Browse Books\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/catalogue\n    - link \"New Arrivals\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/new-arrivals\n    - link \"Events\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/events\n    - link \"About\":\n      - /url: /?patron_library=3eaef2bb-a320-43be-aee4-e80d28ab59d3#about\n    - link \"Know More\":\n      - /url: /llm?patron_library=3eaef2bb-a320-43be-aee4-e80d28ab59d3\n    - link \"My Library\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/my-library\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list?patron_library=3eaef2bb-a320-43be-aee4-e80d28ab59d3\n  - button \"Open account menu for V2CB Browser Member\":\n    - generic: V2CB Browser Member\n- main:\n  - link \"V2CB Clause QA\":\n    - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3\n  - generic: Member \u00b7 Private institution\n  - navigation \"Library activity\":\n    - link \"My Library\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/my-library\n    - link \"Reservations\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/reservations\n    - link \"Fees\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/fees\n    - link \"Resources\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/resources\n  - combobox \"Switch patron library\":\n    - generic: V2CB Clause QA\n  - heading \"Browse Books\" [level=1]\n  - paragraph: Explore V2CB Clause QA\u2019s collection.\n  - paragraph:\n    - generic: Library collection\n    - text: 3 local books in V2CB Clause QA\n    - generic: Library catalogue search\n  - link \"Library Knowledge Graph\":\n    - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/graph\n  - generic: Search V2CB Clause QA\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - combobox \"Search V2CB Clause QA\": online only\n  - status\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\" [checked] [active]\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - status: Refined from previous search\n  - group \"Interpreted search\":\n    - generic: \"Intent: Discover topic\"\n    - 'button \"Remove Topic: wizards\"': \"Topic: wizards \u00d7\"\n    - 'button \"Remove Genre / Subject: Fiction\"': \"Genre / Subject: Fiction \u00d7\"\n    - 'button \"Remove Format: Online\"': \"Format: Online \u00d7\"\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"V2CB Private Orchid 3 books\": V2CB Private Orchid3\n    - button \"Fiction 2 books\": Fiction2\n    - button \"Detective Fiction 1 book\": Detective Fiction1\n    - button \"Mystery 1 book\": Mystery1\n    - button \"Neural Networks 1 book\": Neural Networks1\n    - button \"Romance 1 book\": Romance1\n    - button \"Wizards 1 book\": Wizards1\n    - link \"All subjects\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/genres\n  - text: Author\n  - textbox \"Filter by author\"\n  - text: Circulation status\n  - combobox \"Circulation status\":\n    - generic: All statuses\n  - heading \"Books\" [level=2]\n  - strong: No books match all selected filters.\n  - paragraph: Remove a filter above or choose another subject. Global discovery is a separate catalogue.\n  - link \"Search all LuminaR\":\n    - /url: /search?q=online%20only\n  - navigation \"Catalogue pagination\":\n    - button \"Previous page\" [disabled]:\n      - generic: Previous\n    - generic: Page 1\n    - button \"Next page\" [disabled]:\n      - generic: Next page\n- button \"Ask LuminaR\":"
+    },
+    {
+      "name": "PRIVATE patron Clear Search clears full context and personalization remains independently OFF",
+      "url": "http://127.0.0.1:5174/libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/catalogue",
+      "snapshot": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg?patron_library=3eaef2bb-a320-43be-aee4-e80d28ab59d3\n    - link \"Browse Books\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/catalogue\n    - link \"New Arrivals\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/new-arrivals\n    - link \"Events\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/events\n    - link \"About\":\n      - /url: /?patron_library=3eaef2bb-a320-43be-aee4-e80d28ab59d3#about\n    - link \"Know More\":\n      - /url: /llm?patron_library=3eaef2bb-a320-43be-aee4-e80d28ab59d3\n    - link \"My Library\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/my-library\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list?patron_library=3eaef2bb-a320-43be-aee4-e80d28ab59d3\n  - button \"Open account menu for V2CB Browser Member\":\n    - generic: V2CB Browser Member\n- main:\n  - link \"V2CB Clause QA\":\n    - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3\n  - generic: Member \u00b7 Private institution\n  - navigation \"Library activity\":\n    - link \"My Library\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/my-library\n    - link \"Reservations\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/reservations\n    - link \"Fees\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/fees\n    - link \"Resources\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/resources\n  - combobox \"Switch patron library\":\n    - generic: V2CB Clause QA\n  - heading \"Browse Books\" [level=1]\n  - paragraph: Explore V2CB Clause QA\u2019s collection.\n  - paragraph:\n    - generic: Library collection\n    - text: 3 local books in V2CB Clause QA\n    - generic: Library catalogue search\n  - link \"Library Knowledge Graph\":\n    - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/graph\n  - generic: Search V2CB Clause QA\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - combobox \"Search V2CB Clause QA\": online only\n  - status\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\" [active]\n  - status: Refined from previous search\n  - group \"Interpreted search\":\n    - generic: \"Intent: Discover topic\"\n    - 'button \"Remove Topic: wizards\"': \"Topic: wizards \u00d7\"\n    - 'button \"Remove Genre / Subject: Fiction\"': \"Genre / Subject: Fiction \u00d7\"\n    - 'button \"Remove Format: Online\"': \"Format: Online \u00d7\"\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"V2CB Private Orchid 3 books\": V2CB Private Orchid3\n    - button \"Fiction 2 books\": Fiction2\n    - button \"Detective Fiction 1 book\": Detective Fiction1\n    - button \"Mystery 1 book\": Mystery1\n    - button \"Neural Networks 1 book\": Neural Networks1\n    - button \"Romance 1 book\": Romance1\n    - button \"Wizards 1 book\": Wizards1\n    - link \"All subjects\":\n      - /url: /libraries/3eaef2bb-a320-43be-aee4-e80d28ab59d3/genres\n  - text: Author\n  - textbox \"Filter by author\"\n  - text: Circulation status\n  - combobox \"Circulation status\":\n    - generic: All statuses\n  - heading \"Books\" [level=2]\n  - strong: No books match all selected filters.\n  - paragraph: Remove a filter above or choose another subject. Global discovery is a separate catalogue.\n  - link \"Search all LuminaR\":\n    - /url: /search?q=online%20only\n  - navigation \"Catalogue pagination\":\n    - button \"Previous page\" [disabled]:\n      - generic: Previous\n    - generic: Page 1\n    - button \"Next page\" [disabled]:\n      - generic: Next page\n- button \"Ask LuminaR\":"
+    }
+  ],
+  "semantics": "OFF default; own Reading List only; no new hidden signals; eligibility/rerank limits unchanged."
+}

@@ -1,0 +1,22 @@
+{
+  "status": "FAIL",
+  "stop_condition": {
+    "isolated_database": "luminar_institution_v2g_test_ce00204d27204e30926c691b9671c7f4",
+    "accepted_context_existed_before": true,
+    "rejected_query_preserved_previous_context": true,
+    "forged_choice_http_status": 404,
+    "accepted_context_exists_after_forged_choice": false,
+    "accepted_context_unchanged": false,
+    "cause": "authorized() catches the yielded body HTTPException(404) and calls invalidate(actor, library_id), deleting the caller contexts and pending choices.",
+    "production_catalogue_modified": false,
+    "required_invariant": "A forged choice must not mutate accepted Search state."
+  },
+  "reproducer_command": ".venv\\Scripts\\python.exe -m pytest tests/institution_v2g/test_query_v2c_b_stop_condition.py -q --junitxml=reports/search_v2c_b_stop_condition.xml",
+  "evidence": [
+    "reports/search_v2c_b_stop_condition_observed.json",
+    "reports/search_v2c_b_stop_condition.xml",
+    "reports/search_v2c_b_interactions_final.xml"
+  ],
+  "implementation_stopped": true,
+  "repair_applied_after_stop": false
+}

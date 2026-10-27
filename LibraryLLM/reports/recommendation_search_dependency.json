@@ -1,0 +1,1185 @@
+{
+  "status": "PROVEN",
+  "global_uses_search": true,
+  "tenant_upstream_uses_global_search_when_profile_has_queries": true,
+  "tenant_search_index_dependency": false,
+  "search_url": "http://127.0.0.1:8003/search",
+  "request_body": {
+    "query": "Combined recency-selected genuine search history, or explicit single-book metadata seed",
+    "top_k": 50,
+    "save_history": false
+  },
+  "library_id_in_upstream_request": null,
+  "actual_correlated_trace_id": "5e80dd5b-336d-4bf4-95f2-cfee8263ec91",
+  "search_candidate_count": 50,
+  "global_search_failure": "Cold uncached Recommendation API returns safe 503, not 500. Existing cached pools can still hydrate until TTL. Global Home falls back to explicitly labelled Popular at offset 0; later pages show error, not a provider switch.",
+  "tenant_upstream_failure": "Frontend catches global recommendation failure and submits empty candidate IDs; canonical core projection supplies usable local acquisitions only.",
+  "tenant_index_states": "NOT_BUILT/BUILDING/FAILED/STALE/READY do not select recommender providers. Tested separately from actual tenant Search, which uses the accepted state router.",
+  "actual_call": {
+    "trace_id": "5e80dd5b-336d-4bf4-95f2-cfee8263ec91",
+    "qa_user_id": 465,
+    "stages": [
+      {
+        "name": "PROFILE",
+        "counts": {
+          "queries": 1,
+          "work_ids": 0,
+          "subjects": 0,
+          "authors": 0,
+          "borrowed_subjects": 0,
+          "borrowed_authors": 0,
+          "reserved_subjects": 0,
+          "reserved_authors": 0,
+          "feedback": 0,
+          "feedback_subjects": 0,
+          "feedback_authors": 0,
+          "feedback_work_scores": 0,
+          "active_issue_work_ids": 0,
+          "active_reservation_work_ids": 0,
+          "search_interests": 1
+        },
+        "inputs": "Search history, legacy issues/reservations and recommendation feedback; not tenant lending/reading-list/AI selection"
+      },
+      {
+        "name": "SEARCH_HTTP",
+        "endpoint": "http://127.0.0.1:8003/search",
+        "status": 200,
+        "elapsed_ms": 390.1086000041687,
+        "candidate_count": 50,
+        "ranking": {
+          "candidate_count": 101,
+          "reranked_count": 50,
+          "cache_hit": false,
+          "index_generation": 30,
+          "pool_limit": 50
+        },
+        "candidate_work_ids": [
+          "OL27894699W",
+          "OL8578598W",
+          "OL8273698W",
+          "OL30342875W",
+          "OL3293822W",
+          "OL19829815W",
+          "OL18780505W",
+          "OL13751254W",
+          "OL20813667W",
+          "OL19608585W",
+          "OL13740758W",
+          "OL5736443W",
+          "OL2726697W",
+          "OL19546855W",
+          "OL7914047W",
+          "OL8961733W",
+          "OL18442473W",
+          "OL21505406W",
+          "OL25119086W",
+          "OL29017765W",
+          "OL57770W",
+          "OL21815406W",
+          "OL2033549W",
+          "OL20022420W",
+          "OL19543043W",
+          "OL19959384W",
+          "OL25192516W",
+          "OL36028557W",
+          "OL44593970W",
+          "OL2982186W",
+          "OL17543448W",
+          "OL3515738W",
+          "OL16534708W",
+          "OL16947774W",
+          "OL16981893W",
+          "OL57780W",
+          "OL20790510W",
+          "OL14987338W",
+          "OL16808567W",
+          "OL11276676W",
+          "OL282827W",
+          "OL8221000W",
+          "OL16955468W",
+          "OL21392066W",
+          "OL15160734W",
+          "OL21458696W",
+          "OL15727110W",
+          "OL15922553W",
+          "OL15177240W",
+          "OL15171315W"
+        ]
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL27894699W",
+        "score": 0.3147,
+        "score_breakdown": {
+          "score": 0.3147,
+          "semantic_score": 0.7314,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL8578598W",
+        "score": 0.3284,
+        "score_breakdown": {
+          "score": 0.3284,
+          "semantic_score": 0.7627,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL8273698W",
+        "score": 0.3286,
+        "score_breakdown": {
+          "score": 0.3286,
+          "semantic_score": 0.7715,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL30342875W",
+        "score": 0.349,
+        "score_breakdown": {
+          "score": 0.349,
+          "semantic_score": 0.6893,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 1.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL3293822W",
+        "score": 0.2856,
+        "score_breakdown": {
+          "score": 0.2856,
+          "semantic_score": 0.6587,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL19829815W",
+        "score": 0.2886,
+        "score_breakdown": {
+          "score": 0.2886,
+          "semantic_score": 0.6634,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL18780505W",
+        "score": 0.2734,
+        "score_breakdown": {
+          "score": 0.2734,
+          "semantic_score": 0.6214,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1609,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL13751254W",
+        "score": 0.2685,
+        "score_breakdown": {
+          "score": 0.2685,
+          "semantic_score": 0.6213,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL20813667W",
+        "score": 0.2862,
+        "score_breakdown": {
+          "score": 0.2862,
+          "semantic_score": 0.6655,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL19608585W",
+        "score": 0.2908,
+        "score_breakdown": {
+          "score": 0.2908,
+          "semantic_score": 0.677,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL13740758W",
+        "score": 0.2923,
+        "score_breakdown": {
+          "score": 0.2923,
+          "semantic_score": 0.6754,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL5736443W",
+        "score": 0.2944,
+        "score_breakdown": {
+          "score": 0.2944,
+          "semantic_score": 0.6757,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1386,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL2726697W",
+        "score": 0.2856,
+        "score_breakdown": {
+          "score": 0.2856,
+          "semantic_score": 0.6468,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.2303,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL19546855W",
+        "score": 0.2888,
+        "score_breakdown": {
+          "score": 0.2888,
+          "semantic_score": 0.6548,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.2303,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL7914047W",
+        "score": 0.2802,
+        "score_breakdown": {
+          "score": 0.2802,
+          "semantic_score": 0.6423,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL8961733W",
+        "score": 0.2831,
+        "score_breakdown": {
+          "score": 0.2831,
+          "semantic_score": 0.6525,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL18442473W",
+        "score": 0.2807,
+        "score_breakdown": {
+          "score": 0.2807,
+          "semantic_score": 0.6465,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL21505406W",
+        "score": 0.2852,
+        "score_breakdown": {
+          "score": 0.2852,
+          "semantic_score": 0.6579,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL25119086W",
+        "score": 0.2942,
+        "score_breakdown": {
+          "score": 0.2942,
+          "semantic_score": 0.6855,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL29017765W",
+        "score": 0.2942,
+        "score_breakdown": {
+          "score": 0.2942,
+          "semantic_score": 0.6855,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL57770W",
+        "score": 0.2772,
+        "score_breakdown": {
+          "score": 0.2772,
+          "semantic_score": 0.6378,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL21815406W",
+        "score": 0.2746,
+        "score_breakdown": {
+          "score": 0.2746,
+          "semantic_score": 0.6314,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL2033549W",
+        "score": 0.3044,
+        "score_breakdown": {
+          "score": 0.3044,
+          "semantic_score": 0.7109,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL20022420W",
+        "score": 0.3153,
+        "score_breakdown": {
+          "score": 0.3153,
+          "semantic_score": 0.7195,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.2485,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL19543043W",
+        "score": 0.2868,
+        "score_breakdown": {
+          "score": 0.2868,
+          "semantic_score": 0.6588,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL19959384W",
+        "score": 0.2877,
+        "score_breakdown": {
+          "score": 0.2877,
+          "semantic_score": 0.6588,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1386,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL25192516W",
+        "score": 0.2935,
+        "score_breakdown": {
+          "score": 0.2935,
+          "semantic_score": 0.6588,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.3332,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL36028557W",
+        "score": 0.2835,
+        "score_breakdown": {
+          "score": 0.2835,
+          "semantic_score": 0.6588,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL44593970W",
+        "score": 0.2726,
+        "score_breakdown": {
+          "score": 0.2726,
+          "semantic_score": 0.6316,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL2982186W",
+        "score": 0.2759,
+        "score_breakdown": {
+          "score": 0.2759,
+          "semantic_score": 0.6345,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL17543448W",
+        "score": 0.279,
+        "score_breakdown": {
+          "score": 0.279,
+          "semantic_score": 0.6393,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL3515738W",
+        "score": 0.2878,
+        "score_breakdown": {
+          "score": 0.2878,
+          "semantic_score": 0.6644,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL16534708W",
+        "score": 0.2808,
+        "score_breakdown": {
+          "score": 0.2808,
+          "semantic_score": 0.6417,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1386,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL16947774W",
+        "score": 0.28,
+        "score_breakdown": {
+          "score": 0.28,
+          "semantic_score": 0.6417,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL16981893W",
+        "score": 0.2773,
+        "score_breakdown": {
+          "score": 0.2773,
+          "semantic_score": 0.638,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL57780W",
+        "score": 0.3493,
+        "score_breakdown": {
+          "score": 0.3493,
+          "semantic_score": 0.6672,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 1.0,
+          "popularity_score": 0.4143,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL20790510W",
+        "score": 0.2764,
+        "score_breakdown": {
+          "score": 0.2764,
+          "semantic_score": 0.6305,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1386,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL14987338W",
+        "score": 0.2776,
+        "score_breakdown": {
+          "score": 0.2776,
+          "semantic_score": 0.6389,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL16808567W",
+        "score": 0.3039,
+        "score_breakdown": {
+          "score": 0.3039,
+          "semantic_score": 0.7014,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL11276676W",
+        "score": 0.2722,
+        "score_breakdown": {
+          "score": 0.2722,
+          "semantic_score": 0.6304,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL282827W",
+        "score": 0.286,
+        "score_breakdown": {
+          "score": 0.286,
+          "semantic_score": 0.6546,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1386,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL8221000W",
+        "score": 0.2874,
+        "score_breakdown": {
+          "score": 0.2874,
+          "semantic_score": 0.6521,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.2197,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL16955468W",
+        "score": 0.2779,
+        "score_breakdown": {
+          "score": 0.2779,
+          "semantic_score": 0.6395,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL21392066W",
+        "score": 0.2777,
+        "score_breakdown": {
+          "score": 0.2777,
+          "semantic_score": 0.6443,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL15160734W",
+        "score": 0.2842,
+        "score_breakdown": {
+          "score": 0.2842,
+          "semantic_score": 0.6552,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL21458696W",
+        "score": 0.2699,
+        "score_breakdown": {
+          "score": 0.2699,
+          "semantic_score": 0.6249,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL15727110W",
+        "score": 0.278,
+        "score_breakdown": {
+          "score": 0.278,
+          "semantic_score": 0.6398,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL15922553W",
+        "score": 0.3052,
+        "score_breakdown": {
+          "score": 0.3052,
+          "semantic_score": 0.7047,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL15177240W",
+        "score": 0.2917,
+        "score_breakdown": {
+          "score": 0.2917,
+          "semantic_score": 0.6709,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.1099,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "HYBRID_SCORE",
+        "work_id": "OL15171315W",
+        "score": 0.2728,
+        "score_breakdown": {
+          "score": 0.2728,
+          "semantic_score": 0.6268,
+          "subject_score": 0.0,
+          "author_score": 0.0,
+          "borrowing_score": 0.0,
+          "reservation_score": 0.0,
+          "rating_score": 0.0,
+          "popularity_score": 0.0693,
+          "availability_score": 1.0,
+          "feedback_score": 0.0
+        }
+      },
+      {
+        "name": "DIVERSITY",
+        "input_count": 50,
+        "output_count": 50,
+        "work_ids": [
+          "OL57780W",
+          "OL30342875W",
+          "OL8273698W",
+          "OL20022420W",
+          "OL27894699W",
+          "OL15922553W",
+          "OL2033549W",
+          "OL13740758W",
+          "OL15177240W",
+          "OL19608585W",
+          "OL19829815W",
+          "OL8221000W",
+          "OL3293822W",
+          "OL21505406W",
+          "OL16534708W",
+          "OL7914047W",
+          "OL14987338W",
+          "OL20790510W",
+          "OL2982186W",
+          "OL15171315W",
+          "OL44593970W",
+          "OL11276676W",
+          "OL13751254W",
+          "OL8578598W",
+          "OL16808567W",
+          "OL5736443W",
+          "OL25119086W",
+          "OL29017765W",
+          "OL25192516W",
+          "OL19546855W",
+          "OL3515738W",
+          "OL19959384W",
+          "OL19543043W",
+          "OL20813667W",
+          "OL282827W",
+          "OL2726697W",
+          "OL15160734W",
+          "OL36028557W",
+          "OL8961733W",
+          "OL18442473W",
+          "OL16947774W",
+          "OL17543448W",
+          "OL15727110W",
+          "OL16955468W",
+          "OL21392066W",
+          "OL16981893W",
+          "OL57770W",
+          "OL21815406W",
+          "OL18780505W",
+          "OL21458696W"
+        ]
+      },
+      {
+        "name": "CANONICAL_HYDRATION",
+        "input_ids": [
+          "OL57780W",
+          "OL30342875W",
+          "OL8273698W",
+          "OL20022420W",
+          "OL27894699W",
+          "OL15922553W",
+          "OL2033549W",
+          "OL13740758W",
+          "OL15177240W",
+          "OL19608585W",
+          "OL19829815W",
+          "OL8221000W",
+          "OL3293822W",
+          "OL21505406W",
+          "OL16534708W",
+          "OL7914047W",
+          "OL14987338W",
+          "OL20790510W",
+          "OL2982186W",
+          "OL15171315W",
+          "OL44593970W",
+          "OL11276676W",
+          "OL13751254W",
+          "OL8578598W",
+          "OL16808567W",
+          "OL5736443W",
+          "OL25119086W",
+          "OL29017765W",
+          "OL25192516W",
+          "OL19546855W",
+          "OL3515738W",
+          "OL19959384W",
+          "OL19543043W",
+          "OL20813667W",
+          "OL282827W",
+          "OL2726697W",
+          "OL15160734W",
+          "OL36028557W",
+          "OL8961733W",
+          "OL18442473W",
+          "OL16947774W",
+          "OL17543448W",
+          "OL15727110W",
+          "OL16955468W",
+          "OL21392066W",
+          "OL16981893W",
+          "OL57770W",
+          "OL21815406W",
+          "OL18780505W",
+          "OL21458696W"
+        ],
+        "output_ids": [
+          "OL11276676W",
+          "OL13740758W",
+          "OL13751254W",
+          "OL14987338W",
+          "OL15160734W",
+          "OL15171315W",
+          "OL15177240W",
+          "OL15727110W",
+          "OL15922553W",
+          "OL16534708W",
+          "OL16808567W",
+          "OL16947774W",
+          "OL16955468W",
+          "OL16981893W",
+          "OL17543448W",
+          "OL18442473W",
+          "OL18780505W",
+          "OL19543043W",
+          "OL19546855W",
+          "OL19608585W",
+          "OL19829815W",
+          "OL19959384W",
+          "OL20022420W",
+          "OL2033549W",
+          "OL20790510W",
+          "OL20813667W",
+          "OL21392066W",
+          "OL21458696W",
+          "OL21505406W",
+          "OL21815406W",
+          "OL25119086W",
+          "OL25192516W",
+          "OL2726697W",
+          "OL27894699W",
+          "OL282827W",
+          "OL29017765W",
+          "OL2982186W",
+          "OL30342875W",
+          "OL3293822W",
+          "OL3515738W",
+          "OL36028557W",
+          "OL44593970W",
+          "OL5736443W",
+          "OL57770W",
+          "OL57780W",
+          "OL7914047W",
+          "OL8221000W",
+          "OL8273698W",
+          "OL8578598W",
+          "OL8961733W"
+        ]
+      }
+    ],
+    "offset": 0,
+    "limit": 10,
+    "ranking": {
+      "pool_limit": 50,
+      "cache_hit": false
+    },
+    "final_count": 10,
+    "results": [
+      {
+        "work_id": "OL57780W",
+        "title": "Networking for dummies",
+        "score": 0.3493
+      },
+      {
+        "work_id": "OL30342875W",
+        "title": "Computer Networking First-Step",
+        "score": 0.349
+      },
+      {
+        "work_id": "OL8273698W",
+        "title": "Absolute Beginner's Guide to Networking",
+        "score": 0.3286
+      },
+      {
+        "work_id": "OL20022420W",
+        "title": "Networking all-in-one for dummies",
+        "score": 0.3153
+      },
+      {
+        "work_id": "OL27894699W",
+        "title": "Computer Networking for Beginners",
+        "score": 0.3147
+      },
+      {
+        "work_id": "OL15922553W",
+        "title": "Network+ Guide to Networks",
+        "score": 0.3052
+      },
+      {
+        "work_id": "OL2033549W",
+        "title": "Networking",
+        "score": 0.3044
+      },
+      {
+        "work_id": "OL13740758W",
+        "title": "Networking self-teaching guide",
+        "score": 0.2923
+      },
+      {
+        "work_id": "OL15177240W",
+        "title": "Networking Bible",
+        "score": 0.2917
+      },
+      {
+        "work_id": "OL19608585W",
+        "title": "Tools for teaching computer networking and hardware concepts",
+        "score": 0.2908
+      }
+    ],
+    "elapsed_ms": 466.29160000156844
+  }
+}

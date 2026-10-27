@@ -1,0 +1,97 @@
+{
+  "status": "PASS",
+  "browser": "Real Chromium in-app browser, UI-driven localhost5173; restarted Search API8003",
+  "not_final_V2C_C_acceptance": true,
+  "cases": [
+    {
+      "scope": "GLOBAL",
+      "query": "rating no less than 4.5",
+      "observed": "Rating: >= 4.5",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating above 4",
+      "observed": "Rating: > 4",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating at least 4.5 but below 4.5",
+      "observed": "CONTRADICTORY; two bounds, conflict message and blocked results",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books by Terry Pratchett about witches",
+      "observed": "Author: terry pratchett; Topic: witches; matching author results",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books about \"Python 3\"",
+      "observed": "Topic: Python 3; no rating/year chip",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating above",
+      "observed": "INCOMPLETE; unfinished message and genuine value clarification",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating above -> genuine value4.2",
+      "observed": "Rating: > 4.2; clarification closed",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "remove rating chip",
+      "observed": "Rating chip removed",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books under 250 pages",
+      "observed": "UNSUPPORTED; no results; remove-page-count choice",
+      "status": "PASS"
+    },
+    {
+      "scope": "PUBLIC_PATRON",
+      "query": "rating above 4.5",
+      "observed": "Rating: > 4.5",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "rating no more than 4.5",
+      "observed": "Rating: <= 4.5",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "neur",
+      "observed": "Scoped Neural Networks subject suggestion; selected successfully",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "detectve fiction -> Keep original wording",
+      "observed": "Correction offered; keep-original returns Topic: detectve fiction with no forced subject",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_OUTSIDER",
+      "query": "open private catalogue",
+      "observed": "Unable to open this library / Library resource not found; no private titles or search controls",
+      "status": "PASS"
+    }
+  ],
+  "session_preservation": "search_v2c_c2_browser_before_resolution.json: accepted version4 Python3 survives incomplete query; genuine clarification later applied and rating chip removed.",
+  "private_leaks_observed": 0,
+  "fixture": "search_v2c_c2_fixture.json",
+  "screenshot": "Neutral outsider denial screenshot captured in conversation tool evidence.",
+  "timing_note": "Browser bridge waitFor deadlines occurred while final DOM showed expected chip/status; outcomes reobserved before proceeding.",
+  "cleanup_policy": "Combined cleanup command was rejected by automatic approval review. Credential file retained. Use reversible account disable/library archive, no destructive file removal."
+}

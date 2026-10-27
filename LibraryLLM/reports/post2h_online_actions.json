@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "online_only_title": "CN",
+  "read_action": true,
+  "request_action": false,
+  "actual_pdf_viewer": true,
+  "checks": [
+    {
+      "scenario": "CN inventory record retained",
+      "status": "PASS",
+      "book_id": "e5ad68eb-efc2-446f-8132-ab2db9ce12bd"
+    },
+    {
+      "scenario": "CN online-only Home and New Arrivals card",
+      "status": "PASS",
+      "read_link": "/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/resources/e1787913-d3f5-46c8-ac3a-af0b5dd9d9fc?book=e5ad68eb-efc2-446f-8132-ab2db9ce12bd&open=1"
+    },
+    {
+      "scenario": "CN Home Read Online opens authorized real PDF page",
+      "status": "PASS",
+      "viewer": "/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/resources/e1787913-d3f5-46c8-ac3a-af0b5dd9d9fc?book=e5ad68eb-efc2-446f-8132-ab2db9ce12bd&open=1"
+    },
+    {
+      "scenario": "CN detail online-only has no physical fields",
+      "status": "PASS"
+    },
+    {
+      "scenario": "CN Detail Read Online opens viewer",
+      "status": "PASS",
+      "viewer": "/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/resources/e1787913-d3f5-46c8-ac3a-af0b5dd9d9fc?book=e5ad68eb-efc2-446f-8132-ab2db9ce12bd&open=1"
+    },
+    {
+      "scenario": "STAFF_ONLY book asset does not advertise Patron online access",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Browse shared CN capability",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Search shared CN capability",
+      "status": "PASS"
+    },
+    {
+      "scenario": "New Arrivals shared CN capability",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Reading List hydrates current CN read capability",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Reading List Read Online opens real viewer",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Multiple resources require explicit second resource choice and open selected viewer",
+      "status": "PASS"
+    }
+  ],
+  "byte_authority": "Current user, exact library membership, READY visibility, current owning book/library access are enforced by the existing protected asset service on metadata/file/preview requests. URL book hint is also checked against fresh asset metadata before opening. UI hints do not authorize bytes.",
+  "multiple_assets": "No primary asset ID when two or more authorized READY assets exist. Read Online opens the exact book Digital Resources section; user chooses a resource. More than 20 resources have a scoped All online copies link.",
+  "revocation_evidence": "tests/institution_v2f/test_post2h_capabilities.py:test_revoked_membership_denied_before_content and existing asset revocation suites."
+}

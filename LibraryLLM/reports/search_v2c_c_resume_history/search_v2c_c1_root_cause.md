@@ -1,0 +1,13 @@
+# Confirmed cause and repair
+
+The old authorization-loss helper treated a denied workspace request as a reason to invalidate all Search state for the user and library. The store and personalization helpers omitted JWT sid and workspace from their deletion predicates. An active GENERAL_USER requesting STAFF suggestions therefore received the correct 403 while losing valid PATRON accepted and pending state. Both isolated Mongo and the authoritative running service reproduced this before application edits; see `search_v2c_c1_prepatch.xml` and `search_v2c_c1_prepatch_reproducer.json`.
+
+The corrected helper obtains the existing canonical library mutation lock and rechecks the requested workspace with the existing patron/staff guards. If that workspace remains authorized, downstream resource/choice errors have no cleanup effect. Otherwise it checks each candidate workspace independently, deleting only one proven inaccessible ownership tuple at a time. A transient lock/recovery error does not prove access loss. Identity loss is confirmed by a fresh canonical identity read. Role policy and HTTP denial remain unchanged.
+
+Mongo accepted and pending documents share the exact predicate `(user_id, login_session, scope, library_id, workspace)`. The cache uses the corresponding `(user_id, sid, library_id, staff)` prefix. Another login, user, library, or Global scope is preserved; an inaccessible login is denied and cleaned on its own subsequent scope request. Existing explicit logout retains its accepted account-wide policy. Account disable does not grant access to retained unrelated scopes: every subsequent request still performs fresh identity authorization.
+
+The current library mutation lock protects canonical role/membership changes through the proof-and-delete interval. Existing clarification claims, commit receipts and accepted-context CAS/versioning remain unchanged. No new store, distributed lock, parser behavior, access grant, model, index, or migration was introduced.
+
+The full tenant suite exposed a pre-existing test snapshot limitation when an earlier autocomplete test left an immutable MappingProxyType vocabulary in cache. The B.1 test snapshot now recursively copies mapping contents, including these immutable projections, so the same full cache-equality invariant runs in the complete suite. This is test plumbing only. The C session test report path is configurable to preserve frozen C draft evidence during regression runs.
+
+Validation scope is C.1 security closure. C benchmark drafts remain unaccepted and unreviewed. No heldout evaluation, relabeling, calibration, parser tuning, LLM work, or Part 2I occurred.

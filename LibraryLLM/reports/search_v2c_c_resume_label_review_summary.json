@@ -1,0 +1,104 @@
+{
+  "review_rows": 540,
+  "ai_reviewed": 540,
+  "human_reviewed": 0,
+  "original_hashes": {
+    "development": "e02748d0e2c55badc69ce3c150a0ae3c52b8cdc53ca890e7baa635fe01f55286",
+    "calibration": "60386b97aaefe4621fdf6a7e8ba06c3b76f36b89638a72d11a237aa90395482d",
+    "heldout": "24c7199434694eff8ea4f2f5c3132e6410a73b03de20cb0e4f69083bb3545e25"
+  },
+  "original_labels_modified": false,
+  "parser_implementation_access": false,
+  "parser_output_access": false,
+  "evaluator_output_access": false,
+  "split_summary": {
+    "development": {
+      "rows": 320,
+      "ai_reviewed": 320,
+      "human_reviewed": 0,
+      "generation_safe": 283,
+      "rows_with_concerns": 37,
+      "concern_counts": {
+        "semantic_relation_loss": 2,
+        "negation_scope_ambiguous": 1,
+        "rating_domain_assumption": 2,
+        "identical_text_cross_split": 2,
+        "exact_mode_requires_new_literal_label": 10,
+        "native_sequence_context_missing": 20,
+        "title_role_uncertain": 1
+      },
+      "safe_source_feature_counts": {
+        "contradictory": 8,
+        "incomplete": 10,
+        "ambiguous": 7,
+        "protected": 64,
+        "unsupported": 30,
+        "multi_constraint": 56
+      }
+    },
+    "calibration": {
+      "rows": 110,
+      "ai_reviewed": 110,
+      "human_reviewed": 0,
+      "generation_safe": 80,
+      "rows_with_concerns": 30,
+      "concern_counts": {
+        "identical_text_cross_split": 2,
+        "missing_format_antecedent": 2,
+        "negative_canonical_classification_uncertain": 5,
+        "native_sequence_context_missing": 10,
+        "technical_version_ambiguity": 1,
+        "boolean_capability_contract_missing": 10,
+        "boolean_equivalence_uncertain": 1
+      },
+      "safe_source_feature_counts": {
+        "contradictory": 13,
+        "incomplete": 0,
+        "ambiguous": 9,
+        "protected": 10,
+        "unsupported": 5,
+        "multi_constraint": 32
+      }
+    },
+    "heldout": {
+      "rows": 110,
+      "ai_reviewed": 110,
+      "human_reviewed": 0,
+      "generation_safe": 98,
+      "rows_with_concerns": 12,
+      "concern_counts": {
+        "semantic_relation_loss": 1,
+        "exclusion_role_untyped": 1,
+        "exact_mode_requires_new_literal_label": 10,
+        "pre_exposed_before_evaluation": 10
+      },
+      "safe_source_feature_counts": {
+        "contradictory": 10,
+        "incomplete": 10,
+        "ambiguous": 0,
+        "protected": 35,
+        "unsupported": 7,
+        "multi_constraint": 22
+      }
+    }
+  },
+  "exact_query_cross_split_groups": 2,
+  "family_ids_crossing_splits": 0,
+  "original_family_count": 54,
+  "pre_exposed_heldout_rows": 10,
+  "heldout_content_reporting": "aggregate-only; do not print heldout query text or labels",
+  "schema_adapter_requirements": [
+    "Explicitly map EXECUTABLE=>AUTO_EXECUTE, EXECUTABLE_WITH_NOTICE=>EXECUTE_WITH_NOTICE, AMBIGUOUS/INCOMPLETE=>CLARIFY without altering original labels.",
+    "semantic/exact are legacy UI mode names; map to SMART/EXACT only through a documented adapter.",
+    "Legacy query is query_text; template_id and workspace_type are missing from legacy rows and must be derived from frozen family/scope metadata, never parser output.",
+    "Null sort is unspecified/default, not an authored nondefault sort constraint.",
+    "A delta parser result cannot prove native session/security lifecycle behavior.",
+    "Author self-review claims in original metadata do not establish independent review or human review. This artifact adds540 independent AI reviews only."
+  ],
+  "structural_overlap_disclosure": "Several families share broad operations (rating, exact mode, negative syntax) across splits. Family IDs are disjoint, but IDs alone do not prove near-template isolation. Preserve originals; publish overlap limitations, never silently resplit.",
+  "generation_policy": "Derive only from generation_safe=true rows, retain each family in one original split. Prefix/suffix neutral request scaffolding only outside protected tokens; recompute offsets independently. Avoid every mutation that changes operators, connective scope, quoted text, Exact-mode text, numbers, capability scopes or action contexts. Generated labels inherit review; they are not separately semantically reviewed by this reviewer.",
+  "paths": {
+    "review": "D:\\SDC\\LibraryLLM\\reports\\search_v2c_c_resume_label_review.jsonl",
+    "review_source": "D:\\SDC\\LibraryLLM\\scripts\\search_v2c_c_resume_review_original.py"
+  }
+}

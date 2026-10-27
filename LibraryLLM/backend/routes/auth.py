@@ -21,6 +21,10 @@ from backend.services.login_sessions import revoke
 
 @router.post('/logout')
 def logout(current_user=Depends(get_current_user), credentials=Depends(security)):
+    from search.session_store import invalidate
+    from search.personalization import invalidate as invalidate_profile
+    invalidate(current_user)
+    invalidate_profile(current_user)
     import httpx
     import os
     removed = False

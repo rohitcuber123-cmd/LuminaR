@@ -32,11 +32,12 @@ export type SendOptions = Pick<AssistantRequest, 'action' | 'pending_action_id' 
 interface AssistantState extends SavedSession {
   sessionToken: string | null
   open: boolean; messages: AssistantChatMessage[]; recent: string[]; busy: boolean; startedAt: number | null; selectionNotice: string
-  pagePath: string; pageContext: AssistantPageContext
+  pagePath: string; pageContext: AssistantPageContext; pageDocumentTitle: string
   setOpen: (open: boolean) => void
   select: (book: SelectedBook) => boolean; unselect: (id: string) => void; clearSelection: () => void
   syncOwner: (owner: string | null) => void; resetConversation: () => void
   syncSession: (owner: string | null, token: string | null) => void
+  setDocumentContext: (path: string, libraryId: string, assetId: string, title: string) => void
   setPageContext: (path: string, context: AssistantPageContext) => void
   send: (message: string, context: AssistantPageContext, options?: SendOptions) => Promise<void>
 }
@@ -44,7 +45,7 @@ function persist(state: SavedSession) {
   try { sessionStorage.setItem(STORAGE, JSON.stringify({ owner: state.owner, selected: state.selected.map(minimalBook), conversationId: state.conversationId })) } catch { /* Storage may be unavailable; memory still works. */ }
 }
 export const useAssistantStore = create<AssistantState>((set, get) => ({
-  ...initial, sessionToken: getToken(), open: false, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pagePath: '', pageContext: {},
+  ...initial, sessionToken: getToken(), open: false, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pagePath: '', pageContext: {}, pageDocumentTitle: '',
   setOpen: open => set({ open }),
   select: book => {
     if (!validWorkId(book.work_id)) return false
@@ -57,18 +58,26 @@ export const useAssistantStore = create<AssistantState>((set, get) => ({
   syncOwner: owner => {
     if (get().owner === owner) return
     revision++; controller?.abort(); controller = null
-    set({ owner, selected: [], conversationId: null, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pageContext: {}, pagePath: '' }); persist(get())
+    set({ owner, selected: [], conversationId: null, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pageContext: {}, pageDocumentTitle: '', pagePath: '' }); persist(get())
   },
   syncSession: (owner, token) => {
     if (get().owner === owner && get().sessionToken === token) return
     revision++; controller?.abort(); controller = null
-    set({ owner, sessionToken: token, selected: [], conversationId: null, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pageContext: {}, pagePath: '' }); persist(get())
+    set({ owner, sessionToken: token, selected: [], conversationId: null, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pageContext: {}, pageDocumentTitle: '', pagePath: '' }); persist(get())
   },
   resetConversation: () => {
     if (get().busy) return
     set({ conversationId: null, messages: [], recent: [] }); persist(get())
   },
-  setPageContext: (path, context) => set({ pagePath: path, pageContext: sanitizePageContext(context) }),
+  setDocumentContext: (path, libraryId, assetId, title) => {
+    const documentId = `library:${libraryId}:asset:${assetId}`
+    if (get().pageContext.document_id !== documentId) {
+      revision++; controller?.abort(); controller = null
+      set({messages: [], conversationId: null, selected: [], recent: [], busy: false, startedAt: null})
+    }
+    set({pagePath: path, pageContext: {document_id: documentId}, pageDocumentTitle: title}); persist(get())
+  },
+  setPageContext: (path, context) => set({ pagePath: path, pageContext: sanitizePageContext(context), pageDocumentTitle: '' }),
   send: async (message, context, options = {}) => {
     message = message.trim()
     if (!message || message.length > 4000 || get().busy || !getToken()) return
@@ -84,7 +93,7 @@ export const useAssistantStore = create<AssistantState>((set, get) => ({
     const request: AssistantRequest = {
       message, conversation_id: snapshot.conversationId, selected_work_ids: uniqueIds(snapshot.selected.map(b => b.work_id), 4),
       ...(options.action_work_ids?.length ? { action_work_ids: uniqueIds(options.action_work_ids, 4) } : {}),
-      recent_work_ids: [...snapshot.recent], page_context: sanitizePageContext(context), action: options.action ?? null, pending_action_id: options.pending_action_id ?? null,
+      recent_work_ids: [...snapshot.recent], page_context: sanitizePageContext(context), action: options.action ?? (context.document_id?.startsWith('library:') ? 'DOCUMENT_QUESTION' : null), pending_action_id: options.pending_action_id ?? null,
       ...(options.result_offset ? { result_offset: options.result_offset } : {}),
       ...(options.lending_context ? { lending_context: options.lending_context } : library?.membership?.status === 'ACTIVE' ? { lending_context: { library_id: library.library_id } } : {}),
     }

@@ -184,7 +184,7 @@ export function AIChatWidget() {
               <button disabled={state.busy || !authenticated} className="assistant-button inline-flex items-center gap-2" onClick={() => { closeShortcuts(); send('Show my reading list', { action: 'USER_READING_LIST' }) }}><BookOpen size={12} />My reading list</button>
             </div>
           </details>
-          {(!!state.selected.length || !!Object.keys(context).length) && <p className="ml-auto truncate text-[11px] text-ink-soft">Context: {state.selected.length ? `${state.selected.length} selected ${state.selected.length === 1 ? 'book' : 'books'}` : context.document_id ? 'selected document' : context.work_id ? 'current book' : 'current results'}</p>}
+          {(!!state.selected.length || !!Object.keys(context).length) && <p className="ml-auto truncate text-[11px] text-ink-soft">Context: {state.selected.length ? `${state.selected.length} selected ${state.selected.length === 1 ? 'book' : 'books'}` : context.document_id ? state.pageDocumentTitle || 'selected document' : context.work_id ? 'current book' : 'current results'}</p>}
         </div>
         {!authenticated ? <p className="text-sm"><Link className="text-brand underline" to="/login">Sign in</Link> to chat with LuminaR.</p> : <form onSubmit={event => { event.preventDefault(); send(input) }} className="relative rounded-sm border border-line bg-panel focus-within:border-brand">
           <label className="sr-only" htmlFor="luminar-assistant-input">Message LuminaR AI</label>

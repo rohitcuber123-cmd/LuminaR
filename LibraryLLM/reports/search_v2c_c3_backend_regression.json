@@ -1,0 +1,147 @@
+{
+  "status": "FAIL",
+  "suites": {
+    "parser_final": {
+      "path": "reports\\search_v2c_c3_parser_final.xml",
+      "cases": 1466,
+      "passed": 1460,
+      "failures": [
+        {
+          "class": "tests.test_search_v2c_a",
+          "name": "test_curated_candidate_plan[gold-065]",
+          "message": "AssertionError: {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Romance'], 'actual': []}} = mismatches({'id': 'gold-065', 'query': 'fiction not romance', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction not romance', mode='SMART', semantic_text=None, title_text=None, author_text=None, subjec...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+        },
+        {
+          "class": "tests.test_search_v2c_a",
+          "name": "test_curated_candidate_plan[gold-066]",
+          "message": "AssertionError: {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Romance'], 'actual': []}} = mismatches({'id': 'gold-066', 'query': 'fiction excluding romance', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction excluding romance', mode='SMART', semantic_text=None, title_text=None, author_text=None, ...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+        },
+        {
+          "class": "tests.test_search_v2c_a",
+          "name": "test_curated_candidate_plan[gold-069]",
+          "message": "AssertionError: {'exclude_terms': {'expected': ['Military History'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Military History'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Military History'], 'actual': []}} = mismatches({'id': 'gold-069', 'query': 'history without military history', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['History'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='history without military history', mode='SMART', semantic_text=None, title_text=None, author_text...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+        },
+        {
+          "class": "tests.test_search_v2c_a",
+          "name": "test_curated_candidate_plan[gold-094]",
+          "message": "AssertionError: {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Fiction'], 'actual': []}} = mismatches({'id': 'gold-094', 'query': 'fiction excluding fiction', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction excluding fiction', mode='SMART', semantic_text=None, title_text=None, author_text=None, ...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+        },
+        {
+          "class": "tests.test_search_v2c_a",
+          "name": "test_curated_candidate_plan[gold-095]",
+          "message": "AssertionError: {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Fiction'], 'actual': []}} = mismatches({'id': 'gold-095', 'query': 'include Fiction and exclude Fiction', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='include Fiction and exclude Fiction', mode='SMART', semantic_text=None, title_text=None, author_t...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+        },
+        {
+          "class": "tests.test_search_v2c_a",
+          "name": "test_mixed_negative_refinement_and_instead_provenance",
+          "message": "AssertionError: assert (4.0 == 4 and True and [] == ['Romance']\n +  where 4.0 = QueryPlan(raw_query='not romance rated above 4', mode='SMART', semantic_text='machine learning', title_text=None, auth...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False).rating_min\n +  and   True = QueryPlan(raw_query='not romance rated above 4', mode='SMART', semantic_text='machine learning', title_text=None, auth...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False).rating_min_exclusive\n  \n  Right contains one more item: 'Romance'\n  Use -v to get more diff)"
+        }
+      ],
+      "classes": {
+        "tests.test_search_v2c_c3_safety": 29,
+        "tests.test_search_v2c_c3_numeric": 76,
+        "tests.test_search_v2c_c2": 46,
+        "tests.test_search_v2a": 23,
+        "tests.test_search_v2b": 31,
+        "tests.test_search_v2c_a": 1158,
+        "tests.test_search_v2c_a1": 38,
+        "tests.test_search_query_understanding": 49,
+        "tests.test_search_v2c_c": 8,
+        "tests.test_search_v2c_c_resume_evaluator": 8
+      },
+      "status": "FAIL"
+    },
+    "tenant_regression": {
+      "path": "reports\\search_v2c_c3_tenant_regression.xml",
+      "cases": 129,
+      "passed": 126,
+      "failures": [
+        {
+          "class": "tests.institution_v2g.test_query_v2a",
+          "name": "test_kg_negative_and_rating_cannot_be_overridden",
+          "message": "AssertionError: assert [] == ['Romance']\n  \n  Right contains one more item: 'Romance'\n  Use -v to get more diff"
+        },
+        {
+          "class": "tests.institution_v2g.test_query_v2c_b",
+          "name": "test_one_chip_removal_keeps_other_subjects_and_exclusions[False]",
+          "message": "AssertionError: assert (['Mystery'] == ['Mystery']\n  \n  Use -v to get more diff and [] == ['Biography']\n  \n  Right contains one more item: 'Biography'\n  Use -v to get more diff)"
+        },
+        {
+          "class": "tests.institution_v2g.test_query_v2c_b",
+          "name": "test_one_chip_removal_keeps_other_subjects_and_exclusions[True]",
+          "message": "AssertionError: assert (['Mystery'] == ['Mystery']\n  \n  Use -v to get more diff and [] == ['Biography']\n  \n  Right contains one more item: 'Biography'\n  Use -v to get more diff)"
+        }
+      ],
+      "classes": {
+        "tests.institution_v2g.test_query_v2a": 10,
+        "tests.institution_v2g.test_query_v2b": 12,
+        "tests.institution_v2g.test_query_v2c_a": 12,
+        "tests.institution_v2g.test_query_v2c_a1": 10,
+        "tests.institution_v2g.test_query_v2c_b": 49,
+        "tests.institution_v2g.test_query_v2c_c": 5,
+        "tests.institution_v2g.test_query_v2c_c_stop_condition": 1,
+        "tests.institution_v2g.test_search_runtime": 30
+      },
+      "status": "FAIL"
+    },
+    "native_current": {
+      "path": "reports\\search_v2c_c3_native_current.xml",
+      "cases": 389,
+      "passed": 389,
+      "failures": [],
+      "classes": {
+        "tests.institution_v2g.test_query_v2c_c3_native": 352,
+        "tests.institution_v2g.test_query_v2c_c1": 20,
+        "tests.institution_v2g.test_query_v2c_b1": 17
+      },
+      "status": "PASS"
+    },
+    "catalogue_regression": {
+      "path": "reports\\search_v2c_c3_catalogue_regression.xml",
+      "cases": 88,
+      "passed": 88,
+      "failures": [],
+      "classes": {
+        "tests.library_catalogue_experience.test_catalogue": 41,
+        "tests.library_catalogue_experience.test_full_product_convergence": 6,
+        "tests.library_catalogue_experience.test_home_unification": 8,
+        "tests.library_catalogue_experience.test_recommendation_runtime": 19,
+        "tests.library_catalogue_experience.test_staff_catalogue": 14
+      },
+      "status": "PASS"
+    },
+    "retrieval_regression": {
+      "path": "reports\\search_v2c_c3_retrieval_regression.xml",
+      "cases": 23,
+      "passed": 23,
+      "failures": [],
+      "classes": {
+        "tests.test_search_depth": 23
+      },
+      "status": "PASS"
+    },
+    "inventory_regression": {
+      "path": "reports\\search_v2c_c3_inventory_regression.xml",
+      "cases": 95,
+      "passed": 95,
+      "failures": [],
+      "classes": {
+        "tests.institution_v2a.test_catalogue": 58,
+        "tests.institution_v2a.test_identity_edges": 7,
+        "tests.institution_v2a.test_import_migration": 28,
+        "tests.institution_v2a.test_legacy_compatibility": 2
+      },
+      "status": "PASS"
+    }
+  },
+  "backend_cases_including_352_native_rows": 2190,
+  "passed": 2181,
+  "failed": 9,
+  "frontend": {
+    "status": "PASS",
+    "cases": 34,
+    "log": "search_v2c_c3_frontend_tests.log"
+  },
+  "disjoint_counting": "Final suites only; working/focused repeats not counted. Native352 already inside the native regression suite, not added twice. Mongo conftest roots executed in separate processes.",
+  "retained_assertion_failures": "Canonical subject exclusion no longer imposes a broader title/author/description ban. All original assertions retained, every failure reported; raw regression suite is not relabeled PASS."
+}

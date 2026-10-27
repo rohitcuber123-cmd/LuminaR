@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="8" time="0.248" timestamp="2026-10-15T13:21:46.666108+05:30" hostname="Rohit-pc"><testcase classname="tests.test_search_v2c_b_precondition" name="test_v2c_b_parser_admission[fiction books above rating of 3-EXECUTABLE]" time="0.038" /><testcase classname="tests.test_search_v2c_b_precondition" name="test_v2c_b_parser_admission[fiction about wizards above rating of 3-EXECUTABLE]" time="0.002" /><testcase classname="tests.test_search_v2c_b_precondition" name="test_v2c_b_parser_admission[fiction 4-AMBIGUOUS]" time="0.006" /><testcase classname="tests.test_search_v2c_b_precondition" name="test_v2c_b_parser_admission[books rated above 4 and below 3-CONTRADICTORY]" time="0.002" /><testcase classname="tests.test_search_v2c_b_precondition" name="test_v2c_b_parser_admission[after 2020 before 2000-CONTRADICTORY]" time="0.002" /><testcase classname="tests.test_search_v2c_b_precondition" name="test_v2c_b_parser_admission[online only and physical only-CONTRADICTORY]" time="0.002" /><testcase classname="tests.test_search_v2c_b_precondition" name="test_v2c_b_parser_admission[fiction rating above-INCOMPLETE]" time="0.002" /><testcase classname="tests.test_search_v2c_b_precondition" name="test_v2c_b_parser_admission[include romance but exclude romance-CONTRADICTORY]" time="0.015"><failure message="AssertionError: assert 'EXECUTABLE' == 'CONTRADICTORY'&#10;  &#10;  - CONTRADICTORY&#10;  + EXECUTABLE">query = 'include romance but exclude romance', expected = 'CONTRADICTORY'
+
+    @pytest.mark.parametrize('query,expected', [
+        ('fiction books above rating of 3', 'EXECUTABLE'),
+        ('fiction about wizards above rating of 3', 'EXECUTABLE'),
+        ('fiction 4', 'AMBIGUOUS'),
+        ('books rated above 4 and below 3', 'CONTRADICTORY'),
+        ('after 2020 before 2000', 'CONTRADICTORY'),
+        ('online only and physical only', 'CONTRADICTORY'),
+        ('fiction rating above', 'INCOMPLETE'),
+        ('include romance but exclude romance', 'CONTRADICTORY'),
+    ])
+    def test_v2c_b_parser_admission(query, expected):
+        plan = parse_query(query, FACETS)
+&gt;       assert plan.decision['decision_type'] == expected
+E       AssertionError: assert 'EXECUTABLE' == 'CONTRADICTORY'
+E         
+E         - CONTRADICTORY
+E         + EXECUTABLE
+
+tests\test_search_v2c_b_precondition.py:25: AssertionError</failure></testcase></testsuite></testsuites>

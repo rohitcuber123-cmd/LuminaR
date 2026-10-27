@@ -42,6 +42,7 @@ import { DeviceDocuments } from '@/components/DeviceDocuments'
 import { useDeviceDocuments } from '@/hooks/useDeviceDocuments'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useAssistantPageContext } from '@/hooks/useAssistantPageContext'
+import { OnlineBookKnowMore } from './OnlineBookKnowMore'
 
 
 type Message = {
@@ -405,6 +406,14 @@ function Composer({
 
 
 export function LLMPage() {
+  const [params] = useSearchParams()
+  const token = useAuthStore(state => state.token)
+  if (params.has('library_asset')) return <OnlineBookKnowMore key={`${token}:${params.get('library_id')}:${params.get('library_asset')}:${params.get('library_book')}`}
+    libraryId={params.get('library_id') || ''} assetId={params.get('library_asset') || ''} bookId={params.get('library_book') || ''} />
+  return <DocumentKnowMorePage />
+}
+
+function DocumentKnowMorePage() {
   const product=useProductContext()
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -871,8 +880,8 @@ export function LLMPage() {
       className="
         relative
         flex
-        h-[calc(100dvh-72px)]
-        max-h-[calc(100dvh-72px)]
+        min-h-0
+        flex-1
         overflow-hidden
         bg-paper
         text-ink

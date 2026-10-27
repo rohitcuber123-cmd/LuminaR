@@ -11,6 +11,7 @@ export function luminarHomePath(pathname: string) {
   return libraryId ? patronPath(libraryId) : '/'
 }
 export function staffPath(libraryId: string, section = '') { return `/staff/libraries/${encodeURIComponent(libraryId)}${section ? `/${section}` : ''}` }
+export function libraryBookPath(libraryId:string,bookId:string,staff=false) { return workspacePath(libraryId,staff,`books/${encodeURIComponent(bookId)}`) }
 export function workspacePath(libraryId: string, staff: boolean, section = '') { return staff ? staffPath(libraryId, section) : patronPath(libraryId, section) }
 export function membershipLabel(library: Library) {
   const role = libraryRole(library)

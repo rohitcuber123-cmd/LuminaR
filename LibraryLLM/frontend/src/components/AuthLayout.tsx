@@ -80,7 +80,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* ── Right form panel ── */}
-      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-paper px-6 py-12 lg:w-[55%] xl:w-[50%]">
+      <main id="main-content" tabIndex={-1} className="flex min-h-screen w-full flex-col items-center justify-center bg-paper px-6 py-12 lg:w-[55%] xl:w-[50%]">
         {/* Mobile logo */}
         <div className="mb-10 flex items-center gap-2 lg:hidden">
           <BookOpen className="h-5 w-5 text-brand" strokeWidth={1.75} />
@@ -90,7 +90,7 @@ export function AuthLayout({ children }: { children: ReactNode }) {
         </div>
 
         <div className="w-full max-w-[420px]">{children}</div>
-      </div>
+      </main>
     </div>
   )
 }

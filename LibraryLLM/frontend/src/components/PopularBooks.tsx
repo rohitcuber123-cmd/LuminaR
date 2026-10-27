@@ -167,7 +167,7 @@ export function PopularBooks() {
         !visibleError &&
         visibleBooks.length > 0 && (
 
-          <div className="grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="product-book-grid grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4 items-start">
 
             {visibleBooks.map(
               (book, index) => (

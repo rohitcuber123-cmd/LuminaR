@@ -1,3 +1,4 @@
+import { chooseSelect } from './select-control'
 import assert from 'node:assert/strict'
 import { test, beforeEach, afterEach } from 'node:test'
 import React from 'react'
@@ -63,7 +64,7 @@ test('card shortcuts never consume select or button keyboard events', async () =
 test('card filtering resets to the first available card', async () => {
   stored=[cards];mount();await screen.findByText('Card 1 of 2')
   fireEvent.click(screen.getByRole('button',{name:'Next →'}))
-  fireEvent.change(screen.getByRole('combobox'),{target:{value:'definition'}})
+  chooseSelect(screen.getByRole('combobox'),'definition',fireEvent)
   assert.ok(screen.getByText('Card 1 of 1'))
   assert.ok((screen.getByRole('button',{name:'Next →'}) as HTMLButtonElement).disabled)
 })
@@ -110,7 +111,7 @@ test('loading, explicit generation, flip, navigation, type filter and source pre
   fireEvent.click(screen.getByRole('button', { name: 'Next →' }))
   assert.ok(screen.getByText('_____ divides memory into fixed-size pages.'))
   fireEvent.click(screen.getByRole('button', { name: '← Previous' }))
-  fireEvent.change(screen.getByLabelText('Card type'), { target: { value: 'cloze' } })
+  chooseSelect(screen.getByLabelText('Card type'),'cloze',fireEvent)
   assert.ok(screen.getByText('Card 1 of 1'))
   fireEvent.click(screen.getByRole('button', { name: 'View source' }))
   assert.ok(await screen.findByRole('complementary', { name: 'Source excerpt' }))
@@ -285,9 +286,9 @@ test('matching stable IDs preserve shuffled order selections and score through n
   render(<Quiz questions={[matching,mcq]} onSource={()=>{}} />)
   const order=()=>Array.from((screen.getByRole('combobox',{name:'Match for Stack'}) as HTMLSelectElement).options).map(x=>x.value)
   const initial=order();assert.deepEqual(initial,['','R2','R3','R1'])
-  fireEvent.change(screen.getByRole('combobox',{name:'Match for Stack'}),{target:{value:'R2'}})
-  fireEvent.change(screen.getByRole('combobox',{name:'Match for Tree'}),{target:{value:'R2'}})
-  fireEvent.change(screen.getByRole('combobox',{name:'Match for Graph'}),{target:{value:'R3'}})
+  chooseSelect(screen.getByRole('combobox',{name:'Match for Stack'}),'R2',fireEvent)
+  chooseSelect(screen.getByRole('combobox',{name:'Match for Tree'}),'R2',fireEvent)
+  chooseSelect(screen.getByRole('combobox',{name:'Match for Graph'}),'R3',fireEvent)
   assert.equal(screen.queryByText(/expected match/),null)
   fireEvent.click(screen.getByRole('button',{name:'Check answer'}));assert.ok(screen.getByText('2 / 3 pairs correct.'))
   assert.ok(screen.getByText('Your match: Connects parent and child nodes.'))
@@ -302,7 +303,7 @@ test('matching family prompt pair allocation and source links are explicit', asy
   stored=[{...newQuiz(['matching'],[q]),content:{questions:[q],requestedCount:12,learningItemCount:3,generatedCounts:{matching:1},matchingAllocation:{sets:1,pairs:3,requestedPairs:12}}}]
   await openQuiz();assert.ok(screen.getByText('Generated 3 of 12 requested learning items. 1 matching set · 3 pairs'))
   assert.ok(screen.getByText('1. Match each concept to its definition.'))
-  for(const [label,value] of [['Stack','R1'],['Tree','R2'],['Graph','R3']])fireEvent.change(screen.getByRole('combobox',{name:`Match for ${label}`}),{target:{value}})
+  for(const [label,value] of [['Stack','R1'],['Tree','R2'],['Graph','R3']])chooseSelect(screen.getByRole('combobox',{name:`Match for ${label}`}),value,fireEvent)
   fireEvent.click(screen.getByRole('button',{name:'Check answer'}));assert.ok(screen.getByText('Correct.'))
   assert.ok(screen.getByText('3 / 3 pairs correct.'))
   fireEvent.click(screen.getAllByRole('button',{name:'View source'})[0]);await screen.findByRole('complementary',{name:'Source excerpt'})
@@ -387,16 +388,16 @@ test('matching uses shuffled IDs, requires all pairs, and provides partial feedb
   stored=[newQuiz(['matching'],[matching])]; await openQuiz()
   const check=screen.getByRole('button',{name:'Check answer'}) as HTMLButtonElement
   assert.ok(check.disabled)
-  fireEvent.change(screen.getByRole('combobox',{name:'Match for Stack'}),{target:{value:'R1'}})
-  fireEvent.change(screen.getByRole('combobox',{name:'Match for Tree'}),{target:{value:'R2'}})
+  chooseSelect(screen.getByRole('combobox',{name:'Match for Stack'}),'R1',fireEvent)
+  chooseSelect(screen.getByRole('combobox',{name:'Match for Tree'}),'R2',fireEvent)
   assert.ok(check.disabled)
-  fireEvent.change(screen.getByRole('combobox',{name:'Match for Graph'}),{target:{value:'R1'}})
+  chooseSelect(screen.getByRole('combobox',{name:'Match for Graph'}),'R1',fireEvent)
   fireEvent.click(check)
   assert.ok(screen.getByText('2 / 3 pairs correct.'))
   assert.ok(screen.getByText(/Graph → Represents vertices and edges.*expected match/))
   assert.ok(screen.getByText('Graph represents vertices and edges.'))
   fireEvent.click(screen.getByRole('button',{name:'Try again'}))
-  for (const [text,id] of [['Stack','R1'],['Tree','R2'],['Graph','R3']]) fireEvent.change(screen.getByRole('combobox',{name:`Match for ${text}`}),{target:{value:id}})
+  for (const [text,id] of [['Stack','R1'],['Tree','R2'],['Graph','R3']]) chooseSelect(screen.getByRole('combobox',{name:`Match for ${text}`}),id,fireEvent)
   fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
   assert.ok(screen.getByText('Correct.'))
 })
@@ -439,7 +440,7 @@ test('legacy true-false and fill artifacts open explicitly without satisfying a 
   assert.ok(screen.getByText(/This saved quiz uses the earlier format/))
   assert.ok(screen.getByRole('textbox'))
   fireEvent.click(screen.getByRole('button',{name:'Next →'}))
-  fireEvent.change(screen.getByRole('combobox'),{target:{value:'True'}})
+  chooseSelect(screen.getByRole('combobox'),'True',fireEvent)
   fireEvent.click(screen.getByRole('button',{name:'Check answer'}))
   assert.ok(screen.getByText('Correct.'))
 })
@@ -471,7 +472,7 @@ test('quick and detailed summaries remain separate cached options', async () => 
   mount(); await screen.findByRole('button', { name: 'Generate' })
   fireEvent.click(screen.getByRole('tab', { name: 'Summary' }))
   assert.ok(screen.getByText('quick source sentence.'))
-  fireEvent.change(screen.getByLabelText('Summary length'), { target: { value: 'detailed' } })
+  chooseSelect(screen.getByLabelText('Summary length'),'detailed',fireEvent)
   assert.ok(screen.getByText('detailed source sentence.'))
 })
 

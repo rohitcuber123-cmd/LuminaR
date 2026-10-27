@@ -415,7 +415,7 @@ def audit_events(library_id, current_user, offset=0, limit=20):
     return {'results': results, 'total': collection('audit').count_documents(query)}
 
 
-OPERATION_EVENTS = r'^(LIBRARY_BOOK_|LIBRARY_COPY_|HOLDING_|STOCK_|SHELF_|COPY_|BORROW_|RETURN_|LOAN_|RESERVATION_|FEE_)'
+OPERATION_EVENTS = r'^(LIBRARY_BOOK_|LIBRARY_COPY_|HOLDING_|STOCK_|SHELF_|COPY_|BORROW_|RETURN_|LOAN_|RESERVATION_|FEE_|SEARCH_INDEX_BUILD_|KG_BUILD_)'
 
 def operational_activity(library_id, current_user, offset=0, limit=20):
     from backend.services.library_inventory_access import require_library_staff

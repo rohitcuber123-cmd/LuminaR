@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="3.682" timestamp="2026-10-15T22:30:43.470498+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2g.test_query_v2c_c_stop_condition" name="test_staff_denial_must_not_delete_active_patron_context" time="3.052"><failure message="AssertionError: A denied STAFF request deleted the still-authorized PATRON context&#10;assert None == {'_id': '62987203-e167-4bc5-a7c7-ecad81d2916a', 'user_id': '2', 'login_session': 'v2cb-login', 'scope': 'LIBRARY', ...}&#10; +  where None = find_one({'_id': '62987203-e167-4bc5-a7c7-ecad81d2916a'})&#10; +    where find_one = Collection(Database(MongoClient(host=['127.0.0.1:27017'], document_class=dict, tz_aware=False, connect=True), 'luminar_institution_v2g_test_1cebf95db5704cba8a61c9fcd3450e77'), 'search_sessions_v2b').find_one&#10; +      where Collection(Database(MongoClient(host=['127.0.0.1:27017'], document_class=dict, tz_aware=False, connect=True), 'luminar_institution_v2g_test_1cebf95db5704cba8a61c9fcd3450e77'), 'search_sessions_v2b') = collection()">query_library = ('2a20c4d2-5077-4fd1-a25b-b620953bca4c', {'library_book_id': 'bea23655-e64e-4529-b897-d23aadd044ff', 'library_id': '2a...-9500-4e24-9e4f-8b26ae203387', 'library_id': '2a20c4d2-5077-4fd1-a25b-b620953bca4c', 'target': 'KNOWLEDGE_GRAPH', ...})
+database = Database(MongoClient(host=['127.0.0.1:27017'], document_class=dict, tz_aware=False, connect=True), 'luminar_institution_v2g_test_1cebf95db5704cba8a61c9fcd3450e77')
+
+    def test_staff_denial_must_not_delete_active_patron_context(query_library,database):
+     lid,_,_,worker,_,_=query_library;sid=str(uuid4());api=interaction_client(database,worker)
+     tenant_search(worker,lid,ACTOR,'books about neural networks',session_id=sid)
+     before=deepcopy(collection().find_one({'_id':sid}));q='include Romance but exclude Romance'
+     r=tenant_search(worker,lid,ACTOR,q,session_id=sid);cid=r['interpretation']['clarification']['clarification_id']
+     pending=deepcopy(collection().find_one({'_id':'clarification:'+cid}))
+     response=api.get('/query/suggestions',params={'q':'neur','library_id':lid,'staff':'true'})
+     assert response.status_code==403
+     membership=database.institution_memberships.find_one({'library_id':lid,'user_id':2})
+     assert membership['status']=='ACTIVE' and membership['role']=='GENERAL_USER'
+&gt;    assert collection().find_one({'_id':sid})==before,'A denied STAFF request deleted the still-authorized PATRON context'
+E    AssertionError: A denied STAFF request deleted the still-authorized PATRON context
+E    assert None == {'_id': '62987203-e167-4bc5-a7c7-ecad81d2916a', 'user_id': '2', 'login_session': 'v2cb-login', 'scope': 'LIBRARY', ...}
+E     +  where None = find_one({'_id': '62987203-e167-4bc5-a7c7-ecad81d2916a'})
+E     +    where find_one = Collection(Database(MongoClient(host=['127.0.0.1:27017'], document_class=dict, tz_aware=False, connect=True), 'luminar_institution_v2g_test_1cebf95db5704cba8a61c9fcd3450e77'), 'search_sessions_v2b').find_one
+E     +      where Collection(Database(MongoClient(host=['127.0.0.1:27017'], document_class=dict, tz_aware=False, connect=True), 'luminar_institution_v2g_test_1cebf95db5704cba8a61c9fcd3450e77'), 'search_sessions_v2b') = collection()
+
+tests\institution_v2g\test_query_v2c_c_stop_condition.py:20: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,7 +1,7 @@
-"""Canonical library-owned PDF metadata, fresh access and fenced durable jobs.
+"""Canonical library-owned PDF/TXT/DOCX metadata, fresh access and fenced durable jobs.
 
-The Core API never imports a model or reads extracted text. The existing RAG
-process consumes this small Mongo queue using its accepted document pipeline.
+The Core API validates bounded sources and serves inert previews without a model.
+The existing RAG process consumes the queue using its accepted document pipeline.
 """
 import hashlib
 import os
@@ -68,7 +68,10 @@ def asset_directory(library_id, asset_id):
 
 
 def source_path(row):
-    path = asset_directory(row['library_id'], row['asset_id']) / 'source.pdf'
+    extension = {'PDF': 'pdf', 'TXT': 'txt', 'DOCX': 'docx'}.get(row.get('asset_type', 'PDF'))
+    if not extension:
+        raise HTTPException(409, 'Unsupported document source.')
+    path = asset_directory(row['library_id'], row['asset_id']) / ('source.' + extension)
     if path.resolve() != path:
         raise HTTPException(404, 'Library resource not found.')
     return path
@@ -177,9 +180,9 @@ def validate_filename(filename):
     decoded = unquote(filename)
     if (not filename or len(filename) > 255 or '/' in filename or '\\' in filename or ':' in filename
             or any(ord(char) < 32 for char in decoded) or any(char in decoded for char in '/\\:')
-            or not filename.lower().endswith('.pdf')
+            or Path(filename).suffix.lower() not in {'.pdf', '.txt', '.docx'}
             or filename.strip() != filename or filename.startswith('.')):
-        raise HTTPException(400, 'Choose a PDF filename under 256 characters without path components.')
+        raise HTTPException(400, 'Choose a PDF, UTF-8 TXT or DOCX filename under 256 characters without path components. Legacy .doc is unsupported.')
     return filename
 
 
@@ -222,7 +225,18 @@ def upload(library_id, actor, content, filename, title, visibility, book_id, upl
     library_id, upload_id = canonical_id(library_id), canonical_id(upload_id)
     fresh_guard(library_id, actor, staff=True)
     filename = validate_filename(filename)
-    validate_pdf(content)
+    if not content:
+        raise HTTPException(400, 'Empty document.')
+    if len(content) > MAX_FILE_BYTES:
+        raise HTTPException(413, 'Document exceeds the 64 MiB upload limit.')
+    kind = Path(filename).suffix[1:].upper()
+    if kind == 'PDF':
+        validate_pdf(content)
+    else:
+        from backend.services.library_asset_text import extract_text
+        extract_text(content, kind)
+    media_type = {'PDF': 'application/pdf', 'TXT': 'text/plain',
+        'DOCX': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}[kind]
     title = (title or Path(filename).stem).strip()
     if not title or len(title) > 200 or any(ord(char) < 32 for char in title):
         raise HTTPException(422, 'A title between 1 and 200 characters is required.')
@@ -242,9 +256,9 @@ def upload(library_id, actor, content, filename, title, visibility, book_id, upl
         stamp = now()
         asset_id = str(uuid4())
         row = {'asset_id': asset_id, 'library_id': library_id, 'uploaded_by_user_id': uid,
-            'upload_id': upload_id, 'asset_type': 'PDF', 'title': title, 'original_filename': filename,
-            'media_type': 'application/pdf', 'byte_size': len(content), 'checksum': checksum,
-            'storage_key': f'{library_id}/{asset_id}/source.pdf', 'status': 'UPLOADING',
+            'upload_id': upload_id, 'asset_type': kind, 'title': title, 'original_filename': filename,
+            'media_type': media_type, 'byte_size': len(content), 'checksum': checksum,
+            'storage_key': f'{library_id}/{asset_id}/source.{kind.lower()}', 'status': 'UPLOADING',
             'visibility': visibility, 'library_book_id': linked_id, 'global_work_id': work_id,
             'extraction_status': 'QUEUED', 'rag_status': 'QUEUED', 'created_at': stamp,
             'updated_at': stamp, 'deleted_at': None, 'deleted_by_user_id': None,
@@ -351,7 +365,7 @@ def delete(library_id, asset_id, actor):
                 retired.mkdir(exist_ok=True)
                 if retired.resolve() != retired:
                     raise OSError('Unsafe retired source path.')
-                source_path(row).replace(retired / 'source.pdf')
+                source_path(row).replace(retired / source_path(row).name)
             asset_audit(row, 'ASSET_DELETED', uid, event_id='asset-delete:' + asset_id)
             changes.update(status='DELETED', deleted_at=now(), error_code=None)
         except OSError:

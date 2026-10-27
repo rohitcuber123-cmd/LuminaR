@@ -1,0 +1,43 @@
+{
+  "result": "PASS",
+  "cases": [
+    "tests.institution_v2g.test_query_v2c_b1::test_forgery_then_valid_preserves_full_mongo_state",
+    "tests.institution_v2g.test_query_v2c_b1::test_downstream_status_does_not_invalidate[404]",
+    "tests.institution_v2g.test_query_v2c_b1::test_downstream_status_does_not_invalidate[409]",
+    "tests.institution_v2g.test_query_v2c_b1::test_downstream_status_does_not_invalidate[422]",
+    "tests.institution_v2g.test_query_v2c_b1::test_expiry_and_bad_operand_do_not_mutate_context",
+    "tests.institution_v2g.test_query_v2c_b1::test_cross_clarification_and_newer_accepted_version",
+    "tests.institution_v2g.test_query_v2c_b1::test_foreign_user_sid_scope_and_workspace_cannot_damage_either_context",
+    "tests.institution_v2g.test_query_v2c_b1::test_interleaved_resolution_never_rolls_back_or_double_commits[forged]",
+    "tests.institution_v2g.test_query_v2c_b1::test_interleaved_resolution_never_rolls_back_or_double_commits[duplicate]",
+    "tests.institution_v2g.test_query_v2c_b1::test_interleaved_resolution_never_rolls_back_or_double_commits[expired]",
+    "tests.institution_v2g.test_query_v2c_b1::test_interleaved_resolution_never_rolls_back_or_double_commits[revoked]",
+    "tests.institution_v2g.test_query_v2c_b1::test_interleaved_resolution_never_rolls_back_or_double_commits[newer]",
+    "tests.institution_v2g.test_query_v2c_b1::test_failure_before_context_commit_releases_pending_without_consuming",
+    "tests.institution_v2g.test_query_v2c_b1::test_error_after_commit_does_not_make_pending_reusable",
+    "tests.institution_v2g.test_query_v2c_b1::test_forged_chip_addresses_cannot_inject_or_change_ownership",
+    "tests.institution_v2g.test_query_v2c_b1::test_each_displayed_template_is_executable_and_enforced",
+    "tests.institution_v2g.test_query_v2c_b1::test_late_expiry_before_first_context_insert_cannot_evict_another_context",
+    "tests.institution_v2g.test_query_v2c_b_stop_condition::test_forged_choice_must_not_delete_previous_accepted_context"
+  ],
+  "count": 18,
+  "v2cb_interactions_count": 49,
+  "source": "search_v2c_c1_tenant.xml",
+  "guarantees": {
+    "forged_choice_state_unchanged": "PASS",
+    "valid_after_forged": "PASS",
+    "expiry": "PASS",
+    "cross_clarification": "PASS",
+    "cross_user": "PASS",
+    "cross_sid": "PASS",
+    "cross_library": "PASS",
+    "cross_workspace": "PASS",
+    "duplicate": "PASS",
+    "stale_operations": "PASS",
+    "membership_revocation": "PASS",
+    "backend_validated_chip_edits": "PASS"
+  },
+  "raw_forged_choice": "search_v2c_b1_forged_choice.json",
+  "retained_reproducer": "search_v2c_b1_retained_reproducer.json",
+  "note": "Frozen lifecycle behavior retained. Test-only recursive cache snapshot supports immutable vocabulary projections in complete-suite order."
+}

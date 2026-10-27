@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync,writeFileSync } from 'node:fs'
 import { registerHooks } from 'node:module'
-import { test,beforeEach,afterEach } from 'node:test'
+import { test,beforeEach,afterEach,after } from 'node:test'
 import React from 'react'
 import { JSDOM } from 'jsdom'
 import type { DisplayBook } from '../src/lib/libraryCatalogue'
@@ -41,8 +41,9 @@ const planned:{name:string;features:string[];status:string}[]=[]
 function parity(name:string,features:string[],run:()=>void|Promise<void>){
   for(const id of features)assert.ok(matrix.features.some((f:any)=>f.id===id),'Unknown parity feature '+id)
   const row={name,features,status:'PLANNED'};planned.push(row)
-  test(name,async()=>{try{await run();row.status='PASS'}catch(e){row.status='FAIL';throw e}finally{writeFileSync(new URL('../../reports/full_product_generated_test_plan.json',import.meta.url),JSON.stringify(planned,null,2))}})
+  test(name,async()=>{try{await run();row.status='PASS'}catch(e){row.status='FAIL';throw e}})
 }
+after(()=>writeFileSync(new URL('../../reports/full_product_generated_test_plan.json',import.meta.url),JSON.stringify(planned,null,2)))
 beforeEach(()=>{
   localStorage.clear();sessionStorage.clear();localStorage.setItem('luminar_token','convergence');localStorage.setItem('luminar_user',JSON.stringify({email:'test@example.com',role:'ADMIN'}))
   auth.setState({token:'convergence',user:{user_id:1,email:'test@example.com',name:'Account',role:'ADMIN'},isAuthenticated:true})

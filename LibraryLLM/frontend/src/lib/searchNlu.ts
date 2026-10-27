@@ -1,0 +1,10 @@
+export type SearchMode = 'SMART' | 'GENRE_SUBJECT' | 'TITLE_AUTHOR' | 'EXACT'
+export type SearchDecision = {decision_type:'EXECUTABLE'|'EXECUTABLE_WITH_NOTICE'|'AMBIGUOUS'|'INCOMPLETE'|'CONTRADICTORY'|'UNSUPPORTED';reason_code?:string;affected_fields?:string[];safe_public_message?:string;parser_version?:string}
+export type SearchClarification = {clarification_id:string;decision_type:string;question:string;original_query:string;search_mode:SearchMode;expires_at:string;candidate_choices:{choice_id:string;label:string;input_type?:'number'|'text';minimum?:number;maximum?:number}[]}
+export type SearchInterpretation = { mode: SearchMode; clarification?:SearchClarification|null; decision?:SearchDecision; intent?:string;intent_label?:string;related_concepts?:string[];preference?:string|null; chips: {key:string;label:string;remove_key?:string}[]; corrections:{from:string;to:string;kind:string}[]; notice?:string;suggested_subject?:string|null;session?:{active:boolean;refined:boolean;version:number;expires_at:string}|null;personalized?:boolean }
+export type SearchFacets = {results:{subject:string;count:number}[]; capabilities:{rating:boolean;year:boolean;language:boolean;formats:string[];availability:boolean}}
+export function searchOptions(params:URLSearchParams) {
+  const numeric=(key:string)=>params.get(key)?Number(params.get(key)):undefined
+  return {mode:(params.get('mode') || 'SMART') as SearchMode,rating_min:numeric('rating_min'),rating_max:numeric('rating_max'),year_min:numeric('year_min'),year_max:numeric('year_max'),format:params.get('format') || '',availability:params.get('availability') || '',language:params.get('language') || '',sort:params.get('search_sort') || 'RELEVANCE',omit:(params.get('omit') || '').split(',').filter(Boolean)}
+}
+export const hasSearchFilters=(params:URLSearchParams)=>['rating_min','rating_max','year_min','year_max','format','availability','language'].some(key=>!!params.get(key)) || !!params.get('search_sort') && params.get('search_sort')!=='RELEVANCE'

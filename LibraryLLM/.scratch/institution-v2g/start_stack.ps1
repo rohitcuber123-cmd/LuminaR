@@ -1,0 +1,6 @@
+$ErrorActionPreference='Stop'
+$env:SEARCH_GLOBAL_READ_ONLY='1'
+$env:HF_HUB_OFFLINE='1'
+$env:TRANSFORMERS_OFFLINE='1'
+$env:PYTHONUTF8='1'
+& 'D:\SDC\LibraryLLM\.scratch\institution-v2d\start_stack.ps1'

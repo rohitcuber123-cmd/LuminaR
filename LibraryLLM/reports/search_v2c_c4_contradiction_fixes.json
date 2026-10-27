@@ -1,0 +1,1423 @@
+{
+  "before": 26,
+  "after_targeted": 0,
+  "supported_denominator": 583,
+  "denominator_unchanged": true,
+  "common_validator": "search/query_confidence.py validates composed canonical predicates; no per-query contradiction patches",
+  "fixes": [
+    {
+      "cause": "format_except_precedence",
+      "cases": 18,
+      "change": "Resolve except-format as exclusion before positive format scan"
+    },
+    {
+      "cause": "subject_requirement_punctuation",
+      "cases": 8,
+      "change": "Trim terminal request punctuation before canonical requirement operand lookup"
+    }
+  ],
+  "cases": [
+    {
+      "query_id": "v2:v2cc-authored-c01_exclusivity_clashes-10",
+      "query": "physical books except physical books",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "physical books except physical books"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 15,
+          "source_span_end": 36,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "physical books except physical books"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0292",
+      "query": "Please find physical books except physical books",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 27,
+          "source_span_end": 48,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0773",
+      "query": "Please find physical books except physical books?",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books?"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 27,
+          "source_span_end": 48,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1254",
+      "query": "Please find physical books except physical books.",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books."
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 27,
+          "source_span_end": 48,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books."
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1735",
+      "query": "Please find physical books except physical books please",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 27,
+          "source_span_end": 48,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 48,
+          "source_span_end": 55,
+          "source_text": " please",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0292",
+      "query": "Please find,  physical books except physical books !?",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "Please find,  ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books !?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 14,
+          "source_span_end": 22,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books !?"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 29,
+          "source_span_end": 50,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books !?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0773",
+      "query": "Please find,  physical books except physical books ??",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "Please find,  ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books ??"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 14,
+          "source_span_end": 22,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books ??"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 29,
+          "source_span_end": 50,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books ??"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0034",
+      "query": "Please find physical books except physical books please?",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 27,
+          "source_span_end": 48,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 48,
+          "source_span_end": 56,
+          "source_text": " please?",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0103",
+      "query": "Please find physical books except physical books please.",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 27,
+          "source_span_end": 48,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 48,
+          "source_span_end": 56,
+          "source_text": " please.",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0172",
+      "query": "Find me physical books except physical books",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0241",
+      "query": "Find me physical books except physical books?",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books?"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0310",
+      "query": "Find me physical books except physical books.",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books."
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books."
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0379",
+      "query": "Find me physical books except physical books please",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 44,
+          "source_span_end": 51,
+          "source_text": " please",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0448",
+      "query": "Find me physical books except physical books please?",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 44,
+          "source_span_end": 52,
+          "source_text": " please?",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0517",
+      "query": "Find me physical books except physical books please.",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 44,
+          "source_span_end": 52,
+          "source_text": " please.",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0586",
+      "query": "Show me physical books except physical books",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0655",
+      "query": "Show me physical books except physical books?",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books?"
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0724",
+      "query": "Show me physical books except physical books.",
+      "before_decision": "INCOMPLETE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books."
+        },
+        {
+          "field": "excluded_format",
+          "operator": "NOT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 23,
+          "source_span_end": 44,
+          "source_text": "except physical books",
+          "recognizer_id": "format.exclusion",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books."
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0875",
+      "query": "Please find require Romance; forbid the Romance subject?",
+      "before_decision": "EXECUTABLE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 12,
+          "source_span_end": 27,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 27,
+          "source_span_end": 29,
+          "source_text": "; ",
+          "recognizer_id": "subject.clause_connector",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "excluded_subject",
+          "operator": "NOT",
+          "normalized_value": "Romance",
+          "source_span_start": 29,
+          "source_span_end": 55,
+          "source_text": "forbid the Romance subject",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1356",
+      "query": "Please find require Romance; forbid the Romance subject.",
+      "before_decision": "EXECUTABLE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 12,
+          "source_span_end": 27,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 27,
+          "source_span_end": 29,
+          "source_text": "; ",
+          "recognizer_id": "subject.clause_connector",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "excluded_subject",
+          "operator": "NOT",
+          "normalized_value": "Romance",
+          "source_span_start": 29,
+          "source_span_end": 55,
+          "source_text": "forbid the Romance subject",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject."
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0394",
+      "query": "Please find,  require Romance; forbid the Romance subject !?",
+      "before_decision": "EXECUTABLE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "Please find,  ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject !?"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 14,
+          "source_span_end": 29,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject !?"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 29,
+          "source_span_end": 31,
+          "source_text": "; ",
+          "recognizer_id": "subject.clause_connector",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject !?"
+        },
+        {
+          "field": "excluded_subject",
+          "operator": "NOT",
+          "normalized_value": "Romance",
+          "source_span_start": 31,
+          "source_span_end": 57,
+          "source_text": "forbid the Romance subject",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject !?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0875",
+      "query": "Please find,  require Romance; forbid the Romance subject ??",
+      "before_decision": "EXECUTABLE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "Please find,  ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject ??"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 14,
+          "source_span_end": 29,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject ??"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 29,
+          "source_span_end": 31,
+          "source_text": "; ",
+          "recognizer_id": "subject.clause_connector",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject ??"
+        },
+        {
+          "field": "excluded_subject",
+          "operator": "NOT",
+          "normalized_value": "Romance",
+          "source_span_start": 31,
+          "source_span_end": 57,
+          "source_text": "forbid the Romance subject",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject ??"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0265",
+      "query": "Find me require Romance; forbid the Romance subject?",
+      "before_decision": "EXECUTABLE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 8,
+          "source_span_end": 23,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 23,
+          "source_span_end": 25,
+          "source_text": "; ",
+          "recognizer_id": "subject.clause_connector",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "excluded_subject",
+          "operator": "NOT",
+          "normalized_value": "Romance",
+          "source_span_start": 25,
+          "source_span_end": 51,
+          "source_text": "forbid the Romance subject",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0334",
+      "query": "Find me require Romance; forbid the Romance subject.",
+      "before_decision": "EXECUTABLE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 8,
+          "source_span_end": 23,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 23,
+          "source_span_end": 25,
+          "source_text": "; ",
+          "recognizer_id": "subject.clause_connector",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "excluded_subject",
+          "operator": "NOT",
+          "normalized_value": "Romance",
+          "source_span_start": 25,
+          "source_span_end": 51,
+          "source_text": "forbid the Romance subject",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject."
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0679",
+      "query": "Show me require Romance; forbid the Romance subject?",
+      "before_decision": "EXECUTABLE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 8,
+          "source_span_end": 23,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 23,
+          "source_span_end": 25,
+          "source_text": "; ",
+          "recognizer_id": "subject.clause_connector",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "excluded_subject",
+          "operator": "NOT",
+          "normalized_value": "Romance",
+          "source_span_start": 25,
+          "source_span_end": 51,
+          "source_text": "forbid the Romance subject",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject?"
+        }
+      ]
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0748",
+      "query": "Show me require Romance; forbid the Romance subject.",
+      "before_decision": "EXECUTABLE",
+      "after_decision": "CONTRADICTORY",
+      "after_candidates": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 8,
+          "source_span_end": 23,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 23,
+          "source_span_end": 25,
+          "source_text": "; ",
+          "recognizer_id": "subject.clause_connector",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "excluded_subject",
+          "operator": "NOT",
+          "normalized_value": "Romance",
+          "source_span_start": 25,
+          "source_span_end": 51,
+          "source_text": "forbid the Romance subject",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject."
+        }
+      ]
+    }
+  ],
+  "final_full_population_evidence": {
+    "supported_contradiction_recall": {
+      "numerator": 583,
+      "denominator": 583,
+      "percent": 100.0
+    },
+    "prior_supported_denominator": 583,
+    "denominator_change": 0,
+    "original_misses_before": 26,
+    "misses_after": 0
+  }
+}

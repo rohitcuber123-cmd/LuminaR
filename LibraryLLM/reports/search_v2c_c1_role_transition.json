@@ -1,0 +1,182 @@
+{
+  "result": "PASS",
+  "explanation": "Existing GENERAL_USER patron versus ADMIN/LIBRARIAN staff policy unchanged. Only inaccessible former workspace is removed; new authorized workspace survives.",
+  "cases": {
+    "role_upgrade": {
+      "case": "role_upgrade",
+      "request_scope": {
+        "q": "neur",
+        "library_id": "6155588a-87c7-471c-832b-28bc99f7acd0",
+        "staff": "false"
+      },
+      "request_result": 403,
+      "authorization_reason": "Fresh canonical role check denies only the former workspace for this exact login.",
+      "accepted_changes": {
+        "invalidated": [
+          "c8bbfa7d-db40-48c2-8f20-54e74ccbdf96"
+        ],
+        "preserved": [
+          "07faba7c-bbcd-431f-a0fe-0b0370164d0f",
+          "0caf5c81-684f-431b-bb2a-e5a440a9a837",
+          "7fc77205-6a13-4f4d-ab65-b1bb71107c72",
+          "caae16a2-4c57-4caf-a9e3-4ae23c3553d9",
+          "d8c33402-c65b-47ef-82b5-df69f6857774"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [
+          "clarification:4a70fdf1-a51e-43aa-a9f8-9acf637b0cc1"
+        ],
+        "preserved": [
+          "clarification:30f264dd-9510-4299-8091-99ee772bff48",
+          "clarification:42b5bd28-d224-4055-bbca-5b20951618ff",
+          "clarification:6471e002-b7b3-43ca-9ee1-14720dcac398",
+          "clarification:7c25518f-e2c2-45a0-8234-d3d8f0363b91",
+          "clarification:b58d984d-39c4-4c40-b91f-3a2570e1b7c5"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [
+        "('2', 'v2cb-login', '6155588a-87c7-471c-832b-28bc99f7acd0', False, 'saved-canonical-v1')"
+      ],
+      "personalization_preserved": [
+        "('2', 'other-login', '6155588a-87c7-471c-832b-28bc99f7acd0', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '6155588a-87c7-471c-832b-28bc99f7acd0', True, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '99ef78ff-f049-4a5e-aded-5051ca8a3c06', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')",
+        "('4', 'v2cb-login', '6155588a-87c7-471c-832b-28bc99f7acd0', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "Fresh canonical role check denies only the former workspace for this exact login."
+    },
+    "role_downgrade": {
+      "case": "role_downgrade",
+      "request_scope": {
+        "q": "neur",
+        "library_id": "be84d511-1319-4cca-b077-67678340b614",
+        "staff": "true"
+      },
+      "request_result": 403,
+      "authorization_reason": "Fresh canonical role check denies only the former workspace for this exact login.",
+      "accepted_changes": {
+        "invalidated": [
+          "d1406f21-318b-4080-a399-8feb13d1b69c"
+        ],
+        "preserved": [
+          "43d2d2cd-d530-4ca6-89a3-01dfed12f66b",
+          "80867d6a-432b-4ab9-a6f3-fbab6948b52c",
+          "aa2ff102-d3d3-492e-b1dc-8192d82393ee",
+          "c6b07adf-6d81-4866-88f8-947692bdfdc8",
+          "ff7d163f-444b-4694-bbb6-961bd4cd7a10"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [
+          "clarification:5d592ef0-722d-4338-9a9e-01413fd9a9a3"
+        ],
+        "preserved": [
+          "clarification:401afe53-f864-4712-b868-cb6ce52fe2f0",
+          "clarification:56105de5-b816-4e1b-b00c-547855b6498c",
+          "clarification:7057e267-67a6-4f49-bac1-cbb1bc0694f2",
+          "clarification:99a0d8c6-7f96-403d-8b5a-0f7fac26c9c6",
+          "clarification:caf199be-5e2b-49cb-a02d-9e3527d94287"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [
+        "('2', 'v2cb-login', 'be84d511-1319-4cca-b077-67678340b614', True, 'saved-canonical-v1')"
+      ],
+      "personalization_preserved": [
+        "('2', 'other-login', 'be84d511-1319-4cca-b077-67678340b614', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '883d93fd-0ef5-4a2b-90b6-bd88b8afbebc', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', 'be84d511-1319-4cca-b077-67678340b614', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')",
+        "('4', 'v2cb-login', 'be84d511-1319-4cca-b077-67678340b614', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "Fresh canonical role check denies only the former workspace for this exact login."
+    },
+    "staff_patron": {
+      "case": "staff_patron",
+      "request_scope": {
+        "q": "neur",
+        "library_id": "80f68271-0620-4f3f-9a26-05c1bbef07e2",
+        "staff": "false"
+      },
+      "request_result": 403,
+      "authorization_reason": "Requested operation denied; other owned scopes remain authorized.",
+      "accepted_changes": {
+        "invalidated": [],
+        "preserved": [
+          "475dd6f9-e865-4698-8ade-83f5672f3d9f",
+          "80edae2c-0c0f-441b-8f1d-9ababd0d7c4f",
+          "8dcd1d49-9a38-4ce4-afbd-f0847f0c51e9",
+          "9384eeaf-6746-4fa2-bef7-f11f6b83d4a9",
+          "b50c953a-f733-4ad1-a56d-922741d02524"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [],
+        "preserved": [
+          "clarification:01e86c14-1918-4e22-a7fe-f6cfa5576904",
+          "clarification:2b1f4c18-991f-4ea7-83c3-9843de3a3059",
+          "clarification:ac4cfe85-585c-4e9f-9c7e-355971afec5c",
+          "clarification:d468f038-949e-4683-974e-dc93e944c883",
+          "clarification:fcf8d84b-def2-4c05-bff9-e7dace4f1609"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [],
+      "personalization_preserved": [
+        "('2', 'other-login', '80f68271-0620-4f3f-9a26-05c1bbef07e2', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '7029f489-f005-4b08-b7c9-7736dd234fa7', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '80f68271-0620-4f3f-9a26-05c1bbef07e2', True, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')",
+        "('4', 'v2cb-login', '80f68271-0620-4f3f-9a26-05c1bbef07e2', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "No destructive action occurred."
+    },
+    "interleaved_role_change": {
+      "case": "interleaved_role_change",
+      "request_scope": {
+        "library_id": "4db19c47-df1e-45e5-a076-280d103aeeb8",
+        "workspace": "STAFF"
+      },
+      "request_result": 403,
+      "authorization_reason": "Fresh authority after deterministic interleaving; only inaccessible exact ownership tuple may be deleted.",
+      "accepted_changes": {
+        "invalidated": [],
+        "preserved": [
+          "2ccedbf8-a6d5-4598-8fec-1a2fabdfb105",
+          "330540cc-93b7-41f9-bb81-6fac60599b45",
+          "56cf731c-0caa-4b22-a7eb-3754db927085",
+          "c25d35bb-1695-48b3-a796-3fba2cafd25c",
+          "e6275124-9f28-42a4-9e28-01832d56cd1e"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [],
+        "preserved": [
+          "clarification:7975a82b-e1a5-4f0f-84bb-b34bdba99659",
+          "clarification:a413fc8c-3af5-484f-8144-3ecf3e07cade",
+          "clarification:a4d03b10-48b0-45f4-9b75-5bd9d53a802a",
+          "clarification:e447b144-c3d9-4185-b098-23a21608c5e1",
+          "clarification:f138babb-287f-4d7b-9b56-6b5c5b253495"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [],
+      "personalization_preserved": [
+        "('2', 'other-login', '4db19c47-df1e-45e5-a076-280d103aeeb8', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '3be82eb5-6563-47eb-a070-09913f6a34b4', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '4db19c47-df1e-45e5-a076-280d103aeeb8', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')",
+        "('4', 'v2cb-login', '4db19c47-df1e-45e5-a076-280d103aeeb8', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "No destructive action occurred."
+    }
+  },
+  "complete_state_evidence": "search_v2c_c1_authorization_matrix.json"
+}

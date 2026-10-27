@@ -1,0 +1,231 @@
+{
+  "result": "PASS",
+  "explanation": "Accepted and pending deletion uses exact user_id/login_session/scope/library_id/workspace. Only explicit logout retains existing account-wide cleanup. Account disable is checked fresh; unrelated retained state cannot be accessed while disabled.",
+  "cases": {
+    "revocation": {
+      "case": "revocation",
+      "request_scope": {
+        "q": "neur",
+        "library_id": "fd7f8acf-a63a-443b-a759-b06a12de4ddf",
+        "staff": "true"
+      },
+      "request_result": 404,
+      "authorization_reason": "Fresh canonical membership removed/account disabled; only this login and affected library ownership tuples cleared.",
+      "accepted_changes": {
+        "invalidated": [
+          "4e8b4a58-67b0-4033-aacc-e609780d6afc"
+        ],
+        "preserved": [
+          "844a4959-7b9f-42a6-9bc3-806c83bc986f",
+          "8dffd06c-c2dc-4e3c-8d2c-ad2d13e3f74c",
+          "9e455ab9-f9cf-444b-a020-f8131e5030a7",
+          "aae1e975-822a-4bc3-9d6b-bc059b87a627"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [
+          "clarification:b9ccc556-62a5-46bf-abd6-9062c1ea1e92"
+        ],
+        "preserved": [
+          "clarification:08f710c7-0d40-4313-84f4-9e6b5e4a1a96",
+          "clarification:4c430aa5-582f-4c9d-8997-d2a371d248ab",
+          "clarification:8ec37375-9449-4632-a5bd-d37daaafaf60",
+          "clarification:b03c2d72-fe1d-49ed-950b-8bf320a488b4"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [
+        "('2', 'v2cb-login', 'fd7f8acf-a63a-443b-a759-b06a12de4ddf', False, 'saved-canonical-v1')"
+      ],
+      "personalization_preserved": [
+        "('2', 'other-login', 'fd7f8acf-a63a-443b-a759-b06a12de4ddf', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '43e773cd-e6cd-417e-ae7e-c19d8d6c059f', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')",
+        "('4', 'v2cb-login', 'fd7f8acf-a63a-443b-a759-b06a12de4ddf', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "Fresh canonical membership removed/account disabled; only this login and affected library ownership tuples cleared."
+    },
+    "role_upgrade": {
+      "case": "role_upgrade",
+      "request_scope": {
+        "q": "neur",
+        "library_id": "6155588a-87c7-471c-832b-28bc99f7acd0",
+        "staff": "false"
+      },
+      "request_result": 403,
+      "authorization_reason": "Fresh canonical role check denies only the former workspace for this exact login.",
+      "accepted_changes": {
+        "invalidated": [
+          "c8bbfa7d-db40-48c2-8f20-54e74ccbdf96"
+        ],
+        "preserved": [
+          "07faba7c-bbcd-431f-a0fe-0b0370164d0f",
+          "0caf5c81-684f-431b-bb2a-e5a440a9a837",
+          "7fc77205-6a13-4f4d-ab65-b1bb71107c72",
+          "caae16a2-4c57-4caf-a9e3-4ae23c3553d9",
+          "d8c33402-c65b-47ef-82b5-df69f6857774"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [
+          "clarification:4a70fdf1-a51e-43aa-a9f8-9acf637b0cc1"
+        ],
+        "preserved": [
+          "clarification:30f264dd-9510-4299-8091-99ee772bff48",
+          "clarification:42b5bd28-d224-4055-bbca-5b20951618ff",
+          "clarification:6471e002-b7b3-43ca-9ee1-14720dcac398",
+          "clarification:7c25518f-e2c2-45a0-8234-d3d8f0363b91",
+          "clarification:b58d984d-39c4-4c40-b91f-3a2570e1b7c5"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [
+        "('2', 'v2cb-login', '6155588a-87c7-471c-832b-28bc99f7acd0', False, 'saved-canonical-v1')"
+      ],
+      "personalization_preserved": [
+        "('2', 'other-login', '6155588a-87c7-471c-832b-28bc99f7acd0', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '6155588a-87c7-471c-832b-28bc99f7acd0', True, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '99ef78ff-f049-4a5e-aded-5051ca8a3c06', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')",
+        "('4', 'v2cb-login', '6155588a-87c7-471c-832b-28bc99f7acd0', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "Fresh canonical role check denies only the former workspace for this exact login."
+    },
+    "role_downgrade": {
+      "case": "role_downgrade",
+      "request_scope": {
+        "q": "neur",
+        "library_id": "be84d511-1319-4cca-b077-67678340b614",
+        "staff": "true"
+      },
+      "request_result": 403,
+      "authorization_reason": "Fresh canonical role check denies only the former workspace for this exact login.",
+      "accepted_changes": {
+        "invalidated": [
+          "d1406f21-318b-4080-a399-8feb13d1b69c"
+        ],
+        "preserved": [
+          "43d2d2cd-d530-4ca6-89a3-01dfed12f66b",
+          "80867d6a-432b-4ab9-a6f3-fbab6948b52c",
+          "aa2ff102-d3d3-492e-b1dc-8192d82393ee",
+          "c6b07adf-6d81-4866-88f8-947692bdfdc8",
+          "ff7d163f-444b-4694-bbb6-961bd4cd7a10"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [
+          "clarification:5d592ef0-722d-4338-9a9e-01413fd9a9a3"
+        ],
+        "preserved": [
+          "clarification:401afe53-f864-4712-b868-cb6ce52fe2f0",
+          "clarification:56105de5-b816-4e1b-b00c-547855b6498c",
+          "clarification:7057e267-67a6-4f49-bac1-cbb1bc0694f2",
+          "clarification:99a0d8c6-7f96-403d-8b5a-0f7fac26c9c6",
+          "clarification:caf199be-5e2b-49cb-a02d-9e3527d94287"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [
+        "('2', 'v2cb-login', 'be84d511-1319-4cca-b077-67678340b614', True, 'saved-canonical-v1')"
+      ],
+      "personalization_preserved": [
+        "('2', 'other-login', 'be84d511-1319-4cca-b077-67678340b614', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '883d93fd-0ef5-4a2b-90b6-bd88b8afbebc', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', 'be84d511-1319-4cca-b077-67678340b614', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')",
+        "('4', 'v2cb-login', 'be84d511-1319-4cca-b077-67678340b614', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "Fresh canonical role check denies only the former workspace for this exact login."
+    },
+    "account_disabled": {
+      "case": "account_disabled",
+      "request_scope": {
+        "q": "neur",
+        "library_id": "ec625f58-aec2-4a2d-9d1f-e4499f1487b1",
+        "staff": "false"
+      },
+      "request_result": 401,
+      "authorization_reason": "Fresh canonical membership removed/account disabled; only this login and affected library ownership tuples cleared.",
+      "accepted_changes": {
+        "invalidated": [
+          "f6f72e33-7b54-4e62-b80e-c4971d311fd8"
+        ],
+        "preserved": [
+          "0841b86c-8f72-4489-9012-1eb09961ec78",
+          "563cbf50-f529-46ab-a77b-181fc15ce107",
+          "97a0396c-b154-47d2-9bb4-2ca4e0207bef",
+          "df3e0de0-cb41-427a-9b64-e3e7f8449698"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [
+          "clarification:96fb3909-1cac-425e-b229-b42189557bee"
+        ],
+        "preserved": [
+          "clarification:1040f516-f25b-4fb1-a5c6-1af722acabce",
+          "clarification:32e48196-7a51-4af2-b495-1e61a551aea4",
+          "clarification:a9259179-2b8c-454b-9865-7a0bfe68ea5b",
+          "clarification:c7c31847-8191-4d5a-b7bf-9e1da91bd8ba"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [
+        "('2', 'v2cb-login', 'ec625f58-aec2-4a2d-9d1f-e4499f1487b1', False, 'saved-canonical-v1')"
+      ],
+      "personalization_preserved": [
+        "('2', 'other-login', 'ec625f58-aec2-4a2d-9d1f-e4499f1487b1', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '22159ff8-f664-4b09-8697-696621c5cd0d', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')",
+        "('4', 'v2cb-login', 'ec625f58-aec2-4a2d-9d1f-e4499f1487b1', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "Fresh canonical membership removed/account disabled; only this login and affected library ownership tuples cleared."
+    },
+    "logout": {
+      "case": "logout",
+      "request_scope": {
+        "operation": "existing explicit account-wide logout cleanup"
+      },
+      "request_result": 200,
+      "authorization_reason": "Accepted explicit logout policy removes all scopes/sids for this account only.",
+      "accepted_changes": {
+        "invalidated": [
+          "23feaa12-16da-4d1e-afe1-d40bde8929e3",
+          "4f31e946-e66a-4041-b23e-1c7f58c76270",
+          "6815e9d2-1ce2-48c5-a16d-06a8ea41cc7a",
+          "8f2c2d71-437c-4c80-8f7a-3612be67dbc2"
+        ],
+        "preserved": [
+          "e7882962-4d05-4280-8113-0d234efd0d1a"
+        ],
+        "updated": []
+      },
+      "pending_changes": {
+        "invalidated": [
+          "clarification:105921ab-0594-43ca-9882-f45ab17bf352",
+          "clarification:8fd740f3-0cef-4fa0-8cac-afb29326c82f",
+          "clarification:bcd96b1b-09be-4afd-a400-0204e7d681e8",
+          "clarification:c16a25c0-9a54-4423-845a-c145e87ffae7"
+        ],
+        "preserved": [
+          "clarification:2fc07bd4-ef67-4d78-beee-0f3fa98ad3f8"
+        ],
+        "updated": []
+      },
+      "personalization_invalidated": [
+        "('2', 'other-login', '30c1be57-a28d-4cb2-8e3e-43ae5343b676', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', '30c1be57-a28d-4cb2-8e3e-43ae5343b676', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', 'aee15a94-03ac-4870-9cd7-0604c20c091c', False, 'saved-canonical-v1')",
+        "('2', 'v2cb-login', None, False, 'saved-canonical-v1')"
+      ],
+      "personalization_preserved": [
+        "('4', 'v2cb-login', '30c1be57-a28d-4cb2-8e3e-43ae5343b676', False, 'saved-canonical-v1')"
+      ],
+      "destructive_action_permitted_because": "Accepted explicit logout policy removes all scopes/sids for this account only."
+    }
+  },
+  "complete_state_evidence": "search_v2c_c1_authorization_matrix.json"
+}

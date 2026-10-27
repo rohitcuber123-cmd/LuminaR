@@ -1,0 +1,173 @@
+{
+  "status": "PASS",
+  "observed_at": "2026-10-16T19:00:36.191475+00:00",
+  "browser": "Real Chromium IAB through UI on localhost5173; Search8003 restarted after final source freeze",
+  "search_server_process": 5312,
+  "cases": [
+    {
+      "scope": "GLOBAL",
+      "query": "rating above 4",
+      "chips": [
+        "Rating: > 4"
+      ],
+      "rendered_article_cards": 10,
+      "observed": "All displayed ratings >4",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating at least 4",
+      "chips": [
+        "Rating: \u2265 4"
+      ],
+      "rendered_article_cards": 10,
+      "observed": "Boundary rating4 present",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating below 4",
+      "chips": [
+        "Rating: < 4"
+      ],
+      "rendered_article_cards": 10,
+      "observed": "All displayed ratings <4",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating at most 4",
+      "chips": [
+        "Rating: \u2264 4"
+      ],
+      "rendered_article_cards": 10,
+      "observed": "Boundary rating4 present",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating no less than 4.5",
+      "chips": [
+        "Rating: \u2265 4.5"
+      ],
+      "rendered_article_cards": 10,
+      "observed": "Boundary rating4.5 present",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating at least 4.5 but below 4.5",
+      "chips": [
+        "Rating: \u2265 4.5",
+        "Rating: < 4.5"
+      ],
+      "rendered_article_cards": 0,
+      "observed": "CONTRADICTORY; conflict message and Edit your search to continue",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books titled \"1984\"",
+      "chips": [
+        "Title / Author: 1984"
+      ],
+      "rendered_article_cards": 10,
+      "observed": "1984 title results; no publication-year or rating chip",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books about Python 3",
+      "chips": [
+        "Topic: python 3"
+      ],
+      "rendered_article_cards": 7,
+      "observed": "Python3 results; no rating or year chip; rendered seven cards in inspected snapshot",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books by Terry Pratchett about witches",
+      "chips": [
+        "Author: terry pratchett",
+        "Topic: witches"
+      ],
+      "rendered_article_cards": 1,
+      "observed": "Equal Rites / Wyrd Sisters / Witches Abroad by Terry Pratchett",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "include Fiction but exclude Romance",
+      "chips": [
+        "Genre / Subject: Fiction",
+        "Exclude subject: Romance"
+      ],
+      "rendered_article_cards": 10,
+      "observed": "Canonical subject predicates, no broad text-negative chip",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating above",
+      "chips": [],
+      "rendered_article_cards": 0,
+      "observed": "INCOMPLETE; real rating-value clarification offered; Edit your search to continue",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books under 250 pages",
+      "chips": [],
+      "rendered_article_cards": 0,
+      "observed": "UNSUPPORTED; page count not available, remove requirement choice; no result cards",
+      "status": "PASS"
+    },
+    {
+      "scope": "PUBLIC_PATRON",
+      "query": "rating above 4.5",
+      "chips": [
+        "Rating: > 4.5"
+      ],
+      "rendered_article_cards": 3,
+      "observed": "All three displayed ratings5",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "rating no more than 4.5",
+      "chips": [
+        "Rating: \u2264 4.5"
+      ],
+      "rendered_article_cards": 1,
+      "observed": "V2CCR Wizards Fiction at rating4.5",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "include Fiction but exclude Romance",
+      "chips": [
+        "Genre / Subject: Fiction",
+        "Exclude subject: Romance"
+      ],
+      "rendered_article_cards": 2,
+      "observed": "Wizards Fiction and Mystery Fiction only; Romance excluded",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_OUTSIDER",
+      "query": "open private catalogue",
+      "chips": [],
+      "rendered_article_cards": 0,
+      "observed": "Unable to open this library / Library resource not found.; no private title, vocabulary or search controls",
+      "status": "PASS"
+    }
+  ],
+  "private_leaks_observed": 0,
+  "screenshot": "Neutral outsider denial captured in conversation browser-tool evidence; no standalone image file claimed",
+  "fixtures": "reports\\search_v2c_c3_fixture.json",
+  "reversible_cleanup_verified": true,
+  "credentials": "Retained locally for disabled disposable accounts; never copied into reports",
+  "source_freeze": "search_v2c_c3_freeze.json",
+  "not_complete_development_acceptance": true
+}

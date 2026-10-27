@@ -16,4 +16,11 @@ export function EventCard({ event }: { event: LibraryEvent }) {
   const context=useProductContext();
    return <article className={`event-card ${event.featured ? 'is-featured' : ''}`}><div className="event-card-top"><span className="event-icon"><EventIcon category={event.category} /></span><span className="event-category">{categories[event.category]}</span>{event.featured && <span className="event-tag">Featured</span>}</div><h2><Link to={context.personalPath(event.library_id ? '/libraries/' + event.library_id + '/events/' + event.event_id : '/events/' + event.event_id)}>{event.title}</Link></h2><p className="event-summary">{event.summary || 'Explore this library announcement.'}</p><EventMeta event={event} />{event.related_books.length > 0 && <p className="event-book-note"><BookOpen size={15} />{event.related_books.length} related {event.related_books.length === 1 ? 'book' : 'books'}</p>}<Link className="event-link" to={context.personalPath(event.library_id ? '/libraries/' + event.library_id + '/events/' + event.event_id : '/events/' + event.event_id)}>View event →</Link></article> }
 export function EventSkeleton() { return <div className="event-grid" aria-label="Loading events">{[0,1,2].map(i => <div className="event-skeleton" key={i}><div /><div /><div /></div>)}</div> }
-export function EventPager({ page, count, size, change }: { page: number; count: number; size: number; change: (page: number) => void }) { return <div className="event-pager"><p>{count ? `${(page - 1) * size + 1}–${Math.min(page * size, count)} of ${count}` : '0 events'}</p><div><button disabled={page <= 1} onClick={() => change(page - 1)}>Previous</button><button disabled={page * size >= count} onClick={() => change(page + 1)}>Next</button></div></div> }
+import { scrollToContentAnchor } from '../../lib/paginationScroll'
+export function EventPager({ page, count, size, change, anchorSelector = '.event-manage-list, .event-grid, .events-page' }: { page: number; count: number; size: number; change: (page: number) => void; anchorSelector?: string }) {
+  function go(next: number) {
+    change(next)
+    requestAnimationFrame(() => scrollToContentAnchor(anchorSelector))
+  }
+  return <div className="event-pager"><p>{count ? `${(page - 1) * size + 1}–${Math.min(page * size, count)} of ${count}` : '0 events'}</p><div><button disabled={page <= 1} onClick={() => go(page - 1)}>Previous</button><button disabled={page * size >= count} onClick={() => go(page + 1)}>Next</button></div></div>
+}

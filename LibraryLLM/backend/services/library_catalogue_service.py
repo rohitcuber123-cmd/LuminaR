@@ -238,8 +238,6 @@ def list_books(library_id, current_user, *, search='', kind='all', state='active
         query['status'] = 'ACTIVE' if state == 'active' else 'WITHDRAWN'
     else:
         query['status'] = {'$in': ['ACTIVE', 'WITHDRAWN']}
-    if search:
-        query['search_text'] = {'$regex': re.escape(search.strip().casefold())}
     if kind == 'local':
         query['global_work_id'] = None
     elif kind == 'global':
@@ -248,6 +246,23 @@ def list_books(library_id, current_user, *, search='', kind='all', state='active
         query['needs_review'] = True
     from backend.services.library_book_formats import format_pipeline
     pipeline = [{'$match': {'library_id': library_id, **query}}, *format_pipeline(library_id, staff=membership['role'] in ('ADMIN','LIBRARIAN'))]
+    if search.strip():
+        # Operational identifiers remain deterministic, independent of HNSW.
+        # Read current holding/copy fields rather than denormalized book text:
+        # shelf changes and newly assigned barcodes need no catalogue reindex.
+        term = search.strip()
+        pipeline.extend([
+            {'$lookup': {'from': collection('copies').name, 'let': {'book': '$library_book_id'},
+                'pipeline': [{'$match': {'library_id': library_id, 'barcode': term,
+                    '$expr': {'$eq': ['$library_book_id', '$$book']}}}, {'$limit': 1},
+                    {'$project': {'_id': 0, 'copy_id': 1}}], 'as': '_barcode_match'}},
+            {'$match': {'$or': [
+                {'search_text': {'$regex': re.escape(term.casefold())}},
+                {'holding.shelf_location': {'$regex': re.escape(term), '$options': 'i'}},
+                {'_barcode_match.0': {'$exists': True}},
+            ]}},
+            {'$unset': '_barcode_match'},
+        ])
     if format != 'all': pipeline.append({'$match': {'book_format': format}})
     page = list(collection('library_books').aggregate([*pipeline, {'$sort': {'accession_sequence': -1}},
         {'$facet': {'results': [{'$skip': offset}, {'$limit': limit}], 'total': [{'$count': 'count'}]}}]))[0]

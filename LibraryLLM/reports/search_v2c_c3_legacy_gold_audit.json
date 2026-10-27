@@ -1,0 +1,416 @@
+{
+  "schema_version": "search_v2c_c3_legacy_gold_audit.v1",
+  "created_at_utc": "2026-10-16T18:40:04.385598+00:00",
+  "scope": "Exactly the three legacy 136-gold canonical subject exclusion cases; output-blind semantic review only.",
+  "review_status": "AI_REVIEWED",
+  "review_provenance": {
+    "AI_REVIEWED": 3,
+    "HUMAN_REVIEWED": 0,
+    "UNREVIEWED": 0,
+    "reviewer": "independent Codex semantic-review subagent"
+  },
+  "parser_output_visible": false,
+  "parser_implementation_read": false,
+  "evaluator_implementation_read": false,
+  "current_predictions_or_results_read": false,
+  "c2_failure_actuals_read": false,
+  "sealed_calibration_or_heldout_read": false,
+  "parser_calls": 0,
+  "tests_run": 0,
+  "review_inputs": [
+    "C:/Users/balak/.codex/attachments/beb07e0d-6cc5-4920-b688-e8f33aa62590/Pasted text.txt",
+    "tests/test_search_v2c_a.py: source-file discovery and immutable assertion preservation only; no execution",
+    "reports/search_v2c_a_gold_queries.jsonl: only IDs gold-066, gold-094, gold-095 exposed to reviewer",
+    "reports/search_v2a_facet_vocabulary.json: selected canonical subject names only",
+    "Normative task contract: subject exclusion filters canonical subjects; exclude_terms tests title/author/description text",
+    "Parent-confirmed normative authored field name excluded_subjects; production counterpart exclude_subjects was not inspected"
+  ],
+  "contract": {
+    "include_subjects": "Require canonical subject membership as specified by the accepted inclusion contract.",
+    "excluded_subjects": "Exclude candidates assigned the named canonical subject.",
+    "exclude_terms": "Exclude term occurrences across title, author, and description; requires separate lexical intent.",
+    "canonical_vocabulary_used": [
+      "Fiction",
+      "Romance",
+      "History"
+    ],
+    "same_subject_included_and_excluded": "CONTRADICTORY; not executable.",
+    "expected_assertion_interpretation": "Historical expected dictionaries are partial authored-field assertions, not exhaustive QueryPlan serializations."
+  },
+  "summary": {
+    "cases_reviewed": 3,
+    "PARSER_DEFECT": 0,
+    "LEGACY_GOLD_DEFECT": 3,
+    "SEMANTICALLY_EQUIVALENT": 0,
+    "NON_EQUIVALENT_BUT_ACCEPTABLE_CONTRACT_CHANGE": 0,
+    "UNKNOWN": 0,
+    "full_query_candidate_set_equivalent_cases": [
+      "gold-094",
+      "gold-095"
+    ],
+    "full_query_candidate_set_changed_cases": [
+      "gold-066"
+    ],
+    "classification_note": "Primary classifications concern correctness of the authored expected-field obligation. Empty-set execution equivalence for contradictory cases is reported separately and does not justify requiring a text exclusion.",
+    "new_parser_evaluation_performed": false,
+    "raw_legacy_pass_count_claimed": false
+  },
+  "cases": [
+    {
+      "id": "gold-066",
+      "query": "fiction excluding romance",
+      "mode": "SMART",
+      "original_expected": {
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "author_text": null,
+        "title_text": null,
+        "exact_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclude_terms": [
+          "Romance"
+        ],
+        "sort": "RELEVANCE",
+        "decision_type": "EXECUTABLE"
+      },
+      "reviewed_expected": {
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "author_text": null,
+        "title_text": null,
+        "exact_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclude_terms": [],
+        "sort": "RELEVANCE",
+        "decision_type": "EXECUTABLE",
+        "excluded_subjects": [
+          "Romance"
+        ]
+      },
+      "classification": "LEGACY_GOLD_DEFECT",
+      "classification_scope": "authored expected-field contract",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible": false,
+      "human_reviewed": false,
+      "independently_justified_override": true,
+      "extra_text_exclusion_justified": false,
+      "exact_reason": "Fiction and Romance are supported canonical subjects. The query uses an inclusion/exclusion construction with a canonical subject operand. That operand belongs in excluded_subjects. It does not explicitly request removal of occurrences from title, author, or description, so requiring a nonempty exclude_terms authors an additional unsupported lexical condition. The original assertions are partial expected fields and do not assert excluded_subjects; this review adds that normative subject field and removes only the unjustified lexical requirement. No original row or assertion is changed. Here Fiction inclusion and Romance subject exclusion are compatible. A non-Romance subject candidate whose title happens to contain Romance remains eligible under the authored subject request. The broader lexical condition would incorrectly remove it.",
+      "canonical_subject_interpretation": {
+        "included": [
+          "Fiction"
+        ],
+        "excluded": [
+          "Romance"
+        ]
+      },
+      "original_decision_preserved": true,
+      "broader_text_predicate_is_equivalent_to_subject_predicate": false,
+      "additional_text_predicate_duplicates_subject_exclusion": false,
+      "full_query_candidate_set_equivalent": false,
+      "candidate_set_effect": "Adding the legacy exclude_terms requirement to the canonical subject plan strictly narrows the candidate set.",
+      "candidate_set_counterexamples": [
+        {
+          "kind": "additional broad text exclusion changes candidate eligibility",
+          "candidate": {
+            "id": "review-counterexample-066-title",
+            "subjects": [
+              "Fiction",
+              "History"
+            ],
+            "title": "The Romance of Steam",
+            "author": "A. Historian",
+            "description": "A historical novel about railway workers."
+          },
+          "satisfies_included_subject": true,
+          "has_excluded_canonical_subject": false,
+          "broad_text_contains_exclusion_term": true,
+          "eligible_under_reviewed_subject_contract": true,
+          "eligible_with_canonical_exclusion_plus_legacy_text_exclusion": false,
+          "explanation": "The subject History and the title word Romance describe different fields; Fiction is included to satisfy this exact query."
+        },
+        {
+          "kind": "subject exclusion is independently necessary",
+          "candidate": {
+            "id": "review-counterexample-066-subject",
+            "subjects": [
+              "Fiction",
+              "Romance"
+            ],
+            "title": "A Quiet Story",
+            "author": "A. Writer",
+            "description": "Two people meet and marry."
+          },
+          "satisfies_included_subject": true,
+          "has_excluded_canonical_subject": true,
+          "broad_text_contains_exclusion_term": false,
+          "eligible_under_reviewed_subject_contract": false,
+          "eligible_under_lexical_exclusion_alone": true,
+          "explanation": "A lexical-only plan cannot enforce canonical subject exclusion when the text does not repeat the subject name."
+        }
+      ]
+    },
+    {
+      "id": "gold-094",
+      "query": "fiction excluding fiction",
+      "mode": "SMART",
+      "original_expected": {
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "author_text": null,
+        "title_text": null,
+        "exact_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclude_terms": [
+          "Fiction"
+        ],
+        "sort": "RELEVANCE",
+        "decision_type": "CONTRADICTORY"
+      },
+      "reviewed_expected": {
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "author_text": null,
+        "title_text": null,
+        "exact_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclude_terms": [],
+        "sort": "RELEVANCE",
+        "decision_type": "CONTRADICTORY",
+        "excluded_subjects": [
+          "Fiction"
+        ]
+      },
+      "classification": "LEGACY_GOLD_DEFECT",
+      "classification_scope": "authored expected-field contract",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible": false,
+      "human_reviewed": false,
+      "independently_justified_override": true,
+      "extra_text_exclusion_justified": false,
+      "exact_reason": "Fiction and Romance are supported canonical subjects. The query uses an inclusion/exclusion construction with a canonical subject operand. That operand belongs in excluded_subjects. It does not explicitly request removal of occurrences from title, author, or description, so requiring a nonempty exclude_terms authors an additional unsupported lexical condition. The original assertions are partial expected fields and do not assert excluded_subjects; this review adds that normative subject field and removes only the unjustified lexical requirement. No original row or assertion is changed. Including and excluding the same canonical subject is contradictory, so the original CONTRADICTORY decision remains correct. The extra text condition changes the meaning of an individual operand, but cannot change the full query result because every candidate is already blocked by the subject contradiction. This is a defective field-level gold obligation with equivalent final non-execution, rather than evidence of a parser defect.",
+      "canonical_subject_interpretation": {
+        "included": [
+          "Fiction"
+        ],
+        "excluded": [
+          "Fiction"
+        ]
+      },
+      "original_decision_preserved": true,
+      "broader_text_predicate_is_equivalent_to_subject_predicate": false,
+      "additional_text_predicate_duplicates_subject_exclusion": false,
+      "full_query_candidate_set_equivalent": true,
+      "candidate_set_effect": "Both full-query interpretations have the empty eligible set under the preserved CONTRADICTORY decision; the operand-level predicates are different.",
+      "candidate_set_counterexamples": [
+        {
+          "kind": "no full-query eligibility counterexample exists",
+          "candidate": {
+            "id": "review-control-gold-094-fiction",
+            "subjects": [
+              "Fiction"
+            ],
+            "title": "A Quiet Story",
+            "author": "A. Writer",
+            "description": "A story about a journey."
+          },
+          "satisfies_included_subject": true,
+          "has_excluded_canonical_subject": true,
+          "broad_text_contains_exclusion_term": false,
+          "eligible_under_reviewed_subject_contract": false,
+          "eligible_under_original_contradictory_decision": false,
+          "explanation": "The canonical subject clauses cannot both hold, regardless of title, author, or description."
+        },
+        {
+          "kind": "operand-level distinction, full query still blocked",
+          "candidate": {
+            "id": "review-control-gold-094-history",
+            "subjects": [
+              "History"
+            ],
+            "title": "Fiction in the Archives",
+            "author": "A. Historian",
+            "description": "A study of archival storytelling."
+          },
+          "satisfies_included_subject": false,
+          "has_excluded_canonical_subject": false,
+          "broad_text_contains_exclusion_term": true,
+          "passes_canonical_subject_exclusion_operand": true,
+          "passes_legacy_text_exclusion_operand": false,
+          "eligible_under_reviewed_subject_contract": false,
+          "eligible_under_original_contradictory_decision": false,
+          "explanation": "The exclusion operands disagree, proving they are not interchangeable fields. Neither complete query accepts this candidate because the inclusion or contradiction gate blocks it."
+        }
+      ]
+    },
+    {
+      "id": "gold-095",
+      "query": "include Fiction and exclude Fiction",
+      "mode": "SMART",
+      "original_expected": {
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "author_text": null,
+        "title_text": null,
+        "exact_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclude_terms": [
+          "Fiction"
+        ],
+        "sort": "RELEVANCE",
+        "decision_type": "CONTRADICTORY"
+      },
+      "reviewed_expected": {
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "author_text": null,
+        "title_text": null,
+        "exact_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclude_terms": [],
+        "sort": "RELEVANCE",
+        "decision_type": "CONTRADICTORY",
+        "excluded_subjects": [
+          "Fiction"
+        ]
+      },
+      "classification": "LEGACY_GOLD_DEFECT",
+      "classification_scope": "authored expected-field contract",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible": false,
+      "human_reviewed": false,
+      "independently_justified_override": true,
+      "extra_text_exclusion_justified": false,
+      "exact_reason": "Fiction and Romance are supported canonical subjects. The query uses an inclusion/exclusion construction with a canonical subject operand. That operand belongs in excluded_subjects. It does not explicitly request removal of occurrences from title, author, or description, so requiring a nonempty exclude_terms authors an additional unsupported lexical condition. The original assertions are partial expected fields and do not assert excluded_subjects; this review adds that normative subject field and removes only the unjustified lexical requirement. No original row or assertion is changed. Including and excluding the same canonical subject is contradictory, so the original CONTRADICTORY decision remains correct. The extra text condition changes the meaning of an individual operand, but cannot change the full query result because every candidate is already blocked by the subject contradiction. This is a defective field-level gold obligation with equivalent final non-execution, rather than evidence of a parser defect.",
+      "canonical_subject_interpretation": {
+        "included": [
+          "Fiction"
+        ],
+        "excluded": [
+          "Fiction"
+        ]
+      },
+      "original_decision_preserved": true,
+      "broader_text_predicate_is_equivalent_to_subject_predicate": false,
+      "additional_text_predicate_duplicates_subject_exclusion": false,
+      "full_query_candidate_set_equivalent": true,
+      "candidate_set_effect": "Both full-query interpretations have the empty eligible set under the preserved CONTRADICTORY decision; the operand-level predicates are different.",
+      "candidate_set_counterexamples": [
+        {
+          "kind": "no full-query eligibility counterexample exists",
+          "candidate": {
+            "id": "review-control-gold-095-fiction",
+            "subjects": [
+              "Fiction"
+            ],
+            "title": "A Quiet Story",
+            "author": "A. Writer",
+            "description": "A story about a journey."
+          },
+          "satisfies_included_subject": true,
+          "has_excluded_canonical_subject": true,
+          "broad_text_contains_exclusion_term": false,
+          "eligible_under_reviewed_subject_contract": false,
+          "eligible_under_original_contradictory_decision": false,
+          "explanation": "The canonical subject clauses cannot both hold, regardless of title, author, or description."
+        },
+        {
+          "kind": "operand-level distinction, full query still blocked",
+          "candidate": {
+            "id": "review-control-gold-095-history",
+            "subjects": [
+              "History"
+            ],
+            "title": "Fiction in the Archives",
+            "author": "A. Historian",
+            "description": "A study of archival storytelling."
+          },
+          "satisfies_included_subject": false,
+          "has_excluded_canonical_subject": false,
+          "broad_text_contains_exclusion_term": true,
+          "passes_canonical_subject_exclusion_operand": true,
+          "passes_legacy_text_exclusion_operand": false,
+          "eligible_under_reviewed_subject_contract": false,
+          "eligible_under_original_contradictory_decision": false,
+          "explanation": "The exclusion operands disagree, proving they are not interchangeable fields. Neither complete query accepts this candidate because the inclusion or contradiction gate blocks it."
+        }
+      ]
+    }
+  ],
+  "preservation": {
+    "original_files": {
+      "reports/search_v2c_a_gold_queries.jsonl": {
+        "sha256": "a8094c247bcfab8c168796ea7cd8c112cc8818a0b7ac8011197e0540dc655208",
+        "rows": 136
+      },
+      "reports/search_v2c_a_metamorphic_queries.jsonl": {
+        "sha256": "3881d018906b2b50050f1d1ab6e341d5a88bcc162ef5e8de83a0babf5da7cd99",
+        "rows": 1000
+      },
+      "tests/test_search_v2c_a.py": {
+        "sha256": "05779a4a23270230c167482ddb4b6f07a617e36ab52c5b0156b83d834b2c84ab"
+      }
+    },
+    "originals_modified": false,
+    "historical_assertions_modified": false
+  }
+}

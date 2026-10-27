@@ -28,10 +28,10 @@ class LibraryDigitalAsset(BaseModel):
     asset_id: UUID
     library_id: UUID
     uploaded_by_user_id: int
-    asset_type: Literal['PDF']
+    asset_type: Literal['PDF', 'TXT', 'DOCX']
     title: str
     original_filename: str
-    media_type: Literal['application/pdf']
+    media_type: Literal['application/pdf', 'text/plain', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
     byte_size: int
     checksum: str
     storage_key: str

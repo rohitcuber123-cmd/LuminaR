@@ -1,0 +1,928 @@
+{
+  "broader_exclusion_assertions": 9,
+  "all_nine_independently_reviewed": true,
+  "AI_REVIEWED": 9,
+  "HUMAN_REVIEWED": 0,
+  "raw_historical_suite": "Preserved; must run fresh and report exact failures",
+  "reviewed_current_contract_suite": "New versioned tests; original assertions remain untouched",
+  "cases": [
+    {
+      "test": "tests.test_search_v2c_a::test_curated_candidate_plan[gold-065]",
+      "review_id": "gold-065",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "The bare category phrase explicitly excludes the scoped canonical subject Romance. It supplies a category predicate only, not a second literal-text ban. The positive Fiction independently names a scoped canonical subject.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "A critical discussion of Romance",
+            "author": "Review Example Author",
+            "subjects": [
+              "Fiction"
+            ],
+            "description": "The phrase Romance appears here, but the book is not catalogued in that category.",
+            "rating": 4.7
+          },
+          "eligible": true,
+          "reason": "The canonical excluded subject is absent. Mere negative wording in title/description does not trigger a category-only exclusion."
+        },
+        {
+          "candidate": {
+            "title": "A catalogue example",
+            "author": "Review Example Author",
+            "subjects": [
+              "Fiction",
+              "Romance"
+            ],
+            "description": "No excluded wording is needed in title/description.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "At least one excluded canonical subject is present, so category exclusion rejects the candidate."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "EXECUTABLE",
+        "executable": true,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "exclude_subjects": [
+          "Romance"
+        ],
+        "exclude_terms": [],
+        "rating_min": null,
+        "rating_max": null,
+        "intent": "BROWSE_CATEGORY"
+      },
+      "historical_failure": {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-065]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Romance'], 'actual': []}} = mismatches({'id': 'gold-065', 'query': 'fiction not romance', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction not romance', mode='SMART', semantic_text=None, title_text=None, author_text=None, subjec...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      }
+    },
+    {
+      "test": "tests.test_search_v2c_a::test_curated_candidate_plan[gold-066]",
+      "review_id": "gold-066",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "The bare category phrase explicitly excludes the scoped canonical subject Romance. It supplies a category predicate only, not a second literal-text ban. The positive Fiction independently names a scoped canonical subject.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "A critical discussion of Romance",
+            "author": "Review Example Author",
+            "subjects": [
+              "Fiction"
+            ],
+            "description": "The phrase Romance appears here, but the book is not catalogued in that category.",
+            "rating": 4.7
+          },
+          "eligible": true,
+          "reason": "The canonical excluded subject is absent. Mere negative wording in title/description does not trigger a category-only exclusion."
+        },
+        {
+          "candidate": {
+            "title": "A catalogue example",
+            "author": "Review Example Author",
+            "subjects": [
+              "Fiction",
+              "Romance"
+            ],
+            "description": "No excluded wording is needed in title/description.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "At least one excluded canonical subject is present, so category exclusion rejects the candidate."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "EXECUTABLE",
+        "executable": true,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "exclude_subjects": [
+          "Romance"
+        ],
+        "exclude_terms": [],
+        "rating_min": null,
+        "rating_max": null,
+        "intent": "BROWSE_CATEGORY"
+      },
+      "historical_failure": {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-066]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Romance'], 'actual': []}} = mismatches({'id': 'gold-066', 'query': 'fiction excluding romance', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction excluding romance', mode='SMART', semantic_text=None, title_text=None, author_text=None, ...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      }
+    },
+    {
+      "test": "tests.test_search_v2c_a::test_curated_candidate_plan[gold-069]",
+      "review_id": "gold-069",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "The bare category phrase explicitly excludes the scoped canonical subject Military History. It supplies a category predicate only, not a second literal-text ban. The positive History independently names a scoped canonical subject.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "A critical discussion of Military History",
+            "author": "Review Example Author",
+            "subjects": [
+              "History"
+            ],
+            "description": "The phrase Military History appears here, but the book is not catalogued in that category.",
+            "rating": 4.7
+          },
+          "eligible": true,
+          "reason": "The canonical excluded subject is absent. Mere negative wording in title/description does not trigger a category-only exclusion."
+        },
+        {
+          "candidate": {
+            "title": "A catalogue example",
+            "author": "Review Example Author",
+            "subjects": [
+              "History",
+              "Military History"
+            ],
+            "description": "No excluded wording is needed in title/description.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "At least one excluded canonical subject is present, so category exclusion rejects the candidate."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "EXECUTABLE",
+        "executable": true,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [
+          "History"
+        ],
+        "exclude_subjects": [
+          "Military History"
+        ],
+        "exclude_terms": [],
+        "rating_min": null,
+        "rating_max": null,
+        "intent": "BROWSE_CATEGORY"
+      },
+      "historical_failure": {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-069]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Military History'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Military History'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Military History'], 'actual': []}} = mismatches({'id': 'gold-069', 'query': 'history without military history', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['History'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='history without military history', mode='SMART', semantic_text=None, title_text=None, author_text...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      }
+    },
+    {
+      "test": "tests.test_search_v2c_a::test_curated_candidate_plan[gold-094]",
+      "review_id": "gold-094",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "The request requires canonical Fiction and excludes the same canonical Fiction. No candidate can satisfy both predicates until the conflict is resolved; no literal text exclusion is needed to establish the contradiction.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "A book",
+            "author": "Review Example Author",
+            "subjects": [
+              "Fiction"
+            ],
+            "description": "Independent review example.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "It satisfies inclusion but violates the same subject exclusion."
+        },
+        {
+          "candidate": {
+            "title": "A book",
+            "author": "Review Example Author",
+            "subjects": [
+              "History"
+            ],
+            "description": "Independent review example.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "It avoids exclusion but fails required Fiction inclusion."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "CONTRADICTORY",
+        "executable": false,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "exclude_subjects": [
+          "Fiction"
+        ],
+        "exclude_terms": [],
+        "rating_min": null,
+        "rating_max": null,
+        "intent": "BROWSE_CATEGORY"
+      },
+      "historical_failure": {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-094]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Fiction'], 'actual': []}} = mismatches({'id': 'gold-094', 'query': 'fiction excluding fiction', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction excluding fiction', mode='SMART', semantic_text=None, title_text=None, author_text=None, ...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      }
+    },
+    {
+      "test": "tests.test_search_v2c_a::test_curated_candidate_plan[gold-095]",
+      "review_id": "gold-095",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "The request requires canonical Fiction and excludes the same canonical Fiction. No candidate can satisfy both predicates until the conflict is resolved; no literal text exclusion is needed to establish the contradiction.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "A book",
+            "author": "Review Example Author",
+            "subjects": [
+              "Fiction"
+            ],
+            "description": "Independent review example.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "It satisfies inclusion but violates the same subject exclusion."
+        },
+        {
+          "candidate": {
+            "title": "A book",
+            "author": "Review Example Author",
+            "subjects": [
+              "History"
+            ],
+            "description": "Independent review example.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "It avoids exclusion but fails required Fiction inclusion."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "CONTRADICTORY",
+        "executable": false,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "exclude_subjects": [
+          "Fiction"
+        ],
+        "exclude_terms": [],
+        "rating_min": null,
+        "rating_max": null,
+        "intent": "BROWSE_CATEGORY"
+      },
+      "historical_failure": {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-095]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Fiction'], 'actual': []}} = mismatches({'id': 'gold-095', 'query': 'include Fiction and exclude Fiction', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='include Fiction and exclude Fiction', mode='SMART', semantic_text=None, title_text=None, author_t...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      }
+    },
+    {
+      "test": "tests.test_search_v2c_a::test_mixed_negative_refinement_and_instead_provenance",
+      "review_id": "mixed_refinement",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "The current input adds canonical Romance exclusion and a rating strictly above 4. It does not revoke the prior machine-learning topic. The topic, category exclusion, and rating bound must all survive the refinement.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "Machine learning and romance vocabulary",
+            "author": "Review Example Author",
+            "subjects": [
+              "History"
+            ],
+            "description": "An account of machine learning; Romance is incidental wording, not a canonical subject.",
+            "rating": 4.5
+          },
+          "eligible": true,
+          "reason": "The prior topic is present, canonical Romance is absent, and rating exceeds 4."
+        },
+        {
+          "candidate": {
+            "title": "Machine learning",
+            "author": "Review Example Author",
+            "subjects": [
+              "Romance"
+            ],
+            "description": "Independent review example.",
+            "rating": 4.5
+          },
+          "eligible": false,
+          "reason": "The canonical excluded category is present."
+        },
+        {
+          "candidate": {
+            "title": "Machine learning",
+            "author": "Review Example Author",
+            "subjects": [
+              "History"
+            ],
+            "description": "Independent review example.",
+            "rating": 4
+          },
+          "eligible": false,
+          "reason": "Above 4 is strict; equality at 4 does not satisfy the semantic bound."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "EXECUTABLE",
+        "executable": true,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [],
+        "exclude_subjects": [
+          "Romance"
+        ],
+        "exclude_terms": [],
+        "rating_min": 4,
+        "rating_max": null,
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "machine learning",
+        "rating_min_exclusive": true
+      },
+      "historical_failure": {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_mixed_negative_refinement_and_instead_provenance",
+        "message": "AssertionError: assert (4.0 == 4 and True and [] == ['Romance']\n +  where 4.0 = QueryPlan(raw_query='not romance rated above 4', mode='SMART', semantic_text='machine learning', title_text=None, auth...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False).rating_min\n +  and   True = QueryPlan(raw_query='not romance rated above 4', mode='SMART', semantic_text='machine learning', title_text=None, auth...r_version': 'search-v2c-c3-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False).rating_min_exclusive\n  \n  Right contains one more item: 'Romance'\n  Use -v to get more diff)"
+      }
+    },
+    {
+      "test": "tests.institution_v2g.test_query_v2a::test_kg_negative_and_rating_cannot_be_overridden",
+      "review_id": "kg_negative",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "About neural networks supplies a soft content topic, but not romance supplies a bare canonical Romance exclusion, and rated above 4 supplies a strict rating bound. These are distinct predicates; Romance wording alone does not justify rejection.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "Neural networks: beyond the romance of AI",
+            "author": "Review Example Author",
+            "subjects": [
+              "History"
+            ],
+            "description": "A discussion of neural networks.",
+            "rating": 4.8
+          },
+          "eligible": true,
+          "reason": "Topic and rating are satisfied and canonical Romance is absent, despite romance appearing in the title."
+        },
+        {
+          "candidate": {
+            "title": "Neural networks",
+            "author": "Review Example Author",
+            "subjects": [
+              "Romance"
+            ],
+            "description": "Independent review example.",
+            "rating": 4.8
+          },
+          "eligible": false,
+          "reason": "The excluded canonical category is present."
+        },
+        {
+          "candidate": {
+            "title": "Neural networks",
+            "author": "Review Example Author",
+            "subjects": [
+              "History"
+            ],
+            "description": "Independent review example.",
+            "rating": 4
+          },
+          "eligible": false,
+          "reason": "Rating equal to 4 does not satisfy above 4."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "EXECUTABLE",
+        "executable": true,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [],
+        "exclude_subjects": [
+          "Romance"
+        ],
+        "exclude_terms": [],
+        "rating_min": 4,
+        "rating_max": null,
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "neural networks",
+        "rating_min_exclusive": true
+      },
+      "historical_failure": {
+        "class": "tests.institution_v2g.test_query_v2a",
+        "name": "test_kg_negative_and_rating_cannot_be_overridden",
+        "message": "AssertionError: assert [] == ['Romance']\n  \n  Right contains one more item: 'Romance'\n  Use -v to get more diff"
+      }
+    },
+    {
+      "test": "tests.institution_v2g.test_query_v2c_b::test_one_chip_removal_keeps_other_subjects_and_exclusions[False]",
+      "review_id": "chip_removal_without_session",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "The chip action removes only included Fiction and excluded Romance. Included Mystery, excluded Biography, and rating strictly above 3 remain. The absence or presence of a session does not authorize deleting the other list items or unrelated rating.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "A mystery",
+            "author": "Review Example Author",
+            "subjects": [
+              "Mystery",
+              "Romance"
+            ],
+            "description": "Independent review example.",
+            "rating": 3.8
+          },
+          "eligible": true,
+          "reason": "Mystery remains required, removed Romance exclusion no longer rejects, and the rating bound is met."
+        },
+        {
+          "candidate": {
+            "title": "A biography mystery",
+            "author": "Review Example Author",
+            "subjects": [
+              "Mystery",
+              "Biography"
+            ],
+            "description": "Independent review example.",
+            "rating": 4.2
+          },
+          "eligible": false,
+          "reason": "The unaddressed Biography exclusion must remain active."
+        },
+        {
+          "candidate": {
+            "title": "A mystery",
+            "author": "Review Example Author",
+            "subjects": [
+              "Mystery"
+            ],
+            "description": "Independent review example.",
+            "rating": 3
+          },
+          "eligible": false,
+          "reason": "The unaddressed strict rating bound must remain active."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "EXECUTABLE",
+        "executable": true,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [
+          "Mystery"
+        ],
+        "exclude_subjects": [
+          "Biography"
+        ],
+        "exclude_terms": [],
+        "rating_min": 3,
+        "rating_max": null,
+        "intent": "BROWSE_CATEGORY",
+        "rating_min_exclusive": true
+      },
+      "historical_failure": {
+        "class": "tests.institution_v2g.test_query_v2c_b",
+        "name": "test_one_chip_removal_keeps_other_subjects_and_exclusions[False]",
+        "message": "AssertionError: assert (['Mystery'] == ['Mystery']\n  \n  Use -v to get more diff and [] == ['Biography']\n  \n  Right contains one more item: 'Biography'\n  Use -v to get more diff)"
+      }
+    },
+    {
+      "test": "tests.institution_v2g.test_query_v2c_b::test_one_chip_removal_keeps_other_subjects_and_exclusions[True]",
+      "review_id": "chip_removal_with_session",
+      "original_accepted_behavior": "Canonical subject exclusion plus a broad text-negative assertion",
+      "current_behavior": "Canonical subject exclusion only; other tested filters/state/actions remain required",
+      "source_change": "C3 search/query_repair.py removed duplicate broad text composition; C4 preserves it and applies same rule to subject-exclude clarification choices",
+      "candidate_eligibility_changes": true,
+      "candidate_set_effect": "Books with incidental excluded words but without the excluded canonical category remain eligible",
+      "security_changes": false,
+      "session_ownership_changes": false,
+      "session_semantic_change": "Only explicit query/refinement or addressed chip item is edited",
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible_to_reviewer": false,
+      "reason": "The chip action removes only included Fiction and excluded Romance. Included Mystery, excluded Biography, and rating strictly above 3 remain. The absence or presence of a session does not authorize deleting the other list items or unrelated rating.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "A mystery",
+            "author": "Review Example Author",
+            "subjects": [
+              "Mystery",
+              "Romance"
+            ],
+            "description": "Independent review example.",
+            "rating": 3.8
+          },
+          "eligible": true,
+          "reason": "Mystery remains required, removed Romance exclusion no longer rejects, and the rating bound is met."
+        },
+        {
+          "candidate": {
+            "title": "A biography mystery",
+            "author": "Review Example Author",
+            "subjects": [
+              "Mystery",
+              "Biography"
+            ],
+            "description": "Independent review example.",
+            "rating": 4.2
+          },
+          "eligible": false,
+          "reason": "The unaddressed Biography exclusion must remain active."
+        },
+        {
+          "candidate": {
+            "title": "A mystery",
+            "author": "Review Example Author",
+            "subjects": [
+              "Mystery"
+            ],
+            "description": "Independent review example.",
+            "rating": 3
+          },
+          "eligible": false,
+          "reason": "The unaddressed strict rating bound must remain active."
+        }
+      ],
+      "reviewed_expected_fields": {
+        "decision": "EXECUTABLE",
+        "executable": true,
+        "title_text": null,
+        "author_text": null,
+        "exact_text": null,
+        "subjects": [
+          "Mystery"
+        ],
+        "exclude_subjects": [
+          "Biography"
+        ],
+        "exclude_terms": [],
+        "rating_min": 3,
+        "rating_max": null,
+        "intent": "BROWSE_CATEGORY",
+        "rating_min_exclusive": true
+      },
+      "historical_failure": {
+        "class": "tests.institution_v2g.test_query_v2c_b",
+        "name": "test_one_chip_removal_keeps_other_subjects_and_exclusions[True]",
+        "message": "AssertionError: assert (['Mystery'] == ['Mystery']\n  \n  Use -v to get more diff and [] == ['Biography']\n  \n  Right contains one more item: 'Biography'\n  Use -v to get more diff)"
+      }
+    }
+  ],
+  "additional_title_policy_changes": [
+    {
+      "id": "gold-043",
+      "query": "Foundation by Asimov",
+      "original_expected": {
+        "semantic_text": null,
+        "subjects": [],
+        "author_text": "asimov",
+        "title_text": "foundation",
+        "exact_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclude_terms": [],
+        "sort": "RELEVANCE",
+        "decision_type": "EXECUTABLE"
+      },
+      "reviewed_field_overrides": {
+        "decision_type": "EXECUTABLE",
+        "title_text": null,
+        "author_text": "asimov",
+        "exact_text": null,
+        "subjects": [],
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "rating_min": null,
+        "rating_max": null,
+        "semantic_text": "foundation"
+      },
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible": false,
+      "group": "EXPLICIT_C4_FREE_PREFIX_TITLE_POLICY",
+      "reason": "By explicitly supplies the author operand Asimov. The prefix Foundation is free text without explicit title syntax. The user explicitly forbids inferring title_text from this position, and no title catalog is supplied. Preserve the prefix as soft text rather than exact title identity or an inferred numeric constraint.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "Foundation: an essay collection",
+            "author": "Asimov",
+            "subjects": [],
+            "description": "Independent review example.",
+            "rating": 4.7
+          },
+          "eligible": true,
+          "reason": "The author predicate is satisfied; the free prefix is relevant without requiring exact title identity."
+        },
+        {
+          "candidate": {
+            "title": "Foundation",
+            "author": "An unrelated author",
+            "subjects": [],
+            "description": "Independent review example.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "Matching free text does not remove the explicitly supplied author-only AND predicate."
+        }
+      ],
+      "unresolved_fields": {
+        "soft_prefix_production_carrier": "The supplied output field list has no separate soft remainder field. Preserve the prefix there when applying this contract; do not put it in title_text or exact_text.",
+        "intent": "The supplied intent descriptions do not uniquely classify combined author and soft-prefix text."
+      }
+    },
+    {
+      "id": "gold-056",
+      "query": "1984 by George Orwell",
+      "original_expected": {
+        "semantic_text": null,
+        "subjects": [],
+        "author_text": "george orwell",
+        "title_text": "1984",
+        "exact_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclude_terms": [],
+        "sort": "RELEVANCE",
+        "decision_type": "EXECUTABLE"
+      },
+      "reviewed_field_overrides": {
+        "decision_type": "EXECUTABLE",
+        "title_text": null,
+        "author_text": "george orwell",
+        "exact_text": null,
+        "subjects": [],
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "rating_min": null,
+        "rating_max": null,
+        "semantic_text": "1984"
+      },
+      "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+      "review_status": "AI_REVIEWED",
+      "parser_output_visible": false,
+      "group": "EXPLICIT_C4_FREE_PREFIX_TITLE_POLICY",
+      "reason": "By explicitly supplies the author operand George Orwell. The prefix 1984 is free text without explicit title syntax. The user explicitly forbids inferring title_text from this position, and no title catalog is supplied. Preserve the prefix as soft text rather than exact title identity or an inferred numeric constraint.",
+      "eligibility_examples": [
+        {
+          "candidate": {
+            "title": "1984: an essay collection",
+            "author": "George Orwell",
+            "subjects": [],
+            "description": "Independent review example.",
+            "rating": 4.7
+          },
+          "eligible": true,
+          "reason": "The author predicate is satisfied; the free prefix is relevant without requiring exact title identity."
+        },
+        {
+          "candidate": {
+            "title": "1984",
+            "author": "An unrelated author",
+            "subjects": [],
+            "description": "Independent review example.",
+            "rating": 4.7
+          },
+          "eligible": false,
+          "reason": "Matching free text does not remove the explicitly supplied author-only AND predicate."
+        }
+      ],
+      "unresolved_fields": {
+        "soft_prefix_production_carrier": "The supplied output field list has no separate soft remainder field. Preserve the prefix there when applying this contract; do not put it in title_text or exact_text.",
+        "intent": "The supplied intent descriptions do not uniquely classify combined author and soft-prefix text."
+      }
+    }
+  ],
+  "previous_C3_broader_assertions_reviewed": 9,
+  "additional_C4_subject_choice_assertion_reviewed": 1,
+  "total_broader_exclusion_assertions_reviewed": 10,
+  "additional_subject_choice_delta": {
+    "test": "tests.institution_v2g.test_query_v2c_b::test_choices_reuse_parser_and_validate_before_commit[include Romance but exclude Romance-1-None-<lambda>]",
+    "review_id": "clarification_subject_exclude",
+    "original_accepted_behavior": "Selecting canonical Exclude Romance also added a broad text ban",
+    "current_behavior": "Selecting canonical Exclude Romance edits only the canonical predicate; pending ownership, commit/replay lifecycle retained",
+    "source_change": "search/query_interaction.py transformer subject-exclude branch",
+    "candidate_eligibility_changes": true,
+    "security_changes": false,
+    "session_ownership_changes": false,
+    "classification": "SAFER_BEHAVIOR_WITH_VERSIONED_CONTRACT_CHANGE",
+    "reviewed_fields": {
+      "decision": "EXECUTABLE",
+      "executable": true,
+      "title_text": null,
+      "author_text": null,
+      "exact_text": null,
+      "subjects": [],
+      "exclude_subjects": [
+        "Romance"
+      ],
+      "exclude_terms": [],
+      "rating_min": null,
+      "rating_max": null,
+      "intent": "BROWSE_CATEGORY"
+    },
+    "provenance": "Frozen independently authored record before original-assertion comparison"
+  },
+  "fresh_final_evidence": {
+    "raw_unique_cases": 2281,
+    "raw_failures": [
+      {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-043]",
+        "message": "AssertionError: {'semantic_text': {'expected': None, 'actual': 'foundation'}, 'title_text': {'expected': 'foundation', 'actual': None}}\nassert not {'semantic_text': {'expected': None, 'actual': 'foundation'}, 'title_text': {'expected': 'foundation', 'actual': None}}\n +  where {'semantic_text': {'expected': None, 'actual': 'foundation'}, 'title_text': {'expected': 'foundation', 'actual': None}} = mismatches({'id': 'gold-043', 'query': 'Foundation by Asimov', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': [], 'author_text': 'asimov', 'title_text': 'foundation', ...}, ...}, QueryPlan(raw_query='Foundation by Asimov', mode='SMART', semantic_text='foundation', title_text=None, author_text='as...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      },
+      {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-056]",
+        "message": "AssertionError: {'semantic_text': {'expected': None, 'actual': '1984'}, 'title_text': {'expected': '1984', 'actual': None}}\nassert not {'semantic_text': {'expected': None, 'actual': '1984'}, 'title_text': {'expected': '1984', 'actual': None}}\n +  where {'semantic_text': {'expected': None, 'actual': '1984'}, 'title_text': {'expected': '1984', 'actual': None}} = mismatches({'id': 'gold-056', 'query': '1984 by George Orwell', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': [], 'author_text': 'george orwell', 'title_text': '1984', ...}, ...}, QueryPlan(raw_query='1984 by George Orwell', mode='SMART', semantic_text='1984', title_text=None, author_text='george ...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      },
+      {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-065]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Romance'], 'actual': []}} = mismatches({'id': 'gold-065', 'query': 'fiction not romance', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction not romance', mode='SMART', semantic_text=None, title_text=None, author_text=None, subjec...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      },
+      {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-066]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Romance'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Romance'], 'actual': []}} = mismatches({'id': 'gold-066', 'query': 'fiction excluding romance', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction excluding romance', mode='SMART', semantic_text=None, title_text=None, author_text=None, ...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      },
+      {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-069]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Military History'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Military History'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Military History'], 'actual': []}} = mismatches({'id': 'gold-069', 'query': 'history without military history', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['History'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='history without military history', mode='SMART', semantic_text=None, title_text=None, author_text...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      },
+      {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-094]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Fiction'], 'actual': []}} = mismatches({'id': 'gold-094', 'query': 'fiction excluding fiction', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='fiction excluding fiction', mode='SMART', semantic_text=None, title_text=None, author_text=None, ...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      },
+      {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_curated_candidate_plan[gold-095]",
+        "message": "AssertionError: {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\nassert not {'exclude_terms': {'expected': ['Fiction'], 'actual': []}}\n +  where {'exclude_terms': {'expected': ['Fiction'], 'actual': []}} = mismatches({'id': 'gold-095', 'query': 'include Fiction and exclude Fiction', 'mode': 'SMART', 'expected': {'semantic_text': None, 'subjects': ['Fiction'], 'author_text': None, 'title_text': None, ...}, ...}, QueryPlan(raw_query='include Fiction and exclude Fiction', mode='SMART', semantic_text=None, title_text=None, author_t...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      },
+      {
+        "class": "tests.test_search_v2c_a",
+        "name": "test_mixed_negative_refinement_and_instead_provenance",
+        "message": "AssertionError: assert (4.0 == 4 and True and [] == ['Romance']\n +  where 4.0 = QueryPlan(raw_query='not romance rated above 4', mode='SMART', semantic_text='machine learning', title_text=None, auth...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False).rating_min\n +  and   True = QueryPlan(raw_query='not romance rated above 4', mode='SMART', semantic_text='machine learning', title_text=None, auth...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False).rating_min_exclusive\n  \n  Right contains one more item: 'Romance'\n  Use -v to get more diff)"
+      },
+      {
+        "class": "tests.institution_v2g.test_query_v2a",
+        "name": "test_kg_negative_and_rating_cannot_be_overridden",
+        "message": "AssertionError: assert [] == ['Romance']\n  \n  Right contains one more item: 'Romance'\n  Use -v to get more diff"
+      },
+      {
+        "class": "tests.institution_v2g.test_query_v2c_b",
+        "name": "test_choices_reuse_parser_and_validate_before_commit[include Romance but exclude Romance-1-None-<lambda>]",
+        "message": "AssertionError: assert (True and False)\n +  where True = executable(QueryPlan(raw_query='include Romance but exclude Romance', mode='SMART', semantic_text=None, title_text=None, author_t...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))\n +  and   False = <function <lambda> at 0x000001654400C180>(QueryPlan(raw_query='include Romance but exclude Romance', mode='SMART', semantic_text=None, title_text=None, author_t...r_version': 'search-v2c-c4-deterministic-1'}, exclusive_formats=[], excluded_formats=[], physical_available_only=False))"
+      },
+      {
+        "class": "tests.institution_v2g.test_query_v2c_b",
+        "name": "test_one_chip_removal_keeps_other_subjects_and_exclusions[False]",
+        "message": "AssertionError: assert (['Mystery'] == ['Mystery']\n  \n  Use -v to get more diff and [] == ['Biography']\n  \n  Right contains one more item: 'Biography'\n  Use -v to get more diff)"
+      },
+      {
+        "class": "tests.institution_v2g.test_query_v2c_b",
+        "name": "test_one_chip_removal_keeps_other_subjects_and_exclusions[True]",
+        "message": "AssertionError: assert (['Mystery'] == ['Mystery']\n  \n  Use -v to get more diff and [] == ['Biography']\n  \n  Right contains one more item: 'Biography'\n  Use -v to get more diff)"
+      }
+    ],
+    "unmapped_failures": [],
+    "reviewed_parser": {
+      "path": "reports\\search_v2c_c4_reviewed_parser.xml",
+      "cases": 1249,
+      "passed": 1249,
+      "failures": [],
+      "skipped": [],
+      "classes": {
+        "tests.test_search_v2c_c4_contract": 68,
+        "tests.test_search_v2c_c4_safety": 23,
+        "tests.test_search_v2c_c4_reviewed_legacy": 1158
+      },
+      "status": "PASS"
+    },
+    "reviewed_tenant": {
+      "path": "reports\\search_v2c_c4_reviewed_tenant.xml",
+      "cases": 59,
+      "passed": 59,
+      "failures": [],
+      "skipped": [],
+      "classes": {
+        "tests.institution_v2g.test_query_v2c_c4_reviewed_v2a": 10,
+        "tests.institution_v2g.test_query_v2c_c4_reviewed_b": 49
+      },
+      "status": "PASS"
+    },
+    "status": "PASS",
+    "broader_exclusion_assertions_total": 10,
+    "old_assertions": 9,
+    "additional_C4_clarification_choice_assertions": 1
+  }
+}

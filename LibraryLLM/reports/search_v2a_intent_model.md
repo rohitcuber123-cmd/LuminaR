@@ -1,0 +1,5 @@
+# Intent-aware execution
+
+FIND_EXACT routes identifiers/exact mode to canonical lookup; Title/Author mode uses intentional lexical lookup. FIND_AUTHOR applies canonical author constraints. BROWSE_CATEGORY uses real strict subject membership. DISCOVER_TOPIC emphasizes cleaned-topic HNSW retrieval. LEARN, REFERENCE and RESEARCH use cleaned topics plus soft CrossEncoder query preferences (introductory guide, reference handbook, research studies), with bounded actual description text available to reranking. They never become fabricated database filters. FIND_ONLINE/FIND_AVAILABLE enforce real capability/stock filters. DISCOVER_RELATED requests topic retrieval with optional same-scope graph neighbors.
+
+Priority: explicit exact/author/lexical task, then explicit availability/Online task, then pure category; mixed topic/category stays discovery. Each request stands alone. The intent label corresponds to retrieval/filter/rerank behavior, not user history. Known ambiguity rules from V1 remain conservative.

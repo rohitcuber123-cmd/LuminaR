@@ -1,0 +1,214 @@
+{
+  "status": "PASS",
+  "observed_at": "2026-10-23T22:07:45.533706+00:00",
+  "browser": "Real Chromium IAB on localhost5173; fresh Search8003 process44056 started after C4 freeze",
+  "cases": [
+    {
+      "scope": "GLOBAL",
+      "query": "rating above 4",
+      "chips": [
+        "Rating: > 4"
+      ],
+      "rendered_article_cards": 10,
+      "typed_decision": "EXECUTABLE",
+      "observed": "All ten displayed ratings >4",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating at least 4",
+      "chips": [
+        "Rating: \u2265 4"
+      ],
+      "rendered_article_cards": 10,
+      "typed_decision": "EXECUTABLE",
+      "observed": "All ratings >=4; boundary4 displayed",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating below 4",
+      "chips": [
+        "Rating: < 4"
+      ],
+      "rendered_article_cards": 10,
+      "typed_decision": "EXECUTABLE",
+      "observed": "All ten displayed ratings <4",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating at most 4",
+      "chips": [
+        "Rating: \u2264 4"
+      ],
+      "rendered_article_cards": 10,
+      "typed_decision": "EXECUTABLE",
+      "observed": "All ratings <=4; boundary4 displayed",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating at least 4.5 but below 4.5",
+      "chips": [
+        "Rating: \u2265 4.5",
+        "Rating: < 4.5"
+      ],
+      "rendered_article_cards": 0,
+      "typed_decision": "CONTRADICTORY",
+      "observed": "Conflict decision; Edit your search to continue",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating above 4 and at most 4",
+      "chips": [
+        "Rating: > 4",
+        "Rating: \u2264 4"
+      ],
+      "rendered_article_cards": 0,
+      "typed_decision": "CONTRADICTORY",
+      "observed": "Conflict decision; Edit your search to continue",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating at least 4 and at most 4",
+      "chips": [
+        "Rating: \u2265 4",
+        "Rating: \u2264 4"
+      ],
+      "rendered_article_cards": 10,
+      "typed_decision": "EXECUTABLE",
+      "observed": "All ten displayed ratings exactly4; no blocked decision",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books titled \"1984\"",
+      "chips": [
+        "Title / Author: 1984"
+      ],
+      "rendered_article_cards": 10,
+      "typed_decision": "EXECUTABLE",
+      "observed": "1984 title results; no year/rating chip",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books about Python 3",
+      "chips": [
+        "Topic: python 3"
+      ],
+      "rendered_article_cards": 7,
+      "typed_decision": "EXECUTABLE",
+      "observed": "Python3 results; no rating/year chip",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books by Terry Pratchett about witches",
+      "chips": [
+        "Topic: witches",
+        "Author: terry pratchett"
+      ],
+      "rendered_article_cards": 1,
+      "typed_decision": "EXECUTABLE",
+      "observed": "Equal Rites / Wyrd Sisters / Witches Abroad by Terry Pratchett",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "rating above",
+      "chips": [],
+      "rendered_article_cards": 0,
+      "typed_decision": "INCOMPLETE",
+      "observed": "Rating-value clarification; unfinished decision; Edit your search to continue",
+      "status": "PASS"
+    },
+    {
+      "scope": "GLOBAL",
+      "query": "books under 250 pages",
+      "chips": [],
+      "rendered_article_cards": 0,
+      "typed_decision": "UNSUPPORTED",
+      "observed": "Scope cannot enforce strict field; remove page-count choice; no cards",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "Fiction not Romance",
+      "chips": [
+        "Genre / Subject: Fiction",
+        "Exclude subject: Romance"
+      ],
+      "rendered_article_cards": 2,
+      "typed_decision": "EXECUTABLE",
+      "observed": "Wizards Fiction4.5 and Mystery Fiction5; canonical exclusion only",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "include Fiction but exclude Fiction",
+      "chips": [
+        "Genre / Subject: Fiction",
+        "Exclude subject: Fiction"
+      ],
+      "rendered_article_cards": 0,
+      "typed_decision": "CONTRADICTORY",
+      "observed": "Same canonical subject conflict; no cards",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "online-only and physical-only",
+      "chips": [
+        "Format: Online",
+        "Format: Physical"
+      ],
+      "rendered_article_cards": 0,
+      "typed_decision": "CONTRADICTORY",
+      "observed": "Exclusive format conflict; no cards",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_PATRON",
+      "query": "online and physical",
+      "chips": [
+        "Format: Physical + Online"
+      ],
+      "rendered_article_cards": 0,
+      "typed_decision": "EXECUTABLE",
+      "observed": "No books match all selected filters.; valid execution, no blocked-decision panel; all fixture books physical only",
+      "status": "PASS"
+    },
+    {
+      "scope": "PUBLIC_PATRON",
+      "query": "rating above 4.5",
+      "chips": [
+        "Rating: > 4.5"
+      ],
+      "rendered_article_cards": 3,
+      "typed_decision": "EXECUTABLE",
+      "observed": "All three displayed ratings5",
+      "status": "PASS"
+    },
+    {
+      "scope": "PRIVATE_OUTSIDER",
+      "query": "open private catalogue",
+      "chips": [],
+      "rendered_article_cards": 0,
+      "typed_decision": "ACCESS_DENIED",
+      "observed": "Unable to open this library / Library resource not found.; no private title, vocabulary or search controls",
+      "status": "PASS"
+    }
+  ],
+  "private_leaks_observed": 0,
+  "reversible_cleanup_verified": true,
+  "fixtures": "reports\\search_v2c_c4_fixture.json",
+  "screenshot": "Neutral outsider denial captured in conversation browser-tool evidence; no standalone image file claimed",
+  "credentials": "Retained only in local credentials file for disabled disposable QA accounts; not copied to reports",
+  "source_freeze": "search_v2c_c4_freeze.json",
+  "loading_snapshots": "Transient snapshots discarded; final settled chips and decisions recorded.",
+  "limitations": "Focused checks of actual execution and chips; browser alone does not establish full development acceptance."
+}

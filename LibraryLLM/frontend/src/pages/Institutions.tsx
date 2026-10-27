@@ -1,3 +1,4 @@
+import { LuminarSelect } from '../components/LuminarSelect'
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Modal } from '../components/StaffUI'
@@ -5,6 +6,7 @@ import { institutionApi, type Library, type LibraryContext, type Page, type Invi
 import { activeLibrary, useInstitutionStore } from '../store/useInstitutionStore'
 import { isLibraryStaff, libraryWorkspaceHome, membershipLabel } from '../lib/libraryWorkspace'
 import { PageHeading } from '../components/WorkspaceUI'
+import { scrollToContentAnchor } from '../lib/paginationScroll'
 import { useAuthStore } from '../store/useAuthStore'
 import './Staff.css'
 import './Institutions.css'
@@ -85,7 +87,7 @@ export function ExploreLibrariesPage() {
   }
   return <div className="global-page institutions"><PageHeading eyebrow="Libraries" title="Explore Libraries" description="Find a public library or join your institution." actions={<><Link className="ui-button ui-secondary" to="/account/libraries">My libraries</Link><Link className="ui-button" to="/libraries/register">Register Your Library</Link></>} />
     <form className="institution-toolbar" onSubmit={e => { e.preventDefault(); setPage(0); setSearch(query.trim()) }}><input aria-label="Search libraries" placeholder="Name, slug, city, or region" maxLength={100} value={query} onChange={e => setQuery(e.target.value)} />
-      <select aria-label="Library filter" value={kind} onChange={e => { setKind(e.target.value); setPage(0) }}><option value="all">All Libraries</option><option value="public">Public</option><option value="private">Private Institutions</option><option value="mine">My Libraries</option></select><button>Search</button></form>
+      <LuminarSelect aria-label="Library filter" value={kind} onChange={e => { setKind(e.target.value); setPage(0) }}><option value="all">All Libraries</option><option value="public">Public</option><option value="private">Private Institutions</option><option value="mine">My Libraries</option></LuminarSelect><button>Search</button></form>
     {error && <p className="institution-error" role="alert">{error} <button onClick={() => setRevision(r => r + 1)}>Retry</button></p>}
     {loading ? <p role="status">Loading libraries…</p> : <><p>{data.total ?? 0} libraries found</p><div className="institution-grid">{data.results.map(library => <article className="institution-card" key={library.library_id}>
       <span className="institution-badge">{library.access_mode === 'PUBLIC' ? 'PUBLIC' : 'PRIVATE'}</span><h2>{library.name}</h2><p>{library.description || 'Welcome to this library.'}</p>
@@ -95,7 +97,7 @@ export function ExploreLibrariesPage() {
         if (!library.membership && library.access_mode === 'PRIVATE_CODE') { setJoining(library); setCode(''); setJoinError('') }
         else void enter(library)
       }}>{library.membership?.status === 'ACTIVE' ? isLibraryStaff(library) ? 'Open Staff Workspace' : 'Open Library' : library.membership ? 'Contact library staff' : library.access_mode === 'PUBLIC' ? 'Join Library' : 'Enter Access Code'}</button>
-    </article>)}</div><div className="institution-actions"><button className="secondary" disabled={page === 0 || loading} onClick={() => setPage(p => p - 1)}>Previous</button><span>Page {page + 1}</span><button className="secondary" disabled={!data.has_more || loading} onClick={() => setPage(p => p + 1)}>Next</button></div></>}
+    </article>)}</div><div className="institution-actions"><button className="secondary" disabled={page === 0 || loading} onClick={() => { setPage(p => p - 1); requestAnimationFrame(() => scrollToContentAnchor('.institution-grid, .institutions')) }}>Previous</button><span>Page {page + 1}</span><button className="secondary" disabled={!data.has_more || loading} onClick={() => { setPage(p => p + 1); requestAnimationFrame(() => scrollToContentAnchor('.institution-grid, .institutions')) }}>Next</button></div></>}
     {joining && <Modal title={`Join ${joining.name}`} busy={busy} onClose={() => { setJoining(null); setCode('') }}><div className="institutions"><p>Enter your institution access code to join as a member.</p>
       <form className="institution-form" onSubmit={e => { e.preventDefault(); void enter(joining, code) }}><label>Institution Access Code<input autoFocus type="password" autoComplete="off" maxLength={128} required value={code} onChange={e => setCode(e.target.value)} /></label>
         {joinError && <p role="alert" className="institution-error">{joinError}</p>}<button disabled={busy}>{busy ? 'Joining…' : 'Join Library'}</button></form></div></Modal>}
@@ -122,7 +124,7 @@ export function PendingInvitationsPage() {
   return <div className="global-page institutions"><PageHeading eyebrow="My account" title="Pending Invitations" description="Accept a staff invitation using the account with the invited email address." />{error && <p role="alert" className="institution-error">{error}</p>}
     <div className="institution-grid">{data.results.map(row => <article className="institution-card" key={row.invitation_id}><h2>{row.library_name}</h2><p>{row.role} · {row.email_normalized}</p><p>Expires {new Date(row.expires_at).toLocaleString()}</p>
       {row.requires_token ? <p>Open the invitation link supplied by library staff.</p> : <div className="institution-actions"><button disabled={busy} onClick={() => void respond(row, 'accept')}>Accept</button><button className="secondary" disabled={busy} onClick={() => void respond(row, 'decline')}>Decline</button></div>}
-    </article>)}</div>{!data.results.length && <p>No pending invitations.</p>}<div className="institution-actions"><button disabled={page === 0} onClick={() => setPage(p => p - 1)}>Previous</button><button disabled={(page + 1) * 20 >= (data.total ?? 0)} onClick={() => setPage(p => p + 1)}>Next</button></div><p><Link to="/libraries">Explore Libraries</Link></p></div>
+    </article>)}</div>{!data.results.length && <p>No pending invitations.</p>}<div className="institution-actions"><button disabled={page === 0} onClick={() => { setPage(p => p - 1); requestAnimationFrame(() => scrollToContentAnchor('.institution-grid, .institutions')) }}>Previous</button><button disabled={(page + 1) * 20 >= (data.total ?? 0)} onClick={() => { setPage(p => p + 1); requestAnimationFrame(() => scrollToContentAnchor('.institution-grid, .institutions')) }}>Next</button></div><p><Link to="/libraries">Explore Libraries</Link></p></div>
 }
 
 export function InvitationPage() {

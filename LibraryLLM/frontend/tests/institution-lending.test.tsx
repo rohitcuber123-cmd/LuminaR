@@ -1,3 +1,4 @@
+import { selectedValue } from './select-control'
 import assert from 'node:assert/strict'
 import { registerHooks } from 'node:module'
 import { test, beforeEach, afterEach } from 'node:test'
@@ -162,7 +163,7 @@ for (const status of ['REFERENCE_ONLY', 'TEMPORARILY_UNAVAILABLE', 'WITHDRAWN'])
 })
 test('add book shows prominent shelf and stock defaults', () => {
   mount(<BookEditor libraryId={a} onSaved={() => {}} />); assert.ok(screen.getByText('Physical copy'))
-  assert.equal((screen.getByLabelText('Circulation Status') as HTMLSelectElement).value, 'CIRCULATING')
+  assert.equal(selectedValue(screen.getByLabelText('Circulation Status')), 'CIRCULATING')
   assert.equal(screen.getByLabelText('Shelf / Location').closest('details'), null)
 })
 test('canonical Manage Stock has no editable requestable count', async () => {

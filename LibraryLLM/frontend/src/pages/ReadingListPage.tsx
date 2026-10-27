@@ -9,11 +9,17 @@ import { BookCard } from '../components/BookCard'
 import { CatalogueSurface,CatalogueGrid } from '../components/CatalogueSurface'
 import { StatePanel } from '../components/WorkspaceUI'
 import { showToast } from '../components/Toast'
-type SavedBook={target_key?:string;work_id?:string;target_type?:string;library_id?:string;library_book_id?:string;title:string;authors:string|string[];subjects?:string|string[];cover_url?:string;accessible?:boolean;book_id?:number}
+import { LIBRARY_ACCESS_DENIED } from '../lib/institutions'
+type SavedBook={target_key?:string;work_id?:string;target_type?:string;library_id?:string;library_book_id?:string;title:string;authors:string|string[];subjects?:string|string[];cover_url?:string;accessible?:boolean;book_id?:number;library_book?:DisplayBook|null}
 export function ReadingListPage() {
   const context=useProductContext(),token=useAuthStore(s=>s.token),readingList=useLibraryStore(s=>s.readingList),remove=useLibraryStore(s=>s.removeFromList)
   const [revision,setRevision]=useState(0),key=`${token}:${readingList.join('|')}:${revision}`
   const [result,setResult]=useState<{key:string;items:SavedBook[];error?:string}|null>(null),[busy,setBusy]=useState<string|null>(null)
+  useEffect(()=>{
+    const denied=(event:Event)=>{if((event as CustomEvent).detail?.session===token)setRevision(v=>v+1)}
+    window.addEventListener(LIBRARY_ACCESS_DENIED,denied)
+    return()=>window.removeEventListener(LIBRARY_ACCESS_DENIED,denied)
+  },[token])
   useEffect(()=>{let alive=true;void getReadingList().then(r=>{if(alive)setResult({key,items:r.items || []})}).catch(e=>{if(alive)setResult({key,items:[],error:e instanceof Error ? e.message : 'Unable to load reading list.'})});return()=>{alive=false}},[key])
   const current=result?.key===key ? result : null
   async function removeUnavailable(target:string){setBusy(target);try{await remove(target)}catch(e){if(token===useAuthStore.getState().token)showToast(e instanceof Error?e.message:'Unable to remove saved book.','warning',{scope:token || undefined})}finally{setBusy(null)}}
@@ -21,7 +27,7 @@ export function ReadingListPage() {
     empty={current && !current.items.length && <StatePanel title="Nothing here yet" action={<Link className="ui-button" to={context.cataloguePath}>Browse Catalog</Link>}>Add books from the catalogue to your reading list.</StatePanel>}>
     <CatalogueGrid>{current?.items.map(item=>{
       const key=item.target_key || item.work_id || '',global=globalDisplayBook({work_id:item.work_id,book_id:item.book_id,title:item.title,authors:Array.isArray(item.authors)?item.authors.join('; '):item.authors,subjects:Array.isArray(item.subjects)?item.subjects.join('|'):item.subjects,cover_url:item.cover_url},context.libraryId || '')
-      const book:DisplayBook=item.target_type==='LIBRARY_BOOK' ? {...global,display_id:item.library_book_id || key,library_id:item.library_id || '',library_book_id:item.library_book_id || null,global_work_id:null,source:'LIBRARY'} : global
+      const book:DisplayBook=item.target_type==='LIBRARY_BOOK' ? item.library_book || {...global,display_id:item.library_book_id || key,library_id:item.library_id || '',library_book_id:item.library_book_id || null,global_work_id:null,source:'LIBRARY'} : global
       return item.accessible===false ? <article key={key}><StatePanel title="Unavailable library book">Your library membership or this record is no longer available.</StatePanel><button className="assistant-button" disabled={busy===key} onClick={()=>void removeUnavailable(key)}>Remove from Reading List</button></article> : <BookCard key={key} book={book} />
     })}</CatalogueGrid>
   </CatalogueSurface>

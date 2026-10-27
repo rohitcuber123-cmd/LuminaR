@@ -1,0 +1,218 @@
+{
+  "summary": {
+    "FINAL": "PARTIAL",
+    "V2C_A_PRECONDITION_PASS": "NO",
+    "V2C_A_REGRESSION_PASS": "NO: existing 1261 pure +24 integration passed; new required probe 7 passed/1 failed.",
+    "INLINE_CLARIFICATION": "NOT_RUN: mandatory precondition failed",
+    "AMBIGUOUS_NUMBERS_SAFE": "NOT_RUN: mandatory precondition failed",
+    "INCOMPLETE_QUERY_RESOLUTION": "NOT_RUN: mandatory precondition failed",
+    "CONTRADICTION_RESOLUTION": "NOT_RUN: mandatory precondition failed",
+    "UNSUPPORTED_OPTIONS_SUPPRESSED": "NOT_RUN: mandatory precondition failed",
+    "FALSE_ZERO_RESULTS_AVOIDED": "NOT_RUN: mandatory precondition failed",
+    "CATALOGUE_AWARE_AUTOCOMPLETE": "NOT_RUN: mandatory precondition failed",
+    "GLOBAL_SUGGESTIONS": "NOT_RUN: mandatory precondition failed",
+    "PUBLIC_TENANT_SUGGESTIONS": "NOT_RUN: mandatory precondition failed",
+    "PRIVATE_TENANT_SUGGESTIONS": "NOT_RUN: mandatory precondition failed",
+    "AUTHOR_SUGGESTIONS": "NOT_RUN: mandatory precondition failed",
+    "TITLE_SUGGESTIONS": "NOT_RUN: mandatory precondition failed",
+    "SUBJECT_SUGGESTIONS": "NOT_RUN: mandatory precondition failed",
+    "SUPPORTED_FILTER_TEMPLATES": "NOT_RUN: mandatory precondition failed",
+    "STALE_RESPONSE_PROTECTION": "NOT_RUN: mandatory precondition failed",
+    "TYPO_CORRECTION": "NOT_RUN: mandatory precondition failed",
+    "CORRECTION_ACCEPTANCE": "NOT_RUN: mandatory precondition failed",
+    "CORRECTION_REJECTION": "NOT_RUN: mandatory precondition failed",
+    "QUERY_CHIP_EDITING": "NOT_RUN: mandatory precondition failed",
+    "EMPTY_KG_DISCLOSURE_FIXED": "NOT_RUN: mandatory precondition failed",
+    "V2B_PERSONALIZATION_PRESERVED": "NOT_RUN: mandatory precondition failed",
+    "PRIVATE_MEMBERSHIP_REVOCATION_PASS": "NOT_RUN: mandatory precondition failed",
+    "CROSS_TENANT_SUGGESTION_LEAK": "NOT_RUN: mandatory precondition failed",
+    "PRIVATE_CLARIFICATION_LEAK": "NOT_RUN: mandatory precondition failed",
+    "FORGED_CHOICE_ACCEPTED": "NOT_RUN: mandatory precondition failed",
+    "UNACCEPTED_QUERY_COMMITTED": "NOT_RUN: mandatory precondition failed",
+    "GLOBAL_SEARCH_PASS": "NOT_RUN: mandatory precondition failed",
+    "PUBLIC_TENANT_SEARCH_PASS": "NOT_RUN: mandatory precondition failed",
+    "PRIVATE_READY_SEARCH_PASS": "NOT_RUN: mandatory precondition failed",
+    "PRIVATE_FALLBACK_SEARCH_PASS": "NOT_RUN: mandatory precondition failed",
+    "PRIVATE_OUTSIDER_DENIAL_PASS": "NOT_RUN: mandatory precondition failed",
+    "HNSW_PRESERVED": "NOT_RUN: mandatory precondition failed",
+    "KG_PRESERVED": "NOT_RUN: mandatory precondition failed",
+    "CROSSENCODER_PRESERVED": "NOT_RUN: mandatory precondition failed",
+    "RECOMMENDATION_REGRESSION_PASS": "NOT_RUN: mandatory precondition failed",
+    "MORE_LIKE_THIS_REGRESSION_PASS": "NOT_RUN: mandatory precondition failed",
+    "STAFF_INVENTORY_EXACT_SEARCH_PASS": "NOT_RUN: mandatory precondition failed",
+    "FRONTEND_FULL_SUITE": "NOT_RUN: mandatory precondition failed",
+    "BACKEND_REGRESSION": "NOT_RUN: mandatory precondition failed",
+    "BROWSER_ACCEPTANCE": "NOT_RUN: mandatory precondition failed",
+    "ACCESSIBILITY": "NOT_RUN: mandatory precondition failed",
+    "RESPONSIVE": "NOT_RUN: mandatory precondition failed",
+    "SUGGESTION_P50_P95": "NOT_RUN: mandatory precondition failed",
+    "CLARIFICATION_P50_P95": "NOT_RUN: mandatory precondition failed",
+    "GLOBAL_SEARCH_P50_P95": "NOT_RUN: mandatory precondition failed",
+    "PUBLIC_SEARCH_P50_P95": "NOT_RUN: mandatory precondition failed",
+    "PRIVATE_READY_SEARCH_P50_P95": "NOT_RUN: mandatory precondition failed",
+    "GLOBAL_SEARCH_HEALTH": "NOT_RUN: mandatory precondition failed",
+    "V2B_SESSION_PRESERVED": "PASS: 24 current database-backed gate tests",
+    "GLOBAL_BOOK_COUNT": 5000000,
+    "GLOBAL_HNSW_REBUILT": "NO",
+    "GLOBAL_KG_REBUILT": "NO",
+    "TENANT_HNSW_KG_REBUILT": "NO",
+    "QWEN_CHANGED": "NO",
+    "V2C_C_STARTED": "NO",
+    "PART_2I_STARTED": "NO"
+  },
+  "precondition_report": "search_v2c_b_precondition.json",
+  "scope": "Precondition diagnosis only; no V2C-B implementation or acceptance claim.",
+  "failure": {
+    "query": "include romance but exclude romance",
+    "expected_decision": "CONTRADICTORY",
+    "actual_plan": {
+      "raw_query": "include romance but exclude romance",
+      "mode": "SMART",
+      "semantic_text": "include romance but",
+      "title_text": null,
+      "author_text": null,
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "rating_min_exclusive": false,
+      "rating_max_exclusive": false,
+      "year_min": null,
+      "year_max": null,
+      "year_min_exclusive": false,
+      "year_max_exclusive": false,
+      "formats": [],
+      "availability": null,
+      "language": null,
+      "exact_text": null,
+      "sort": "RELEVANCE",
+      "interpretation_confidence": 1.0,
+      "corrections": [],
+      "unknown_subject": false,
+      "suggested_subject": null,
+      "normalized_query": "include romance but exclude romance",
+      "intent": "DISCOVER_TOPIC",
+      "parser_version": "search-v2c-a-compositional-1",
+      "include_terms": [],
+      "exclude_terms": [
+        "Romance"
+      ],
+      "exclude_subjects": [
+        "Romance"
+      ],
+      "expanded_subjects": [],
+      "soft_preference": null,
+      "kg_expansion_used": false,
+      "kg_generation": null,
+      "constraint_candidates": [
+        {
+          "field": "exclude",
+          "operator": "NOT",
+          "normalized_value": "romance",
+          "source_span_start": 20,
+          "source_span_end": 35,
+          "source_text": "exclude romance",
+          "recognizer_id": "negative.explicit",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "include romance but exclude romance"
+        }
+      ],
+      "source_spans": [
+        {
+          "kind": "STRUCTURED_CONSTRAINT",
+          "start": 20,
+          "end": 35,
+          "text": "exclude romance",
+          "recognizer_id": "negative.explicit"
+        },
+        {
+          "kind": "SEMANTIC_TOPIC",
+          "start": 0,
+          "end": 7,
+          "text": "include"
+        },
+        {
+          "kind": "SEMANTIC_TOPIC",
+          "start": 8,
+          "end": 15,
+          "text": "romance"
+        },
+        {
+          "kind": "SEMANTIC_TOPIC",
+          "start": 16,
+          "end": 19,
+          "text": "but"
+        }
+      ],
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "relevant_source_spans": [],
+        "affected_fields": [],
+        "recognized_candidates": [
+          {
+            "field": "exclude",
+            "operator": "NOT",
+            "normalized_value": "romance",
+            "source_span_start": 20,
+            "source_span_end": 35,
+            "source_text": "exclude romance",
+            "recognizer_id": "negative.explicit",
+            "specificity": 100,
+            "support_status": "SUPPORTED",
+            "repair_provenance": null,
+            "source_query": "include romance but exclude romance"
+          }
+        ],
+        "unresolved_fragments": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "physical_available_only": false
+    },
+    "actual_public": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: include romance but"
+        },
+        {
+          "key": "exclude",
+          "label": "Exclude: Romance"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null
+    },
+    "fresh_database_vocabulary_confirmation": {
+      "database": "luminar_library",
+      "facet_count": 4096,
+      "Romance_present": true,
+      "same_failure": true
+    },
+    "test_file": "tests/test_search_v2c_b_precondition.py",
+    "junit": "reports/search_v2c_b_admission_probes.xml",
+    "results": {
+      "passed": 7,
+      "failed": 1
+    },
+    "command": ".venv\\Scripts\\python.exe -m pytest tests/test_search_v2c_b_precondition.py -q --junitxml=reports/search_v2c_b_admission_probes.xml"
+  },
+  "no_application_edits": true
+}

@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "qa_account_created": true,
+  "qa_email": "recommendation-runtime-93a925e1f4ac@example.com",
+  "qa_account_disabled_after_review": true,
+  "clean_global_trace": {
+    "trace_id": "3ac39e33-2ae4-4c0d-b6a1-9d9e38f204d5",
+    "qa_user_id": 465,
+    "stages": [
+      {
+        "name": "PROFILE",
+        "counts": {
+          "queries": 0,
+          "work_ids": 0,
+          "subjects": 0,
+          "authors": 0,
+          "borrowed_subjects": 0,
+          "borrowed_authors": 0,
+          "reserved_subjects": 0,
+          "reserved_authors": 0,
+          "feedback": 0,
+          "feedback_subjects": 0,
+          "feedback_authors": 0,
+          "feedback_work_scores": 0,
+          "active_issue_work_ids": 0,
+          "active_reservation_work_ids": 0,
+          "search_interests": 0
+        },
+        "inputs": "Search history, legacy issues/reservations and recommendation feedback; not tenant lending/reading-list/AI selection"
+      },
+      {
+        "name": "DIVERSITY",
+        "input_count": 0,
+        "output_count": 0,
+        "work_ids": []
+      },
+      {
+        "name": "CANONICAL_HYDRATION",
+        "input_ids": [],
+        "output_ids": []
+      }
+    ],
+    "offset": 0,
+    "limit": 10,
+    "ranking": {
+      "pool_limit": 50,
+      "cache_hit": false
+    },
+    "final_count": 0,
+    "results": [],
+    "elapsed_ms": 8.012799997231923
+  },
+  "browser_checks": [
+    {
+      "scenario": "Clean user global cold start uses explicitly labelled Popular fallback",
+      "status": "PASS",
+      "history_count": 0,
+      "global_recommendation_count": 0,
+      "popular_cards": 10
+    },
+    {
+      "scenario": "Empty Patron library uses labelled global discovery",
+      "status": "PASS",
+      "library_id": "6dc155e0-196b-46b1-8cfd-b424d188f7bd"
+    },
+    {
+      "scenario": "Clean user populated tenant cold start switches to canonical local acquisitions",
+      "status": "PASS",
+      "library_id": "6dc155e0-196b-46b1-8cfd-b424d188f7bd",
+      "links": [
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/aed140ac-c6d9-44d1-9d8d-6290402e2527",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/24549175-7fe4-4216-912d-5621f7a860d2",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/f2db6fc0-c481-4f2d-b35a-302ad87c299f",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/ac085a2e-e1d3-404a-bcac-63186544d47c",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/09cbf050-fc55-4a35-8dd3-90b74dc4b9ee",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/f3b1ddd1-721c-474a-867c-3e65cfb85db0",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/9e57cc49-0339-4c66-b914-4cb9eebfe56f",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/b6d5e0c6-a76a-4eca-8e4b-0f8b46a80f6a",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/b2417097-4200-499b-8de6-5965f547e498",
+        "/libraries/6dc155e0-196b-46b1-8cfd-b424d188f7bd/books/1ffb4ef9-8507-4bd8-b3bb-cd48096b3138"
+      ]
+    },
+    {
+      "scenario": "Cold global Popular fallback View All keeps Popular provider",
+      "status": "PASS",
+      "route": "/catalog?sort=popular",
+      "test_method": "Browser response fixture reproduces clean-account empty recommendations, real Core popular results"
+    }
+  ],
+  "personalization_inputs": {
+    "candidate_query": "Up to 10 recent search-history queries selected by recency weight (50 queried from Mongo); seed mode uses explicit book metadata.",
+    "profile": "Legacy global issues/reservations and recommendation_feedbacks, with authors/subjects and active-work exclusions.",
+    "scoring": "Semantic HNSW similarity 0.40, subject 0.15, author 0.10, borrowing 0.15, reservation 0.10, aggregate rating 0.05, popularity 0.03, availability 0.02; additive feedback adjustment 0.10. Existing diversity limits preserved.",
+    "not_inputs": [
+      "Reading List",
+      "AI selection",
+      "current tenant local loans",
+      "current tenant reservations",
+      "current tenant HNSW",
+      "tenant KG"
+    ],
+    "ratings_note": "Aggregate catalogue rating affects score; feedback types include RATED if such an existing system event is present. No direct user ratings-collection read is implemented here."
+  },
+  "limits": [
+    "Tenant local-only acquisitions are safe deterministic discovery, not a newly trained tenant personalization model.",
+    "No history queries means no ordinary semantic candidates, even if some other preference fields exist; the accepted UI cold fallback handles this.",
+    "Global profile updates do not invalidate a frozen ranking pool immediately; accepted 180-second/session/generation policy remains. Controlled quality case used a fresh login after the genuine Search interaction."
+  ]
+}

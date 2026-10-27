@@ -1,0 +1,3 @@
+# Motion
+Shared durations: button/menu 150–160ms; card 180ms/2px lift; route 200ms/6px entry; drawer 220ms. Dropdowns, filter disclosure, existing autocomplete and clarification panels use short CSS transitions. Filter disclosure interpolates intrinsic block size instead of a fixed height. Auth/button and decorative cover hover effects use restrained motion. Existing toast entry remains shared and reduced-motion-aware.
+The global reduce rule disables animations/transitions and smooth scrolling. JS route, dialog and carousel handling also checks the media preference. No springs, scale-heavy card effects, large dependency or animated business-data updates were introduced.

@@ -8,6 +8,8 @@ import './index.css'
 import 'katex/dist/katex.min.css'
 import './components/rag/RAGAnswer.css'
 import './components/Notifications.css'
+import './styles/product.css'
+import './styles/design-system.css'
 
 import { useAuthStore } from './store/useAuthStore'
 

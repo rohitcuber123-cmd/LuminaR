@@ -1,0 +1,65 @@
+{
+  "status": "PASS for applicable observed regression suites",
+  "suites": {
+    "catalogue_regression": {
+      "report": "D:\\SDC\\LibraryLLM\\reports\\search_v2c_b_catalogue_regression.xml",
+      "tests": 88,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "failed_cases": []
+    },
+    "tenant_full": {
+      "report": "D:\\SDC\\LibraryLLM\\reports\\search_v2c_b_tenant_full.xml",
+      "tests": 230,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "failed_cases": []
+    }
+  },
+  "matching_cases": [
+    {
+      "suite": "catalogue_regression",
+      "cases": [
+        "test_local_recommendation_intersection",
+        "test_local_recommendation_fallback_local_only",
+        "test_empty_recommendations_explicitly_require_global_fallback",
+        "test_recommendations_cannot_use_staff_authority",
+        "test_recommendation_inputs_are_bounded",
+        "test_local_recommendations_do_not_merge_another_tenant",
+        "test_global_recommendation_provider_traced",
+        "test_tenant_recommendation_provider_traced",
+        "test_tenant_recommendations_library_scoped",
+        "test_tenant_recommendations_no_global_filler",
+        "test_tenant_recommendations_canonical_hydration",
+        "test_tenant_recommendations_no_duplicate_global_local_identity",
+        "test_recommendation_multi_library_isolation",
+        "test_recommendation_cold_start",
+        "test_recommendation_archived_book_filtered",
+        "test_recommendation_deleted_foreign_and_unavailable_filtered",
+        "test_empty_library_recommendation_explicit_global_fallback",
+        "test_recommendation_next_page_same_provider",
+        "test_recommendation_previous_page_same_provider",
+        "test_global_recommendation_deleted_work_removed_from_cached_pool",
+        "test_recommendation_profiles_and_cache_are_user_session_scoped",
+        "test_recommendation_search_unavailable_is_safe_api_503_not_500",
+        "test_recommendation_does_not_read_tenant_hnsw_or_kg",
+        "test_recommendation_tenant_index_states_do_not_change_provider"
+      ]
+    },
+    {
+      "suite": "tenant_full",
+      "cases": [
+        "test_private_library_member_recommendations_allowed",
+        "test_private_library_outsider_recommendations_denied",
+        "test_private_recommendation_no_global_filler",
+        "test_private_recommendation_no_cross_library_leak",
+        "test_private_membership_revocation_recommendation_denied"
+      ]
+    }
+  ],
+  "source_and_artifacts_preserved": true,
+  "overlapping_counts_not_summed": true,
+  "limits": "Source preservation is separate from exercised cases; see matching cases for exact coverage."
+}

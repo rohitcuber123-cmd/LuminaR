@@ -1,0 +1,49 @@
+{
+  "task": "Independently reconsider exactly these five unresolved contexts. Do not regenerate corpus. No parser/evaluator/policy/model calls or other-source reads.",
+  "typed_decisions": [
+    "EXECUTABLE",
+    "EXECUTABLE_WITH_NOTICE",
+    "AMBIGUOUS",
+    "INCOMPLETE",
+    "UNSUPPORTED",
+    "CONTRADICTORY"
+  ],
+  "execution_contract": "Only EXECUTABLE and EXECUTABLE_WITH_NOTICE permit execution. AMBIGUOUS means intended field/value requirement cannot be uniquely resolved; INCOMPLETE means a mandatory operand is unfinished; known conflicts are CONTRADICTORY; unsupported strict fields are UNSUPPORTED.",
+  "label_rules": [
+    "Do not assume contextual uncertainty automatically makes explicit search filters ambiguous. Distinguish anecdotal uncertainty from a mandatory unresolved condition.",
+    "Strict title requires explicit titled/called/named; author requires structural author evidence or explicit mandatory authorship request.",
+    "A book can have multiple authors. Different author/title strings alone do not prove a contradiction.",
+    "Do not assume author-title mapping facts unavailable in the query/evidence.",
+    "No arbitrary confidence floats. No current parser output or v1 verdict may be used as evidence."
+  ],
+  "allowed_inputs": [
+    "reports/search_v2c_c5b_working_manifest.json",
+    "reports/search_v2c_c5b_review_brief.json"
+  ],
+  "review_goal": "Determine original candidate label pair independently. If definitive original semantics do not serve the intended AMBIGUOUS stratum, propose the smallest wording revision that makes the mandatory author-title mapping choice explicitly unresolved while retaining the scope, meaningful constraints and intended testing objective. Preserve original queries and label lineage. A different fresh reviewer must judge any proposed revisions before acceptance.",
+  "revision_requirements": [
+    "At most five rows; no new core-family generation.",
+    "Keep stable original IDs with explicit context_version and parent fingerprints.",
+    "Revise only text needed to specify the ambiguity; avoid decorative padding.",
+    "Do not weaken scope/structural-isolation rules; a sealed audit later accepts or rejects changes."
+  ],
+  "output_schema": [
+    "case_id",
+    "original_query",
+    "original_semantic_intent",
+    "source_of_uncertainty",
+    "original_candidate_typed_decision",
+    "original_candidate_executable",
+    "normative_justification",
+    "context_revision_necessary",
+    "proposed_query_text_if_needed",
+    "proposed_expected_typed_decision",
+    "proposed_expected_executable",
+    "proposed_expected_ambiguity",
+    "affected_other_fields_and_masks",
+    "review_notes",
+    "input_sha256"
+  ],
+  "output": "reports/search_v2c_c5b_resolution_proposals.json",
+  "human_reviewed": 0
+}

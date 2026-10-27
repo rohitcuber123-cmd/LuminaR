@@ -1,0 +1,3 @@
+C5B candidate readiness PASS.
+
+Prerequisite for the next phase: a separate explicit user authorization to run C5 calibration parser evaluation against search_v2c_c5b_freeze_manifest.json and its exact corpus/label hashes. Verify the unchanged C4 parser/policy, frozen evaluator/native references and all applicability masks first. Keep native-sequence rows separate from parser-plan scoring. Do not infer that unknown authors are missing gold: all five typed-decision/execution labels are now definitive AMBIGUOUS/false. No heldout evaluation, threshold fitting, policy selection/activation or production change is authorized by C5B.

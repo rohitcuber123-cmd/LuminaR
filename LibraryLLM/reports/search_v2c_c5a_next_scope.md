@@ -1,0 +1,3 @@
+V2C-C.5A PARTIAL. Calibration policy selection remains blocked.
+
+Resolve the five mapping-note contexts listed in review_readiness.json through independent query-spec clarification or independently authored versioned replacements, then independently review their typed-decision/execution labels. Preserve current draft, review and masks. Re-audit only changed new cases for structural/context isolation, reassemble counts and refreeze. Do not promote unresolved labels based on parser outputs. Native repair is already complete; no production patch is indicated. Do not rerun C5, evaluate heldout or select a policy under this task. A later separate authorization may rerun calibration only after readiness closure.

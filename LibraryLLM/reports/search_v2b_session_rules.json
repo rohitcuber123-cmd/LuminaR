@@ -1,0 +1,36 @@
+{
+  "parser": "search-v2b-session-1",
+  "idle_minutes": 30,
+  "hard_minutes": 60,
+  "max_contexts_per_user": 32,
+  "scope": [
+    "user_id",
+    "JWT sid",
+    "GLOBAL or exact library_id",
+    "workspace"
+  ],
+  "stored": "Current and previous structured plan, last request/query, CAS version, timestamps and parser version. No conversation transcript.",
+  "refinements": {
+    "only highly rated": "rating >= 4",
+    "rating above 4": "rating > 4",
+    "online only": "replace format with ONLINE",
+    "physical instead": "replace format with PHYSICAL",
+    "remove rating filter": "clear both rating bounds",
+    "not romance": "append bounded exclusion",
+    "include romance again": "remove matching exclusion",
+    "after 2020": "exclusive lower year",
+    "more advanced": "explicit soft preference",
+    "show me operating systems instead": "replace topic, retain other constraints",
+    "something different": "clear plan"
+  },
+  "new_independent_topic": "New V2A plan; inherited constraints reset",
+  "non_smart_modes": "Fresh V2A plan, no inherited refinement",
+  "chip_removal": "Persist omission into plan; removed constraint stays absent on later refinement",
+  "empty_query": "Restore only own exact-scope current plan",
+  "repeated_request": "Fingerprint replay is idempotent",
+  "expiry_serialization": "Always explicit UTC (+00:00), including naive PyMongo reads on replay/restore; avoids local-time premature expiry",
+  "clear": "Authenticated DELETE exact context; account clear before JWT revocation at logout; browser identifiers reset",
+  "expired": "Request-time expiry check independent of Mongo TTL sweep; fresh plan",
+  "race_protection": "Compare-and-swap version, at most 4 retries",
+  "limits": "English anchored finite operators; max query 500 chars, at most 5 exclusions; not a conversational LLM"
+}

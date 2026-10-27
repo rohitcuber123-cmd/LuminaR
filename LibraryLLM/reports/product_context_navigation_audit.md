@@ -202,7 +202,7 @@ URL context wins. Explicit global URLs without return parameters remain global. 
 
 The readNow compatibility helper in lib/readNow.ts has no production call sites (repository-wide reference check); current BookCapabilities and BookReaderPage use the shared context hook. No blind replacement of root/global authentication or external document links was made.
 
-## Part 2F.1 canonical collection supplement
+## Earlier Part 2F.1 routing supplement — superseded by current correction
 
 The 193-entry accepted audit above remains the baseline. This closure rechecked the actual collection entry points below. Seven live navigation scenarios pass in `institution_v2f1_staff_catalog_browser.json`; return parameters preserve personal navigation and never supply tenant authority.
 
@@ -217,3 +217,10 @@ The 193-entry accepted audit above remains the baseline. This closure rechecked 
 | frontend/src/lib/productContext.ts | shared catalogue/new arrivals/search destinations | URL context and validated UUID | CONTEXT_AWARE_REQUIRED | Staff, Patron, Platform or explicit Global destination | YES |
 
 Staff Reading List return resolves to Staff Overview; Patron Reading List return resolves to Patron Home. An explicit global Catalog resolves Home to `/`. No first-membership guess is used.
+
+<!-- current-staff-catalogue-correction -->
+## Current Staff catalogue and title correction
+
+The earlier Staff Catalog → Inventory choice is superseded. The shared product-context resolver now sends Catalog to `/staff/libraries/{current_library_id}/catalogue`, Search there with a bounded query, and New Arrivals there with `sort=new_arrivals`. Inventory remains `/staff/libraries/{current_library_id}/inventory`. Patron and explicit Global routes are unchanged. Legacy catalogue compatibility URLs redirect to the correct Staff catalogue without selecting the first membership.
+
+[Ten inspected title/list call sites and exact destinations](institution_v2f1_book_title_navigation_audit.md). [Current route inventory](institution_v2f1_staff_catalogue_routes.json). [Browser evidence](institution_v2f1_staff_catalogue_browser.json).

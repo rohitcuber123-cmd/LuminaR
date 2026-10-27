@@ -1,0 +1,33 @@
+{
+  "default_enabled": false,
+  "signal": "Own Reading List; canonical saved global works plus local-only saves in the authorized current tenant",
+  "saved_global_limit": 50,
+  "saved_local_limit": 50,
+  "subject_limit": 100,
+  "author_limit": 50,
+  "subject_weight": 0.8,
+  "author_weight": 0.2,
+  "frequency_saturation": 3,
+  "max_additive_boost": 0.02,
+  "score_basis": "sigmoid of existing CrossEncoder logit, used only as a relative ranking scale; not a probability",
+  "max_raw_ce_logit_gap": 0.1,
+  "max_sigmoid_band_span": 0.02,
+  "max_adjacent_band_size": 3,
+  "max_displacement": 2,
+  "cross_primary_kg_secondary_groups": false,
+  "add_candidates": false,
+  "override_explicit_sort": false,
+  "exact_title_author_order_changes": false,
+  "cold_start": "Exact baseline order",
+  "off": "No profile lookup; exact baseline order",
+  "no_ce": "Only existing adjacent candidates without CE scores, with the same displacement cap; canonical filters already enforced",
+  "cache_seconds": 60,
+  "cache_max_entries": 256,
+  "cache_key": [
+    "user_id",
+    "JWT sid",
+    "library_id or GLOBAL",
+    "staff/patron workspace",
+    "saved-canonical-v1"
+  ]
+}

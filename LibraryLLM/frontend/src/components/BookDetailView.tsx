@@ -7,14 +7,16 @@ import { BookCoverArt } from './BookCoverArt'
 import { BookPersonalActions } from './BookPersonalActions'
 import { BookCapabilities } from './BookCapabilities'
 import '../styles/product.css'
+import {resolveLibraryBookCapabilities} from '../lib/libraryBookCapabilities'
 
 /** The mature global detail composition, with explicit tenant facts/actions injected. */
-export function BookDetailView({book,backPath,notice,physicalActions,relatedActions,related,resources}: {
-  book:DisplayBook; backPath:string; notice?:ReactNode; physicalActions?:ReactNode; relatedActions?:ReactNode; related?:ReactNode; resources?:ReactNode
+export function BookDetailView({book,backPath,backLabel,notice,physicalActions,relatedActions,related,resources}: {
+  book:DisplayBook; backPath:string;backLabel?:string; notice?:ReactNode; physicalActions?:ReactNode; relatedActions?:ReactNode; related?:ReactNode; resources?:ReactNode
 }) {
   const owned = book.source === 'LIBRARY' && book.owned_by_current_library
+  const capability=resolveLibraryBookCapabilities(book)
   return <section className="book-detail-view mx-auto max-w-[90rem] px-6 py-10 md:px-10 md:py-16" data-book-context={owned?'LIBRARY':'GLOBAL'}>
-    <Link to={backPath} className="mb-8 inline-flex items-center gap-2 text-sm text-ink-soft transition-colors hover:text-brand"><ArrowLeft size={16} aria-hidden="true" />{book.library_id ? 'Browse Books' : 'Back to catalog'}</Link>
+    <Link to={backPath} className="mb-8 inline-flex items-center gap-2 text-sm text-ink-soft transition-colors hover:text-brand"><ArrowLeft size={16} aria-hidden="true" />{backLabel||(book.library_id ? 'Browse Books' : 'Back to catalog')}</Link>
     {notice}
     <div className="grid grid-cols-1 gap-12 md:grid-cols-[minmax(0,18rem)_1fr] lg:gap-16">
       <div className="mx-auto w-[65%] md:w-full"><BookCoverArt title={book.title} author={book.authors.join('; ')} seed={bookSeed(book)} url={book.cover_url} className="shadow-[0_18px_40px_rgba(0,0,0,0.15)]" /></div>
@@ -22,13 +24,13 @@ export function BookDetailView({book,backPath,notice,physicalActions,relatedActi
         <h1 className="font-display text-[clamp(1.8rem,4vw,2.8rem)] leading-[1.05] text-ink">{book.title}</h1>
         <p className="mt-3 text-lg text-ink-soft">by {book.authors.join('; ') || 'Author not recorded'}</p>
         <div className="mt-8 flex flex-wrap gap-6 text-sm text-ink-soft"><span className="flex items-center gap-2"><BookOpen size={16} aria-hidden="true" />
-          <span className={owned && (book.requestable_count || 0)>0 ? 'text-moss font-medium' : ''}>{owned && book.requestable_count != null && book.circulation_status === 'CIRCULATING' ? `${book.requestable_count} available to request` : bookAvailability(book)}</span></span>
-          {owned && book.has_physical !== false && <span className="flex items-center gap-2"><Layers size={16} aria-hidden="true" />{book.shelf_location || 'Shelf not recorded'}</span>}
+          <span className={capability.hasPhysical && (book.requestable_count || 0)>0 ? 'text-moss font-medium' : ''}>{capability.hasPhysical && book.requestable_count != null && book.circulation_status === 'CIRCULATING' ? `${book.requestable_count} available to request` : bookAvailability(book)}</span></span>
+          {capability.hasPhysical && <span className="flex items-center gap-2"><Layers size={16} aria-hidden="true" />{book.shelf_location || 'Shelf not recorded'}</span>}
           {book.average_rating != null && <span>★ {book.average_rating>0 ? `${book.average_rating.toFixed(1)} (${book.rating_count || 0})` : 'No ratings yet'}</span>}
           {book.reading_log_count != null && <span className="flex items-center gap-2"><Calendar size={16} aria-hidden="true" />{book.reading_log_count.toLocaleString()} reads</span>}
         </div>
-        {owned && <dl className="book-facts">{bookFormatLabel(book)&&<div><dt>Format</dt><dd>{bookFormatLabel(book)}</dd></div>}<div><dt>Accession</dt><dd>{book.accession_number || 'Not recorded'}</dd></div>{book.has_physical !== false && <div><dt>Circulation status</dt><dd>{book.circulation_status === 'CIRCULATING' ? 'Circulating' : bookAvailability(book)}</dd></div>}
-          {book.availability && <div><dt>Copies</dt><dd>{book.availability.total} total · {book.availability.active_loans} on loan · {book.availability.pending_holds} pending</dd></div>}</dl>}
+        {owned && <dl className="book-facts">{bookFormatLabel(book)&&<div><dt>Format</dt><dd>{bookFormatLabel(book)}</dd></div>}<div><dt>Accession</dt><dd>{book.accession_number || 'Not recorded'}</dd></div>{book.status&&<div><dt>Status</dt><dd>{book.status}</dd></div>}{(book.isbn_13||book.isbn_10)&&<div><dt>ISBN</dt><dd>{book.isbn_13||book.isbn_10}</dd></div>}{book.global_work_id&&<div><dt>Global catalogue reference</dt><dd><Link to={`/book/${encodeURIComponent(book.global_work_id)}`}>{book.global_work_id}</Link></dd></div>}{capability.hasPhysical&&<div><dt>Call number</dt><dd>{book.local_call_number||'Not recorded'}</dd></div>}{capability.hasPhysical && <div><dt>Circulation status</dt><dd>{book.circulation_status === 'CIRCULATING' ? 'Circulating' : bookAvailability(book)}</dd></div>}
+          {capability.hasPhysical && book.availability && <div><dt>Copies</dt><dd>{book.availability.total} total · {book.availability.active_loans} on loan · {book.availability.pending_holds} pending</dd></div>}</dl>}
         {!!book.subjects.length && <div className="mt-6 flex flex-wrap gap-2">{book.subjects.slice(1,9).map(s=><span key={s} className="rounded-full bg-brand/5 px-2.5 py-1 text-[0.65rem] uppercase tracking-wide text-brand border border-brand/10 break-words">{s}</span>)}</div>}
         <div className="mt-8 border-t border-line pt-8"><p className="book-description text-[0.95rem] leading-relaxed text-ink-soft whitespace-pre-line">{book.description || 'No description available.'}</p></div>
         {book.global_work_id && <BookCapabilities book={capabilityBook(book)} showUnavailable />}

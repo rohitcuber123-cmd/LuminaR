@@ -1,0 +1,2568 @@
+{
+  "supported_denominator": 583,
+  "misses": 26,
+  "cases": [
+    {
+      "query_id": "v2:v2cc-authored-c01_exclusivity_clashes-10",
+      "query": "physical books except physical books",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "physical books except physical books"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 15,
+          "source_span_end": 21,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 22,
+          "source_span_end": 30,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "physical books except physical books"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0292",
+      "query": "Please find physical books except physical books",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 27,
+          "source_span_end": 33,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 34,
+          "source_span_end": 42,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0773",
+      "query": "Please find physical books except physical books?",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books?"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 27,
+          "source_span_end": 33,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 34,
+          "source_span_end": 42,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books?"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1254",
+      "query": "Please find physical books except physical books.",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books."
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 27,
+          "source_span_end": 33,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 34,
+          "source_span_end": 42,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books."
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1735",
+      "query": "Please find physical books except physical books please",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 27,
+          "source_span_end": 33,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 34,
+          "source_span_end": 42,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 48,
+          "source_span_end": 55,
+          "source_text": " please",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0292",
+      "query": "Please find,  physical books except physical books !?",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "Please find,  ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books !?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 14,
+          "source_span_end": 22,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books !?"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 29,
+          "source_span_end": 35,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books !?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 36,
+          "source_span_end": 44,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books !?"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0773",
+      "query": "Please find,  physical books except physical books ??",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "Please find,  ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books ??"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 14,
+          "source_span_end": 22,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books ??"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 29,
+          "source_span_end": 35,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books ??"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 36,
+          "source_span_end": 44,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  physical books except physical books ??"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0034",
+      "query": "Please find physical books except physical books please?",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 27,
+          "source_span_end": 33,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 34,
+          "source_span_end": 42,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 48,
+          "source_span_end": 56,
+          "source_text": " please?",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please?"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0103",
+      "query": "Please find physical books except physical books please.",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 12,
+          "source_span_end": 20,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 27,
+          "source_span_end": 33,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 34,
+          "source_span_end": 42,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 48,
+          "source_span_end": 56,
+          "source_text": " please.",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find physical books except physical books please."
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0172",
+      "query": "Find me physical books except physical books",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0241",
+      "query": "Find me physical books except physical books?",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books?"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books?"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0310",
+      "query": "Find me physical books except physical books.",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books."
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books."
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0379",
+      "query": "Find me physical books except physical books please",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 44,
+          "source_span_end": 51,
+          "source_text": " please",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0448",
+      "query": "Find me physical books except physical books please?",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 44,
+          "source_span_end": 52,
+          "source_text": " please?",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please?"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0517",
+      "query": "Find me physical books except physical books please.",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        },
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 44,
+          "source_span_end": 52,
+          "source_text": " please.",
+          "recognizer_id": "grammar.request_suffix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me physical books except physical books please."
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0586",
+      "query": "Show me physical books except physical books",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0655",
+      "query": "Show me physical books except physical books?",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books?"
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books?"
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books?"
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0724",
+      "query": "Show me physical books except physical books.",
+      "family": "c01_exclusivity_clashes",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 8,
+          "source_span_end": 16,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books."
+        },
+        {
+          "field": "subject_clause",
+          "operator": "MISSING",
+          "normalized_value": "except",
+          "source_span_start": 23,
+          "source_span_end": 29,
+          "source_text": "except",
+          "recognizer_id": "subject.clause_incomplete",
+          "specificity": 100,
+          "support_status": "INCOMPLETE",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books."
+        },
+        {
+          "field": "format",
+          "operator": "PRESENT",
+          "normalized_value": "PHYSICAL",
+          "source_span_start": 30,
+          "source_span_end": 38,
+          "source_text": "physical",
+          "recognizer_id": "format.physical",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me physical books except physical books."
+        }
+      ],
+      "expected_contradiction_type": "FORMAT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [
+          "PHYSICAL"
+        ],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [
+          "PHYSICAL"
+        ],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "format"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "format"
+        ]
+      },
+      "actual_decision": "INCOMPLETE",
+      "why_missed": "except is absent from format-negative operators; positive scanner consumes its operand first, leaving a false missing-subject cue",
+      "root_cause_id": "format_except_precedence"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0875",
+      "query": "Please find require Romance; forbid the Romance subject?",
+      "family": "h04_scope_conflicting_requirements",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 12,
+          "source_span_end": 27,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "EXACT",
+          "normalized_value": "Romance",
+          "source_span_start": 40,
+          "source_span_end": 47,
+          "source_text": "Romance",
+          "recognizer_id": "subject.scoped_vocabulary",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject?"
+        }
+      ],
+      "expected_contradiction_type": "SUBJECT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [
+          "Romance"
+        ],
+        "expected_excluded_subjects": [
+          "Romance"
+        ],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "subject"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "subject"
+        ]
+      },
+      "actual_decision": "EXECUTABLE",
+      "why_missed": "terminal request punctuation remains on the required subject operand before canonical lookup",
+      "root_cause_id": "subject_requirement_punctuation"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1356",
+      "query": "Please find require Romance; forbid the Romance subject.",
+      "family": "h04_scope_conflicting_requirements",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 12,
+          "source_text": "Please find ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 12,
+          "source_span_end": 27,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "EXACT",
+          "normalized_value": "Romance",
+          "source_span_start": 40,
+          "source_span_end": 47,
+          "source_text": "Romance",
+          "recognizer_id": "subject.scoped_vocabulary",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find require Romance; forbid the Romance subject."
+        }
+      ],
+      "expected_contradiction_type": "SUBJECT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [
+          "Romance"
+        ],
+        "expected_excluded_subjects": [
+          "Romance"
+        ],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "subject"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "subject"
+        ]
+      },
+      "actual_decision": "EXECUTABLE",
+      "why_missed": "terminal request punctuation remains on the required subject operand before canonical lookup",
+      "root_cause_id": "subject_requirement_punctuation"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0394",
+      "query": "Please find,  require Romance; forbid the Romance subject !?",
+      "family": "h04_scope_conflicting_requirements",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "Please find,  ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject !?"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 14,
+          "source_span_end": 29,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject !?"
+        },
+        {
+          "field": "subject",
+          "operator": "EXACT",
+          "normalized_value": "Romance",
+          "source_span_start": 42,
+          "source_span_end": 49,
+          "source_text": "Romance",
+          "recognizer_id": "subject.scoped_vocabulary",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject !?"
+        }
+      ],
+      "expected_contradiction_type": "SUBJECT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [
+          "Romance"
+        ],
+        "expected_excluded_subjects": [
+          "Romance"
+        ],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "subject"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "subject"
+        ]
+      },
+      "actual_decision": "EXECUTABLE",
+      "why_missed": "terminal request punctuation remains on the required subject operand before canonical lookup",
+      "root_cause_id": "subject_requirement_punctuation"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0875",
+      "query": "Please find,  require Romance; forbid the Romance subject ??",
+      "family": "h04_scope_conflicting_requirements",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "Please find,  ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject ??"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 14,
+          "source_span_end": 29,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject ??"
+        },
+        {
+          "field": "subject",
+          "operator": "EXACT",
+          "normalized_value": "Romance",
+          "source_span_start": 42,
+          "source_span_end": 49,
+          "source_text": "Romance",
+          "recognizer_id": "subject.scoped_vocabulary",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Please find,  require Romance; forbid the Romance subject ??"
+        }
+      ],
+      "expected_contradiction_type": "SUBJECT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [
+          "Romance"
+        ],
+        "expected_excluded_subjects": [
+          "Romance"
+        ],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "subject"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "subject"
+        ]
+      },
+      "actual_decision": "EXECUTABLE",
+      "why_missed": "terminal request punctuation remains on the required subject operand before canonical lookup",
+      "root_cause_id": "subject_requirement_punctuation"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0265",
+      "query": "Find me require Romance; forbid the Romance subject?",
+      "family": "h04_scope_conflicting_requirements",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 8,
+          "source_span_end": 23,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "EXACT",
+          "normalized_value": "Romance",
+          "source_span_start": 36,
+          "source_span_end": 43,
+          "source_text": "Romance",
+          "recognizer_id": "subject.scoped_vocabulary",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject?"
+        }
+      ],
+      "expected_contradiction_type": "SUBJECT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [
+          "Romance"
+        ],
+        "expected_excluded_subjects": [
+          "Romance"
+        ],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "subject"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "subject"
+        ]
+      },
+      "actual_decision": "EXECUTABLE",
+      "why_missed": "terminal request punctuation remains on the required subject operand before canonical lookup",
+      "root_cause_id": "subject_requirement_punctuation"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0334",
+      "query": "Find me require Romance; forbid the Romance subject.",
+      "family": "h04_scope_conflicting_requirements",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Find me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 8,
+          "source_span_end": 23,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "EXACT",
+          "normalized_value": "Romance",
+          "source_span_start": 36,
+          "source_span_end": 43,
+          "source_text": "Romance",
+          "recognizer_id": "subject.scoped_vocabulary",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Find me require Romance; forbid the Romance subject."
+        }
+      ],
+      "expected_contradiction_type": "SUBJECT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [
+          "Romance"
+        ],
+        "expected_excluded_subjects": [
+          "Romance"
+        ],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "subject"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "subject"
+        ]
+      },
+      "actual_decision": "EXECUTABLE",
+      "why_missed": "terminal request punctuation remains on the required subject operand before canonical lookup",
+      "root_cause_id": "subject_requirement_punctuation"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0679",
+      "query": "Show me require Romance; forbid the Romance subject?",
+      "family": "h04_scope_conflicting_requirements",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 8,
+          "source_span_end": 23,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject?"
+        },
+        {
+          "field": "subject",
+          "operator": "EXACT",
+          "normalized_value": "Romance",
+          "source_span_start": 36,
+          "source_span_end": 43,
+          "source_text": "Romance",
+          "recognizer_id": "subject.scoped_vocabulary",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject?"
+        }
+      ],
+      "expected_contradiction_type": "SUBJECT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [
+          "Romance"
+        ],
+        "expected_excluded_subjects": [
+          "Romance"
+        ],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "subject"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "subject"
+        ]
+      },
+      "actual_decision": "EXECUTABLE",
+      "why_missed": "terminal request punctuation remains on the required subject operand before canonical lookup",
+      "root_cause_id": "subject_requirement_punctuation"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0748",
+      "query": "Show me require Romance; forbid the Romance subject.",
+      "family": "h04_scope_conflicting_requirements",
+      "resolved_constraints": [
+        {
+          "field": "connector",
+          "operator": "GRAMMAR",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 8,
+          "source_text": "Show me ",
+          "recognizer_id": "grammar.request_prefix",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "INCLUDE",
+          "normalized_value": "Romance",
+          "source_span_start": 8,
+          "source_span_end": 23,
+          "source_text": "require Romance",
+          "recognizer_id": "subject.requirement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject."
+        },
+        {
+          "field": "subject",
+          "operator": "EXACT",
+          "normalized_value": "Romance",
+          "source_span_start": 36,
+          "source_span_end": 43,
+          "source_text": "Romance",
+          "recognizer_id": "subject.scoped_vocabulary",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null,
+          "source_query": "Show me require Romance; forbid the Romance subject."
+        }
+      ],
+      "expected_contradiction_type": "SUBJECT_INCLUDE_EXCLUDE",
+      "expected_hard_fields": {
+        "expected_decision": "CONTRADICTORY",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [
+          "Romance"
+        ],
+        "expected_excluded_subjects": [
+          "Romance"
+        ],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [
+          "subject"
+        ],
+        "expected_execution_allowed": false,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": [
+          "subject"
+        ]
+      },
+      "actual_decision": "EXECUTABLE",
+      "why_missed": "terminal request punctuation remains on the required subject operand before canonical lookup",
+      "root_cause_id": "subject_requirement_punctuation"
+    }
+  ],
+  "no_reclassification_or_denominator_change": true
+}

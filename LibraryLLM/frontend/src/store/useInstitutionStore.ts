@@ -13,6 +13,7 @@ type State = {
   syncSession: (owner: string | null, session: string | null) => void
   reset: () => void; refresh: () => Promise<void>
   select: (libraryId: string) => Promise<Library | null>
+  forgetLibrary: (libraryId: string) => void
 }
 const emptyContexts = { activeId: null, patronLibraryId: null, staffLibraryId: null, workspace: null }
 function persist(state: State) {
@@ -23,6 +24,15 @@ function validId(value: unknown): string | null { return typeof value === 'strin
 
 export const useInstitutionStore = create<State>((set, get) => ({
   owner: null, session: null, libraries: [], ...emptyContexts, loading: false, error: null,
+  forgetLibrary: libraryId => {
+    requestSequence++; refreshSequence++; selections.PATRON++; selections.STAFF++
+    const current=get()
+    set({libraries:current.libraries.filter(l=>l.library_id!==libraryId),
+      ...(current.activeId===libraryId ? {activeId:null,workspace:null} : {}),
+      ...(current.patronLibraryId===libraryId ? {patronLibraryId:null} : {}),
+      ...(current.staffLibraryId===libraryId ? {staffLibraryId:null} : {}),loading:false})
+    persist(get())
+  },
   reset: () => {
     requestSequence++; refreshSequence++; selections.PATRON++; selections.STAFF++
     localStorage.removeItem(storageKey); localStorage.removeItem('luminar_active_library')

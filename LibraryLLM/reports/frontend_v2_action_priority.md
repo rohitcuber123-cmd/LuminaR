@@ -1,0 +1,4 @@
+# Card action priority
+The compact row contains Save/Saved, AI with stable width and pressed state, and overflow. Cover and title are separate detail links; the article is not a click target.
+Primary slot priority: existing loan/request/reservation details, otherwise a permitted physical Request Book or Join Waitlist, otherwise permitted Read Online. Global entitled READ NOW remains available. Empty slots retain shared geometry. Staff cards do not gain patron actions.
+Know More and physical-card digital alternatives move into overflow. Legacy account-scoped global reader/RAG entitlements on linked tenant books remain in that menu. More Like This and search-result explanations remain reachable. Detail screens retain their full workflow. The capability resolver, authorization guards, command endpoints, idempotency and callbacks are unchanged.

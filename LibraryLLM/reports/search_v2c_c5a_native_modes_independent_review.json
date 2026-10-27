@@ -1,0 +1,76 @@
+{
+  "version": "C5A-native-mode-independent-preexecution-review-v1",
+  "approval": "APPROVED_FOR_SEPARATE_NATIVE_MODE_SUPPLEMENT",
+  "review_timing": "BEFORE_SUPPLEMENT_EXECUTION_AND_BEFORE_REVIEWING_MAIN264_OUTPUTS",
+  "main_run_outputs_seen_at_signoff": false,
+  "supplement_outputs_seen": false,
+  "calibration_corpus_semantics_seen": false,
+  "source_supported_findings": [
+    {
+      "id": "EXACT_LITERAL",
+      "verdict": "APPROVED",
+      "evidence": [
+        "search/query_plan.py:155-184",
+        "search/query_execution.py:31-34,58-61,196-206"
+      ],
+      "reason": "Explicit EXACT preserves wording in exact_text and bypasses SMART composition; executable literal without corrections issues no pending clarification."
+    },
+    {
+      "id": "NATIVE_STATE",
+      "verdict": "APPROVED",
+      "evidence": [
+        "tests/institution_v2g/test_query_v2c_c5a_native_modes.py:24-42"
+      ],
+      "reason": "Fresh EXACT session adds exactly one correctly owned version1 accepted row; query bytes, mode and literal operand retained; pending and unrelated accepted/profile/reading_list records preserved."
+    },
+    {
+      "id": "EXACT_SUGGESTIONS",
+      "verdict": "APPROVED",
+      "evidence": [
+        "search/query_suggestions.py:suggest modeEXACT early return",
+        "tests/institution_v2g/test_query_v2c_c5a_native_modes.py:43-44"
+      ],
+      "reason": "Actual endpoint expected200 with empty suggestions and exact native state nonmutation."
+    },
+    {
+      "id": "SMART_REAL_ISSUANCE",
+      "verdict": "APPROVED",
+      "evidence": [
+        "tests/institution_v2g/test_query_v2c_c5a_native_modes.py:45-50",
+        "tests/institution_v2g/test_query_v2c_c5a_native.py:correction and commit"
+      ],
+      "reason": "Same isolated source vocabulary produces actual SMART typo clarification; Mongo must contain correction_apply/keep. Genuine apply commits with version/receipt/used proof and replay409; prior EXACT accepted document remains byte-equal."
+    },
+    {
+      "id": "ISOLATION",
+      "verdict": "APPROVED",
+      "evidence": [
+        "scripts/search_v2c_c5a_native_modes_run.py"
+      ],
+      "reason": "Separate supplement test file, attempt directory and login SQLite journal; main source unchanged, historical reports hashed, no new repaired corpus inputs or policy/scoring path."
+    }
+  ],
+  "required_fixes": [],
+  "limits": [
+    "Five native sequences only; zero independently reviewed parser-core calibration credit.",
+    "Exact query is an existing native development fixture, not a new isolated calibration row.",
+    "Global retrieval fixture remains bounded provider; no relevance/ranking claim.",
+    "EXACT personalization may populate only its own scope profile; unrelated profiles and reading_list must remain unchanged.",
+    "Direct Search service calls are native integration, not HTTP Search transport coverage; suggestion and correction resolution use actual authenticated routes."
+  ],
+  "frozen_reviewed_inputs": {
+    "reports/search_v2c_c5a_native_mode_oracles.json": "d5123f841df14d607f2fe3023a33a54e0902a22c46df5cb2e0a76ac6516fb775",
+    "tests/institution_v2g/test_query_v2c_c5a_native_modes.py": "8a1ff0a72e086743d20d15be4438b8865e6126df33b91536d9ec12df0af231d6",
+    "scripts/search_v2c_c5a_native_modes_run.py": "9d9fcabe98d314527e1480845f96461578b37d80377d9a243576d35696b2126c",
+    "tests/institution_v2g/test_query_v2c_c5a_native.py": "922ac0b455c3dffb7b527798618cccef073373f863b10a10c1f5e49f390a26be",
+    "search/query_plan.py": "376224248025cd56008b03febd3e4b60527b2ae8da8c22188c508b058cab1152",
+    "search/query_execution.py": "055db8458d2407394e3a32888fe68a258c3649b939507c72c9d8253fa5d5ee00",
+    "search/query_suggestions.py": "f6861102e36a074e3086ef54737f6a348a23c24584155927b331671c024b35d6"
+  },
+  "calibration_parser_evaluations": 0,
+  "heldout_parser_evaluations": 0,
+  "heldout_policy_evaluations": 0,
+  "policy_calls": 0,
+  "heldout_access": false,
+  "production_changes": false
+}

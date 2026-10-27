@@ -115,7 +115,7 @@ def run():
             api=TestClient(search_api.app)
             def query(value):
                 return api.post('/search',headers=headers,
-                                json={'query':value,'top_k':5,'save_history':False,
+                                json={'query':value,'query_contract':'MACHINE','top_k':5,'save_history':False,
                                       'diagnostics':True})
             assert api.post('/search',json={'query':'Frankenstein',
                                            'save_history':False}).status_code==401

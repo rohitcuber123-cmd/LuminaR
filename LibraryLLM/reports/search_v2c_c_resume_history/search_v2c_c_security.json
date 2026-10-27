@@ -1,0 +1,22 @@
+{
+  "status": "FAIL",
+  "mandatory_stop": "session corruption reappears",
+  "observed_at": "2026-10-15T17:03:21.728460+00:00",
+  "case": "Active authorized PATRON sends an unauthorized STAFF suggestion request in the same library",
+  "observed": "403 correctly denies STAFF, but library-wide cleanup deletes accepted PATRON context and pending clarification although PATRON membership remains ACTIVE.",
+  "session_corruption_rate": {
+    "numerator": 1,
+    "denominator": 1,
+    "percent": 100.0,
+    "population": "targeted live preflight scenario; isolated reproducer confirms the same defect, not a second independent scenario"
+  },
+  "private_content_leaked_in_response": false,
+  "evidence": "search_v2c_c_preflight_security.json",
+  "retained_reproducer": "tests/institution_v2g/test_query_v2c_c_stop_condition.py",
+  "test_xml": "search_v2c_c_stop_condition.xml",
+  "test_result": "1 failed, as expected for retained invariant assertion",
+  "root_cause": "search.scope_authorization.invalidate_if_access_lost confirms denial only for requested workspace then calls session_store.invalidate(actor,library_id), whose deletion predicate omits workspace. A STAFF permission denial is therefore treated as loss of all library workspaces.",
+  "proposed_corrective_scope": "Distinguish requested-workspace denial from actual whole-library revocation; invalidate only inaccessible workspace state, preserving other still-authorized workspaces. Preserve full affected-library cleanup on actual revocation. Re-run denied-workspace, role-change, forged-choice, concurrency and revocation invariants before resuming C.",
+  "fix_implemented": false,
+  "stop_instruction": "User V2C-C prompt section35: STOP if session corruption reappears."
+}

@@ -1,0 +1,46 @@
+{
+  "version": "C5A-native-oracles-v1",
+  "written_before_native_execution": true,
+  "review_status": "PENDING_INDEPENDENT_REVIEW",
+  "scope_matrix": [
+    "GLOBAL",
+    "PUBLIC_TENANT_PATRON",
+    "PUBLIC_TENANT_STAFF",
+    "PRIVATE_TENANT_PATRON",
+    "PRIVATE_TENANT_STAFF"
+  ],
+  "fixtures": {
+    "database": "random luminar_institution_v2g_test_*; deleted by accepted conftest lifecycle",
+    "library_creation": "Real register/join/inventory APIs. In both libraries actors2+6 are GENERAL_USER patrons; actors4+5 are promoted LIBRARIAN staff. Scoped actor2 patron / actor4 staff. Wrong-user actors6 patron / actor5 staff.",
+    "indexes": "Only ordinary Mongo fixture indexes; no HNSW/KG builds, no production data access",
+    "global_lexical": "in-memory SQLite lexical_values fixture through production LexicalSearchStore._query",
+    "retrieval_limit": "Global semantic candidate provider is isolated fixture provider; no ranking/model/production index claims. Tenant NOT_BUILT path uses actual bounded catalogue fallback.",
+    "personalization": "Actual get_profile(... personalized=True) from isolated reading_list; snapshots include profile cache and Mongo reading_list, not only HTTP statuses",
+    "workspace_transition": "Current contract forbids simultaneous patron+staff. Wrong-workspace authorization403 is tested first; an isolated direct membership role transition permits opposite workspace ownership denial404 correction/409 suggestion, then original role is restored before genuine recovery.",
+    "global_catalogue": "One shared isolated OL1W book with all eight test subjects plus Global exclusive C5A; canonical book_categories created for each. No per-target single-subject book is claimed."
+  },
+  "suggestion": {
+    "issuance": "GET /query/suggestions; assert actual opaque id and type SUBJECT/AUTHOR/TITLE from scoped canonical fixture",
+    "selection": "POST /query/suggestions/select using exact issued id; status200 and insert_text/type; no accepted/pending/personalization mutation",
+    "staleness": "Suggestion capabilities bind actor/sid/library/workspace/query/mode/catalogue generation/expiry; no session_id or accepted context version exists. Original resume_stale_suggestion accepted-version premise is stale; record accepted revision selection separately and then test real generation staleness.",
+    "rejections": "forged/wrong user/sid/library/workspace/expired capability/generation each non-mutating; true owner can still select if capability unchanged"
+  },
+  "correction": {
+    "issuance": "Actual GlobalQuerySearch.search or tenant_search; response clarification id; Mongo row must contain correction_apply AND correction_keep with typo from/to; no fabricated UUID or typed-choice proxy",
+    "commit": "200 exactly one accepted version increment and receipt; pending used=True; same user/sid/library/workspace; semantic wording remains typo on keep, canonical subject on apply",
+    "non_mutation": "Compare full accepted/pending Mongo rows, actual profile cache and reading_list before/after every denied request",
+    "expiry": "Expired pending410 (or404 only if Mongo TTL removed target); expired accepted session409; expired authentication401",
+    "recovery": "After forged, wrong user/sid/library/workspace rejection original genuine choice200, replay409 and exact state unchanged",
+    "revocation": "404 private membership loss removes only matching actor/library/workspace accepted,pending/profile ownership; independent Global/other-library/other-sid scopes retained",
+    "no_correction": "Protected literal and unrelated phrase produce no correction clarification"
+  },
+  "security": [
+    "private outsider and platform admin without membership generic404; no canonical vocabulary",
+    "staff unauthorized workspace403",
+    "JWT expiry401 before projection/choice loading",
+    "B1 forged-choice single-use and C1 ownership tuple remain unchanged"
+  ],
+  "calibration_parser_evaluations": 0,
+  "heldout_access": false,
+  "production_source_changes": false
+}

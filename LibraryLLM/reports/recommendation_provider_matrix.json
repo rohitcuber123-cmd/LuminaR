@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "qa_summary": {
+    "GLOBAL_RECOMMENDATION_PROVIDER": "GLOBAL_HNSW_CANDIDATES + EXISTING_HYBRID_PROFILE_SCORE + DIVERSITY",
+    "TENANT_RECOMMENDATION_PROVIDER": "GLOBAL_CANDIDATE_INTERSECTION_AND_CANONICAL_LOCAL_ACQUISITION_FILL",
+    "RECOMMENDATION_USES_SEARCH": "YES",
+    "RECOMMENDATION_SEARCH_PROVIDER": "GLOBAL_HNSW_MINILM_CROSSENCODER (or accepted ranking cache)",
+    "RECOMMENDATION_USES_TENANT_HNSW": "NO",
+    "RECOMMENDATION_HNSW_ACTUALLY_QUERIED": "YES (global)",
+    "RECOMMENDATION_SEARCH_GENERATION": 30,
+    "RECOMMENDATION_USES_KEYWORD_FALLBACK_WHEN_HNSW_READY": "N/A — tenant HNSW is not a recommender dependency; acquisition fill is not keyword Search",
+    "RECOMMENDATION_USES_KG": "NO",
+    "RECOMMENDATION_KG_ROLE": "NOT_USED_BY_FOR_YOU",
+    "TENANT_RECOMMENDATION_GLOBAL_FILLER_COUNT": 0,
+    "TENANT_RECOMMENDATION_CROSS_LIBRARY_LEAK": "NO",
+    "RECOMMENDATION_CANONICAL_HYDRATION": "YES",
+    "RECOMMENDATION_COLD_START_PASS": "YES",
+    "RECOMMENDATION_PAGING_TENANT_SAFE": "YES",
+    "RECOMMENDATION_MULTI_LIBRARY_CACHE_SAFE": "YES",
+    "NEW_ARRIVALS_PROVIDER": "TENANT acquisition/created date ordering; GLOBAL created_at ordering",
+    "POPULAR_PROVIDER": "TENANT weighted 90-day loans/approved BORROW requests/reservations; GLOBAL reading_log_count/rating aggregates"
+  },
+  "classification": [
+    "SEARCH_HNSW_CANDIDATE_DEPENDENT (global upstream)",
+    "USER_HISTORY_CONTENT_PROFILE",
+    "HYBRID",
+    "POPULARITY_BASED (score signal or explicit cold fallback)"
+  ],
+  "independent_trained_recommendation_model": false,
+  "providers": {
+    "global_personalized": "GLOBAL_HNSW_CANDIDATES + EXISTING_HYBRID_PROFILE_SCORE + DIVERSITY",
+    "global_cold_start": "Global recommendation API returns empty; ForYou explicitly renders Popular books; View All now retains Popular provider",
+    "tenant_nonempty": "POST canonical projection of global preferred work IDs + recent-acquisition local fill, including local-only records",
+    "tenant_empty": "Explicit GLOBAL_FALLBACK discovery; global candidates, or Popular fallback on Home when cold",
+    "staff": "Staff catalogue remains canonical discovery/browse; no same-library Admin-as-patron recommendation authority",
+    "more_like_this": "Separate global catalogue metadata KG relationships via /api/kg/books/{work_id}/more-like-this",
+    "recommend_similar_assistant": "Single selected global-book seed mode of existing recommender via /recommendations/from-book, separate from graph widget"
+  }
+}

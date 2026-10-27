@@ -13,9 +13,12 @@
 .institution-form .access-choice { display: block; cursor: pointer; }
 .access-choice input { margin-right: 10px; }
 .access-choice small { display: block; margin: 5px 0 12px 24px; font-weight: 400; }
-.institutions button, .institution-primary { background: #244c3b; color: white; border-radius: 8px; padding: 10px 16px; cursor: pointer; }
-.institutions button:disabled { opacity: .55; cursor: wait; }
+.institutions button:not(:where(.luminar-select-trigger,.ui-dialog-close,.ui-pagination button)), .institution-primary { background: #244c3b; color: white; border-radius: 8px; padding: 10px 16px; cursor: pointer; }
+.institutions button:not(:where(.ui-pagination button)):disabled { opacity: .55; cursor: wait; }
 .institutions button.secondary { background: #edf0e8; color: #244c3b; }
+.institutions .ui-pagination button { background: white; color: var(--color-ink, #202823); border: 1px solid #d8ded2; border-radius: 8px; padding: 6px 14px; min-height: 38px; cursor: pointer; }
+.institutions .ui-pagination button:hover:not(:disabled) { border-color: #244c3b; color: #244c3b; }
+.institutions .ui-pagination button:disabled { background: transparent; color: #827e75; border-color: #d8ded2; opacity: .5; cursor: not-allowed; }
 .institutions a { color: #24573d; text-decoration: underline; text-underline-offset: 3px; }
 .institution-toolbar, .institution-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .institution-toolbar { margin: 24px 0; }

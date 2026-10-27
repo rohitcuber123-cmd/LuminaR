@@ -1,0 +1,165 @@
+"""Source-backed requirement checks for the disabled SMART development parser.
+
+No gold, benchmark IDs, models, application access, confidence cutoffs or IO.
+Literal interiors remain opaque except to their explicit field owner.
+"""
+import re
+from hashlib import sha256
+
+VOCABULARY=('rated','rating','published','between','exactly','greater','less','least','most','above','below','after','before','online','digital','physical','titled','by')
+FIELD_CONTEXT=re.compile(r'\b(?:rat\w*|stars?|publish\w*|year|format|only|books?|titled)\b',re.I)
+
+def distance_one(a,b):
+    if a==b:return False
+    if len(a)==len(b):
+        indices=[i for i in range(len(a)) if a[i]!=b[i]]
+        return len(indices)==1 or len(indices)==2 and indices[1]==indices[0]+1 and a[indices[0]]==b[indices[1]] and a[indices[1]]==b[indices[0]]
+    if abs(len(a)-len(b))!=1:return False
+    short,long=(a,b) if len(a)<len(b) else (b,a)
+    return any(long[:i]+long[i+1:]==short for i in range(len(long)))
+
+def quotes(text):return [m.span() for m in re.finditer(r'"[^"\n]*"|“[^”\n]*”',text)]
+def outside_literals(text):
+    chars=list(text)
+    for a,b in quotes(text):chars[a:b]=' '*(b-a)
+    return ''.join(chars)
+
+def prepare(query):
+    protected=quotes(query);edits=[]
+    for token in re.finditer(r'\b[a-zA-Z]{3,}\b',query):
+        if any(token.start()<b and token.end()>a for a,b in protected):continue
+        word=token[0].casefold()
+        if word in VOCABULARY or word in ('title','year','only','format','subject','category','author','release','language'):continue
+        left=query.rfind(';',0,token.start())+1;right=query.find(';',token.end());right=len(query) if right<0 else right
+        clause=query[left:right]
+        if not FIELD_CONTEXT.search(clause):continue
+        choices=[v for v in VOCABULARY if distance_one(word,v)]
+        # Field words in ordinary about-topic prose are not repair candidates.
+        if re.match(r'\s*(?:(?:find|show)\s+)?(?:books?\s+)?about\b',clause,re.I):continue
+        if len(choices)!=1:continue
+        value=choices[0]
+        # Avoid short-name and ordinary-topic false repairs. Structural words
+        # need their own field/unit evidence, not a generic book noun alone.
+        if value in ['least','most','greater','less','between','exactly','above','below'] and not re.search(r'\brat\w*\b|\bstars?\b',clause,re.I):continue
+        if value in ['online','digital','physical'] and not re.search(r'\b(?:only|format|version|copies)\b',clause,re.I):continue
+        if value=='by' and not re.fullmatch(r'\s*(?:(?:find|show)\s+)?books?\s+',query[left:token.start()],re.I):continue
+        if value=='titled' and not re.search(r'["“]',clause):continue
+        edits.append((token.start(),token.end(),value))
+    chunks=[];offsets=[];repairs=[];cursor=0
+    for a,b,value in edits:
+        chunks.append(query[cursor:a]);offsets.extend(range(cursor,a));start=sum(map(len,chunks))
+        chunks.append(value);offsets.extend(a+min(i,b-a-1) for i in range(len(value)))
+        repairs.append({'from':query[a:b],'to':value,'start':a,'end':b,'prepared_start':start,'prepared_end':start+len(value),'kind':'bounded_grammar_repair'})
+        cursor=b
+    chunks.append(query[cursor:]);offsets.extend(range(cursor,len(query)))
+    return ''.join(chunks),repairs,offsets
+
+def finish(plan,original,prepared,repairs,offsets,facets,filters,omit):
+    from scratch.search_v2c_c5d_repair.candidate_search.query_confidence import decide,validate,executable
+    from scratch.search_v2c_c5d_repair.candidate_search.query_plan import normalize
+    from scratch.search_v2c_c5d_repair.candidate_search.query_session import item_edit_key
+    omit=set(omit);ledger=[]
+    def omitted(field,value=None):
+        alias={'author':'author','title':'title','subject':'subject','excluded_subject':'exclude','exclude':'exclude','format':'format'}
+        if alias.get(field,field) in omit:return True
+        if alias.get(field,field) in filters and filters[alias.get(field,field)] not in (None,''):return True
+        if field=='subject' and item_edit_key('subject',value) in omit:return True
+        if field in ['excluded_subject','exclude'] and item_edit_key('exclude',value) in omit:return True
+        return False
+    def add(field,status,reason,span=None,value=None):
+        if not omitted(field,value):ledger.append({'field':field,'status':status,'reason':reason,'source_span':span,'value':value})
+    text=outside_literals(prepared).casefold()
+    # Explicit unresolved references are different from an optional anecdote.
+    relational=re.search(r'\bby\s+(?:the|that|an?)\s+(?:author|writer|person)\b[^;]*',text)
+    if relational:add('author','AMBIGUOUS','Mandatory author reference lacks a uniquely grounded name.',list(relational.span()))
+    uncertainty=re.search(r'\b(?:cannot|can\s+not|can\x27t)\s+(?:tell|remember|read|decide|determine)\b',text)
+    if uncertainty and re.search(r'\bwhether\b[^;]*(?:\bor\b|\bmodif\w*\b)|\b(?:joint|either|alternatives|intersection)\b',text):
+        if re.search(r'\b(?:rating|author|writer|title|subject|category|format|year|published|minimum|maximum|preferably|excluding)\b',text):
+            add('relationship','AMBIGUOUS','Unresolved alternatives affect mandatory field/operator/association ownership.',list(uncertainty.span()))
+    field_words={'rating':r'\brat(?:ing|ings|ed)\b|\bstars?\b','year':r'\b(?:published|publication|year|released)\b',
+                 'author':r'\b(?:by|author)\b','title':r'\b(?:titled|title)\b','language':r'\blanguage\b',
+                 'availability':r'\b(?:available|availability|borrow)\b','subject':r'\b(?:include|subject|category|genre)\b',
+                 'format':r'\b(?:format|physical|online|digital)\b'}
+    for m in re.finditer(r'[^;]+',prepared):
+        clause=m[0];outside=outside_literals(clause)
+        if re.match(r'\s*(?:(?:find|show)\s+)?(?:books?\s+)?about\b',outside,re.I):continue
+        placeholder=bool(re.search(r'\.{3}|…|_{2,}|\[\s*\]|["“]\s*["”]',clause))
+        missing=bool(re.search(r'\b(?:missing|blank|not\s+(?:supplied|entered|provided|specified|selected|finished|given)|have\s+not\s+(?:entered|supplied))\b',outside,re.I))
+        if placeholder or missing:
+            for field,pattern in field_words.items():
+                if re.search(pattern,outside,re.I):add(field,'INCOMPLETE','Explicit mandatory field or operand is blank/unfinished.',list(m.span()))
+    strict=re.compile(r'\b(?:require|requires|must|hard\s+filter|only)\b',re.I)
+    unavailable={'pages':r'\b(?:pages?|page\s+count)\b','edition':r'\bedition\b','price':r'\b(?:price|cost|costing|purchase\s+price|dollar|rupee)\b',
+                 'difficulty':r'\b(?:difficulty|reading\s+level|audience|machine.verified)\b','binding':r'\b(?:hardcover|paperback|binding)\b',
+                 'copy_status':r'\b(?:per.copy|on\s+loan|another\s+reader|individual\s+cop(?:y|ies))\b'}
+    for m in re.finditer(r'[^;]+',text):
+        clause=m[0]
+        if re.match(r'\s*(?:(?:find|show)\s+)?(?:books?\s+)?about\b',clause):continue
+        if strict.search(clause):
+            for field,pattern in unavailable.items():
+                if re.search(pattern,clause):add(field,'UNSUPPORTED','Requested strict metadata/operation has no enforceable search capability.',list(m.span()))
+    operation=re.match(r'\s*(?:please\s+)?(?:borrow|return|reserve|delete|purchase|checkout|check\s+out|renew|transfer|update)\b',text)
+    if operation:add('operation','UNSUPPORTED','This parser interprets catalogue searches, not account/inventory transactions.',list(operation.span()))
+    # Candidate provenance and original offsets are restored after bounded repair.
+    for c in plan.constraint_candidates:
+        start,end=c['source_span_start'],c['source_span_end']
+        relevant=[r for r in repairs if start<r['prepared_end'] and end>r['prepared_start']]
+        if relevant:c['repair_provenance']='bounded unique one-edit field/operator repair: '+', '.join(r['from']+' -> '+r['to'] for r in relevant)
+        a=offsets[start] if start<len(offsets) else len(original);b=offsets[end-1]+1 if end and end-1<len(offsets) else a
+        c.update(source_span_start=a,source_span_end=b,source_text=original[a:b],source_query=original)
+        if c.get('support_status') in ['AMBIGUOUS','INCOMPLETE','UNSUPPORTED']:
+            add(c['field'],c['support_status'],'Recognizer retained an unresolved mandatory clause.',[a,b],c.get('normalized_value'))
+        elif c['field'] not in ['connector','preference']:
+            field,value,op=c['field'],c.get('normalized_value'),c.get('operator');preserved=True
+            if field in ['author','title','language']:
+                actual=getattr(plan,{'author':'author_text','title':'title_text','language':'language'}[field])
+                preserved=bool(normalize(value)) and (normalize(value) in normalize(actual) if field in ['author','title'] else normalize(value)==normalize(actual))
+            elif field in ['subject','excluded_subject']:preserved=normalize(value) in set(map(normalize,plan.subjects if field=='subject' else plan.exclude_subjects))
+            elif field=='format':
+                expanded=lambda xs:{x for v in xs for x in (['ONLINE','PHYSICAL'] if v=='BOTH' else [v])}
+                preserved=expanded([value]).issubset(expanded(plan.formats)) and (op!='ONLY' or value in plan.exclusive_formats)
+            elif field in ['rating','year']:
+                lo,hi=getattr(plan,field+'_min'),getattr(plan,field+'_max')
+                if op=='RANGE':preserved=lo is not None and hi is not None and lo>=value[0] and hi<=value[1]
+                elif op=='=':preserved=lo==hi==value
+                elif op in ['>','>=']:preserved=lo is not None and (lo>value or lo==value and (op=='>=' or getattr(plan,field+'_min_exclusive')))
+                elif op in ['<','<=']:preserved=hi is not None and (hi<value or hi==value and (op=='<=' or getattr(plan,field+'_max_exclusive')))
+            add(field,'RESOLVED' if preserved else 'AMBIGUOUS','Source-backed candidate retained.' if preserved else 'Recognized required operand was lost or overwritten during composition.',[a,b],value)
+    for s in plan.source_spans:
+        a,b=s.get('start',0),s.get('end',0)
+        start=offsets[a] if a<len(offsets) else len(original);end=offsets[b-1]+1 if b and b-1<len(offsets) else start
+        s.update(start=start,end=end,text=original[start:end],source_query=original)
+    plan.raw_query=original;plan.normalized_query=normalize(original)
+    # A separate explicit topic clause is retained even alongside a title. Its
+    # literal wording is never treated as a catalogue filter by this step.
+    topics=[]
+    for m in re.finditer(r'(?:^|;)\s*(?:books?\s+)?about\s+([^;]+)',original,re.I):
+        topics.append(m[1].strip(' .?!'))
+    if topics and 'topic' not in omit:plan.semantic_text='; '.join(topics)
+    elif plan.semantic_text:plan.semantic_text=re.sub(r'\s*;\s*','; ',plan.semantic_text).strip(' ;,.') or None
+    # Cross-field constraints use the exact production normalization and word
+    # boundaries; the earlier shadow substring counterexample stays executable.
+    conflict=[]
+    for term in plan.exclude_terms:
+        literal=normalize(term)
+        if literal and any(re.search(r'(?<!\w)'+re.escape(literal)+r'(?!\w)',normalize(getattr(plan,f) or '')) for f in ['author_text','title_text']):
+            conflict.extend(['exclude_terms','author_text' if plan.author_text else 'title_text'])
+    languages={normalize(c['normalized_value']) for c in plan.constraint_candidates if c['field']=='language' and c.get('support_status')=='SUPPORTED'}
+    if len(languages)>1:conflict.append('language')
+    checked=validate(plan)
+    if conflict:plan=decide(plan,'CONTRADICTORY','CROSS_FIELD_REQUIRED_EXCLUSION',fields=list(dict.fromkeys(conflict)))
+    elif checked.decision.get('decision_type')=='CONTRADICTORY':plan=checked
+    else:
+        priority=next((status for status in ['INCOMPLETE','AMBIGUOUS','UNSUPPORTED'] if any(x['status']==status for x in ledger)),None)
+        if priority:
+            relevant=[x for x in ledger if x['status']==priority]
+            plan=decide(plan,priority,'MANDATORY_'+priority,fields=sorted({x['field'] for x in relevant}),
+                        unresolved=[{'field':x['field'],'reason':x['reason'],'source_span':x['source_span']} for x in relevant])
+        elif executable(plan) and repairs:
+            plan=decide(plan,'EXECUTABLE_WITH_NOTICE','BOUNDED_GRAMMAR_REPAIR')
+            if not any(c.get('repair_provenance') for c in plan.constraint_candidates):
+                # A repaired cue with no recognized owner is not a resolved filter.
+                plan=decide(plan,'INCOMPLETE','REPAIRED_REQUIREMENT_NOT_GROUNDED',fields=['requirement'])
+    plan.decision['requirements']=ledger
+    plan.decision['development_isolation']={'disabled_candidate':True,'native_authorization_required_externally':True,'confidence_is_probability':False}
+    return plan

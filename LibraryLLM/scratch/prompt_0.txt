@@ -1,0 +1,804 @@
+<USER_REQUEST>
+# LuminaR — Resume Interrupted V2C-C.5E-R Implementation
+## Codex-to-Antigravity Handoff — Preserve Work, Inspect State, Continue to Completion
+
+### CRITICAL: THIS IS A CONTINUATION, NOT A NEW IMPLEMENTATION
+
+Codex was previously executing V2C-C.5E-R — Final Semantic Parser Recovery, Fresh Independent Validation and Search Readiness.
+
+**Codex stopped unexpectedly because its usage credits were exhausted. It did not necessarily finish the task.**
+
+You are taking over the exact existing repository state.
+
+Your first responsibility is to determine what Codex already implemented, what it tested, what remains incomplete, and which changes are correct.
+
+Do not restart C5E-R from scratch.
+
+Do not regenerate existing candidate implementations.
+
+Do not blindly overwrite unfinished scripts.
+
+Do not discard uncommitted changes.
+
+Do not assume the latest candidate version is necessarily the best or most complete.
+
+Do not revert the working tree merely because some files are modified or untracked.
+
+**Your goal is to resume Codex's interrupted work, complete the original C5E-R requirements, and produce the final evidence-backed C5E-R report without disturbing existing functionality.**
+
+---
+
+# 1. Original project context
+
+LuminaR is an AI-powered multi-library platform providing:
+
+- Global book discovery.
+- Public institutional library search.
+- Private institutional library search.
+- SMART natural-language search.
+- EXACT search.
+- Semantic retrieval.
+- Structured filters.
+- Recommendations and related-book discovery.
+- RAG and document-based question answering.
+- Knowledge graph functionality.
+- Conventional library operations.
+
+The Smart Search parser is a shared capability across global, public and private libraries.
+
+Existing authorization, collection scoping, patron/staff permissions, privacy protections and library operations must remain intact.
+
+The current production parser and C4 policy are still active.
+
+All C5D/C5E/C5E-R experimental parsers must remain disabled until a separately authorized activation phase.
+
+Do not introduce Qwen inference into the Smart Search parser's hot path.
+
+Do not rebuild global HNSW/KG indexes or modify the five-million-book catalog.
+
+The global dataset may eventually be reduced to a few thousand books, but that migration is explicitly outside this phase.
+
+---
+
+# 2. What Codex already changed
+
+A screenshot of the interrupted Codex session shows modifications or additions involving the following files.
+
+These are actual observed paths, not a guaranteed complete list.
+
+### Initial candidate implementation
+
+- `scripts/search_v2c_c5er_prepare.py`
+- `scratch/search_v2c_c5er/candidate_search/query_constraints.py`
+- `scratch/search_v2c_c5er/candidate_search/requirement_ledger.py`
+- `scratch/search_v2c_c5er/candidate_search/semantic_safety.py`
+
+### Development scripts and candidate revisions
+
+- `scripts/search_v2c_c5er_development.py`
+- `scratch/search_v2c_c5er/candidate_search_v2/requirement_ledger.py`
+- `scratch/search_v2c_c5er/candidate_search_v3/query_constraints.py`
+- `scratch/search_v2c_c5er/candidate_search_v3/requirement_ledger.py`
+
+### Evaluation adapter implementation
+
+- `scratch/search_v2c_c5er/test_evaluation_adapter.py`
+- `scripts/search_v2c_c5er_evaluation_adapter.py`
+- `scripts/search_v2c_c5er_adapter_v2_prepare.py`
+- `scripts/search_v2c_c5er_replay_prepare.py`
+- `scripts/search_v2c_c5er_evaluation_adapter_v2.py`
+- `scratch/search_v2c_c5er/test_evaluation_adapter_v2.py`
+
+### Isolation and native test infrastructure
+
+- `scripts/search_v2c_c5er_isolation.py`
+- `scripts/search_v2c_c5er_offline_native.py`
+
+### Latest visible candidate work
+
+- `scratch/search_v2c_c5er/candidate_search_v4/requirement_ledger.py`
+- `scratch/search_v2c_c5er/regression_v4/test_generalized_ledger.py`
+
+IMPORTANT:
+
+The presence of candidate_search_v4 suggests Codex was working on a fourth candidate revision.
+
+It does not establish that V4 is complete, validated, frozen or superior to V1–V3.
+
+There may be additional modified or newly created files not visible in the screenshot.
+
+Discover the complete working state yourself.
+
+---
+
+# 3. Phase A — Recover the interrupted development state
+
+Before modifying any code:
+
+1. Locate the actual repository root.
+2. Inspect git status.
+3. Inspect both staged and unstaged diffs.
+4. Locate untracked files.
+5. Review all C5E-R candidate namespaces.
+6. Inspect C5E-R development scripts.
+7. Inspect existing test results.
+8. Inspect any existing reports, traces, manifests or freeze records.
+9. Check whether a previous command stopped halfway through writing an output.
+10. Identify which candidate version was last being developed.
+11. Identify whether any evaluation has already occurred.
+12. Check whether any independent acceptance population or predictions have already been generated.
+
+Use the actual repository evidence, not assumptions about Codex's progress.
+
+Do not execute scripts merely to discover what they do. Read their implementation and side effects first.
+
+### Required recovery output
+
+Create an internal continuation inventory containing:
+
+| Component | Questions to answer |
+|---|---|
+| Candidate V1 | What was implemented and why was it superseded? |
+| Candidate V2 | What changed and what problems remained? |
+| Candidate V3 | What was revised and which tests exist? |
+| Candidate V4 | Is the requirement-ledger implementation complete? |
+| Evaluation adapter V1 | Was it completed and tested? |
+| Evaluation adapter V2 | What mask/contract issues does it fix? |
+| Isolation script | Does it preserve existing split boundaries? |
+| Offline native script | Is it safe and operational? |
+| Regression V4 | Which behaviors does it verify? |
+| Independent acceptance | Has authoring, review, freezing or prediction capture started? |
+| Reports | Which are partial, final, immutable or missing? |
+
+Discover the actual state of every component.
+
+If V4 is incomplete, continue from its existing implementation.
+
+If another version is demonstrably more correct, preserve V4 and document why development proceeds from the other version.
+
+Do not remove earlier candidate versions or failed-run evidence.
+
+---
+
+# 4. Phase B — Verify protected baseline
+
+C5E previously ended PARTIAL.
+
+Its independent acceptance results were:
+
+- 90 independently reviewed cases.
+- Typed decision accuracy: 25/90.
+- Execution accuracy: 55/90.
+- False execution: 25/60 blocked cases.
+- Missed execution: 10/30 executable cases.
+- Ambiguous recognition: 0/15.
+- Incomplete recognition: 5/15.
+- Unsupported recognition: 10/15.
+- Contradictory recognition: 0/15.
+
+The exposed C5C development cohort had achieved 644/644 typed and execution matches, but this did not generalize to independent cases.
+
+Native disposable integration previously passed:
+
+- 310/310 scenarios.
+- 833 boundary requests.
+- 529 denials.
+- Zero observed privacy/authorization violations.
+
+These are historical results and must not be rewritten.
+
+Verify the existing freeze manifests and protected artifacts.
+
+The previous C5E report recorded 1,868 protected entries, including 462 production files.
+
+Use the authoritative manifests to establish the current protection scope.
+
+Do not alter:
+
+- C5A evidence.
+- C5B frozen corpus and normative gold.
+- C5C predictions and evaluation outputs.
+- C5D historical candidates and reports.
+- C5E independent acceptance results.
+- The original C5E PARTIAL decision.
+- Sealed heldout content.
+- Active production search modules.
+- Active C4 policy.
+
+If a new development candidate is necessary, create it under the existing C5E-R scratch namespace using established versioning conventions.
+
+---
+
+# 5. Phase C — Finish the existing semantic-parser repairs
+
+Inspect the current work in:
+
+`scratch/search_v2c_c5er/`
+
+Pay special attention to:
+
+- `query_constraints.py`
+- `requirement_ledger.py`
+- `semantic_safety.py`
+- Other copied parser modules.
+- Candidate V2/V3/V4 differences.
+
+Determine how far Codex progressed on the following original recovery requirements.
+
+## A. Mandatory requirement ledger
+
+Verify that the implementation correctly distinguishes:
+
+- Mandatory search requirements.
+- Optional/advisory preferences.
+- Explicit empty operands.
+- Missing required operands.
+- Unresolved alternatives.
+- Ambiguous relationships.
+- Contradictory requirements.
+- Unsupported operations.
+- Resolved requirements.
+- Correct source-span ownership.
+
+The ledger must not treat a recognized keyword as proof that an entire requirement is satisfied.
+
+Preserve source provenance and avoid accidentally discarding mandatory conditions.
+
+Do not hardcode original acceptance context IDs.
+
+## B. Creator-wide aggregate constraints
+
+Verify that creator-level rating or aggregate requirements are not incorrectly transformed into book-level rating filters.
+
+Determine what the existing application actually supports.
+
+If a required operation is unsupported, preserve the established safe unsupported behavior.
+
+Do not introduce unauthorized new Mongo aggregation functionality.
+
+## C. Valid bibliographic intersections
+
+Verify that valid combinations of author, subject, title, format, availability, publication constraints and exclusions remain executable.
+
+Do not overcorrect by rejecting every complex query.
+
+## D. Literal and field ownership
+
+Verify quoted-literal handling.
+
+Preserve distinctions between:
+
+- Quoted title and quoted subject.
+- Literal author name and broad semantic text.
+- Required hard filter and optional preference.
+- Whole-word exclusion and unrelated substring.
+- Field-specific operand and background narration.
+
+Preserve the established Marsh/ar whole-word negative-predicate counterexample.
+
+## E. Grammar repair provenance
+
+Verify that any spelling correction, operator repair, canonicalization or bounded grammar repair has sufficient source-backed justification.
+
+A matching substring alone is not proof that a repair is semantically correct.
+
+Do not fabricate repairs merely to obtain a successful executable classification.
+
+## F. Notice and clarification
+
+Preserve existing typed-decision and C4 policy contracts.
+
+Correctly distinguish:
+
+- EXECUTABLE
+- EXECUTABLE_WITH_NOTICE
+- AMBIGUOUS
+- INCOMPLETE
+- UNSUPPORTED
+- CONTRADICTORY
+
+Use the established enum definitions and representations.
+
+Do not introduce a parallel incompatible decision vocabulary.
+
+Continue incomplete general-purpose repairs only where the current implementation and failure evidence justify them.
+
+Avoid unnecessary redesign.
+
+---
+
+# 6. Phase D — Finish the evaluation adapter correctly
+
+Codex created both initial and V2 evaluation-adapter implementations.
+
+Inspect:
+
+- `scripts/search_v2c_c5er_evaluation_adapter.py`
+- `scripts/search_v2c_c5er_evaluation_adapter_v2.py`
+- `scratch/search_v2c_c5er/test_evaluation_adapter.py`
+- `scratch/search_v2c_c5er/test_evaluation_adapter_v2.py`
+
+The original C5E scorer omitted prefixed scalar masks in its primary strict evaluation.
+
+The original C5E typed/execution confusion and metrics remain valid.
+
+The strict semantic/operand score was incomplete.
+
+Finish the corrected evaluation adapter while preserving all previous outputs.
+
+Requirements:
+
+1. Correctly resolve prefixed scalar applicability masks.
+2. Preserve original normative gold.
+3. Distinguish false values from missing values.
+4. Distinguish inapplicable values from unresolved values.
+5. Preserve established partial-list comparison rules.
+6. Never interpret an unknown operand as confirmed absent.
+7. Never add a blanket semantic-equivalence adapter solely to improve scores.
+8. Report strict field matching separately from verified semantic correctness.
+9. Do not modify historical C5E scoring files.
+10. Test corrected adapter behavior against known applicable, inapplicable, unresolved and intentionally false examples.
+
+Determine whether V2 already satisfies these requirements before implementing further changes.
+
+If it is complete and tests pass, reuse it.
+
+If not, implement only the missing corrections.
+
+---
+
+# 7. Phase E — Finish and run focused development regressions
+
+Inspect existing C5E-R regression files before creating new tests.
+
+In particular:
+
+`scratch/search_v2c_c5er/regression_v4/test_generalized_ledger.py`
+
+Determine whether Codex was in the middle of repairing a failing generalized-ledger test.
+
+Run the appropriate focused tests in a safe environment.
+
+Use the actual project commands and dependencies.
+
+Do not invent successful test results.
+
+Test at least:
+
+- The original 25 independent C5E unsafe cases.
+- The original 10 missed-valid-execution cases.
+- Mandatory alternatives.
+- Explicit empty required operands.
+- Creator-wide aggregate constraints.
+- Valid bibliographic intersections.
+- Quoted field/literal boundaries.
+- Spelling and grammar repairs.
+- Safe uncertain executable queries.
+- Typed repair notices.
+- Contradiction detection.
+- Existing Marsh/ar negative-predicate behavior.
+- Global/public/private query contexts.
+- Patron/staff capability distinctions.
+- SMART and EXACT behavior.
+
+The previously independent C5E 90-case set is now exposed development material.
+
+It may be used for regression and diagnosis, but never relabeled as fresh independent validation.
+
+Preserve old failures, retries, candidate versions and regression logs.
+
+When fixing a test failure, investigate whether the defect belongs to the parser, test fixture, evaluator or normative contract.
+
+Do not change a correct test expectation simply to make a failing implementation pass.
+
+---
+
+# 8. Phase F — Finish structural isolation and native test utilities
+
+Inspect:
+
+`scripts/search_v2c_c5er_isolation.py`
+
+and
+
+`scripts/search_v2c_c5er_offline_native.py`
+
+Determine whether Codex completed both scripts.
+
+### Structural isolation
+
+Verify that the isolation implementation uses the repository's established canonicalization and structural collision rules.
+
+It must not reveal sealed-heldout queries.
+
+It must not modify heldout data or split membership.
+
+Do not weaken isolation merely because some generated validation examples collide.
+
+Rejected candidates must remain excluded from acceptance scoring.
+
+### Offline native verification
+
+Use only disposable fixtures and explicitly authorized test environments.
+
+Verify candidate compatibility with:
+
+- Global search.
+- Public institutional libraries.
+- Private institutional libraries.
+- SMART search.
+- EXACT search.
+- Query serialization.
+- Parsed filter propagation.
+- Corrections.
+- Clarifications.
+- Typed notices.
+- Scope/role authorization.
+- Workspace ownership.
+- Outsider concealment.
+- No unauthorized commits.
+
+Private-library testing is particularly important.
+
+Verify that private-library search continues to function using institution-owned books while the global fixture is empty or unavailable.
+
+Do not depend on the global catalog containing five million records.
+
+Audit whether global HNSW/KG/Mongo references are shared with private collections.
+
+Do not mutate the global catalog or rebuild any index.
+
+Do not claim end-to-end private independence unless the relevant integration tests actually demonstrate it.
+
+---
+
+# 9. Phase G — Fresh independent acceptance
+
+IMPORTANT: Before starting this phase, inspect the repository to determine whether Codex already began acceptance preparation.
+
+If an acceptance population already exists, determine whether it was independently reviewed, frozen, structurally isolated or exposed to predictions.
+
+Never silently regenerate or replace an already scored acceptance population.
+
+If Codex already captured acceptance predictions, preserve them and their outcome as the historical primary attempt. Do not score them again as fresh.
+
+If no acceptance capture has occurred, proceed only after the candidate is finalized and the necessary independent reviewer is available.
+
+### Required population
+
+Use the original C5E-R acceptance design:
+
+- All five search scopes.
+- All six decision strata.
+- Thirty scope/decision cells.
+- Target at least five independently reviewed cases per cell.
+- Meaningful structural diversity beyond repeating one query across scopes.
+
+Include clear executable, safe uncertain, ambiguous, incomplete, unsupported and contradictory requests.
+
+Include literal boundaries, valid intersections, mandatory alternatives, unsupported aggregate requirements, repairs and adversarial near misses.
+
+Keep full structural families together.
+
+Use fresh normative authoring and independent review.
+
+Reviewers must not see candidate predictions or target pass rates.
+
+Record AI-review provenance accurately. Do not claim human review without human participation.
+
+Use the established sealed auditor without revealing sealed-heldout content.
+
+### Pre-scoring freeze
+
+Before the primary capture, freeze:
+
+- Final candidate source hash.
+- Normative labels.
+- Validation population.
+- Eligibility and applicability masks.
+- Evaluator/adapter version.
+- Acceptance thresholds.
+- Structural-isolation result.
+
+Capture candidate predictions without gold.
+
+Then join predictions with frozen gold for scoring.
+
+Run one primary acceptance attempt.
+
+Do not edit the candidate after seeing the acceptance outcomes and rescore the same population as though it were still independent.
+
+If review or isolation cannot legitimately be completed, report PARTIAL instead of inventing a PASS.
+
+---
+
+# 10. Phase H — Final acceptance criteria
+
+Use the project's pre-registered acceptance contract.
+
+At minimum:
+
+- Zero observed false-execution recommendations in the independent blocked-gold population.
+- No observed authorization/privacy violations in isolated native tests.
+- No critical invented or discarded mandatory operands.
+- No loss of required relationships.
+- Correct handling of unsupported aggregate operations.
+- Correct handling of genuinely incomplete requests.
+- Correct contradiction and ambiguity behavior.
+- Legitimate executable intersections remain usable.
+- Safe-uncertain executable cases are not blanket-blocked.
+- SMART and EXACT regressions pass.
+- Correction and notice workflows conform to native contracts.
+- No live side effects.
+- Applicable typed/execution accuracy meets the documented predeclared acceptance requirements.
+
+Report numerators and denominators for all results.
+
+Do not choose accuracy thresholds after looking at final scores.
+
+An independent safety failure blocks C5F readiness even if the exposed-development score is perfect.
+
+Finite test results do not prove absence of real-world risk.
+
+---
+
+# 11. Preserve all production features
+
+Do not change active production search behavior.
+
+No production parser modification or routing activation is authorized.
+
+Do not modify:
+
+- Active C4 policy.
+- Existing library-management operations.
+- Private/public authorization.
+- Borrowing, issuing or returning books.
+- RAG.
+- Uploaded-document answering.
+- Qwen inference configuration.
+- Recommendations.
+- More Like This.
+- Knowledge graph.
+- HNSW indexes.
+- Mongo production data.
+- Frontend UI.
+- Staff inventory.
+
+Avoid unrelated refactoring or repository cleanup.
+
+Keep C5E-R implementations inside isolated candidate/test namespaces.
+
+Do not promote scratch code to production.
+
+---
+
+# 12. Performance and operational checks
+
+If safe and relevant, measure:
+
+- Parser-only latency.
+- Offline native fixture latency.
+- Runtime exceptions.
+- Candidate regression against previous measurements.
+
+Prior C5E measurements:
+
+- Parser p50 approximately 10.19 ms.
+- Parser p95 approximately 20.63 ms.
+- Native fixture p50 approximately 59.48 ms.
+- Native fixture p95 approximately 143.35 ms.
+
+These are not production end-to-end measurements.
+
+The previous global count was 5,000,000 books.
+
+The last measured global search health was STALE/degraded with `baseline_verified=False`.
+
+Do not repoll the protected resident endpoint or claim fresh live-search health without separate authorization.
+
+Do not rebuild indexes.
+
+---
+
+# 13. Completion evidence
+
+Produce versioned C5E-R reports using the repository's established report conventions.
+
+Include:
+
+1. Codex interruption recovery inventory.
+2. Original modified/untracked file inventory.
+3. Candidate version comparison.
+4. Root-cause-to-code-change mapping.
+5. Final candidate diff and hashes.
+6. Requirement-ledger verification.
+7. Evaluation-adapter V2 verification.
+8. Focused regression results.
+9. Historical C5E failure regression.
+10. Structural isolation evidence.
+11. Independent review provenance.
+12. Fresh acceptance prediction and scoring evidence, if legitimately performed.
+13. Native fixture results.
+14. Private/global catalog independence audit.
+15. Performance observations.
+16. Protected-file verification.
+17. Final QA decision.
+18. C5F readiness and exact remaining blockers.
+
+Record the actual generated paths.
+
+Do not assume that any report exists before checking the filesystem.
+
+Do not overwrite historical frozen evidence.
+
+Any previously failed or partial results must remain traceable.
+
+---
+
+# 14. Final QA output
+
+Return a structured final report containing:
+
+### Recovery status
+
+- CODEX_INTERRUPTED_WORK_RECOVERED
+- CODEX_EXISTING_CHANGES_PRESERVED
+- INITIAL_MODIFIED_FILES
+- INITIAL_UNTRACKED_FILES
+- LAST_EXISTING_CANDIDATE_FOUND
+- INCOMPLETE_SCRIPTS_FOUND
+- EXISTING_TEST_FAILURES_FOUND
+
+### Implementation
+
+- FINAL_CANDIDATE_ID
+- CANDIDATE_VERSION_SELECTED
+- CANDIDATE_V4_STATUS
+- NEW_FILES_CREATED
+- EXISTING_FILES_MODIFIED
+- REQUIREMENT_LEDGER_COMPLETE
+- EVALUATION_ADAPTER_V2_VALIDATED
+- KNOWN_C5E_FAILURES_REGRESSED
+
+### Validation
+
+- DEVELOPMENT_TESTS_PASSED
+- DEVELOPMENT_TESTS_FAILED
+- NATIVE_SCENARIOS_PASSED
+- PRIVATE_LIBRARY_INDEPENDENCE
+- STRUCTURAL_ISOLATION_VERIFIED
+- INDEPENDENT_REVIEW_COMPLETED
+- FRESH_ACCEPTANCE_CAPTURED
+- INDEPENDENT_TYPED_ACCURACY
+- INDEPENDENT_EXECUTION_ACCURACY
+- FALSE_EXECUTION_COUNT
+- MISSED_EXECUTION_COUNT
+- AMBIGUITY_RECOGNITION
+- INCOMPLETE_RECOGNITION
+- UNSUPPORTED_RECOGNITION
+- CONTRADICTION_RECOGNITION
+- NOTICE_RECOGNITION
+
+### Preservation
+
+- PRODUCTION_PARSER_CHANGED
+- ACTIVE_C4_POLICY_CHANGED
+- PRODUCTION_DATABASE_MUTATED
+- SEALED_HELDOUT_EVALUATIONS
+- HNSW_REBUILT
+- KG_REBUILT
+- PREVIOUS_EVIDENCE_HASH_VERIFIED
+- C5ER_EVIDENCE_FROZEN
+
+### Final decision
+
+- FINAL = PASS / PARTIAL / FAIL
+- C5F_READY
+- REMAINING_BLOCKERS
+- NEXT_AUTHORIZED_ACTION
+
+Clearly distinguish previously completed Codex work from new work performed during this continuation.
+
+---
+
+# 15. Resource-efficient execution
+
+Because the previous coding session was interrupted by credit exhaustion, avoid wasting effort.
+
+Use this order:
+
+1. Understand repository state.
+2. Identify already completed implementations.
+3. Identify already executed tests.
+4. Preserve existing work.
+5. Repair only verified incomplete pieces.
+6. Run focused tests.
+7. Run broader development regression once candidate quality is sufficient.
+8. Verify the evaluator and structural isolation.
+9. Freeze the candidate.
+10. Conduct independent acceptance only when genuinely ready.
+11. Complete native integration verification.
+12. Produce final QA evidence.
+
+Do not repeatedly run the full 644-case development evaluation after every small edit.
+
+Use targeted regressions during development.
+
+Do not trigger expensive model inference or production workloads.
+
+Do not regenerate reviewed corpora unnecessarily.
+
+If a required external reviewer is unavailable, do not substitute unverified self-review.
+
+Work on other safely completable items and report the independent-review blocker.
+
+Do not start fresh acceptance prematurely merely to show progress.
+
+---
+
+# 16. Strict continuation rules
+
+You must not:
+
+- Restart C5E-R from zero.
+- Delete or overwrite Codex's changes.
+- Assume V4 is complete.
+- Assume V4 is broken without inspection.
+- Replace the already established architecture unnecessarily.
+- Move experimental parser files into production.
+- Alter normative gold based on parser predictions.
+- Reuse exposed acceptance as independent evidence.
+- Inspect sealed heldout examples.
+- Run heldout scoring.
+- Change live library permissions.
+- Perform production Mongo mutations.
+- Rebuild HNSW/KG.
+- Start C5F.
+- Silently hide failed attempts.
+- Claim PASS without verifying requirements.
+
+If an existing script is unsafe or incomplete, preserve it and document the reason before producing a corrected version.
+
+Prefer completing the actual existing work over creating another parallel implementation.
+
+---
+
+# 17. Final instruction — Begin immediately
+
+Start by inspecting:
+
+`git status`
+
+and the complete existing:
+
+`scratch/search_v2c_c5er/`
+
+and:
+
+`scripts/search_v2c_c5er_*.py`
+
+Then inspect existing C5E-R reports, candidate diffs and test logs.
+
+Determine exactly where Codex stopped.
+
+Give a concise implementation-state summary grounded in the repository.
+
+After that, **continue coding from the actual interrupted point**, complete any unfinished tests and authorized validation, and produce the final C5E-R QA report.
+
+Do not ask me to repeat the previous prompt or explain the project again.
+
+Use the repository, frozen evidence and the requirements above.
+
+If an action is blocked, complete the remaining authorized work and report the blocker without falsely claiming completion.
+
+**The successful outcome is completion of Codex's existing C5E-R work, not a fresh implementation that wastes the code already written.**
+
+Stop after C5E-R. C5F requires separate authorization.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-27T12:12:31+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Claude Opus 4.6 (Thinking). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

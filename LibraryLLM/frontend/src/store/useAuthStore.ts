@@ -1,8 +1,10 @@
 import { finishDocumentLogout } from "../lib/documentCacheApi";
+import { clearSearchContexts } from '../lib/searchContext';
 import { useAssistantStore } from "./useAssistantStore";
 import { create } from "zustand";
 import { useLibraryStore } from "./useLibraryStore";
 import { useInstitutionStore } from './useInstitutionStore';
+import { usePlatformStore } from './usePlatformStore';
 
 import {
   login as apiLogin,
@@ -121,7 +123,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         throw new Error("Login did not return a supported user role.");
 
       useLibraryStore.getState().clearUserData();
+      clearSearchContexts();
       useInstitutionStore.getState().reset();
+      usePlatformStore.getState().reset();
       localStorage.setItem("luminar_token", token);
 
       if (user) {
@@ -261,9 +265,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   // ========================================================
 
   logout: async () => {
+    clearSearchContexts();
     useInstitutionStore.getState().reset();
+    usePlatformStore.getState().reset();
     const token = get().token;
     set({ loading: true });
+    // Clear Search plans while this login is still valid. Document logout may
+    // revoke the shared token before the later core logout call reaches it.
+    if(token) await fetch('/api/search-context', {method:'DELETE',headers:{Authorization:`Bearer ${token}`},signal:AbortSignal.timeout(3000)}).catch(()=>{});
     const removed = token ? await finishDocumentLogout(token) : true;
     if (get().token !== token) return;
     useAssistantStore.getState().syncOwner(null);

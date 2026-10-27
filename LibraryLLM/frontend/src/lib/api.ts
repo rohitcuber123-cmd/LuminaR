@@ -62,6 +62,7 @@ export interface CategoriesResponse {
 }
 
 export interface SearchResult {
+  search_reasons?: string[]
   readable?: boolean
   rag_available?: boolean
   work_id?: string
@@ -97,6 +98,7 @@ export interface RankedPageMetadata {
 }
 
 export interface SearchResponse extends RankedPageMetadata {
+  interpretation?: import('./searchNlu').SearchInterpretation
   system?: string
   query?: string
 
@@ -519,7 +521,7 @@ export async function searchBooks(
   availableAtLibrary = true,
   saveHistory = true,
   offset = 0,
-  filters: { category?: string; author?: string } = {}
+  filters: { category?: string; author?: string;mode?:string;rating_min?:number;rating_max?:number;year_min?:number;year_max?:number;format?:string;availability?:string;language?:string;sort?:string;omit?:string[];session_id?:string;personalized?:boolean } = {}
 ) {
 
   const response = await request<SearchResponse>(

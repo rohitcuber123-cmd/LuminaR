@@ -1,0 +1,60 @@
+{
+  "version": "C5-calibration-v1",
+  "status": "FROZEN_BEFORE_BASELINE",
+  "cases": 280,
+  "unique_contexts": 280,
+  "parser_cases": 50,
+  "native_cases": 230,
+  "source_parser_version": "search-v2c-c4-deterministic-1",
+  "evaluator_version": "C5-baseline-1",
+  "policy_version": "existing categorical execution_policy",
+  "policy_hash": "a874fc2f2e8876c70ee30faacc9a7bab86f3e9099ffc7f14605ff0a18c2d1393",
+  "files": {
+    "reports\\search_v2c_c5_calibration.jsonl": "95435709878671afb6e36cb5bd6004da6465ad9efea2f5686aaa2e06f0a77225",
+    "reports\\search_v2c_c_scope_vocabularies.json": "019f91e6e206b6edfd5e07f5c592a895912c459b1c8b0c7cbff57fa145738e4f",
+    "reports\\search_v2c_c2_benchmark_v2_split.json": "7102bdd6487f0a0409911653eed4a040303b3ee6a72d0994c60916de005cbb44",
+    "reports\\search_v2c_c4_reviewed_contract.json": "96ea427dcb1a5531ecff1df09f59413533f99d44dd61e4959d38bf586cd0ea4b",
+    "reports\\search_v2c_c5_label_quality.json": "f0a6fe3651f22d9a5132605305ace58d094d8b21753e67d978427ea853887f18",
+    "D:\\SDC\\LibraryLLM\\scripts\\search_v2c_c5_prepare.py": "cb0fcd2e0436ac09d5c5e4da0b13fbbfbea24b7f96446abbaca34f15a8f862f1"
+  },
+  "parser_source_hashes": {
+    "search/query_repair.py": "0f4906eda7a3e5ff46aaca37f40aa3a1cbe47515f92f645261c45c1a3c5af9c3",
+    "search/query_calibration.py": "a874fc2f2e8876c70ee30faacc9a7bab86f3e9099ffc7f14605ff0a18c2d1393",
+    "search/query_suggestions.py": "f6861102e36a074e3086ef54737f6a348a23c24584155927b331671c024b35d6",
+    "search/scope_authorization.py": "55ac0c6b1e1efbb0b8b25b27c28a30e17bd381cea6c6da55aad5acd29ae07504",
+    "search/query_execution.py": "055db8458d2407394e3a32888fe68a258c3649b939507c72c9d8253fa5d5ee00",
+    "search/query_session.py": "ed0cbe643a5a43e9f3c1af006848a38ce9abf3a4bb2e1ea7bd795b74274b6233",
+    "search/query_numeric.py": "980d2897a94c6c41e78b9251b4da81023ce28f5c32fcf637b8af661d2df7d8dc",
+    "search/query_confidence.py": "054e7fbe72b107b58d9146b737ebf63d4d2f81fc5237850f3bf4a6036141c428",
+    "search/session_store.py": "bc99ede7293ef4c48db4db949451dd252685ea6ab49883d87a8ff469d1c34791",
+    "search/query_plan.py": "376224248025cd56008b03febd3e4b60527b2ae8da8c22188c508b058cab1152",
+    "search/query_expansion.py": "8743a79a857771870f9ae20f876282f226b22241328e09ab0826b5500693b0bc",
+    "search/query_constraints.py": "40d98864665f1aeafa902e92c45ee892d6018de266bab86cd66222be8d298774",
+    "search/query_interaction.py": "1a8c408693f139310e212107123cf53c0835f4327d4e01b6a286418a997bc481"
+  },
+  "heldout_access": "Hash bytes and permitted manifests only; no held-out row decoded",
+  "label_sources": "C3 reviewed50 replace C2 originals by exact unchanged context lineage; remaining230 original rows retained.",
+  "baseline_evaluator_hash": "a6b2765bae459aa1cb48d7c8cfaf5f0a45297ce25adb6463e684822d935a177d",
+  "representation_rules": {
+    "protected_entity": "Matching surrounding single/double quote delimiters are syntax, excluded from protected entity content. Raw legacy protected containment result also retained.",
+    "other_fields": "C4 scorer definitions and BOTH equivalence; original expected fields immutable; native plan fields masked."
+  },
+  "candidate_policy_evaluator_hash": "d9c39f6c0fa9333ba28f4da994ffd738b080bb14f3c327c41e0088992738c9e5",
+  "candidate_configs": [
+    {
+      "version": "c5-existing-control",
+      "rule": "Existing categorical policy unchanged"
+    },
+    {
+      "version": "c5-notice-source-certainty-v1",
+      "rule": "Typed guard authoritative; notice on repairs, unknown subject or confidence below1",
+      "notice_below": 1.0
+    },
+    {
+      "version": "c5-complete-source-evidence-v1",
+      "rule": "Typed guard authoritative; clarify missing supported source evidence, notice repairs or confidence below0.98",
+      "notice_below": 0.98,
+      "require_source": true
+    }
+  ]
+}

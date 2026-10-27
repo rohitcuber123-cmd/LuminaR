@@ -47,7 +47,7 @@ export function Hero({ books }: HeroProps) {
                 key={`${book.book_id}-${i}`}
                 to={productNavigation.personalPath(homeBookPath(context, book.work_id))}
                 data-library-book-id={context?.data.source.catalogue_source === 'LIBRARY_LOCAL' ? book.work_id : undefined}
-                className="w-[130px] shrink-0 sm:w-[160px] md:w-[190px] transition-transform hover:-translate-y-2 hover:scale-[1.02]"
+                className="w-[130px] shrink-0 sm:w-[160px] md:w-[190px] motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:-translate-y-[2px]"
               >
                 <BookCover 
                   title={book.title} 

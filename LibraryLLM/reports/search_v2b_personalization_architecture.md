@@ -1,0 +1,9 @@
+# Opt-in personalized ranking
+
+Personalized results defaults OFF. Its account-keyed persisted browser preference contains only a boolean. The client sends no user-selected weights or fabricated profile. The server derives a temporary profile from up to 50 own saved global work identities and, in a freshly authorized tenant, up to 50 own local-only saved identities. Global identities are rehydrated from live public metadata; copied Reading List snapshots are ignored. Local metadata stays within the exact authorized library/workspace. No loans, search history, clicks, RAG, private documents, fees, chat or other users' data are used.
+
+Authorization → session edits → V2A interpretation → existing KG/HNSW or structured retrieval → canonical eligibility/strict filters → existing CrossEncoder → bounded personalization → safe reasons. Candidates are not added by personalization. Cache keys include user, JWT sid, library, workspace and profile version; 60 seconds/256 entries. Profile failures yield neutral relevance, while authorization failures propagate.
+
+Subjects contribute 80% and authors 20%, each saturating at three saved books. The total additive adjustment is at most 0.02 on a sigmoid CE scale. Eligible adjacent three-row bands must span no more than 0.02 on that scale AND 0.1 raw CE logit; displacement is at most two. Primary and KG-secondary groups never cross. Explicit sorts and Exact/Title-Author ordering remain authoritative. OFF/cold users retain the exact baseline order. This is a conservative tie-breaker, not a demonstrated relevance-quality improvement.
+
+At most two deterministic reasons use current canonical result metadata and authorized profile matches. HUMAN responses remove internal scores; MACHINE behavior is preserved. Explanation vocabulary remains literal, including multilingual catalogue subjects; no invented aliases or AI confidence.

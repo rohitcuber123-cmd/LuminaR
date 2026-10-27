@@ -1,0 +1,3 @@
+# Shared button system
+`Button.tsx` provides primary, secondary, ghost and danger variants plus a required-label IconButton. Existing application controls consume the same CSS tokens. Primary controls are 44px with 11–12px rounded rectangles; secondary controls are 40px with 10px corners; icon controls are 38px desktop and 44px mobile. Carousel arrows remain 44px circles. Status/filter chips alone use pill geometry.
+Disabled/busy buttons retain native disabled semantics and accessible names. Hover lift is 1px over 160ms; focus outlines remain visible. Inputs/selects use the existing 44px form geometry with the shared 11px control radius. No animation dependency was added.

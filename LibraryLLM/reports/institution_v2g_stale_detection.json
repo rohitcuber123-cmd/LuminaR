@@ -1,0 +1,31 @@
+{
+  "status": "PASS_TESTED",
+  "source_fields": [
+    "library_book_id",
+    "library_id",
+    "global_work_id",
+    "status",
+    "title",
+    "authors",
+    "subjects",
+    "description",
+    "isbn_10",
+    "isbn_13",
+    "publication_year",
+    "edition",
+    "publisher",
+    "classification"
+  ],
+  "normalized": "NFKC, bounded normalized whitespace and deterministic sorted authors/subjects/book IDs; schema-versioned SHA-256.",
+  "ignored": [
+    "loans",
+    "fees",
+    "stock counts",
+    "availability",
+    "requests",
+    "reservations",
+    "memberships",
+    "document source/chunks"
+  ],
+  "stale_policy": "Computed current source mismatch => STALE. First observed timestamp recorded; dry-run reconciliation never writes. Only READY uses semantic artifact; stale reads use current local canonical catalogue."
+}

@@ -1,0 +1,2 @@
+from library_intelligence_cli import run
+if __name__=='__main__':run(recovery=True)

@@ -1,0 +1,583 @@
+{
+  "captured_at": "2026-10-15T05:57:35.544586+00:00",
+  "status": "BLOCKED",
+  "V2C_A_PRECONDITION_PASS": false,
+  "implementation_started": false,
+  "missing_required_v2c_a_reports": [
+    "reports\\search_v2c_a_final_qa.json",
+    "reports\\search_v2c_a_confidence.json",
+    "reports\\search_v2c_a_leftover_analysis.json",
+    "reports\\search_v2c_a_browser.json",
+    "reports\\search_v2c_a_preservation.json"
+  ],
+  "parser_version": "search-v2a-deterministic-1",
+  "parser_interface": {
+    "module": "search.query_plan",
+    "entrypoint": "parse_query(query, facets=(), mode=SMART, filters=None, omit=())",
+    "plan_fields": [
+      "raw_query",
+      "mode",
+      "semantic_text",
+      "title_text",
+      "author_text",
+      "subjects",
+      "rating_min",
+      "rating_max",
+      "rating_min_exclusive",
+      "rating_max_exclusive",
+      "year_min",
+      "year_max",
+      "year_min_exclusive",
+      "year_max_exclusive",
+      "formats",
+      "availability",
+      "language",
+      "exact_text",
+      "sort",
+      "interpretation_confidence",
+      "corrections",
+      "unknown_subject",
+      "suggested_subject",
+      "normalized_query",
+      "intent",
+      "parser_version",
+      "include_terms",
+      "exclude_terms",
+      "exclude_subjects",
+      "expanded_subjects",
+      "soft_preference",
+      "kg_expansion_used",
+      "kg_generation"
+    ],
+    "confidence_contract": "Existing interpretation_confidence float defaults to 1.0, adjusted for canonical facet resolution. No slot-level confidence or typed ambiguity/conflict/leftover decision found."
+  },
+  "probe_method": "Direct read-only execution of actual parser using accepted canonical Global facet snapshot reports/search_v2a_facet_vocabulary.json. No V2B session commit, DB write, search model invocation or browser action.",
+  "query_probes": [
+    {
+      "query": "fiction books above rating of 3",
+      "plan": {
+        "raw_query": "fiction books above rating of 3",
+        "mode": "SMART",
+        "semantic_text": "above of 3",
+        "title_text": null,
+        "author_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "availability": null,
+        "language": null,
+        "exact_text": null,
+        "sort": "RELEVANCE",
+        "interpretation_confidence": 1.0,
+        "corrections": [],
+        "unknown_subject": false,
+        "suggested_subject": null,
+        "normalized_query": "fiction books above rating of 3",
+        "intent": "DISCOVER_TOPIC",
+        "parser_version": "search-v2a-deterministic-1",
+        "include_terms": [],
+        "exclude_terms": [],
+        "exclude_subjects": [],
+        "expanded_subjects": [],
+        "soft_preference": null,
+        "kg_expansion_used": false,
+        "kg_generation": null
+      },
+      "public_interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: above of 3"
+          },
+          {
+            "key": "subject",
+            "label": "Genre / Subject: Fiction"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null
+      }
+    },
+    {
+      "query": "fiction about wizards above rating of 3",
+      "plan": {
+        "raw_query": "fiction about wizards above rating of 3",
+        "mode": "SMART",
+        "semantic_text": "wizards above of 3",
+        "title_text": null,
+        "author_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "availability": null,
+        "language": null,
+        "exact_text": null,
+        "sort": "RELEVANCE",
+        "interpretation_confidence": 1.0,
+        "corrections": [],
+        "unknown_subject": false,
+        "suggested_subject": null,
+        "normalized_query": "fiction about wizards above rating of 3",
+        "intent": "DISCOVER_TOPIC",
+        "parser_version": "search-v2a-deterministic-1",
+        "include_terms": [],
+        "exclude_terms": [],
+        "exclude_subjects": [],
+        "expanded_subjects": [],
+        "soft_preference": null,
+        "kg_expansion_used": false,
+        "kg_generation": null
+      },
+      "public_interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: wizards above of 3"
+          },
+          {
+            "key": "subject",
+            "label": "Genre / Subject: Fiction"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null
+      }
+    },
+    {
+      "query": "fiction 4",
+      "plan": {
+        "raw_query": "fiction 4",
+        "mode": "SMART",
+        "semantic_text": "fiction 4",
+        "title_text": null,
+        "author_text": null,
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "availability": null,
+        "language": null,
+        "exact_text": null,
+        "sort": "RELEVANCE",
+        "interpretation_confidence": 1.0,
+        "corrections": [],
+        "unknown_subject": false,
+        "suggested_subject": null,
+        "normalized_query": "fiction 4",
+        "intent": "DISCOVER_TOPIC",
+        "parser_version": "search-v2a-deterministic-1",
+        "include_terms": [],
+        "exclude_terms": [],
+        "exclude_subjects": [],
+        "expanded_subjects": [],
+        "soft_preference": null,
+        "kg_expansion_used": false,
+        "kg_generation": null
+      },
+      "public_interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: fiction 4"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null
+      }
+    },
+    {
+      "query": "books rated above 4 and below 3",
+      "plan": {
+        "raw_query": "books rated above 4 and below 3",
+        "mode": "SMART",
+        "semantic_text": "below 3",
+        "title_text": null,
+        "author_text": null,
+        "subjects": [],
+        "rating_min": 4.0,
+        "rating_max": null,
+        "rating_min_exclusive": true,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "availability": null,
+        "language": null,
+        "exact_text": null,
+        "sort": "RELEVANCE",
+        "interpretation_confidence": 1.0,
+        "corrections": [],
+        "unknown_subject": false,
+        "suggested_subject": null,
+        "normalized_query": "books rated above 4 and below 3",
+        "intent": "DISCOVER_TOPIC",
+        "parser_version": "search-v2a-deterministic-1",
+        "include_terms": [],
+        "exclude_terms": [],
+        "exclude_subjects": [],
+        "expanded_subjects": [],
+        "soft_preference": null,
+        "kg_expansion_used": false,
+        "kg_generation": null
+      },
+      "public_interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: below 3"
+          },
+          {
+            "key": "rating_min",
+            "label": "Rating: > 4"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null
+      }
+    },
+    {
+      "query": "books rated above 4 and rated below 3",
+      "plan": {
+        "raw_query": "books rated above 4 and rated below 3",
+        "mode": "SMART",
+        "semantic_text": null,
+        "title_text": null,
+        "author_text": null,
+        "subjects": [],
+        "rating_min": 4.0,
+        "rating_max": 3.0,
+        "rating_min_exclusive": true,
+        "rating_max_exclusive": true,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "availability": null,
+        "language": null,
+        "exact_text": null,
+        "sort": "RELEVANCE",
+        "interpretation_confidence": 1.0,
+        "corrections": [],
+        "unknown_subject": false,
+        "suggested_subject": null,
+        "normalized_query": "books rated above 4 and rated below 3",
+        "intent": "DISCOVER_TOPIC",
+        "parser_version": "search-v2a-deterministic-1",
+        "include_terms": [],
+        "exclude_terms": [],
+        "exclude_subjects": [],
+        "expanded_subjects": [],
+        "soft_preference": null,
+        "kg_expansion_used": false,
+        "kg_generation": null
+      },
+      "public_interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "rating_min",
+            "label": "Rating: > 4"
+          },
+          {
+            "key": "rating_max",
+            "label": "Rating: < 3"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null
+      }
+    },
+    {
+      "query": "after 2020 before 2000",
+      "plan": {
+        "raw_query": "after 2020 before 2000",
+        "mode": "SMART",
+        "semantic_text": null,
+        "title_text": null,
+        "author_text": null,
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": 2020,
+        "year_max": 2000,
+        "year_min_exclusive": true,
+        "year_max_exclusive": true,
+        "formats": [],
+        "availability": null,
+        "language": null,
+        "exact_text": null,
+        "sort": "RELEVANCE",
+        "interpretation_confidence": 1.0,
+        "corrections": [],
+        "unknown_subject": false,
+        "suggested_subject": null,
+        "normalized_query": "after 2020 before 2000",
+        "intent": "DISCOVER_TOPIC",
+        "parser_version": "search-v2a-deterministic-1",
+        "include_terms": [],
+        "exclude_terms": [],
+        "exclude_subjects": [],
+        "expanded_subjects": [],
+        "soft_preference": null,
+        "kg_expansion_used": false,
+        "kg_generation": null
+      },
+      "public_interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "year_min",
+            "label": "Year: > 2020"
+          },
+          {
+            "key": "year_max",
+            "label": "Year: < 2000"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null
+      }
+    },
+    {
+      "query": "online only and physical only",
+      "plan": {
+        "raw_query": "online only and physical only",
+        "mode": "SMART",
+        "semantic_text": "only only",
+        "title_text": null,
+        "author_text": null,
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [
+          "ONLINE",
+          "PHYSICAL"
+        ],
+        "availability": null,
+        "language": null,
+        "exact_text": null,
+        "sort": "RELEVANCE",
+        "interpretation_confidence": 1.0,
+        "corrections": [],
+        "unknown_subject": false,
+        "suggested_subject": null,
+        "normalized_query": "online only and physical only",
+        "intent": "FIND_ONLINE",
+        "parser_version": "search-v2a-deterministic-1",
+        "include_terms": [],
+        "exclude_terms": [],
+        "exclude_subjects": [],
+        "expanded_subjects": [],
+        "soft_preference": null,
+        "kg_expansion_used": false,
+        "kg_generation": null
+      },
+      "public_interpretation": {
+        "mode": "SMART",
+        "intent": "FIND_ONLINE",
+        "intent_label": "Find online",
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: only only"
+          },
+          {
+            "key": "format",
+            "label": "Format: Online"
+          },
+          {
+            "key": "format",
+            "label": "Format: Physical"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null
+      }
+    },
+    {
+      "query": "fiction rating above",
+      "plan": {
+        "raw_query": "fiction rating above",
+        "mode": "SMART",
+        "semantic_text": "fiction above",
+        "title_text": null,
+        "author_text": null,
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "availability": null,
+        "language": null,
+        "exact_text": null,
+        "sort": "RELEVANCE",
+        "interpretation_confidence": 1.0,
+        "corrections": [],
+        "unknown_subject": false,
+        "suggested_subject": null,
+        "normalized_query": "fiction rating above",
+        "intent": "DISCOVER_TOPIC",
+        "parser_version": "search-v2a-deterministic-1",
+        "include_terms": [],
+        "exclude_terms": [],
+        "exclude_subjects": [],
+        "expanded_subjects": [],
+        "soft_preference": null,
+        "kg_expansion_used": false,
+        "kg_generation": null
+      },
+      "public_interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: fiction above"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null
+      }
+    }
+  ],
+  "gate_checks": {
+    "A_Fiction_and_rating_gt_3": "FAIL: rating_min is absent",
+    "B_no_garbage_topic": "FAIL: semantic_text is above of 3",
+    "C_wizards_topic_preserved_cleanly": "FAIL: semantic_text retains wizards above of 3",
+    "D_fiction_4_marked_ambiguous": "FAIL: ordinary semantic query, confidence 1.0, no ambiguity decision",
+    "E_contradictions_detected": "FAIL: conflicting ranges/formats accepted without conflict decision; partially phrased upper rating left as topic",
+    "F_slot_or_equivalent_typed_decision": "FAIL: legacy facet confidence float is not slot/plan acceptance metadata",
+    "G_V2C_A_global_public_private": "NOT_VERIFIED: no V2C-A scoped evidence or implementation",
+    "H_V2B_recommendation_MLT_preservation": "PRIOR_ACCEPTANCE_PRESENT: search_v2b_final_qa.json and regression XML retained; not rerun after gate failure",
+    "I_V2C_A_browser_acceptance": "MISSING: V2A/V2B closure exists, no V2C-A browser report"
+  },
+  "prior_evidence": [
+    "reports/search_v2b_final_qa.json",
+    "reports/search_v2b_regression.json",
+    "reports/search_v2b_v2a_browser_closure.json"
+  ],
+  "unrelated_institution_v2c": "Existing institution_v2c reports/services concern circulation/reservations/fees, not Search Intelligence V2C-A.",
+  "source_sha256_before_after": {
+    "search/query_plan.py": {
+      "before": "559c49e14e7c76bb68eca3f80f11c1fa2dfc24dd76b8dfd7196696e51fea090d",
+      "after": "559c49e14e7c76bb68eca3f80f11c1fa2dfc24dd76b8dfd7196696e51fea090d",
+      "unchanged": true
+    },
+    "search/query_session.py": {
+      "before": "998be74094c2666ca39ed8673a6a5095cdac4792739faa6ba0aa07570de7a467",
+      "after": "998be74094c2666ca39ed8673a6a5095cdac4792739faa6ba0aa07570de7a467",
+      "unchanged": true
+    },
+    "search/session_store.py": {
+      "before": "9d0237b3691ca9b03c5d8455441c0f19f7e5bac6f13584ce1e6cc7225651eac3",
+      "after": "9d0237b3691ca9b03c5d8455441c0f19f7e5bac6f13584ce1e6cc7225651eac3",
+      "unchanged": true
+    },
+    "search/personalization.py": {
+      "before": "c3258ead7f38c5b228f00ed73845d59e0202426a1cc43e454c9a88952760eb7e",
+      "after": "c3258ead7f38c5b228f00ed73845d59e0202426a1cc43e454c9a88952760eb7e",
+      "unchanged": true
+    },
+    "search/query_execution.py": {
+      "before": "749b0748b4599c189b100044e00c4c5cefa3060324f93328d7d4d13cb53954ce",
+      "after": "749b0748b4599c189b100044e00c4c5cefa3060324f93328d7d4d13cb53954ce",
+      "unchanged": true
+    },
+    "search/query_expansion.py": {
+      "before": "65d3c1becdaf0886323077406010a7b4ced89d732ed86536017dd9f8108e5004",
+      "after": "65d3c1becdaf0886323077406010a7b4ced89d732ed86536017dd9f8108e5004",
+      "unchanged": true
+    },
+    "search/luminar_search.py": {
+      "before": "287df052687d8e3c7959a3cc0d057b6eb7b4c19973d630239f705e64896ed094",
+      "after": "287df052687d8e3c7959a3cc0d057b6eb7b4c19973d630239f705e64896ed094",
+      "unchanged": true
+    }
+  },
+  "changes_this_request": [
+    "reports/search_v2c_b_precondition.json",
+    "reports/search_v2c_b_precondition_blocker.md"
+  ],
+  "stop_reason": "Mandatory V2C-A precondition gate failed. Do not implement V2C-A silently inside V2C-B. V2C-B/V2C-C/Part 2I not started; no HNSW/KG rebuild or model changes."
+}

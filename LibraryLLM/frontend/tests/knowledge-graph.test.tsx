@@ -1,3 +1,4 @@
+import { chooseSelect, selectedValue } from './select-control'
 import assert from 'node:assert/strict'
 import { test, beforeEach, afterEach } from 'node:test'
 import { JSDOM } from 'jsdom'
@@ -46,7 +47,7 @@ test('keyboard node selection, subject filter and reseeding clear stale comparis
   fireEvent.click(screen.getByRole('button', { name: 'Inspect book: Another Book' }))
   fireEvent.click(screen.getByRole('button', { name: 'Use as starting book' }))
   assert.equal(screen.queryByRole('region', { name: 'Interactive catalogue graph' }), null)
-  assert.equal((screen.getByLabelText('Starting book') as HTMLSelectElement).value, 'OL2W')
+  assert.equal(selectedValue(screen.getByLabelText('Starting book')), 'OL2W')
 })
 test('compare explicitly requests the existing recommender and renders both lists', async () => {
   await mount(); await explore(); fireEvent.click(screen.getByRole('button', { name: 'Compare with existing recommender' }))
@@ -65,7 +66,7 @@ test('aborted request cannot replace a newly selected seed', async () => {
   await mount(); let release: ((value: Response) => void) | undefined
   globalThis.fetch = async () => new Promise<Response>(resolve => { release = resolve })
   fireEvent.click(screen.getByRole('button', { name: 'Explore connections' }))
-  fireEvent.change(screen.getByLabelText('Starting book'), { target: { value: 'OL2W' } })
+  chooseSelect(screen.getByLabelText('Starting book'),'OL2W',fireEvent)
   release?.(new Response(JSON.stringify(data), { status: 200 }))
   await waitFor(() => assert.equal(screen.queryByRole('region', { name: 'Interactive catalogue graph' }), null))
 })

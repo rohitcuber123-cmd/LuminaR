@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "routes": [
+    {
+      "path": "/staff/libraries/:libraryId/catalogue",
+      "component": "LibraryCataloguePage staff",
+      "authority": "ACTIVE ADMIN/LIBRARIAN LibraryMembership",
+      "purpose": "selected-library visual browsing"
+    },
+    {
+      "path": "/staff/libraries/:libraryId/genres",
+      "component": "LibraryCatalogueGenres staff",
+      "authority": "same Staff membership",
+      "purpose": "shared subject browser"
+    },
+    {
+      "path": "/staff/libraries/:libraryId/books/:bookId",
+      "component": "LibraryCatalogueDetail staff",
+      "identity": "library_book_id",
+      "authority": "same Staff membership",
+      "purpose": "shared detail with existing Staff forms/resources"
+    },
+    {
+      "path": "/staff/libraries/:libraryId/inventory",
+      "purpose": "existing separate management table"
+    },
+    {
+      "path": "/libraries/:libraryId/catalogue",
+      "purpose": "unchanged Patron catalogue"
+    },
+    {
+      "path": "/catalog",
+      "purpose": "unchanged global catalogue; explicit Staff discovery action"
+    }
+  ],
+  "reused_API_reads": [
+    "GET /libraries/{library_id}/catalogue/source?staff=true",
+    "GET /libraries/{library_id}/catalogue/books?staff=true",
+    "GET /libraries/{library_id}/catalogue/genres?staff=true",
+    "GET /libraries/{library_id}/catalogue/books/{library_book_id}?staff=true"
+  ],
+  "new_mutation_endpoints": []
+}

@@ -1,0 +1,71 @@
+{
+  "status": "FAIL",
+  "accepted_V2B_regression": {
+    "report": "D:\\SDC\\LibraryLLM\\reports\\search_v2c_b_regression_sessions.xml",
+    "tests": 34,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failed_cases": [],
+    "cases": [
+      "test_global_contradiction_preserves_context_and_skips_retrieval",
+      "test_multi_subject_global_uses_rarest_bounded_ids_and_all_predicates",
+      "test_private_canonical_clause_session_pipeline[False]",
+      "test_private_canonical_clause_session_pipeline[True]",
+      "test_private_clause_vocabulary_not_read_before_auth[actor0]",
+      "test_private_clause_vocabulary_not_read_before_auth[actor1]",
+      "test_revocation_precedes_contradiction_resolution",
+      "test_missing_tenant_subject_not_imported_from_global",
+      "test_public_session_clause_guard[False]",
+      "test_public_session_clause_guard[True]",
+      "test_rejected_plan_never_overwrites_or_creates_context[fiction 4-AMBIGUOUS]",
+      "test_rejected_plan_never_overwrites_or_creates_context[fiction rating above-INCOMPLETE]",
+      "test_rejected_plan_never_overwrites_or_creates_context[books rated above 4 and below 3-CONTRADICTORY]",
+      "test_rejected_plan_never_overwrites_or_creates_context[online only and physical only-CONTRADICTORY]",
+      "test_rejected_plan_never_overwrites_or_creates_context[books under 250 pages-UNSUPPORTED]",
+      "test_old_scoped_plan_readable_and_new_query_revalidated",
+      "test_global_guard_precedes_retrieval_profile_kg_and_commit",
+      "test_authorized_private_guard_and_revocation",
+      "test_private_unauthorized_before_vocabulary[actor0]",
+      "test_private_unauthorized_before_vocabulary[actor1]",
+      "test_natural_strict_rating_filters_canonical_rows",
+      "test_global_unsupported_year_does_not_commit",
+      "test_search_session_persistence_replay_expiry_and_clear",
+      "test_search_session_foreign_user_and_login_denied[foreign0]",
+      "test_search_session_foreign_user_and_login_denied[foreign1]",
+      "test_library_a_b_sessions_and_workspaces_separate",
+      "test_private_search_session_membership_revoked",
+      "test_private_session_outsider_denied_before_resolution",
+      "test_private_session_exclusion_overrides_kg_and_personalization",
+      "test_tenant_profile_cannot_enter_global_or_foreign_tenant",
+      "test_public_tenant_fallback_preserves_session_and_boundaries",
+      "test_global_opt_in_warm_profile_off_and_reason_contract",
+      "test_empty_public_tenant_session_never_becomes_global_filler",
+      "test_logout_context_clear_is_user_scoped_and_preserves_saved_books"
+    ]
+  },
+  "new_forged_choice_reproducer": {
+    "report": "D:\\SDC\\LibraryLLM\\reports\\search_v2c_b_stop_condition.xml",
+    "tests": 1,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "failed_cases": [
+      "test_forged_choice_must_not_delete_previous_accepted_context"
+    ],
+    "cases": [
+      "test_forged_choice_must_not_delete_previous_accepted_context"
+    ]
+  },
+  "observed": {
+    "isolated_database": "luminar_institution_v2g_test_ce00204d27204e30926c691b9671c7f4",
+    "accepted_context_existed_before": true,
+    "rejected_query_preserved_previous_context": true,
+    "forged_choice_http_status": 404,
+    "accepted_context_exists_after_forged_choice": false,
+    "accepted_context_unchanged": false,
+    "cause": "authorized() catches the yielded body HTTPException(404) and calls invalidate(actor, library_id), deleting the caller contexts and pending choices.",
+    "production_catalogue_modified": false,
+    "required_invariant": "A forged choice must not mutate accepted Search state."
+  }
+}

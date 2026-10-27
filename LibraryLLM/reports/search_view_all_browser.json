@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "scenario": "staff For You View All submitted query executes tenant HNSW",
+      "status": "PASS",
+      "route": "/staff/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue?view=for-you&search=community+memories",
+      "source": {
+        "library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+        "library_name": "TEST",
+        "catalogue_source": "LIBRARY_LOCAL",
+        "local_book_count": 151,
+        "capabilities": {
+          "physical_actions": false,
+          "reservations": false,
+          "local_search": true,
+          "global_discovery": false
+        },
+        "circulation_state": "CANONICAL",
+        "discovery_notice": null,
+        "search_source": "TENANT_SEMANTIC",
+        "intelligence_status": "READY",
+        "search_generation_id": "dc974c19-a2b5-457c-af50-0b2e0446c2ed"
+      },
+      "top_title": "TEST Community Oral History Handbook",
+      "recommendation_request_after_query": false,
+      "network_paths": [
+        "http://127.0.0.1:5173/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?view=for-you&search=community+memories&offset=0&sort=title&staff=true"
+      ]
+    },
+    {
+      "scenario": "patron For You View All submitted query executes tenant HNSW",
+      "status": "PASS",
+      "route": "/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue?view=for-you&search=community+memories",
+      "source": {
+        "library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+        "library_name": "TEST",
+        "catalogue_source": "LIBRARY_LOCAL",
+        "local_book_count": 151,
+        "capabilities": {
+          "physical_actions": true,
+          "reservations": true,
+          "local_search": true,
+          "global_discovery": false
+        },
+        "circulation_state": "CANONICAL",
+        "discovery_notice": null,
+        "search_source": "TENANT_SEMANTIC",
+        "intelligence_status": "READY",
+        "search_generation_id": "dc974c19-a2b5-457c-af50-0b2e0446c2ed"
+      },
+      "top_title": "TEST Community Oral History Handbook",
+      "recommendation_request_after_query": false,
+      "network_paths": [
+        "http://127.0.0.1:5173/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?view=for-you&search=community+memories&offset=0&sort=title",
+        "http://127.0.0.1:5173/api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/books?view=for-you&offset=0&sort=title",
+        "http://127.0.0.1:5173/api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/recommendations"
+      ]
+    },
+    {
+      "scenario": "Clearing query retains original For You recommendation provider",
+      "status": "PASS"
+    }
+  ]
+}

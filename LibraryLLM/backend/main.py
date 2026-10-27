@@ -150,6 +150,8 @@ app.include_router(
     auth_router
 )
 app.include_router(staff_router)
+from backend.routes.search_context import router as search_context_router
+app.include_router(search_context_router)
 app.include_router(platform_router)
 app.include_router(platform_access_router)
 app.include_router(institution_router)
@@ -167,6 +169,10 @@ app.include_router(
 app.include_router(know_more_router)
 app.include_router(assistant_catalogue_router)
 app.include_router(knowledge_graph_router)
+from backend.routes.library_intelligence import router as library_intelligence_router
+from backend.services.library_intelligence_store import initialize as initialize_library_intelligence
+app.include_router(library_intelligence_router)
+app.router.add_event_handler('startup',initialize_library_intelligence)
 app.include_router(related_books_router)
 
 app.include_router(

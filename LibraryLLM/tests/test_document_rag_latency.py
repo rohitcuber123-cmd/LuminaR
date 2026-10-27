@@ -193,10 +193,24 @@ def test_document_semantic_cache_is_bounded_scoped_and_returns_copies(monkeypatc
 
 def test_document_auth_retrieval_validation_verdict_and_sources_code_preserved():
     manifest=json.loads((ROOT/'reports/document_rag_latency_baseline/manifest.json').read_text())
-    for relative in ['rag/qa.py','rag/llm.py','rag/fast_filter.py','rag/evidence.py',
+    for relative in ['rag/llm.py','rag/fast_filter.py','rag/evidence.py',
                      'rag/reranker.py','rag/retriever.py','rag/services/book_access.py',
                      'rag/services/document_service.py']:
         assert hashlib.sha256((ROOT/relative).read_bytes()).hexdigest()==manifest[relative]['sha256']
+    # Urgent document definition grounding is an intentional change to ask().
+    # Freeze every other QA method, constant, and import against the baseline;
+    # scoped ask/validation/citation behavior is covered by urgent RAG tests.
+    def unaffected_qa(path):
+        tree = ast.parse(path.read_text())
+        tree.body = [node for node in tree.body if not (
+            isinstance(node, ast.ImportFrom) and node.module in
+            {'rag.document_grounding', 'rag.book_assets'})]
+        for node in tree.body:
+            if isinstance(node, ast.ClassDef) and node.name == 'LuminaRAG':
+                node.body = [method for method in node.body if not (
+                    isinstance(method, (ast.FunctionDef, ast.AsyncFunctionDef)) and method.name == 'ask')]
+        return ast.dump(tree)
+    assert unaffected_qa(ROOT/'rag/qa.py') == unaffected_qa(ROOT/'reports/document_rag_latency_baseline/snapshot/rag/qa.py')
     # Selected-context routing is an intentional later change; retain the
     # document routing contract rather than freezing the whole assistant router.
     from assistant.routing import fast_route
@@ -223,6 +237,18 @@ def test_document_auth_retrieval_validation_verdict_and_sources_code_preserved()
     def chat_contract(source):
         node = next(node for node in ast.walk(ast.parse(source))
                     if isinstance(node, ast.AsyncFunctionDef) and node.name == 'chat')
+        # Accepted Part 2F.1 adds a separately guarded canonical-library asset
+        # callback. Freeze that accepted handler hash, then compare the original
+        # global/personal callback with only this explicit branch excluded.
+        for callback in ast.walk(node):
+            if isinstance(callback, ast.AsyncFunctionDef) and callback.name == 'rag_callback':
+                guarded = callback.body[0]
+                if isinstance(guarded, ast.Try) and isinstance(guarded.body[0], ast.If):
+                    branch = guarded.body[0]
+                    assert ast.unparse(branch.test) == "document_id and document_id.startswith('library:')"
+                    accepted = json.loads((ROOT/'reports/institution_v2g_baseline.json').read_text())
+                    assert hashlib.sha256((ROOT/'assistant/api.py').read_bytes()).hexdigest() == accepted['source_sha256']['assistant/api.py']
+                    guarded.body = guarded.body[1:]
         body=[]
         for statement in node.body:
             if isinstance(statement, ast.AsyncWith):

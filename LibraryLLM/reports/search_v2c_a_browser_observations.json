@@ -1,0 +1,3595 @@
+[
+  {
+    "label": "GLOBAL original rating repair",
+    "query": "fiction books above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 1,
+        "expires_at": "2026-10-15T07:01:54.802180+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      4.5,
+      5,
+      4,
+      4,
+      5,
+      4.7,
+      4,
+      4.096,
+      5,
+      3.333
+    ],
+    "titles": [
+      "Who is Bugs Potter?",
+      "The prince she never knew",
+      "靈山 = Ling shan",
+      "Judy Moody Saves the World!",
+      "Death of a Stranger (A William Monk Mystery)",
+      "The moon and sixpence",
+      "Exile-and Glory",
+      "Eleanor & Park",
+      "After the Party",
+      "The Magic World"
+    ]
+  },
+  {
+    "label": "GLOBAL Wizards retained",
+    "query": "fiction about wizards above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Children's fiction",
+        "Large type books",
+        "Juvenile fiction",
+        "Man-woman relationships",
+        "Fiction, general",
+        "Fiction, mystery & detective, general"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:02:01.668009+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      4,
+      4,
+      4,
+      5,
+      4,
+      4,
+      4,
+      4,
+      4.333,
+      4.8
+    ],
+    "titles": [
+      "A wizard in absentia",
+      "A Wizard in Mind",
+      "A wizard and a warlord",
+      "The crusading wizard",
+      "A wizard in the way",
+      "The book of wizards",
+      "A wizard in peace",
+      "A wizard in Midgard",
+      "Wizards at War",
+      "Her Majesty's wizard"
+    ]
+  },
+  {
+    "label": "GLOBAL ambiguous numeric",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:02:01.668000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL contradictory ratings",
+    "query": "books rated above 4 and below 3",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "rating_max",
+          "label": "Rating: < 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:02:01.668000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL format conflict",
+    "query": "online only and physical only",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "FIND_ONLINE",
+      "intent_label": "Find online",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "EXCLUSIVE_FORMATS",
+        "affected_fields": [
+          "format"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "format",
+          "label": "Format: Online"
+        },
+        {
+          "key": "format",
+          "label": "Format: Physical"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:02:01.668000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL incomplete rating",
+    "query": "fiction rating above",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "INCOMPLETE",
+        "reason_code": "MISSING_CONSTRAINT_VALUE",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "A search constraint is unfinished. Complete it and search again.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "A search constraint is unfinished. Complete it and search again.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:02:01.668000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL exclusion and strict rating",
+    "query": "AI excluding deep learning rated above 4",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Artificial intelligence",
+        "Science Fiction",
+        "Survival",
+        "Aliens",
+        "Asteroid",
+        "Children's fiction"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: ai"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "exclude",
+          "label": "Exclude: deep learning"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 3,
+        "expires_at": "2026-10-15T07:02:36.601910+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      5,
+      5,
+      5,
+      5,
+      4.333,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "titles": [
+      "AI for Everyone",
+      "AI 2041",
+      "AI... Meets... AI",
+      "AI Ethics",
+      "AI Engineering",
+      "Surviving AI",
+      "AI-Assisted Programming",
+      "The Dawn of AI",
+      "Common sense, the Turing test, and the quest for real AI",
+      "AI Search Optimization Playbook"
+    ]
+  },
+  {
+    "label": "GLOBAL technical numeric topic",
+    "query": "Python 3 for beginners",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "LEARN",
+      "intent_label": "Learn",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Computing",
+        "Initiation",
+        "Programming languages",
+        "Python",
+        "Technology"
+      ],
+      "preference": "Introductory / beginner (preference)",
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: python 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:02:40.139292+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3.667,
+      0,
+      4
+    ],
+    "titles": [
+      "Python 3 for absolute beginners",
+      "Python 3 for absolute beginners",
+      "Python Essential Reference Fourth Edition",
+      "Learn to Program with Python 3: A Step-by-Step Guide to Programming",
+      "Introduction to programming with Python 3",
+      "Introduction to programming with Python 3",
+      "Python Guide Documentation",
+      "Python for Everybody",
+      "Learn More Python 3 the Hard Way: The Next Step for New Python Programmers (Zed Shaw's Hard Way Series)",
+      "Programming in Python 3"
+    ]
+  },
+  {
+    "label": "GLOBAL unsupported publication year",
+    "query": "books published after 2020 about events in 1945",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "UNSUPPORTED",
+        "reason_code": "SCOPE_YEAR_UNSUPPORTED",
+        "affected_fields": [
+          "year"
+        ],
+        "safe_public_message": "This search requests a strict field that this catalogue cannot enforce. Edit that constraint and try again.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: events in 1945"
+        }
+      ],
+      "corrections": [],
+      "notice": "This search requests a strict field that this catalogue cannot enforce. Edit that constraint and try again.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:02:40.139000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL session online",
+    "query": "online only",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Artificial intelligence",
+        "Apprentissage automatique",
+        "Data mining",
+        "Algorithms",
+        "Computer science",
+        "Data processing"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: machine learning"
+        },
+        {
+          "key": "format",
+          "label": "Format: Online"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": true,
+        "version": 2,
+        "expires_at": "2026-10-15T07:03:49.801204+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL ambiguous refinement leaves session",
+    "query": "above 4",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: above 4"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": true,
+        "version": 2,
+        "expires_at": "2026-10-15T07:03:49.801000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL valid refinement after rejection",
+    "query": "rating above 4",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Artificial intelligence",
+        "Apprentissage automatique",
+        "Data mining",
+        "Algorithms",
+        "Computer science",
+        "Data processing"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: machine learning"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "format",
+          "label": "Format: Online"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": true,
+        "version": 3,
+        "expires_at": "2026-10-15T07:03:51.938395+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL notice wrapping",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": true,
+        "version": 3,
+        "expires_at": "2026-10-15T07:03:51.938000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "TEST_PATRON fiction books above rating of 3",
+    "query": "fiction books above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+books+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 1,
+        "expires_at": "2026-10-15T07:16:26.434366+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON fiction about wizards above rating of 3",
+    "query": "fiction about wizards above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+about+wizards+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "American Science fiction",
+        "Fiction, science fiction, general",
+        "American Erotic stories",
+        "Amusement parks",
+        "Amusement parks, fiction",
+        "Ancient Civilization"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:16:27.074167+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON fiction 4",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:16:27.074000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON books rated above 4 and below 3",
+    "query": "books rated above 4 and below 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=books+rated+above+4+and+below+3&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "rating_max",
+          "label": "Rating: < 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:16:27.074000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON online only and physical only",
+    "query": "online only and physical only",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=online+only+and+physical+only&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "FIND_ONLINE",
+      "intent_label": "Find online",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "EXCLUSIVE_FORMATS",
+        "affected_fields": [
+          "format"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "format",
+          "label": "Format: Online"
+        },
+        {
+          "key": "format",
+          "label": "Format: Physical"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:16:27.074000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON fiction rating above",
+    "query": "fiction rating above",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+rating+above&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "INCOMPLETE",
+        "reason_code": "MISSING_CONSTRAINT_VALUE",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "A search constraint is unfinished. Complete it and search again.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "A search constraint is unfinished. Complete it and search again.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:16:27.074000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON AI excluding deep learning rated above 4",
+    "query": "AI excluding deep learning rated above 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=AI+excluding+deep+learning+rated+above+4&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: ai"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "exclude",
+          "label": "Exclude: deep learning"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 3,
+        "expires_at": "2026-10-15T07:16:30.103388+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 5,
+    "owners": [
+      "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae"
+    ],
+    "ratings": [
+      4.197,
+      5,
+      5,
+      4.333,
+      5
+    ],
+    "titles": [
+      "The Richest Man in Babylon",
+      "Learn Java for Android Development",
+      "Social and personality development",
+      "Visions of culture",
+      "Suicide Stitch"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON Python 3 for beginners",
+    "query": "Python 3 for beginners",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=Python+3+for+beginners&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "LEARN",
+      "intent_label": "Learn",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": "Introductory / beginner (preference)",
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: python 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:16:31.047640+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 20,
+    "owners": [
+      "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae"
+    ],
+    "ratings": [
+      5,
+      0,
+      4,
+      0,
+      0,
+      null,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "titles": [
+      "Learn Java for Android Development",
+      "Java Programming Fundamentals",
+      "Head first C",
+      "Applying computational intelligence",
+      "Algorithmic Differentiation of Pragma-Defined Parallel Regions",
+      "TEST Makerspace Equipment Guide",
+      "Dynamics of dissipation",
+      "Observation of the Earth and Its Environment",
+      "The Kepler Problem",
+      "From unseen fire",
+      "CODES 2002",
+      "Adobe Premiere Pro complete course",
+      "Dead Serious",
+      "The molecular biology of Gaia",
+      "Two studies in the early Academy",
+      "Arthur Schopenhauer's English schooling",
+      "Āryabhaṭīya critical edition series",
+      "The Tower",
+      "Autonomno pravo",
+      "Scandinavian Conference on Artificial Intelligence 89"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON books published after 2020 about events in 1945",
+    "query": "books published after 2020 about events in 1945",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=books+published+after+2020+about+events+in+1945&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: events in 1945"
+        },
+        {
+          "key": "year_min",
+          "label": "Year: > 2020"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 5,
+        "expires_at": "2026-10-15T07:16:32.281190+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_PATRON responsive rejection",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=83691a48-5e3d-43ef-98e5-74217eaf8142&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 5,
+        "expires_at": "2026-10-15T07:16:32.281000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON fiction books above rating of 3",
+    "query": "fiction books above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+books+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 1,
+        "expires_at": "2026-10-15T07:17:02.348448+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 2,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      4.5,
+      5
+    ],
+    "titles": [
+      "V2CA Fiction Wizards primer",
+      "V2CA Fiction Dragons guide"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON fiction about wizards above rating of 3",
+    "query": "fiction about wizards above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+about+wizards+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:17:02.686401+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 2,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      4.5,
+      5
+    ],
+    "titles": [
+      "V2CA Fiction Wizards primer",
+      "V2CA Fiction Dragons guide"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON fiction 4",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:17:02.686000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON books rated above 4 and below 3",
+    "query": "books rated above 4 and below 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=books+rated+above+4+and+below+3&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "rating_max",
+          "label": "Rating: < 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:17:02.686000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON online only and physical only",
+    "query": "online only and physical only",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=online+only+and+physical+only&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "FIND_ONLINE",
+      "intent_label": "Find online",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "EXCLUSIVE_FORMATS",
+        "affected_fields": [
+          "format"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "format",
+          "label": "Format: Online"
+        },
+        {
+          "key": "format",
+          "label": "Format: Physical"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:17:02.686000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON fiction rating above",
+    "query": "fiction rating above",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+rating+above&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "INCOMPLETE",
+        "reason_code": "MISSING_CONSTRAINT_VALUE",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "A search constraint is unfinished. Complete it and search again.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "A search constraint is unfinished. Complete it and search again.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:17:02.686000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON AI excluding deep learning rated above 4",
+    "query": "AI excluding deep learning rated above 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=AI+excluding+deep+learning+rated+above+4&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: ai"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "exclude",
+          "label": "Exclude: deep learning"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 3,
+        "expires_at": "2026-10-15T07:17:03.932519+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON Python 3 for beginners",
+    "query": "Python 3 for beginners",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=Python+3+for+beginners&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "LEARN",
+      "intent_label": "Learn",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": "Introductory / beginner (preference)",
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: python 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:17:04.280086+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 1,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      null
+    ],
+    "titles": [
+      "V2CA Python 3 for beginners"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON books published after 2020 about events in 1945",
+    "query": "books published after 2020 about events in 1945",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=books+published+after+2020+about+events+in+1945&offset=0&sort=RELEVANCE&session_id=f143b232-ba63-4f0b-b845-a05214fa8f92&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: events in 1945"
+        },
+        {
+          "key": "year_min",
+          "label": "Year: > 2020"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 5,
+        "expires_at": "2026-10-15T07:17:04.622687+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON fresh session",
+    "query": "books about wizards",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=books+about+wizards&offset=0&sort=RELEVANCE&session_id=36bba08a-d2da-475b-a6f1-164219c937d4&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 1,
+        "expires_at": "2026-10-15T07:17:18.335452+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 3,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      4.5,
+      5,
+      null
+    ],
+    "titles": [
+      "V2CA Fiction Wizards primer",
+      "V2CA Fiction Dragons guide",
+      "V2CA Python 3 for beginners"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON refinement",
+    "query": "physical only",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=physical+only&offset=0&sort=RELEVANCE&session_id=36bba08a-d2da-475b-a6f1-164219c937d4&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "format",
+          "label": "Format: Physical"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": true,
+        "version": 2,
+        "expires_at": "2026-10-15T07:17:30.347068+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 3,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      4.5,
+      5,
+      null
+    ],
+    "titles": [
+      "V2CA Fiction Wizards primer",
+      "V2CA Fiction Dragons guide",
+      "V2CA Python 3 for beginners"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON rejected refinement",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=36bba08a-d2da-475b-a6f1-164219c937d4&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": true,
+        "version": 2,
+        "expires_at": "2026-10-15T07:17:30.347000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON preserved session retry",
+    "query": "rating above 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=rating+above+3&offset=0&sort=RELEVANCE&session_id=36bba08a-d2da-475b-a6f1-164219c937d4&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        },
+        {
+          "key": "format",
+          "label": "Format: Physical"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": true,
+        "version": 3,
+        "expires_at": "2026-10-15T07:17:30.817179+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 2,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      4.5,
+      5
+    ],
+    "titles": [
+      "V2CA Fiction Wizards primer",
+      "V2CA Fiction Dragons guide"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_PATRON responsive rejection",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=36bba08a-d2da-475b-a6f1-164219c937d4&personalized=false",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": true,
+        "version": 3,
+        "expires_at": "2026-10-15T07:17:30.817000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "REVOKED_PRIVATE_PATRON",
+    "query": "fiction books above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+books+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=36bba08a-d2da-475b-a6f1-164219c937d4&personalized=false",
+    "status": 404,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "PRIVATE_STAFF warmup",
+    "query": "books about wizards",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=books+about+wizards&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:18:35.406158+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 3,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      4.5,
+      5,
+      null
+    ],
+    "titles": [
+      "V2CA Fiction Wizards primer",
+      "V2CA Fiction Dragons guide",
+      "V2CA Python 3 for beginners"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF fiction books above rating of 3",
+    "query": "fiction books above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+books+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 3,
+        "expires_at": "2026-10-15T07:18:35.684626+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 2,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      4.5,
+      5
+    ],
+    "titles": [
+      "V2CA Fiction Wizards primer",
+      "V2CA Fiction Dragons guide"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF fiction about wizards above rating of 3",
+    "query": "fiction about wizards above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+about+wizards+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:18:35.987739+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 2,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      4.5,
+      5
+    ],
+    "titles": [
+      "V2CA Fiction Wizards primer",
+      "V2CA Fiction Dragons guide"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF fiction 4",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:18:35.987000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF books rated above 4 and below 3",
+    "query": "books rated above 4 and below 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=books+rated+above+4+and+below+3&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "rating_max",
+          "label": "Rating: < 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:18:35.987000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF online only and physical only",
+    "query": "online only and physical only",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=online+only+and+physical+only&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "FIND_ONLINE",
+      "intent_label": "Find online",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "EXCLUSIVE_FORMATS",
+        "affected_fields": [
+          "format"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "format",
+          "label": "Format: Online"
+        },
+        {
+          "key": "format",
+          "label": "Format: Physical"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:18:35.987000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF fiction rating above",
+    "query": "fiction rating above",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+rating+above&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "INCOMPLETE",
+        "reason_code": "MISSING_CONSTRAINT_VALUE",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "A search constraint is unfinished. Complete it and search again.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "A search constraint is unfinished. Complete it and search again.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:18:35.987000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF AI excluding deep learning rated above 4",
+    "query": "AI excluding deep learning rated above 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=AI+excluding+deep+learning+rated+above+4&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: ai"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "exclude",
+          "label": "Exclude: deep learning"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 5,
+        "expires_at": "2026-10-15T07:18:37.274595+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF Python 3 for beginners",
+    "query": "Python 3 for beginners",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=Python+3+for+beginners&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "LEARN",
+      "intent_label": "Learn",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": "Introductory / beginner (preference)",
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: python 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 6,
+        "expires_at": "2026-10-15T07:18:37.577467+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 1,
+    "owners": [
+      "c3fb67ab-a12f-4e63-97af-8810d8352320"
+    ],
+    "ratings": [
+      null
+    ],
+    "titles": [
+      "V2CA Python 3 for beginners"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF books published after 2020 about events in 1945",
+    "query": "books published after 2020 about events in 1945",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=books+published+after+2020+about+events+in+1945&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: events in 1945"
+        },
+        {
+          "key": "year_min",
+          "label": "Year: > 2020"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 7,
+        "expires_at": "2026-10-15T07:18:37.943649+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "PRIVATE_STAFF responsive rejection",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/c3fb67ab-a12f-4e63-97af-8810d8352320/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=7c8b62b6-144a-40df-bb44-7948447ea531&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 7,
+        "expires_at": "2026-10-15T07:18:37.943000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF fiction books above rating of 3",
+    "query": "fiction books above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+books+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 1,
+        "expires_at": "2026-10-15T07:19:11.274526+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF fiction about wizards above rating of 3",
+    "query": "fiction about wizards above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+about+wizards+above+rating+of+3&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "American Science fiction",
+        "Fiction, science fiction, general",
+        "American Erotic stories",
+        "Amusement parks",
+        "Amusement parks, fiction",
+        "Ancient Civilization"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:19:11.897124+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF fiction 4",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:19:11.897000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF books rated above 4 and below 3",
+    "query": "books rated above 4 and below 3",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=books+rated+above+4+and+below+3&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "rating_max",
+          "label": "Rating: < 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:19:11.897000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF online only and physical only",
+    "query": "online only and physical only",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=online+only+and+physical+only&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "FIND_ONLINE",
+      "intent_label": "Find online",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "EXCLUSIVE_FORMATS",
+        "affected_fields": [
+          "format"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "format",
+          "label": "Format: Online"
+        },
+        {
+          "key": "format",
+          "label": "Format: Physical"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:19:11.897000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF fiction rating above",
+    "query": "fiction rating above",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+rating+above&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "INCOMPLETE",
+        "reason_code": "MISSING_CONSTRAINT_VALUE",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "A search constraint is unfinished. Complete it and search again.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "A search constraint is unfinished. Complete it and search again.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:19:11.897000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF AI excluding deep learning rated above 4",
+    "query": "AI excluding deep learning rated above 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=AI+excluding+deep+learning+rated+above+4&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: ai"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "exclude",
+          "label": "Exclude: deep learning"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 3,
+        "expires_at": "2026-10-15T07:19:14.923347+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 5,
+    "owners": [
+      "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae"
+    ],
+    "ratings": [
+      4.197,
+      5,
+      5,
+      4.333,
+      5
+    ],
+    "titles": [
+      "The Richest Man in Babylon",
+      "Learn Java for Android Development",
+      "Social and personality development",
+      "Visions of culture",
+      "Suicide Stitch"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF Python 3 for beginners",
+    "query": "Python 3 for beginners",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=Python+3+for+beginners&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "LEARN",
+      "intent_label": "Learn",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": "Introductory / beginner (preference)",
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: python 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:19:15.938563+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 20,
+    "owners": [
+      "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae"
+    ],
+    "ratings": [
+      5,
+      0,
+      4,
+      0,
+      0,
+      null,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "titles": [
+      "Learn Java for Android Development",
+      "Java Programming Fundamentals",
+      "Head first C",
+      "Applying computational intelligence",
+      "Algorithmic Differentiation of Pragma-Defined Parallel Regions",
+      "TEST Makerspace Equipment Guide",
+      "Dynamics of dissipation",
+      "Observation of the Earth and Its Environment",
+      "The Kepler Problem",
+      "From unseen fire",
+      "CODES 2002",
+      "Adobe Premiere Pro complete course",
+      "Dead Serious",
+      "The molecular biology of Gaia",
+      "Two studies in the early Academy",
+      "Arthur Schopenhauer's English schooling",
+      "Āryabhaṭīya critical edition series",
+      "The Tower",
+      "Autonomno pravo",
+      "Scandinavian Conference on Artificial Intelligence 89"
+    ],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF books published after 2020 about events in 1945",
+    "query": "books published after 2020 about events in 1945",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=books+published+after+2020+about+events+in+1945&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: events in 1945"
+        },
+        {
+          "key": "year_min",
+          "label": "Year: > 2020"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 5,
+        "expires_at": "2026-10-15T07:19:17.190842+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "TEST_STAFF responsive rejection",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue/search?search=fiction+4&offset=0&sort=RELEVANCE&session_id=61e49457-fdb0-405a-afda-3ab48e54067e&personalized=false&staff=true",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 5,
+        "expires_at": "2026-10-15T07:19:17.190000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": [],
+    "source": "LIBRARY_LOCAL"
+  },
+  {
+    "label": "GLOBAL_FINAL fiction books above rating of 3",
+    "query": "fiction books above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 1,
+        "expires_at": "2026-10-15T07:20:13.712359+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      4.5,
+      5,
+      4,
+      4,
+      5,
+      4.7,
+      4,
+      4.096,
+      5,
+      3.333
+    ],
+    "titles": [
+      "Who is Bugs Potter?",
+      "The prince she never knew",
+      "靈山 = Ling shan",
+      "Judy Moody Saves the World!",
+      "Death of a Stranger (A William Monk Mystery)",
+      "The moon and sixpence",
+      "Exile-and Glory",
+      "Eleanor & Park",
+      "After the Party",
+      "The Magic World"
+    ]
+  },
+  {
+    "label": "GLOBAL_FINAL fiction about wizards above rating of 3",
+    "query": "fiction about wizards above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Children's fiction",
+        "Large type books",
+        "Juvenile fiction",
+        "Man-woman relationships",
+        "Fiction, general",
+        "Fiction, mystery & detective, general"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:20:14.702446+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      4,
+      4,
+      4,
+      5,
+      4,
+      4,
+      4,
+      4,
+      4.333,
+      4.8
+    ],
+    "titles": [
+      "A wizard in absentia",
+      "A Wizard in Mind",
+      "A wizard and a warlord",
+      "The crusading wizard",
+      "A wizard in the way",
+      "The book of wizards",
+      "A wizard in peace",
+      "A wizard in Midgard",
+      "Wizards at War",
+      "Her Majesty's wizard"
+    ]
+  },
+  {
+    "label": "GLOBAL_FINAL fiction 4",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:20:14.702000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL_FINAL books rated above 4 and below 3",
+    "query": "books rated above 4 and below 3",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "rating_max",
+          "label": "Rating: < 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:20:14.702000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL_FINAL online only and physical only",
+    "query": "online only and physical only",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "FIND_ONLINE",
+      "intent_label": "Find online",
+      "decision": {
+        "decision_type": "CONTRADICTORY",
+        "reason_code": "EXCLUSIVE_FORMATS",
+        "affected_fields": [
+          "format"
+        ],
+        "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "format",
+          "label": "Format: Online"
+        },
+        {
+          "key": "format",
+          "label": "Format: Physical"
+        }
+      ],
+      "corrections": [],
+      "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:20:14.702000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL_FINAL fiction rating above",
+    "query": "fiction rating above",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "BROWSE_CATEGORY",
+      "intent_label": "Browse category",
+      "decision": {
+        "decision_type": "INCOMPLETE",
+        "reason_code": "MISSING_CONSTRAINT_VALUE",
+        "affected_fields": [
+          "rating"
+        ],
+        "safe_public_message": "A search constraint is unfinished. Complete it and search again.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "A search constraint is unfinished. Complete it and search again.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 2,
+        "expires_at": "2026-10-15T07:20:14.702000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL_FINAL AI excluding deep learning rated above 4",
+    "query": "AI excluding deep learning rated above 4",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Artificial intelligence",
+        "Science Fiction",
+        "Survival",
+        "Aliens",
+        "Asteroid",
+        "Children's fiction"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: ai"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 4"
+        },
+        {
+          "key": "exclude",
+          "label": "Exclude: deep learning"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 3,
+        "expires_at": "2026-10-15T07:20:18.289226+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      5,
+      5,
+      5,
+      5,
+      4.333,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "titles": [
+      "AI for Everyone",
+      "AI 2041",
+      "AI... Meets... AI",
+      "AI Ethics",
+      "AI Engineering",
+      "Surviving AI",
+      "AI-Assisted Programming",
+      "The Dawn of AI",
+      "Common sense, the Turing test, and the quest for real AI",
+      "AI Search Optimization Playbook"
+    ]
+  },
+  {
+    "label": "GLOBAL_FINAL Python 3 for beginners",
+    "query": "Python 3 for beginners",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "LEARN",
+      "intent_label": "Learn",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Computing",
+        "Initiation",
+        "Programming languages",
+        "Python",
+        "Technology"
+      ],
+      "preference": "Introductory / beginner (preference)",
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: python 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:20:19.573724+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3.667,
+      0,
+      4
+    ],
+    "titles": [
+      "Python 3 for absolute beginners",
+      "Python 3 for absolute beginners",
+      "Python Essential Reference Fourth Edition",
+      "Learn to Program with Python 3: A Step-by-Step Guide to Programming",
+      "Introduction to programming with Python 3",
+      "Introduction to programming with Python 3",
+      "Python Guide Documentation",
+      "Python for Everybody",
+      "Learn More Python 3 the Hard Way: The Next Step for New Python Programmers (Zed Shaw's Hard Way Series)",
+      "Programming in Python 3"
+    ]
+  },
+  {
+    "label": "GLOBAL_FINAL books published after 2020 about events in 1945",
+    "query": "books published after 2020 about events in 1945",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "UNSUPPORTED",
+        "reason_code": "SCOPE_YEAR_UNSUPPORTED",
+        "affected_fields": [
+          "year"
+        ],
+        "safe_public_message": "This search requests a strict field that this catalogue cannot enforce. Edit that constraint and try again.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: events in 1945"
+        }
+      ],
+      "corrections": [],
+      "notice": "This search requests a strict field that this catalogue cannot enforce. Edit that constraint and try again.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:20:19.573000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL_FINAL responsive rejection",
+    "query": "fiction 4",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "AMBIGUOUS",
+        "reason_code": "NUMBER_WITHOUT_FIELD",
+        "affected_fields": [],
+        "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: fiction 4"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        }
+      ],
+      "corrections": [],
+      "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 4,
+        "expires_at": "2026-10-15T07:20:19.573000+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 0,
+    "owners": [],
+    "ratings": [],
+    "titles": []
+  },
+  {
+    "label": "GLOBAL_FINAL deliverable",
+    "query": "fiction about wizards above rating of 3",
+    "url": "http://127.0.0.1:5174/search-api/search",
+    "status": 200,
+    "interpretation": {
+      "mode": "SMART",
+      "intent": "DISCOVER_TOPIC",
+      "intent_label": "Discover topic",
+      "decision": {
+        "decision_type": "EXECUTABLE",
+        "reason_code": "VALIDATED",
+        "affected_fields": [],
+        "safe_public_message": "",
+        "parser_version": "search-v2c-a-compositional-1"
+      },
+      "related_concepts": [
+        "Children's fiction",
+        "Large type books",
+        "Juvenile fiction",
+        "Man-woman relationships",
+        "Fiction, general",
+        "Fiction, mystery & detective, general"
+      ],
+      "preference": null,
+      "chips": [
+        {
+          "key": "topic",
+          "label": "Topic: wizards"
+        },
+        {
+          "key": "subject",
+          "label": "Genre / Subject: Fiction"
+        },
+        {
+          "key": "rating_min",
+          "label": "Rating: > 3"
+        }
+      ],
+      "corrections": [],
+      "notice": "",
+      "suggested_subject": null,
+      "session": {
+        "active": true,
+        "refined": false,
+        "version": 5,
+        "expires_at": "2026-10-15T07:20:39.162786+00:00"
+      },
+      "personalized": false
+    },
+    "returned": 10,
+    "owners": [],
+    "ratings": [
+      4,
+      4,
+      4,
+      5,
+      4,
+      4,
+      4,
+      4,
+      4.333,
+      4.8
+    ],
+    "titles": [
+      "A wizard in absentia",
+      "A Wizard in Mind",
+      "A wizard and a warlord",
+      "The crusading wizard",
+      "A wizard in the way",
+      "The book of wizards",
+      "A wizard in peace",
+      "A wizard in Midgard",
+      "Wizards at War",
+      "Her Majesty's wizard"
+    ]
+  }
+]

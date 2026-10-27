@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "qa_summary": {
+    "GLOBAL_SEARCH_PROVIDER": "GLOBAL_HNSW_MINILM_CROSSENCODER_WITH_RANKING_CACHE",
+    "GLOBAL_HNSW_ACTUALLY_QUERIED": "YES",
+    "TENANT_READY_SEARCH_PROVIDER": "TENANT_HNSW_MINILM_CROSSENCODER",
+    "TENANT_HNSW_ACTUALLY_QUERIED": "YES",
+    "TENANT_HNSW_GENERATION": "dc974c19-a2b5-457c-af50-0b2e0446c2ed",
+    "TENANT_HNSW_LIBRARY_ID": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+    "TENANT_RERANKER_USED": "YES",
+    "TENANT_KEYWORD_FALLBACK_USED_WHEN_READY": "NO",
+    "NOT_BUILT_FALLBACK_PROVIDER": "TENANT_LOCAL_SUBSTRING",
+    "BUILDING_FALLBACK_PROVIDER": "TENANT_LOCAL_SUBSTRING",
+    "FAILED_FALLBACK_PROVIDER": "TENANT_LOCAL_SUBSTRING",
+    "STALE_SEARCH_POLICY": "Current canonical tenant-local substring fallback; retained stale vector generation is not queried. Source fingerprint is rechecked after ranking; a concurrent change also falls back safely.",
+    "SEMANTIC_NON_LITERAL_QUERY_PASS": "YES",
+    "KEYWORD_BASELINE_COMPARISON_PASS": "YES",
+    "CROSS_LIBRARY_SEARCH_LEAK": "NO",
+    "GLOBAL_FILLER_IN_TENANT_RESULTS": 0,
+    "KNOWLEDGE_GRAPH_USED_BY_NORMAL_SEARCH": "NO",
+    "KNOWLEDGE_GRAPH_SEARCH_ROLE": "NOT_USED",
+    "KG_SEARCH_INTEGRATION_IMPLEMENTED_IN_THIS_TASK": "NO",
+    "SEARCH_WORKS_WITH_KG_UNAVAILABLE": "YES",
+    "INVENTORY_EXACT_SEARCH_PRESERVED": "YES",
+    "GLOBAL_HNSW_REBUILT": "NO",
+    "GLOBAL_KG_REBUILT": "NO"
+  },
+  "matrix": [
+    {
+      "state": "GLOBAL cold",
+      "provider": "GLOBAL_HNSW",
+      "reranker": true,
+      "kg": false
+    },
+    {
+      "state": "GLOBAL cached",
+      "provider": "RANKING_CACHE + current Mongo hydration",
+      "reranker": "Reused prior pool",
+      "kg": false
+    },
+    {
+      "state": "TENANT READY",
+      "provider": "TENANT_HNSW",
+      "reranker": true,
+      "kg": false
+    },
+    {
+      "state": "NOT_BUILT",
+      "provider": "TENANT_LOCAL_SUBSTRING",
+      "reranker": false,
+      "kg": false
+    },
+    {
+      "state": "BUILDING",
+      "provider": "TENANT_LOCAL_SUBSTRING",
+      "reranker": false,
+      "kg": false
+    },
+    {
+      "state": "FAILED",
+      "provider": "TENANT_LOCAL_SUBSTRING",
+      "reranker": false,
+      "kg": false
+    },
+    {
+      "state": "STALE",
+      "provider": "TENANT_LOCAL_SUBSTRING",
+      "reranker": false,
+      "kg": false
+    },
+    {
+      "state": "RECOVERY_REQUIRED",
+      "provider": "TENANT_LOCAL_SUBSTRING",
+      "reranker": false,
+      "kg": false
+    },
+    {
+      "state": "SEARCH_API unavailable (5xx)",
+      "provider": "Frontend tenant core fallback",
+      "kg": false
+    },
+    {
+      "state": "Unfiltered browse",
+      "provider": "Canonical bounded Mongo catalogue page",
+      "kg": false
+    },
+    {
+      "state": "Operational inventory",
+      "provider": "Canonical search_text + current shelf + exact barcode",
+      "kg": false
+    }
+  ],
+  "disposable_library_id": "eb973eea-366e-4f5a-8853-8abeabcf7c40",
+  "only_live_build": "One SEARCH_INDEX build of four-book disposable library; no TEST/global/KG build"
+}

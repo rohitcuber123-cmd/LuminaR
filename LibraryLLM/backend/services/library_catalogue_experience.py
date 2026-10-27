@@ -5,7 +5,7 @@ import re
 from fastapi import HTTPException
 from backend.institution_dependencies import actor_id
 from backend.services.institution_repository import collection, library_mutation, require_readable
-from backend.services.library_inventory_access import require_library_membership, require_library_patron
+from backend.services.library_inventory_access import require_library_membership, require_library_patron, require_library_staff
 from backend.services import library_lending_service as lending
 from backend.services.library_v2c_plan import enabled
 from backend.services.library_catalogue_availability import project
@@ -27,14 +27,14 @@ def ensure_indexes():
 
 
 @contextmanager
-def read_context(library_id, actor, *, patron=True):
-    guard = require_library_patron if patron else require_library_membership
+def read_context(library_id, actor, *, patron=True, staff=False):
+    guard = require_library_staff if staff else require_library_patron if patron else require_library_membership
     # Verify eligibility/scope before locking or running canonical maintenance.
     library, membership = guard(library_id, actor)
     canonical = lending.journal.state(library_id) == 'CANONICAL'
     if canonical:
         with library_mutation(library_id, wait_seconds=30, durable=True):
-            lending.access_locked(library_id, actor, patron=patron)
+            lending.access_locked(library_id, actor, patron=patron and not staff, staff=staff)
             library, membership = guard(library_id, actor, locked=True)
             yield library, membership, canonical
     else:
@@ -42,7 +42,7 @@ def read_context(library_id, actor, *, patron=True):
         require_readable(library_id)
 
 
-def usable(library_id, *, search='', subject='', author='', circulation_status=''):
+def usable(library_id, *, search='', subject='', author='', circulation_status='', staff=False):
     query = {'library_id': library_id, 'status': 'ACTIVE', 'title': {'$type': 'string', '$regex': r'\S'}}
     if search.strip():
         # Exactly the existing tenant inventory search_text semantics; no global index routing.
@@ -50,15 +50,16 @@ def usable(library_id, *, search='', subject='', author='', circulation_status='
     if subject: query['subjects'] = subject
     if author: query['authors'] = {'$regex': re.escape(author.strip()), '$options': 'i'}
     from backend.services.library_book_formats import format_pipeline
-    pipeline = [{'$match': query}, *format_pipeline(library_id), {'$match': {'$or': [{'has_physical':True},{'has_online':True}]}}]
+    pipeline = [{'$match': query}, *format_pipeline(library_id, staff=staff)]
+    if not staff: pipeline.append({'$match': {'$or': [{'has_physical':True},{'has_online':True}]}})
     if circulation_status: pipeline.append({'$match': {'holding.circulation_status': circulation_status}})
     return pipeline
 
 
-def source_locked(library_id, library, membership, canonical):
-    count = list(collection('library_books').aggregate([*usable(library_id), {'$count': 'count'}]))
+def source_locked(library_id, library, membership, canonical, *, staff=False):
+    count = list(collection('library_books').aggregate([*usable(library_id, staff=staff), {'$count': 'count'}]))
     total = count[0]['count'] if count else 0
-    local = total > 0
+    local = staff or total > 0
     return {'library_id': library_id, 'library_name': library['name'],
         'catalogue_source': 'LIBRARY_LOCAL' if local else 'GLOBAL_FALLBACK', 'local_book_count': total,
         'capabilities': {'physical_actions': bool(local and canonical and membership['role'] == 'GENERAL_USER'),
@@ -68,9 +69,9 @@ def source_locked(library_id, library, membership, canonical):
         'discovery_notice': None if local else 'Global Catalogue · Not currently held by this library.'}
 
 
-def source(library_id, actor):
-    with read_context(library_id, actor, patron=False) as (library, membership, canonical):
-        return source_locked(library_id, library, membership, canonical)
+def source(library_id, actor, *, staff=False):
+    with read_context(library_id, actor, patron=False, staff=staff) as (library, membership, canonical):
+        return source_locked(library_id, library, membership, canonical, staff=staff)
 
 
 def grouped(name, query, fields=None):
@@ -78,7 +79,7 @@ def grouped(name, query, fields=None):
     return {r['_id']: r for r in collection(name).aggregate([{'$match': query}, {'$group': {'_id': '$library_book_id', **fields}}])}
 
 
-def hydrate(library_id, actor, rows, canonical):
+def hydrate(library_id, actor, rows, canonical, *, staff=False):
     """Constant database round trips per bounded batch; no per-card HTTP or Mongo calls."""
     if not rows: return []
     ids = [r['library_book_id'] for r in rows]
@@ -114,15 +115,20 @@ def hydrate(library_id, actor, rows, canonical):
             active=active.get(bid, {}).get('count', 0), known=counts.get('known', 0), conditions=counts.get('conditions', 0),
             available=counts.get('available', 0), waiting=bool(waiting.get(bid))) if canonical and holding else None
         request, reservation, loan = own_requests.get(bid), own_reservations.get(bid), own_loans.get(bid)
+        if staff: request = reservation = loan = None
         result.append({'display_id': bid, 'library_id': library_id, 'library_book_id': bid,
             **{k: row.get(k) for k in ('book_format','has_physical','has_online','online_asset_id')},
             'global_work_id': row.get('global_work_id'), 'title': row['title'], 'authors': row.get('authors') or [],
             'subjects': row.get('subjects') or [], 'description': row.get('description') or metadata.get('description'),
+            'publication_year': row.get('publication_year'), 'language': row.get('language'),
+            'isbn_10': row.get('isbn_10'), 'isbn_13': row.get('isbn_13'), 'local_call_number': row.get('local_call_number'),
             'cover_seed': metadata.get('book_id'), 'average_rating': metadata.get('average_rating'),
             'rating_count': metadata.get('rating_count'), 'reading_log_count': metadata.get('reading_log_count'),
             **digital_flags.get(row.get('global_work_id'), {}),
             'cover_url': row.get('cover_url'), 'source': 'LIBRARY', 'owned_by_current_library': True,
             'accession_number': row.get('accession_number'), 'shelf_location': holding.get('shelf_location'),
+            **{k:row.get(k) for k in ('isbn_10','isbn_13','status')},
+            'local_call_number': holding.get('call_number') or row.get('local_call_number'),
             'circulation_status': availability['circulation_status'] if availability else holding.get('circulation_status'),
             'requestable_count': availability['requestable'] if availability else None, 'availability': availability,
             'added_at': row.get('added_at') or row.get('created_at'),
@@ -132,8 +138,8 @@ def hydrate(library_id, actor, rows, canonical):
                 'queue_length': waiting.get(bid, {}).get('count', 0)} if reservation else None,
             'user_loan_state': {'id': loan['loan_id'], 'status': loan['status'], 'due_at': loan.get('due_at'),
                 'return_requested': bool(loan.get('pending_return_request_id'))} if loan else None,
-            'actions': {'request': bool(canonical and availability and availability['circulation_status'] == 'CIRCULATING' and availability['requestable'] > 0 and not (request or loan or reservation)),
-                'reserve': bool(reservations_enabled and availability and availability['circulation_status'] == 'CIRCULATING' and availability['requestable'] == 0 and not (request or loan or reservation)),
+            'actions': {'request': bool(not staff and canonical and availability and availability['circulation_status'] == 'CIRCULATING' and availability['requestable'] > 0 and not (request or loan or reservation)),
+                'reserve': bool(not staff and reservations_enabled and availability and availability['circulation_status'] == 'CIRCULATING' and availability['requestable'] == 0 and not (request or loan or reservation)),
                 'cancel_request': bool(request), 'cancel_reservation': bool(reservation and reservation['status'] == 'WAITING')},
             **({'popularity': row['popularity']} if 'popularity' in row else {})})
     return result
@@ -144,8 +150,8 @@ def arrival_sort():
             {'$sort': {'added_at': -1, 'library_book_id': 1}}]
 
 
-def subject_rows(library_id, offset=0, limit=24):
-    rows = list(collection('library_books').aggregate([*usable(library_id), {'$project': {'subjects': {'$setUnion': [{'$ifNull': ['$subjects', []]}, []]}}},
+def subject_rows(library_id, offset=0, limit=24, *, staff=False):
+    rows = list(collection('library_books').aggregate([*usable(library_id, staff=staff), {'$project': {'subjects': {'$setUnion': [{'$ifNull': ['$subjects', []]}, []]}}},
         {'$unwind': '$subjects'}, {'$match': {'subjects': {'$type': 'string', '$regex': r'\S'}}},
         {'$group': {'_id': '$subjects', 'count': {'$sum': 1}}}, {'$sort': {'count': -1, '_id': 1}},
         {'$facet': {'results': [{'$skip': offset}, {'$limit': limit}], 'total': [{'$count': 'count'}]}}]))[0]
@@ -231,34 +237,36 @@ def recommendations(library_id, actor, work_ids=(), limit=10):
             'ranking': 'GLOBAL_INTERSECTION_AND_LOCAL_DISCOVERY', 'intersection_count': len(matches)}
 
 
-def books(library_id, actor, *, search='', subject='', author='', circulation_status='', sort='title', offset=0, limit=20):
-    with read_context(library_id, actor) as (library, membership, canonical):
-        descriptor = source_locked(library_id, library, membership, canonical)
+def books(library_id, actor, *, search='', subject='', author='', circulation_status='', sort='title', offset=0, limit=20, staff=False):
+    with read_context(library_id, actor, staff=staff) as (library, membership, canonical):
+        descriptor = source_locked(library_id, library, membership, canonical, staff=staff)
         if descriptor['catalogue_source'] == 'GLOBAL_FALLBACK':
             return {'source': descriptor, 'results': [], 'total': 0, 'has_more': False, 'offset': offset, 'limit': limit}
         if sort == 'popular':
-            rows, total = popular_rows(library_id, limit, offset, search=search, subject=subject, author=author, circulation_status=circulation_status)
+            rows, total = popular_rows(library_id, limit, offset, search=search, subject=subject, author=author, circulation_status=circulation_status, staff=staff)
         else:
-            pipeline = [*usable(library_id, search=search, subject=subject, author=author, circulation_status=circulation_status),
+            pipeline = [*usable(library_id, search=search, subject=subject, author=author, circulation_status=circulation_status, staff=staff),
                 *(arrival_sort() if sort == 'new_arrivals' else [{'$sort': {'normalized_title': 1, 'library_book_id': 1}}]),
                 {'$facet': {'results': [{'$skip': offset}, {'$limit': limit}], 'total': [{'$count': 'count'}]}}]
             payload = list(collection('library_books').aggregate(pipeline))[0]
             rows, total = payload['results'], payload['total'][0]['count'] if payload['total'] else 0
-        return {'source': descriptor, 'results': hydrate(library_id, actor, rows, canonical), 'total': total,
+        return {'source': descriptor, 'results': hydrate(library_id, actor, rows, canonical, staff=staff), 'total': total,
             'has_more': offset + len(rows) < total, 'offset': offset, 'limit': limit}
 
 
-def genres(library_id, actor, offset=0, limit=50):
-    with read_context(library_id, actor) as (library, membership, canonical):
-        descriptor = source_locked(library_id, library, membership, canonical)
-        return {'source': descriptor, **(subject_rows(library_id, offset, limit) if descriptor['catalogue_source'] == 'LIBRARY_LOCAL' else {'results': [], 'total': 0, 'has_more': False, 'offset': offset, 'limit': limit})}
+def genres(library_id, actor, offset=0, limit=50, *, staff=False):
+    with read_context(library_id, actor, staff=staff) as (library, membership, canonical):
+        descriptor = source_locked(library_id, library, membership, canonical, staff=staff)
+        return {'source': descriptor, **(subject_rows(library_id, offset, limit, staff=staff) if descriptor['catalogue_source'] == 'LIBRARY_LOCAL' else {'results': [], 'total': 0, 'has_more': False, 'offset': offset, 'limit': limit})}
 
 
-def detail(library_id, book_id, actor):
-    with read_context(library_id, actor) as (library, membership, canonical):
-        rows = list(collection('library_books').aggregate([*usable(library_id), {'$match': {'library_book_id': book_id}}, *arrival_sort(), {'$limit': 1}]))
+def detail(library_id, book_id, actor, *, staff=False):
+    with read_context(library_id, actor, staff=staff) as (library, membership, canonical):
+        pipeline=usable(library_id,staff=staff)
+        if staff:pipeline[0]['$match']['status']={'$in':['ACTIVE','WITHDRAWN']}
+        rows = list(collection('library_books').aggregate([*pipeline, {'$match': {'library_book_id': book_id}}, *arrival_sort(), {'$limit': 1}]))
         if not rows: raise HTTPException(404, 'Book is not held by this library.')
-        return {'source': source_locked(library_id, library, membership, canonical), 'book': hydrate(library_id, actor, rows, canonical)[0]}
+        return {'source': source_locked(library_id, library, membership, canonical, staff=staff), 'book': hydrate(library_id, actor, rows, canonical, staff=staff)[0]}
 
 
 def global_context(library_id, work_id, actor):

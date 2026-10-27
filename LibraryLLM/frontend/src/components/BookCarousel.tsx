@@ -6,11 +6,13 @@ interface BookCarouselProps {
   gap?: number // gap between cards in pixels
 }
 
-export function BookCarousel({ children, gap = 24 }: BookCarouselProps) {
+export function BookCarousel({ children, gap = 20 }: BookCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const transitionTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  useEffect(() => () => clearTimeout(transitionTimer.current), [])
 
   const updateScrollButtons = () => {
     if (!scrollRef.current) return
@@ -50,23 +52,25 @@ export function BookCarousel({ children, gap = 24 }: BookCarouselProps) {
     setIsTransitioning(true)
 
     const container = scrollRef.current
-    const cardWidth = 180 // width of each card
-    const scrollAmount = (cardWidth + gap) * 4 // Scroll 4 cards at a time
+    const cardWidth = container.firstElementChild?.getBoundingClientRect().width || container.clientWidth
+    const stride = cardWidth + gap
+    const scrollAmount = stride * Math.max(1, Math.floor(container.clientWidth / stride))
 
     const targetScroll = direction === 'left'
       ? container.scrollLeft - scrollAmount
       : container.scrollLeft + scrollAmount
 
+    const reduced = typeof window !== 'undefined' && typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-reduced-motion: reduce)')?.matches : false
     container.scrollTo({
       left: targetScroll,
-      behavior: 'smooth'
+      behavior: reduced ? 'instant' : 'smooth'
     })
 
     // Reset transitioning state after animation
-    setTimeout(() => {
+    transitionTimer.current = setTimeout(() => {
       setIsTransitioning(false)
       updateScrollButtons()
-    }, 300)
+    }, reduced ? 0 : 300)
   }
 
   return <div className="product-carousel">

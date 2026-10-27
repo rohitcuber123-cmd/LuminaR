@@ -1,0 +1,125 @@
+{
+  "source": "Live loopback HTTP with resident accepted MiniLM/CrossEncoder; opt-in allowlisted diagnostic wrapper, no public diagnostic fields",
+  "samples_per_query": 5,
+  "p95_method": "nearest rank",
+  "cases": [
+    {
+      "query": "fiction",
+      "samples_ms": [
+        172.07,
+        166.5,
+        136.72,
+        155.47,
+        159.53
+      ],
+      "p50_ms": 159.53,
+      "p95_ms": 172.07,
+      "returned": 10,
+      "candidate_counts": [
+        1000,
+        1000,
+        1000,
+        1000,
+        1000
+      ],
+      "provider": "STRUCTURED_METADATA",
+      "hnsw_used": false
+    },
+    {
+      "query": "OL19545719W",
+      "samples_ms": [
+        55.38,
+        76.91,
+        60.46,
+        59.11,
+        56.25
+      ],
+      "p50_ms": 59.11,
+      "p95_ms": 76.91,
+      "returned": 1,
+      "candidate_counts": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "provider": "EXACT_LOOKUP",
+      "hnsw_used": false
+    },
+    {
+      "query": "books about wizards",
+      "samples_ms": [
+        180.94,
+        179.28,
+        175.86,
+        175.1,
+        171.68
+      ],
+      "p50_ms": 175.86,
+      "p95_ms": 180.94,
+      "returned": 10,
+      "candidate_counts": [
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "provider": "GLOBAL_SEMANTIC",
+      "hnsw_used": true
+    },
+    {
+      "query": "books about wizards with rating above 4",
+      "samples_ms": [
+        218.13,
+        224.03,
+        209.75,
+        238.47,
+        219.82
+      ],
+      "p50_ms": 219.82,
+      "p95_ms": 238.47,
+      "returned": 10,
+      "candidate_counts": [
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "provider": "GLOBAL_SEMANTIC",
+      "hnsw_used": true
+    },
+    {
+      "query": "fiction books about wizards rated at least 4",
+      "samples_ms": [
+        220.43,
+        232.2,
+        230.69,
+        202.84,
+        216.89
+      ],
+      "p50_ms": 220.43,
+      "p95_ms": 232.2,
+      "returned": 10,
+      "candidate_counts": [
+        101,
+        101,
+        101,
+        101,
+        101
+      ],
+      "provider": "GLOBAL_SEMANTIC",
+      "hnsw_used": true
+    }
+  ],
+  "candidate_bounds": {
+    "structured": 1000,
+    "tenant_constrained_hnsw": 1000,
+    "tenant_unconstrained_hnsw": 120,
+    "tenant_reranking": 60,
+    "global_results": 50
+  },
+  "limitations": "Local small sample; no concurrency benchmark. Unindexed broad structured searches have a 6s maximum."
+}

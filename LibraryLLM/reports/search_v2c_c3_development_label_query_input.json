@@ -1,0 +1,4890 @@
+{
+  "purpose": "Independent semantic review of development-only authored contracts. No predictions/results/source or old expected labels provided.",
+  "schema": {
+    "fields": [
+      "expected_decision",
+      "execution_allowed",
+      "expected_subjects",
+      "expected_excluded_subjects",
+      "expected_exclude_terms",
+      "expected_author",
+      "expected_title",
+      "expected_exact_text",
+      "expected_semantic_text",
+      "expected_intent"
+    ],
+    "decisions": [
+      "EXECUTABLE",
+      "EXECUTABLE_WITH_NOTICE",
+      "AMBIGUOUS",
+      "INCOMPLETE",
+      "UNSUPPORTED",
+      "CONTRADICTORY"
+    ]
+  },
+  "contract": {
+    "SMART": "Deterministic field syntax; known scoped canonical subject can be named/excluded, ordinary about topics remain soft. High-confidence typo corrections may offer a correction; review whether hard enforcement or confirmation is semantically justified.",
+    "TITLE_AUTHOR": "Explicit literal Title/Author mode: match the supplied literal query against title/author. SMART grammar is not implicitly enabled in this mode.",
+    "EXACT": "Literal exact identity lookup. ISBN10/13 and OL work identifiers are accepted exact identifiers in SMART too.",
+    "negative": "Canonical subject exclusion must not automatically ban title/author/description text. Literal phrase/topic exclusions differ.",
+    "review": "Do not force one interpretation when wording genuinely admits multiple meanings. Preserve user meaning independently of current behavior."
+  },
+  "cases": [
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-01",
+      "query_text": "books by Ursula K. Le Guin",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-02",
+      "query_text": "books about Ursula K. Le Guin",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-03",
+      "query_text": "fiction by George Orwell",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-04",
+      "query_text": "books on the ideas of George Orwell",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-05",
+      "query_text": "poetry written by Emily Dickinson",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-06",
+      "query_text": "about the poetry of Emily Dickinson",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-07",
+      "query_text": "books authored by Octavia Butler",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-08",
+      "query_text": "biographies about Octavia Butler",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-09",
+      "query_text": "by Terry Pratchett about witches",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d05_by_vs_about-10",
+      "query_text": "study the influence of Terry Pratchett",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-01",
+      "query_text": "rated above 4, online Fiction about wizards",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-02",
+      "query_text": "exclude Romance; after publication year 2020; include Fiction",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-03",
+      "query_text": "physical only, Mystery, rated below 4",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-04",
+      "query_text": "Neural Networks available now rated at least 3",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-05",
+      "query_text": "before 2018 in publication year, online books on bridges",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-06",
+      "query_text": "by Synthetic A1 Author, include Wizards, rating above 3",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-07",
+      "query_text": "include Fiction, rating at most 4.5, exclude Romance",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-08",
+      "query_text": "about waterways, physical books published in 2021",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-09",
+      "query_text": "online only; include Mystery; available now",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d12_multi_reordering-10",
+      "query_text": "rated 4+ about wizards, exclude Romance, Fiction",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-01",
+      "query_text": "scince fiction",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-02",
+      "query_text": "histroy books",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-03",
+      "query_text": "mystrey stories",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-04",
+      "query_text": "romnace",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-05",
+      "query_text": "artifical intelligence",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-06",
+      "query_text": "astronmy for amateurs",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-07",
+      "query_text": "philosphy about ethics",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-08",
+      "query_text": "netwroking protocols",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-09",
+      "query_text": "ficiton about islands",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d17_typographical_noise-10",
+      "query_text": "archtecture of bridges",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-01",
+      "query_text": "9780141036144",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-02",
+      "query_text": "ISBN 978-0-14-103614-4",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-03",
+      "query_text": "0-451-52493-4",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-04",
+      "query_text": "find 9780307277671",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-05",
+      "query_text": "ISBN-10 014118776X",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-06",
+      "query_text": "978-1-59327-928-8 Python",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-07",
+      "query_text": "book identifier 9780201616224",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-08",
+      "query_text": "ISBN 978 0 7432 7356 5",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-09",
+      "query_text": "the text 123-4-567-89012-3",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-d22_isbn_like-10",
+      "query_text": "ISBN: 9780000000002",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-resume-core-title_author_mode-01",
+      "query_text": "books by Mira Rao",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-resume-core-title_author_mode-02",
+      "query_text": "books by N. K. Jemisin",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-resume-core-title_author_mode-03",
+      "query_text": "books by Ursula K. Le Guin",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-resume-core-title_author_mode-04",
+      "query_text": "books by bell hooks",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0041",
+      "query_text": "Please find books by Ursula K. Le Guin",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0042",
+      "query_text": "Please find books about Ursula K. Le Guin",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0043",
+      "query_text": "Please find fiction by George Orwell",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0044",
+      "query_text": "Please find books on the ideas of George Orwell",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0045",
+      "query_text": "Please find poetry written by Emily Dickinson",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0046",
+      "query_text": "Please find about the poetry of Emily Dickinson",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0047",
+      "query_text": "Please find books authored by Octavia Butler",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0048",
+      "query_text": "Please find biographies about Octavia Butler",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0049",
+      "query_text": "Please find by Terry Pratchett about witches",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0050",
+      "query_text": "Please find study the influence of Terry Pratchett",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0109",
+      "query_text": "Please find rated above 4, online Fiction about wizards",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0110",
+      "query_text": "Please find exclude Romance; after publication year 2020; include Fiction",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0111",
+      "query_text": "Please find physical only, Mystery, rated below 4",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0112",
+      "query_text": "Please find Neural Networks available now rated at least 3",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0113",
+      "query_text": "Please find before 2018 in publication year, online books on bridges",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0114",
+      "query_text": "Please find by Synthetic A1 Author, include Wizards, rating above 3",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0115",
+      "query_text": "Please find include Fiction, rating at most 4.5, exclude Romance",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0116",
+      "query_text": "Please find about waterways, physical books published in 2021",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0117",
+      "query_text": "Please find online only; include Mystery; available now",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0155",
+      "query_text": "Please find scince fiction",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0156",
+      "query_text": "Please find histroy books",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0157",
+      "query_text": "Please find mystrey stories",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0158",
+      "query_text": "Please find romnace",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0159",
+      "query_text": "Please find artifical intelligence",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0160",
+      "query_text": "Please find astronmy for amateurs",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0161",
+      "query_text": "Please find philosphy about ethics",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0162",
+      "query_text": "Please find netwroking protocols",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0163",
+      "query_text": "Please find ficiton about islands",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0164",
+      "query_text": "Please find archtecture of bridges",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0205",
+      "query_text": "Please find 9780141036144",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0206",
+      "query_text": "Please find ISBN 978-0-14-103614-4",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0207",
+      "query_text": "Please find 0-451-52493-4",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0208",
+      "query_text": "Please find find 9780307277671",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0209",
+      "query_text": "Please find ISBN-10 014118776X",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0210",
+      "query_text": "Please find 978-1-59327-928-8 Python",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0211",
+      "query_text": "Please find book identifier 9780201616224",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0212",
+      "query_text": "Please find ISBN 978 0 7432 7356 5",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0213",
+      "query_text": "Please find the text 123-4-567-89012-3",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0214",
+      "query_text": "Please find ISBN: 9780000000002",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0463",
+      "query_text": "Please find books by Mira Rao",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0465",
+      "query_text": "Please find books by N. K. Jemisin",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0467",
+      "query_text": "Please find books by Ursula K. Le Guin",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0469",
+      "query_text": "Please find books by bell hooks",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0522",
+      "query_text": "Please find books by Ursula K. Le Guin?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0523",
+      "query_text": "Please find books about Ursula K. Le Guin?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0524",
+      "query_text": "Please find fiction by George Orwell?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0525",
+      "query_text": "Please find books on the ideas of George Orwell?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0526",
+      "query_text": "Please find poetry written by Emily Dickinson?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0527",
+      "query_text": "Please find about the poetry of Emily Dickinson?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0528",
+      "query_text": "Please find books authored by Octavia Butler?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0529",
+      "query_text": "Please find biographies about Octavia Butler?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0530",
+      "query_text": "Please find by Terry Pratchett about witches?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0531",
+      "query_text": "Please find study the influence of Terry Pratchett?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0590",
+      "query_text": "Please find rated above 4, online Fiction about wizards?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0591",
+      "query_text": "Please find exclude Romance; after publication year 2020; include Fiction?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0592",
+      "query_text": "Please find physical only, Mystery, rated below 4?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0593",
+      "query_text": "Please find Neural Networks available now rated at least 3?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0594",
+      "query_text": "Please find before 2018 in publication year, online books on bridges?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0595",
+      "query_text": "Please find by Synthetic A1 Author, include Wizards, rating above 3?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0596",
+      "query_text": "Please find include Fiction, rating at most 4.5, exclude Romance?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0597",
+      "query_text": "Please find about waterways, physical books published in 2021?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0598",
+      "query_text": "Please find online only; include Mystery; available now?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0636",
+      "query_text": "Please find scince fiction?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0637",
+      "query_text": "Please find histroy books?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0638",
+      "query_text": "Please find mystrey stories?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0639",
+      "query_text": "Please find romnace?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0640",
+      "query_text": "Please find artifical intelligence?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0641",
+      "query_text": "Please find astronmy for amateurs?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0642",
+      "query_text": "Please find philosphy about ethics?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0643",
+      "query_text": "Please find netwroking protocols?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0644",
+      "query_text": "Please find ficiton about islands?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0645",
+      "query_text": "Please find archtecture of bridges?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0686",
+      "query_text": "Please find 9780141036144?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0687",
+      "query_text": "Please find ISBN 978-0-14-103614-4?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0688",
+      "query_text": "Please find 0-451-52493-4?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0689",
+      "query_text": "Please find find 9780307277671?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0690",
+      "query_text": "Please find ISBN-10 014118776X?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0691",
+      "query_text": "Please find 978-1-59327-928-8 Python?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0692",
+      "query_text": "Please find book identifier 9780201616224?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0693",
+      "query_text": "Please find ISBN 978 0 7432 7356 5?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0694",
+      "query_text": "Please find the text 123-4-567-89012-3?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0695",
+      "query_text": "Please find ISBN: 9780000000002?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0944",
+      "query_text": "Please find books by Mira Rao?",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0946",
+      "query_text": "Please find books by N. K. Jemisin?",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0948",
+      "query_text": "Please find books by Ursula K. Le Guin?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0950",
+      "query_text": "Please find books by bell hooks?",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1003",
+      "query_text": "Please find books by Ursula K. Le Guin.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1004",
+      "query_text": "Please find books about Ursula K. Le Guin.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1005",
+      "query_text": "Please find fiction by George Orwell.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1006",
+      "query_text": "Please find books on the ideas of George Orwell.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1007",
+      "query_text": "Please find poetry written by Emily Dickinson.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1008",
+      "query_text": "Please find about the poetry of Emily Dickinson.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1009",
+      "query_text": "Please find books authored by Octavia Butler.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1010",
+      "query_text": "Please find biographies about Octavia Butler.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1011",
+      "query_text": "Please find by Terry Pratchett about witches.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1012",
+      "query_text": "Please find study the influence of Terry Pratchett.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1071",
+      "query_text": "Please find rated above 4, online Fiction about wizards.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1072",
+      "query_text": "Please find exclude Romance; after publication year 2020; include Fiction.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1073",
+      "query_text": "Please find physical only, Mystery, rated below 4.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1074",
+      "query_text": "Please find Neural Networks available now rated at least 3.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1075",
+      "query_text": "Please find before 2018 in publication year, online books on bridges.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1076",
+      "query_text": "Please find by Synthetic A1 Author, include Wizards, rating above 3.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1077",
+      "query_text": "Please find include Fiction, rating at most 4.5, exclude Romance.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1078",
+      "query_text": "Please find about waterways, physical books published in 2021.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1079",
+      "query_text": "Please find online only; include Mystery; available now.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1117",
+      "query_text": "Please find scince fiction.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1118",
+      "query_text": "Please find histroy books.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1119",
+      "query_text": "Please find mystrey stories.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1120",
+      "query_text": "Please find romnace.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1121",
+      "query_text": "Please find artifical intelligence.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1122",
+      "query_text": "Please find astronmy for amateurs.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1123",
+      "query_text": "Please find philosphy about ethics.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1124",
+      "query_text": "Please find netwroking protocols.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1125",
+      "query_text": "Please find ficiton about islands.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1126",
+      "query_text": "Please find archtecture of bridges.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1167",
+      "query_text": "Please find 9780141036144.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1168",
+      "query_text": "Please find ISBN 978-0-14-103614-4.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1169",
+      "query_text": "Please find 0-451-52493-4.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1170",
+      "query_text": "Please find find 9780307277671.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1171",
+      "query_text": "Please find ISBN-10 014118776X.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1172",
+      "query_text": "Please find 978-1-59327-928-8 Python.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1173",
+      "query_text": "Please find book identifier 9780201616224.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1174",
+      "query_text": "Please find ISBN 978 0 7432 7356 5.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1175",
+      "query_text": "Please find the text 123-4-567-89012-3.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1176",
+      "query_text": "Please find ISBN: 9780000000002.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1425",
+      "query_text": "Please find books by Mira Rao.",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1427",
+      "query_text": "Please find books by N. K. Jemisin.",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1429",
+      "query_text": "Please find books by Ursula K. Le Guin.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1431",
+      "query_text": "Please find books by bell hooks.",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1484",
+      "query_text": "Please find books by Ursula K. Le Guin please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1485",
+      "query_text": "Please find books about Ursula K. Le Guin please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1486",
+      "query_text": "Please find fiction by George Orwell please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1487",
+      "query_text": "Please find books on the ideas of George Orwell please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1488",
+      "query_text": "Please find poetry written by Emily Dickinson please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1489",
+      "query_text": "Please find about the poetry of Emily Dickinson please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1490",
+      "query_text": "Please find books authored by Octavia Butler please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1491",
+      "query_text": "Please find biographies about Octavia Butler please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1492",
+      "query_text": "Please find by Terry Pratchett about witches please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1493",
+      "query_text": "Please find study the influence of Terry Pratchett please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1552",
+      "query_text": "Please find rated above 4, online Fiction about wizards please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1553",
+      "query_text": "Please find exclude Romance; after publication year 2020; include Fiction please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1554",
+      "query_text": "Please find physical only, Mystery, rated below 4 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1555",
+      "query_text": "Please find Neural Networks available now rated at least 3 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1556",
+      "query_text": "Please find before 2018 in publication year, online books on bridges please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1557",
+      "query_text": "Please find by Synthetic A1 Author, include Wizards, rating above 3 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1558",
+      "query_text": "Please find include Fiction, rating at most 4.5, exclude Romance please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1559",
+      "query_text": "Please find about waterways, physical books published in 2021 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1560",
+      "query_text": "Please find online only; include Mystery; available now please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1598",
+      "query_text": "Please find scince fiction please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1599",
+      "query_text": "Please find histroy books please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1600",
+      "query_text": "Please find mystrey stories please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1601",
+      "query_text": "Please find romnace please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1602",
+      "query_text": "Please find artifical intelligence please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1603",
+      "query_text": "Please find astronmy for amateurs please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1604",
+      "query_text": "Please find philosphy about ethics please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1605",
+      "query_text": "Please find netwroking protocols please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1606",
+      "query_text": "Please find ficiton about islands please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1607",
+      "query_text": "Please find archtecture of bridges please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1648",
+      "query_text": "Please find 9780141036144 please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1649",
+      "query_text": "Please find ISBN 978-0-14-103614-4 please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1650",
+      "query_text": "Please find 0-451-52493-4 please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1651",
+      "query_text": "Please find find 9780307277671 please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1652",
+      "query_text": "Please find ISBN-10 014118776X please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1653",
+      "query_text": "Please find 978-1-59327-928-8 Python please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1654",
+      "query_text": "Please find book identifier 9780201616224 please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1655",
+      "query_text": "Please find ISBN 978 0 7432 7356 5 please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1656",
+      "query_text": "Please find the text 123-4-567-89012-3 please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1657",
+      "query_text": "Please find ISBN: 9780000000002 please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1906",
+      "query_text": "Please find books by Mira Rao please",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1908",
+      "query_text": "Please find books by N. K. Jemisin please",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1910",
+      "query_text": "Please find books by Ursula K. Le Guin please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1912",
+      "query_text": "Please find books by bell hooks please",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1965",
+      "query_text": "Please find books by Ursula K. Le Guin please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1966",
+      "query_text": "Please find books about Ursula K. Le Guin please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1967",
+      "query_text": "Please find fiction by George Orwell please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1968",
+      "query_text": "Please find books on the ideas of George Orwell please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1969",
+      "query_text": "Please find poetry written by Emily Dickinson please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1970",
+      "query_text": "Please find about the poetry of Emily Dickinson please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1971",
+      "query_text": "Please find books authored by Octavia Butler please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1972",
+      "query_text": "Please find biographies about Octavia Butler please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1973",
+      "query_text": "Please find by Terry Pratchett about witches please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1974",
+      "query_text": "Please find study the influence of Terry Pratchett please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0041",
+      "query_text": "Please find,  books by Ursula K. Le Guin !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0042",
+      "query_text": "Please find,  books about Ursula K. Le Guin !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0043",
+      "query_text": "Please find,  fiction by George Orwell !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0044",
+      "query_text": "Please find,  books on the ideas of George Orwell !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0045",
+      "query_text": "Please find,  poetry written by Emily Dickinson !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0046",
+      "query_text": "Please find,  about the poetry of Emily Dickinson !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0047",
+      "query_text": "Please find,  books authored by Octavia Butler !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0048",
+      "query_text": "Please find,  biographies about Octavia Butler !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0049",
+      "query_text": "Please find,  by Terry Pratchett about witches !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0050",
+      "query_text": "Please find,  study the influence of Terry Pratchett !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0109",
+      "query_text": "Please find,  rated above 4, online Fiction about wizards !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0110",
+      "query_text": "Please find,  exclude Romance; after publication year 2020; include Fiction !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0111",
+      "query_text": "Please find,  physical only, Mystery, rated below 4 !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0112",
+      "query_text": "Please find,  Neural Networks available now rated at least 3 !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0113",
+      "query_text": "Please find,  before 2018 in publication year, online books on bridges !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0114",
+      "query_text": "Please find,  by Synthetic A1 Author, include Wizards, rating above 3 !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0115",
+      "query_text": "Please find,  include Fiction, rating at most 4.5, exclude Romance !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0116",
+      "query_text": "Please find,  about waterways, physical books published in 2021 !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0117",
+      "query_text": "Please find,  online only; include Mystery; available now !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0155",
+      "query_text": "Please find,  scince fiction !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0156",
+      "query_text": "Please find,  histroy books !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0157",
+      "query_text": "Please find,  mystrey stories !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0158",
+      "query_text": "Please find,  romnace !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0159",
+      "query_text": "Please find,  artifical intelligence !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0160",
+      "query_text": "Please find,  astronmy for amateurs !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0161",
+      "query_text": "Please find,  philosphy about ethics !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0162",
+      "query_text": "Please find,  netwroking protocols !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0163",
+      "query_text": "Please find,  ficiton about islands !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0164",
+      "query_text": "Please find,  archtecture of bridges !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0205",
+      "query_text": "Please find,  9780141036144 !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0206",
+      "query_text": "Please find,  ISBN 978-0-14-103614-4 !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0207",
+      "query_text": "Please find,  0-451-52493-4 !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0208",
+      "query_text": "Please find,  find 9780307277671 !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0209",
+      "query_text": "Please find,  ISBN-10 014118776X !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0210",
+      "query_text": "Please find,  978-1-59327-928-8 Python !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0211",
+      "query_text": "Please find,  book identifier 9780201616224 !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0212",
+      "query_text": "Please find,  ISBN 978 0 7432 7356 5 !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0213",
+      "query_text": "Please find,  the text 123-4-567-89012-3 !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0214",
+      "query_text": "Please find,  ISBN: 9780000000002 !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0463",
+      "query_text": "Please find,  books by Mira Rao !?",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0465",
+      "query_text": "Please find,  books by N. K. Jemisin !?",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0467",
+      "query_text": "Please find,  books by Ursula K. Le Guin !?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0469",
+      "query_text": "Please find,  books by bell hooks !?",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0522",
+      "query_text": "Please find,  books by Ursula K. Le Guin ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0523",
+      "query_text": "Please find,  books about Ursula K. Le Guin ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0524",
+      "query_text": "Please find,  fiction by George Orwell ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0525",
+      "query_text": "Please find,  books on the ideas of George Orwell ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0526",
+      "query_text": "Please find,  poetry written by Emily Dickinson ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0527",
+      "query_text": "Please find,  about the poetry of Emily Dickinson ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0528",
+      "query_text": "Please find,  books authored by Octavia Butler ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0529",
+      "query_text": "Please find,  biographies about Octavia Butler ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0530",
+      "query_text": "Please find,  by Terry Pratchett about witches ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0531",
+      "query_text": "Please find,  study the influence of Terry Pratchett ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0590",
+      "query_text": "Please find,  rated above 4, online Fiction about wizards ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0591",
+      "query_text": "Please find,  exclude Romance; after publication year 2020; include Fiction ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0592",
+      "query_text": "Please find,  physical only, Mystery, rated below 4 ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0593",
+      "query_text": "Please find,  Neural Networks available now rated at least 3 ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0594",
+      "query_text": "Please find,  before 2018 in publication year, online books on bridges ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0595",
+      "query_text": "Please find,  by Synthetic A1 Author, include Wizards, rating above 3 ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0596",
+      "query_text": "Please find,  include Fiction, rating at most 4.5, exclude Romance ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0597",
+      "query_text": "Please find,  about waterways, physical books published in 2021 ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0598",
+      "query_text": "Please find,  online only; include Mystery; available now ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0636",
+      "query_text": "Please find,  scince fiction ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0637",
+      "query_text": "Please find,  histroy books ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0638",
+      "query_text": "Please find,  mystrey stories ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0639",
+      "query_text": "Please find,  romnace ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0640",
+      "query_text": "Please find,  artifical intelligence ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0641",
+      "query_text": "Please find,  astronmy for amateurs ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0642",
+      "query_text": "Please find,  philosphy about ethics ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0643",
+      "query_text": "Please find,  netwroking protocols ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0644",
+      "query_text": "Please find,  ficiton about islands ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0645",
+      "query_text": "Please find,  archtecture of bridges ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d17_typographical_noise",
+      "parent_query_id": "v2cc-authored-d17_typographical_noise-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0686",
+      "query_text": "Please find,  9780141036144 ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0687",
+      "query_text": "Please find,  ISBN 978-0-14-103614-4 ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0688",
+      "query_text": "Please find,  0-451-52493-4 ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0689",
+      "query_text": "Please find,  find 9780307277671 ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0690",
+      "query_text": "Please find,  ISBN-10 014118776X ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0691",
+      "query_text": "Please find,  978-1-59327-928-8 Python ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0692",
+      "query_text": "Please find,  book identifier 9780201616224 ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0693",
+      "query_text": "Please find,  ISBN 978 0 7432 7356 5 ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0694",
+      "query_text": "Please find,  the text 123-4-567-89012-3 ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0695",
+      "query_text": "Please find,  ISBN: 9780000000002 ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0944",
+      "query_text": "Please find,  books by Mira Rao ??",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0946",
+      "query_text": "Please find,  books by N. K. Jemisin ??",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0948",
+      "query_text": "Please find,  books by Ursula K. Le Guin ??",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0950",
+      "query_text": "Please find,  books by bell hooks ??",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0015",
+      "query_text": "Please find exclude Romance; after publication year 2020; include Fiction please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0016",
+      "query_text": "Please find include Fiction, rating at most 4.5, exclude Romance please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0084",
+      "query_text": "Please find exclude Romance; after publication year 2020; include Fiction please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0085",
+      "query_text": "Please find include Fiction, rating at most 4.5, exclude Romance please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0153",
+      "query_text": "Find me exclude Romance; after publication year 2020; include Fiction",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0154",
+      "query_text": "Find me include Fiction, rating at most 4.5, exclude Romance",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0222",
+      "query_text": "Find me exclude Romance; after publication year 2020; include Fiction?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0223",
+      "query_text": "Find me include Fiction, rating at most 4.5, exclude Romance?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0291",
+      "query_text": "Find me exclude Romance; after publication year 2020; include Fiction.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0292",
+      "query_text": "Find me include Fiction, rating at most 4.5, exclude Romance.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0360",
+      "query_text": "Find me exclude Romance; after publication year 2020; include Fiction please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0361",
+      "query_text": "Find me include Fiction, rating at most 4.5, exclude Romance please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0429",
+      "query_text": "Find me exclude Romance; after publication year 2020; include Fiction please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0430",
+      "query_text": "Find me include Fiction, rating at most 4.5, exclude Romance please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0498",
+      "query_text": "Find me exclude Romance; after publication year 2020; include Fiction please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0499",
+      "query_text": "Find me include Fiction, rating at most 4.5, exclude Romance please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0567",
+      "query_text": "Show me exclude Romance; after publication year 2020; include Fiction",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0568",
+      "query_text": "Show me include Fiction, rating at most 4.5, exclude Romance",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0636",
+      "query_text": "Show me exclude Romance; after publication year 2020; include Fiction?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0637",
+      "query_text": "Show me include Fiction, rating at most 4.5, exclude Romance?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0705",
+      "query_text": "Show me exclude Romance; after publication year 2020; include Fiction.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0706",
+      "query_text": "Show me include Fiction, rating at most 4.5, exclude Romance.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0003",
+      "query_text": "Please find rated above 4, online Fiction about wizards please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0004",
+      "query_text": "Please find physical only, Mystery, rated below 4 please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0005",
+      "query_text": "Please find Neural Networks available now rated at least 3 please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0006",
+      "query_text": "Please find before 2018 in publication year, online books on bridges please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0007",
+      "query_text": "Please find by Synthetic A1 Author, include Wizards, rating above 3 please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0008",
+      "query_text": "Please find about waterways, physical books published in 2021 please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0009",
+      "query_text": "Please find online only; include Mystery; available now please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0073",
+      "query_text": "Please find fiction by George Orwell please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0074",
+      "query_text": "Please find poetry written by Emily Dickinson please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0081",
+      "query_text": "Please find rated above 4, online Fiction about wizards please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0082",
+      "query_text": "Please find physical only, Mystery, rated below 4 please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0083",
+      "query_text": "Please find Neural Networks available now rated at least 3 please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0084",
+      "query_text": "Please find before 2018 in publication year, online books on bridges please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0085",
+      "query_text": "Please find by Synthetic A1 Author, include Wizards, rating above 3 please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0086",
+      "query_text": "Please find about waterways, physical books published in 2021 please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0087",
+      "query_text": "Please find online only; include Mystery; available now please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0151",
+      "query_text": "Find me fiction by George Orwell",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0152",
+      "query_text": "Find me poetry written by Emily Dickinson",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0159",
+      "query_text": "Find me rated above 4, online Fiction about wizards",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0160",
+      "query_text": "Find me physical only, Mystery, rated below 4",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0161",
+      "query_text": "Find me Neural Networks available now rated at least 3",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0162",
+      "query_text": "Find me before 2018 in publication year, online books on bridges",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0163",
+      "query_text": "Find me by Synthetic A1 Author, include Wizards, rating above 3",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0164",
+      "query_text": "Find me about waterways, physical books published in 2021",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0165",
+      "query_text": "Find me online only; include Mystery; available now",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0229",
+      "query_text": "Find me fiction by George Orwell?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0230",
+      "query_text": "Find me poetry written by Emily Dickinson?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0237",
+      "query_text": "Find me rated above 4, online Fiction about wizards?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0238",
+      "query_text": "Find me physical only, Mystery, rated below 4?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0239",
+      "query_text": "Find me Neural Networks available now rated at least 3?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0240",
+      "query_text": "Find me before 2018 in publication year, online books on bridges?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0241",
+      "query_text": "Find me by Synthetic A1 Author, include Wizards, rating above 3?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0242",
+      "query_text": "Find me about waterways, physical books published in 2021?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0243",
+      "query_text": "Find me online only; include Mystery; available now?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0307",
+      "query_text": "Find me fiction by George Orwell.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0308",
+      "query_text": "Find me poetry written by Emily Dickinson.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0315",
+      "query_text": "Find me rated above 4, online Fiction about wizards.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0316",
+      "query_text": "Find me physical only, Mystery, rated below 4.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0317",
+      "query_text": "Find me Neural Networks available now rated at least 3.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0318",
+      "query_text": "Find me before 2018 in publication year, online books on bridges.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0319",
+      "query_text": "Find me by Synthetic A1 Author, include Wizards, rating above 3.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0320",
+      "query_text": "Find me about waterways, physical books published in 2021.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0321",
+      "query_text": "Find me online only; include Mystery; available now.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0385",
+      "query_text": "Find me fiction by George Orwell please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0386",
+      "query_text": "Find me poetry written by Emily Dickinson please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0393",
+      "query_text": "Find me rated above 4, online Fiction about wizards please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0394",
+      "query_text": "Find me physical only, Mystery, rated below 4 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0395",
+      "query_text": "Find me Neural Networks available now rated at least 3 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0396",
+      "query_text": "Find me before 2018 in publication year, online books on bridges please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0397",
+      "query_text": "Find me by Synthetic A1 Author, include Wizards, rating above 3 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0398",
+      "query_text": "Find me about waterways, physical books published in 2021 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0399",
+      "query_text": "Find me online only; include Mystery; available now please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0463",
+      "query_text": "Find me fiction by George Orwell please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0464",
+      "query_text": "Find me poetry written by Emily Dickinson please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0471",
+      "query_text": "Find me rated above 4, online Fiction about wizards please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0472",
+      "query_text": "Find me physical only, Mystery, rated below 4 please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0473",
+      "query_text": "Find me Neural Networks available now rated at least 3 please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0474",
+      "query_text": "Find me before 2018 in publication year, online books on bridges please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0475",
+      "query_text": "Find me by Synthetic A1 Author, include Wizards, rating above 3 please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0476",
+      "query_text": "Find me about waterways, physical books published in 2021 please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0477",
+      "query_text": "Find me online only; include Mystery; available now please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0541",
+      "query_text": "Find me fiction by George Orwell please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0542",
+      "query_text": "Find me poetry written by Emily Dickinson please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0549",
+      "query_text": "Find me rated above 4, online Fiction about wizards please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0550",
+      "query_text": "Find me physical only, Mystery, rated below 4 please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0551",
+      "query_text": "Find me Neural Networks available now rated at least 3 please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0552",
+      "query_text": "Find me before 2018 in publication year, online books on bridges please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0553",
+      "query_text": "Find me by Synthetic A1 Author, include Wizards, rating above 3 please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0554",
+      "query_text": "Find me about waterways, physical books published in 2021 please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0555",
+      "query_text": "Find me online only; include Mystery; available now please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0619",
+      "query_text": "Show me fiction by George Orwell",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0620",
+      "query_text": "Show me poetry written by Emily Dickinson",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0627",
+      "query_text": "Show me rated above 4, online Fiction about wizards",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0628",
+      "query_text": "Show me physical only, Mystery, rated below 4",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0629",
+      "query_text": "Show me Neural Networks available now rated at least 3",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0630",
+      "query_text": "Show me before 2018 in publication year, online books on bridges",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0631",
+      "query_text": "Show me by Synthetic A1 Author, include Wizards, rating above 3",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0632",
+      "query_text": "Show me about waterways, physical books published in 2021",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0633",
+      "query_text": "Show me online only; include Mystery; available now",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0697",
+      "query_text": "Show me fiction by George Orwell?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0698",
+      "query_text": "Show me poetry written by Emily Dickinson?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0705",
+      "query_text": "Show me rated above 4, online Fiction about wizards?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0706",
+      "query_text": "Show me physical only, Mystery, rated below 4?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0707",
+      "query_text": "Show me Neural Networks available now rated at least 3?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0708",
+      "query_text": "Show me before 2018 in publication year, online books on bridges?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0709",
+      "query_text": "Show me by Synthetic A1 Author, include Wizards, rating above 3?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0710",
+      "query_text": "Show me about waterways, physical books published in 2021?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0711",
+      "query_text": "Show me online only; include Mystery; available now?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0775",
+      "query_text": "Show me fiction by George Orwell.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0776",
+      "query_text": "Show me poetry written by Emily Dickinson.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0783",
+      "query_text": "Show me rated above 4, online Fiction about wizards.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0784",
+      "query_text": "Show me physical only, Mystery, rated below 4.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0785",
+      "query_text": "Show me Neural Networks available now rated at least 3.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0786",
+      "query_text": "Show me before 2018 in publication year, online books on bridges.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0787",
+      "query_text": "Show me by Synthetic A1 Author, include Wizards, rating above 3.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0788",
+      "query_text": "Show me about waterways, physical books published in 2021.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0789",
+      "query_text": "Show me online only; include Mystery; available now.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0857",
+      "query_text": "Show me fiction by George Orwell please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0858",
+      "query_text": "Show me poetry written by Emily Dickinson please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0874",
+      "query_text": "Show me rated above 4, online Fiction about wizards please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0875",
+      "query_text": "Show me exclude Romance; after publication year 2020; include Fiction please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0876",
+      "query_text": "Show me physical only, Mystery, rated below 4 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0877",
+      "query_text": "Show me Neural Networks available now rated at least 3 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0878",
+      "query_text": "Show me before 2018 in publication year, online books on bridges please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0879",
+      "query_text": "Show me by Synthetic A1 Author, include Wizards, rating above 3 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0880",
+      "query_text": "Show me include Fiction, rating at most 4.5, exclude Romance please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0881",
+      "query_text": "Show me about waterways, physical books published in 2021 please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0882",
+      "query_text": "Show me online only; include Mystery; available now please",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "SMART",
+      "family_id": "d12_multi_reordering",
+      "parent_query_id": "v2cc-authored-d12_multi_reordering-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0984",
+      "query_text": "Show me fiction by George Orwell please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0985",
+      "query_text": "Show me poetry written by Emily Dickinson please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d05_by_vs_about",
+      "parent_query_id": "v2cc-authored-d05_by_vs_about-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0015",
+      "query_text": "Please find 9780141036144 please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0016",
+      "query_text": "Please find ISBN 978-0-14-103614-4 please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0017",
+      "query_text": "Please find 0-451-52493-4 please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0018",
+      "query_text": "Please find find 9780307277671 please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0019",
+      "query_text": "Please find ISBN-10 014118776X please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0020",
+      "query_text": "Please find 978-1-59327-928-8 Python please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0021",
+      "query_text": "Please find book identifier 9780201616224 please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0022",
+      "query_text": "Please find ISBN 978 0 7432 7356 5 please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0023",
+      "query_text": "Please find the text 123-4-567-89012-3 please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0024",
+      "query_text": "Please find ISBN: 9780000000002 please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0083",
+      "query_text": "Please find books by Mira Rao please?",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0084",
+      "query_text": "Please find books by N. K. Jemisin please?",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0085",
+      "query_text": "Please find books by Ursula K. Le Guin please?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0086",
+      "query_text": "Please find books by bell hooks please?",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0125",
+      "query_text": "Please find 9780141036144 please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0126",
+      "query_text": "Please find ISBN 978-0-14-103614-4 please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0127",
+      "query_text": "Please find 0-451-52493-4 please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0128",
+      "query_text": "Please find find 9780307277671 please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0129",
+      "query_text": "Please find ISBN-10 014118776X please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0130",
+      "query_text": "Please find 978-1-59327-928-8 Python please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0131",
+      "query_text": "Please find book identifier 9780201616224 please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0132",
+      "query_text": "Please find ISBN 978 0 7432 7356 5 please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0133",
+      "query_text": "Please find the text 123-4-567-89012-3 please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0134",
+      "query_text": "Please find ISBN: 9780000000002 please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0193",
+      "query_text": "Please find books by Mira Rao please.",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0194",
+      "query_text": "Please find books by N. K. Jemisin please.",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0195",
+      "query_text": "Please find books by Ursula K. Le Guin please.",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0196",
+      "query_text": "Please find books by bell hooks please.",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0235",
+      "query_text": "Find me 9780141036144",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0236",
+      "query_text": "Find me ISBN 978-0-14-103614-4",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0237",
+      "query_text": "Find me 0-451-52493-4",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0238",
+      "query_text": "Find me find 9780307277671",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0239",
+      "query_text": "Find me ISBN-10 014118776X",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0240",
+      "query_text": "Find me 978-1-59327-928-8 Python",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0241",
+      "query_text": "Find me book identifier 9780201616224",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0242",
+      "query_text": "Find me ISBN 978 0 7432 7356 5",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0243",
+      "query_text": "Find me the text 123-4-567-89012-3",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0244",
+      "query_text": "Find me ISBN: 9780000000002",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0303",
+      "query_text": "Find me books by Mira Rao",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0304",
+      "query_text": "Find me books by N. K. Jemisin",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0305",
+      "query_text": "Find me books by Ursula K. Le Guin",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0306",
+      "query_text": "Find me books by bell hooks",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0345",
+      "query_text": "Find me 9780141036144?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0346",
+      "query_text": "Find me ISBN 978-0-14-103614-4?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0347",
+      "query_text": "Find me 0-451-52493-4?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0348",
+      "query_text": "Find me find 9780307277671?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0349",
+      "query_text": "Find me ISBN-10 014118776X?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0350",
+      "query_text": "Find me 978-1-59327-928-8 Python?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0351",
+      "query_text": "Find me book identifier 9780201616224?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0352",
+      "query_text": "Find me ISBN 978 0 7432 7356 5?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0353",
+      "query_text": "Find me the text 123-4-567-89012-3?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0354",
+      "query_text": "Find me ISBN: 9780000000002?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0413",
+      "query_text": "Find me books by Mira Rao?",
+      "scope_type": "PUBLIC_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0414",
+      "query_text": "Find me books by N. K. Jemisin?",
+      "scope_type": "PUBLIC_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0415",
+      "query_text": "Find me books by Ursula K. Le Guin?",
+      "scope_type": "PRIVATE_PATRON",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0416",
+      "query_text": "Find me books by bell hooks?",
+      "scope_type": "PRIVATE_STAFF",
+      "search_mode": "TITLE_AUTHOR",
+      "family_id": "resume_title_author_mode",
+      "parent_query_id": "v2cc-resume-core-title_author_mode-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0455",
+      "query_text": "Find me 9780141036144.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0456",
+      "query_text": "Find me ISBN 978-0-14-103614-4.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0457",
+      "query_text": "Find me 0-451-52493-4.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-03"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0458",
+      "query_text": "Find me find 9780307277671.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-04"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0459",
+      "query_text": "Find me ISBN-10 014118776X.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0460",
+      "query_text": "Find me 978-1-59327-928-8 Python.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-06"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0461",
+      "query_text": "Find me book identifier 9780201616224.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0462",
+      "query_text": "Find me ISBN 978 0 7432 7356 5.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0463",
+      "query_text": "Find me the text 123-4-567-89012-3.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-09"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-entity_number_protection-0464",
+      "query_text": "Find me ISBN: 9780000000002.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "d22_isbn_like",
+      "parent_query_id": "v2cc-authored-d22_isbn_like-10"
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-01",
+      "query_text": "Artificial intelligence excluding neural networks",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-02",
+      "query_text": "Computer science minus cybersecurity",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-03",
+      "query_text": "Mathematics excluding calculus",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-04",
+      "query_text": "Astronomy excluding astrology",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-05",
+      "query_text": "Fiction without Romance",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-06",
+      "query_text": "History excluding military campaigns",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-07",
+      "query_text": "Engineering minus bridge design",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-08",
+      "query_text": "Philosophy except ethics",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-09",
+      "query_text": "Technology excluding social media",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-authored-c03_kg_negative-10",
+      "query_text": "Science excluding astrology and alchemy",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": null
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0300",
+      "query_text": "Please find Artificial intelligence excluding neural networks",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0301",
+      "query_text": "Please find Computer science minus cybersecurity",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0302",
+      "query_text": "Please find Fiction without Romance",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0303",
+      "query_text": "Please find Engineering minus bridge design",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0304",
+      "query_text": "Please find Philosophy except ethics",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0781",
+      "query_text": "Please find Artificial intelligence excluding neural networks?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0782",
+      "query_text": "Please find Computer science minus cybersecurity?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0783",
+      "query_text": "Please find Fiction without Romance?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0784",
+      "query_text": "Please find Engineering minus bridge design?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-0785",
+      "query_text": "Please find Philosophy except ethics?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1262",
+      "query_text": "Please find Artificial intelligence excluding neural networks.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1263",
+      "query_text": "Please find Computer science minus cybersecurity.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1264",
+      "query_text": "Please find Fiction without Romance.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1265",
+      "query_text": "Please find Engineering minus bridge design.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1266",
+      "query_text": "Please find Philosophy except ethics.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1743",
+      "query_text": "Please find Artificial intelligence excluding neural networks please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1744",
+      "query_text": "Please find Computer science minus cybersecurity please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1745",
+      "query_text": "Please find Fiction without Romance please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1746",
+      "query_text": "Please find Engineering minus bridge design please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-paraphrase_word_order-1747",
+      "query_text": "Please find Philosophy except ethics please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0300",
+      "query_text": "Please find,  Artificial intelligence excluding neural networks !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0301",
+      "query_text": "Please find,  Computer science minus cybersecurity !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0302",
+      "query_text": "Please find,  Fiction without Romance !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0303",
+      "query_text": "Please find,  Engineering minus bridge design !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0304",
+      "query_text": "Please find,  Philosophy except ethics !?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0781",
+      "query_text": "Please find,  Artificial intelligence excluding neural networks ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0782",
+      "query_text": "Please find,  Computer science minus cybersecurity ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0783",
+      "query_text": "Please find,  Fiction without Romance ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0784",
+      "query_text": "Please find,  Engineering minus bridge design ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-noisy_malformed-0785",
+      "query_text": "Please find,  Philosophy except ethics ??",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0035",
+      "query_text": "Please find Artificial intelligence excluding neural networks please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0036",
+      "query_text": "Please find Computer science minus cybersecurity please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0037",
+      "query_text": "Please find Fiction without Romance please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0038",
+      "query_text": "Please find Engineering minus bridge design please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0039",
+      "query_text": "Please find Philosophy except ethics please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0104",
+      "query_text": "Please find Artificial intelligence excluding neural networks please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0105",
+      "query_text": "Please find Computer science minus cybersecurity please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0106",
+      "query_text": "Please find Fiction without Romance please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0107",
+      "query_text": "Please find Engineering minus bridge design please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0108",
+      "query_text": "Please find Philosophy except ethics please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0173",
+      "query_text": "Find me Artificial intelligence excluding neural networks",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0174",
+      "query_text": "Find me Computer science minus cybersecurity",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0175",
+      "query_text": "Find me Fiction without Romance",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0176",
+      "query_text": "Find me Engineering minus bridge design",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0177",
+      "query_text": "Find me Philosophy except ethics",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0242",
+      "query_text": "Find me Artificial intelligence excluding neural networks?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0243",
+      "query_text": "Find me Computer science minus cybersecurity?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0244",
+      "query_text": "Find me Fiction without Romance?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0245",
+      "query_text": "Find me Engineering minus bridge design?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0246",
+      "query_text": "Find me Philosophy except ethics?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0311",
+      "query_text": "Find me Artificial intelligence excluding neural networks.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0312",
+      "query_text": "Find me Computer science minus cybersecurity.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0313",
+      "query_text": "Find me Fiction without Romance.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0314",
+      "query_text": "Find me Engineering minus bridge design.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0315",
+      "query_text": "Find me Philosophy except ethics.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0380",
+      "query_text": "Find me Artificial intelligence excluding neural networks please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0381",
+      "query_text": "Find me Computer science minus cybersecurity please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0382",
+      "query_text": "Find me Fiction without Romance please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0383",
+      "query_text": "Find me Engineering minus bridge design please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0384",
+      "query_text": "Find me Philosophy except ethics please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0449",
+      "query_text": "Find me Artificial intelligence excluding neural networks please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0450",
+      "query_text": "Find me Computer science minus cybersecurity please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0451",
+      "query_text": "Find me Fiction without Romance please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0452",
+      "query_text": "Find me Engineering minus bridge design please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0453",
+      "query_text": "Find me Philosophy except ethics please?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0518",
+      "query_text": "Find me Artificial intelligence excluding neural networks please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0519",
+      "query_text": "Find me Computer science minus cybersecurity please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0520",
+      "query_text": "Find me Fiction without Romance please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0521",
+      "query_text": "Find me Engineering minus bridge design please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0522",
+      "query_text": "Find me Philosophy except ethics please.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0587",
+      "query_text": "Show me Artificial intelligence excluding neural networks",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0588",
+      "query_text": "Show me Computer science minus cybersecurity",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0589",
+      "query_text": "Show me Fiction without Romance",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0590",
+      "query_text": "Show me Engineering minus bridge design",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0591",
+      "query_text": "Show me Philosophy except ethics",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0656",
+      "query_text": "Show me Artificial intelligence excluding neural networks?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0657",
+      "query_text": "Show me Computer science minus cybersecurity?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0658",
+      "query_text": "Show me Fiction without Romance?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0659",
+      "query_text": "Show me Engineering minus bridge design?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0660",
+      "query_text": "Show me Philosophy except ethics?",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0725",
+      "query_text": "Show me Artificial intelligence excluding neural networks.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-01"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0726",
+      "query_text": "Show me Computer science minus cybersecurity.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-02"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0727",
+      "query_text": "Show me Fiction without Romance.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0728",
+      "query_text": "Show me Engineering minus bridge design.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-07"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-contradiction_negative-0729",
+      "query_text": "Show me Philosophy except ethics.",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0911",
+      "query_text": "Show me Fiction without Romance please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-05"
+    },
+    {
+      "query_id": "v2:v2cc-seeded-multi_constraint-0912",
+      "query_text": "Show me Philosophy except ethics please",
+      "scope_type": "GLOBAL",
+      "search_mode": "SMART",
+      "family_id": "c03_kg_negative",
+      "parent_query_id": "v2cc-authored-c03_kg_negative-08"
+    }
+  ]
+}

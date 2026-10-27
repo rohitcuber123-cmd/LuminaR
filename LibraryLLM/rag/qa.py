@@ -7,6 +7,8 @@ from rag.reranker import RAGReranker
 from rag.llm import LuminaRLLM
 from rag.fast_filter import run_fast_filter
 from rag.query_types import grounded_book_overview, grounded_book_author, ordinary_book_intent, is_informational_book_query
+from rag.book_assets import valid_work_id
+from rag.document_grounding import select_definition_evidence, definition_category
 
 
 # ============================================================
@@ -643,6 +645,9 @@ ANSWER:'''
             "results",
             []
         )
+        is_document = bool(document_id and not valid_work_id(document_id))
+        if is_document:
+            results = select_definition_evidence(question, results, document_id, max_chunks)
 
         # ----------------------------------------------------
         # NO RESULTS
@@ -714,6 +719,8 @@ ANSWER:'''
 
         # Classify query type for adaptive grounding
         q_category = is_informational_book_query(question)
+        if is_document:
+            q_category = definition_category(question, used_items, document_id) or q_category
 
         fast_filter_start = time.perf_counter()
         fast_filter_result = run_fast_filter(
@@ -852,7 +859,7 @@ LIMITATION: '''
 
         seen = set()
 
-        for item in used_items:
+        for item in ([] if is_document and verdict == "NOT_SUPPORTED" else used_items):
 
             # ------------------------------------------------
             # Use chunk_id as primary deduplication key.

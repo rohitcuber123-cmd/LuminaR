@@ -1,0 +1,1060 @@
+{
+  "status": "PASS",
+  "actual_api_observations": {
+    "TEST_PATRON": [
+      {
+        "query": "fiction books above rating of 3",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "BROWSE_CATEGORY",
+          "intent_label": "Browse category",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "subject",
+              "label": "Genre / Subject: Fiction"
+            },
+            {
+              "key": "rating_min",
+              "label": "Rating: > 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 325.296,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "fiction about wizards above rating of 3",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [
+            "American Science fiction",
+            "Fiction, science fiction, general",
+            "American Erotic stories",
+            "Amusement parks",
+            "Amusement parks, fiction",
+            "Ancient Civilization"
+          ],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: wizards"
+            },
+            {
+              "key": "subject",
+              "label": "Genre / Subject: Fiction"
+            },
+            {
+              "key": "rating_min",
+              "label": "Rating: > 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 535.58,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "fiction 4",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "AMBIGUOUS",
+            "reason_code": "NUMBER_WITHOUT_FIELD",
+            "affected_fields": [],
+            "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: fiction 4"
+            },
+            {
+              "key": "subject",
+              "label": "Genre / Subject: Fiction"
+            }
+          ],
+          "corrections": [],
+          "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 274.927,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "books rated above 4 and below 3",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "CONTRADICTORY",
+            "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+            "affected_fields": [
+              "rating"
+            ],
+            "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "rating_min",
+              "label": "Rating: > 4"
+            },
+            {
+              "key": "rating_max",
+              "label": "Rating: < 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 256.644,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "books rated above 4 and rated below 3",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "CONTRADICTORY",
+            "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+            "affected_fields": [
+              "rating"
+            ],
+            "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "rating_min",
+              "label": "Rating: > 4"
+            },
+            {
+              "key": "rating_max",
+              "label": "Rating: < 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 284.225,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "after 2020 before 2000",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "CONTRADICTORY",
+            "reason_code": "INCOMPATIBLE_YEAR_BOUNDS",
+            "affected_fields": [
+              "year"
+            ],
+            "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "year_min",
+              "label": "Year: > 2020"
+            },
+            {
+              "key": "year_max",
+              "label": "Year: < 2000"
+            }
+          ],
+          "corrections": [],
+          "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 286.334,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "online only and physical only",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "FIND_ONLINE",
+          "intent_label": "Find online",
+          "decision": {
+            "decision_type": "CONTRADICTORY",
+            "reason_code": "EXCLUSIVE_FORMATS",
+            "affected_fields": [
+              "format"
+            ],
+            "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "format",
+              "label": "Format: Online"
+            },
+            {
+              "key": "format",
+              "label": "Format: Physical"
+            }
+          ],
+          "corrections": [],
+          "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 222.501,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "fiction rating above",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "BROWSE_CATEGORY",
+          "intent_label": "Browse category",
+          "decision": {
+            "decision_type": "INCOMPLETE",
+            "reason_code": "MISSING_CONSTRAINT_VALUE",
+            "affected_fields": [
+              "rating"
+            ],
+            "safe_public_message": "A search constraint is unfinished. Complete it and search again.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "subject",
+              "label": "Genre / Subject: Fiction"
+            }
+          ],
+          "corrections": [],
+          "notice": "A search constraint is unfinished. Complete it and search again.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 239.106,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "AI excluding deep learning rated above 4",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: ai"
+            },
+            {
+              "key": "rating_min",
+              "label": "Rating: > 4"
+            },
+            {
+              "key": "exclude",
+              "label": "Exclude: deep learning"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 5,
+        "elapsed_ms": 635.08,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "Python 3 for beginners",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "LEARN",
+          "intent_label": "Learn",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": "Introductory / beginner (preference)",
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: python 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 50,
+        "elapsed_ms": 894.45,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "books published after 2020 about events in 1945",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: events in 1945"
+            },
+            {
+              "key": "year_min",
+              "label": "Year: > 2020"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 605.793,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "books about history after 1945",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: history after 1945"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 50,
+        "elapsed_ms": 776.904,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "available online and physically",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "FIND_ONLINE",
+          "intent_label": "Find online",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "format",
+              "label": "Format: Physical + Online"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 2,
+        "elapsed_ms": 371.676,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "online but not physical",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "FIND_ONLINE",
+          "intent_label": "Find online",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "format",
+              "label": "Format: Online"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 1,
+        "elapsed_ms": 367.114,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      }
+    ],
+    "TEST_STAFF": [
+      {
+        "query": "fiction books above rating of 3",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "BROWSE_CATEGORY",
+          "intent_label": "Browse category",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "subject",
+              "label": "Genre / Subject: Fiction"
+            },
+            {
+              "key": "rating_min",
+              "label": "Rating: > 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 267.805,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "fiction about wizards above rating of 3",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [
+            "American Science fiction",
+            "Fiction, science fiction, general",
+            "American Erotic stories",
+            "Amusement parks",
+            "Amusement parks, fiction",
+            "Ancient Civilization"
+          ],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: wizards"
+            },
+            {
+              "key": "subject",
+              "label": "Genre / Subject: Fiction"
+            },
+            {
+              "key": "rating_min",
+              "label": "Rating: > 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 362.987,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "fiction 4",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "AMBIGUOUS",
+            "reason_code": "NUMBER_WITHOUT_FIELD",
+            "affected_fields": [],
+            "safe_public_message": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: fiction 4"
+            },
+            {
+              "key": "subject",
+              "label": "Genre / Subject: Fiction"
+            }
+          ],
+          "corrections": [],
+          "notice": "This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 260.196,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "books rated above 4 and below 3",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "CONTRADICTORY",
+            "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+            "affected_fields": [
+              "rating"
+            ],
+            "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "rating_min",
+              "label": "Rating: > 4"
+            },
+            {
+              "key": "rating_max",
+              "label": "Rating: < 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 265.983,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "books rated above 4 and rated below 3",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "CONTRADICTORY",
+            "reason_code": "INCOMPATIBLE_RATING_BOUNDS",
+            "affected_fields": [
+              "rating"
+            ],
+            "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "rating_min",
+              "label": "Rating: > 4"
+            },
+            {
+              "key": "rating_max",
+              "label": "Rating: < 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 277.619,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "after 2020 before 2000",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "CONTRADICTORY",
+            "reason_code": "INCOMPATIBLE_YEAR_BOUNDS",
+            "affected_fields": [
+              "year"
+            ],
+            "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "year_min",
+              "label": "Year: > 2020"
+            },
+            {
+              "key": "year_max",
+              "label": "Year: < 2000"
+            }
+          ],
+          "corrections": [],
+          "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 219.931,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "online only and physical only",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "FIND_ONLINE",
+          "intent_label": "Find online",
+          "decision": {
+            "decision_type": "CONTRADICTORY",
+            "reason_code": "EXCLUSIVE_FORMATS",
+            "affected_fields": [
+              "format"
+            ],
+            "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "format",
+              "label": "Format: Online"
+            },
+            {
+              "key": "format",
+              "label": "Format: Physical"
+            }
+          ],
+          "corrections": [],
+          "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 243.988,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "fiction rating above",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "BROWSE_CATEGORY",
+          "intent_label": "Browse category",
+          "decision": {
+            "decision_type": "INCOMPLETE",
+            "reason_code": "MISSING_CONSTRAINT_VALUE",
+            "affected_fields": [
+              "rating"
+            ],
+            "safe_public_message": "A search constraint is unfinished. Complete it and search again.",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "subject",
+              "label": "Genre / Subject: Fiction"
+            }
+          ],
+          "corrections": [],
+          "notice": "A search constraint is unfinished. Complete it and search again.",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 259.673,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "AI excluding deep learning rated above 4",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: ai"
+            },
+            {
+              "key": "rating_min",
+              "label": "Rating: > 4"
+            },
+            {
+              "key": "exclude",
+              "label": "Exclude: deep learning"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 5,
+        "elapsed_ms": 514.744,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "Python 3 for beginners",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "LEARN",
+          "intent_label": "Learn",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": "Introductory / beginner (preference)",
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: python 3"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 50,
+        "elapsed_ms": 569.813,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "books published after 2020 about events in 1945",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: events in 1945"
+            },
+            {
+              "key": "year_min",
+              "label": "Year: > 2020"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 0,
+        "elapsed_ms": 435.588,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "books about history after 1945",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "intent_label": "Discover topic",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "topic",
+              "label": "Topic: history after 1945"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 50,
+        "elapsed_ms": 548.987,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "available online and physically",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "FIND_ONLINE",
+          "intent_label": "Find online",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "format",
+              "label": "Format: Physical + Online"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 3,
+        "elapsed_ms": 382.895,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      },
+      {
+        "query": "online but not physical",
+        "status": 200,
+        "interpretation": {
+          "mode": "SMART",
+          "intent": "FIND_ONLINE",
+          "intent_label": "Find online",
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "affected_fields": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a-compositional-1"
+          },
+          "related_concepts": [],
+          "preference": null,
+          "chips": [
+            {
+              "key": "format",
+              "label": "Format: Online"
+            }
+          ],
+          "corrections": [],
+          "notice": "",
+          "suggested_subject": null,
+          "session": null,
+          "personalized": false
+        },
+        "returned": 1,
+        "elapsed_ms": 353.176,
+        "strict_violations": 0,
+        "foreign_rows": 0
+      }
+    ]
+  },
+  "browser": "search_v2c_a_browser.json",
+  "strict_violations": 0,
+  "foreign_rows": 0,
+  "rejected_query_execution": "No silent unrestricted search; zero results for typed rejections.",
+  "security_and_fallback_suite": "D:\\SDC\\LibraryLLM\\reports\\search_v2c_a_tenant.xml"
+}

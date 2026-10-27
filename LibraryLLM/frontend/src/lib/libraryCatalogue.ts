@@ -1,13 +1,19 @@
 import { request, type BackendBook, type BooksResponse, type CategoriesResponse, type SearchResponse, type RecommendationsResponse } from './api'
 import { institutionApi } from './institutions'
 import type { Availability } from './libraryLending'
+import {hasSearchFilters,searchOptions,type SearchInterpretation} from './searchNlu'
+import {rememberSearch,forgetSearch} from './searchContext'
 
 export type CatalogueSource = {
   library_id: string; library_name: string; catalogue_source: 'LIBRARY_LOCAL' | 'GLOBAL_FALLBACK'; local_book_count: number;
   capabilities: { physical_actions: boolean; reservations: boolean; local_search: boolean; global_discovery: boolean };
   circulation_state: string; discovery_notice: string | null
+  search_source?:'TENANT_SEMANTIC'|'LOCAL_FALLBACK';intelligence_status?:string;search_generation_id?:string
 }
 export type DisplayBook = {
+  search_reasons?:string[];
+  isbn_10?:string|null;isbn_13?:string|null;local_call_number?:string|null;status?:string;
+  publication_year?:number|null;language?:string|null;
   book_format?: 'PHYSICAL_ONLY'|'DIGITAL_ONLY'|'PHYSICAL_AND_DIGITAL'|'UNAVAILABLE';has_physical?:boolean;has_online?:boolean;online_asset_id?:string|null;
   display_id: string; library_id: string; library_book_id: string | null; global_work_id: string | null;
   title: string; authors: string[]; subjects: string[]; description?: string | null; cover_url: string | null;
@@ -23,7 +29,7 @@ export type DisplayBook = {
 }
 export type SubjectCount = { subject: string; count: number; preview_book?: DisplayBook | null }
 export type CatalogueHome = { source: CatalogueSource; featured: DisplayBook[]; for_you?: DisplayBook[]; new_arrivals: DisplayBook[]; popular: DisplayBook[]; subjects: SubjectCount[]; my_library: { pending_requests: number; active_loans: number; waiting_reservations: number }; popularity_window_days: number }
-export type CataloguePage = { source: CatalogueSource; results: DisplayBook[]; total: number | null; has_more: boolean; offset: number; limit: number }
+export type CataloguePage = { source: CatalogueSource; results: DisplayBook[]; total: number | null; has_more: boolean; offset: number; limit: number;interpretation?:import('./searchNlu').SearchInterpretation }
 export type GenrePage = { source: CatalogueSource; results: SubjectCount[]; total: number; has_more: boolean; offset: number; limit: number }
 export type CatalogueDetail = { source: CatalogueSource; book: DisplayBook }
 export type CatalogueOperation = 'home' | 'books' | 'genres' | 'detail' | 'global-detail'
@@ -51,22 +57,33 @@ async function recommendationCandidates(signal: AbortSignal) {
   } catch (error) { if (signal.aborted) throw error; return [] }
 }
 
-function checkSource(source: CatalogueSource, libraryId: string) {
+export async function libraryRecommendationPage(id:string,signal:AbortSignal,offset=0,limit=10) {
+  const candidates=await recommendationCandidates(signal)
+  const result=await institutionApi<{source:CatalogueSource;results:DisplayBook[]}>(`${catalogueBase(id)}/recommendations`,'POST',{work_ids:candidates.map(book=>book.work_id),limit:50},signal)
+  checkSource(result.source,id)
+  if(result.source.catalogue_source!=='LIBRARY_LOCAL' || result.results.some(book=>book.library_id!==id || book.source!=='LIBRARY'))throw new Error('Library recommendation context changed.')
+  return {...result,results:result.results.slice(offset,offset+limit),has_more:offset+limit<result.results.length,total:result.results.length}
+}
+
+function checkSource(source: CatalogueSource, libraryId: string,staff=false) {
   if (source?.library_id !== libraryId || !['LIBRARY_LOCAL', 'GLOBAL_FALLBACK'].includes(source?.catalogue_source) || !Number.isInteger(source.local_book_count) || source.local_book_count < 0)
     throw new Error('Catalogue context changed. Refresh to load this library.')
-  if ((source.catalogue_source === 'LIBRARY_LOCAL') !== (source.local_book_count > 0)) throw new Error('Catalogue source could not be verified. Try again.')
+  if(staff && source.catalogue_source!=='LIBRARY_LOCAL')throw new Error('Staff catalogue must use this library’s records. Global discovery is a separate catalogue.')
+  if (!staff && (source.catalogue_source === 'LIBRARY_LOCAL') !== (source.local_book_count > 0)) throw new Error('Catalogue source could not be verified. Try again.')
 }
 
 async function globalPage(id: string, source: CatalogueSource, params: URLSearchParams, signal: AbortSignal): Promise<CataloguePage> {
   const offset = Number(params.get('offset') || 0), limit = 20, sort = params.get('sort'), subject = params.get('subject') || '', author = params.get('author') || '', query = params.get('search') || subject || author
-  let results: DisplayBook[], total: number | null, hasMore: boolean
-  if (params.get('view') === 'for-you') {
+  let results: DisplayBook[], total: number | null, hasMore: boolean, interpretation:SearchInterpretation|undefined
+  const planned=!!params.get('search') || hasSearchFilters(params)
+  if (params.get('view') === 'for-you' && !planned) {
     const response = await request<RecommendationsResponse>(`/recommendation-api/recommendations?limit=${limit}&offset=${offset}`, { signal })
     results = response.recommendations.map(book => globalDisplayBook({...book, book_id:book.book_id || 0,authors:book.authors || '',subjects:book.subjects || ''},id))
     total = response.total_ranked_candidates ?? offset + results.length; hasMore = response.has_more === true
-  } else if (params.get('search')) {
+  } else if (planned) {
     const response = await request<SearchResponse>('/search-api/search', { method: 'POST', signal,
-      body: JSON.stringify({ query, limit: 10, offset: Math.min(40,offset), category:subject, author, library_id: 'LIB001', available_at_library: false, save_history: false }) })
+      body: JSON.stringify({ query, limit: 10, offset: Math.min(40,offset), category:subject, author, ...searchOptions(params), library_id: 'LIB001', available_at_library: false, save_history: false }) })
+    interpretation=response.interpretation
     results = response.results.map(book => globalDisplayBook({ work_id: book.work_id, title: book.title || '', authors: book.authors || '', subjects: book.subjects || '',readable:book.readable,rag_available:book.rag_available,average_rating:book.rating ?? undefined,rating_count:book.rating_count ?? undefined,reading_log_count:book.read_logs ?? undefined }, id))
     total = response.total_ranked_candidates ?? offset + results.length
     hasMore = response.has_more === true
@@ -76,12 +93,13 @@ async function globalPage(id: string, source: CatalogueSource, params: URLSearch
     results = response.results.map(book => globalDisplayBook(book, id)); total = response.count
     hasMore = response.has_more ?? (total !== null && offset + results.length < total)
   }
-  return { source, results, total, has_more: hasMore, offset, limit: params.get('search') ? 10 : limit }
+  return { source, results, total, has_more: hasMore, offset, limit: planned ? 10 : limit,interpretation }
 }
 
 /** The only frontend source switch: pages consume normalized responses, never infer mode from result length. */
-export async function loadCatalogue(operation: CatalogueOperation, id: string, filters: string, signal: AbortSignal): Promise<CatalogueHome | CataloguePage | GenrePage | CatalogueDetail> {
+export async function loadCatalogue(operation: CatalogueOperation, id: string, filters: string, signal: AbortSignal,staff=false): Promise<CatalogueHome | CataloguePage | GenrePage | CatalogueDetail> {
   const params = new URLSearchParams(filters), base = catalogueBase(id)
+  if(staff)params.set('staff','true')
   if (operation === 'home') {
     const home = await institutionApi<CatalogueHome>(`${base}/home`, 'GET', undefined, signal); checkSource(home.source, id)
     const candidates = await recommendationCandidates(signal)
@@ -102,9 +120,24 @@ export async function loadCatalogue(operation: CatalogueOperation, id: string, f
         preview_book: row.preview_book ? globalDisplayBook({ ...row.preview_book, authors: row.preview_book.authors || '' }, id) : null })) }
   }
   if (operation === 'books') {
-    const page = await institutionApi<CataloguePage>(`${base}/books?${params}`, 'GET', undefined, signal); checkSource(page.source, id)
+    let page:CataloguePage
+    const discoveryQuery = !!params.get('search')?.trim() || hasSearchFilters(params) || !!params.get('session_id')
+    if (discoveryQuery) {
+      try { page=await institutionApi<CataloguePage>(`${base}/search?${params}`,'GET',undefined,signal,'/search-api') }
+      catch (error) {
+        if (signal?.aborted) throw error
+        if (error instanceof Error && 'status' in error && Number(error.status)<500) {if([403,404].includes(Number(error.status)))forgetSearch({libraryId:id,staff});throw error}
+        page=await institutionApi<CataloguePage>(`${base}/discovery?${params}`,'GET',undefined,signal)
+        page.source={...page.source,search_source:'LOCAL_FALLBACK',intelligence_status:'UNAVAILABLE'}
+      }
+    } else page=await institutionApi<CataloguePage>(`${base}/books?${params}`, 'GET', undefined, signal)
+    checkSource(page.source, id,staff)
+    rememberSearch({libraryId:id,staff},page.interpretation?.session)
+    if(staff)return page
     if (page.source.catalogue_source !== 'LIBRARY_LOCAL') return globalPage(id, page.source, params, signal)
-    if (params.get('view') !== 'for-you') return page
+    // A submitted catalogue query is discovery even when entered from For You.
+    // Unqueried recommendations retain their existing provider and ranking.
+    if (params.get('view') !== 'for-you' || discoveryQuery) return page
     const candidates = await recommendationCandidates(signal)
     const scoped = await institutionApi<{source:CatalogueSource;results:DisplayBook[]}>(`${base}/recommendations`,'POST',{work_ids:candidates.map(b=>b.work_id),limit:50},signal)
     checkSource(scoped.source,id)
@@ -117,14 +150,15 @@ export async function loadCatalogue(operation: CatalogueOperation, id: string, f
     return {source:scoped.source,results:rows.slice(offset,offset+20),total:rows.length,offset,limit:20,has_more:offset+20<rows.length}
   }
   if (operation === 'genres') {
-    const page = await institutionApi<GenrePage>(`${base}/genres?${params}`, 'GET', undefined, signal); checkSource(page.source, id)
+    const page = await institutionApi<GenrePage>(`${base}/genres?${params}`, 'GET', undefined, signal); checkSource(page.source, id,staff)
+    if(staff)return page
     if (page.source.catalogue_source === 'LIBRARY_LOCAL') return page
     const response = await request<CategoriesResponse>('/api/books/categories', { signal }), offset = Number(params.get('offset') || 0)
     const results = response.categories.slice(offset, offset + 50).map(row => ({ subject: row.name, count: row.count }))
     return { ...page, results, total: response.categories.length, has_more: offset + results.length < response.categories.length, offset }
   }
-  const result = await institutionApi<{ source: CatalogueSource; book: DisplayBook | null }>(`${base}/${operation === 'detail' ? 'books' : 'global-books'}/${encodeURIComponent(params.get('id') || '')}`, 'GET', undefined, signal)
-  checkSource(result.source, id)
+  const result = await institutionApi<{ source: CatalogueSource; book: DisplayBook | null }>(`${base}/${operation === 'detail' ? 'books' : 'global-books'}/${encodeURIComponent(params.get('id') || '')}${staff?'?staff=true':''}`, 'GET', undefined, signal)
+  checkSource(result.source, id,staff)
   if (result.book) return { ...result, book: result.book }
   if (operation === 'detail') throw new Error('Book is not held by this library.')
   const book = await request<BackendBook>(`/api/books/${encodeURIComponent(params.get('id') || '')}`, { signal })

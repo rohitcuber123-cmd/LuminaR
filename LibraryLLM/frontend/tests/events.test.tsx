@@ -1,3 +1,4 @@
+import { chooseSelect, selectedValue } from './select-control'
 import assert from 'node:assert/strict'
 import { registerHooks } from 'node:module'
 import { test, beforeEach, afterEach } from 'node:test'
@@ -61,7 +62,7 @@ test('events_badge_hidden_when_zero', () => { mount('/events', true); assert.equ
 test('mobile_events_header_badge uses existing menu', () => { events.setState({ scope: 'token-a', count: 3 }); mount('/events', true); fireEvent.click(screen.getByRole('button', { name: 'Toggle menu', exact: true })); const links = screen.getAllByRole('link', { name: /Events/ }); assert.equal(links.length, 2); assert.ok(links[1].textContent?.includes('3')) })
 test('general_user_no_create_button and upcoming page mark receipt', async () => { mount(); await loaded(); assert.equal(screen.queryByRole('link', { name: 'Create Event' }), null); await waitFor(() => assert.ok(calls.some(c => c.url.endsWith('/events/mark-seen') && c.body.cursor === 'receipt'))); assert.equal(screen.getByRole('button', { name: 'Upcoming' }).getAttribute('aria-pressed'), 'true') })
 for (const role of ['ADMIN', 'LIBRARIAN'] as const) test(`${role} create and manage links`, async () => { user(role); mount(); await loaded(); assert.equal(screen.getByRole('link', { name: 'Create Event' }).getAttribute('href'), '/platform/events/new'); assert.ok(screen.getByRole('link', { name: 'Manage Events' })) })
-test('events_page_past and filters preserve backend URL', async () => { mount('/events?page=2'); await loaded(); fireEvent.click(screen.getByRole('button', { name: 'Past' })); await waitFor(() => assert.ok(calls.some(c => c.url.includes('view=past') && !c.url.includes('page=2')))); fireEvent.change(screen.getByLabelText('Event category'), { target: { value: 'BOOK_SALE' } }); await waitFor(() => assert.ok(calls.some(c => c.url.includes('category=BOOK_SALE')))); fireEvent.change(screen.getByLabelText('Search events'), { target: { value: 'Sale' } }); fireEvent.click(screen.getByRole('button', { name: 'Search' })); await waitFor(() => assert.ok(calls.some(c => c.url.includes('query=Sale')))) })
+test('events_page_past and filters preserve backend URL', async () => { mount('/events?page=2'); await loaded(); fireEvent.click(screen.getByRole('button', { name: 'Past' })); await waitFor(() => assert.ok(calls.some(c => c.url.includes('view=past') && !c.url.includes('page=2')))); chooseSelect(screen.getByLabelText('Event category'),'BOOK_SALE',fireEvent); await waitFor(() => assert.ok(calls.some(c => c.url.includes('category=BOOK_SALE')))); fireEvent.change(screen.getByLabelText('Search events'), { target: { value: 'Sale' } }); fireEvent.click(screen.getByRole('button', { name: 'Search' })); await waitFor(() => assert.ok(calls.some(c => c.url.includes('query=Sale')))) })
 for (const [path, message] of [['/events','No upcoming events right now.'], ['/events?view=past','No past events to show.'], ['/events?query=missing','No events match your filters.']]) test(`event_empty_state ${path}`, async () => { rows = []; mount(path); await screen.findByText(message) })
 test('event_detail and related_book_navigation, cancellation clear', async () => { rows = [event({ status: 'CANCELLED' })]; mount('/events/' + id); await loaded(); assert.ok(screen.getByText('Cancelled')); fireEvent.click(screen.getByRole('link', { name: /Dracula/ })); await screen.findByText('Book Detail destination') })
 test('event_delta ignores login backlog and deduplicates', () => { const seen = new Set<string>(); assert.equal(eventDelta(seen, unseen, false), null); assert.equal(eventDelta(seen, unseen, true), null); const fresh = { ...unseen, event_ids: [id, 'new'], latest_event: { ...unseen.latest_event!, event_id: 'new' } }; assert.equal(eventDelta(seen, fresh, true)?.event_id, 'new'); assert.equal(eventDelta(seen, fresh, true), null) })
@@ -71,10 +72,10 @@ async function form() { user('LIBRARIAN'); mount('/platform/events/new'); await 
 test('create_event_form and save_draft never publish implicitly', async () => { await form(); fireEvent.click(screen.getByRole('button', { name: 'Save Draft' })); await waitFor(() => assert.ok(calls.some(c => c.method === 'POST' && c.url.endsWith('/platform/events')))); assert.equal(calls.filter(c => c.url.endsWith('/publish')).length, 0); assert.equal(calls.find(c => c.method === 'POST' && c.url.endsWith('/platform/events'))!.body.category, 'NEW_ARRIVALS') })
 test('publish_confirmation requires explicit confirmation', async () => { await form(); await chooseBook(); fireEvent.click(screen.getByRole('button', { name: 'Publish Now' })); await screen.findByRole('dialog', { name: 'Publish this event?' }); assert.equal(calls.filter(c => c.url.endsWith('/publish')).length, 0); fireEvent.click(screen.getByRole('button', { name: 'Publish event' })); await waitFor(() => assert.ok(calls.some(c => c.url.endsWith('/publish')))) })
 test('published edit preserves status and uses PATCH', async () => { user('ADMIN'); mount('/platform/events/' + id + '/edit'); const title = await screen.findByLabelText('Event title'); await waitFor(() => assert.equal((title as HTMLInputElement).value, 'Library Workshop')); assert.equal(screen.queryByRole('button', { name: 'Publish Now' }), null); fireEvent.change(title, { target: { value: 'Corrected title' } }); fireEvent.click(screen.getByRole('button', { name: 'Save changes' })); await waitFor(() => assert.ok(calls.some(c => c.method === 'PATCH'))); assert.equal(calls.filter(c => c.url.endsWith('/publish')).length, 0) })
-test('staff date validation prevents invalid write', async () => { await form(); fireEvent.change(screen.getByLabelText('Event Type'), { target: { value: 'OTHER' } }); fireEvent.change(screen.getByLabelText('Start date and time'), { target: { value: '2026-10-08T12:00' } }); fireEvent.change(screen.getByLabelText('End date and time'), { target: { value: '2026-10-07T12:00' } }); fireEvent.click(screen.getByRole('button', { name: 'Save Draft' })); await screen.findByRole('alert'); assert.equal(calls.filter(c => c.method === 'POST').length, 0) })
+test('staff date validation prevents invalid write', async () => { await form(); chooseSelect(screen.getByLabelText('Event Type'),'OTHER',fireEvent); fireEvent.change(screen.getByLabelText('Start date and time'), { target: { value: '2026-10-08T12:00' } }); fireEvent.change(screen.getByLabelText('End date and time'), { target: { value: '2026-10-07T12:00' } }); fireEvent.click(screen.getByRole('button', { name: 'Save Draft' })); await screen.findByRole('alert'); assert.equal(calls.filter(c => c.method === 'POST').length, 0) })
 test('related_book_picker order, remove and limit', async () => { await form(); fireEvent.change(screen.getByLabelText('Search catalogue'), { target: { value: 'Books' } }); fireEvent.click(screen.getByRole('button', { name: 'Search catalogue' })); await screen.findByText('Book 13'); for (let i = 0; i < 12; i++) fireEvent.click(screen.getAllByRole('button', { name: 'Select book' }).find(b => !(b as HTMLButtonElement).disabled)!); assert.equal((screen.getByRole('button', { name: 'Select book' }) as HTMLButtonElement).disabled, true); await screen.findByText('Select no more than 12 related books.'); fireEvent.click(screen.getByRole('button', { name: 'Remove Book 1' })); fireEvent.click(screen.getByRole('button', { name: 'Save Draft' })); await waitFor(() => assert.ok(calls.some(c => c.method === 'POST' && c.url.endsWith('/platform/events')))); assert.deepEqual(calls.find(c => c.url.endsWith('/platform/events') && c.method === 'POST')!.body.related_work_ids, Array.from({ length: 11 }, (_, i) => 'OL' + (i + 2) + 'W')) })
 for (const [status, button, action] of [['DRAFT','Publish','publish'],['DRAFT','Delete Draft','delete'],['PUBLISHED','Cancel Event','cancel'],['CANCELLED','Archive','archive']] as const) test(`manage ${action} explicit confirmation`, async () => { user('ADMIN'); rows = [event({ status })]; mount('/platform/events'); await loaded(); fireEvent.click(screen.getByRole('button', { name: button })); await screen.findByRole('dialog'); assert.equal(calls.filter(c => c.method !== 'GET').length, 0); fireEvent.click(within(screen.getByRole('dialog')).getByRole('button', { name: action === 'delete' ? 'Delete Draft' : action === 'publish' ? 'Publish event' : action === 'cancel' ? 'Cancel event' : 'Archive event' })); await waitFor(() => assert.ok(calls.some(c => action === 'delete' ? c.method === 'DELETE' : c.url.endsWith('/' + action)))) })
-test('manage_events_statuses and archived history has no writes', async () => { user('ADMIN'); rows = [event({ status: 'ARCHIVED' })]; mount('/platform/events'); await loaded(); assert.ok(screen.getByText('History retained')); assert.equal(screen.queryByRole('button', { name: 'Publish' }), null); fireEvent.change(screen.getByLabelText('Event status'), { target: { value: 'DRAFT' } }); await waitFor(() => assert.ok(calls.some(c => c.url.includes('status=DRAFT')))) })
+test('manage_events_statuses and archived history has no writes', async () => { user('ADMIN'); rows = [event({ status: 'ARCHIVED' })]; mount('/platform/events'); await loaded(); assert.ok(screen.getByText('History retained')); assert.equal(screen.queryByRole('button', { name: 'Publish' }), null); chooseSelect(screen.getByLabelText('Event status'),'DRAFT',fireEvent); await waitFor(() => assert.ok(calls.some(c => c.url.includes('status=DRAFT')))) })
 
 test('general user management deep link is blocked by existing role guard', async () => {
   render(<MemoryRouter initialEntries={['/platform/events/new']}><Routes><Route path="/platform/events/new" element={<PlatformRoute><EventEditorPage /></PlatformRoute>} /><Route path="/" element={<p>Reader destination</p>} /><Route path="/profile" element={<p>Reader destination</p>} /></Routes></MemoryRouter>)
@@ -94,7 +95,7 @@ test('failed events load offers retry and succeeds without discarding filters', 
   mount('/events?category=WORKSHOP')
   await screen.findByRole('alert'); failed=false
   fireEvent.click(screen.getByRole('button', {name:'Retry'})); await loaded()
-  assert.equal((screen.getByLabelText('Event category') as HTMLSelectElement).value,'WORKSHOP')
+  assert.equal(selectedValue(screen.getByLabelText('Event category')),'WORKSHOP')
 })
 
 test('late events response after account switch cannot change new account content', async () => {
@@ -134,13 +135,15 @@ async function chooseBook() {
   await screen.findByText('Book 1')
   fireEvent.click(screen.getAllByRole('button', { name: 'Select book' })[0])
 }
-function type(category: string) { fireEvent.change(screen.getByLabelText('Event Type'), { target: { value: category } }) }
+function type(category: string) { chooseSelect(screen.getByLabelText('Event Type'),category,fireEvent) }
 test('preset dropdown is first, defaults to New Arrivals and exposes all eleven canonical types', async () => {
   await form()
-  const select = screen.getByLabelText('Event Type') as HTMLSelectElement
-  assert.equal(select.value, 'NEW_ARRIVALS')
-  assert.deepEqual(Array.from(select.options).map(o => o.textContent), Object.values(categories))
-  assert.equal(document.querySelector('form.event-editor')?.querySelector('input,select,textarea'), select)
+  const select = screen.getByLabelText('Event Type')
+  assert.equal(selectedValue(select), 'NEW_ARRIVALS')
+  assert.equal(document.querySelector('form.event-editor')?.querySelector('[role=combobox],input,textarea'), select)
+  fireEvent.click(select)
+  assert.deepEqual(screen.getAllByRole('option').map(o => o.textContent), Object.values(categories))
+  fireEvent.keyDown(select,{key:'Escape'})
   assert.equal(Object.keys(EVENT_PRESETS).length, 11)
   assert.ok(screen.getByText('What kind of event are you publishing?'))
 })
@@ -224,11 +227,11 @@ test('edit preset loads category; published type change requires confirmation an
   type('LIBRARY_NOTICE')
   await screen.findByRole('dialog', { name: 'Change published event type?' })
   assert.ok(screen.getByText('Change event type from Workshop to Library Notice?'))
-  assert.equal((screen.getByLabelText('Event Type') as HTMLSelectElement).value, 'WORKSHOP')
+  assert.equal(selectedValue(screen.getByLabelText('Event Type')), 'WORKSHOP')
   fireEvent.click(screen.getByRole('button', { name: 'Keep current type' }))
-  assert.equal((screen.getByLabelText('Event Type') as HTMLSelectElement).value, 'WORKSHOP')
+  assert.equal(selectedValue(screen.getByLabelText('Event Type')), 'WORKSHOP')
   type('COMMUNITY_EVENT'); fireEvent.click(screen.getByRole('button', { name: 'Change event type' }))
-  assert.equal((screen.getByLabelText('Event Type') as HTMLSelectElement).value, 'COMMUNITY_EVENT')
+  assert.equal(selectedValue(screen.getByLabelText('Event Type')), 'COMMUNITY_EVENT')
   fireEvent.click(screen.getByRole('button', { name: 'Save changes' }))
   await waitFor(() => assert.ok(calls.some(c => c.method === 'PATCH')))
   assert.equal(calls.find(c => c.method === 'PATCH')!.body.category, 'COMMUNITY_EVENT')

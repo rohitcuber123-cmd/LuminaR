@@ -1,0 +1,894 @@
+{
+  "version": "V2C-C.3-legacy-delta-review-1",
+  "case_count": 4,
+  "selection_rule": "Exactly nonempty C2 delta_mismatches among 20 legacy native delta rows; rating-retention diagnostics alone are not failures.",
+  "review_provenance": {
+    "review_status": "AI_REVIEWED",
+    "human_reviewed": false,
+    "human_reviewed_count": 0,
+    "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+    "current_parser_output_visible": true,
+    "c2_native_outputs_visible": true,
+    "blind_gold_correction": false,
+    "calibration_or_heldout_read": false,
+    "fresh_parser_or_application_calls": 0,
+    "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+  },
+  "historical_artifacts_modified": false,
+  "original_delta_labels_rewritten": false,
+  "input_sha256": {
+    "reports/search_v2c_c2_native_current/search_v2c_c2_native_observations.jsonl": "a16f47d70a1848e50c36ed4e3ee569c2b5801e329141e73e6bdb1d10282d666d",
+    "reports/search_v2c_c2_v2_development.jsonl": "df679d22f9e8eb915193dfe3e4c63971f0c5a44f0b56b32f1b69928f6bfa4e75",
+    "reports/search_v2c_c2_development_native.json": "a585989fac8255ee9a451d61f34bd688f294470fdd8a19ce62539800047ffdd1",
+    "reports/search_v2c_c2_native_diagnostics.json": "583a33891b186507333421e0bf6bd62c71c7124ee14db7a07a53c1a06548fe24"
+  },
+  "classification_counts": {
+    "LEGACY_LABEL_PRIOR_CONTEXT_UNDERSPECIFIED_SAFE_NONEXECUTION": 1,
+    "SESSION_REFINEMENT_DEFECT_WITH_SYNTHETIC_PRIOR_LIMITATION": 3
+  },
+  "cases": [
+    {
+      "query_id": "v2:v2cc-authored-d24_refinement_turns-03",
+      "family_id": "d24_refinement_turns",
+      "scope": "PUBLIC_PATRON",
+      "requested_refinement": "above 4",
+      "previous_accepted_plan": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "neural networks",
+        "subjects": [],
+        "author_text": null,
+        "title_text": null,
+        "rating_min": 2,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "availability": null,
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "language": null,
+        "sort": "RELEVANCE",
+        "exact_text": null,
+        "soft_preference": null
+      },
+      "prior_evidence": "reconstructed from final unchanged current_plan",
+      "original_prior_defined": false,
+      "synthetic_prior": {
+        "seed_query": "books about neural networks",
+        "explicit_filters": {
+          "rating_min": 2
+        },
+        "fixture_validity": "Valid isolated supplemental sequence; does not repair absent original authoring context or create output-blind gold."
+      },
+      "original_expected_delta": {
+        "rating_min": {
+          "expected": 4,
+          "actual": null
+        },
+        "rating_min_exclusive": {
+          "expected": true,
+          "actual": false
+        }
+      },
+      "original_expected_authored_fields": {
+        "expected_decision": "EXECUTABLE",
+        "expected_intent": "DISCOVER_TOPIC",
+        "expected_subjects": [],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": 4,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [],
+        "expected_execution_allowed": true,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": []
+      },
+      "actual_delta": {
+        "rating_min": null,
+        "rating_min_exclusive": false
+      },
+      "actual_accepted_plan_after": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "neural networks",
+        "subjects": [],
+        "author_text": null,
+        "title_text": null,
+        "rating_min": 2,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "availability": null,
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "language": null,
+        "sort": "RELEVANCE",
+        "exact_text": null,
+        "soft_preference": null
+      },
+      "actual_accepted_version": 1,
+      "actual_returned_complete_plan_recorded": false,
+      "accepted_prior_rating_retained": true,
+      "classification": "LEGACY_LABEL_PRIOR_CONTEXT_UNDERSPECIFIED_SAFE_NONEXECUTION",
+      "semantic_reason": "A bare above4 lacks a named field or unit. The original row has no prior plan, so rating>4 cannot be independent gold. The synthetic prior supplies an explicit rating control but never proves that this utterance addresses it. Accepted V2B finite grammar documents rating above4; source-evidence safety favors clarification over inventing a strict rating edit.",
+      "candidate_set_effect": "Authored rating>4 would discard rating2..4 candidates. Safe nonexecution executes no new candidate set and retains accepted neural-networks/rating>=2 state; it is not state corruption.",
+      "intentionality": "The finite explicit-field refinement contract intentionally does not infer every fieldless comparative. C2 preserved accepted version1/rating2; exact returned decision/body was not serialized.",
+      "normative_v2_contract": {
+        "query_id": "v2:v2cc-authored-d24_refinement_turns-03",
+        "query_text": "above 4",
+        "scope": "PUBLIC_PATRON",
+        "fixture_prior": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "semantic_text": "neural networks",
+          "subjects": [],
+          "rating_min": 2,
+          "rating_min_exclusive": false,
+          "rating_max": null,
+          "rating_max_exclusive": false,
+          "formats": [],
+          "exclude_subjects": [],
+          "exclude_terms": []
+        },
+        "facet_vocabulary": [
+          "Fiction",
+          "History",
+          "Computer science",
+          "Java",
+          "Neural networks"
+        ],
+        "expected_http_status": 200,
+        "normative_v2": {
+          "decision": "AMBIGUOUS",
+          "execution_allowed": false,
+          "emitted_hard_rating_bound": null,
+          "accepted_plan_after": {
+            "mode": "SMART",
+            "intent": "DISCOVER_TOPIC",
+            "semantic_text": "neural networks",
+            "subjects": [],
+            "rating_min": 2,
+            "rating_min_exclusive": false,
+            "rating_max": null,
+            "rating_max_exclusive": false,
+            "formats": [],
+            "exclude_subjects": [],
+            "exclude_terms": []
+          },
+          "accepted_version_delta": 0,
+          "requires_field_clarification": "rating versus another quantitative meaning"
+        },
+        "review_provenance": {
+          "review_status": "AI_REVIEWED",
+          "human_reviewed": false,
+          "human_reviewed_count": 0,
+          "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+          "current_parser_output_visible": true,
+          "c2_native_outputs_visible": true,
+          "blind_gold_correction": false,
+          "calibration_or_heldout_read": false,
+          "fresh_parser_or_application_calls": 0,
+          "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+        },
+        "original_label_immutable": true
+      },
+      "review_provenance": {
+        "review_status": "AI_REVIEWED",
+        "human_reviewed": false,
+        "human_reviewed_count": 0,
+        "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+        "current_parser_output_visible": true,
+        "c2_native_outputs_visible": true,
+        "blind_gold_correction": false,
+        "calibration_or_heldout_read": false,
+        "fresh_parser_or_application_calls": 0,
+        "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+      }
+    },
+    {
+      "query_id": "v2:v2cc-authored-d25_instead_turns-03",
+      "family_id": "d25_instead_turns",
+      "scope": "PUBLIC_PATRON",
+      "requested_refinement": "instead History",
+      "previous_accepted_plan": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "neural networks",
+        "subjects": [],
+        "author_text": null,
+        "title_text": null,
+        "rating_min": 2,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "availability": null,
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "language": null,
+        "sort": "RELEVANCE",
+        "exact_text": null,
+        "soft_preference": null
+      },
+      "prior_evidence": "final previous_plan captures accepted synthetic seed",
+      "original_prior_defined": false,
+      "synthetic_prior": {
+        "seed_query": "books about neural networks",
+        "explicit_filters": {
+          "rating_min": 2
+        },
+        "fixture_validity": "Valid isolated supplemental sequence; does not repair absent original authoring context or create output-blind gold."
+      },
+      "original_expected_delta": {
+        "subjects": {
+          "expected": [
+            "History"
+          ],
+          "actual": []
+        }
+      },
+      "original_expected_authored_fields": {
+        "expected_decision": "EXECUTABLE",
+        "expected_intent": "BROWSE_CATEGORY",
+        "expected_subjects": [
+          "History"
+        ],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [],
+        "expected_execution_allowed": true,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": []
+      },
+      "actual_delta": {
+        "subjects": []
+      },
+      "actual_accepted_plan_after": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "instead history",
+        "subjects": [],
+        "author_text": null,
+        "title_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "availability": null,
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "language": null,
+        "sort": "RELEVANCE",
+        "exact_text": null,
+        "soft_preference": null
+      },
+      "actual_accepted_version": 2,
+      "actual_returned_complete_plan_recorded": false,
+      "accepted_prior_rating_retained": false,
+      "classification": "SESSION_REFINEMENT_DEFECT_WITH_SYNTHETIC_PRIOR_LIMITATION",
+      "semantic_reason": "Explicit instead is a topic-replacement operator under accepted V2B prose; position before X has the same semantics as X instead. Canonical X is supplied by the isolated facet vocabulary. Replacement retains non-topic constraints, so the synthetic rating>=2 must survive. Existing suffix-only recognizer falls back to a fresh independent query for this prefix.",
+      "candidate_set_effect": "Expected hard canonical subject History plus rating>=2; actual accepted plan has neither hard guard and literal topic 'instead history'. This changes strict eligibility and semantic retrieval. A subject-X book rated1.5 is excluded by reviewed guards but not by actual hard guards; actual ranked/result membership was not captured, so no end-to-end result count is inferred.",
+      "intentionality": "Resetting filters for a new independent topic is intentional; treating explicit prefix instead as an independent topic is not semantically justified. This is a refinement/eligibility defect, not foreign ownership or security corruption.",
+      "normative_v2_contract": {
+        "query_id": "v2:v2cc-authored-d25_instead_turns-03",
+        "query_text": "instead History",
+        "scope": "PUBLIC_PATRON",
+        "fixture_prior": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "semantic_text": "neural networks",
+          "subjects": [],
+          "rating_min": 2,
+          "rating_min_exclusive": false,
+          "rating_max": null,
+          "rating_max_exclusive": false,
+          "formats": [],
+          "exclude_subjects": [],
+          "exclude_terms": []
+        },
+        "facet_vocabulary": [
+          "Fiction",
+          "History",
+          "Computer science",
+          "Java",
+          "Neural networks"
+        ],
+        "expected_http_status": 200,
+        "normative_v2": {
+          "decision": "EXECUTABLE",
+          "execution_allowed": true,
+          "accepted_plan_after": {
+            "mode": "SMART",
+            "intent": "BROWSE_CATEGORY",
+            "semantic_text": null,
+            "subjects": [
+              "History"
+            ],
+            "rating_min": 2,
+            "rating_min_exclusive": false,
+            "rating_max": null,
+            "rating_max_exclusive": false,
+            "formats": [],
+            "exclude_subjects": [],
+            "exclude_terms": []
+          },
+          "accepted_version_delta": 1,
+          "retained_fields": [
+            "rating_min",
+            "rating_min_exclusive"
+          ],
+          "replaced_fields": [
+            "semantic_text",
+            "subjects",
+            "title_text",
+            "author_text",
+            "exact_text",
+            "intent",
+            "soft_preference"
+          ]
+        },
+        "review_provenance": {
+          "review_status": "AI_REVIEWED",
+          "human_reviewed": false,
+          "human_reviewed_count": 0,
+          "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+          "current_parser_output_visible": true,
+          "c2_native_outputs_visible": true,
+          "blind_gold_correction": false,
+          "calibration_or_heldout_read": false,
+          "fresh_parser_or_application_calls": 0,
+          "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+        },
+        "original_label_immutable": true
+      },
+      "review_provenance": {
+        "review_status": "AI_REVIEWED",
+        "human_reviewed": false,
+        "human_reviewed_count": 0,
+        "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+        "current_parser_output_visible": true,
+        "c2_native_outputs_visible": true,
+        "blind_gold_correction": false,
+        "calibration_or_heldout_read": false,
+        "fresh_parser_or_application_calls": 0,
+        "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+      }
+    },
+    {
+      "query_id": "v2:v2cc-authored-d25_instead_turns-06",
+      "family_id": "d25_instead_turns",
+      "scope": "PUBLIC_PATRON",
+      "requested_refinement": "instead Java",
+      "previous_accepted_plan": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "neural networks",
+        "subjects": [],
+        "author_text": null,
+        "title_text": null,
+        "rating_min": 2,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "availability": null,
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "language": null,
+        "sort": "RELEVANCE",
+        "exact_text": null,
+        "soft_preference": null
+      },
+      "prior_evidence": "final previous_plan captures accepted synthetic seed",
+      "original_prior_defined": false,
+      "synthetic_prior": {
+        "seed_query": "books about neural networks",
+        "explicit_filters": {
+          "rating_min": 2
+        },
+        "fixture_validity": "Valid isolated supplemental sequence; does not repair absent original authoring context or create output-blind gold."
+      },
+      "original_expected_delta": {
+        "subjects": {
+          "expected": [
+            "Java"
+          ],
+          "actual": []
+        }
+      },
+      "original_expected_authored_fields": {
+        "expected_decision": "EXECUTABLE",
+        "expected_intent": "BROWSE_CATEGORY",
+        "expected_subjects": [
+          "Java"
+        ],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [],
+        "expected_execution_allowed": true,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": []
+      },
+      "actual_delta": {
+        "subjects": []
+      },
+      "actual_accepted_plan_after": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "instead java",
+        "subjects": [],
+        "author_text": null,
+        "title_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "availability": null,
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "language": null,
+        "sort": "RELEVANCE",
+        "exact_text": null,
+        "soft_preference": null
+      },
+      "actual_accepted_version": 2,
+      "actual_returned_complete_plan_recorded": false,
+      "accepted_prior_rating_retained": false,
+      "classification": "SESSION_REFINEMENT_DEFECT_WITH_SYNTHETIC_PRIOR_LIMITATION",
+      "semantic_reason": "Explicit instead is a topic-replacement operator under accepted V2B prose; position before X has the same semantics as X instead. Canonical X is supplied by the isolated facet vocabulary. Replacement retains non-topic constraints, so the synthetic rating>=2 must survive. Existing suffix-only recognizer falls back to a fresh independent query for this prefix.",
+      "candidate_set_effect": "Expected hard canonical subject Java plus rating>=2; actual accepted plan has neither hard guard and literal topic 'instead java'. This changes strict eligibility and semantic retrieval. A subject-X book rated1.5 is excluded by reviewed guards but not by actual hard guards; actual ranked/result membership was not captured, so no end-to-end result count is inferred.",
+      "intentionality": "Resetting filters for a new independent topic is intentional; treating explicit prefix instead as an independent topic is not semantically justified. This is a refinement/eligibility defect, not foreign ownership or security corruption.",
+      "normative_v2_contract": {
+        "query_id": "v2:v2cc-authored-d25_instead_turns-06",
+        "query_text": "instead Java",
+        "scope": "PUBLIC_PATRON",
+        "fixture_prior": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "semantic_text": "neural networks",
+          "subjects": [],
+          "rating_min": 2,
+          "rating_min_exclusive": false,
+          "rating_max": null,
+          "rating_max_exclusive": false,
+          "formats": [],
+          "exclude_subjects": [],
+          "exclude_terms": []
+        },
+        "facet_vocabulary": [
+          "Fiction",
+          "History",
+          "Computer science",
+          "Java",
+          "Neural networks"
+        ],
+        "expected_http_status": 200,
+        "normative_v2": {
+          "decision": "EXECUTABLE",
+          "execution_allowed": true,
+          "accepted_plan_after": {
+            "mode": "SMART",
+            "intent": "BROWSE_CATEGORY",
+            "semantic_text": null,
+            "subjects": [
+              "Java"
+            ],
+            "rating_min": 2,
+            "rating_min_exclusive": false,
+            "rating_max": null,
+            "rating_max_exclusive": false,
+            "formats": [],
+            "exclude_subjects": [],
+            "exclude_terms": []
+          },
+          "accepted_version_delta": 1,
+          "retained_fields": [
+            "rating_min",
+            "rating_min_exclusive"
+          ],
+          "replaced_fields": [
+            "semantic_text",
+            "subjects",
+            "title_text",
+            "author_text",
+            "exact_text",
+            "intent",
+            "soft_preference"
+          ]
+        },
+        "review_provenance": {
+          "review_status": "AI_REVIEWED",
+          "human_reviewed": false,
+          "human_reviewed_count": 0,
+          "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+          "current_parser_output_visible": true,
+          "c2_native_outputs_visible": true,
+          "blind_gold_correction": false,
+          "calibration_or_heldout_read": false,
+          "fresh_parser_or_application_calls": 0,
+          "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+        },
+        "original_label_immutable": true
+      },
+      "review_provenance": {
+        "review_status": "AI_REVIEWED",
+        "human_reviewed": false,
+        "human_reviewed_count": 0,
+        "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+        "current_parser_output_visible": true,
+        "c2_native_outputs_visible": true,
+        "blind_gold_correction": false,
+        "calibration_or_heldout_read": false,
+        "fresh_parser_or_application_calls": 0,
+        "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+      }
+    },
+    {
+      "query_id": "v2:v2cc-authored-d25_instead_turns-08",
+      "family_id": "d25_instead_turns",
+      "scope": "PUBLIC_PATRON",
+      "requested_refinement": "instead Computer science",
+      "previous_accepted_plan": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "neural networks",
+        "subjects": [],
+        "author_text": null,
+        "title_text": null,
+        "rating_min": 2,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "availability": null,
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "language": null,
+        "sort": "RELEVANCE",
+        "exact_text": null,
+        "soft_preference": null
+      },
+      "prior_evidence": "final previous_plan captures accepted synthetic seed",
+      "original_prior_defined": false,
+      "synthetic_prior": {
+        "seed_query": "books about neural networks",
+        "explicit_filters": {
+          "rating_min": 2
+        },
+        "fixture_validity": "Valid isolated supplemental sequence; does not repair absent original authoring context or create output-blind gold."
+      },
+      "original_expected_delta": {
+        "subjects": {
+          "expected": [
+            "Computer science"
+          ],
+          "actual": []
+        }
+      },
+      "original_expected_authored_fields": {
+        "expected_decision": "EXECUTABLE",
+        "expected_intent": "BROWSE_CATEGORY",
+        "expected_subjects": [
+          "Computer science"
+        ],
+        "expected_excluded_subjects": [],
+        "expected_exclude_terms": [],
+        "expected_author": null,
+        "expected_title_entity": null,
+        "expected_exact_text": null,
+        "expected_rating_min": null,
+        "expected_rating_max": null,
+        "expected_year_min": null,
+        "expected_year_max": null,
+        "expected_format": [],
+        "expected_exclusive_formats": [],
+        "expected_excluded_formats": [],
+        "expected_availability": null,
+        "expected_sort": null,
+        "expected_semantic_text": "",
+        "expected_soft_preferences": [],
+        "expected_unsupported_fields": [],
+        "expected_ambiguous_spans": [],
+        "expected_incomplete_fields": [],
+        "expected_contradiction_fields": [],
+        "expected_execution_allowed": true,
+        "expected_title": null,
+        "expected_ambiguity": [],
+        "expected_contradiction": []
+      },
+      "actual_delta": {
+        "subjects": []
+      },
+      "actual_accepted_plan_after": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "semantic_text": "instead computer science",
+        "subjects": [],
+        "author_text": null,
+        "title_text": null,
+        "rating_min": null,
+        "rating_max": null,
+        "rating_min_exclusive": false,
+        "rating_max_exclusive": false,
+        "year_min": null,
+        "year_max": null,
+        "year_min_exclusive": false,
+        "year_max_exclusive": false,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "availability": null,
+        "exclude_subjects": [],
+        "exclude_terms": [],
+        "language": null,
+        "sort": "RELEVANCE",
+        "exact_text": null,
+        "soft_preference": null
+      },
+      "actual_accepted_version": 2,
+      "actual_returned_complete_plan_recorded": false,
+      "accepted_prior_rating_retained": false,
+      "classification": "SESSION_REFINEMENT_DEFECT_WITH_SYNTHETIC_PRIOR_LIMITATION",
+      "semantic_reason": "Explicit instead is a topic-replacement operator under accepted V2B prose; position before X has the same semantics as X instead. Canonical X is supplied by the isolated facet vocabulary. Replacement retains non-topic constraints, so the synthetic rating>=2 must survive. Existing suffix-only recognizer falls back to a fresh independent query for this prefix.",
+      "candidate_set_effect": "Expected hard canonical subject Computer science plus rating>=2; actual accepted plan has neither hard guard and literal topic 'instead computer science'. This changes strict eligibility and semantic retrieval. A subject-X book rated1.5 is excluded by reviewed guards but not by actual hard guards; actual ranked/result membership was not captured, so no end-to-end result count is inferred.",
+      "intentionality": "Resetting filters for a new independent topic is intentional; treating explicit prefix instead as an independent topic is not semantically justified. This is a refinement/eligibility defect, not foreign ownership or security corruption.",
+      "normative_v2_contract": {
+        "query_id": "v2:v2cc-authored-d25_instead_turns-08",
+        "query_text": "instead Computer science",
+        "scope": "PUBLIC_PATRON",
+        "fixture_prior": {
+          "mode": "SMART",
+          "intent": "DISCOVER_TOPIC",
+          "semantic_text": "neural networks",
+          "subjects": [],
+          "rating_min": 2,
+          "rating_min_exclusive": false,
+          "rating_max": null,
+          "rating_max_exclusive": false,
+          "formats": [],
+          "exclude_subjects": [],
+          "exclude_terms": []
+        },
+        "facet_vocabulary": [
+          "Fiction",
+          "History",
+          "Computer science",
+          "Java",
+          "Neural networks"
+        ],
+        "expected_http_status": 200,
+        "normative_v2": {
+          "decision": "EXECUTABLE",
+          "execution_allowed": true,
+          "accepted_plan_after": {
+            "mode": "SMART",
+            "intent": "BROWSE_CATEGORY",
+            "semantic_text": null,
+            "subjects": [
+              "Computer science"
+            ],
+            "rating_min": 2,
+            "rating_min_exclusive": false,
+            "rating_max": null,
+            "rating_max_exclusive": false,
+            "formats": [],
+            "exclude_subjects": [],
+            "exclude_terms": []
+          },
+          "accepted_version_delta": 1,
+          "retained_fields": [
+            "rating_min",
+            "rating_min_exclusive"
+          ],
+          "replaced_fields": [
+            "semantic_text",
+            "subjects",
+            "title_text",
+            "author_text",
+            "exact_text",
+            "intent",
+            "soft_preference"
+          ]
+        },
+        "review_provenance": {
+          "review_status": "AI_REVIEWED",
+          "human_reviewed": false,
+          "human_reviewed_count": 0,
+          "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+          "current_parser_output_visible": true,
+          "c2_native_outputs_visible": true,
+          "blind_gold_correction": false,
+          "calibration_or_heldout_read": false,
+          "fresh_parser_or_application_calls": 0,
+          "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+        },
+        "original_label_immutable": true
+      },
+      "review_provenance": {
+        "review_status": "AI_REVIEWED",
+        "human_reviewed": false,
+        "human_reviewed_count": 0,
+        "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+        "current_parser_output_visible": true,
+        "c2_native_outputs_visible": true,
+        "blind_gold_correction": false,
+        "calibration_or_heldout_read": false,
+        "fresh_parser_or_application_calls": 0,
+        "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+      }
+    }
+  ],
+  "fresh_reviewed_v2_delta_agreement": {
+    "numerator": 4,
+    "denominator": 4,
+    "percent": 100.0
+  },
+  "fresh_cases": [
+    {
+      "query_id": "v2:v2cc-authored-d24_refinement_turns-03",
+      "mismatches": {},
+      "pass": true,
+      "provenance": {
+        "review_status": "AI_REVIEWED",
+        "human_reviewed": false,
+        "human_reviewed_count": 0,
+        "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+        "current_parser_output_visible": true,
+        "c2_native_outputs_visible": true,
+        "blind_gold_correction": false,
+        "calibration_or_heldout_read": false,
+        "fresh_parser_or_application_calls": 0,
+        "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+      }
+    },
+    {
+      "query_id": "v2:v2cc-authored-d25_instead_turns-03",
+      "mismatches": {},
+      "pass": true,
+      "provenance": {
+        "review_status": "AI_REVIEWED",
+        "human_reviewed": false,
+        "human_reviewed_count": 0,
+        "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+        "current_parser_output_visible": true,
+        "c2_native_outputs_visible": true,
+        "blind_gold_correction": false,
+        "calibration_or_heldout_read": false,
+        "fresh_parser_or_application_calls": 0,
+        "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+      }
+    },
+    {
+      "query_id": "v2:v2cc-authored-d25_instead_turns-06",
+      "mismatches": {},
+      "pass": true,
+      "provenance": {
+        "review_status": "AI_REVIEWED",
+        "human_reviewed": false,
+        "human_reviewed_count": 0,
+        "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+        "current_parser_output_visible": true,
+        "c2_native_outputs_visible": true,
+        "blind_gold_correction": false,
+        "calibration_or_heldout_read": false,
+        "fresh_parser_or_application_calls": 0,
+        "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+      }
+    },
+    {
+      "query_id": "v2:v2cc-authored-d25_instead_turns-08",
+      "mismatches": {},
+      "pass": true,
+      "provenance": {
+        "review_status": "AI_REVIEWED",
+        "human_reviewed": false,
+        "human_reviewed_count": 0,
+        "reviewer": "C3 delegated contract reviewer; separate from parser-hardening agent",
+        "current_parser_output_visible": true,
+        "c2_native_outputs_visible": true,
+        "blind_gold_correction": false,
+        "calibration_or_heldout_read": false,
+        "fresh_parser_or_application_calls": 0,
+        "independence_scope": "Independent semantic judgment from source contracts; not output-blind and not human review"
+      }
+    }
+  ]
+}

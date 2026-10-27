@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "root_causes": [
+    "Platform header lacked a global Catalog entry; the Platform catalogue destination helper returned /platform.",
+    "Login preserved a previous tenant URL in history redirect state and returned a different account there before refreshing memberships.",
+    "Return hints were not validated against the current account; in-flight tenant response/error results lacked a central post-response account check."
+  ],
+  "before_evidence": "The browser reproduced an approved Platform-only login being returned to /staff/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/inventory. Exact Library not found wording was not captured, so the literal-text reproduction flag is NO.",
+  "repairs": [
+    "Existing owner-scoped persisted selections and request-version checks reused.",
+    "Library login returns pass through AccountLanding for fresh membership resolution.",
+    "One ProductSessionBoundary applies across auth, main and personal layouts.",
+    "One authorized route/return-context resolver validates the current account and role, including demotion.",
+    "Tenant request queues are keyed by session and UUID; stale successes and failures abort."
+  ],
+  "browser_checks": [
+    {
+      "scenario": "TEST staff explicit context before account switch",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Staff logout to Platform-only login; Catalog is global 5M",
+      "status": "PASS",
+      "route": "/catalog?workspace=platform",
+      "qa_email": "post2h-platform-17a91f4e4a8c@example.com"
+    },
+    {
+      "scenario": "Platform Catalog history, reload, hard navigation and logo",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Deep global Catalog and unauthorized old return hints stay global",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Platform filter controls use shared accessible themed select",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Patron circulation menu selection, Home and Enter update filter",
+      "status": "PASS"
+    },
+    {
+      "scenario": "Patron logout to Platform-only login does not retain TEST",
+      "status": "PASS"
+    }
+  ],
+  "delayed_response_browser": {
+    "status": "PASS",
+    "method": "Actual Chromium UI auth transitions; controlled delay of an authorized tenant-context response.",
+    "old_response_delivered": true,
+    "same_browser_document": true,
+    "route": "/catalog?workspace=platform",
+    "tenant_projection_restored": false,
+    "spurious_library_error": false,
+    "qa_account_disabled": true,
+    "qa_assignment_revoked": true
+  },
+  "temporary_QA_grants_remaining": 0,
+  "QA_fields": {
+    "PLATFORM_ADMIN_LIBRARY_NOT_FOUND_REPRODUCED_BEFORE": "NO",
+    "PLATFORM_ADMIN_LIBRARY_NOT_FOUND_AFTER": "NO",
+    "PLATFORM_CATALOG_ROUTE": "/catalog?workspace=platform",
+    "PLATFORM_CATALOG_IS_GLOBAL": "YES",
+    "PLATFORM_INHERITED_STAFF_LIBRARY": "NO",
+    "PLATFORM_INHERITED_PATRON_LIBRARY": "NO",
+    "ACCOUNT_SCOPED_CONTEXT_STORAGE": "YES",
+    "STALE_ACCOUNT_REQUEST_GUARD": "YES",
+    "SHARED_THEMED_SELECT": "YES",
+    "EXPLORE_LIBRARIES_DROPDOWN_THEMED": "YES",
+    "PATRON_CIRCULATION_DROPDOWN_THEMED": "YES",
+    "STAFF_LIBRARY_DROPDOWN_THEMED": "YES",
+    "STAFF_INVENTORY_DROPDOWNS_THEMED": "YES",
+    "PLATFORM_DROPDOWNS_THEMED": "YES",
+    "DROPDOWN_KEYBOARD_PASS": "YES",
+    "DROPDOWN_MOBILE_PASS": "YES",
+    "GLOBAL_HNSW_REBUILT": "NO",
+    "GLOBAL_KG_REBUILT": "NO",
+    "INTELLIGENCE_SHARED_DIALOG": "YES",
+    "SEARCH_REBUILD_DIALOG_THEMED": "YES",
+    "KG_REBUILD_DIALOG_THEMED": "YES",
+    "SEARCH_KG_DIALOG_GEOMETRY_MATCH": "YES",
+    "DIALOG_BODY_TYPOGRAPHY_PASS": "YES",
+    "DIALOG_CLOSE_BUTTON_PASS": "YES",
+    "DIALOG_ACTION_BUTTONS_PASS": "YES",
+    "DIALOG_DESKTOP_SIZE_PASS": "YES",
+    "DIALOG_MOBILE_SIZE_PASS": "YES",
+    "DIALOG_KEYBOARD_PASS": "YES",
+    "DIALOG_FOCUS_RESTORE_PASS": "YES",
+    "INTELLIGENCE_LOGIC_CHANGED": "NO"
+  }
+}

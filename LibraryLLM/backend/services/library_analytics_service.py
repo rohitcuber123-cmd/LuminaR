@@ -105,6 +105,13 @@ def collection_metrics(library_id, window, canonical, *, reservations_enabled=Tr
         {'$unwind': {'path': '$holding', 'preserveNullAndEmptyArrays': True}},
         {'$set': {'holding.circulation_status': {'$ifNull': ['$holding.circulation_status', 'CIRCULATING']}}}]
     if canonical:
+        # Intentional nonphysical creation is provenance, not lost stock. Never
+        # exempt a broken physical holding merely because an asset exists.
+        from backend.services.library_book_formats import unstocked_origin_pipeline
+        has_unstocked_origin = collection('lending_operations').find_one({'library_id': library_id,
+            'operation_type': 'LIBRARY_BOOK_CREATED', 'state': 'COMMITTED', 'result.has_physical': False}, {'_id': 1}) or collection('audit').find_one({
+            'library_id': library_id, 'event': 'LIBRARY_BOOK_CREATED', 'metadata.holding_id': {'$exists': False}}, {'_id': 1})
+        pipeline.extend(unstocked_origin_pipeline(library_id) if has_unstocked_origin else [{'$set': {'_unstocked_origin': False}}])
         for name, query, alias in [
             ('lending_requests', {'request_type': 'BORROW', 'status': 'PENDING'}, 'pending'),
             ('loans', {'status': 'ACTIVE'}, 'active'),
@@ -133,8 +140,12 @@ def collection_metrics(library_id, window, canonical, *, reservations_enabled=Tr
                 {'$ifNull': ['$holding.unavailable_stock', 0]},
                 {'$ifNull': [{'$arrayElemAt': ['$copy_counts.conditions', 0]}, 0]}]}]}}})
         pipeline.append({'$set': {'requestable': {'$cond': [{'$and': [
+            {'$ne': [{'$ifNull': ['$holding.holding_id', None]}, None]},
             {'$eq': ['$holding.circulation_status', 'CIRCULATING']}, {'$eq': ['$waiting', 0]}]}, '$physical_units', 0]},
-            'invalid': {'$or': [{'$lt': ['$physical_units', 0]}, {'$eq': [{'$ifNull': ['$holding.holding_id', None]}, None]},
+            'invalid': {'$or': [{'$lt': ['$physical_units', 0]},
+                {'$and': [{'$eq': [{'$ifNull': ['$holding.holding_id', None]}, None]},
+                    {'$or': [{'$ne': ['$_unstocked_origin', True]}, {'$gt': ['$pending', 0]}, {'$gt': ['$active', 0]},
+                        {'$gt': ['$waiting', 0]}, {'$gt': [{'$ifNull': [{'$arrayElemAt': ['$copy_counts.known', 0]}, 0]}, 0]}]}]},
                 {'$and': [{'$eq': ['$holding.allocation_mode', 'COPY']}, {'$or': [
                     {'$ne': [{'$ifNull': [{'$arrayElemAt': ['$copy_counts.known', 0]}, 0]}, '$holding.total_copies']},
                     {'$ne': [{'$ifNull': [{'$arrayElemAt': ['$copy_counts.available', 0]}, 0]}, '$physical_units']}]}]}]}}})
@@ -142,7 +153,7 @@ def collection_metrics(library_id, window, canonical, *, reservations_enabled=Tr
         'total_holding_quantity': {'$sum': '$holding.total_copies'},
         'local_only_books': count_when({'$eq': [{'$ifNull': ['$global_work_id', None]}, None]}),
         'globally_linked_books': count_when({'$ne': [{'$ifNull': ['$global_work_id', None]}, None]}),
-        **{status: count_when({'$eq': ['$holding.circulation_status', status]})
+        **{status: count_when({'$and': [{'$ne': [{'$ifNull': ['$holding.holding_id', None]}, None]}, {'$eq': ['$holding.circulation_status', status]}]})
            for status in ('CIRCULATING', 'REFERENCE_ONLY', 'TEMPORARILY_UNAVAILABLE')},
         **({'requestable_units': {'$sum': '$requestable'}, 'invalid': count_when('$invalid')} if canonical else {})}
     pipeline.append({'$facet': {'summary': [{'$group': summary}],

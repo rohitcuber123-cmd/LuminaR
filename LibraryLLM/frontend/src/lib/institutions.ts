@@ -12,18 +12,42 @@ export type AccessSettings = { access_code_set: boolean; access_code_changed_at:
 // Canonical reads also reconcile under the library mutation lock. Keep one
 // browser's requests to the same tenant ordered; other libraries remain independent.
 const tenantRequests = new Map<string, Promise<unknown>>()
-export function institutionApi<T>(path: string, method = 'GET', body?: unknown, signal?: AbortSignal): Promise<T> {
+export const LIBRARY_ACCESS_DENIED = 'luminar-library-access-denied'
+const accessChecks = new Map<string, Promise<void>>()
+export async function revalidateDeniedAccess(libraryId: string, session: string | null) {
+  const key = `${session}:${libraryId}`
+  const current = accessChecks.get(key)
+  if (current) return current
+  const check = (async () => {
+    try {
+      // A missing book or forbidden staff action does not revoke membership.
+      // Probe the exact context without entering the per-tenant request queue.
+      await request(`/api/libraries/${libraryId}/context`, { cache: 'no-store' })
+    } catch (error) {
+      if (session === localStorage.getItem('luminar_token') && error instanceof ApiError && [403,404].includes(error.status))
+        window.dispatchEvent(new window.CustomEvent(LIBRARY_ACCESS_DENIED, {detail:{library_id:libraryId,session}}))
+    }
+  })()
+  accessChecks.set(key, check)
+  try { await check } finally { if(accessChecks.get(key)===check) accessChecks.delete(key) }
+}
+export function institutionApi<T>(path: string, method = 'GET', body?: unknown, signal?: AbortSignal, apiPrefix: '/api' | '/search-api' = '/api'): Promise<T> {
   const tenant = path.match(/^\/libraries\/([0-9a-f-]{36})(?:\/|$)/i)?.[1]
   const session = localStorage.getItem('luminar_token')
   const send = async () => {
     for (let attempt = 0; ; attempt++) {
       if (signal?.aborted || session !== localStorage.getItem('luminar_token')) throw new DOMException('Request context changed.', 'AbortError')
       try {
-        return await request<T>('/api' + path, { method, cache: 'no-store', signal, ...(body === undefined ? {} : { body: JSON.stringify(body) }) })
+        const result = await request<T>(apiPrefix + path, { method, cache: 'no-store', signal, ...(body === undefined ? {} : { body: JSON.stringify(body) }) })
+        if (signal?.aborted || session !== localStorage.getItem('luminar_token')) throw new DOMException('Request context changed.', 'AbortError')
+        return result
       } catch (error) {
-        // A cancelled browser read can leave accepted server reconciliation
-        // briefly running. Retry only reads, with the original scope/session.
-        if (method !== 'GET' || !(tenant || path.startsWith('/me/libraries')) || !(error instanceof ApiError) || error.status !== 503 || attempt >= 2) throw error
+        if (signal?.aborted || session !== localStorage.getItem('luminar_token')) throw new DOMException('Request context changed.', 'AbortError')
+        if (tenant && error instanceof ApiError && [403,404].includes(error.status)) await revalidateDeniedAccess(tenant,session)
+        // Cancelled reads can leave canonical reconciliation briefly running.
+        // Recommendation POST is also read-only; commands are never retried here.
+        const readOnly = method === 'GET' || method === 'POST' && !!tenant && path.endsWith('/catalogue/recommendations')
+        if (!readOnly || !(tenant || path.startsWith('/me/libraries')) || !(error instanceof ApiError) || error.status !== 503 || attempt >= 2) throw error
         await new Promise<void>((resolve, reject) => {
           const abort = () => { clearTimeout(timer); reject(new DOMException('Request context changed.', 'AbortError')) }
           const timer = setTimeout(() => { signal?.removeEventListener('abort', abort); resolve() }, 300 * (attempt + 1))
@@ -34,9 +58,10 @@ export function institutionApi<T>(path: string, method = 'GET', body?: unknown, 
     }
   }
   if (!tenant) return send()
-  const pending = (tenantRequests.get(tenant) || Promise.resolve()).catch(() => undefined).then(send)
-  tenantRequests.set(tenant, pending)
-  void pending.finally(() => { if (tenantRequests.get(tenant) === pending) tenantRequests.delete(tenant) }).catch(() => undefined)
+  const key = `${session}:${tenant}`
+  const pending = (tenantRequests.get(key) || Promise.resolve()).catch(() => undefined).then(send)
+  tenantRequests.set(key, pending)
+  void pending.finally(() => { if (tenantRequests.get(key) === pending) tenantRequests.delete(key) }).catch(() => undefined)
   return pending
 }
 

@@ -1,0 +1,490 @@
+--- scratch\search_v2c_c5d_repair_v2\candidate_search\query_confidence.py
++++ scratch\search_v2c_c5e\candidate_search_v2\query_confidence.py
+@@ -1,7 +1,7 @@
+ """Typed decisions and consistency validation; confidence is not probability."""
+ from dataclasses import asdict
+ import re
+-from scratch.search_v2c_c5d_repair_v2.candidate_search.query_numeric import range_contradiction,valid_numeric_domain
++from scratch.search_v2c_c5e.candidate_search_v2.query_numeric import range_contradiction,valid_numeric_domain
+ 
+ EXECUTABLE=('EXECUTABLE','EXECUTABLE_WITH_NOTICE')
+ MESSAGES={'AMBIGUOUS':'This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.',
+@@ -10,9 +10,11 @@
+  'UNSUPPORTED':'This search requests a strict field that this catalogue cannot enforce. Edit that constraint and try again.'}
+ 
+ def decide(plan,kind='EXECUTABLE',reason='VALIDATED',spans=(),fields=(),unresolved=()):
++    retained={key:plan.decision[key] for key in ['requirements','repair_notices','development_isolation'] if key in plan.decision}
+     plan.decision={'decision_type':kind,'reason_code':reason,'relevant_source_spans':list(spans),
+       'affected_fields':list(fields),'recognized_candidates':plan.constraint_candidates,
+       'unresolved_fragments':list(unresolved),'safe_public_message':MESSAGES.get(kind,''),'parser_version':plan.parser_version}
++    plan.decision.update(retained)
+     if kind not in EXECUTABLE:plan.interpretation_confidence=0.
+     return plan
+ 
+@@ -35,13 +37,18 @@
+     if plan.exclusive_formats and positives-set(plan.exclusive_formats):
+         return decide(plan,'CONTRADICTORY','EXCLUSIVE_FORMAT_REQUIREMENT',fields=['format'])
+     if positives & set(plan.excluded_formats):return decide(plan,'CONTRADICTORY','FORMAT_INCLUDE_EXCLUDE',fields=['format'])
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import normalize
++    from scratch.search_v2c_c5e.candidate_search_v2.query_plan import normalize
+     if set(map(normalize,plan.subjects)) & set(map(normalize,plan.exclude_subjects)):
+         return decide(plan,'CONTRADICTORY','SUBJECT_INCLUDE_EXCLUDE',fields=['subject'],
+                       spans=[{'start':c['source_span_start'],'end':c['source_span_end'],
+                               'source_query':c.get('source_query',plan.raw_query)}
+                              for c in plan.constraint_candidates if c['field'] in ('subject','excluded_subject','exclude')])
+     if capabilities:
++        for requirement in plan.decision.get('requirements',[]):
++            field=requirement['field'];family='year' if field.startswith('year') else field
++            if family in capabilities and capabilities[family] is False:
++                requirement['enforcement']='CONTEXTUALLY_INAPPLICABLE'
++                requirement['scope_reason']='This catalogue cannot enforce the requested field; mandatory requests remain unsupported.'
+         allowed=capabilities.get('formats')
+         if allowed is not None and any(f not in allowed for f in plan.formats):
+             return decide(plan,'UNSUPPORTED','SCOPE_FORMAT_UNSUPPORTED',fields=['format'])
+--- scratch\search_v2c_c5d_repair_v2\candidate_search\query_constraints.py
++++ scratch\search_v2c_c5e\candidate_search_v2\query_constraints.py
+@@ -66,7 +66,7 @@
+         if delimiter:end=start+delimiter.start()
+         return self.text[start:end].rstrip()
+ 
+-from scratch.search_v2c_c5d_repair_v2.candidate_search.query_numeric import (
++from scratch.search_v2c_c5e.candidate_search_v2.query_numeric import (
+     COMPARATOR_PATTERN, RATING_NUMBER_PATTERN, comparator,
+     recognize_ratings, recognize_years,
+ )
+@@ -81,15 +81,16 @@
+     recognize_years(s)
+ 
+ def formats_availability(s):
++    s.scan(r'\b(?:prefer|preferably|preference\s+for)\s+(online|digital|physical)(?:\s+(?:access|format|copies))?\b','preference','SOFT',lambda m:'Prefer '+('PHYSICAL' if m[1]=='physical' else 'ONLINE')+' access','preference.format')
+     s.scan(r'\b(physical|online|digital)\s+(?:format|version|copies)\s+only\b','format','ONLY',lambda m:'PHYSICAL' if m[1]=='physical' else 'ONLINE','format.explicit_only_modifier')
+     s.scan(r'\bavailable\s+to\s+borrow\s+(?:now|immediately)\b','availability','=','AVAILABLE_NOW','availability.borrow_now')
+     s.scan(r'\bavailable to borrow physically\b','availability','=','PHYSICAL_REQUESTABLE','availability.physical_request')
+     s.scan(r'\b(?:but not|not|nothing|without|excluding|exclude|except|minus|disallow|forbid)\s+(physical|online|digital)(?:\s+books?)?\b','excluded_format','NOT',lambda m:'PHYSICAL' if m[1]=='physical' else 'ONLINE','format.exclusion')
+     s.scan(r'\b(physical|online|digital)\s+(?:(?:must|should)\s+be\s+|is\s+)?(?:excluded|forbidden|absent)\b','excluded_format','NOT',lambda m:'PHYSICAL' if m[1]=='physical' else 'ONLINE','format.postfix_exclusion')
+     s.scan(r'\b(?:require\s+)?both\s+(?:versions|formats)\b','format','PRESENT','BOTH','format.both_versions')
+-    s.scan(r'\b(?:both\s+)?(?:physical\s*(?:\+|and)\s*(?:online|digital)|(?:online|digital)\s+and\s+physical(?:ly)?)(?:\s+copies)?\b','format','PRESENT','BOTH','format.combined')
+-    s.scan(r'\b(?:only[ -]+)?(?:online|digital(?:ly)?)(?:[ -]+only)?\b','format',lambda m:'ONLY' if 'only' in m[0] else 'PRESENT','ONLINE','format.online')
+-    s.scan(r'\b(?:only[ -]+)?(?:physically|physical|hard cop(?:y|ies))(?:[ -]+only)?\b','format',lambda m:'ONLY' if 'only' in m[0] else 'PRESENT','PHYSICAL','format.physical')
++    s.scan(r'\b(?:in\s+)?(?:both\s+)?(?:physical\s*(?:\+|and)\s*(?:online|digital)|(?:online|digital)\s+and\s+physical(?:ly)?)(?:\s+(?:copies|formats?|versions?))?\b','format','PRESENT','BOTH','format.combined')
++    s.scan(r'\b(?:in\s+)?(?:only[ -]+)?(?:online|digital(?:ly)?)(?:\s+(?:formats?|versions?|copies|access))?(?:[ -]+only)?\b','format',lambda m:'ONLY' if re.search(r'\bonly\b',m[0]) else 'PRESENT','ONLINE','format.online')
++    s.scan(r'\b(?:in\s+)?(?:only[ -]+)?(?:physically|physical|hard cop(?:y|ies))(?:\s+(?:formats?|versions?|copies|access))?(?:[ -]+only)?\b','format',lambda m:'ONLY' if re.search(r'\bonly\b',m[0]) else 'PRESENT','PHYSICAL','format.physical')
+     s.scan(r'\b(?:available\s+to\s+request|(?:books?\s+)?i can request)\b','availability','=','REQUESTABLE','availability.request')
+     s.scan(r'\b(?:available now|available copies|access now)\b','availability','=','AVAILABLE_NOW','availability.now')
+     if re.search(r'\bavailable\s+physically\s+(?:today|now)\b',s.text):
+@@ -118,7 +119,7 @@
+     """A prose negation does not itself authorize a catalogue predicate."""
+     before=text[:start]
+     after=text[start:]
+-    return bool(re.search(r'\b(?:about|on|word|phrase|why|do|does|did|are|is|was|were)\s*$',before)
++    return bool(re.search(r'\b(?:about|on|word|phrase|why|do|does|did|are|is|was|were|have|has|had|can|could|would|should)\s*$',before)
+                 or re.match(r'not\s+(?:just|only|a\s+(?:beginner|subject|filter))\b',after)
+                 or re.search(r'\b(?:where|characters|things\s+that)\b[^,;]*$',before))
+ 
+@@ -155,7 +156,7 @@
+     subject. An explicit include-OR is not representable and is rejected.
+     Lookups are bounded by input tokens, never by a regex for every facet.
+     """
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import FacetVocabulary
++    from scratch.search_v2c_c5e.candidate_search_v2.query_plan import FacetVocabulary
+     vocab = FacetVocabulary(facets)
+     subject_requirements(s,vocab)
+     # Affirmative category clauses terminate a preceding negative operand.
+@@ -281,7 +282,7 @@
+ 
+ 
+ def author_title_entities(s, facets):
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import FacetVocabulary
++    from scratch.search_v2c_c5e.candidate_search_v2.query_plan import FacetVocabulary
+     vocab=FacetVocabulary(facets)
+     for m in re.finditer(r'\b(?:books?\s+(?:written\s+)?by|written\s+by|by)\s+([^,;]+)',s.remaining()):
+         segment=s.segment(m.start(1),m.end(1))
+@@ -303,11 +304,11 @@
+ 
+ def owned_literals(s, facets):
+     """Explicit field owners may consume a protected operand, never its interior."""
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import FacetVocabulary
++    from scratch.search_v2c_c5e.candidate_search_v2.query_plan import FacetVocabulary
+     vocab=FacetVocabulary(facets)
+     patterns=[
+       (r'\b(?:exclude|excluding|reject)\s+(?:every|any|all)\s+records?\s+(?:containing|with)\s+(?:the\s+)?(?:exact\s+)?(?:(?:text|word|phrase)\s+)?["“]([^"”]*)["”]','exclude'),
+-      (r'\b(?:(include|exclude|excluding|without)\s+(?:(?:that\s+)?same\s+|the\s+)?)?(?:subject|category|genre)\s+["“]([^"”]*)["”]','category')]
++      (r'\b(?:(include|exclude|excluding|without|not)\s+(?:(?:that\s+)?same\s+|the\s+)?)?(?:subject|category|genre)\s+["“]([^"”]*)["”]','category')]
+     for pattern,kind in patterns:
+         for m in re.finditer(pattern,s.text,re.I):
+             a,b=s.span(*m.span())
+@@ -316,9 +317,11 @@
+             if kind=='exclude':field,op,value,status='exclude','TEXT_NOT',literal,'SUPPORTED' if literal.strip() else 'INCOMPLETE'
+             else:
+                 value,_,correction=vocab.resolve(literal,fuzzy=True)
+-                negative=(m[1] or '').casefold() in ('exclude','excluding','without')
++                negative=(m[1] or '').casefold() in ('exclude','excluding','without','not')
+                 field,op,status=('excluded_subject' if negative else 'subject'),('NOT' if negative else 'INCLUDE'),'SUPPORTED'
+                 if not value:field,op,value,status='subject_clause','MISSING' if not literal.strip() else 'UNRESOLVED',literal,'INCOMPLETE' if not literal.strip() else 'UNSUPPORTED'
++                elif re.search(r'\b(?:prefer|preferably|optional)\s*$',s.text[:m.start()]):
++                    field,op,value='preference','SOFT','Prefer subject: '+value
+             repair='scoped canonical alias/typo resolution' if kind=='category' and correction else None
+             s.items.append(Candidate(field,op,value,a,b,s.raw[a:b],'literal.explicit_field_owner',support_status=status,repair_provenance=repair))
+ 
+@@ -326,7 +329,7 @@
+     owned_literals(s, facets)
+     author_title_entities(s,facets)
+     subject_clauses(s, facets)
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import FacetVocabulary
++    from scratch.search_v2c_c5e.candidate_search_v2.query_plan import FacetVocabulary
+     vocab=FacetVocabulary(facets)
+     for m in re.finditer(r'\b(?:(?:filter\s+by|restrict\s+to)\s+)?(?:subject|category|genre)\s+([^,;]+)',s.remaining()):
+         segment=s.segment(m.start(1),m.end(1)).strip(' .?!')
+@@ -342,6 +345,11 @@
+         if not value:continue
+         s.add_span('exclude','NOT',value,m.start(),m.start(1)+len(segment),'negative.explicit')
+     clause_connectors(s)
++    for pattern,value in [(r'\bprefer\s+(?:short|shorter)\s+(?:works?|books?)\b','Prefer shorter books'),
++        (r'\bprefer\s+(?:beginner|introductory)\s+(?:explanations?|works?|books?|material)\b','Introductory / beginner (preference)'),
++        (r'\bprefer\s+advanced\s+(?:treatments?|works?|books?|material)\b','Advanced (preference)'),
++        (r'\bprefer\s+reference\s+(?:works?|books?|material)\b','Reference material (preference)')]:
++        s.scan(pattern,'preference','SOFT',value,'preference.explicit_owned_clause')
+     s.scan(r'\b(?:short|shorter)\b','preference','SOFT','Prefer shorter books','preference.length')
+     s.scan(r'\b(?:for\s+)?(?:beginners?(?:-friendly)?|introductory|first-year)\b','preference','SOFT','Introductory / beginner (preference)','preference.beginner')
+     s.scan(r'\b(?:advanced|research-level)\b','preference','SOFT','Advanced (preference)','preference.advanced')
+--- scratch\search_v2c_c5d_repair_v2\candidate_search\query_plan.py
++++ scratch\search_v2c_c5e\candidate_search_v2\query_plan.py
+@@ -12,7 +12,7 @@
+ 
+ MODES = ('SMART', 'GENRE_SUBJECT', 'TITLE_AUTHOR', 'EXACT')
+ SORTS = ('RELEVANCE', 'RATING', 'NEWEST', 'TITLE')
+-PARSER_VERSION = 'search-v2c-c5d-disabled-candidate-2'
++PARSER_VERSION = 'search-v2c-c5e-disabled-candidate-2'
+ INTENTS = ('FIND_EXACT','FIND_AUTHOR','BROWSE_CATEGORY','DISCOVER_TOPIC','LEARN','REFERENCE','RESEARCH','FIND_AVAILABLE','FIND_ONLINE','DISCOVER_RELATED')
+ 
+ 
+@@ -148,7 +148,7 @@
+         return {'mode': self.mode, 'intent':self.intent, 'intent_label':self.intent.replace('_',' ').capitalize(), 'decision':decision,
+                 'related_concepts':self.expanded_subjects if self.kg_expansion_used else [],
+                 'preference':self.soft_preference, 'chips': chips, 'corrections': self.corrections,
+-                'notice': 'No canonical subject matches this query.' if self.unknown_subject else '',
++                'notice': 'No canonical subject matches this query.' if self.unknown_subject else ' '.join('Interpreted “'+str(r['from'])+'” as “'+str(r['to'])+'”.' for r in self.decision.get('repair_notices',[])),
+                 'suggested_subject': self.suggested_subject}
+ 
+ 
+@@ -157,11 +157,11 @@
+     # Retain accepted validation/error semantics for explicit UI/API controls.
+     if filters:_parse_legacy('',(),mode,filters,())
+     if mode!='SMART' or re.fullmatch(r'(?:\d{13}|\d{9}[\dXx]|OL\d+W)',re.sub(r'[-\s]','',str(query)),re.I):
+-        from scratch.search_v2c_c5d_repair_v2.candidate_search.query_confidence import decide,validate
++        from scratch.search_v2c_c5e.candidate_search_v2.query_confidence import decide,validate
+         plan=_parse_legacy(query,facets,mode,filters,omit)
+         # The explicit Search mode (or complete identifier syntax) supplies
+         # field evidence; its operand is the actual query span, not SMART prose.
+-        from scratch.search_v2c_c5d_repair_v2.candidate_search.query_constraints import Candidate
++        from scratch.search_v2c_c5e.candidate_search_v2.query_constraints import Candidate
+         raw=str(query)
+         if raw.strip():
+             for field,value in [('title',plan.title_text),('exact_text',plan.exact_text),
+@@ -172,7 +172,7 @@
+                 plan.constraint_candidates.append(candidate)
+                 plan.source_spans.append({'kind':'CANONICAL_FACET' if field=='subject' else 'CANONICAL_ENTITY','start':0,'end':len(raw),'text':raw,'source_query':raw,'recognizer_id':'mode.explicit_operand'})
+         return validate(decide(plan))
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_repair import compose
++    from scratch.search_v2c_c5e.candidate_search_v2.query_repair import compose
+     return compose(str(query),facets,_parse_legacy,filters or {},omit)
+ 
+ def _parse_legacy(query, facets=(), mode='SMART', filters=None, omit=(), recognize_constraints=True):
+@@ -293,7 +293,7 @@
+ 
+ 
+ def matches(plan, book):
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_confidence import executable
++    from scratch.search_v2c_c5e.candidate_search_v2.query_confidence import executable
+     if not executable(plan):return False
+     if plan.unknown_subject:return False
+     if not all(normalize(s) in {normalize(v) for v in values(book.get('subjects'))} for s in plan.subjects):return False
+--- scratch\search_v2c_c5d_repair_v2\candidate_search\query_repair.py
++++ scratch\search_v2c_c5e\candidate_search_v2\query_repair.py
+@@ -1,11 +1,11 @@
+ """Compose recognized spans with the accepted facet/intent parser."""
+ from dataclasses import asdict
+ import re
+-from scratch.search_v2c_c5d_repair_v2.candidate_search.query_constraints import recognize,comparator,topical_not
+-from scratch.search_v2c_c5d_repair_v2.candidate_search.query_confidence import decide,validate
++from scratch.search_v2c_c5e.candidate_search_v2.query_constraints import recognize,comparator,topical_not
++from scratch.search_v2c_c5e.candidate_search_v2.query_confidence import decide,validate
+ 
+ def annotate(plan,s,facets):
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import FacetVocabulary,normalize
++    from scratch.search_v2c_c5e.candidate_search_v2.query_plan import FacetVocabulary,normalize
+     vocab=FacetVocabulary(facets)
+     for subject in plan.subjects:
+         keys=[normalize(subject),*(a for a,target in vocab.aliases.items() if target==normalize(subject))]
+@@ -56,11 +56,11 @@
+     # Repair resolved whole phrases before legacy parsing; ensure every hard
+     # field is later assigned exclusively from candidates or explicit controls.
+     preference=next((c.normalized_value for c in s.items if c.field=='preference' and c.normalized_value.startswith(('Introductory','Advanced'))),None)
+-    intent_prefix='learn ' if preference and preference.startswith('Introductory') else 'research material about ' if preference else ''
++    intent_prefix=('learn ' if preference and preference.startswith('Introductory') else 'research material about ' if preference else '') if remaining.strip(' ;,') else ''
+     plan=legacy(intent_prefix+remaining,facets,'SMART',{},(),recognize_constraints=False)
+-    plan.raw_query=query;plan.normalized_query=__import__('scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan',fromlist=['normalize']).normalize(query)
++    plan.raw_query=query;plan.normalized_query=__import__('scratch.search_v2c_c5e.candidate_search_v2.query_plan',fromlist=['normalize']).normalize(query)
+     if not plan.subjects:
+-        from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import FacetVocabulary,normalize
++        from scratch.search_v2c_c5e.candidate_search_v2.query_plan import FacetVocabulary,normalize
+         numeric_suffix=re.fullmatch(r'(.+?)\s+\d+(?:\.\d+)?',normalize(remaining))
+         if numeric_suffix:
+             subject,_,_=FacetVocabulary(facets).resolve(numeric_suffix[1],fuzzy=False)
+@@ -97,7 +97,7 @@
+         elif field=='excluded_subject':
+             plan.exclude_subjects.append(value)
+         elif field=='exclude':
+-            from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import FacetVocabulary
++            from scratch.search_v2c_c5e.candidate_search_v2.query_plan import FacetVocabulary
+             if op=='TEXT_NOT':
+                 plan.exclude_terms.append(value)
+                 continue
+@@ -106,7 +106,7 @@
+                 if subject:plan.exclude_subjects.append(subject)
+                 else:plan.exclude_terms.append(term)
+         elif field=='include':
+-            from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import FacetVocabulary
++            from scratch.search_v2c_c5e.candidate_search_v2.query_plan import FacetVocabulary
+             subject,_,_=FacetVocabulary(facets).resolve(value,fuzzy=False)
+             if subject:plan.subjects.append(subject);plan.include_terms.append(subject)
+         elif field=='sort':plan.sort=value
+@@ -119,9 +119,9 @@
+         setattr(plan,field,list(dict.fromkeys(getattr(plan,field))))
+     # Explicit "not physical" is a format exclusion, not a title-word test.
+     for term in list(plan.exclude_terms):
+-        if term in ('physical','online','digital'):
++        if term in ('physical','online','digital') and not any(c.field=='exclude' and c.operator=='TEXT_NOT' and c.normalized_value==term for c in s.items):
+             plan.excluded_formats.append('PHYSICAL' if term=='physical' else 'ONLINE');plan.exclude_terms.remove(term)
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_session import explicit_filters,omit_fields
++    from scratch.search_v2c_c5e.candidate_search_v2.query_session import explicit_filters,omit_fields
+     explicit_filters(plan,{k:v for k,v in filters.items() if v is not None and v!='' and not(k=='sort' and v=='RELEVANCE')});omit_fields(plan,omit)
+     if plan.author_text:plan.intent='FIND_AUTHOR'
+     elif plan.title_text or plan.exact_text:plan.intent='FIND_EXACT'
+@@ -143,7 +143,7 @@
+                       unresolved=[c.source_text for c in unfinished])
+     unsupported=[c for c in s.items if c.support_status!='SUPPORTED']
+     if unsupported:return validate(decide(plan,'UNSUPPORTED','UNSUPPORTED_STRICT_FIELD',fields=[c.field for c in unsupported]))
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_numeric import valid_numeric_domain
++    from scratch.search_v2c_c5e.candidate_search_v2.query_numeric import valid_numeric_domain
+     for field in ('rating','year'):
+         if any(v is not None and not valid_numeric_domain(field,v) for v in (getattr(plan,field+'_min'),getattr(plan,field+'_max'))):
+             setattr(plan,field+'_min',None);setattr(plan,field+'_max',None)
+@@ -172,7 +172,7 @@
+     return validate(decide(plan))
+ 
+ def compose(query,facets,legacy,filters,omit):
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.semantic_safety import prepare,finish
++    from scratch.search_v2c_c5e.candidate_search_v2.semantic_safety import prepare,finish
+     prepared,repairs,offsets=prepare(query)
+     plan=_compose(prepared,facets,legacy,filters,omit)
+     return finish(plan,query,prepared,repairs,offsets,facets,filters,omit)
+--- scratch\search_v2c_c5d_repair_v2\candidate_search\query_session.py
++++ scratch\search_v2c_c5e\candidate_search_v2\query_session.py
+@@ -1,7 +1,7 @@
+ """Bounded deterministic plan edits. No transcript concatenation or model calls."""
+ from copy import deepcopy
+ import re
+-from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import QueryPlan, parse_query, normalize, FacetVocabulary, PARSER_VERSION
++from scratch.search_v2c_c5e.candidate_search_v2.query_plan import QueryPlan, parse_query, normalize, FacetVocabulary, PARSER_VERSION
+ 
+ VERSION = 'search-v2b-session-1'
+ 
+@@ -63,12 +63,12 @@
+     if not text:
+         return plan, True
+     if text in ('something different','new search','start over','clear search context'):
+-        from scratch.search_v2c_c5d_repair_v2.candidate_search.query_confidence import decide
++        from scratch.search_v2c_c5e.candidate_search_v2.query_confidence import decide
+         return decide(QueryPlan('', mode=mode)), False
+     instead = re.fullmatch(r'(?:show me\s+)?(.+?)\s+instead', text) or re.fullmatch(r'instead\s+(?:show me\s+)?(.+)',text)
+     if instead and instead[1] not in ('physical','online','digital'):
+         replacement = new_plan(instead[1], facets)
+-        from scratch.search_v2c_c5d_repair_v2.candidate_search.query_confidence import executable
++        from scratch.search_v2c_c5e.candidate_search_v2.query_confidence import executable
+         if not executable(replacement):return replacement,False
+         for field in ('semantic_text','subjects','title_text','author_text','exact_text','intent','soft_preference','unknown_subject'):
+             setattr(plan, field, getattr(replacement, field))
+@@ -106,7 +106,7 @@
+             setattr(plan, field, getattr(delta, field))
+     elif re.fullmatch(r'(?:not|exclude|without)\s+.{1,100}', text):
+         delta=parse_query(query,facets)
+-        from scratch.search_v2c_c5d_repair_v2.candidate_search.query_confidence import executable
++        from scratch.search_v2c_c5e.candidate_search_v2.query_confidence import executable
+         if not executable(delta):return delta,False
+         plan.exclude_terms=list(dict.fromkeys([*plan.exclude_terms,*delta.exclude_terms]))[-5:]
+         plan.exclude_subjects=list(dict.fromkeys([*plan.exclude_subjects,*delta.exclude_subjects]))[-5:]
+@@ -133,7 +133,7 @@
+     plan.constraint_candidates=list(evidence.values())[-24:]
+     plan.source_spans=[{'kind':'STRUCTURED_CONSTRAINT','start':c['source_span_start'],'end':c['source_span_end'],'text':c['source_text'],'source_query':c.get('source_query',query)} for c in plan.constraint_candidates]
+     plan.parser_version=PARSER_VERSION
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_confidence import decide,validate
++    from scratch.search_v2c_c5e.candidate_search_v2.query_confidence import decide,validate
+     validate(decide(plan))
+     return plan, True
+ 
+--- scratch\search_v2c_c5d_repair_v2\candidate_search\semantic_safety.py
++++ scratch\search_v2c_c5e\candidate_search_v2\semantic_safety.py
+@@ -6,8 +6,8 @@
+ import re
+ from hashlib import sha256
+ 
+-VOCABULARY=('rated','rating','published','between','exactly','greater','less','least','most','above','below','after','before','online','digital','physical','titled','by')
+-FIELD_CONTEXT=re.compile(r'\b(?:rat\w*|stars?|publish\w*|year|format|only|books?|titled)\b',re.I)
++VOCABULARY=('rated','rating','published','between','exactly','greater','less','least','most','above','below','after','before','online','digital','physical','titled','by','only','beginner','advanced','short','reference','exclude','and')
++FIELD_CONTEXT=re.compile(r'\b(?:rat\w*|stars?|publish\w*|year|format|online|digital|physical|only|books?|titled|prefer|subject|category|record|containing)\b',re.I)
+ 
+ def distance_one(a,b):
+     if a==b:return False
+@@ -25,7 +25,7 @@
+     return ''.join(chars)
+ 
+ def prepare(query):
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_numeric import COMPARATOR_GROUPS,YEAR_COMPARATOR_GROUPS
++    from scratch.search_v2c_c5e.candidate_search_v2.query_numeric import COMPARATOR_GROUPS,YEAR_COMPARATOR_GROUPS
+     accepted_words={word for groups in [COMPARATOR_GROUPS,YEAR_COMPARATOR_GROUPS] for phrases in groups.values() for phrase in phrases for word in phrase.split()}
+     accepted_words.update(['must','should','be','are','is','stay','remain','the','and','or','not'])
+     protected=quotes(query);edits=[]
+@@ -45,6 +45,10 @@
+         # need their own field/unit evidence, not a generic book noun alone.
+         if value in ['least','most','greater','less','between','exactly','above','below'] and not re.search(r'\brat\w*\b|\bstars?\b',clause,re.I):continue
+         if value in ['online','digital','physical'] and not re.search(r'\b(?:only|format|version|copies)\b',clause,re.I):continue
++        if value=='only' and not re.search(r'\b(?:online|digital|physical|format|copies)\b',clause,re.I):continue
++        if value in ['beginner','advanced','short','reference'] and not re.search(r'\b(?:prefer|preference|for)\b',clause,re.I):continue
++        if value=='exclude' and not re.match(r'\s*(?:every|any|all|subject|category|record)\b',query[token.end():right],re.I):continue
++        if value=='and' and not (re.search(r'["”]\s*$',query[left:token.start()]) and re.match(r'\s*(?:subject|category|["“])',query[token.end():right],re.I)):continue
+         if value=='by' and not re.fullmatch(r'\s*(?:(?:find|show)\s+)?books?\s+',query[left:token.start()],re.I):continue
+         if value=='titled' and not re.search(r'["“]',clause):continue
+         edits.append((token.start(),token.end(),value))
+@@ -58,10 +62,10 @@
+     return ''.join(chunks),repairs,offsets
+ 
+ def finish(plan,original,prepared,repairs,offsets,facets,filters,omit):
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_confidence import decide,validate,executable
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_plan import normalize
+-    from scratch.search_v2c_c5d_repair_v2.candidate_search.query_session import item_edit_key
+-    omit=set(omit);ledger=[]
++    from scratch.search_v2c_c5e.candidate_search_v2.query_confidence import decide,validate,executable
++    from scratch.search_v2c_c5e.candidate_search_v2.query_plan import normalize
++    from scratch.search_v2c_c5e.candidate_search_v2.query_session import item_edit_key
++    omit=set(omit);ledger=[];spans_are_original=False
+     def omitted(field,value=None):
+         alias={'author':'author','title':'title','subject':'subject','excluded_subject':'exclude','exclude':'exclude','format':'format'}
+         if alias.get(field,field) in omit:return True
+@@ -70,7 +74,12 @@
+         if field in ['excluded_subject','exclude'] and item_edit_key('exclude',value) in omit:return True
+         return False
+     def add(field,status,reason,span=None,value=None):
+-        if not omitted(field,value):ledger.append({'field':field,'status':status,'reason':reason,'source_span':span,'value':value})
++        if not omitted(field,value):
++            if span is None:a,b=0,len(original)
++            elif spans_are_original:a,b=span
++            else:
++                x,y=span;a=offsets[x] if x<len(offsets) else len(original);b=offsets[y-1]+1 if y and y-1<len(offsets) else a
++            ledger.append({'field':field,'status':status,'reason':reason,'source_span':[a,b],'source_text':original[a:b],'value':value})
+     text=outside_literals(prepared).casefold()
+     # A conditional/explanatory clause cannot inherit the executable status of
+     # a recognized prefix when its mandatory grouping or referent is unresolved.
+@@ -84,7 +93,7 @@
+         plain=outside_literals(m[0]).casefold()
+         if not re.search(uncertain_pattern,plain):continue
+         context=outside_literals((clauses[index-1][0]+'; ' if index else '')+m[0]).casefold()
+-        field=next((f for f,pattern in [('rating',r'\brat(?:ing|ed)\b|\bfloor\b'),('title',r'\btitle\b'),('author',r'\bauthor|writer\b'),('subject',r'\bsubject|category|exclu\w*\b')] if re.search(pattern,context)),None)
++        field=next((f for f,pattern in [('format',r'\b(?:online|digital|physical|access|format)\b'),('rating',r'\brat(?:ing|ed)\b|\bfloor\b'),('title',r'\btitle\b'),('author',r'\bauthor|writer\b'),('subject',r'\bsubject|category|exclu\w*\b')] if re.search(pattern,context)),None)
+         alternatives=bool(re.search(r'\b(?:whether|either|joint|alternative\w*|which|tolerance|how\s+close|crossed.out)\b',context))
+         # An unrelated remembered-author anecdote is discharged by a separate
+         # explicit named author. A relative author reference is not discharged.
+@@ -98,6 +107,8 @@
+     if uncertainty and re.search(r'\bwhether\b[^;]*(?:\bor\b|\bmodif\w*\b)|\b(?:joint|either|alternatives|intersection)\b',text):
+         if re.search(r'\b(?:rating|author|writer|title|subject|category|format|year|published|minimum|maximum|preferably|excluding)\b',text):
+             add('relationship','AMBIGUOUS','Unresolved alternatives affect mandatory field/operator/association ownership.',list(uncertainty.span()))
++    if re.search(r'\b(?:lost|missing|unknown)\b[^;]*\b(?:parentheses|grouping)\b',text) and re.search(r'\b(?:not|exclude|excluding)\b[^;]*\bor\b',text):
++        add('relationship','AMBIGUOUS','The negative group scope is explicitly unresolved.')
+     field_words={'rating':r'\brat(?:ing|ings|ed)\b|\bstars?\b','year':r'\b(?:published|publication|year|released)\b',
+                  'author':r'\b(?:by|author)\b','title':r'\b(?:titled|title)\b','language':r'\blanguage\b',
+                  'availability':r'\b(?:available|availability|borrow)\b','subject':r'\b(?:include|subject|category|genre)\b',
+@@ -106,7 +117,7 @@
+         clause=m[0];outside=outside_literals(clause)
+         if re.match(r'\s*(?:(?:find|show)\s+)?(?:books?\s+)?about\b',outside,re.I):continue
+         placeholder=bool(re.search(r'\.{3}|…|_{2,}|\[\s*\]|["“]\s*["”]',clause))
+-        missing=bool(re.search(r'\b(?:missing|blank|unnamed|not\s+(?:supplied|entered|provided|specified|selected|finished|given)|have\s+not\s+(?:entered|supplied))\b',outside,re.I))
++        missing=bool(re.search(r'\b(?:missing|blank|unnamed|not\s+(?:supplied|entered|provided|specified|selected|finished|given|named)|have\s+not\s+(?:entered|supplied|named))\b',outside,re.I))
+         if placeholder or missing:
+             for field,pattern in field_words.items():
+                 if re.search(pattern,outside,re.I):add(field,'INCOMPLETE','Explicit mandatory field or operand is blank/unfinished.',list(m.span()))
+@@ -137,13 +148,16 @@
+     operation=re.match(r'\s*(?:please\s+)?(?:borrow|return|reserve|delete|purchase|checkout|check\s+out|renew|transfer|update)\b',text)
+     if operation:add('operation','UNSUPPORTED','This parser interprets catalogue searches, not account/inventory transactions.',list(operation.span()))
+     # Candidate provenance and original offsets are restored after bounded repair.
++    spans_are_original=True
+     for c in plan.constraint_candidates:
+         start,end=c['source_span_start'],c['source_span_end']
+         relevant=[r for r in repairs if start<r['prepared_end'] and end>r['prepared_start']]
+         if relevant:c['repair_provenance']='bounded unique one-edit field/operator repair: '+', '.join(r['from']+' -> '+r['to'] for r in relevant)
+         a=offsets[start] if start<len(offsets) else len(original);b=offsets[end-1]+1 if end and end-1<len(offsets) else a
+         c.update(source_span_start=a,source_span_end=b,source_text=original[a:b],source_query=original)
+-        if c.get('support_status') in ['AMBIGUOUS','INCOMPLETE','UNSUPPORTED']:
++        if c['field']=='preference':
++            add('preference','ADVISORY','Explicit preference does not authorize a hard filter.',[a,b],c.get('normalized_value'))
++        elif c.get('support_status') in ['AMBIGUOUS','INCOMPLETE','UNSUPPORTED']:
+             add(c['field'],c['support_status'],'Recognizer retained an unresolved mandatory clause.',[a,b],c.get('normalized_value'))
+         elif c['field'] not in ['connector','preference']:
+             field,value,op=c['field'],c.get('normalized_value'),c.get('operator');preserved=True
+@@ -154,8 +168,10 @@
+             elif field=='format':
+                 expanded=lambda xs:{x for v in xs for x in (['ONLINE','PHYSICAL'] if v=='BOTH' else [v])}
+                 preserved=expanded([value]).issubset(expanded(plan.formats)) and (op!='ONLY' or value in plan.exclusive_formats)
++            elif field=='excluded_format':preserved=value in plan.excluded_formats
++            elif field=='exclude' and op=='TEXT_NOT':preserved=normalize(value) in set(map(normalize,plan.exclude_terms))
+             elif field in ['rating','year']:
+-                from scratch.search_v2c_c5d_repair_v2.candidate_search.query_numeric import valid_numeric_domain
++                from scratch.search_v2c_c5e.candidate_search_v2.query_numeric import valid_numeric_domain
+                 if any(not valid_numeric_domain(field,v) for v in (value if op=='RANGE' else [value])):
+                     add(field,'UNSUPPORTED','Numeric operand is outside the established catalogue domain.',[a,b],value)
+                     continue
+@@ -165,6 +181,12 @@
+                 elif op in ['>','>=']:preserved=lo is not None and (lo>value or lo==value and (op=='>=' or getattr(plan,field+'_min_exclusive')))
+                 elif op in ['<','<=']:preserved=hi is not None and (hi<value or hi==value and (op=='<=' or getattr(plan,field+'_max_exclusive')))
+             add(field,'RESOLVED' if preserved else 'AMBIGUOUS','Source-backed candidate retained.' if preserved else 'Recognized required operand was lost or overwritten during composition.',[a,b],value)
++    unresolved_fields={x['field'] for x in ledger if x['status'] in ['AMBIGUOUS','INCOMPLETE','UNSUPPORTED']}
++    for requirement in ledger:
++        requirement['ownership']='ADVISORY' if requirement['status']=='ADVISORY' else 'MANDATORY'
++        if requirement['status']=='RESOLVED' and requirement['field'] in unresolved_fields:
++            requirement['status']='UNRESOLVED_RELATIONSHIP'
++            requirement['reason']='A recognized value does not resolve the field\x27s mandatory interpretation.'
+     for s in plan.source_spans:
+         a,b=s.get('start',0),s.get('end',0)
+         start=offsets[a] if a<len(offsets) else len(original);end=offsets[b-1]+1 if b and b-1<len(offsets) else start
+@@ -178,6 +200,18 @@
+     if topics and 'topic' not in omit:plan.semantic_text='; '.join(topics)
+     elif plan.semantic_text:plan.semantic_text=re.sub(r'\s*;\s*','; ',plan.semantic_text).strip(' ;,') or None
+     if plan.semantic_text and re.fullmatch(r'(?:(?:the|a|an|book|books|find|please)\s*)+',plan.semantic_text,re.I):plan.semantic_text=None
++    repair_notices=[]
++    for r in repairs:
++        repair_notices.append({'from':r['from'],'to':r['to'],'source_span':[r['start'],r['end']],'kind':'bounded_grammar_repair'})
++    for c in plan.constraint_candidates:
++        if c['recognizer_id']=='literal.explicit_field_owner' and str(c.get('repair_provenance','')).startswith('scoped canonical'):
++            literal=re.search(r'["“]([^"”]+)["”]',c['source_text'])
++            if literal:
++                correction={'from':literal[1],'to':c['normalized_value'],'kind':'typo' if 'typo' in c['repair_provenance'] else 'alias'}
++                if correction not in plan.corrections:plan.corrections.append(correction)
++                start=c['source_span_start']+literal.start(1)
++                repair_notices.append({**correction,'source_span':[start,start+len(literal[1])]})
++    plan.decision['repair_notices']=repair_notices
+     # Cross-field constraints use the exact production normalization and word
+     # boundaries; the earlier shadow substring counterexample stays executable.
+     conflict=[]
+@@ -204,5 +238,13 @@
+                 # A repaired cue with no recognized owner is not a resolved filter.
+                 plan=decide(plan,'INCOMPLETE','REPAIRED_REQUIREMENT_NOT_GROUNDED',fields=['requirement'])
+     plan.decision['requirements']=ledger
++    if plan.decision['decision_type']=='CONTRADICTORY':
++        affected=plan.decision.get('affected_fields',[])
++        aliases={'excluded_subject':'subject','exclude':'exclude_terms','author':'author_text','title':'title_text','excluded_format':'format'}
++        for requirement in ledger:
++            if requirement['status']=='RESOLVED' and aliases.get(requirement['field'],requirement['field']) in affected:
++                requirement['status']='CONTRADICTORY'
++                requirement['reason']='Resolved requirements conflict under the established predicate contract.'
++    plan.decision['repair_notices']=repair_notices
+     plan.decision['development_isolation']={'disabled_candidate':True,'native_authorization_required_externally':True,'confidence_is_probability':False}
+     return plan

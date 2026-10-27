@@ -1,8 +1,10 @@
+import { LuminarSelect } from '../components/LuminarSelect'
 import { useEffect, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { coreRequest } from '../lib/api'
 import { PageHeading, StatePanel } from '../components/WorkspaceUI'
 import { Modal, date } from '../components/StaffUI'
+import { scrollToContentAnchor } from '../lib/paginationScroll'
 
 type Status='ACTIVE'|'SUSPENDED'|'REMOVED'
 type LibrarySummary={library_id:string;name:string;slug:string;library_type:string;access_mode:string;status:string;created_at:string;updated_at:string;
@@ -31,9 +33,9 @@ export function PlatformLibrariesPage(){
   return <div className="institutions platform-libraries"><PageHeading title="Libraries" description="Library identity, lifecycle and safe aggregate counts. Tenant operations require an independent library membership." />
     <form key={q} className="ui-filter-toolbar" onSubmit={event=>{event.preventDefault();update('q',String(new FormData(event.currentTarget).get('q')||'').trim())}}>
       <label>Search libraries<input type="search" name="q" defaultValue={q} maxLength={120} placeholder="Name, slug, UUID or owner" /></label><button type="submit" className="ui-button">Search</button>
-      <label>Status<select aria-label="Library status" value={status} onChange={e=>update('status',e.target.value)}><option value="">All statuses</option>{['ACTIVE','SUSPENDED','REMOVED'].map(s=><option key={s} value={s}>{statusLabel(s)}</option>)}</select></label>
-      <label>Type<select aria-label="Library type" value={type} onChange={e=>update('library_type',e.target.value)}><option value="">All types</option><option value="PUBLIC_LIBRARY">Public library</option><option value="PRIVATE_INSTITUTION">Private institution</option></select></label>
-      <label>Per page<select aria-label="Libraries per page" value={limit} onChange={e=>update('limit',e.target.value)}>{[5,10,20,50].map(n=><option key={n}>{n}</option>)}</select></label>
+      <label>Status<LuminarSelect aria-label="Library status" value={status} onChange={e=>update('status',e.target.value)}><option value="">All statuses</option>{['ACTIVE','SUSPENDED','REMOVED'].map(s=><option key={s} value={s}>{statusLabel(s)}</option>)}</LuminarSelect></label>
+      <label>Type<LuminarSelect aria-label="Library type" value={type} onChange={e=>update('library_type',e.target.value)}><option value="">All types</option><option value="PUBLIC_LIBRARY">Public library</option><option value="PRIVATE_INSTITUTION">Private institution</option></LuminarSelect></label>
+      <label>Per page<LuminarSelect aria-label="Libraries per page" value={limit} onChange={e=>update('limit',e.target.value)}>{[5,10,20,50].map(n=><option key={n}>{n}</option>)}</LuminarSelect></label>
     </form>
     {!current?<StatePanel kind="loading" title="Loading libraries…"/>:current.error?<StatePanel kind="error" title="Unable to load libraries" action={<button onClick={()=>setRevision(v=>v+1)}>Retry</button>}>{current.error}</StatePanel>:<>
       <p role="status">{current.data!.total} libraries{q?' matching your search':''}</p>
@@ -41,7 +43,7 @@ export function PlatformLibrariesPage(){
         <td><strong>{row.name}</strong><small>{row.library_id}</small><small>{row.slug}</small></td><td>{row.library_type==='PUBLIC_LIBRARY'?'Public library':'Private institution'}<small>{row.access_mode==='PUBLIC'?'Public':'Private code'}</small></td>
         <td><span className="ui-badge">{statusLabel(row.status)}</span></td><td>{row.owner.name||'Owner account unavailable'}<small>{row.owner.email||'—'}</small></td><td>{row.counts.local_books} books<small>{row.counts.members} members · {row.counts.staff} staff</small></td><td>{date(row.created_at)}</td>
         <td><Link className="ui-button ui-secondary" aria-label={`View ${row.name}`} to={'/platform/libraries/'+row.library_id}>View</Link></td></tr>)}</tbody></table></div>}
-      <div className="ui-pagination"><button className="ui-button ui-secondary" disabled={!offset} onClick={()=>update('offset',String(Math.max(0,offset-limit)))}>Previous</button><span>Page {Math.floor(offset/limit)+1}</span><button className="ui-button ui-secondary" disabled={!current.data!.has_more} onClick={()=>update('offset',String(offset+limit))}>Next</button></div>
+      <div className="ui-pagination"><button className="ui-button ui-secondary" disabled={!offset} onClick={()=>{update('offset',String(Math.max(0,offset-limit)));requestAnimationFrame(()=>scrollToContentAnchor('.ui-table-wrap, .institutions'))}}>Previous</button><span>Page {Math.floor(offset/limit)+1}</span><button className="ui-button ui-secondary" disabled={!current.data!.has_more} onClick={()=>{update('offset',String(offset+limit));requestAnimationFrame(()=>scrollToContentAnchor('.ui-table-wrap, .institutions'))}}>Next</button></div>
     </>}
   </div>
 }
@@ -66,7 +68,7 @@ function PlatformAudit({libraryId,revision}:{libraryId:string;revision:number}){
   const current=result?.key===key?result:null
   return <section className="ui-card"><h2>Platform audit</h2>{!current?<StatePanel title="Loading platform audit…" kind="loading"/>:current.error?<p role="alert">{current.error}</p>:<>
     {!current.data!.results.length?<p>No platform lifecycle actions recorded.</p>:<ol className="platform-audit-list">{current.data!.results.map(event=><li key={event.event_id}><strong>{event.event}</strong><p>{event.previous_state} → {event.new_state} · {date(event.created_at)} · Actor {event.actor_user_id}</p><p>{event.reason}</p></li>)}</ol>}
-    {(offset>0||current.data!.total>20)&&<div className="ui-pagination"><button className="ui-button ui-secondary" disabled={!offset} onClick={()=>setOffset(v=>Math.max(0,v-20))}>Previous audit events</button><span>{current.data!.total} events</span><button className="ui-button ui-secondary" disabled={offset+20>=current.data!.total} onClick={()=>setOffset(v=>v+20)}>Next audit events</button></div>}
+    {(offset>0||current.data!.total>20)&&<div className="ui-pagination"><button className="ui-button ui-secondary" disabled={!offset} onClick={()=>{setOffset(v=>Math.max(0,v-20));requestAnimationFrame(()=>scrollToContentAnchor('.platform-audit-list, .ui-card'))}}>Previous audit events</button><span>{current.data!.total} events</span><button className="ui-button ui-secondary" disabled={offset+20>=current.data!.total} onClick={()=>{setOffset(v=>v+20);requestAnimationFrame(()=>scrollToContentAnchor('.platform-audit-list, .ui-card'))}}>Next audit events</button></div>}
   </>}</section>
 }
 

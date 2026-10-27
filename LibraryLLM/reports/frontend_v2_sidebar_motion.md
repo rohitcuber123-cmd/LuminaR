@@ -1,0 +1,2 @@
+# Sidebar motion
+Desktop sidebar sizing and fixed layout remain unchanged. The existing native dialog drawer enters from the left over 220ms, with a fading backdrop. Close/Escape uses a 160ms exit; normal dialogs use 180ms entry and 120ms exit. Busy-state close guards, modal focus containment and focus return remain intact. Browser Escape returned focus to Open workspace menu. Reduced motion closes immediately.

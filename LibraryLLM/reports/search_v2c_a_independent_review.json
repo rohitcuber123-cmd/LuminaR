@@ -1,0 +1,1212 @@
+{
+  "reviewer_type": "INDEPENDENT_AI_AGENT",
+  "human_reviewed": false,
+  "reviewed_at_utc": "2026-10-15T06:41:06.308786+00:00",
+  "status": "INDEPENDENT_AI_REVIEW_COMPLETE",
+  "corpus_sha256": "a8094c247bcfab8c168796ea7cd8c112cc8818a0b7ac8011197e0540dc655208",
+  "manual_gold_rows_reviewed": 136,
+  "all_labels_read_independently": true,
+  "labels_parser_derived": false,
+  "label_assessment": "All 136 manually authored rows independently reviewed against intended task semantics and actual scoped Global vocabulary. Corrected not-only label and eight new spelling/conservative-identity labels accepted. No outstanding label defect found. This is independent AI review, not human-verified accuracy.",
+  "canonical_facet_count": 4096,
+  "expected_positive_facets_present": true,
+  "families": {
+    "rating_comparators": 8,
+    "rating_ranges": 8,
+    "publication_year": 8,
+    "history_and_topic_year": 8,
+    "canonical_facets": 8,
+    "author_vs_subject": 8,
+    "numeric_titles": 8,
+    "format_availability": 8,
+    "negative_scope": 8,
+    "clause_reordering": 8,
+    "incomplete": 8,
+    "contradictions": 8,
+    "ambiguity_and_unsupported": 8,
+    "soft_preferences": 8,
+    "literal_modes_identifiers": 8,
+    "session_refinement": 8,
+    "typos_and_conservative_identity": 8
+  },
+  "metamorphic": {
+    "rows": 1000,
+    "distinct_exact_queries": 1000,
+    "distinct_case_whitespace_normalized_queries": 1000,
+    "review_basis": "Seeded template-generation source and template labels reviewed; not 1,000 independently human-labelled cases. Full generated-case execution belongs to primary test report.",
+    "independently_human_verified": false
+  },
+  "independent_gold_parser_comparison": {
+    "passed": 136,
+    "total": 136,
+    "comparison": "Every declared expected field, exact comparator flags, decision and session sequence compared; no mismatch. This parser agreement follows semantic label review, not label generation."
+  },
+  "reviewed_source_hashes": {
+    "scripts/search_v2c_a_corpus.py": "9820b5da8cba265822065c6a3c6f7e1a39a7f651a5ebf0bf47425eb941fd46d2",
+    "search/query_constraints.py": "1f408622ef3d2c4e12d3374ab19e76b5840fbd14fcfc24a3e67dbbd6909f0a68",
+    "search/query_repair.py": "951e2312982a181002b382c8e335628d8d5ce4778f7a9e7bd4e0b4ff641c1733",
+    "search/query_confidence.py": "6288b919e00c4c74b4d941229956fd4989049f1e9a464429819e6ab58f58d319",
+    "search/query_plan.py": "8560f1e99540e017b9f168105de526aebd092d7687965c587d23ae9595c1d563",
+    "search/query_session.py": "41934ed789bd5928b02bc7a3adb0e84f409fcf9506e5833a27d0a21017f92724",
+    "search/session_store.py": "2bc4c249d7de78b50abfce0c4864fbc9d46773cedc5997f099eaf424d16ca235",
+    "search/query_execution.py": "c1f3bc0d367623f8a9f8bb4170eef6c67d26095bba6fc9be60859c8893ce910d",
+    "frontend/src/components/SearchIntelligence.tsx": "f4cdc8ad0c0bfb57c4418a7d1630f5aa5292f64525d985f43d2b87a9732caacb"
+  },
+  "findings": [],
+  "resolved_findings": [
+    {
+      "id": "R1",
+      "severity": "HIGH",
+      "file": "search/query_repair.py",
+      "problem": "Unrecognized/incomplete hard-constraint cues can execute as semantic search. rated above, rating >, malformed numeric/year values bypass trailing missing_pattern.",
+      "examples": [
+        "fiction rated above",
+        "fiction rating >",
+        "fiction rating above banana",
+        "fiction published after tomorrow",
+        "fiction rated above -1"
+      ],
+      "required_change": "Recognize unresolved field/operator/value spans before legacy grammar deletes rating words; return typed INCOMPLETE/UNSUPPORTED without execution.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    },
+    {
+      "id": "R2",
+      "severity": "HIGH",
+      "file": "search/query_constraints.py",
+      "problem": "year.range accepts between/from anywhere, including historical subject matter; can invent publication bounds and false contradictions.",
+      "examples": [
+        "books about events between 1940 and 1950",
+        "books published after 2020 about events between 1940 and 1950"
+      ],
+      "required_change": "Require publication/year field evidence or pure coordinated constraint construction for ranges, preserving historical-era topic text.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    },
+    {
+      "id": "R3",
+      "severity": "HIGH",
+      "file": "search/query_constraints.py",
+      "problem": "Format presence recognizer consumes physical/online before without/excluding negation, reversing explicit negative format meaning.",
+      "examples": [
+        "fiction without online books",
+        "fiction excluding physical books"
+      ],
+      "required_change": "Recognize all accepted negative cues before positive format spans and enforce excluded_formats.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    },
+    {
+      "id": "R4",
+      "severity": "HIGH",
+      "file": "search/query_session.py",
+      "problem": "Session broad negative branch bypasses compositional parsing: not online becomes title-word exclusion; compound refinement swallows rating bound.",
+      "examples": [
+        "not online",
+        "not romance rated above 4"
+      ],
+      "required_change": "Reuse typed delta parser and validate rather than treating all remaining text as a literal exclusion.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    },
+    {
+      "id": "R5",
+      "severity": "MEDIUM",
+      "file": "search/query_confidence.py",
+      "problem": "Positive/excluded same format remains EXECUTABLE; exclusive-online plus physical presence remains EXECUTABLE.",
+      "examples": [
+        "online and not online",
+        "online only and physical"
+      ],
+      "required_change": "Detect format inclusion/exclusion collisions and incompatible exclusivity/presence combinations.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    },
+    {
+      "id": "R7",
+      "severity": "MEDIUM",
+      "file": "search/query_session.py",
+      "problem": "Session direct hard-bound refinements set fields without importing delta source candidates/spans; current raw query differs from retained old topic source spans.",
+      "examples": [
+        "rating above 4"
+      ],
+      "required_change": "Preserve inherited source-query provenance and append current delta provenance; every newly applied hard field needs source evidence.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    },
+    {
+      "id": "R8",
+      "severity": "MEDIUM",
+      "file": "reports/search_v2c_a_gold_queries.jsonl",
+      "case_id": "gold-070",
+      "problem": "Gold label requires strict Fiction subject for not only fiction; idiom permits more than Fiction and should not narrow to Fiction alone.",
+      "required_change": "Retain literal/semantic preference or typed notice; independently review corrected label.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    },
+    {
+      "id": "R9",
+      "severity": "MEDIUM",
+      "file": "scripts/search_v2c_a_corpus.py",
+      "problem": "Gold corpus has no typo example despite required typographical variants family.",
+      "required_change": "Add independently labelled actual-vocabulary typo/correction cases; do not count seeded case/space variation as spelling errors.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    },
+    {
+      "id": "R10",
+      "severity": "LOW",
+      "file": "reports/search_v2c_a_metamorphic_queries.jsonl",
+      "problem": "1000 generated rows repeat only96 exact strings/48 case-space-normalized strings.",
+      "required_change": "Report1000template executions honestly and distinct-query counts; broaden generated forms if claiming1000distinctvariants.",
+      "status": "RESOLVED_BY_REPROBE_OR_DOCUMENTED_COMPATIBILITY"
+    }
+  ],
+  "compatibility_observations": [
+    {
+      "id": "R6",
+      "resolution": "DOCUMENTED_COMPATIBILITY",
+      "note": "Per accepted V2B semantics, online only selects the online-capability presence filter; a book with both capabilities still qualifies. Mutual ONLY requests conflict; explicit online but not physical enforces opposite-capability absence. Not treated as an implementation defect under this compatibility contract."
+    }
+  ],
+  "latest_probe_evidence": [
+    {
+      "query": "fiction rated above",
+      "decision": "INCOMPLETE",
+      "semantic_text": null,
+      "subjects": [
+        "Fiction"
+      ],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "fiction rating >",
+      "decision": "INCOMPLETE",
+      "semantic_text": null,
+      "subjects": [
+        "Fiction"
+      ],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "fiction rating above banana",
+      "decision": "INCOMPLETE",
+      "semantic_text": "fiction above banana",
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "fiction published after tomorrow",
+      "decision": "INCOMPLETE",
+      "semantic_text": "fiction published after tomorrow",
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "fiction rated above -1",
+      "decision": "UNSUPPORTED",
+      "semantic_text": null,
+      "subjects": [
+        "Fiction"
+      ],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "books about events between 1940 and 1950",
+      "decision": "EXECUTABLE",
+      "semantic_text": "events between 1940 1950",
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "books published after 2020 about events between 1940 and 1950",
+      "decision": "EXECUTABLE",
+      "semantic_text": "events between 1940 1950",
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": 2020,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "history from 2020 onward",
+      "decision": "EXECUTABLE",
+      "semantic_text": "history from 2020 onward",
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "books about history from 2020 onward",
+      "decision": "EXECUTABLE",
+      "semantic_text": "history from 2020 onward",
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "fiction without online books",
+      "decision": "EXECUTABLE",
+      "semantic_text": null,
+      "subjects": [
+        "Fiction"
+      ],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [
+        "ONLINE"
+      ],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "fiction excluding physical books",
+      "decision": "EXECUTABLE",
+      "semantic_text": null,
+      "subjects": [
+        "Fiction"
+      ],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [
+        "PHYSICAL"
+      ],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "online and not online",
+      "decision": "CONTRADICTORY",
+      "semantic_text": null,
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [
+        "ONLINE"
+      ],
+      "exclusive_formats": [],
+      "excluded_formats": [
+        "ONLINE"
+      ],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "online only and physical only",
+      "decision": "CONTRADICTORY",
+      "semantic_text": null,
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [
+        "ONLINE",
+        "PHYSICAL"
+      ],
+      "exclusive_formats": [
+        "ONLINE",
+        "PHYSICAL"
+      ],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "not only fiction",
+      "decision": "EXECUTABLE",
+      "semantic_text": "not only fiction",
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "online books I can access now",
+      "decision": "EXECUTABLE",
+      "semantic_text": null,
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [
+        "ONLINE"
+      ],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": "AVAILABLE_NOW",
+      "physical_available_only": false
+    },
+    {
+      "query": "histroy",
+      "decision": "EXECUTABLE",
+      "semantic_text": null,
+      "subjects": [
+        "History"
+      ],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": null,
+      "physical_available_only": false
+    },
+    {
+      "query": "available to borrow physically",
+      "decision": "EXECUTABLE",
+      "semantic_text": null,
+      "subjects": [],
+      "rating_min": null,
+      "rating_max": null,
+      "year_min": null,
+      "year_max": null,
+      "formats": [
+        "PHYSICAL"
+      ],
+      "exclusive_formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "availability": "REQUESTABLE",
+      "physical_available_only": true
+    }
+  ],
+  "latest_session_probe_evidence": [
+    {
+      "prior_query": "books about machine learning",
+      "query": "not online",
+      "continued": true,
+      "decision": "EXECUTABLE",
+      "semantic_text": "machine learning",
+      "subjects": [],
+      "rating_min": null,
+      "formats": [],
+      "excluded_formats": [
+        "ONLINE"
+      ],
+      "exclude_terms": [],
+      "constraint_candidates": [
+        {
+          "field": "excluded_formats",
+          "operator": "SESSION_EDIT",
+          "normalized_value": [
+            "ONLINE"
+          ],
+          "source_span_start": 0,
+          "source_span_end": 10,
+          "source_text": "not online",
+          "source_query": "not online",
+          "recognizer_id": "session.explicit_refinement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null
+        }
+      ],
+      "source_spans": [
+        {
+          "kind": "STRUCTURED_CONSTRAINT",
+          "start": 0,
+          "end": 10,
+          "text": "not online",
+          "source_query": "not online"
+        }
+      ]
+    },
+    {
+      "prior_query": "books about machine learning",
+      "query": "not romance rated above 4",
+      "continued": true,
+      "decision": "EXECUTABLE",
+      "semantic_text": "machine learning",
+      "subjects": [],
+      "rating_min": 4.0,
+      "formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [
+        "Romance"
+      ],
+      "constraint_candidates": [
+        {
+          "field": "rating_min",
+          "operator": "SESSION_EDIT",
+          "normalized_value": 4.0,
+          "source_span_start": 0,
+          "source_span_end": 25,
+          "source_text": "not romance rated above 4",
+          "source_query": "not romance rated above 4",
+          "recognizer_id": "session.explicit_refinement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null
+        },
+        {
+          "field": "exclude_terms",
+          "operator": "SESSION_EDIT",
+          "normalized_value": [
+            "Romance"
+          ],
+          "source_span_start": 0,
+          "source_span_end": 25,
+          "source_text": "not romance rated above 4",
+          "source_query": "not romance rated above 4",
+          "recognizer_id": "session.explicit_refinement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null
+        }
+      ],
+      "source_spans": [
+        {
+          "kind": "STRUCTURED_CONSTRAINT",
+          "start": 0,
+          "end": 25,
+          "text": "not romance rated above 4",
+          "source_query": "not romance rated above 4"
+        },
+        {
+          "kind": "STRUCTURED_CONSTRAINT",
+          "start": 0,
+          "end": 25,
+          "text": "not romance rated above 4",
+          "source_query": "not romance rated above 4"
+        }
+      ]
+    },
+    {
+      "prior_query": "books about machine learning",
+      "query": "rating above 4",
+      "continued": true,
+      "decision": "EXECUTABLE",
+      "semantic_text": "machine learning",
+      "subjects": [],
+      "rating_min": 4.0,
+      "formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "constraint_candidates": [
+        {
+          "field": "rating_min",
+          "operator": "SESSION_EDIT",
+          "normalized_value": 4.0,
+          "source_span_start": 0,
+          "source_span_end": 14,
+          "source_text": "rating above 4",
+          "source_query": "rating above 4",
+          "recognizer_id": "session.explicit_refinement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null
+        }
+      ],
+      "source_spans": [
+        {
+          "kind": "STRUCTURED_CONSTRAINT",
+          "start": 0,
+          "end": 14,
+          "text": "rating above 4",
+          "source_query": "rating above 4"
+        }
+      ]
+    },
+    {
+      "prior_query": "books about machine learning",
+      "query": "show me fiction instead",
+      "continued": true,
+      "decision": "EXECUTABLE",
+      "semantic_text": null,
+      "subjects": [
+        "Fiction"
+      ],
+      "rating_min": null,
+      "formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "constraint_candidates": [
+        {
+          "field": "semantic_text",
+          "operator": "SESSION_EDIT",
+          "normalized_value": null,
+          "source_span_start": 0,
+          "source_span_end": 23,
+          "source_text": "show me fiction instead",
+          "source_query": "show me fiction instead",
+          "recognizer_id": "session.explicit_refinement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null
+        },
+        {
+          "field": "subjects",
+          "operator": "SESSION_EDIT",
+          "normalized_value": [
+            "Fiction"
+          ],
+          "source_span_start": 0,
+          "source_span_end": 23,
+          "source_text": "show me fiction instead",
+          "source_query": "show me fiction instead",
+          "recognizer_id": "session.explicit_refinement",
+          "specificity": 100,
+          "support_status": "SUPPORTED",
+          "repair_provenance": null
+        }
+      ],
+      "source_spans": [
+        {
+          "kind": "STRUCTURED_CONSTRAINT",
+          "start": 0,
+          "end": 23,
+          "text": "show me fiction instead",
+          "source_query": "show me fiction instead"
+        },
+        {
+          "kind": "STRUCTURED_CONSTRAINT",
+          "start": 0,
+          "end": 23,
+          "text": "show me fiction instead",
+          "source_query": "show me fiction instead"
+        }
+      ]
+    },
+    {
+      "prior_query": "books about machine learning",
+      "query": "something different",
+      "continued": false,
+      "decision": "EXECUTABLE",
+      "semantic_text": null,
+      "subjects": [],
+      "rating_min": null,
+      "formats": [],
+      "excluded_formats": [],
+      "exclude_terms": [],
+      "constraint_candidates": [],
+      "source_spans": []
+    }
+  ],
+  "additional_assertions": {
+    "passed": 18,
+    "total": 18,
+    "session_source_slices_valid": true,
+    "borrow_physical_stock_enforced": true,
+    "explicit_control_equal_rating_bounds": [
+      4.0,
+      4.0,
+      false,
+      "EXECUTABLE"
+    ],
+    "unchanged_empty_controls_preserve_prior_exclusive_rating": [
+      3.0,
+      true
+    ]
+  },
+  "privacy_review": "Tenant canonical facets loaded inside read_context before parse; second read_context before hydration; guarded public decision omits internal recognized candidates/provenance. No authorization weakening found in reviewed source. Runtime auth matrix belongs to primary agent.",
+  "scope_limits": "Read-only source/parser probes and separately saved reports only. No implementation/corpus edits, browser, full engine execution, live auth mutation, or full acceptance claim. Full authorization, runtime retrieval and browser matrix belongs to primary agent. Source hashes identify reviewed snapshot.",
+  "initial_review": {
+    "corpus_sha256": "2a83b05aa495b8a08bba90a029783b0c90f29c1f65c2e7bfd08913fc062fddc8",
+    "manual_gold_rows_reviewed": 128,
+    "findings": [
+      {
+        "id": "R1",
+        "severity": "HIGH",
+        "file": "search/query_repair.py",
+        "problem": "Unrecognized/incomplete hard-constraint cues can execute as semantic search. rated above, rating >, malformed numeric/year values bypass trailing missing_pattern.",
+        "examples": [
+          "fiction rated above",
+          "fiction rating >",
+          "fiction rating above banana",
+          "fiction published after tomorrow",
+          "fiction rated above -1"
+        ],
+        "required_change": "Recognize unresolved field/operator/value spans before legacy grammar deletes rating words; return typed INCOMPLETE/UNSUPPORTED without execution."
+      },
+      {
+        "id": "R2",
+        "severity": "HIGH",
+        "file": "search/query_constraints.py",
+        "problem": "year.range accepts between/from anywhere, including historical subject matter; can invent publication bounds and false contradictions.",
+        "examples": [
+          "books about events between 1940 and 1950",
+          "books published after 2020 about events between 1940 and 1950"
+        ],
+        "required_change": "Require publication/year field evidence or pure coordinated constraint construction for ranges, preserving historical-era topic text."
+      },
+      {
+        "id": "R3",
+        "severity": "HIGH",
+        "file": "search/query_constraints.py",
+        "problem": "Format presence recognizer consumes physical/online before without/excluding negation, reversing explicit negative format meaning.",
+        "examples": [
+          "fiction without online books",
+          "fiction excluding physical books"
+        ],
+        "required_change": "Recognize all accepted negative cues before positive format spans and enforce excluded_formats."
+      },
+      {
+        "id": "R4",
+        "severity": "HIGH",
+        "file": "search/query_session.py",
+        "problem": "Session broad negative branch bypasses compositional parsing: not online becomes title-word exclusion; compound refinement swallows rating bound.",
+        "examples": [
+          "not online",
+          "not romance rated above 4"
+        ],
+        "required_change": "Reuse typed delta parser and validate rather than treating all remaining text as a literal exclusion."
+      },
+      {
+        "id": "R5",
+        "severity": "MEDIUM",
+        "file": "search/query_confidence.py",
+        "problem": "Positive/excluded same format remains EXECUTABLE; exclusive-online plus physical presence remains EXECUTABLE.",
+        "examples": [
+          "online and not online",
+          "online only and physical"
+        ],
+        "required_change": "Detect format inclusion/exclusion collisions and incompatible exclusivity/presence combinations."
+      },
+      {
+        "id": "R7",
+        "severity": "MEDIUM",
+        "file": "search/query_session.py",
+        "problem": "Session direct hard-bound refinements set fields without importing delta source candidates/spans; current raw query differs from retained old topic source spans.",
+        "examples": [
+          "rating above 4"
+        ],
+        "required_change": "Preserve inherited source-query provenance and append current delta provenance; every newly applied hard field needs source evidence."
+      },
+      {
+        "id": "R8",
+        "severity": "MEDIUM",
+        "file": "reports/search_v2c_a_gold_queries.jsonl",
+        "case_id": "gold-070",
+        "problem": "Gold label requires strict Fiction subject for not only fiction; idiom permits more than Fiction and should not narrow to Fiction alone.",
+        "required_change": "Retain literal/semantic preference or typed notice; independently review corrected label."
+      },
+      {
+        "id": "R9",
+        "severity": "MEDIUM",
+        "file": "scripts/search_v2c_a_corpus.py",
+        "problem": "Gold corpus has no typo example despite required typographical variants family.",
+        "required_change": "Add independently labelled actual-vocabulary typo/correction cases; do not count seeded case/space variation as spelling errors."
+      },
+      {
+        "id": "R10",
+        "severity": "LOW",
+        "file": "reports/search_v2c_a_metamorphic_queries.jsonl",
+        "problem": "1000 generated rows repeat only96 exact strings/48 case-space-normalized strings.",
+        "required_change": "Report1000template executions honestly and distinct-query counts; broaden generated forms if claiming1000distinctvariants."
+      }
+    ],
+    "probe_evidence": [
+      {
+        "query": "fiction rated above",
+        "decision": "INCOMPLETE",
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "fiction rating >",
+        "decision": "INCOMPLETE",
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "fiction rating above banana",
+        "decision": "INCOMPLETE",
+        "semantic_text": "fiction above banana",
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "fiction published after tomorrow",
+        "decision": "INCOMPLETE",
+        "semantic_text": "fiction published after tomorrow",
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "fiction rated above -1",
+        "decision": "UNSUPPORTED",
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "books about events between 1940 and 1950",
+        "decision": "EXECUTABLE",
+        "semantic_text": "events between 1940 1950",
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": true
+      },
+      {
+        "query": "books published after 2020 about events between 1940 and 1950",
+        "decision": "EXECUTABLE",
+        "semantic_text": "events between 1940 1950",
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": 2020,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "fiction without online books",
+        "decision": "EXECUTABLE",
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [
+          "ONLINE"
+        ],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "fiction excluding physical books",
+        "decision": "EXECUTABLE",
+        "semantic_text": null,
+        "subjects": [
+          "Fiction"
+        ],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [
+          "PHYSICAL"
+        ],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "online and not online",
+        "decision": "CONTRADICTORY",
+        "semantic_text": null,
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [],
+        "excluded_formats": [
+          "ONLINE"
+        ],
+        "exclude_terms": [],
+        "combined_format_book_passes": false
+      },
+      {
+        "query": "online only and physical",
+        "decision": "EXECUTABLE",
+        "semantic_text": null,
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [
+          "ONLINE",
+          "PHYSICAL"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": true
+      },
+      {
+        "query": "online only",
+        "decision": "EXECUTABLE",
+        "semantic_text": null,
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": true
+      },
+      {
+        "query": "not only fiction",
+        "decision": "EXECUTABLE",
+        "semantic_text": "not only fiction",
+        "subjects": [],
+        "rating_min": null,
+        "rating_max": null,
+        "year_min": null,
+        "year_max": null,
+        "formats": [],
+        "exclusive_formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "combined_format_book_passes": true
+      }
+    ],
+    "session_probe_evidence": [
+      {
+        "prior_query": "books about machine learning",
+        "query": "not online",
+        "continued": true,
+        "semantic_text": "machine learning",
+        "rating_min": null,
+        "formats": [],
+        "excluded_formats": [
+          "ONLINE"
+        ],
+        "exclude_terms": [],
+        "constraint_candidates": [
+          {
+            "field": "excluded_formats",
+            "operator": "SESSION_EDIT",
+            "normalized_value": [
+              "ONLINE"
+            ],
+            "source_span_start": 0,
+            "source_span_end": 10,
+            "source_text": "not online",
+            "source_query": "not online",
+            "recognizer_id": "session.explicit_refinement",
+            "specificity": 100,
+            "support_status": "SUPPORTED",
+            "repair_provenance": null
+          }
+        ],
+        "source_spans": [
+          {
+            "kind": "STRUCTURED_CONSTRAINT",
+            "start": 0,
+            "end": 10,
+            "text": "not online",
+            "source_query": "not online"
+          }
+        ]
+      },
+      {
+        "prior_query": "books about machine learning",
+        "query": "not romance rated above 4",
+        "continued": true,
+        "semantic_text": "machine learning",
+        "rating_min": 4.0,
+        "formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [
+          "Romance"
+        ],
+        "constraint_candidates": [
+          {
+            "field": "rating_min",
+            "operator": "SESSION_EDIT",
+            "normalized_value": 4.0,
+            "source_span_start": 0,
+            "source_span_end": 25,
+            "source_text": "not romance rated above 4",
+            "source_query": "not romance rated above 4",
+            "recognizer_id": "session.explicit_refinement",
+            "specificity": 100,
+            "support_status": "SUPPORTED",
+            "repair_provenance": null
+          },
+          {
+            "field": "exclude_terms",
+            "operator": "SESSION_EDIT",
+            "normalized_value": [
+              "Romance"
+            ],
+            "source_span_start": 0,
+            "source_span_end": 25,
+            "source_text": "not romance rated above 4",
+            "source_query": "not romance rated above 4",
+            "recognizer_id": "session.explicit_refinement",
+            "specificity": 100,
+            "support_status": "SUPPORTED",
+            "repair_provenance": null
+          }
+        ],
+        "source_spans": [
+          {
+            "kind": "STRUCTURED_CONSTRAINT",
+            "start": 0,
+            "end": 25,
+            "text": "not romance rated above 4",
+            "source_query": "not romance rated above 4"
+          },
+          {
+            "kind": "STRUCTURED_CONSTRAINT",
+            "start": 0,
+            "end": 25,
+            "text": "not romance rated above 4",
+            "source_query": "not romance rated above 4"
+          }
+        ]
+      },
+      {
+        "prior_query": "books about machine learning",
+        "query": "rating above 4",
+        "continued": true,
+        "semantic_text": "machine learning",
+        "rating_min": 4.0,
+        "formats": [],
+        "excluded_formats": [],
+        "exclude_terms": [],
+        "constraint_candidates": [
+          {
+            "field": "rating_min",
+            "operator": "SESSION_EDIT",
+            "normalized_value": 4.0,
+            "source_span_start": 0,
+            "source_span_end": 14,
+            "source_text": "rating above 4",
+            "source_query": "rating above 4",
+            "recognizer_id": "session.explicit_refinement",
+            "specificity": 100,
+            "support_status": "SUPPORTED",
+            "repair_provenance": null
+          }
+        ],
+        "source_spans": [
+          {
+            "kind": "STRUCTURED_CONSTRAINT",
+            "start": 0,
+            "end": 14,
+            "text": "rating above 4",
+            "source_query": "rating above 4"
+          }
+        ]
+      }
+    ],
+    "reviewed_source_hashes": {
+      "scripts/search_v2c_a_corpus.py": "a9971ae310b72869e737bb94fa0e937153c8972cd466f2061755052d9e145aee",
+      "search/query_constraints.py": "c188063cbf02f91492a4c614027d54f15dc518c5ba154f8ea55c5a2af3509a40",
+      "search/query_repair.py": "11a3a812b8947c7690ef594c0e7f28b41f18583574e477a025fe12ba300113c7",
+      "search/query_confidence.py": "6288b919e00c4c74b4d941229956fd4989049f1e9a464429819e6ab58f58d319",
+      "search/query_plan.py": "dcc84bdbe7b9791766b0db2177e55951971b6b0fb467a2c8d71a42eb0cb17854",
+      "search/query_session.py": "b4dd2bb01aa9651155c6910b8699360163d41e5e4d4dd5a1bfa1ab4a6215752e",
+      "search/session_store.py": "2bc4c249d7de78b50abfce0c4864fbc9d46773cedc5997f099eaf424d16ca235",
+      "search/query_execution.py": "c1f3bc0d367623f8a9f8bb4170eef6c67d26095bba6fc9be60859c8893ce910d"
+    }
+  },
+  "post_performance_change_review": {
+    "gold_parser_field_agreement": "136/136",
+    "source_segment_cases": [
+      {
+        "query": "books by Isaac  Asimov rated above 4",
+        "author_text": "isaac asimov",
+        "exclude_terms": [],
+        "rating_min": 4.0,
+        "subjects": [],
+        "decision": "EXECUTABLE",
+        "source_slices_valid": true
+      },
+      {
+        "query": "fiction excluding military  history rated above 4",
+        "author_text": null,
+        "exclude_terms": [
+          "Military History"
+        ],
+        "rating_min": 4.0,
+        "subjects": [
+          "Fiction"
+        ],
+        "decision": "EXECUTABLE",
+        "source_slices_valid": true
+      },
+      {
+        "query": "AI excluding deep  learning rated above 4",
+        "author_text": null,
+        "exclude_terms": [
+          "deep learning"
+        ],
+        "rating_min": 4.0,
+        "subjects": [],
+        "decision": "EXECUTABLE",
+        "source_slices_valid": true
+      },
+      {
+        "query": "science fiction 4",
+        "author_text": null,
+        "exclude_terms": [],
+        "rating_min": null,
+        "subjects": [
+          "Science fiction"
+        ],
+        "decision": "AMBIGUOUS",
+        "source_slices_valid": true
+      }
+    ],
+    "numeric_facet_lookup": "Single numeric-suffix regex + authorized exact vocabulary lookup replaces per-facet regex compilation. Canonical aliases accepted only through scoped vocabulary; no model inference.",
+    "rejected_refined_badge": "Source reviewed: !rejected condition hides refined badge for rejected typed decision; no runtime/browser claim.",
+    "corpus_sha256": "a8094c247bcfab8c168796ea7cd8c112cc8818a0b7ac8011197e0540dc655208"
+  }
+}

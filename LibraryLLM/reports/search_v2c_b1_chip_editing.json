@@ -1,0 +1,2550 @@
+{
+  "status": "PASS",
+  "captured_at": "2026-10-15T16:44:01.098207+00:00",
+  "real_running_backend": true,
+  "session_versions": [
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "context_id": "11e1b63b-94b3-4045-87a8-254250c8b134",
+  "mongo": [
+    {
+      "name": "chips_initial",
+      "context": {
+        "_id": "11e1b63b-94b3-4045-87a8-254250c8b134",
+        "user_id": "490",
+        "login_session": "180917b2c3e14560b33fe091f583c6be",
+        "scope": "LIBRARY",
+        "library_id": "468003a5-2972-46ef-ba69-967972f13ecb",
+        "workspace": "PATRON",
+        "current_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": "neural networks",
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Fiction",
+            "Wizards"
+          ],
+          "rating_min": 4.0,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [
+            "Romance"
+          ],
+          "exclude_subjects": [
+            "Romance"
+          ],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "previous_plan": {
+          "raw_query": "include Romance but exclude Romance",
+          "mode": "SMART",
+          "semantic_text": null,
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Romance"
+          ],
+          "rating_min": null,
+          "rating_max": null,
+          "rating_min_exclusive": false,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 0.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include romance but exclude romance",
+          "intent": "BROWSE_CATEGORY",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Romance"
+          ],
+          "exclude_terms": [],
+          "exclude_subjects": [],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Romance",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Romance",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Romance but exclude Romance"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 15,
+              "source_span_end": 20,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Romance but exclude Romance"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 20,
+              "source_span_end": 35,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Romance but exclude Romance"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Romance",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 20,
+              "end": 35,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 15,
+              "end": 20,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Romance",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Romance",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Romance but exclude Romance"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 15,
+                "source_span_end": 20,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Romance but exclude Romance"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 20,
+                "source_span_end": 35,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Romance but exclude Romance"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "version": 3,
+        "refinement_count": 0,
+        "refined": false,
+        "last_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+        "last_request": "b9dd32508e4835f3af49ba3ec04a088fe51d3a255f3a9026e2795395703beb38",
+        "last_filters": {
+          "subject": "",
+          "author": "",
+          "circulation_status": "",
+          "rating_min": null,
+          "rating_max": null,
+          "year_min": null,
+          "year_max": null,
+          "format": "",
+          "availability": "",
+          "language": "",
+          "sort": "RELEVANCE"
+        },
+        "created_at": "2026-10-15 13:37:17.871000",
+        "updated_at": "2026-10-15 13:37:59.596000",
+        "expires_at": "2026-10-15 14:07:59.596000",
+        "parser_version": "search-v2b-session-1"
+      }
+    },
+    {
+      "name": "chips_without_rating",
+      "context": {
+        "_id": "11e1b63b-94b3-4045-87a8-254250c8b134",
+        "user_id": "490",
+        "login_session": "180917b2c3e14560b33fe091f583c6be",
+        "scope": "LIBRARY",
+        "library_id": "468003a5-2972-46ef-ba69-967972f13ecb",
+        "workspace": "PATRON",
+        "current_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": "neural networks",
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Fiction",
+            "Wizards"
+          ],
+          "rating_min": null,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [
+            "Romance"
+          ],
+          "exclude_subjects": [
+            "Romance"
+          ],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "previous_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": "neural networks",
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Fiction",
+            "Wizards"
+          ],
+          "rating_min": 4.0,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [
+            "Romance"
+          ],
+          "exclude_subjects": [
+            "Romance"
+          ],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "version": 4,
+        "refinement_count": 1,
+        "refined": true,
+        "last_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+        "last_request": "42d32831ab9b30d508ca5dc989f6a9911dce0c3e7ec3ac7bb81a14e8b2995390",
+        "last_filters": {
+          "subject": "",
+          "author": "",
+          "circulation_status": "",
+          "rating_min": null,
+          "rating_max": null,
+          "year_min": null,
+          "year_max": null,
+          "format": "",
+          "availability": "",
+          "language": "",
+          "sort": "RELEVANCE"
+        },
+        "created_at": "2026-10-15 13:37:17.871000",
+        "updated_at": "2026-10-15 13:38:10.054000",
+        "expires_at": "2026-10-15 14:08:10.054000",
+        "parser_version": "search-v2b-session-1"
+      }
+    },
+    {
+      "name": "chips_without_exclusion",
+      "context": {
+        "_id": "11e1b63b-94b3-4045-87a8-254250c8b134",
+        "user_id": "490",
+        "login_session": "180917b2c3e14560b33fe091f583c6be",
+        "scope": "LIBRARY",
+        "library_id": "468003a5-2972-46ef-ba69-967972f13ecb",
+        "workspace": "PATRON",
+        "current_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": "neural networks",
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Fiction",
+            "Wizards"
+          ],
+          "rating_min": null,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [],
+          "exclude_subjects": [],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "previous_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": "neural networks",
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Fiction",
+            "Wizards"
+          ],
+          "rating_min": null,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [
+            "Romance"
+          ],
+          "exclude_subjects": [
+            "Romance"
+          ],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "version": 5,
+        "refinement_count": 2,
+        "refined": true,
+        "last_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+        "last_request": "723cff34a45dbfc80455ea723562632ffc0938ed9926add1f0103639dcf8a0da",
+        "last_filters": {
+          "subject": "",
+          "author": "",
+          "circulation_status": "",
+          "rating_min": null,
+          "rating_max": null,
+          "year_min": null,
+          "year_max": null,
+          "format": "",
+          "availability": "",
+          "language": "",
+          "sort": "RELEVANCE"
+        },
+        "created_at": "2026-10-15 13:37:17.871000",
+        "updated_at": "2026-10-15 13:38:23.278000",
+        "expires_at": "2026-10-15 14:08:23.278000",
+        "parser_version": "search-v2b-session-1"
+      }
+    },
+    {
+      "name": "chips_without_fiction",
+      "context": {
+        "_id": "11e1b63b-94b3-4045-87a8-254250c8b134",
+        "user_id": "490",
+        "login_session": "180917b2c3e14560b33fe091f583c6be",
+        "scope": "LIBRARY",
+        "library_id": "468003a5-2972-46ef-ba69-967972f13ecb",
+        "workspace": "PATRON",
+        "current_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": "neural networks",
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Wizards"
+          ],
+          "rating_min": null,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [],
+          "exclude_subjects": [],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "previous_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": "neural networks",
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Fiction",
+            "Wizards"
+          ],
+          "rating_min": null,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [],
+          "exclude_subjects": [],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "version": 6,
+        "refinement_count": 3,
+        "refined": true,
+        "last_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+        "last_request": "b8f3caa31d5ccdd08b0a6b469d369481d504af007c4b2ae77031f90e0483675e",
+        "last_filters": {
+          "subject": "",
+          "author": "",
+          "circulation_status": "",
+          "rating_min": null,
+          "rating_max": null,
+          "year_min": null,
+          "year_max": null,
+          "format": "",
+          "availability": "",
+          "language": "",
+          "sort": "RELEVANCE"
+        },
+        "created_at": "2026-10-15 13:37:17.871000",
+        "updated_at": "2026-10-15 13:38:38.295000",
+        "expires_at": "2026-10-15 14:08:38.295000",
+        "parser_version": "search-v2b-session-1"
+      }
+    },
+    {
+      "name": "chips_without_topic",
+      "context": {
+        "_id": "11e1b63b-94b3-4045-87a8-254250c8b134",
+        "user_id": "490",
+        "login_session": "180917b2c3e14560b33fe091f583c6be",
+        "scope": "LIBRARY",
+        "library_id": "468003a5-2972-46ef-ba69-967972f13ecb",
+        "workspace": "PATRON",
+        "current_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": null,
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Wizards"
+          ],
+          "rating_min": null,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [],
+          "exclude_subjects": [],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "previous_plan": {
+          "raw_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+          "mode": "SMART",
+          "semantic_text": "neural networks",
+          "title_text": null,
+          "author_text": null,
+          "subjects": [
+            "Wizards"
+          ],
+          "rating_min": null,
+          "rating_max": null,
+          "rating_min_exclusive": true,
+          "rating_max_exclusive": false,
+          "year_min": null,
+          "year_max": null,
+          "year_min_exclusive": false,
+          "year_max_exclusive": false,
+          "formats": [],
+          "availability": null,
+          "language": null,
+          "exact_text": null,
+          "sort": "RELEVANCE",
+          "interpretation_confidence": 1.0,
+          "corrections": [],
+          "unknown_subject": false,
+          "suggested_subject": null,
+          "normalized_query": "include fiction and wizards but exclude romance rated above 4 about neural networks",
+          "intent": "DISCOVER_TOPIC",
+          "parser_version": "search-v2c-a1-compositional-1",
+          "include_terms": [
+            "Fiction",
+            "Wizards"
+          ],
+          "exclude_terms": [],
+          "exclude_subjects": [],
+          "expanded_subjects": [],
+          "soft_preference": null,
+          "kg_expansion_used": false,
+          "kg_generation": null,
+          "constraint_candidates": [
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Fiction",
+              "source_span_start": 0,
+              "source_span_end": 15,
+              "source_text": "include Fiction",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "subject",
+              "operator": "INCLUDE",
+              "normalized_value": "Wizards",
+              "source_span_start": 15,
+              "source_span_end": 27,
+              "source_text": " and Wizards",
+              "recognizer_id": "subject.explicit_include",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "connector",
+              "operator": "GRAMMAR",
+              "normalized_value": null,
+              "source_span_start": 27,
+              "source_span_end": 32,
+              "source_text": " but ",
+              "recognizer_id": "subject.clause_connector",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "excluded_subject",
+              "operator": "NOT",
+              "normalized_value": "Romance",
+              "source_span_start": 32,
+              "source_span_end": 47,
+              "source_text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            },
+            {
+              "field": "rating",
+              "operator": ">",
+              "normalized_value": 4.0,
+              "source_span_start": 48,
+              "source_span_end": 61,
+              "source_text": "rated above 4",
+              "recognizer_id": "rating.field_operator",
+              "specificity": 100,
+              "support_status": "SUPPORTED",
+              "repair_provenance": null,
+              "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+            }
+          ],
+          "source_spans": [
+            {
+              "kind": "STRUCTURED_CONSTRAINT",
+              "start": 48,
+              "end": 61,
+              "text": "rated above 4",
+              "recognizer_id": "rating.field_operator"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 0,
+              "end": 15,
+              "text": "include Fiction",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 15,
+              "end": 27,
+              "text": " and Wizards",
+              "recognizer_id": "subject.explicit_include"
+            },
+            {
+              "kind": "CANONICAL_FACET",
+              "start": 32,
+              "end": 47,
+              "text": "exclude Romance",
+              "recognizer_id": "subject.explicit_exclude"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 27,
+              "end": 32,
+              "text": " but ",
+              "recognizer_id": "subject.clause_connector"
+            },
+            {
+              "kind": "GRAMMATICAL_CONNECTOR",
+              "start": 62,
+              "end": 67,
+              "text": "about"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 68,
+              "end": 74,
+              "text": "neural"
+            },
+            {
+              "kind": "SEMANTIC_TOPIC",
+              "start": 75,
+              "end": 83,
+              "text": "networks"
+            }
+          ],
+          "decision": {
+            "decision_type": "EXECUTABLE",
+            "reason_code": "VALIDATED",
+            "relevant_source_spans": [],
+            "affected_fields": [],
+            "recognized_candidates": [
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Fiction",
+                "source_span_start": 0,
+                "source_span_end": 15,
+                "source_text": "include Fiction",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "subject",
+                "operator": "INCLUDE",
+                "normalized_value": "Wizards",
+                "source_span_start": 15,
+                "source_span_end": 27,
+                "source_text": " and Wizards",
+                "recognizer_id": "subject.explicit_include",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "connector",
+                "operator": "GRAMMAR",
+                "normalized_value": null,
+                "source_span_start": 27,
+                "source_span_end": 32,
+                "source_text": " but ",
+                "recognizer_id": "subject.clause_connector",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "excluded_subject",
+                "operator": "NOT",
+                "normalized_value": "Romance",
+                "source_span_start": 32,
+                "source_span_end": 47,
+                "source_text": "exclude Romance",
+                "recognizer_id": "subject.explicit_exclude",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              },
+              {
+                "field": "rating",
+                "operator": ">",
+                "normalized_value": 4.0,
+                "source_span_start": 48,
+                "source_span_end": 61,
+                "source_text": "rated above 4",
+                "recognizer_id": "rating.field_operator",
+                "specificity": 100,
+                "support_status": "SUPPORTED",
+                "repair_provenance": null,
+                "source_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks"
+              }
+            ],
+            "unresolved_fragments": [],
+            "safe_public_message": "",
+            "parser_version": "search-v2c-a1-compositional-1"
+          },
+          "exclusive_formats": [],
+          "excluded_formats": [],
+          "physical_available_only": false
+        },
+        "version": 7,
+        "refinement_count": 4,
+        "refined": true,
+        "last_query": "include Fiction and Wizards but exclude Romance rated above 4 about neural networks",
+        "last_request": "8e86ad0133201f533638a5bc34b71f6ef38f1cee858c612575cbeb18710d9102",
+        "last_filters": {
+          "subject": "",
+          "author": "",
+          "circulation_status": "",
+          "rating_min": null,
+          "rating_max": null,
+          "year_min": null,
+          "year_max": null,
+          "format": "",
+          "availability": "",
+          "language": "",
+          "sort": "RELEVANCE"
+        },
+        "created_at": "2026-10-15 13:37:17.871000",
+        "updated_at": "2026-10-15 13:38:56.150000",
+        "expires_at": "2026-10-15 14:08:56.150000",
+        "parser_version": "search-v2b-session-1"
+      }
+    }
+  ],
+  "network": "search_v2c_b1_browser_network_final.json",
+  "result_titles_every_edit": [
+    "V2CB1 Wizards Fiction"
+  ],
+  "tests": [
+    {
+      "name": "test_one_chip_removal_keeps_other_subjects_and_exclusions[False]",
+      "module": "tests.institution_v2g.test_query_v2c_b",
+      "passed": true
+    },
+    {
+      "name": "test_one_chip_removal_keeps_other_subjects_and_exclusions[True]",
+      "module": "tests.institution_v2g.test_query_v2c_b",
+      "passed": true
+    },
+    {
+      "name": "test_forged_chip_addresses_cannot_inject_or_change_ownership",
+      "module": "tests.institution_v2g.test_query_v2c_b1",
+      "passed": true
+    }
+  ],
+  "forged_plan_json_rejected": 422,
+  "unknown_remove_keys": "ignored; no plan injection or ownership change"
+}

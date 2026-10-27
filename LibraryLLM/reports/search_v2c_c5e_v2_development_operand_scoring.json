@@ -1,0 +1,272 @@
+{
+  "BOTH_equivalence_proof": {
+    "applied_to": "all expected and actual formats, every row in the representation-normalized view",
+    "does_not_normalize": [
+      "excluded subject versus broad text",
+      "exclusive_formats",
+      "excluded_formats",
+      "decision",
+      "intent"
+    ],
+    "parser_calls": 0,
+    "proof": "matches iterates every format conjunctively. BOTH rejects missing online and missing physical. Two separate ONLINE/PHYSICAL operands impose exactly these same predicates, including unknown/missing values.",
+    "raw_metrics_retained": true,
+    "rule": "formats ONLY: expand BOTH into ONLINE and PHYSICAL; compare conjunctive sets",
+    "source": "search/query_plan.py",
+    "source_conditions": [
+      "fmt in ('ONLINE', 'BOTH') and book.get('has_online') is not True",
+      "fmt in ('PHYSICAL', 'BOTH') and book.get('has_physical') is not True"
+    ],
+    "source_sha256": "376224248025cd56008b03febd3e4b60527b2ae8da8c22188c508b058cab1152",
+    "truth_table": [
+      {
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false,
+        "has_online": false,
+        "has_physical": false
+      },
+      {
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false,
+        "has_online": false,
+        "has_physical": true
+      },
+      {
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false,
+        "has_online": false,
+        "has_physical": null
+      },
+      {
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false,
+        "has_online": true,
+        "has_physical": false
+      },
+      {
+        "BOTH_accepts": true,
+        "ONLINE_and_PHYSICAL_accepts": true,
+        "has_online": true,
+        "has_physical": true
+      },
+      {
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false,
+        "has_online": true,
+        "has_physical": null
+      },
+      {
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false,
+        "has_online": null,
+        "has_physical": false
+      },
+      {
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false,
+        "has_online": null,
+        "has_physical": true
+      },
+      {
+        "BOTH_accepts": false,
+        "ONLINE_and_PHYSICAL_accepts": false,
+        "has_online": null,
+        "has_physical": null
+      }
+    ]
+  },
+  "actor_accuracy": {
+    "denominator": 0,
+    "numerator": null,
+    "percent": null,
+    "reason": "No predicted role output or independent actor oracle for this parser.",
+    "status": "N/A"
+  },
+  "list_case_whitespace_normalization": "Unchanged evaluator norm()",
+  "native_boundary_handling": "N/A: no native API assertions executed. Foreign vocabulary diagnostic only.",
+  "new_structured_soft_preference_accuracy": {
+    "denominator": 0,
+    "numerator": null,
+    "percent": null,
+    "reason": "No established object-to-display-string scoring adapter.",
+    "status": "N/A"
+  },
+  "per_field": {
+    "author_text": {
+      "denominator": 604,
+      "numerator": 597,
+      "percent": 98.84105960264901,
+      "status": "MEASURED"
+    },
+    "availability": {
+      "denominator": 523,
+      "numerator": 523,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "exact_text": {
+      "denominator": 50,
+      "numerator": 50,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "exclude_subjects": {
+      "denominator": 613,
+      "numerator": 607,
+      "percent": 99.02120717781403,
+      "status": "MEASURED"
+    },
+    "exclude_terms": {
+      "denominator": 629,
+      "numerator": 603,
+      "percent": 95.8664546899841,
+      "status": "MEASURED"
+    },
+    "excluded_formats": {
+      "denominator": 644,
+      "numerator": 644,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "exclusive_formats": {
+      "denominator": 634,
+      "numerator": 634,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "expected_contradiction_fields": {
+      "denominator": 644,
+      "numerator": 553,
+      "percent": 85.8695652173913,
+      "status": "MEASURED"
+    },
+    "expected_incomplete_fields": {
+      "denominator": 644,
+      "numerator": 553,
+      "percent": 85.8695652173913,
+      "status": "MEASURED"
+    },
+    "expected_unsupported_fields": {
+      "denominator": 644,
+      "numerator": 546,
+      "percent": 84.78260869565217,
+      "status": "MEASURED"
+    },
+    "formats": {
+      "denominator": 632,
+      "numerator": 632,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "intent": {
+      "denominator": 50,
+      "numerator": 0,
+      "percent": 0.0,
+      "status": "MEASURED"
+    },
+    "language": {
+      "denominator": 469,
+      "numerator": 469,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "protected_entities": {
+      "denominator": 589,
+      "numerator": 566,
+      "percent": 96.09507640067912,
+      "status": "MEASURED"
+    },
+    "rating_max": {
+      "denominator": 621,
+      "numerator": 616,
+      "percent": 99.19484702093398,
+      "status": "MEASURED"
+    },
+    "rating_max_exclusive": {
+      "denominator": 636,
+      "numerator": 636,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "rating_min": {
+      "denominator": 616,
+      "numerator": 605,
+      "percent": 98.21428571428571,
+      "status": "MEASURED"
+    },
+    "rating_min_exclusive": {
+      "denominator": 621,
+      "numerator": 621,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "semantic_text": {
+      "denominator": 644,
+      "numerator": 412,
+      "percent": 63.975155279503106,
+      "status": "MEASURED"
+    },
+    "soft_preference": {
+      "denominator": 50,
+      "numerator": 50,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "sort": {
+      "denominator": 50,
+      "numerator": 50,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "subjects": {
+      "denominator": 614,
+      "numerator": 612,
+      "percent": 99.6742671009772,
+      "status": "MEASURED"
+    },
+    "title_text": {
+      "denominator": 609,
+      "numerator": 609,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "year_max": {
+      "denominator": 515,
+      "numerator": 511,
+      "percent": 99.22330097087378,
+      "status": "MEASURED"
+    },
+    "year_max_exclusive": {
+      "denominator": 515,
+      "numerator": 515,
+      "percent": 100.0,
+      "status": "MEASURED"
+    },
+    "year_min": {
+      "denominator": 515,
+      "numerator": 511,
+      "percent": 99.22330097087378,
+      "status": "MEASURED"
+    },
+    "year_min_exclusive": {
+      "denominator": 515,
+      "numerator": 515,
+      "percent": 100.0,
+      "status": "MEASURED"
+    }
+  },
+  "scope_accuracy": {
+    "denominator": 0,
+    "numerator": null,
+    "percent": null,
+    "reason": "Scope and authorization context supplied; parser emits no predicted scope.",
+    "status": "N/A"
+  },
+  "semantic_remainder_token_f1": {
+    "denominator": 644,
+    "numerator": 412.0,
+    "percent": 63.975155279503106,
+    "status": "MEASURED"
+  },
+  "strict_match": "All scored dimensions only, not complete-plan accuracy for partially applicable contexts."
+}

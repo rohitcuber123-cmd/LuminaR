@@ -102,11 +102,50 @@ test('another account cannot inherit stored contexts', async () => { await store
 test('promotion removes old patron selection for that same membership', async () => { libraries=libraries.map(l=>l.library_id===b?library(b,'LIBRARIAN'):l); await store.getState().select(b); assert.equal(store.getState().patronLibraryId,null); assert.equal(store.getState().staffLibraryId,b) })
 test('global catalogue targets B even after staff switches A to C', async () => { await store.getState().select(c); assert.equal(patronCatalogueDestination(),`/libraries/${b}/catalogue`) })
 test('global catalogue without explicit patron selection opens patron selector', () => { store.setState({patronLibraryId:null}); assert.equal(patronCatalogueDestination(),'/account/libraries?group=patron') })
-for (const mode of ['staff','patron']) test(`${mode} switcher lists only its membership roles`, () => { render(<MemoryRouter><LibrarySwitcher staff={mode==='staff'} /></MemoryRouter>); const options=screen.getAllByRole('option').map(n=>n.textContent); assert.deepEqual(options,mode==='staff'?['Library A','Library C']:['Library B','Library D']); assert.equal(screen.queryByLabelText('Active library'),null) })
+for (const mode of ['staff','patron']) test(`${mode} switcher offers global and only its membership roles`, () => { render(<MemoryRouter><LibrarySwitcher staff={mode==='staff'} /></MemoryRouter>); fireEvent.click(screen.getByRole('combobox')); const options=screen.getAllByRole('option').map(n=>n.textContent); assert.deepEqual(options,mode==='staff'?['Global catalogue','Library A','Library C']:['Global catalogue','Library B','Library D']); assert.equal(screen.queryByLabelText('Active library'),null) })
+for (const staff of [false, true]) test(`${staff ? 'staff' : 'patron'} with one library can switch to global without retaining route context`, () => {
+  const id = staff ? a : b
+  store.setState({ libraries: [library(id, staff ? 'ADMIN' : 'GENERAL_USER')] })
+  render(<MemoryRouter initialEntries={[`${staff ? '/staff' : ''}/libraries/${id}?search=systems#books`]}><LibrarySwitcher staff={staff} /><Position /><Header /></MemoryRouter>)
+  fireEvent.click(screen.getByRole('combobox'))
+  fireEvent.click(screen.getByRole('option', { name: 'Global catalogue', exact: true }))
+  assert.equal(screen.getByTestId('position').textContent, '/')
+  assert.equal(screen.getByRole('link', { name: 'Catalog', exact: true }).getAttribute('href'), '/catalog')
+  assert.equal(store.getState()[staff ? 'staffLibraryId' : 'patronLibraryId'], id)
+})
+test('global header shows Global selected and all active memberships', () => {
+  render(<MemoryRouter><Header /></MemoryRouter>)
+  const switcher = screen.getByRole('combobox', { name: 'Switch catalogue' })
+  assert.equal(switcher.textContent, 'Global catalogue')
+  fireEvent.click(switcher)
+  assert.deepEqual(screen.getAllByRole('option').map(n => n.textContent), ['Global catalogue', 'Library A', 'Library B', 'Library C', 'Library D'])
+})
+for (const staff of [false, true]) test(`global dropdown remains available after a ${staff ? 'staff' : 'patron'} library round trip`, async () => {
+  const id = staff ? a : b, path = `${staff ? '/staff' : ''}/libraries/${id}`
+  render(<MemoryRouter><Header /><Position /><Routes>
+    <Route path="/" element={<p>Global home</p>} />
+    <Route path="/libraries/:libraryId" element={<WorkspaceRoute><LibrarySwitcher /></WorkspaceRoute>} />
+    <Route path="/staff/libraries/:libraryId" element={<WorkspaceRoute staff><LibrarySwitcher staff /></WorkspaceRoute>} />
+  </Routes></MemoryRouter>)
+  fireEvent.click(screen.getByRole('combobox', { name: 'Switch catalogue' }))
+  fireEvent.click(screen.getByRole('option', { name: staff ? 'Library A' : 'Library B', exact: true }))
+  await screen.findByRole('combobox', { name: staff ? 'Switch staff library' : 'Switch patron library' })
+  assert.equal(screen.getByTestId('position').textContent, path)
+  fireEvent.click(screen.getByRole('combobox'))
+  fireEvent.click(screen.getByRole('option', { name: 'Global catalogue', exact: true }))
+  assert.equal(screen.getByTestId('position').textContent, '/')
+  assert.equal(screen.getByRole('combobox', { name: 'Switch catalogue' }).textContent, 'Global catalogue')
+})
+test('global dropdown excludes memberships cached for another session', () => {
+  store.setState({ session: 'another-session' })
+  render(<MemoryRouter><Header /></MemoryRouter>)
+  fireEvent.click(screen.getByRole('combobox', { name: 'Switch catalogue' }))
+  assert.deepEqual(screen.getAllByRole('option').map(n => n.textContent), ['Global catalogue'])
+})
 test('legacy patron link uses remembered patron B while route context is staff A', async () => { mount('/library-loans'); await screen.findByText('Patron account content'); assert.equal(screen.getByTestId('position').textContent,`/libraries/${b}/my-library`) })
 test('legacy staff link uses staff A after patron B was viewed', async () => { store.setState({activeId:b}); mount('/library-circulation'); await screen.findByRole('heading',{name:'Circulation'}); assert.ok(screen.getByTestId('position').textContent?.startsWith(`/staff/libraries/${a}/`)) })
 for (const count of [0,1,4]) test(`login landing for ${count} memberships`, async () => { libraries=libraries.slice(0,count); store.setState({libraries}); mount('/account/continue'); await screen.findByText(count===0?'Global home':count===1?'Staff home content':'My libraries') })
-test('login preserves explicit library deep-link query and fragment', () => { assert.equal(workspaceDestination(`/libraries/${b}/my-library?history=1#returns`),`/libraries/${b}/my-library?history=1#returns`) })
+test('login preserves library deep-link for fresh authority resolution', () => { const path=`/libraries/${b}/my-library?history=1#returns`;assert.equal(new URLSearchParams(workspaceDestination(path).split('?')[1]).get('return_to'),path);assert.ok(workspaceDestination(path).startsWith('/account/continue?')) })
 for (const path of ['//evil.example','https://evil.example','/login','/staff/login','/dashboard','/account/continue','/\\evil']) test(`login rejects ambiguous destination ${path}`,()=>assert.equal(workspaceDestination(path),'/account/continue'))
 test('avatar groups memberships with correct explicit destinations and concise roles', () => { render(<MemoryRouter><Header /></MemoryRouter>); fireEvent.click(screen.getByRole('button',{name:/Open account menu/})); const menu=screen.getByRole('menu'); assert.equal(within(menu).getByRole('menuitem',{name:/Library A/}).getAttribute('href'),`/staff/libraries/${a}`); assert.equal(within(menu).getByRole('menuitem',{name:/Library B/}).getAttribute('href'),`/libraries/${b}`); assert.ok(within(menu).getByText('Owner · Admin')); assert.ok(within(menu).getByText('Librarian')); assert.equal(screen.queryByLabelText('Active library'),null) })
 test('avatar bounds each group and offers a view-all destination', () => { const more=Array.from({length:20},(_,i)=>library(`10000000-0000-4000-8000-${String(i).padStart(12,'0')}`,'GENERAL_USER')); store.setState({libraries:[...libraries,...more]}); render(<MemoryRouter><Header /></MemoryRouter>); fireEvent.click(screen.getByRole('button',{name:/Open account menu/})); assert.equal(screen.getAllByRole('menuitem',{name:/Member$/}).length,3); assert.ok(screen.getByRole('menuitem',{name:'View all patron libraries'})); assert.ok(screen.getByRole('menuitem',{name:'View all libraries'})) })
@@ -142,7 +181,7 @@ test('queued tenant commands cannot run with a new account token', async () => {
   globalThis.fetch=async()=>{ received++; return new Promise(resolve=>{release=resolve}) }
   const first=institutionApi(`/libraries/${a}/access`); await waitFor(()=>assert.ok(release))
   const next=institutionApi(`/libraries/${a}/lending/borrow-requests`,'POST',{library_book_id:d})
-  localStorage.setItem('luminar_token','new-account'); release(Response.json({})); await first
+  localStorage.setItem('luminar_token','new-account'); release(Response.json({})); await assert.rejects(first,{name:'AbortError'})
   await assert.rejects(next,{name:'AbortError'}); assert.equal(received,1)
 })
 

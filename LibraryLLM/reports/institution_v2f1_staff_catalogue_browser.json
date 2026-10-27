@@ -1,0 +1,104 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "scenario": "A: Owner/Admin Catalog uses TEST cards",
+      "status": "PASS",
+      "route": "/staff/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue",
+      "role": "ADMIN",
+      "local_count": 150,
+      "page_cards": 20,
+      "all_owned_by_TEST": true,
+      "patron_actions": false
+    },
+    {
+      "scenario": "B: Inventory remains management table with canonical title links",
+      "status": "PASS",
+      "title_links": 20,
+      "route": "/staff/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/inventory"
+    },
+    {
+      "scenario": "C: Catalog returns to shared browsing grid",
+      "status": "PASS",
+      "route": "/staff/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue",
+      "shared_renderer": true
+    },
+    {
+      "scenario": "Campus inventory title opens exact Staff detail",
+      "status": "PASS",
+      "route": "/staff/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/a8a04662-23be-45ea-bb20-0f0b86bcfa12",
+      "library_book_id": "a8a04662-23be-45ea-bb20-0f0b86bcfa12",
+      "format": "Physical + Online",
+      "resources_visible": true,
+      "private_document_content_opened": false
+    },
+    {
+      "scenario": "Inventory Back restores search, record/state/format filters and page 2",
+      "status": "PASS",
+      "route": "/staff/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/inventory?search=a&kind=global&state=active&format=PHYSICAL_ONLY&page=1",
+      "same_page_rows": true
+    },
+    {
+      "scenario": "D: Physical + Online card/detail \u2192 native safe PDF \u2192 linked Staff book",
+      "status": "PASS",
+      "book_id": "9a122a7b-0a76-4d4f-bacf-a4daf32851de",
+      "asset_id": "197703fb-6af8-4a94-87cb-c28fdc83fba5",
+      "authorized_file_open": true,
+      "asset_linked_book_clickable": true,
+      "staff_context": true,
+      "ask_and_knowledge_tools": true,
+      "native_RAG_from_book_flow": "PASS; safe authored Cedar Reading Room opens at 09:00 fact verified"
+    },
+    {
+      "scenario": "Add Online Copy works from shared Staff detail",
+      "status": "PASS",
+      "library_id": "f93d9da8-bb7c-402c-9ee1-edc4bb61fe9e",
+      "library_book_id": "dfed560c-7a7c-4fba-9979-f5fb06b6e91f",
+      "asset": {
+        "asset_id": "cbb788d7-76ec-441f-838f-d0b330366371",
+        "status": "READY",
+        "visibility": "STAFF_ONLY"
+      },
+      "holding_unchanged": true,
+      "TEST_untouched": true
+    },
+    {
+      "scenario": "E: Explicit Staff switch loads the selected library only",
+      "status": "PASS",
+      "library_id": "f93d9da8-bb7c-402c-9ee1-edc4bb61fe9e",
+      "count": 4,
+      "old_TEST_cards": false
+    },
+    {
+      "scenario": "Keyboard title activation and existing online-copy dialog focus trap/Escape/restore",
+      "status": "PASS",
+      "focus": {
+        "focusVisible": true,
+        "outline": "solid",
+        "outlineWidth": "2px"
+      }
+    },
+    {
+      "scenario": "F: Explicit global action opens unchanged 5M catalogue",
+      "status": "PASS",
+      "route": "/catalog",
+      "global_count": 5000000
+    },
+    {
+      "scenario": "Patron catalogue/title/detail remains Patron with TEST Home",
+      "status": "PASS",
+      "route": "/libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/a166ad25-54ea-46d6-8adf-bb5a8d228cbf",
+      "same_library": true
+    },
+    {
+      "scenario": "Explicit global catalogue/title/detail stays global",
+      "status": "PASS",
+      "route": "/book/OL20895240W",
+      "global_home": "/"
+    }
+  ],
+  "account_authority": "Runtime normal login; user 4 TEST Owner/Admin and user 10 GENERAL_USER. No grants or promotion.",
+  "private_documents_opened": false,
+  "safe_pdf_only": true,
+  "final_served_core_rechecked": true
+}

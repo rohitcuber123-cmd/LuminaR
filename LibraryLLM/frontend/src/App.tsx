@@ -1,8 +1,11 @@
 import { StatePanel } from './components/WorkspaceUI'
+import { RoutePresentation } from './components/RoutePresentation'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { AIChatWidget } from '@/components/AIChatWidget'
+import {LibraryGraphPage} from './pages/LibraryGraph'
+import { LibraryIntelligencePage } from './pages/LibraryIntelligence'
 import { ToastContainer } from '@/components/Toast'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import { WorkspaceRoute, AdminLibraryRoute, LegacyWorkspaceRedirect, AccountLanding } from '@/components/WorkspaceRoute'
@@ -10,9 +13,9 @@ import { StaffLibraryShell, PatronLibraryShell, StaffOverviewPage } from '@/comp
 import { AccountProfilePage, MyLibrariesPage } from '@/pages/AccountPages'
 import { LibraryActivityPage } from '@/pages/LibraryActivity'
 import { InstitutionPanel } from '@/pages/InstitutionPanel'
-import { useEffect, useRef } from 'react'
-import { useLocation, useParams, useNavigate } from 'react-router-dom'
-import { withProductContext } from '@/lib/productContext'
+import { useEffect } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
+import { ProductSessionBoundary } from './components/ProductSessionBoundary'
 
 import { Home } from '@/pages/Home'
 import { CatalogPage } from '@/pages/CatalogPage'
@@ -51,21 +54,14 @@ import { LibraryReservationsFeesPage } from '@/pages/LibraryReservationsFees'
 import { LibraryAnalyticsPage } from '@/pages/LibraryAnalyticsPage'
 import { LibraryAssetsPage, LibraryAssetDetailPage } from '@/pages/LibraryAssets'
 import '@/styles/workspaces.css'
+import './components/LuminarSelect.css'
 
 
 function LegacyEventRedirect() { const { eventId = '' } = useParams(); return <Navigate to={'/platform/events/' + encodeURIComponent(eventId) + '/edit'} replace /> }
 
 function DashboardLayout() {
-  const location = useLocation(), { pathname } = location, navigate = useNavigate()
+  const location = useLocation(), { pathname } = location
   const sessionToken = useAuthStore(s => s.token)
-  const previousSession = useRef(sessionToken)
-  useEffect(() => {
-    if(previousSession.current && previousSession.current !== sessionToken) {
-      const clean=withProductContext(location.pathname+location.search+location.hash,{kind:'GLOBAL',libraryId:null})
-      if(clean !== location.pathname+location.search+location.hash) navigate(clean,{replace:true})
-    }
-    previousSession.current=sessionToken
-  },[sessionToken,location.pathname,location.search,location.hash,navigate])
   const staffPage = pathname.startsWith('/staff/') || pathname.startsWith('/platform')
   const workspacePage = staffPage || /^\/libraries\/[^/]+/.test(pathname) && pathname !== '/libraries/register'
   const accountGateway = pathname.startsWith('/account/') || pathname.startsWith('/invitations') || pathname === '/libraries' || pathname === '/libraries/register'
@@ -97,6 +93,7 @@ function DashboardLayout() {
             <Route path="new-arrivals" element={<LibraryCataloguePage arrivals />} />
             <Route path="popular" element={<LibraryCataloguePage popular />} />
             <Route path="genres" element={<LibraryCatalogueGenres />} />
+            <Route path="graph" element={<LibraryGraphPage />} />
             <Route path="books/:bookId" element={<LibraryCatalogueDetail />} />
             <Route path="global-books/:bookId" element={<LibraryCatalogueDetail global />} />
             <Route path="my-library" element={<LibraryCirculationPage />} />
@@ -110,6 +107,10 @@ function DashboardLayout() {
           </Route>
           <Route path="/staff/libraries/:libraryId" element={<ProtectedRoute><WorkspaceRoute staff><StaffLibraryShell /></WorkspaceRoute></ProtectedRoute>}>
             <Route index element={<StaffOverviewPage />} />
+            <Route path="catalogue" element={<LibraryCataloguePage staff />} />
+            <Route path="graph" element={<LibraryGraphPage staff />} />
+            <Route path="genres" element={<LibraryCatalogueGenres staff />} />
+            <Route path="books/:bookId" element={<LibraryCatalogueDetail staff />} />
             <Route path="inventory" element={<LibraryInventoryPage />} />
             <Route path="circulation" element={<LibraryCirculationPage staff />} />
             <Route path="reservations" element={<LibraryReservationsFeesPage staff />} />
@@ -119,6 +120,7 @@ function DashboardLayout() {
             <Route path="events/:eventId" element={<EventDetailPage staff />} />
             <Route path="events/:eventId/edit" element={<EventEditorPage />} />
             <Route path="analytics" element={<LibraryAnalyticsPage />} />
+            <Route path="intelligence" element={<LibraryIntelligencePage />} />
             <Route path="assets" element={<LibraryAssetsPage staff />} />
             <Route path="assets/:assetId" element={<LibraryAssetDetailPage staff />} />
             <Route path="members" element={<AdminLibraryRoute><InstitutionPanel section="members" /></AdminLibraryRoute>} />
@@ -211,7 +213,7 @@ function DashboardLayout() {
 
       {!workspacePage && <Footer />}
 
-      {!staffPage && <AIChatWidget />}
+      {(!staffPage || /^\/staff\/libraries\/[^/]+\/assets\/[^/]+\/?$/.test(location.pathname)) && <AIChatWidget />}
 
 
     </div>
@@ -221,32 +223,12 @@ function DashboardLayout() {
 
 function LLMLayout() {
   return (
-    <div className="h-screen overflow-hidden bg-paper">
+    <div className="flex h-dvh flex-col overflow-hidden bg-paper">
       <Header />
-      <LLMPage />
+      <main id="main-content" tabIndex={-1} className="flex min-h-0 flex-1 flex-col"><LLMPage /></main>
       <AIChatWidget />
     </div>
   )
-}
-
-function ScrollToHash() {
-  const { pathname, hash } = useLocation()
-
-  useEffect(() => {
-    if (hash) {
-      setTimeout(() => {
-        const id = hash.replace('#', '')
-        const element = document.getElementById(id)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }, 100) // Small delay to ensure DOM is painted
-    } else {
-      window.scrollTo(0, 0)
-    }
-  }, [pathname, hash])
-
-  return null
 }
 
 function App() {
@@ -297,9 +279,10 @@ function App() {
 
   return (
     <>
+      <ProductSessionBoundary />
       <EventMonitor />
       <ToastContainer />
-      <ScrollToHash />
+      <RoutePresentation />
       <Routes>
 
       {/* ── Public auth pages (no Header/Footer) ── */}

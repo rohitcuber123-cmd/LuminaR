@@ -131,3 +131,8 @@ STOPPED after Part 2F. No Events/Notifications/Analytics domain expansion, tenan
 ## Part 2F.1 closure
 
 The counts and acceptance evidence above describe the accepted Part 2F baseline. The subsequent critical closure is complete: [institution_v2f1_critical_completion.md](D:/SDC/LibraryLLM/reports/institution_v2f1_critical_completion.md). All additional gates 186–230 pass; current regression totals are 1,944 unique backend tests and 805 frontend tests. This includes canonical Staff Catalog, the three-way Physical/Online/Both workflow, original-colour cover restoration, card controls, native document reading/Q&A and preservation. Part 2G has not started.
+
+<!-- current-staff-catalogue-correction -->
+## Current Part 2F.1 title and catalogue closure
+
+[FINAL PASS: clickable canonical Staff titles, selected-library Staff Catalogue, separate Inventory, six viewports and preservation](institution_v2f1_staff_catalogue_completion.md). Staff Catalog → Inventory was explicitly superseded by the latest user correction. No Part 2G work or Git commit was performed.

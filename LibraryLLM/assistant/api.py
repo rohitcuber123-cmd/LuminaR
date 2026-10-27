@@ -76,6 +76,18 @@ def install_assistant(app, engine, rag_ask, rag_request):
 
         async def rag_callback(message, work_id=None, document_id=None):
             try:
+                if document_id and document_id.startswith('library:'):
+                    from uuid import UUID
+                    parts = document_id.split(':')
+                    if len(parts) != 4 or parts[2] != 'asset':
+                        raise HTTPException(404, 'Library document not found.')
+                    try:
+                        library_id, asset_id = str(UUID(parts[1])), str(UUID(parts[3]))
+                    except ValueError:
+                        raise HTTPException(404, 'Library document not found.')
+                    return await asyncio.wait_for(run_in_threadpool(
+                        app.state.library_assets.ask, library_id, asset_id, current_user, message, 'normal'),
+                        timeout=float(os.getenv('ASSISTANT_RAG_TIMEOUT', '120')))
                 return await asyncio.wait_for(run_in_threadpool(
                     rag_ask, rag_request(query=message, work_id=work_id, document_id=document_id), credentials),
                     timeout=float(os.getenv('ASSISTANT_RAG_TIMEOUT', '120')))

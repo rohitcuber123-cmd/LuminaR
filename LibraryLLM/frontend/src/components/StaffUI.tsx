@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { dateValue } from "../api/core";
+import { scrollToContentAnchor } from "../lib/paginationScroll";
 
 export function Badge({ children }: { children: ReactNode }) {
   return <span className="staff-badge">{children}</span>;
@@ -98,13 +99,21 @@ export function Pager({
   onChange,
   size = 20,
   label = 'Results pagination',
+  anchorSelector = '.staff-table-wrap, .staff-activity-results, .institution-table, .institutions, .workspace-content',
 }: {
   page: number;
   count: number;
   onChange: (page: number) => void;
   size?: number;
   label?: string;
+  anchorSelector?: string;
 }) {
+  function go(next: number) {
+    onChange(next)
+    requestAnimationFrame(() => {
+      scrollToContentAnchor(anchorSelector)
+    })
+  }
   return (
     <div className="staff-pager" role="navigation" aria-label={label}>
       <span>
@@ -112,12 +121,12 @@ export function Pager({
           ? `${page * size + 1}–${Math.min((page + 1) * size, count)} of ${count}`
           : "0 results"}
       </span>
-      <button disabled={page === 0} onClick={() => onChange(page - 1)}>
+      <button disabled={page === 0} onClick={() => go(page - 1)}>
         Previous
       </button>
       <button
         disabled={(page + 1) * size >= count}
-        onClick={() => onChange(page + 1)}
+        onClick={() => go(page + 1)}
       >
         Next
       </button>
@@ -138,12 +147,25 @@ export function Modal({
   className?: string;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
+  const [closing, setClosing] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const closeRequested = useRef(false);
+  function requestClose() {
+    if (busy || closeRequested.current) return;
+    closeRequested.current = true;
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    if (reduced || !ref.current?.animate) { onClose(); return; }
+    setClosing(true);
+    closeTimer.current = setTimeout(onClose, className.includes('workspace-nav-dialog') ? 160 : 120);
+  }
   useEffect(() => {
     const previous = document.activeElement as HTMLElement;
     const dialog = ref.current;
     dialog?.showModal();
     dialog?.querySelector<HTMLElement>('[data-autofocus]')?.focus();
     return () => {
+      clearTimeout(closeTimer.current);
       dialog?.close();
       previous?.focus();
     };
@@ -151,10 +173,11 @@ export function Modal({
   return (
     <dialog
       ref={ref}
-      className={`staff-dialog ui-dialog ${className}`}
-      aria-label={title}
+      className={`staff-dialog ui-dialog ${className}${closing ? ' is-closing' : ''}`}
+      aria-labelledby={titleId}
+      aria-modal="true"
       onKeyDown={e => {
-        if (e.key === 'Escape') { e.preventDefault(); if (!busy) onClose(); }
+        if (e.key === 'Escape') { e.preventDefault(); requestClose(); }
         if(e.key === 'Tab') {
           const focusable=[...e.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])')].filter(element=>element.getClientRects().length>0)
           const first=focusable[0],last=focusable.at(-1)
@@ -166,20 +189,20 @@ export function Modal({
       onClick={e => {
         if (e.target !== e.currentTarget || busy) return;
         const bounds = e.currentTarget.getBoundingClientRect();
-        if (e.clientX < bounds.left || e.clientX > bounds.right || e.clientY < bounds.top || e.clientY > bounds.bottom) onClose();
+        if (e.clientX < bounds.left || e.clientX > bounds.right || e.clientY < bounds.top || e.clientY > bounds.bottom) requestClose();
       }}
       onCancel={(e) => {
         e.preventDefault();
-        if (!busy) onClose();
+        requestClose();
       }}
     >
       <header role="presentation">
-        <h2>{title}</h2>
-        <button aria-label="Close dialog" disabled={busy} onClick={onClose}>
+        <h2 id={titleId}>{title}</h2>
+        <button type="button" className="ui-dialog-close" aria-label="Close dialog" disabled={busy || closing} onClick={requestClose}>
           ×
         </button>
       </header>
-      {children}
+      <div className="ui-dialog-body">{children}</div>
     </dialog>
   );
 }

@@ -86,7 +86,7 @@ def test_legacy_and_platform_admin_cannot_upload(library, upload, database, user
     assert upload(lib, user=user).status_code == 404
 
 
-@pytest.mark.parametrize('filename,content', [('other.txt', b'hello'), ('empty.pdf', b''),
+@pytest.mark.parametrize('filename,content', [('other.exe', b'hello'), ('empty.pdf', b''),
     ('corrupt.pdf', b'%PDF-1.7\ncorrupt'), ('image.pdf', b'PNG'), ('../leak.pdf', None),
     ('..\\leak.pdf', None), ('/tmp/leak.pdf', None),
     ('hidden\x00.pdf', None), ('.hidden.pdf', None)])

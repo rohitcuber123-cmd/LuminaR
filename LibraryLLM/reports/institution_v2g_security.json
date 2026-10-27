@@ -1,0 +1,34 @@
+{
+  "status": "PASS_TESTED",
+  "authority": "Fresh active ADMIN LibraryMembership for builds/recovery; LIBRARIAN status/read only; Patron and Staff read routes use corresponding fresh library guards. Explicit platform assignment and legacy role never grant tenant builds.",
+  "tested": [
+    "foreign job/generation/search/graph denied",
+    "raw artifact routes absent",
+    "UUID path traversal rejected",
+    "normalized namespace containment",
+    "manifest foreign library rejected",
+    "source and target checksums",
+    "private chunks and member activity absent",
+    "status without paths/fence tokens/worker identity"
+  ],
+  "routes": {
+    "core": [
+      "GET /libraries/{UUID}/intelligence",
+      "POST /libraries/{UUID}/intelligence/builds",
+      "GET /libraries/{UUID}/intelligence/jobs/{UUID}",
+      "GET /libraries/{UUID}/intelligence/generations/{UUID}",
+      "GET /libraries/{UUID}/intelligence/reconciliation",
+      "POST /libraries/{UUID}/intelligence/jobs/{UUID}/recover",
+      "GET /libraries/{UUID}/intelligence/graph"
+    ],
+    "search": [
+      "GET /libraries/{UUID}/catalogue/search"
+    ],
+    "frontend": [
+      "/libraries/:libraryId/graph",
+      "/staff/libraries/:libraryId/graph"
+    ]
+  },
+  "no_new_authority_grants": true,
+  "no_build_UI": true
+}

@@ -1,0 +1,4 @@
+# Shared card frame
+BookCard / DiscoveryBookFrame serve global, tenant, saved, search, popular, rail and related-book results. Cover ratio 2:3, reserved two-line title, one-line author/fallback, one-line availability, 46px metadata slot, compact secondary row and 52px primary slot are shared CSS rules. Grid and rail children stretch within rows; actions align without per-page card heights.
+Source subject labels occupy a stable grid zone. Missing ratings, author, shelf or actions retain layout structure without empty textual labels. Related-book explanations remain below the shared frame; explicit detailPath retains the original tenant global-book destination.
+The measured alignment report compares real DOM action origins by row. It reports final measurements separately from raw pre-fix evidence. Compact event references, editorial cover-only links and conversational result cards are audited intentional variants, not lending cards.

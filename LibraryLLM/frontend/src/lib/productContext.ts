@@ -23,24 +23,35 @@ export function resolveProductHomeDestination(context:ProductRouteContext):strin
   return context.kind==='STAFF_LIBRARY' && context.libraryId ? `/staff/libraries/${context.libraryId}` :
     context.kind==='PATRON_LIBRARY' && context.libraryId ? patronPath(context.libraryId) : context.kind==='PLATFORM' ? '/platform' : '/'
 }
+/** Return hints are convenience state. Only current account authority may carry them. */
+export function resolveAuthorizedProductContext(pathname:string,search:string,memberships:{library_id:string;role:string}[],canUsePlatform:boolean):ProductRouteContext {
+  const route=resolveProductContext(pathname,search)
+  const explicit=/^\/(?:staff\/libraries|libraries)\/[^/]+/.test(pathname) || /^\/platform(?:\/|$)/.test(pathname)
+  const membership=memberships.find(row=>row.library_id===route.libraryId)
+  if(explicit) return resolveProductContext(pathname,search,membership?.role)
+  if(route.kind==='PLATFORM') return canUsePlatform ? route : {kind:'GLOBAL',libraryId:null}
+  if(route.libraryId && !membership) return {kind:'GLOBAL',libraryId:null}
+  if(route.libraryId && membership) return {kind:membership.role==='GENERAL_USER'?'PATRON_LIBRARY':membership.role==='ADMIN'||membership.role==='LIBRARIAN'?'STAFF_LIBRARY':'GLOBAL',libraryId:membership.role==='GENERAL_USER'||membership.role==='ADMIN'||membership.role==='LIBRARIAN'?route.libraryId:null}
+  return resolveProductContext(pathname,search,membership?.role)
+}
 export function productEventsPath(context:ProductRouteContext):string {
   return context.libraryId && (context.kind==='STAFF_LIBRARY' || context.kind==='PATRON_LIBRARY')
     ? `/${context.kind==='STAFF_LIBRARY'?'staff/':''}libraries/${context.libraryId}/events`
     : withProductContext('/events',context)
 }
 export function productCatalogueDestination(context:ProductRouteContext):string {
-  if (context.kind==='STAFF_LIBRARY' && context.libraryId) return `/staff/libraries/${context.libraryId}/inventory`
+  if (context.kind==='STAFF_LIBRARY' && context.libraryId) return `/staff/libraries/${context.libraryId}/catalogue`
   if (context.kind==='PATRON_LIBRARY' && context.libraryId) return patronPath(context.libraryId,'catalogue')
-  return context.kind==='PLATFORM' ? '/platform' : '/catalog'
+  return withProductContext('/catalog',context)
 }
 export function productNewArrivalsDestination(context:ProductRouteContext):string {
   if (context.kind==='STAFF_LIBRARY') return `${productCatalogueDestination(context)}?sort=new_arrivals`
   if (context.kind==='PATRON_LIBRARY' && context.libraryId) return patronPath(context.libraryId,'new-arrivals')
-  return context.kind==='PLATFORM' ? '/platform' : '/#new-arrivals'
+  return withProductContext('/#new-arrivals',context)
 }
 export function productSearchDestination(context:ProductRouteContext,query:string):string {
   if (context.kind==='STAFF_LIBRARY' || context.kind==='PATRON_LIBRARY') return `${productCatalogueDestination(context)}?search=${encodeURIComponent(query)}`
-  return context.kind==='PLATFORM' ? '/platform/libraries' : `/search?q=${encodeURIComponent(query)}`
+  return withProductContext(`/search?q=${encodeURIComponent(query)}`,context)
 }
 export function withProductContext(path:string,context:ProductRouteContext):string {
   if(!path.startsWith('/') || path.startsWith('//') || /^\/(staff\/libraries|platform)(?:\/|$)/.test(path) || patronLibraryIdFromPath(path.split('?')[0])) return path

@@ -8,6 +8,8 @@ import { globalBookPresentation } from '../lib/bookPresentation'
 import { BookCard } from './BookCard'
 import { BookCarousel } from './BookCarousel'
 import { useHomeCatalogue, displayToHomeBook, homeCataloguePath } from './HomeCatalogueContext'
+import {libraryRecommendationPage,type DisplayBook} from '../lib/libraryCatalogue'
+import { scrollToContentAnchor } from '../lib/paginationScroll'
 const RECOMMENDATION_LIMIT = 10
 // Convert Recommendation to BackendBook format for compatibility
 function recommendationToBackendBook(rec: Recommendation): BackendBook {
@@ -44,15 +46,24 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
   const context = useHomeCatalogue()
   const productNavigation=useProductContext()
   const token = useAuthStore(state => state.token)
-  const [page, setPage] = useState({ token, offset: 0 })
-  const offset = page.token === token ? page.offset : 0
+  const scope=`${token}:${context?.data.source.library_id || 'GLOBAL'}`
+  const [page, setPage] = useState({ scope, offset: 0 })
+  const offset = page.scope === scope ? page.offset : 0
+  const [tenantPage,setTenantPage]=useState<{scope:string;offset:number;rows:DisplayBook[];hasMore:boolean}|null>(null)
   const [books, setBooks] = useState<BackendBook[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [hasMore, setHasMore] = useState(false)
   const [popular, setPopular] = useState(false)
   useEffect(() => {
-    if (context) return
+    if (context) {
+      if(context.data.source.catalogue_source!=='LIBRARY_LOCAL')return
+      const controller=new AbortController()
+      void libraryRecommendationPage(context.data.source.library_id,controller.signal,offset,RECOMMENDATION_LIMIT)
+        .then(result=>{if(!controller.signal.aborted){setError(false);setTenantPage({scope,offset,rows:result.results,hasMore:result.has_more})}})
+        .catch(()=>{if(!controller.signal.aborted){setError(true);setTenantPage({scope,offset,rows:[],hasMore:false})}})
+      return ()=>controller.abort()
+    }
     let cancelled = false
     async function load() {
       setLoading(true); setError(false)
@@ -75,13 +86,15 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
     }
     void load()
     return () => { cancelled = true }
-  }, [token, offset, context])
+  }, [token, offset, context,scope])
   function goToPage(next: number) {
-    setPage({ token, offset: next })
-    document.getElementById('for-you-results')?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
+    setPage({ scope, offset: next })
+    requestAnimationFrame(() => scrollToContentAnchor('#for-you-results'))
   }
 
-  const visibleBooks = context ? (context.data.for_you || []).map(displayToHomeBook) : books
+  const localRows=context && tenantPage?.scope===scope && tenantPage.offset===offset ? tenantPage.rows : context && offset===0 ? context.data.for_you || [] : []
+  const visibleBooks = context ? localRows.map(displayToHomeBook) : books
+  const pageHasMore=context ? tenantPage?.scope===scope && tenantPage.offset===offset && tenantPage.hasMore : hasMore
   const visibleLoading = context ? false : loading
   if (visibleLoading) {
     return (
@@ -124,7 +137,7 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
 
           {showViewAll && (
             <Link
-              to={productNavigation.personalPath(homeCataloguePath(context, 'catalogue?view=for-you'))}
+              to={productNavigation.personalPath(homeCataloguePath(context, !context && popular ? 'popular' : 'catalogue?view=for-you'))}
               className="group flex items-center gap-1 text-xs font-medium text-ink-soft transition-colors hover:text-brand"
             >
               VIEW ALL
@@ -135,14 +148,14 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4 text-xs text-ink-soft">
           <p>{context ? context.data.source.catalogue_source === 'LIBRARY_LOCAL' ? 'Recommendations from your library’s collection' : 'Global Catalogue discoveries' : popular ? 'Popular books' : books.length ? `Recommendations ${offset + 1}–${offset + books.length}` : error ? 'Recommendations could not be loaded. Try Previous.' : 'No further recommendations.'}</p>
-          {!context && !popular && <nav aria-label="Recommendation pagination" className="flex gap-3">
-            <button className="assistant-button disabled:opacity-40" disabled={offset === 0} onClick={() => goToPage(Math.max(0, offset - RECOMMENDATION_LIMIT))}>Previous</button>
-            <button className="assistant-button disabled:opacity-40" disabled={!hasMore || error} onClick={() => goToPage(offset + RECOMMENDATION_LIMIT)}>Next Recommendations</button>
+          {(context || !popular) && <nav aria-label="Recommendation pagination" className="flex flex-wrap gap-3">
+            <button className="assistant-button disabled:opacity-40" disabled={offset === 0} onClick={() => goToPage(Math.max(0, offset - RECOMMENDATION_LIMIT))}>Previous Recommendations</button>
+            <button className="assistant-button disabled:opacity-40" disabled={!pageHasMore || error} onClick={() => goToPage(offset + RECOMMENDATION_LIMIT)}>Next Recommendations</button>
           </nav>}
         </div>
-        <BookCarousel>
+        <BookCarousel key={`${scope}:${offset}`}>
           {visibleBooks.map((book, i) => (
-            <BookCard key={`${book.work_id}-${i}`} book={context ? context.data.for_you![i] : globalBookPresentation(book)} changed={context?.changed} rail />
+            <BookCard key={book.work_id} book={context ? localRows[i] : globalBookPresentation(book)} changed={context?.changed} rail />
           ))}
         </BookCarousel>
       </div>

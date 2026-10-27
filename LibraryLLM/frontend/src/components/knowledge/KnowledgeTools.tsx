@@ -1,3 +1,4 @@
+import { LuminarSelect } from '../LuminarSelect'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useAuthStore } from '../../store/useAuthStore'
 import { generateArtifact, getSource, gradeCloze, listArtifacts, type Artifact, type ArtifactKind, type Card, type QuizQuestionType, type Source } from '../../lib/knowledgeArtifacts'
@@ -33,9 +34,9 @@ function Flashcards({ cards, onSource }: { cards: Card[]; onSource: (id: string)
     return () => window.removeEventListener('keydown', keyboard)
   }, [card, safeIndex, move])
   return <div>
-    <label className="text-sm">Card type <select className="ml-2 border border-line bg-paper p-2" value={filter} onChange={e => { setFilter(e.target.value); move(0) }}>
+    <label className="text-sm">Card type <LuminarSelect className="knowledge-tool-select" value={filter} onChange={e => { setFilter(e.target.value); move(0) }}>
       <option value="all">All</option>{[...new Set(cards.map(c => c.type))].map(type => <option key={type} value={type}>{cardNames[type]}</option>)}
-    </select></label>
+    </LuminarSelect></label>
     {!card ? <p role="status" className="mt-5">Not enough reliable content was found for this card type. Try another filter.</p> : <>
       <p className="my-4 text-sm text-ink-soft">{cardNames[card.type]}</p>
       <div tabIndex={0} aria-label="Flashcard" className="border border-line bg-panel p-5 focus-visible:outline-2 focus-visible:outline-brand sm:p-8">
@@ -121,7 +122,7 @@ function KnowledgeToolsSession({ documentId, title, libraryAsset }: { documentId
     <div className={isMap ? 'flex min-h-0 min-w-0 flex-1 flex-col gap-3' : 'mx-auto max-w-4xl space-y-5'}>
       {isMap ? <h2 className="shrink-0 truncate font-display text-base" title={title}>{title} · Mind Map</h2> : <div><h2 className="break-words font-display text-xl">{title}</h2><p className="mt-2 text-sm text-ink-soft">Knowledge Tools · Entire Document</p><p className="mt-1 text-xs text-ink-soft">{libraryAsset ? 'Source-based concepts and practice materials for this library document. Access follows current library permissions.' : 'Source-based concepts and practice materials. Saved until this document’s session ends.'}</p></div>}
       <div role="tablist" aria-label="Artifact types" className="flex flex-wrap gap-2">{tabs.map(([id, label]) => <button key={id} role="tab" aria-selected={tab === id} aria-controls="knowledge-content" className={tab === id ? toolButton.replace('hover:bg-panel', 'hover:bg-brand') + ' bg-brand text-paper' : toolButton} disabled={generating} onClick={() => { setTab(id); setSource(null); setNotice('') }}>{label}</button>)}</div>
-      {tab === 'summary' && <label className="block text-sm">Summary length <select className="ml-2 border border-line bg-paper p-2" disabled={generating} value={mode} onChange={e => setMode(e.target.value)}><option value="quick">Quick · up to 5 sentences</option><option value="detailed">Detailed · up to 12 sentences</option></select></label>}
+      {tab === 'summary' && <label className="block text-sm">Summary length <LuminarSelect className="knowledge-tool-select" disabled={generating} value={mode} onChange={e => setMode(e.target.value)}><option value="quick">Quick · up to 5 sentences</option><option value="detailed">Detailed · up to 12 sentences</option></LuminarSelect></label>}
       {tab === 'quiz' && <div className="space-y-3">
         <fieldset disabled={loading || generating} className="border border-line bg-panel p-4">
           <legend className="px-1 text-sm font-medium">Question Types</legend>

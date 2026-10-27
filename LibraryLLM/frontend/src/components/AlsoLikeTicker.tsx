@@ -43,7 +43,7 @@ export function AlsoLikeTicker({ spotlightBook }: AlsoLikeTickerProps) {
         <Link 
           to={productNavigation.personalPath(homeBookPath(context, spotlightBook.work_id))}
           data-library-book-id={context?.data.source.catalogue_source === 'LIBRARY_LOCAL' ? spotlightBook.work_id : undefined}
-          className="mx-auto w-[65%] rotate-[-4deg] transition-transform duration-500 hover:rotate-0 hover:scale-105 sm:w-[55%] md:w-full block"
+          className="spotlight-book mx-auto w-[65%] motion-safe:transition-transform motion-safe:duration-200 motion-safe:hover:-translate-y-[2px] sm:w-[55%] md:w-full block"
         >
           <BookCover
             title={spotlightBook.title}

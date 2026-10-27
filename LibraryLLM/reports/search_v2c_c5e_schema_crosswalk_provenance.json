@@ -1,0 +1,233 @@
+{
+  "version": "C5E-schema-only-crosswalk-provenance-v2",
+  "created_at_utc": "2026-10-27T05:31:40.201077+00:00",
+  "agent_identity": "/root/c5e_blind_normative_author",
+  "runtime_model": "NOT_EXPOSED_TO_AGENT",
+  "amendment_type": "Serialization and field crosswalk only; no normative label, query, case ID or grouping changes.",
+  "source_output": "reports/search_v2c_c5e_independent_authored.jsonl",
+  "source_output_sha256": "d84abdc3ad66ac5b2eeefe903062c8134abcb5906950db234650db48b59df8e1",
+  "source_provenance": "reports/search_v2c_c5e_author_provenance.json",
+  "source_provenance_sha256": "83f4e37281b563332f8ae16008b4a27e44d98331ee010415e9f39bc7e19d0007",
+  "source_brief_sha256_from_original_provenance": "303bf337612f951792c68b4b997c25387fc98420797b30c9b5c3256f4127bc39",
+  "output": "reports/search_v2c_c5e_independent_authored_schema_v2.jsonl",
+  "output_sha256": "a4611a1c2b34b34abcb3e6c552a9588fa27c3995077e7c99846e561fa66b8f1f",
+  "rows": 90,
+  "source_artifacts_written": false,
+  "source_artifact_original_hashes_recorded": true,
+  "crosswalks": [
+    {
+      "from": "author.exact",
+      "to": "author_text",
+      "rule": "Extract the exact operand string. Retain the source exactness object as metadata; no inference of a different matching operation."
+    },
+    {
+      "from": "title.exact",
+      "to": "title_text",
+      "rule": "Extract the exact operand string. Retain source exactness metadata."
+    },
+    {
+      "from": "include_subjects",
+      "to": "subjects",
+      "rule": "Copy canonical subject list; no Boolean reinterpretation."
+    },
+    {
+      "from": "exclude_subjects",
+      "to": "exclude_subjects",
+      "rule": "Copy canonical category exclusion list unchanged."
+    },
+    {
+      "from": "excluded_text[*].value",
+      "to": "exclude_terms[*]",
+      "rule": "Copy literal word strings. Retain match/domain qualifiers in original_hard_constraints because scalar list items have no separate qualifier slots."
+    },
+    {
+      "from": "rating.gte",
+      "to": [
+        "rating_min",
+        "rating_min_exclusive"
+      ],
+      "rule": "Endpoint value and false exclusive flag."
+    },
+    {
+      "from": "rating.lt",
+      "to": [
+        "rating_max",
+        "rating_max_exclusive"
+      ],
+      "rule": "Endpoint value and true exclusive flag. Preserve simultaneous contradictory bounds."
+    },
+    {
+      "from": "formats",
+      "to": "formats",
+      "rule": "Copy list unchanged."
+    },
+    {
+      "from": "explicit online ONLY source modifier",
+      "to": "exclusive_formats",
+      "rule": "Copy [ONLINE] for C2/A2/I2/U2/X1/X3 only. Coordinator confirmed exclusive_formats is a list of enum strings, not bool."
+    },
+    {
+      "from": "required_text",
+      "to": "expected_unadapted_author_assertions",
+      "rule": "No scalar mapping invented. Whole-word positive searchable-text predicate is not assumed equivalent to exact_text or subjects."
+    },
+    {
+      "from": "diagnostic field references, missing/unresolved operands, notice fields, candidate_fields",
+      "to": "same issue with mechanically renamed field references",
+      "rule": "author->author_text; title->title_text; include_subjects->subjects; excluded_text->exclude_terms. Diagnostic meanings are unchanged."
+    },
+    {
+      "from": "metric_applicability string values",
+      "to": "objects with status and reason",
+      "rule": "Definite labels and resolved/absent scalar values APPLICABLE; unknown required operands UNRESOLVED; prior N/A fields status N/A with original reason retained."
+    },
+    {
+      "from": "expected_sort",
+      "to": "expected_sort",
+      "rule": "Preserved unchanged as a separate object; supplied note did not specify a replacement sort serialization."
+    },
+    {
+      "from": "source contradiction semantic requirements",
+      "to": "expected_contradictions",
+      "rule": "Unchanged human semantic diagnostics, including gte/lt descriptions, distinct from adapted scalar hard constraints."
+    },
+    {
+      "from": "expected_semantic_remainder and expected_soft_preferences",
+      "to": "same fields",
+      "rule": "Unchanged semantic content; no advisory schema manufactured."
+    }
+  ],
+  "uninstantiated_schema_fields": [
+    "exact_text",
+    "year_min",
+    "year_max",
+    "year_min_exclusive",
+    "year_max_exclusive",
+    "excluded_formats",
+    "availability",
+    "language"
+  ],
+  "uninstantiated_schema_field_reason": "No source case asserts a resolved operand for these fields. Availability AVAILABLE_NOW/REQUESTABLE enum vocabulary is acknowledged but no availability values are invented.",
+  "representation_concerns": [
+    {
+      "kind": "UNADAPTED_POSITIVE_WHOLE_WORD_TEXT",
+      "count": 5,
+      "cases": [
+        {
+          "case_id": "C5E_GLOBAL_X3",
+          "kind": "UNADAPTED_POSITIVE_WHOLE_WORD_TEXT",
+          "source_field": "required_text",
+          "source_value": [
+            {
+              "value": "atlas",
+              "match": "WHOLE_WORD",
+              "domain": "searchable_text"
+            }
+          ]
+        },
+        {
+          "case_id": "C5E_PUBLIC_TENANT_PATRON_X3",
+          "kind": "UNADAPTED_POSITIVE_WHOLE_WORD_TEXT",
+          "source_field": "required_text",
+          "source_value": [
+            {
+              "value": "atlas",
+              "match": "WHOLE_WORD",
+              "domain": "searchable_text"
+            }
+          ]
+        },
+        {
+          "case_id": "C5E_PUBLIC_TENANT_STAFF_X3",
+          "kind": "UNADAPTED_POSITIVE_WHOLE_WORD_TEXT",
+          "source_field": "required_text",
+          "source_value": [
+            {
+              "value": "atlas",
+              "match": "WHOLE_WORD",
+              "domain": "searchable_text"
+            }
+          ]
+        },
+        {
+          "case_id": "C5E_PRIVATE_TENANT_PATRON_X3",
+          "kind": "UNADAPTED_POSITIVE_WHOLE_WORD_TEXT",
+          "source_field": "required_text",
+          "source_value": [
+            {
+              "value": "atlas",
+              "match": "WHOLE_WORD",
+              "domain": "searchable_text"
+            }
+          ]
+        },
+        {
+          "case_id": "C5E_PRIVATE_TENANT_STAFF_X3",
+          "kind": "UNADAPTED_POSITIVE_WHOLE_WORD_TEXT",
+          "source_field": "required_text",
+          "source_value": [
+            {
+              "value": "atlas",
+              "match": "WHOLE_WORD",
+              "domain": "searchable_text"
+            }
+          ]
+        }
+      ],
+      "effect": "Five X3 cases retain definite normative CONTRADICTORY/executable=false labels. Positive atlas assertion is preserved separately and is not claimed as an adapted supported scalar predicate."
+    },
+    {
+      "kind": "EXACT_BIBLIOGRAPHIC_QUALIFIER",
+      "effect": "Scalar author_text/title_text preserve operand strings but do not themselves carry the original exact qualifier. Original assertion objects are retained for review; no claim of matching-equivalence verification."
+    },
+    {
+      "kind": "NEGATIVE_WORD_MATCH_DOMAIN",
+      "effect": "exclude_terms preserves word strings. WHOLE_WORD/searchable_text source qualifiers are retained in metadata because the supplied scalar list does not separately encode them."
+    },
+    {
+      "kind": "SORT_SCHEMA_NOT_REPLACED",
+      "effect": "All original title ASC gold and null sorting absences are preserved. No alternate sort field vocabulary or object shape was inferred."
+    }
+  ],
+  "original_normative_decisions_changed": 0,
+  "case_ids_queries_groups_changed": 0,
+  "converted_exclusive_format_cases": 30,
+  "unadapted_positive_text_cases": 5,
+  "human_reviewed": 0,
+  "independent_fresh_query_review_still_required": true,
+  "exact_reads_this_amendment": [
+    {
+      "path": "reports/search_v2c_c5e_independent_authored.jsonl",
+      "operations": [
+        "Python read_bytes plus json.loads for source serialization inspection",
+        "Python read_bytes plus json.loads for mechanical field conversion"
+      ]
+    },
+    {
+      "path": "reports/search_v2c_c5e_author_provenance.json",
+      "operations": [
+        "Python read_bytes plus json.loads for source provenance inspection",
+        "Python read_bytes plus json.loads for inherited provenance facts"
+      ]
+    },
+    {
+      "path": "coordinator schema note in task messages",
+      "operations": [
+        "Read supplied schema field vocabulary and exclusive_formats list-type clarification"
+      ]
+    }
+  ],
+  "brief_reread_this_amendment": false,
+  "authorized_writes": [
+    "reports/search_v2c_c5e_independent_authored_schema_v2.jsonl",
+    "reports/search_v2c_c5e_schema_crosswalk_provenance.json"
+  ],
+  "candidate_source_reads": 0,
+  "prediction_reads": 0,
+  "other_label_reads": 0,
+  "search_parser_calls": 0,
+  "model_api_inference_calls": 0,
+  "database_calls": 0,
+  "native_application_calls": 0,
+  "execution_disclosure": "Python standard-library JSON decoding/encoding, hashing, and in-memory preservation checks only; no search parser, candidate, test suite, database or native application was invoked."
+}

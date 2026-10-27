@@ -1,0 +1,1107 @@
+{
+  "version": "C5E-independent-author-v3-pre-inference-structural-remediation",
+  "agent_identity": "/root/c5e_blind_normative_author",
+  "runtime_model": "NOT_EXPOSED_TO_AGENT",
+  "patterns": [
+    {
+      "id": "C1",
+      "stratum": "CLEAR_EXECUTABLE",
+      "planned_topology": "SMART:rating,author,title,sort",
+      "query_template": "The catalogue match must be by the exact author name \"Lena Orr\" and titled exactly \"The Copper Gate\". Keep works rated at least 4, then sort titles A to Z.",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "title_text": "The Copper Gate",
+        "rating_min": 4,
+        "rating_min_exclusive": false
+      },
+      "semantic_justification": "A fully bound bibliographic intersection and inclusive record-rating floor are independent supported predicates; sorting presents their intersection without inferring a catalogue association.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      }
+    },
+    {
+      "id": "C2",
+      "stratum": "CLEAR_EXECUTABLE",
+      "planned_topology": "SMART:author,include,format,sort",
+      "query_template": "Build a reading shelf from category \"{SUBJECT}\". Its creator filter is by the exact name \"Lena Orr\"; delivery is online only. Sort the surviving titles A to Z.",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ],
+        "subjects": [
+          "{SUBJECT}"
+        ]
+      },
+      "semantic_justification": "The thematic shelf, creator, online-only delivery and title ordering each have a separate purpose. No inventory action is implied by staff context.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      }
+    },
+    {
+      "id": "C3",
+      "stratum": "CLEAR_EXECUTABLE",
+      "planned_topology": "SMART:rating,negative,include,preference,sort",
+      "query_template": "For category \"{SUBJECT}\", retain a rating of 3.5 or greater. Exclude the whole word \"solutions\" from searchable text. Short explanations are preferable, with longer discussions acceptable. Sort titles A to Z.",
+      "hard_template": {
+        "subjects": [
+          "{SUBJECT}"
+        ],
+        "rating_min": 3.5,
+        "rating_min_exclusive": false,
+        "exclude_terms": [
+          "solutions"
+        ]
+      },
+      "semantic_justification": "The text-wide solutions exclusion is distinct from a canonical category negative. Longer discussions remain eligible because short explanations are advisory.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "soft": [
+        "short explanations"
+      ]
+    },
+    {
+      "id": "S1",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "planned_topology": "SMART:author,title,negative,include",
+      "query_template": "A reading-list entry must be by the exact author name \"Lena Orr\", titled exactly \"The Copper Gate\", and carry category \"{SUBJECT_TYPO}\". Exclude works tagged \"Fiction\".",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "title_text": "The Copper Gate",
+        "subjects": [
+          "{SUBJECT}"
+        ],
+        "exclude_subjects": [
+          "Fiction"
+        ]
+      },
+      "semantic_justification": "The explicit category typo has one supplied canonical spelling repair. Fiction is an independently owned negative tag; author/title strings establish no category conflict.",
+      "repair": {
+        "field": "subjects",
+        "source_text": "{SUBJECT_TYPO}",
+        "resolved_value": "{SUBJECT}"
+      }
+    },
+    {
+      "id": "S2",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "planned_topology": "SMART:rating,title,negative,preference",
+      "query_template": "The work is titled exactly \"A Glass Compass\". Its rating must reach 4. Exclude works tagged \"Fictoin\". Advanced analyses are preferred; simpler accounts are acceptable.",
+      "hard_template": {
+        "title_text": "A Glass Compass",
+        "rating_min": 4,
+        "rating_min_exclusive": false,
+        "exclude_subjects": [
+          "Fiction"
+        ]
+      },
+      "semantic_justification": "Fictoin uniquely repairs to the canonical Fiction tag in every supplied scope. The advanced-treatment preference never becomes a hard field.",
+      "soft": [
+        "advanced analyses"
+      ],
+      "repair": {
+        "field": "exclude_subjects",
+        "source_text": "Fictoin",
+        "resolved_value": "Fiction"
+      }
+    },
+    {
+      "id": "S3",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "planned_topology": "SMART:author,negative,include,preference,sort",
+      "query_template": "Assemble a bibliography by the exact author name \"Lena Orr\" under subject \"{REPAIR_TYPO}\". Exclude the whole word \"workbook\" from searchable text. Short summaries would help but are optional. Sort titles A to Z.",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "subjects": [
+          "{REPAIR}"
+        ],
+        "exclude_terms": [
+          "workbook"
+        ]
+      },
+      "semantic_justification": "The explicit subject typo uniquely repairs against the scope canonical list. Bibliography creator, broad text exclusion and title order are resolved; summary length remains soft.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "soft": [
+        "short summaries"
+      ],
+      "repair": {
+        "field": "subjects",
+        "source_text": "{REPAIR_TYPO}",
+        "resolved_value": "{REPAIR}"
+      }
+    },
+    {
+      "id": "A1",
+      "stratum": "AMBIGUOUS",
+      "planned_topology": "SMART:rating,author,title,preference",
+      "query_template": "The slots \"by\" and \"titled\" must take the two exact strings \"Lena Orr\" and \"A Glass Compass\", one string per slot. Their assignment is still undecided. Require a rating of at least 4. Beginner explanations are preferred but optional.",
+      "hard_template": {
+        "rating_min": 4,
+        "rating_min_exclusive": false
+      },
+      "semantic_justification": "Two literal values are known but their mandatory author/title assignment is expressly undecided. Name-like appearance cannot resolve ownership; the rating floor is resolved.",
+      "soft": [
+        "beginner explanations"
+      ],
+      "unresolved": [
+        "author_text",
+        "title_text"
+      ],
+      "ambiguity": [
+        {
+          "kind": "FIELD_OWNER_ASSOCIATION",
+          "operands": [
+            "Lena Orr",
+            "A Glass Compass"
+          ],
+          "candidate_fields": [
+            "author_text",
+            "title_text"
+          ],
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "A2",
+      "stratum": "AMBIGUOUS",
+      "planned_topology": "SMART:author,negative,format,sort",
+      "query_template": "Use works by the exact author name \"Lena Orr\", online only, and sort titles A to Z. The instruction \"exclude the whole word abridged from searchable text\" has unsettled status: it could be mandatory or advisory, and that choice is pending.",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ]
+      },
+      "semantic_justification": "The negative operand is known, but mandatory/advisory ownership is unresolved. Either applying or dropping its filter would settle that open choice without authorization.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "unresolved": [
+        "exclude_terms"
+      ],
+      "ambiguity": [
+        {
+          "kind": "HARD_ADVISORY_OWNERSHIP",
+          "field": "exclude_terms",
+          "operand": "abridged",
+          "match": "WHOLE_WORD",
+          "domain": "searchable_text",
+          "choices": [
+            "MANDATORY",
+            "ADVISORY"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A3",
+      "stratum": "AMBIGUOUS",
+      "planned_topology": "SMART:title,include,preference,sort",
+      "query_template": "Target works titled exactly \"The Copper Gate\". One mandatory category must be chosen between \"{SUBJECT}\" and \"{ALTERNATIVE}\"; that single choice remains pending. Research discussions are an optional preference. Sort titles A to Z.",
+      "hard_template": {
+        "title_text": "The Copper Gate"
+      },
+      "semantic_justification": "The one mandatory canonical operand has two candidates and no chosen value. A pending single choice does not license a union or an invented association.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "soft": [
+        "research discussions"
+      ],
+      "unresolved": [
+        "subjects"
+      ],
+      "ambiguity": [
+        {
+          "kind": "REQUIRED_OPERAND_CHOICE",
+          "field": "subjects",
+          "candidates": [
+            "{SUBJECT}",
+            "{ALTERNATIVE}"
+          ],
+          "cardinality": 1,
+          "union_requested": false
+        }
+      ]
+    },
+    {
+      "id": "I1",
+      "stratum": "INCOMPLETE",
+      "planned_topology": "SMART:rating,author,negative,sort",
+      "query_template": "Find works by [empty required creator value]. The rating ceiling is 4, inclusive. Exclude the whole word \"abridged\" from searchable text, and sort titles A to Z. The creator value is intentionally unfilled.",
+      "hard_template": {
+        "rating_max": 4,
+        "rating_max_exclusive": false,
+        "exclude_terms": [
+          "abridged"
+        ]
+      },
+      "semantic_justification": "The required creator field is empty rather than ambiguous between candidates. Neither the resolved numeric ceiling nor text exclusion can substitute for it.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "unresolved": [
+        "author_text"
+      ],
+      "missing": [
+        {
+          "field": "author_text",
+          "reason": "EXPLICIT_EMPTY_REQUIRED_VALUE"
+        }
+      ]
+    },
+    {
+      "id": "I2",
+      "stratum": "INCOMPLETE",
+      "planned_topology": "SMART:title,negative,include,format",
+      "query_template": "The required title box reads titled \"\" and is empty. The remaining checks are category \"{SUBJECT}\", online only, and exclude works tagged \"Fiction\". Keep the empty title box mandatory.",
+      "hard_template": {
+        "subjects": [
+          "{SUBJECT}"
+        ],
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ],
+        "exclude_subjects": [
+          "Fiction"
+        ]
+      },
+      "semantic_justification": "An explicitly empty required title is missing input. Its shelf membership and Fiction exclusion are both resolved and need no inferred catalogue fact.",
+      "unresolved": [
+        "title_text"
+      ],
+      "missing": [
+        {
+          "field": "title_text",
+          "reason": "EXPLICIT_EMPTY_REQUIRED_VALUE"
+        }
+      ]
+    },
+    {
+      "id": "I3",
+      "stratum": "INCOMPLETE",
+      "planned_topology": "SMART:rating,author,format,preference,sort",
+      "query_template": "Choose works by the exact author name \"Lena Orr\", online only. A minimum rating is mandatory, but its numeric box is empty. Short explanations are optional. Sort titles A to Z.",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ]
+      },
+      "semantic_justification": "Minimum gives the comparison direction but no numeric endpoint. No threshold is invented; creator, delivery, soft reading style and ordering are definite.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "soft": [
+        "short explanations"
+      ],
+      "unresolved": [
+        "rating_min"
+      ],
+      "missing": [
+        {
+          "field": "rating_min",
+          "reason": "EXPLICIT_EMPTY_REQUIRED_NUMERIC_VALUE"
+        }
+      ],
+      "absence_notes": [
+        "rating_min_exclusive is omitted because no endpoint is instantiated; inclusive minimum semantics remain in the query."
+      ]
+    },
+    {
+      "id": "U1",
+      "stratum": "UNSUPPORTED",
+      "planned_topology": "SMART:rating,author,include,sort",
+      "query_template": "Form an exclusive-membership partition for subject \"{SUBJECT}\" and subject \"{ALTERNATIVE}\": a work qualifies precisely when it bears one of those two tags; doubly tagged and untagged works fail. Restrict to works by the exact author name \"Lena Orr\", require rating at least 4, and sort titles A to Z.",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "rating_min": 4,
+        "rating_min_exclusive": false
+      },
+      "semantic_justification": "The explicit membership truth table is XOR, with both operands resolved. Replacing it with an ordinary subject union or intersection would change the strict operation.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "unsupported": [
+        {
+          "kind": "BOOLEAN_OPERATION",
+          "operation": "XOR",
+          "field": "subjects",
+          "resolved_operands": [
+            "{SUBJECT}",
+            "{ALTERNATIVE}"
+          ],
+          "mandatory": true
+        }
+      ],
+      "absence_notes": [
+        "subjects scalar omitted: no supported list conjunction is asserted in place of XOR."
+      ]
+    },
+    {
+      "id": "U2",
+      "stratum": "UNSUPPORTED",
+      "planned_topology": "SMART:author,title,negative,format,preference",
+      "query_template": "For works by the exact author name \"Lena Orr\", titled exactly \"The Copper Gate\", require online only. Exclude a work precisely when \"amber\" and \"ledger\" occur at most two words apart in searchable text. This proximity rule is strict. Short introductions are optional.",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "title_text": "The Copper Gate",
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ]
+      },
+      "semantic_justification": "A bounded word-proximity relation is an unsupported strict text operation. Neither operand is silently converted into an independent forbidden word.",
+      "soft": [
+        "short introductions"
+      ],
+      "unsupported": [
+        {
+          "kind": "NEGATIVE_PROXIMITY",
+          "resolved_operands": [
+            "amber",
+            "ledger"
+          ],
+          "max_word_distance": 2,
+          "domain": "searchable_text",
+          "mandatory": true
+        }
+      ],
+      "absence_notes": [
+        "exclude_terms omitted: independent word exclusions would change the proximity predicate."
+      ]
+    },
+    {
+      "id": "U3",
+      "stratum": "UNSUPPORTED",
+      "planned_topology": "SMART:rating,include,format,preference,sort",
+      "query_template": "Use online only within subject \"{SUBJECT}\". Admit a work only when its creator has an average rating of at least 4 across every work credited to that creator. The creator-wide average is a strict condition. Advanced accounts are preferable but optional. Sort titles A to Z.",
+      "hard_template": {
+        "subjects": [
+          "{SUBJECT}"
+        ],
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ]
+      },
+      "semantic_justification": "The mandatory rating threshold targets an aggregate over a creator corpus, rather than the selected record. The contract does not enforce this cross-record aggregation, and record rating_min would be false gold.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "soft": [
+        "advanced accounts"
+      ],
+      "unsupported": [
+        {
+          "kind": "AGGREGATE_RATING_OPERATION",
+          "aggregation": "MEAN",
+          "group": "creator",
+          "population": "every work credited to creator",
+          "comparison": {
+            "min": 4,
+            "min_exclusive": false
+          },
+          "mandatory": true
+        }
+      ],
+      "absence_notes": [
+        "rating_min/rating_max omitted: no per-record bound is requested."
+      ]
+    },
+    {
+      "id": "X1",
+      "stratum": "CONTRADICTORY",
+      "planned_topology": "SMART:rating,title,format,sort",
+      "query_template": "Use works titled exactly \"The Copper Gate\", online only. Apply both rating checks simultaneously: a minimum of 4 inclusive and a maximum of 3 inclusive. Sort titles A to Z.",
+      "hard_template": {
+        "title_text": "The Copper Gate",
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ],
+        "rating_min": 4,
+        "rating_min_exclusive": false,
+        "rating_max": 3,
+        "rating_max_exclusive": false
+      },
+      "semantic_justification": "The simultaneous closed interval [4,3] is empty. Both resolved bounds remain in hard gold; catalogue contents cannot resolve their incompatibility.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "contradictions": [
+        {
+          "kind": "EMPTY_NUMERIC_INTERSECTION",
+          "field": "rating",
+          "requirements": [
+            {
+              "rating_min": 4,
+              "rating_min_exclusive": false
+            },
+            {
+              "rating_max": 3,
+              "rating_max_exclusive": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "X2",
+      "stratum": "CONTRADICTORY",
+      "planned_topology": "SMART:author,negative,include,preference",
+      "query_template": "Find works by the exact author name \"Lena Orr\". Require category \"{SUBJECT}\" and exclude works tagged \"{SUBJECT}\"; both membership checks are mandatory. Short introductions are an optional preference.",
+      "hard_template": {
+        "author_text": "Lena Orr",
+        "subjects": [
+          "{SUBJECT}"
+        ],
+        "exclude_subjects": [
+          "{SUBJECT}"
+        ]
+      },
+      "semantic_justification": "The same canonical membership is required and forbidden. The optional introductory-treatment preference cannot reconcile those opposed mandatory predicates.",
+      "soft": [
+        "short introductions"
+      ],
+      "contradictions": [
+        {
+          "kind": "POSITIVE_NEGATIVE_CATEGORY_COLLISION",
+          "subject": "{SUBJECT}"
+        }
+      ]
+    },
+    {
+      "id": "X3",
+      "stratum": "CONTRADICTORY",
+      "planned_topology": "SMART:title,negative,include,format,preference,sort",
+      "query_template": "For works titled exactly \"The Copper Gate\", use online only and sort titles A to Z. Two mandatory checks use the identical searchable-text domain: include a match of the whole word \"atlas\", and exclude a match of the whole word \"atlas\". Short explanations are merely preferred.",
+      "hard_template": {
+        "title_text": "The Copper Gate",
+        "formats": [
+          "ONLINE"
+        ],
+        "exclusive_formats": [
+          "ONLINE"
+        ],
+        "exclude_terms": [
+          "atlas"
+        ]
+      },
+      "semantic_justification": "Opposed whole-word atlas predicates over the identical domain cannot both hold. This definite semantic contradiction is preserved even though the positive predicate has no supplied scalar equivalent.",
+      "sort": "TITLE",
+      "sort_source": {
+        "field": "title",
+        "direction": "ASC"
+      },
+      "soft": [
+        "short explanations"
+      ],
+      "contradictions": [
+        {
+          "kind": "POSITIVE_NEGATIVE_TEXT_COLLISION",
+          "value": "atlas",
+          "match": "WHOLE_WORD",
+          "domain": "searchable_text"
+        }
+      ],
+      "unadapted": [
+        {
+          "source_field": "required_text",
+          "source_value": [
+            {
+              "value": "atlas",
+              "match": "WHOLE_WORD",
+              "domain": "searchable_text"
+            }
+          ],
+          "adaptation_status": "UNADAPTED_AUTHOR_ASSERTION",
+          "reason": "No supplied scalar equivalent. exact_text and subjects are not assumed equivalent; no support is manufactured."
+        }
+      ]
+    }
+  ],
+  "materialization_pending": false,
+  "authored_at_utc": "2026-10-27T05:42:05.050188+00:00",
+  "context_disclosure": "Same output-blind author continuing its own pre-inference draft remediation, not a new independent author. Original context was fresh; subsequent context contains own author drafts and coordinator schema/structure metadata. No candidate outcomes have been exposed.",
+  "brief_sha256": "303bf337612f951792c68b4b997c25387fc98420797b30c9b5c3256f4127bc39",
+  "output": "reports/search_v2c_c5e_independent_authored_v3.jsonl",
+  "output_sha256": "1e53de3de9773038d8098db3cfefb6ebcaedc1aee72b983d891861ca9686decc",
+  "contexts": 90,
+  "independently_composed_semantic_patterns": 18,
+  "scope_instances_per_pattern": 5,
+  "ninety_independent_grammars_claimed": false,
+  "actual_distinct_topologies": 18,
+  "actual_topology_inventory": [
+    {
+      "actual_topology": "SMART:author,include,format,sort",
+      "sha256": "fb431f7e6edc9dde703b246d6d1fe68d59155622afadbb24d6b3a40dc98bbedf",
+      "contexts": 5,
+      "patterns": [
+        "V3_C2"
+      ]
+    },
+    {
+      "actual_topology": "SMART:author,negative,format,sort",
+      "sha256": "0ce38d547291cd445e7e70d762f8f0469e5c4211d534d53bc0ab8fc74f22b003",
+      "contexts": 5,
+      "patterns": [
+        "V3_A2"
+      ]
+    },
+    {
+      "actual_topology": "SMART:author,negative,include,preference",
+      "sha256": "315e59bcb66f5c774fa1ba6ec8149f634729dbf7066029940548ec67dbf1e49a",
+      "contexts": 5,
+      "patterns": [
+        "V3_X2"
+      ]
+    },
+    {
+      "actual_topology": "SMART:author,negative,include,preference,sort",
+      "sha256": "8ec2b20b424ec4cad37dc1c36c9e1041792ba965492d4cbd9152c6dc9143cff0",
+      "contexts": 5,
+      "patterns": [
+        "V3_S3"
+      ]
+    },
+    {
+      "actual_topology": "SMART:author,title,negative,format,preference",
+      "sha256": "35eec185a2d823b3a0d13850106f31ae94b04e5b53f845a5d53176deaf3d08d9",
+      "contexts": 5,
+      "patterns": [
+        "V3_U2"
+      ]
+    },
+    {
+      "actual_topology": "SMART:author,title,negative,include",
+      "sha256": "c5a24170834578769192499aea178d076d074b5450fb1934e40942c39747e568",
+      "contexts": 5,
+      "patterns": [
+        "V3_S1"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,author,format,preference,sort",
+      "sha256": "2e00521ced9eec20f757783948cb4022999d1ab28e5d6e74676c7e8afa398d26",
+      "contexts": 5,
+      "patterns": [
+        "V3_I3"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,author,include,sort",
+      "sha256": "ad0f198886e3ed8abbb584c1d2abd6d921ea177a3f080f37d3d99215aa227d13",
+      "contexts": 5,
+      "patterns": [
+        "V3_U1"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,author,negative,sort",
+      "sha256": "9724c94b1139be0a34cbf611c9fa9f5070d533f2dc600c0c5a0e0f56ac043550",
+      "contexts": 5,
+      "patterns": [
+        "V3_I1"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,author,title,preference",
+      "sha256": "caf67a5e1958d4376643a4194855fb850a1836e634f2ac52bfe8538202d9a11b",
+      "contexts": 5,
+      "patterns": [
+        "V3_A1"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,author,title,sort",
+      "sha256": "c044b50dc2c92c78a86329b7b95842bb00c52f58011baf0ee7a3a52f36711603",
+      "contexts": 5,
+      "patterns": [
+        "V3_C1"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,include,format,preference,sort",
+      "sha256": "92e9597b83f19bbdcc0b62a889c0a16121162fa2e0263d54d1e27d4e44526b04",
+      "contexts": 5,
+      "patterns": [
+        "V3_U3"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,negative,include,preference,sort",
+      "sha256": "c277d8ff8c1097cdffc920aa3da816fe4724fabf6937f32f2d9b65fd952d056b",
+      "contexts": 5,
+      "patterns": [
+        "V3_C3"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,title,format,sort",
+      "sha256": "131551f9e80d8f1f081e9004f743397dcf56e381a50a8410cf031ab1f02a9ce6",
+      "contexts": 5,
+      "patterns": [
+        "V3_X1"
+      ]
+    },
+    {
+      "actual_topology": "SMART:rating,title,negative,preference",
+      "sha256": "35480523b9cd441566f99a2511b52d9b1ed369882aa00f55030af10b5337eb77",
+      "contexts": 5,
+      "patterns": [
+        "V3_S2"
+      ]
+    },
+    {
+      "actual_topology": "SMART:title,include,preference,sort",
+      "sha256": "99f6f1732bfb7145d1f0975d1c9adc4759178a4ed5c4a95c19fdc0ce8dcc202b",
+      "contexts": 5,
+      "patterns": [
+        "V3_A3"
+      ]
+    },
+    {
+      "actual_topology": "SMART:title,negative,include,format",
+      "sha256": "74f43474e9abf33abf2b13356598816de52541bee0f8b19179cc1345b61eb5ec",
+      "contexts": 5,
+      "patterns": [
+        "V3_I2"
+      ]
+    },
+    {
+      "actual_topology": "SMART:title,negative,include,format,preference,sort",
+      "sha256": "dc4459efd160a91674e378bc92b4e0672604c308b751bef3d39867ff72c409bb",
+      "contexts": 5,
+      "patterns": [
+        "V3_X3"
+      ]
+    }
+  ],
+  "actual_topology_inventory_sha256": "de4bb21256bdd8425ef2e6b838ea285a1a295f7f7acc5beedca0a5f14d7c2161",
+  "actual_pattern_specs": [
+    {
+      "pattern_id": "V3_C1",
+      "stratum": "CLEAR_EXECUTABLE",
+      "actual_topology": "SMART:rating,author,title,sort",
+      "topology_sha256": "c044b50dc2c92c78a86329b7b95842bb00c52f58011baf0ee7a3a52f36711603",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Mandatory resolved record-rating bound(s).",
+        "author": "Literal required author operand.",
+        "title": "Literal required title operand.",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_C2",
+      "stratum": "CLEAR_EXECUTABLE",
+      "actual_topology": "SMART:author,include,format,sort",
+      "topology_sha256": "fb431f7e6edc9dde703b246d6d1fe68d59155622afadbb24d6b3a40dc98bbedf",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "author": "Literal required author operand.",
+        "include": "Positive canonical subject membership.",
+        "format": "Resolved online-only delivery restriction.",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_C3",
+      "stratum": "CLEAR_EXECUTABLE",
+      "actual_topology": "SMART:rating,negative,include,preference,sort",
+      "topology_sha256": "c277d8ff8c1097cdffc920aa3da816fe4724fabf6937f32f2d9b65fd952d056b",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Mandatory resolved record-rating bound(s).",
+        "negative": "Broad whole-word searchable-text exclusion.",
+        "include": "Positive canonical subject membership.",
+        "preference": "Advisory reading preference: short explanations",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_S1",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "actual_topology": "SMART:author,title,negative,include",
+      "topology_sha256": "c5a24170834578769192499aea178d076d074b5450fb1934e40942c39747e568",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "author": "Literal required author operand.",
+        "title": "Literal required title operand.",
+        "negative": "Canonical tag exclusion.",
+        "include": "Positive canonical subject membership."
+      }
+    },
+    {
+      "pattern_id": "V3_S2",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "actual_topology": "SMART:rating,title,negative,preference",
+      "topology_sha256": "35480523b9cd441566f99a2511b52d9b1ed369882aa00f55030af10b5337eb77",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Mandatory resolved record-rating bound(s).",
+        "title": "Literal required title operand.",
+        "negative": "Canonical tag exclusion.",
+        "preference": "Advisory reading preference: advanced analyses"
+      }
+    },
+    {
+      "pattern_id": "V3_S3",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "actual_topology": "SMART:author,negative,include,preference,sort",
+      "topology_sha256": "8ec2b20b424ec4cad37dc1c36c9e1041792ba965492d4cbd9152c6dc9143cff0",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "author": "Literal required author operand.",
+        "negative": "Broad whole-word searchable-text exclusion.",
+        "include": "Positive canonical subject membership.",
+        "preference": "Advisory reading preference: short summaries",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_A1",
+      "stratum": "AMBIGUOUS",
+      "actual_topology": "SMART:rating,author,title,preference",
+      "topology_sha256": "caf67a5e1958d4376643a4194855fb850a1836e634f2ac52bfe8538202d9a11b",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Mandatory resolved record-rating bound(s).",
+        "author": "Required author/title association is unresolved.",
+        "title": "Required author/title association is unresolved.",
+        "preference": "Advisory reading preference: beginner explanations"
+      }
+    },
+    {
+      "pattern_id": "V3_A2",
+      "stratum": "AMBIGUOUS",
+      "actual_topology": "SMART:author,negative,format,sort",
+      "topology_sha256": "0ce38d547291cd445e7e70d762f8f0469e5c4211d534d53bc0ab8fc74f22b003",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "author": "Literal required author operand.",
+        "negative": "Hard/advisory ownership of known exclusion is unresolved.",
+        "format": "Resolved online-only delivery restriction.",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_A3",
+      "stratum": "AMBIGUOUS",
+      "actual_topology": "SMART:title,include,preference,sort",
+      "topology_sha256": "99f6f1732bfb7145d1f0975d1c9adc4759178a4ed5c4a95c19fdc0ce8dcc202b",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "title": "Literal required title operand.",
+        "include": "Pending mandatory single-category choice.",
+        "preference": "Advisory reading preference: research discussions",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_I1",
+      "stratum": "INCOMPLETE",
+      "actual_topology": "SMART:rating,author,negative,sort",
+      "topology_sha256": "9724c94b1139be0a34cbf611c9fa9f5070d533f2dc600c0c5a0e0f56ac043550",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Mandatory resolved record-rating bound(s).",
+        "author": "Required author input is blank.",
+        "negative": "Broad whole-word searchable-text exclusion.",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_I2",
+      "stratum": "INCOMPLETE",
+      "actual_topology": "SMART:title,negative,include,format",
+      "topology_sha256": "74f43474e9abf33abf2b13356598816de52541bee0f8b19179cc1345b61eb5ec",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "title": "Required exact-title input is empty.",
+        "negative": "Canonical tag exclusion.",
+        "include": "Positive canonical subject membership.",
+        "format": "Resolved online-only delivery restriction."
+      }
+    },
+    {
+      "pattern_id": "V3_I3",
+      "stratum": "INCOMPLETE",
+      "actual_topology": "SMART:rating,author,format,preference,sort",
+      "topology_sha256": "2e00521ced9eec20f757783948cb4022999d1ab28e5d6e74676c7e8afa398d26",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Required numeric minimum with missing endpoint.",
+        "author": "Literal required author operand.",
+        "format": "Resolved online-only delivery restriction.",
+        "preference": "Advisory reading preference: short explanations",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_U1",
+      "stratum": "UNSUPPORTED",
+      "actual_topology": "SMART:rating,author,include,sort",
+      "topology_sha256": "ad0f198886e3ed8abbb584c1d2abd6d921ea177a3f080f37d3d99215aa227d13",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Mandatory resolved record-rating bound(s).",
+        "author": "Literal required author operand.",
+        "include": "Required XOR category operation, unsupported.",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_U2",
+      "stratum": "UNSUPPORTED",
+      "actual_topology": "SMART:author,title,negative,format,preference",
+      "topology_sha256": "35eec185a2d823b3a0d13850106f31ae94b04e5b53f845a5d53176deaf3d08d9",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "author": "Literal required author operand.",
+        "title": "Literal required title operand.",
+        "negative": "Strict negative proximity operation, unsupported.",
+        "format": "Resolved online-only delivery restriction.",
+        "preference": "Advisory reading preference: short introductions"
+      }
+    },
+    {
+      "pattern_id": "V3_U3",
+      "stratum": "UNSUPPORTED",
+      "actual_topology": "SMART:rating,include,format,preference,sort",
+      "topology_sha256": "92e9597b83f19bbdcc0b62a889c0a16121162fa2e0263d54d1e27d4e44526b04",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Strict creator-wide aggregate operation, unsupported.",
+        "include": "Positive canonical subject membership.",
+        "format": "Resolved online-only delivery restriction.",
+        "preference": "Advisory reading preference: advanced accounts",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_X1",
+      "stratum": "CONTRADICTORY",
+      "actual_topology": "SMART:rating,title,format,sort",
+      "topology_sha256": "131551f9e80d8f1f081e9004f743397dcf56e381a50a8410cf031ab1f02a9ce6",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "rating": "Mandatory resolved record-rating bound(s).",
+        "title": "Literal required title operand.",
+        "format": "Resolved online-only delivery restriction.",
+        "sort": "Explicit title order A to Z."
+      }
+    },
+    {
+      "pattern_id": "V3_X2",
+      "stratum": "CONTRADICTORY",
+      "actual_topology": "SMART:author,negative,include,preference",
+      "topology_sha256": "315e59bcb66f5c774fa1ba6ec8149f634729dbf7066029940548ec67dbf1e49a",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "author": "Literal required author operand.",
+        "negative": "Canonical tag exclusion.",
+        "include": "Positive canonical subject membership.",
+        "preference": "Advisory reading preference: short introductions"
+      }
+    },
+    {
+      "pattern_id": "V3_X3",
+      "stratum": "CONTRADICTORY",
+      "actual_topology": "SMART:title,negative,include,format,preference,sort",
+      "topology_sha256": "dc4459efd160a91674e378bc92b4e0672604c308b751bef3d39867ff72c409bb",
+      "scope_instances": 5,
+      "feature_purpose": {
+        "title": "Literal required title operand.",
+        "negative": "Broad whole-word searchable-text exclusion.",
+        "include": "Required positive whole-word searchable-text predicate, explicitly unadapted.",
+        "format": "Resolved online-only delivery restriction.",
+        "preference": "Advisory reading preference: short explanations",
+        "sort": "Explicit title order A to Z."
+      }
+    }
+  ],
+  "scope_counts": {
+    "GLOBAL": 18,
+    "PUBLIC_TENANT_PATRON": 18,
+    "PUBLIC_TENANT_STAFF": 18,
+    "PRIVATE_TENANT_PATRON": 18,
+    "PRIVATE_TENANT_STAFF": 18
+  },
+  "stratum_counts": {
+    "CLEAR_EXECUTABLE": 15,
+    "SAFE_UNCERTAIN_EXECUTABLE": 15,
+    "AMBIGUOUS": 15,
+    "INCOMPLETE": 15,
+    "UNSUPPORTED": 15,
+    "CONTRADICTORY": 15
+  },
+  "structural_check": {
+    "normalization": "Unicode NFKC, casefold, collapse whitespace, entire query including quoted tokens",
+    "ordered_regexes": [
+      {
+        "feature": "rating",
+        "regex": "\\brat(?:ing|ings|ed)\\b|\\bstars?\\b|\\d\\+"
+      },
+      {
+        "feature": "year",
+        "regex": "\\b(?:publish\\w*|release\\w*|year|after|before|onward)\\b"
+      },
+      {
+        "feature": "author",
+        "regex": "\\bby\\b"
+      },
+      {
+        "feature": "title",
+        "regex": "\\btitled\\b"
+      },
+      {
+        "feature": "negative",
+        "regex": "\\b(?:not|exclud\\w*|without|except)\\b"
+      },
+      {
+        "feature": "include",
+        "regex": "\\b(?:include|included|subject|category)\\b"
+      },
+      {
+        "feature": "format",
+        "regex": "\\b(?:online|digital\\w*|physical\\w*|hardcover|binding)\\b"
+      },
+      {
+        "feature": "availability",
+        "regex": "\\b(?:available|request|loan|borrow)\\b"
+      },
+      {
+        "feature": "metadata",
+        "regex": "\\b(?:pages?|edition|language|french|dollars|costing|difficulty|audience)\\b"
+      },
+      {
+        "feature": "preference",
+        "regex": "\\b(?:beginner\\w*|introduct\\w*|advanced|research|reference|short\\w*)\\b"
+      },
+      {
+        "feature": "sort",
+        "regex": "\\b(?:sort|highest|newest|oldest)\\b"
+      }
+    ],
+    "required": "Actual topology equals planned topology and is in brief allowed list, every row checked before writing; each feature has a requested-operation purpose.",
+    "scope": "Pure regex on own new output, not the search parser or established/sealed corpus."
+  },
+  "readiness_note": "Brief allowed-list membership is locally necessary only. The coordinator reported its established baseline is larger; independent external isolation audit remains pending. No sealed comparison performed here.",
+  "representation_concerns": [
+    {
+      "kind": "UNADAPTED_POSITIVE_TEXT",
+      "cases": [
+        "C5E_V3_GLOBAL_X3",
+        "C5E_V3_PUBLIC_TENANT_PATRON_X3",
+        "C5E_V3_PUBLIC_TENANT_STAFF_X3",
+        "C5E_V3_PRIVATE_TENANT_PATRON_X3",
+        "C5E_V3_PRIVATE_TENANT_STAFF_X3"
+      ],
+      "effect": "Mandatory positive whole-word atlas predicate remains explicit outside scalar hard constraints; no exact_text/subjects substitution. Semantic contradiction/executable=false remains definite."
+    },
+    {
+      "kind": "MATCH_QUALIFIERS",
+      "effect": "Exact author/title ownership and WHOLE_WORD/searchable_text exclusion qualifiers remain semantic gold, without extra scalar shapes."
+    },
+    {
+      "kind": "SORT_DIRECTION",
+      "effect": "expected_sort uses supplied TITLE enum; original A-to-Z direction remains expected_sort_source, with no new equality adapter."
+    }
+  ],
+  "construction_rules": [
+    "Eighteen genuinely revised semantic patterns across five scopes; shared groups are disclosed, not ninety independent grammars.",
+    "Each detected structural feature has a meaningful supported, unresolved, contradictory or unsupported requested operation; no inert padding.",
+    "Author/title strings do not establish bibliography facts. Canonical repairs use supplied per-scope subject lists and source-backed notices.",
+    "Three ambiguity families cover association, hard/advisory ownership and operand choice; incomplete families cover creator, title and numeric endpoint.",
+    "Unsupported families cover XOR membership, negative proximity and creator-wide aggregate rating, rather than false scalar replacements.",
+    "Contradiction families cover a reversed closed interval, opposed canonical membership and identical-domain opposed text predicates.",
+    "Canonical scalar fields and exclusive-format lists follow supplied coordinator metadata; unknown operands remain UNRESOLVED and absent fields are explicit.",
+    "No labels derive from a parser or outcomes. All desired strata were judged feasible; fresh independent review is still required."
+  ],
+  "original_artifacts_modified": false,
+  "candidate_or_prediction_feedback_used": false,
+  "pre_inference_structural_remediation": true,
+  "human_reviewed": 0,
+  "independent_fresh_review_pending": true,
+  "exact_reads_v3": [
+    {
+      "path": "reports/search_v2c_c5e_blind_author_brief.json",
+      "operations": [
+        "PowerShell Get-Content -Raw",
+        "Python read_bytes and JSON decoding for author-owned validation"
+      ]
+    },
+    {
+      "path": "reports/search_v2c_c5e_author_provenance_v3.json",
+      "operations": [
+        "Read own newly authored pattern-spec draft to materialize and validate it"
+      ]
+    },
+    {
+      "path": "coordinator messages in this agent context",
+      "operations": [
+        "Read authorized schema note, sort/exclusive_formats clarifications and pure structural regex metadata"
+      ]
+    }
+  ],
+  "authorized_writes": [
+    "reports/search_v2c_c5e_independent_authored_v3.jsonl",
+    "reports/search_v2c_c5e_author_provenance_v3.json"
+  ],
+  "candidate_source_reads": 0,
+  "prior_corpus_reads": 0,
+  "prediction_reads": 0,
+  "metric_reads": 0,
+  "heldout_reads": 0,
+  "search_parser_calls": 0,
+  "database_calls": 0,
+  "native_application_calls": 0,
+  "separate_model_api_inference_calls": 0,
+  "execution_disclosure": "Standard-library JSON, SHA256, pure regex, canonical/capability membership and in-memory count checks only. An initial oversized process launch was rejected by Windows before execution or output writes; pattern specifications were then written to the authorized v3 provenance and materialized here. No search parser, test suite, database, native application or sealed interface was invoked."
+}

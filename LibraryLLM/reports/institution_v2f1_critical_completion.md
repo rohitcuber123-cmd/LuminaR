@@ -1,4 +1,13 @@
-# Institution Part 2F.1 — final critical closure
+Current consolidated closure: [institution_v2f1_consolidated_completion.md](institution_v2f1_consolidated_completion.md). The evidence below records the earlier sub-phase.
+
+<!-- current-staff-catalogue-correction -->
+# Current Part 2F.1 closure — PASS
+
+The latest Staff catalogue/title correction is complete. **Staff Catalog opens the selected-library browsing surface at `/staff/libraries/{libraryId}/catalogue`; Inventory remains separate.** [Current completion, gates 231–254 and required QA fields](institution_v2f1_staff_catalogue_completion.md). The previous routing decision below is superseded; its other accepted evidence remains historical.
+
+---
+
+# Earlier critical closure — historical evidence
 
 **FINAL PASS. All 45 additional acceptance gates (186–230) pass.**
 

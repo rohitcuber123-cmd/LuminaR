@@ -74,7 +74,7 @@ test('For You advances the existing recommendation mode through disjoint slices'
  assert.ok(calls.some(call=>call.url.endsWith('limit=10&offset=10')))
  assert.equal(screen.queryAllByText('Depth book 0').length,0)
  assert.ok(screen.getByText('Recommendations 11–20'))
- fireEvent.click(screen.getByRole('button',{name:'Previous'}));await screen.findAllByText('Depth book 0')
+ fireEvent.click(screen.getByRole('button',{name:'Previous Recommendations'}));await screen.findAllByText('Depth book 0')
 })
 test('For You has_more false disables continuation',async()=>{
  more=false;render(<MemoryRouter><ForYou/></MemoryRouter>);await screen.findAllByText('Depth book 0')
@@ -90,5 +90,5 @@ test('For You failed continuation clears old cards and offers Previous',async()=
  await screen.findByText('Recommendations could not be loaded. Try Previous.')
  assert.equal(screen.queryAllByText('Depth book 0').length,0)
  assert.ok((screen.getByRole('button',{name:'Next Recommendations'}) as HTMLButtonElement).disabled)
- fireEvent.click(screen.getByRole('button',{name:'Previous'}));await screen.findAllByText('Depth book 0')
+ fireEvent.click(screen.getByRole('button',{name:'Previous Recommendations'}));await screen.findAllByText('Depth book 0')
 })

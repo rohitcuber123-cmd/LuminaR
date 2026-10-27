@@ -1,0 +1,239 @@
+{
+  "version": "C5E-independent-author-provenance-v1",
+  "author_identity": {
+    "delegated_agent_task": "/root/c5e_blind_normative_author",
+    "runtime_model": "NOT_EXPOSED_TO_AGENT",
+    "fresh_agent_context": true,
+    "prior_candidate_or_acceptance_result_history_exposed": false,
+    "context_statement": "Only the author task instructions and the one allowed normative brief were exposed as substantive task material."
+  },
+  "authored_at_utc": "2026-10-27T05:28:11.662155+00:00",
+  "brief_path": "reports/search_v2c_c5e_blind_author_brief.json",
+  "brief_sha256": "303bf337612f951792c68b4b997c25387fc98420797b30c9b5c3256f4127bc39",
+  "output_path": "reports/search_v2c_c5e_independent_authored.jsonl",
+  "output_sha256": "d84abdc3ad66ac5b2eeefe903062c8134abcb5906950db234650db48b59df8e1",
+  "human_reviewed": 0,
+  "independent_fresh_review_pending": true,
+  "contexts": 90,
+  "independently_composed_semantic_patterns": 18,
+  "scope_instantiations_per_pattern": 5,
+  "independent_grammars_claimed": 18,
+  "ninety_independent_grammars_claimed": false,
+  "scope_counts": {
+    "GLOBAL": 18,
+    "PUBLIC_TENANT_PATRON": 18,
+    "PUBLIC_TENANT_STAFF": 18,
+    "PRIVATE_TENANT_PATRON": 18,
+    "PRIVATE_TENANT_STAFF": 18
+  },
+  "stratum_counts": {
+    "CLEAR_EXECUTABLE": 15,
+    "SAFE_UNCERTAIN_EXECUTABLE": 15,
+    "AMBIGUOUS": 15,
+    "INCOMPLETE": 15,
+    "UNSUPPORTED": 15,
+    "CONTRADICTORY": 15
+  },
+  "pattern_specs": [
+    {
+      "pattern_id": "C1",
+      "stratum": "CLEAR_EXECUTABLE",
+      "operation_topology": "SMART:rating,author,title,negative",
+      "semantic_structure": "Field-bound literal title containing a Boolean-looking word, rating floor, explicit author and canonical category exclusion.",
+      "normative_rule": "Quoted title is literal; title text does not imply category membership. Four resolved conjunctive requirements are enforceable.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "C2",
+      "stratum": "CLEAR_EXECUTABLE",
+      "operation_topology": "SMART:author,include,format,sort",
+      "semantic_structure": "Ordered catalogue selection recipe: select canonical category, constrain author and online format, then order title.",
+      "normative_rule": "Positive canonical category, explicit author and online format are supported in every scope; catalogue sorting is a search operation.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "C3",
+      "stratum": "CLEAR_EXECUTABLE",
+      "operation_topology": "SMART:title,negative,include,preference",
+      "semantic_structure": "Exact-title search with a positive canonical category, whole-word text exclusion and an optional presentation preference.",
+      "normative_rule": "Broad whole-word exclusion differs from canonical category exclusion; optional illustrated presentation never filters.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "S1",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "operation_topology": "SMART:rating,author,include,sort",
+      "semantic_structure": "Category-first request with one transposed category spelling and independently explicit author, rating and title order.",
+      "normative_rule": "Unique canonical category repair is executable with a notice grounded in that scope canonical list.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "S2",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "operation_topology": "SMART:title,negative,include,preference",
+      "semantic_structure": "Acceptance checklist separates a literal title, positive category, misspelled negative category and optional maps.",
+      "normative_rule": "The negative category spelling has one safe canonical repair; negative category ownership remains explicit.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "S3",
+      "stratum": "SAFE_UNCERTAIN_EXECUTABLE",
+      "operation_topology": "SMART:rating,negative,include,format,preference",
+      "semantic_structure": "Reader need expressed as an online selection bounded by rating and word exclusion, with a repaired domain label and soft audience preference.",
+      "normative_rule": "Repair only the explicit category operand; keep the text exclusion broad and the beginner preference advisory.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "A1",
+      "stratum": "AMBIGUOUS",
+      "operation_topology": "SMART:rating,author,title,sort",
+      "semantic_structure": "Two quoted operands have explicitly undecided author/title assignment, while rating and sorting are fixed.",
+      "normative_rule": "Both hard field operands are unresolved because their owner assignment is expressly withheld; plausible name appearance is not evidence.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "A2",
+      "stratum": "AMBIGUOUS",
+      "operation_topology": "SMART:author,negative,format,preference",
+      "semantic_structure": "A stated exclusion has explicitly undecided mandatory/advisory status beside resolved author/format and another definite preference.",
+      "normative_rule": "Unresolved hard/advisory ownership prevents execution even when the text operand itself is known.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "A3",
+      "stratum": "AMBIGUOUS",
+      "operation_topology": "SMART:title,include,preference,sort",
+      "semantic_structure": "A required single canonical category is pending a choice between two named categories; union is explicitly disclaimed.",
+      "normative_rule": "Unknown mandatory category choice is ambiguity, not permission to invent an OR operation or search both.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "I1",
+      "stratum": "INCOMPLETE",
+      "operation_topology": "SMART:rating,author,title,negative",
+      "semantic_structure": "A quoted empty title field is mandatory beside explicit author, rating floor and category exclusion.",
+      "normative_rule": "A blank required title is incomplete; the other resolved constraints remain gold.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "I2",
+      "stratum": "INCOMPLETE",
+      "operation_topology": "SMART:author,include,format,sort",
+      "semantic_structure": "A saved catalogue form specifies category/format/order but explicitly leaves its required author box empty.",
+      "normative_rule": "Missing required author is incomplete and may not be silently dropped.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "I3",
+      "stratum": "INCOMPLETE",
+      "operation_topology": "SMART:title,negative,format,preference",
+      "semantic_structure": "A delivery-mode selection is explicitly unfilled beside a literal title, whole-word exclusion and an optional visual preference.",
+      "normative_rule": "An empty required format remains incomplete even where the scope supports only online material; capabilities do not supply user input.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "U1",
+      "stratum": "UNSUPPORTED",
+      "operation_topology": "SMART:rating,author,include,sort",
+      "semantic_structure": "Strict exclusive category membership requests XOR, including rejection of records in both named categories.",
+      "normative_rule": "Ordinary category keywords do not license exclusive Boolean operations. Resolved XOR operands are documented without fabricating an AND/OR hard filter.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "U2",
+      "stratum": "UNSUPPORTED",
+      "operation_topology": "SMART:author,title,negative,format",
+      "semantic_structure": "Literal author/title and online format coexist with a strict regular-expression description exclusion.",
+      "normative_rule": "An arbitrary anchored digit-pattern exclusion is not the supported broad whole-word text exclusion.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "U3",
+      "stratum": "UNSUPPORTED",
+      "operation_topology": "SMART:rating,negative,include,preference,sort",
+      "semantic_structure": "A strict negative jacket-color field accompanies supported category/rating/order and an advisory content preference.",
+      "normative_rule": "Cover color is not an enforceable capability in any supplied contract; do not reduce it to an unrelated whole-word text exclusion.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "X1",
+      "stratum": "CONTRADICTORY",
+      "operation_topology": "SMART:rating,author,title,format,sort",
+      "semantic_structure": "Resolved strict and inclusive rating bounds share the same endpoint beside exact bibliographic fields, online format and order.",
+      "normative_rule": "Rating at least four and below four has empty intersection; neither bound may be discarded.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "X2",
+      "stratum": "CONTRADICTORY",
+      "operation_topology": "SMART:author,title,negative,include",
+      "semantic_structure": "One explicitly canonical category is simultaneously required and prohibited, with independently literal author/title.",
+      "normative_rule": "Positive and negative membership in the same canonical category is a direct contradiction, independent of catalogue facts.",
+      "scope_instances": 5
+    },
+    {
+      "pattern_id": "X3",
+      "stratum": "CONTRADICTORY",
+      "operation_topology": "SMART:title,negative,include,format,preference,sort",
+      "semantic_structure": "The same whole word is explicitly required and prohibited in the same searchable-text domain beside title/format/order and optional diagrams.",
+      "normative_rule": "Opposed whole-word predicates over the same domain contradict; soft preferences cannot repair them.",
+      "scope_instances": 5
+    }
+  ],
+  "construction_rules": [
+    "Eighteen semantic patterns were composed from the normative brief, then mechanically instantiated into five explicit scope contexts; these are shared groups, not ninety independently invented grammars.",
+    "All meaningful requested operations are declared in operation_topology. No inert modifiers were added to obtain a topology.",
+    "Explicit exact author/title operands are literal query constraints. No bibliography existence or author/title association was looked up or inferred.",
+    "The public/global category pair is History/Physics; the private pair is Neural Networks/Detective Fiction. All are supplied canonical subjects.",
+    "Safe repairs use only an explicit category operand and one unique supplied canonical spelling; notice gold points to its brief source.",
+    "All format requests with a value are ONLINE, supported in every scope. Blank required format remains missing even in GLOBAL.",
+    "Hard constraints contain resolved, expressible operands only; unresolved required operands are omitted and masked UNRESOLVED. Unsupported operations keep their resolved operands under expected_unsupported without fabricating supported replacements.",
+    "Resolved contradictory predicates remain in hard gold rather than deleting one side.",
+    "Absent hard fields are explicit in expected_absent_hard_fields and APPLICABLE in masks; absence of unsupported replacement filters is separately explained.",
+    "Soft semantic preferences are independently authored content, not a commitment to a parser-specific advisory object schema; structured advisory/actor metrics are N/A where no oracle exists.",
+    "No case was relabeled from predictions. Every desired stratum was judged semantically feasible; separate fresh review remains mandatory."
+  ],
+  "gold_schema": {
+    "hard_constraints": {
+      "author": "exact string object",
+      "title": "exact string object",
+      "rating": "resolved bound operators, including both sides of a contradiction",
+      "include_subjects": "canonical positive category list",
+      "exclude_subjects": "canonical negative category list",
+      "required_text": "value/match/domain objects",
+      "excluded_text": "value/match/domain objects",
+      "formats": "explicit supported enum list"
+    },
+    "null_sort": "No sorting was requested.",
+    "empty_diagnostic_arrays": "The corresponding issue is absent, not unknown.",
+    "semantic_remainder": "Non-hard preference meanings; no additional free-text hard content is silently inferred.",
+    "notice_matching": "Semantic repair and source are gold; exact notice wording is not prescribed."
+  },
+  "exact_reads": [
+    {
+      "path": "reports/search_v2c_c5e_blind_author_brief.json",
+      "operation": "PowerShell Get-Content -Raw",
+      "purpose": "Read the one authorized normative brief"
+    },
+    {
+      "path": "reports/search_v2c_c5e_blind_author_brief.json",
+      "operation": "Python Path.read_bytes",
+      "purpose": "SHA256 of the exact authorized brief bytes only; contents not parsed"
+    }
+  ],
+  "authorized_writes": [
+    "reports/search_v2c_c5e_independent_authored.jsonl",
+    "reports/search_v2c_c5e_author_provenance.json"
+  ],
+  "other_file_reads": 0,
+  "production_or_test_edits": 0,
+  "candidate_parser_calls": 0,
+  "model_inference_calls": 0,
+  "database_calls": 0,
+  "native_application_or_qualification_calls": 0,
+  "search_parser_calls": 0,
+  "execution_disclosure": "One PowerShell read tool invocation and one PowerShell-hosted Python standard-library serialization/materialization invocation. json.dumps is output serialization; no JSON input parser or search parser was run. No separate model/API inference, catalogue, database, native application, or test execution occurred.",
+  "candidate_behavior_consulted": false,
+  "predictions_consulted": false,
+  "heldout_material_consulted": false
+}

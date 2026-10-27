@@ -738,6 +738,7 @@ def generate_semantic_candidates(
             SEARCH_API_URL,
             json={
                 "query": combined_query,
+                "query_contract": "MACHINE",
                 "top_k": candidate_count,
                 "save_history": False
             },

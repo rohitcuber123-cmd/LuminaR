@@ -1,0 +1,538 @@
+{
+  "status": "PASS",
+  "actual_api": {
+    "GLOBAL": {
+      "prior_stored": true,
+      "rejected_results": 0,
+      "prior_unchanged": true,
+      "later_refinement_kept_topic": true,
+      "clear_deleted_context": true,
+      "fresh_context_has_no_prior_rating": true
+    },
+    "TEST_PATRON": {
+      "prior_stored": true,
+      "rejected_results": 0,
+      "prior_unchanged": true,
+      "later_refinement_kept_topic": true,
+      "clear_deleted_context": true,
+      "fresh_context_has_no_prior_rating": true
+    },
+    "TEST_STAFF": {
+      "prior_stored": true,
+      "rejected_results": 0,
+      "prior_unchanged": true,
+      "later_refinement_kept_topic": true,
+      "clear_deleted_context": true,
+      "fresh_context_has_no_prior_rating": true
+    },
+    "PRIVATE_PATRON": {
+      "prior_stored": true,
+      "rejected_results": 0,
+      "prior_unchanged": true,
+      "later_refinement_kept_topic": true,
+      "clear_deleted_context": true,
+      "fresh_context_has_no_prior_rating": true
+    },
+    "PRIVATE_STAFF": {
+      "prior_stored": true,
+      "rejected_results": 0,
+      "prior_unchanged": true,
+      "later_refinement_kept_topic": true,
+      "clear_deleted_context": true,
+      "fresh_context_has_no_prior_rating": true
+    }
+  },
+  "new_and_accepted_tests": {
+    "tests": 51,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "report": "D:\\SDC\\LibraryLLM\\reports\\search_v2c_a1_final_integration.xml",
+    "cases": [
+      "test_global_contradiction_preserves_context_and_skips_retrieval",
+      "test_multi_subject_global_uses_rarest_bounded_ids_and_all_predicates",
+      "test_private_canonical_clause_session_pipeline[False]",
+      "test_private_canonical_clause_session_pipeline[True]",
+      "test_private_clause_vocabulary_not_read_before_auth[actor0]",
+      "test_private_clause_vocabulary_not_read_before_auth[actor1]",
+      "test_revocation_precedes_contradiction_resolution",
+      "test_missing_tenant_subject_not_imported_from_global",
+      "test_public_session_clause_guard[False]",
+      "test_public_session_clause_guard[True]",
+      "test_rejected_plan_never_overwrites_or_creates_context[fiction 4-AMBIGUOUS]",
+      "test_rejected_plan_never_overwrites_or_creates_context[fiction rating above-INCOMPLETE]",
+      "test_rejected_plan_never_overwrites_or_creates_context[books rated above 4 and below 3-CONTRADICTORY]",
+      "test_rejected_plan_never_overwrites_or_creates_context[online only and physical only-CONTRADICTORY]",
+      "test_rejected_plan_never_overwrites_or_creates_context[books under 250 pages-UNSUPPORTED]",
+      "test_old_scoped_plan_readable_and_new_query_revalidated",
+      "test_global_guard_precedes_retrieval_profile_kg_and_commit",
+      "test_authorized_private_guard_and_revocation",
+      "test_private_unauthorized_before_vocabulary[actor0]",
+      "test_private_unauthorized_before_vocabulary[actor1]",
+      "test_natural_strict_rating_filters_canonical_rows",
+      "test_global_unsupported_year_does_not_commit",
+      "test_search_session_persistence_replay_expiry_and_clear",
+      "test_search_session_foreign_user_and_login_denied[foreign0]",
+      "test_search_session_foreign_user_and_login_denied[foreign1]",
+      "test_library_a_b_sessions_and_workspaces_separate",
+      "test_private_search_session_membership_revoked",
+      "test_private_session_outsider_denied_before_resolution",
+      "test_private_session_exclusion_overrides_kg_and_personalization",
+      "test_tenant_profile_cannot_enter_global_or_foreign_tenant",
+      "test_public_tenant_fallback_preserves_session_and_boundaries",
+      "test_global_opt_in_warm_profile_off_and_reason_contract",
+      "test_empty_public_tenant_session_never_becomes_global_filler",
+      "test_logout_context_clear_is_user_scoped_and_preserves_saved_books",
+      "test_tenant_kg_same_context_bounded_and_canonically_reranked",
+      "test_tenant_kg_unavailable_search_hnsw_fallback[NOT_BUILT]",
+      "test_tenant_kg_unavailable_search_hnsw_fallback[BUILDING]",
+      "test_tenant_kg_unavailable_search_hnsw_fallback[FAILED]",
+      "test_tenant_kg_unavailable_search_hnsw_fallback[RECOVERY_REQUIRED]",
+      "test_tenant_kg_unavailable_search_hnsw_fallback[STALE]",
+      "test_private_outsider_kg_and_search_denied_before_cache",
+      "test_kg_negative_and_rating_cannot_be_overridden",
+      "test_soft_learn_intent_reaches_existing_crossencoder",
+      "test_foreign_graph_generation_is_never_used",
+      "test_global_shared_plan_strict_filters_and_no_hnsw_for_facets",
+      "test_query_hnsw_cache_generation_isolated_between_libraries",
+      "test_tenant_semantic_rating_filtered_before_rerank",
+      "test_private_facets_and_search_authorize_before_cache",
+      "test_library_vocabulary_isolation_and_fallback",
+      "test_core_fallback_privacy_headers_and_exact_mode",
+      "test_patron_online_filter_excludes_staff_only_and_uses_canonical_year"
+    ]
+  },
+  "browser_sequences": [
+    {
+      "scope": "GLOBAL_SESSION",
+      "query": "books about wizards",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "decision": {
+          "decision_type": "EXECUTABLE",
+          "reason_code": "VALIDATED",
+          "affected_fields": [],
+          "safe_public_message": "",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [
+          "Magic",
+          "Juvenile fiction",
+          "Children's fiction",
+          "Fantasy fiction",
+          "Wizards, fiction",
+          "Fantasy"
+        ],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: wizards"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": false,
+          "version": 1,
+          "expires_at": "2026-10-15T08:39:08.803701+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 10,
+      "owners": [],
+      "noticeVisible": false,
+      "editStateVisible": false,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg\n    - link \"Catalog\":\n      - /url: /catalog\n    - link \"New Arrivals\":\n      - /url: /#new-arrivals\n    - link \"Events\":\n      - /url: /events\n    - link \"About\":\n      - /url: /#about\n    - link \"Know More\":\n      - /url: /llm\n    - link \"My Library\":\n      - /url: /account/libraries?group=patron\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n  - generic: Catalogue\n  - combobox \"Switch catalogue\":\n    - generic: Global catalogue\n- main:\n  - heading \"Catalog\" [level=1]\n  - paragraph: Global search results for “books about wizards”\n  - generic: Search by title, author or subject\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search by title, author or subject\": books about wizards\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - group \"Interpreted search\":\n    - generic: \"Intent: Discover topic\"\n    - 'button \"Remove Topic: wizards\"': \"Topic: wizards ×\"\n    - generic \"Related concepts included\"\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"History 566,010 books\": History566,010\n    - button \"Fiction 416,802 books\": Fiction416,802\n    - button \"Biography 254,619 books\": Biography254,619\n    - button \"Juvenile literature 162,704 books\": Juvenile literature162,704\n    - button \"Children's fiction 159,631 books\": Children's fiction159,631\n    - button \"Politics and government 133,081 books\": Politics and government133,081\n    - button \"Juvenile fiction 117,297 books\": Juvenile fiction117,297\n    - button \"Fiction, general 66,171 books\": Fiction, general66,171\n    - button \"Philosophy 56,047 books\": Philosophy56,047\n    - button \"Fiction, romance, general 47,436 books\": Fiction, romance, general47,436\n    - button \"Women 46,327 books\": Women46,327\n    - button \"Bible 46,085 books\": Bible46,085\n    - button \"Law and legislation 45,487 books\": Law and legislation45,487\n    - button \"Economic conditions 45,256 books\": Economic conditions45,256\n  - text: Author\n  - textbox \"Filter by author\"\n  - heading \"Books\" [level=2]\n  - status: Showing 1–10 of 50 ranked results\n  - 'article \"WIZARDS: A HISTORY\"':\n    - paragraph: Magic\n    - 'link \"Cover for WIZARDS: A HISTORY by P.G MAXWELL-STUART WIZARDS: A HISTORY P.G MAXWELL-STUART Global Catalogue\"':\n      - /url: /book/OL13615506W\n      - 'img \"Cover for WIZARDS: A HISTORY by P.G MAXWELL-STUART\"':\n        - generic: LuminaR\n        - paragraph: \"WIZARDS: A HISTORY\"\n        - paragraph: P.G MAXWELL-STUART\n      - 'heading \"WIZARDS: A HISTORY\" [level=3]'\n      - paragraph: P.G MAXWELL-STUART\n      - paragraph: Global Catalogue\n    - 'button \"Select WIZARDS: A HISTORY\"':\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL13615506W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL13615506W\n  - article \"A Guide to Wizards of the World - Being a True Account of Wizards in the Known World\":\n    - paragraph: Wizards\n    - link \"Cover for A Guide to Wizards of the World - Being a True Account of Wizards in the Known World A Guide to Wizards of the World - Being a True Account of Wizards in the Known World Author not recorded Global Catalogue\":\n      - /url: /book/OL20776463W\n      - img \"Cover for A Guide to Wizards of the World - Being a True Account of Wizards in the Known World\":\n        - generic: LuminaR\n        - paragraph: A Guide to Wizards of the World - Being a True Account of Wizards in the Known World\n      - heading \"A Guide to Wizards of the World - Being a True Account of Wizards in the Known World\" [level=3]\n      - paragraph: Author not recorded\n      - paragraph: Global Catalogue\n    - button \"Select A Guide to Wizards of the World - Being a True Account of Wizards in the Known World\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL20776463W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL20776463W\n  - article \"The Book of Wizards\":\n    - paragraph: Wizards\n    - link \"Cover for The Book of Wizards by Michael Hague The Book of Wizards Michael Hague Global Catalogue\":\n      - /url: /book/OL1933071W\n      - img \"Cover for The Book of Wizards by Michael Hague\":\n        - generic: LuminaR\n        - paragraph: The Book of Wizards\n        - paragraph: Michael Hague\n      - heading \"The Book of Wizards\" [level=3]\n      - paragraph: Michael Hague\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select The Book of Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL1933071W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL1933071W\n  - article \"Wizards\":\n    - paragraph: Wizards\n    - link \"Cover for Wizards by Gail B. Stewart Wizards Gail B. Stewart Global Catalogue\":\n      - /url: /book/OL16688362W\n      - img \"Cover for Wizards by Gail B. Stewart\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: Gail B. Stewart\n      - heading \"Wizards\" [level=3]\n      - paragraph: Gail B. Stewart\n      - paragraph: Global Catalogue\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL16688362W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL16688362W\n  - article \"Wizards\":\n    - paragraph: Wizards\n    - link \"Cover for Wizards by Chris Lehotsky Wizards Chris Lehotsky Global Catalogue\":\n      - /url: /book/OL20251446W\n      - img \"Cover for Wizards by Chris Lehotsky\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: Chris Lehotsky\n      - heading \"Wizards\" [level=3]\n      - paragraph: Chris Lehotsky\n      - paragraph: Global Catalogue\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL20251446W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL20251446W\n  - article \"Wizards\":\n    - paragraph: Wizards\n    - link \"Cover for Wizards by Aubrey Sherman Wizards Aubrey Sherman Global Catalogue\":\n      - /url: /book/OL23193888W\n      - img \"Cover for Wizards by Aubrey Sherman\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: Aubrey Sherman\n      - heading \"Wizards\" [level=3]\n      - paragraph: Aubrey Sherman\n      - paragraph: Global Catalogue\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL23193888W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL23193888W\n  - article \"Wizards\":\n    - paragraph: Magicians\n    - link \"Cover for Wizards by Matthews, John Wizards Matthews, John Global Catalogue\":\n      - /url: /book/OL1848193W\n      - img \"Cover for Wizards by Matthews, John\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: Matthews, John\n      - heading \"Wizards\" [level=3]\n      - paragraph: Matthews, John\n      - paragraph: Global Catalogue\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL1848193W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL1848193W\n  - article \"Wizards\":\n    - paragraph: Wizards\n    - link \"Cover for Wizards by Jack Dann; Gardner R. Dozois Wizards Jack Dann; Gardner R. Dozois Global Catalogue\":\n      - /url: /book/OL19040992W\n      - img \"Cover for Wizards by Jack Dann; Gardner R. Dozois\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: Jack Dann; Gardner R. Dozois\n      - heading \"Wizards\" [level=3]\n      - paragraph: Jack Dann; Gardner R. Dozois\n      - paragraph: Global Catalogue\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL19040992W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL19040992W\n  - article \"Wizards\":\n    - paragraph: Magicians\n    - link \"Cover for Wizards by David A. McIntee; Lesley McIntee Wizards David A. McIntee; Lesley McIntee Global Catalogue\":\n      - /url: /book/OL20293280W\n      - img \"Cover for Wizards by David A. McIntee; Lesley McIntee\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: David A. McIntee; Lesley McIntee\n      - heading \"Wizards\" [level=3]\n      - paragraph: David A. McIntee; Lesley McIntee\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL20293280W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL20293280W\n  - article \"Wizards' Kingdom\":\n    - paragraph: Wizards\n    - link \"Cover for Wizards' Kingdom by Colin R Parsons Wizards' Kingdom Colin R Parsons Global Catalogue\":\n      - /url: /book/OL9028024W\n      - img \"Cover for Wizards' Kingdom by Colin R Parsons\":\n        - generic: LuminaR\n        - paragraph: Wizards' Kingdom\n        - paragraph: Colin R Parsons\n      - heading \"Wizards' Kingdom\" [level=3]\n      - paragraph: Colin R Parsons\n      - paragraph: Global Catalogue\n    - button \"Select Wizards' Kingdom\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL9028024W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL9028024W\n  - navigation \"Catalogue pagination\":\n    - button \"Previous\" [disabled]:\n      - generic: Previous\n    - generic: Page 1 of 5\n    - button \"Next Results\":\n      - generic: Next Results\n- contentinfo:\n  - link \"LuminaR home\":\n    - /url: /\n    - generic: LuminaR\n  - paragraph: Discover books, save your next reads, and explore your library’s collection with LuminaR.\n  - navigation \"Footer navigation\":\n    - link \"Catalog\":\n      - /url: /catalog\n    - link \"New Arrivals\":\n      - /url: /catalog?sort=new_arrivals\n    - link \"Reading List\":\n      - /url: /reading-list\n    - link \"My Libraries\":\n      - /url: /account/libraries\n    - link \"Events & Announcements\":\n      - /url: /events\n    - link \"Know More\":\n      - /url: /llm\n- button \"Ask LuminaR\":"
+    },
+    {
+      "scope": "GLOBAL_SESSION",
+      "query": "include romance but exclude romance",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "BROWSE_CATEGORY",
+        "intent_label": "Browse category",
+        "decision": {
+          "decision_type": "CONTRADICTORY",
+          "reason_code": "SUBJECT_INCLUDE_EXCLUDE",
+          "affected_fields": [
+            "subject"
+          ],
+          "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "subject",
+            "label": "Genre / Subject: Romance"
+          },
+          {
+            "key": "exclude",
+            "label": "Exclude: Romance"
+          }
+        ],
+        "corrections": [],
+        "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": false,
+          "version": 1,
+          "expires_at": "2026-10-15T08:39:08.803000+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 0,
+      "owners": [],
+      "noticeVisible": true,
+      "editStateVisible": true,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg\n    - link \"Catalog\":\n      - /url: /catalog\n    - link \"New Arrivals\":\n      - /url: /#new-arrivals\n    - link \"Events\":\n      - /url: /events\n    - link \"About\":\n      - /url: /#about\n    - link \"Know More\":\n      - /url: /llm\n    - link \"My Library\":\n      - /url: /account/libraries?group=patron\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n  - generic: Catalogue\n  - combobox \"Switch catalogue\":\n    - generic: Global catalogue\n- main:\n  - heading \"Catalog\" [level=1]\n  - paragraph: Global search results for “include romance but exclude romance”\n  - generic: Search by title, author or subject\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search by title, author or subject\": include romance but exclude romance\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - group \"Interpreted search\":\n    - generic: \"Intent: Browse category\"\n    - 'button \"Remove Genre / Subject: Romance\"': \"Genre / Subject: Romance ×\"\n    - 'button \"Remove Exclude: Romance\"': \"Exclude: Romance ×\"\n    - status \"Search interpretation decision\": These search filters conflict. Edit the query or remove a conflicting filter. Edit your query and search again.\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"History 566,010 books\": History566,010\n    - button \"Fiction 416,802 books\": Fiction416,802\n    - button \"Biography 254,619 books\": Biography254,619\n    - button \"Juvenile literature 162,704 books\": Juvenile literature162,704\n    - button \"Children's fiction 159,631 books\": Children's fiction159,631\n    - button \"Politics and government 133,081 books\": Politics and government133,081\n    - button \"Juvenile fiction 117,297 books\": Juvenile fiction117,297\n    - button \"Fiction, general 66,171 books\": Fiction, general66,171\n    - button \"Philosophy 56,047 books\": Philosophy56,047\n    - button \"Fiction, romance, general 47,436 books\": Fiction, romance, general47,436\n    - button \"Women 46,327 books\": Women46,327\n    - button \"Bible 46,085 books\": Bible46,085\n    - button \"Law and legislation 45,487 books\": Law and legislation45,487\n    - button \"Economic conditions 45,256 books\": Economic conditions45,256\n  - text: Author\n  - textbox \"Filter by author\"\n  - heading \"Books\" [level=2]\n  - strong: Edit your search to continue\n  - paragraph: Remove a filter above, choose another subject, or try a different topic.\n  - navigation \"Catalogue pagination\":\n    - button \"Previous\" [disabled]:\n      - generic: Previous\n    - generic: Page 1\n    - button \"Next Results\" [disabled]:\n      - generic: Next Results\n- contentinfo:\n  - link \"LuminaR home\":\n    - /url: /\n    - generic: LuminaR\n  - paragraph: Discover books, save your next reads, and explore your library’s collection with LuminaR.\n  - navigation \"Footer navigation\":\n    - link \"Catalog\":\n      - /url: /catalog\n    - link \"New Arrivals\":\n      - /url: /catalog?sort=new_arrivals\n    - link \"Reading List\":\n      - /url: /reading-list\n    - link \"My Libraries\":\n      - /url: /account/libraries\n    - link \"Events & Announcements\":\n      - /url: /events\n    - link \"Know More\":\n      - /url: /llm\n- button \"Ask LuminaR\":\n  - paragraph: Ask LuminaR\n  - paragraph: AI Library Assistant"
+    },
+    {
+      "scope": "GLOBAL_SESSION",
+      "query": "rating above 3",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "decision": {
+          "decision_type": "EXECUTABLE",
+          "reason_code": "VALIDATED",
+          "affected_fields": [],
+          "safe_public_message": "",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [
+          "Magic",
+          "Juvenile fiction",
+          "Children's fiction",
+          "Fantasy fiction",
+          "Wizards, fiction",
+          "Fantasy"
+        ],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: wizards"
+          },
+          {
+            "key": "rating_min",
+            "label": "Rating: > 3"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": true,
+          "version": 2,
+          "expires_at": "2026-10-15T08:39:10.788916+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 10,
+      "owners": [],
+      "noticeVisible": false,
+      "editStateVisible": false,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg\n    - link \"Catalog\":\n      - /url: /catalog\n    - link \"New Arrivals\":\n      - /url: /#new-arrivals\n    - link \"Events\":\n      - /url: /events\n    - link \"About\":\n      - /url: /#about\n    - link \"Know More\":\n      - /url: /llm\n    - link \"My Library\":\n      - /url: /account/libraries?group=patron\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n  - generic: Catalogue\n  - combobox \"Switch catalogue\":\n    - generic: Global catalogue\n- main:\n  - heading \"Catalog\" [level=1]\n  - paragraph: Global search results for “rating above 3”\n  - generic: Search by title, author or subject\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search by title, author or subject\": rating above 3\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - status: Refined from previous search\n  - group \"Interpreted search\":\n    - generic: \"Intent: Discover topic\"\n    - 'button \"Remove Topic: wizards\"': \"Topic: wizards ×\"\n    - 'button \"Remove Rating: > 3\"': \"Rating: > 3 ×\"\n    - generic \"Related concepts included\"\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"History 566,010 books\": History566,010\n    - button \"Fiction 416,802 books\": Fiction416,802\n    - button \"Biography 254,619 books\": Biography254,619\n    - button \"Juvenile literature 162,704 books\": Juvenile literature162,704\n    - button \"Children's fiction 159,631 books\": Children's fiction159,631\n    - button \"Politics and government 133,081 books\": Politics and government133,081\n    - button \"Juvenile fiction 117,297 books\": Juvenile fiction117,297\n    - button \"Fiction, general 66,171 books\": Fiction, general66,171\n    - button \"Philosophy 56,047 books\": Philosophy56,047\n    - button \"Fiction, romance, general 47,436 books\": Fiction, romance, general47,436\n    - button \"Women 46,327 books\": Women46,327\n    - button \"Bible 46,085 books\": Bible46,085\n    - button \"Law and legislation 45,487 books\": Law and legislation45,487\n    - button \"Economic conditions 45,256 books\": Economic conditions45,256\n  - text: Author\n  - textbox \"Filter by author\"\n  - heading \"Books\" [level=2]\n  - status: Showing 1–10 of 50 ranked results\n  - article \"The Book of Wizards\":\n    - paragraph: Wizards\n    - link \"Cover for The Book of Wizards by Michael Hague The Book of Wizards Michael Hague Global Catalogue\":\n      - /url: /book/OL1933071W\n      - img \"Cover for The Book of Wizards by Michael Hague\":\n        - generic: LuminaR\n        - paragraph: The Book of Wizards\n        - paragraph: Michael Hague\n      - heading \"The Book of Wizards\" [level=3]\n      - paragraph: Michael Hague\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select The Book of Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL1933071W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL1933071W\n  - article \"Wizards\":\n    - paragraph: Magicians\n    - link \"Cover for Wizards by David A. McIntee; Lesley McIntee Wizards David A. McIntee; Lesley McIntee Global Catalogue\":\n      - /url: /book/OL20293280W\n      - img \"Cover for Wizards by David A. McIntee; Lesley McIntee\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: David A. McIntee; Lesley McIntee\n      - heading \"Wizards\" [level=3]\n      - paragraph: David A. McIntee; Lesley McIntee\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL20293280W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL20293280W\n  - article \"A wizard in the way\":\n    - paragraph: Wizards\n    - link \"Cover for A wizard in the way by Christopher Stasheff A wizard in the way Christopher Stasheff Global Catalogue\":\n      - /url: /book/OL15345755W\n      - img \"Cover for A wizard in the way by Christopher Stasheff\":\n        - generic: LuminaR\n        - paragraph: A wizard in the way\n        - paragraph: Christopher Stasheff\n      - heading \"A wizard in the way\" [level=3]\n      - paragraph: Christopher Stasheff\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select A wizard in the way\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL15345755W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL15345755W\n  - article \"The Way of Wizards\":\n    - paragraph: Wizards\n    - link \"Cover for The Way of Wizards by Tom Cross The Way of Wizards Tom Cross Global Catalogue\":\n      - /url: /book/OL2761798W\n      - img \"Cover for The Way of Wizards by Tom Cross\":\n        - generic: LuminaR\n        - paragraph: The Way of Wizards\n        - paragraph: Tom Cross\n      - heading \"The Way of Wizards\" [level=3]\n      - paragraph: Tom Cross\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select The Way of Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL2761798W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL2761798W\n  - article \"The game of wizards\":\n    - paragraph: Occultism\n    - link \"Cover for The game of wizards by Charles Poncé The game of wizards Charles Poncé Global Catalogue\":\n      - /url: /book/OL3149863W\n      - img \"Cover for The game of wizards by Charles Poncé\":\n        - generic: LuminaR\n        - paragraph: The game of wizards\n        - paragraph: Charles Poncé\n      - heading \"The game of wizards\" [level=3]\n      - paragraph: Charles Poncé\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select The game of wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL3149863W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL3149863W\n  - article \"A wizard in Midgard\":\n    - paragraph: Magnus Gallowglass (Fictitious character)\n    - link \"Cover for A wizard in Midgard by Christopher Stasheff A wizard in Midgard Christopher Stasheff Global Catalogue\":\n      - /url: /book/OL17783483W\n      - img \"Cover for A wizard in Midgard by Christopher Stasheff\":\n        - generic: LuminaR\n        - paragraph: A wizard in Midgard\n        - paragraph: Christopher Stasheff\n      - heading \"A wizard in Midgard\" [level=3]\n      - paragraph: Christopher Stasheff\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select A wizard in Midgard\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL17783483W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL17783483W\n  - article \"Wizards\":\n    - paragraph: Fantasy fiction\n    - link \"Cover for Wizards by Jack Dann; Gardner R. Dozois Wizards Jack Dann; Gardner R. Dozois Global Catalogue\":\n      - /url: /book/OL24359555W\n      - img \"Cover for Wizards by Jack Dann; Gardner R. Dozois\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: Jack Dann; Gardner R. Dozois\n      - heading \"Wizards\" [level=3]\n      - paragraph: Jack Dann; Gardner R. Dozois\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL24359555W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL24359555W\n  - article \"Wizards\":\n    - paragraph: Book\n    - link \"Cover for Wizards by Orson Scott Card; Eoin Colfer; Gardner R. Dozois; Jack Dann Wizards Orson Scott Card; Eoin Colfer; Gardner R. Dozois; Jack Dann Global Catalogue\":\n      - /url: /book/OL17079867W\n      - img \"Cover for Wizards by Orson Scott Card; Eoin Colfer; Gardner R. Dozois; Jack Dann\":\n        - generic: LuminaR\n        - paragraph: Wizards\n        - paragraph: Orson Scott Card; Eoin Colfer; Gardner R. Dozois; Jack Dann\n      - heading \"Wizards\" [level=3]\n      - paragraph: Orson Scott Card; Eoin Colfer; Gardner R. Dozois; Jack Dann\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.5 (2)\n    - button \"Select Wizards\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL17079867W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL17079867W\n  - article \"Games wizards play\":\n    - paragraph: Wizards\n    - link \"Cover for Games wizards play by Diane Duane Games wizards play Diane Duane Global Catalogue\":\n      - /url: /book/OL20023542W\n      - img \"Cover for Games wizards play by Diane Duane\":\n        - generic: LuminaR\n        - paragraph: Games wizards play\n        - paragraph: Diane Duane\n      - heading \"Games wizards play\" [level=3]\n      - paragraph: Diane Duane\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select Games wizards play\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL20023542W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL20023542W\n  - article \"So, You Want to Be a Wizard?\":\n    - paragraph: Wizards\n    - link \"Cover for So, You Want to Be a Wizard? by Wes Magee; Celia Gentles So, You Want to Be a Wizard? Wes Magee; Celia Gentles Global Catalogue\":\n      - /url: /book/OL25666999W\n      - img \"Cover for So, You Want to Be a Wizard? by Wes Magee; Celia Gentles\":\n        - generic: LuminaR\n        - paragraph: So, You Want to Be a Wizard?\n        - paragraph: Wes Magee; Celia Gentles\n      - heading \"So, You Want to Be a Wizard?\" [level=3]\n      - paragraph: Wes Magee; Celia Gentles\n      - paragraph: Global Catalogue\n    - paragraph: ★ 4.0 (1)\n    - button \"Select So, You Want to Be a Wizard?\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL25666999W\": More actions\n    - generic \"Why this result?\"\n    - link \"View Details\":\n      - /url: /book/OL25666999W\n  - navigation \"Catalogue pagination\":\n    - button \"Previous\" [disabled]:\n      - generic: Previous\n    - generic: Page 1 of 5\n    - button \"Next Results\":\n      - generic: Next Results\n- contentinfo:\n  - link \"LuminaR home\":\n    - /url: /\n    - generic: LuminaR\n  - paragraph: Discover books, save your next reads, and explore your library’s collection with LuminaR.\n  - navigation \"Footer navigation\":\n    - link \"Catalog\":\n      - /url: /catalog\n    - link \"New Arrivals\":\n      - /url: /catalog?sort=new_arrivals\n    - link \"Reading List\":\n      - /url: /reading-list\n    - link \"My Libraries\":\n      - /url: /account/libraries\n    - link \"Events & Announcements\":\n      - /url: /events\n    - link \"Know More\":\n      - /url: /llm\n- button \"Ask LuminaR\":\n  - paragraph: Ask LuminaR\n  - paragraph: AI Library Assistant"
+    },
+    {
+      "scope": "TEST_PATRON_SESSION",
+      "query": "books about wizards",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "decision": {
+          "decision_type": "EXECUTABLE",
+          "reason_code": "VALIDATED",
+          "affected_fields": [],
+          "safe_public_message": "",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: wizards"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": false,
+          "version": 1,
+          "expires_at": "2026-10-15T08:39:32.407403+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 20,
+      "owners": [
+        "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae"
+      ],
+      "noticeVisible": false,
+      "editStateVisible": false,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - link \"Browse Books\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue\n    - link \"New Arrivals\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/new-arrivals\n    - link \"Events\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/events\n    - link \"About\":\n      - /url: /?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae#about\n    - link \"Know More\":\n      - /url: /llm?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - link \"My Library\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/my-library\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n- main:\n  - link \"TEST\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n  - generic: Member · Public library\n  - navigation \"Library activity\":\n    - link \"My Library\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/my-library\n    - link \"Reservations\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/reservations\n    - link \"Fees\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/fees\n    - link \"Resources\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/resources\n  - combobox \"Switch patron library\":\n    - generic: TEST\n  - heading \"Browse Books\" [level=1]\n  - paragraph: Explore TEST’s collection.\n  - paragraph:\n    - generic: Library collection\n    - text: 151 local books in TEST\n    - generic: Library semantic search\n  - link \"Library Knowledge Graph\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/graph\n  - generic: Search TEST\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search TEST\": books about wizards\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - group \"Interpreted search\":\n    - generic: \"Intent: Discover topic\"\n    - 'button \"Remove Topic: wizards\"': \"Topic: wizards ×\"\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"Congresses 10 books\": Congresses10\n    - button \"History 9 books\": History9\n    - button \"Fiction 8 books\": Fiction8\n    - button \"Mathematics 7 books\": Mathematics7\n    - button \"Philosophy 7 books\": Philosophy7\n    - button \"Physics 7 books\": Physics7\n    - button \"Biography 6 books\": Biography6\n    - button \"General 5 books\": General5\n    - button \"Science 5 books\": Science5\n    - button \"Artificial intelligence 4 books\": Artificial intelligence4\n    - button \"BUSINESS & ECONOMICS 4 books\": BUSINESS & ECONOMICS4\n    - button \"Economics 4 books\": Economics4\n    - button \"History and criticism 4 books\": History and criticism4\n    - button \"Mathematical models 4 books\": Mathematical models4\n    - button \"National security 4 books\": National security4\n    - button \"Politics and government 4 books\": Politics and government4\n    - button \"Biographies 3 books\": Biographies3\n    - button \"Biology 3 books\": Biology3\n    - button \"Computer science 3 books\": Computer science3\n    - button \"Congrès 3 books\": Congrès3\n    - button \"Description and travel 3 books\": Description and travel3\n    - button \"Ecology 3 books\": Ecology3\n    - button \"Economic aspects 3 books\": Economic aspects3\n    - button \"Economic policy 3 books\": Economic policy3\n    - button \"Fiction, science fiction, general 3 books\": Fiction, science fiction, general3\n    - button \"Histoire 3 books\": Histoire3\n    - button \"Literature 3 books\": Literature3\n    - button \"Molecular biology 3 books\": Molecular biology3\n    - button \"Religious aspects 3 books\": Religious aspects3\n    - button \"SOCIAL SCIENCE 3 books\": SOCIAL SCIENCE3\n    - button \"Strategic planning 3 books\": Strategic planning3\n    - button \"Sustainable development 3 books\": Sustainable development3\n    - button \"Adaptation (Biology) 2 books\": Adaptation (Biology)2\n    - button \"American Science fiction 2 books\": American Science fiction2\n    - button \"Anthropology 2 books\": Anthropology2\n    - button \"Architecture 2 books\": Architecture2\n    - button \"Bibliography 2 books\": Bibliography2\n    - button \"Business 2 books\": Business2\n    - button \"Business communication 2 books\": Business communication2\n    - button \"Business networks 2 books\": Business networks2\n    - button \"Children's fiction 2 books\": Children's fiction2\n    - button \"Christianity 2 books\": Christianity2\n    - button \"Civilization 2 books\": Civilization2\n    - button \"Computers 2 books\": Computers2\n    - button \"Data processing 2 books\": Data processing2\n    - button \"Diplomacy 2 books\": Diplomacy2\n    - button \"Early works to 1800 2 books\": Early works to 18002\n    - button \"Economic conditions 2 books\": Economic conditions2\n    - button \"Education 2 books\": Education2\n    - button \"Energy security 2 books\": Energy security2\n    - link \"All subjects\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/genres\n  - text: Author\n  - textbox \"Filter by author\"\n  - text: Circulation status\n  - combobox \"Circulation status\":\n    - generic: All statuses\n  - heading \"Books\" [level=2]\n  - status: 60 books in this view\n  - article \"From unseen fire\":\n    - paragraph: Magic\n    - link \"Cover for From unseen fire by Cass Morris From unseen fire Cass Morris Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/101f3aa9-7bbe-4ce2-96ad-f6949130be1f\n      - img \"Cover for From unseen fire by Cass Morris\":\n        - generic: LuminaR\n        - paragraph: From unseen fire\n        - paragraph: Cass Morris\n      - heading \"From unseen fire\" [level=3]\n      - paragraph: Cass Morris\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf LIT-01\n    - button \"Select From unseen fire\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL19743719W\": More actions\n    - button \"Request Book\"\n  - article \"The Richest Man in Babylon\":\n    - paragraph: Business ethics\n    - link \"Cover for The Richest Man in Babylon by George S. Clason The Richest Man in Babylon George S. Clason Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/4597d542-5c81-4b5f-9d13-878726d3310f\n      - img \"Cover for The Richest Man in Babylon by George S. Clason\":\n        - generic: LuminaR\n        - paragraph: The Richest Man in Babylon\n        - paragraph: George S. Clason\n      - heading \"The Richest Man in Babylon\" [level=3]\n      - paragraph: George S. Clason\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf BUS-02\n    - paragraph: ★ 4.2 (132)\n    - button \"Select The Richest Man in Babylon\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL8165007W\": More actions\n    - button \"Request Book\"\n  - article \"The green millennium\":\n    - paragraph: Fantasy\n    - link \"Cover for The green millennium by Fritz Leiber The green millennium Fritz Leiber Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/40f1f88a-c743-46d8-999c-25b317718479\n      - img \"Cover for The green millennium by Fritz Leiber\":\n        - generic: LuminaR\n        - paragraph: The green millennium\n        - paragraph: Fritz Leiber\n      - heading \"The green millennium\" [level=3]\n      - paragraph: Fritz Leiber\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf SCI-04\n    - button \"Select The green millennium\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL101940W\": More actions\n    - button \"Request Book\"\n  - article \"Applying computational intelligence\":\n    - paragraph: Expert systems (Computer science)\n    - link \"Cover for Applying computational intelligence by Arthur K. Kordon Applying computational intelligence Arthur K. Kordon Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/0936a594-01fe-49cc-9d6d-d774e996735b\n      - img \"Cover for Applying computational intelligence by Arthur K. Kordon\":\n        - generic: LuminaR\n        - paragraph: Applying computational intelligence\n        - paragraph: Arthur K. Kordon\n      - heading \"Applying computational intelligence\" [level=3]\n      - paragraph: Arthur K. Kordon\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf CS-01\n    - button \"Select Applying computational intelligence\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL15987813W\": More actions\n    - button \"Request Book\"\n  - article \"Compendium of occult theories and practices\":\n    - paragraph: Fortune-telling\n    - link \"Cover for Compendium of occult theories and practices by Zolar. Compendium of occult theories and practices Zolar. Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/dd030833-e4ff-4df6-a274-85b9793358f8\n      - img \"Cover for Compendium of occult theories and practices by Zolar.\":\n        - generic: LuminaR\n        - paragraph: Compendium of occult theories and practices\n        - paragraph: Zolar.\n      - heading \"Compendium of occult theories and practices\" [level=3]\n      - paragraph: Zolar.\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf SCI-04\n    - button \"Select Compendium of occult theories and practices\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL2024104W\": More actions\n    - button \"Request Book\"\n  - article \"Zen explorations in remotest New Guinea\":\n    - paragraph: Travel\n    - link \"Cover for Zen explorations in remotest New Guinea by Neville Shulman Zen explorations in remotest New Guinea Neville Shulman Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/96bca4fe-1455-4606-a689-aeb0d9e9e13d\n      - img \"Cover for Zen explorations in remotest New Guinea by Neville Shulman\":\n        - generic: LuminaR\n        - paragraph: Zen explorations in remotest New Guinea\n        - paragraph: Neville Shulman\n      - heading \"Zen explorations in remotest New Guinea\" [level=3]\n      - paragraph: Neville Shulman\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf PHI-04\n    - button \"Select Zen explorations in remotest New Guinea\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL1733800W\": More actions\n    - button \"Request Book\"\n  - article \"Bringing down the mouse\":\n    - paragraph: Genius\n    - link \"Cover for Bringing down the mouse by Ben Mezrich Bringing down the mouse Ben Mezrich Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/403cdc26-2bd4-4228-9b01-210addf828b2\n      - img \"Cover for Bringing down the mouse by Ben Mezrich\":\n        - generic: LuminaR\n        - paragraph: Bringing down the mouse\n        - paragraph: Ben Mezrich\n      - heading \"Bringing down the mouse\" [level=3]\n      - paragraph: Ben Mezrich\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf MATH-01\n    - button \"Select Bringing down the mouse\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL19983510W\": More actions\n    - button \"Request Book\"\n  - article \"Dynamics of dissipation\":\n    - paragraph: Open "
+    },
+    {
+      "scope": "TEST_PATRON_SESSION",
+      "query": "include Fiction but exclude Fiction",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "BROWSE_CATEGORY",
+        "intent_label": "Browse category",
+        "decision": {
+          "decision_type": "CONTRADICTORY",
+          "reason_code": "SUBJECT_INCLUDE_EXCLUDE",
+          "affected_fields": [
+            "subject"
+          ],
+          "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "subject",
+            "label": "Genre / Subject: Fiction"
+          },
+          {
+            "key": "exclude",
+            "label": "Exclude: Fiction"
+          }
+        ],
+        "corrections": [],
+        "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": false,
+          "version": 1,
+          "expires_at": "2026-10-15T08:39:32.407000+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 0,
+      "owners": [],
+      "noticeVisible": true,
+      "editStateVisible": true,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - link \"Browse Books\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue\n    - link \"New Arrivals\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/new-arrivals\n    - link \"Events\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/events\n    - link \"About\":\n      - /url: /?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae#about\n    - link \"Know More\":\n      - /url: /llm?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - link \"My Library\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/my-library\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n- main:\n  - link \"TEST\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n  - generic: Member · Public library\n  - navigation \"Library activity\":\n    - link \"My Library\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/my-library\n    - link \"Reservations\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/reservations\n    - link \"Fees\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/fees\n    - link \"Resources\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/resources\n  - combobox \"Switch patron library\":\n    - generic: TEST\n  - heading \"Browse Books\" [level=1]\n  - paragraph: Explore TEST’s collection.\n  - paragraph:\n    - generic: Library collection\n    - text: 151 local books in TEST\n  - link \"Library Knowledge Graph\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/graph\n  - generic: Search TEST\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search TEST\": include Fiction but exclude Fiction\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - group \"Interpreted search\":\n    - generic: \"Intent: Browse category\"\n    - 'button \"Remove Genre / Subject: Fiction\"': \"Genre / Subject: Fiction ×\"\n    - 'button \"Remove Exclude: Fiction\"': \"Exclude: Fiction ×\"\n    - status \"Search interpretation decision\": These search filters conflict. Edit the query or remove a conflicting filter. Edit your query and search again.\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"Congresses 10 books\": Congresses10\n    - button \"History 9 books\": History9\n    - button \"Fiction 8 books\": Fiction8\n    - button \"Mathematics 7 books\": Mathematics7\n    - button \"Philosophy 7 books\": Philosophy7\n    - button \"Physics 7 books\": Physics7\n    - button \"Biography 6 books\": Biography6\n    - button \"General 5 books\": General5\n    - button \"Science 5 books\": Science5\n    - button \"Artificial intelligence 4 books\": Artificial intelligence4\n    - button \"BUSINESS & ECONOMICS 4 books\": BUSINESS & ECONOMICS4\n    - button \"Economics 4 books\": Economics4\n    - button \"History and criticism 4 books\": History and criticism4\n    - button \"Mathematical models 4 books\": Mathematical models4\n    - button \"National security 4 books\": National security4\n    - button \"Politics and government 4 books\": Politics and government4\n    - button \"Biographies 3 books\": Biographies3\n    - button \"Biology 3 books\": Biology3\n    - button \"Computer science 3 books\": Computer science3\n    - button \"Congrès 3 books\": Congrès3\n    - button \"Description and travel 3 books\": Description and travel3\n    - button \"Ecology 3 books\": Ecology3\n    - button \"Economic aspects 3 books\": Economic aspects3\n    - button \"Economic policy 3 books\": Economic policy3\n    - button \"Fiction, science fiction, general 3 books\": Fiction, science fiction, general3\n    - button \"Histoire 3 books\": Histoire3\n    - button \"Literature 3 books\": Literature3\n    - button \"Molecular biology 3 books\": Molecular biology3\n    - button \"Religious aspects 3 books\": Religious aspects3\n    - button \"SOCIAL SCIENCE 3 books\": SOCIAL SCIENCE3\n    - button \"Strategic planning 3 books\": Strategic planning3\n    - button \"Sustainable development 3 books\": Sustainable development3\n    - button \"Adaptation (Biology) 2 books\": Adaptation (Biology)2\n    - button \"American Science fiction 2 books\": American Science fiction2\n    - button \"Anthropology 2 books\": Anthropology2\n    - button \"Architecture 2 books\": Architecture2\n    - button \"Bibliography 2 books\": Bibliography2\n    - button \"Business 2 books\": Business2\n    - button \"Business communication 2 books\": Business communication2\n    - button \"Business networks 2 books\": Business networks2\n    - button \"Children's fiction 2 books\": Children's fiction2\n    - button \"Christianity 2 books\": Christianity2\n    - button \"Civilization 2 books\": Civilization2\n    - button \"Computers 2 books\": Computers2\n    - button \"Data processing 2 books\": Data processing2\n    - button \"Diplomacy 2 books\": Diplomacy2\n    - button \"Early works to 1800 2 books\": Early works to 18002\n    - button \"Economic conditions 2 books\": Economic conditions2\n    - button \"Education 2 books\": Education2\n    - button \"Energy security 2 books\": Energy security2\n    - link \"All subjects\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/genres\n  - text: Author\n  - textbox \"Filter by author\"\n  - text: Circulation status\n  - combobox \"Circulation status\":\n    - generic: All statuses\n  - heading \"Books\" [level=2]\n  - strong: Edit your search to continue\n  - paragraph: Remove a filter above or choose another subject. Global discovery is a separate catalogue.\n  - link \"Search all LuminaR\":\n    - /url: /search?q=include%20Fiction%20but%20exclude%20Fiction\n  - navigation \"Catalogue pagination\":\n    - button \"Previous page\" [disabled]:\n      - generic: Previous\n    - generic: Page 1\n    - button \"Next page\" [disabled]:\n      - generic: Next page\n- button \"Ask LuminaR\":"
+    },
+    {
+      "scope": "TEST_PATRON_SESSION",
+      "query": "rating above 3",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "decision": {
+          "decision_type": "EXECUTABLE",
+          "reason_code": "VALIDATED",
+          "affected_fields": [],
+          "safe_public_message": "",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: wizards"
+          },
+          {
+            "key": "rating_min",
+            "label": "Rating: > 3"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": true,
+          "version": 2,
+          "expires_at": "2026-10-15T08:39:34.439723+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 9,
+      "owners": [
+        "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae"
+      ],
+      "noticeVisible": false,
+      "editStateVisible": false,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - link \"Browse Books\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/catalogue\n    - link \"New Arrivals\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/new-arrivals\n    - link \"Events\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/events\n    - link \"About\":\n      - /url: /?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae#about\n    - link \"Know More\":\n      - /url: /llm?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n    - link \"My Library\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/my-library\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list?patron_library=e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n- main:\n  - link \"TEST\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae\n  - generic: Member · Public library\n  - navigation \"Library activity\":\n    - link \"My Library\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/my-library\n    - link \"Reservations\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/reservations\n    - link \"Fees\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/fees\n    - link \"Resources\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/resources\n  - combobox \"Switch patron library\":\n    - generic: TEST\n  - heading \"Browse Books\" [level=1]\n  - paragraph: Explore TEST’s collection.\n  - paragraph:\n    - generic: Library collection\n    - text: 151 local books in TEST\n    - generic: Library semantic search\n  - link \"Library Knowledge Graph\":\n    - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/graph\n  - generic: Search TEST\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search TEST\": rating above 3\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - status: Refined from previous search\n  - group \"Interpreted search\":\n    - generic: \"Intent: Discover topic\"\n    - 'button \"Remove Topic: wizards\"': \"Topic: wizards ×\"\n    - 'button \"Remove Rating: > 3\"': \"Rating: > 3 ×\"\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"Congresses 10 books\": Congresses10\n    - button \"History 9 books\": History9\n    - button \"Fiction 8 books\": Fiction8\n    - button \"Mathematics 7 books\": Mathematics7\n    - button \"Philosophy 7 books\": Philosophy7\n    - button \"Physics 7 books\": Physics7\n    - button \"Biography 6 books\": Biography6\n    - button \"General 5 books\": General5\n    - button \"Science 5 books\": Science5\n    - button \"Artificial intelligence 4 books\": Artificial intelligence4\n    - button \"BUSINESS & ECONOMICS 4 books\": BUSINESS & ECONOMICS4\n    - button \"Economics 4 books\": Economics4\n    - button \"History and criticism 4 books\": History and criticism4\n    - button \"Mathematical models 4 books\": Mathematical models4\n    - button \"National security 4 books\": National security4\n    - button \"Politics and government 4 books\": Politics and government4\n    - button \"Biographies 3 books\": Biographies3\n    - button \"Biology 3 books\": Biology3\n    - button \"Computer science 3 books\": Computer science3\n    - button \"Congrès 3 books\": Congrès3\n    - button \"Description and travel 3 books\": Description and travel3\n    - button \"Ecology 3 books\": Ecology3\n    - button \"Economic aspects 3 books\": Economic aspects3\n    - button \"Economic policy 3 books\": Economic policy3\n    - button \"Fiction, science fiction, general 3 books\": Fiction, science fiction, general3\n    - button \"Histoire 3 books\": Histoire3\n    - button \"Literature 3 books\": Literature3\n    - button \"Molecular biology 3 books\": Molecular biology3\n    - button \"Religious aspects 3 books\": Religious aspects3\n    - button \"SOCIAL SCIENCE 3 books\": SOCIAL SCIENCE3\n    - button \"Strategic planning 3 books\": Strategic planning3\n    - button \"Sustainable development 3 books\": Sustainable development3\n    - button \"Adaptation (Biology) 2 books\": Adaptation (Biology)2\n    - button \"American Science fiction 2 books\": American Science fiction2\n    - button \"Anthropology 2 books\": Anthropology2\n    - button \"Architecture 2 books\": Architecture2\n    - button \"Bibliography 2 books\": Bibliography2\n    - button \"Business 2 books\": Business2\n    - button \"Business communication 2 books\": Business communication2\n    - button \"Business networks 2 books\": Business networks2\n    - button \"Children's fiction 2 books\": Children's fiction2\n    - button \"Christianity 2 books\": Christianity2\n    - button \"Civilization 2 books\": Civilization2\n    - button \"Computers 2 books\": Computers2\n    - button \"Data processing 2 books\": Data processing2\n    - button \"Diplomacy 2 books\": Diplomacy2\n    - button \"Early works to 1800 2 books\": Early works to 18002\n    - button \"Economic conditions 2 books\": Economic conditions2\n    - button \"Education 2 books\": Education2\n    - button \"Energy security 2 books\": Energy security2\n    - link \"All subjects\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/genres\n  - text: Author\n  - textbox \"Filter by author\"\n  - text: Circulation status\n  - combobox \"Circulation status\":\n    - generic: All statuses\n  - heading \"Books\" [level=2]\n  - status: 9 books in this view\n  - article \"The Richest Man in Babylon\":\n    - paragraph: Business ethics\n    - link \"Cover for The Richest Man in Babylon by George S. Clason The Richest Man in Babylon George S. Clason Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/4597d542-5c81-4b5f-9d13-878726d3310f\n      - img \"Cover for The Richest Man in Babylon by George S. Clason\":\n        - generic: LuminaR\n        - paragraph: The Richest Man in Babylon\n        - paragraph: George S. Clason\n      - heading \"The Richest Man in Babylon\" [level=3]\n      - paragraph: George S. Clason\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf BUS-02\n    - paragraph: ★ 4.2 (132)\n    - button \"Select The Richest Man in Babylon\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL8165007W\": More actions\n    - button \"Request Book\"\n  - article \"The dilemmas of Lenin\":\n    - paragraph: Politics and government\n    - link \"Cover for The dilemmas of Lenin by Tariq Ali The dilemmas of Lenin Tariq Ali Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/ed0ab36f-2e12-40b1-a577-2e0e5108b144\n      - img \"Cover for The dilemmas of Lenin by Tariq Ali\":\n        - generic: LuminaR\n        - paragraph: The dilemmas of Lenin\n        - paragraph: Tariq Ali\n      - heading \"The dilemmas of Lenin\" [level=3]\n      - paragraph: Tariq Ali\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf HIS-03\n    - paragraph: ★ 4.0 (1)\n    - button \"Select The dilemmas of Lenin\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL20052054W\": More actions\n    - button \"Request Book\"\n  - article \"Learn Java for Android Development\":\n    - paragraph: Java (computer program language)\n    - link \"Cover for Learn Java for Android Development by Jeff Friesen Learn Java for Android Development Jeff Friesen Reference Only\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/e38b53f3-516c-4b58-92d0-97bf0142f5fb\n      - img \"Cover for Learn Java for Android Development by Jeff Friesen\":\n        - generic: LuminaR\n        - paragraph: Learn Java for Android Development\n        - paragraph: Jeff Friesen\n      - heading \"Learn Java for Android Development\" [level=3]\n      - paragraph: Jeff Friesen\n      - paragraph: Reference Only\n    - generic: Physical\n    - paragraph: Shelf CS-01\n    - paragraph: ★ 5.0 (1)\n    - button \"Select Learn Java for Android Development\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL17563259W\": More actions\n  - article \"Head first C\":\n    - paragraph: Computer programming\n    - link \"Cover for Head first C by David Griffiths Head first C David Griffiths Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/7f3b40c3-77ba-4514-9615-a7cf4cd60675\n      - img \"Cover for Head first C by David Griffiths\":\n        - generic: LuminaR\n        - paragraph: Head first C\n        - paragraph: David Griffiths\n      - heading \"Head first C\" [level=3]\n      - paragraph: David Griffiths\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf CS-01\n    - paragraph: ★ 4.0 (1)\n    - button \"Select Head first C\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL16961370W\": More actions\n    - button \"Request Book\"\n  - article \"Visions of culture\":\n    - paragraph: Field work\n    - link \"Cover for Visions of culture by Jerry D. Moore Visions of culture Jerry D. Moore Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/06b1c81e-37a0-4973-84f3-dea6b73a68ff\n      - img \"Cover for Visions of culture by Jerry D. Moore\":\n        - generic: LuminaR\n        - paragraph: Visions of culture\n        - paragraph: Jerry D. Moore\n      - heading \"Visions of culture\" [level=3]\n      - paragraph: Jerry D. Moore\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf HIS-03\n    - paragraph: ★ 4.3 (3)\n    - button \"Select Visions of culture\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL2971950W\": More actions\n    - button \"Request Book\"\n  - article \"Social and personality development\":\n    - paragraph: Adolescent psychology\n    - link \"Cover for Social and personality development by William Damon Social and personality development William Damon Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/bca32560-9925-4558-a57d-9b06cbd9407a\n      - img \"Cover for Social and personality development by William Damon\":\n        - generic: LuminaR\n        - paragraph: Social and personality development\n        - paragraph: William Damon\n      - heading \"Social and personality development\" [level=3]\n      - paragraph: William Damon\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf PHI-04\n    - paragraph: ★ 5.0 (1)\n    - button \"Select Social and personality development\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL2685312W\": More actions\n    - button \"Request Book\"\n  - article \"Mathematical discourse\":\n    - paragraph: Language\n    - link \"Cover for Mathematical discourse by Kay L. O'Halloran Mathematical discourse Kay L. O'Halloran Available now\":\n      - /url: /libraries/e6d1e5b4-c48f-4b47-b96a-656a676fb8ae/books/dd55a6d0-bd03-405a-aec6-3a9e05742e99\n      - img \"Cover for Mathematical discourse by Kay L. O'Halloran\":\n        - generic: LuminaR\n        - paragraph: Mathematical discourse\n        - paragraph: Kay L. O'Halloran\n      - heading \"Mathematical discourse\" [level=3]\n      - paragraph: Kay L. O'Halloran\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf MATH-01\n    - paragraph: ★ 4.0 (1)\n    - button \"Select Mathematical discourse\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL5855784W\": More actions\n    - button \"Request B"
+    },
+    {
+      "scope": "PRIVATE_PATRON_SESSION",
+      "query": "books about wizards",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "decision": {
+          "decision_type": "EXECUTABLE",
+          "reason_code": "VALIDATED",
+          "affected_fields": [],
+          "safe_public_message": "",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: wizards"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": false,
+          "version": 1,
+          "expires_at": "2026-10-15T08:40:20.698262+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 3,
+      "owners": [
+        "b88b2cb4-2601-492e-af83-c57311c94a08"
+      ],
+      "noticeVisible": false,
+      "editStateVisible": false,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n    - link \"Browse Books\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/catalogue\n    - link \"New Arrivals\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/new-arrivals\n    - link \"Events\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/events\n    - link \"About\":\n      - /url: /?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08#about\n    - link \"Know More\":\n      - /url: /llm?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n    - link \"My Library\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/my-library\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n- main:\n  - link \"V2CA1 Clause QA\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08\n  - generic: Member · Private institution\n  - navigation \"Library activity\":\n    - link \"My Library\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/my-library\n    - link \"Reservations\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/reservations\n    - link \"Fees\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/fees\n    - link \"Resources\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/resources\n  - combobox \"Switch patron library\":\n    - generic: V2CA1 Clause QA\n  - heading \"Browse Books\" [level=1]\n  - paragraph: Explore V2CA1 Clause QA’s collection.\n  - paragraph:\n    - generic: Library collection\n    - text: 3 local books in V2CA1 Clause QA\n    - generic: Library catalogue search\n  - link \"Library Knowledge Graph\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/graph\n  - generic: Search V2CA1 Clause QA\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search V2CA1 Clause QA\": books about wizards\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - group \"Interpreted search\":\n    - generic: \"Intent: Discover topic\"\n    - 'button \"Remove Topic: wizards\"': \"Topic: wizards ×\"\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"V2CA1 Private Orchid 3 books\": V2CA1 Private Orchid3\n    - button \"Fiction 2 books\": Fiction2\n    - button \"Mystery 1 book\": Mystery1\n    - button \"Romance 1 book\": Romance1\n    - button \"Wizards 1 book\": Wizards1\n    - link \"All subjects\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/genres\n  - text: Author\n  - textbox \"Filter by author\"\n  - text: Circulation status\n  - combobox \"Circulation status\":\n    - generic: All statuses\n  - heading \"Books\" [level=2]\n  - status: 3 books in this view\n  - article \"V2CA1 Wizards Fiction\":\n    - paragraph: Fiction\n    - link \"Cover for V2CA1 Wizards Fiction by Synthetic A1 Author V2CA1 Wizards Fiction Synthetic A1 Author Available now\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/books/9c90f3a0-4d55-418c-ba3b-7e2005bc6eb5\n      - img \"Cover for V2CA1 Wizards Fiction by Synthetic A1 Author\":\n        - generic: LuminaR\n        - paragraph: V2CA1 Wizards Fiction\n        - paragraph: Synthetic A1 Author\n      - heading \"V2CA1 Wizards Fiction\" [level=3]\n      - paragraph: Synthetic A1 Author\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf V2CA1-QA\n    - paragraph: ★ 4.5 (2)\n    - button \"Select V2CA1 Wizards Fiction\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL109579W\": More actions\n    - generic \"Why this result?\"\n    - button \"Request Book\"\n  - article \"V2CA1 Romance\":\n    - paragraph: Romance\n    - link \"Cover for V2CA1 Romance by Synthetic A1 Author V2CA1 Romance Synthetic A1 Author Available now\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/books/4eaa490b-5e85-43ab-8e89-e39088f7c673\n      - img \"Cover for V2CA1 Romance by Synthetic A1 Author\":\n        - generic: LuminaR\n        - paragraph: V2CA1 Romance\n        - paragraph: Synthetic A1 Author\n      - heading \"V2CA1 Romance\" [level=3]\n      - paragraph: Synthetic A1 Author\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf V2CA1-QA\n    - button \"Add to Reading List\"\n    - generic \"Why this result?\"\n    - button \"Request Book\"\n  - article \"V2CA1 Mystery Fiction\":\n    - paragraph: Fiction\n    - link \"Cover for V2CA1 Mystery Fiction by Synthetic A1 Author V2CA1 Mystery Fiction Synthetic A1 Author Available now\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/books/e71e8aa3-14a3-4890-811c-f9efcaf0fc27\n      - img \"Cover for V2CA1 Mystery Fiction by Synthetic A1 Author\":\n        - generic: LuminaR\n        - paragraph: V2CA1 Mystery Fiction\n        - paragraph: Synthetic A1 Author\n      - heading \"V2CA1 Mystery Fiction\" [level=3]\n      - paragraph: Synthetic A1 Author\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf V2CA1-QA\n    - paragraph: ★ 5.0 (1)\n    - button \"Select V2CA1 Mystery Fiction\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL17918479W\": More actions\n    - generic \"Why this result?\"\n    - button \"Request Book\"\n  - navigation \"Catalogue pagination\":\n    - button \"Previous page\" [disabled]:\n      - generic: Previous\n    - generic: Page 1 of 1\n    - button \"Next page\" [disabled]:\n      - generic: Next page\n- button \"Ask LuminaR\":"
+    },
+    {
+      "scope": "PRIVATE_PATRON_SESSION",
+      "query": "include romance but exclude romance",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "BROWSE_CATEGORY",
+        "intent_label": "Browse category",
+        "decision": {
+          "decision_type": "CONTRADICTORY",
+          "reason_code": "SUBJECT_INCLUDE_EXCLUDE",
+          "affected_fields": [
+            "subject"
+          ],
+          "safe_public_message": "These search filters conflict. Edit the query or remove a conflicting filter.",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "subject",
+            "label": "Genre / Subject: Romance"
+          },
+          {
+            "key": "exclude",
+            "label": "Exclude: Romance"
+          }
+        ],
+        "corrections": [],
+        "notice": "These search filters conflict. Edit the query or remove a conflicting filter.",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": false,
+          "version": 1,
+          "expires_at": "2026-10-15T08:40:20.698000+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 0,
+      "owners": [],
+      "noticeVisible": true,
+      "editStateVisible": true,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n    - link \"Browse Books\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/catalogue\n    - link \"New Arrivals\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/new-arrivals\n    - link \"Events\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/events\n    - link \"About\":\n      - /url: /?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08#about\n    - link \"Know More\":\n      - /url: /llm?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n    - link \"My Library\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/my-library\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n- main:\n  - link \"V2CA1 Clause QA\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08\n  - generic: Member · Private institution\n  - navigation \"Library activity\":\n    - link \"My Library\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/my-library\n    - link \"Reservations\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/reservations\n    - link \"Fees\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/fees\n    - link \"Resources\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/resources\n  - combobox \"Switch patron library\":\n    - generic: V2CA1 Clause QA\n  - heading \"Browse Books\" [level=1]\n  - paragraph: Explore V2CA1 Clause QA’s collection.\n  - paragraph:\n    - generic: Library collection\n    - text: 3 local books in V2CA1 Clause QA\n  - link \"Library Knowledge Graph\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/graph\n  - generic: Search V2CA1 Clause QA\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search V2CA1 Clause QA\": include romance but exclude romance\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - group \"Interpreted search\":\n    - generic: \"Intent: Browse category\"\n    - 'button \"Remove Genre / Subject: Romance\"': \"Genre / Subject: Romance ×\"\n    - 'button \"Remove Exclude: Romance\"': \"Exclude: Romance ×\"\n    - status \"Search interpretation decision\": These search filters conflict. Edit the query or remove a conflicting filter. Edit your query and search again.\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"V2CA1 Private Orchid 3 books\": V2CA1 Private Orchid3\n    - button \"Fiction 2 books\": Fiction2\n    - button \"Mystery 1 book\": Mystery1\n    - button \"Romance 1 book\": Romance1\n    - button \"Wizards 1 book\": Wizards1\n    - link \"All subjects\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/genres\n  - text: Author\n  - textbox \"Filter by author\"\n  - text: Circulation status\n  - combobox \"Circulation status\":\n    - generic: All statuses\n  - heading \"Books\" [level=2]\n  - strong: Edit your search to continue\n  - paragraph: Remove a filter above or choose another subject. Global discovery is a separate catalogue.\n  - link \"Search all LuminaR\":\n    - /url: /search?q=include%20romance%20but%20exclude%20romance\n  - navigation \"Catalogue pagination\":\n    - button \"Previous page\" [disabled]:\n      - generic: Previous\n    - generic: Page 1\n    - button \"Next page\" [disabled]:\n      - generic: Next page\n- button \"Ask LuminaR\":"
+    },
+    {
+      "scope": "PRIVATE_PATRON_SESSION",
+      "query": "rating above 3",
+      "status": 200,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "DISCOVER_TOPIC",
+        "intent_label": "Discover topic",
+        "decision": {
+          "decision_type": "EXECUTABLE",
+          "reason_code": "VALIDATED",
+          "affected_fields": [],
+          "safe_public_message": "",
+          "parser_version": "search-v2c-a1-compositional-1"
+        },
+        "related_concepts": [],
+        "preference": null,
+        "chips": [
+          {
+            "key": "topic",
+            "label": "Topic: wizards"
+          },
+          {
+            "key": "rating_min",
+            "label": "Rating: > 3"
+          }
+        ],
+        "corrections": [],
+        "notice": "",
+        "suggested_subject": null,
+        "session": {
+          "active": true,
+          "refined": true,
+          "version": 2,
+          "expires_at": "2026-10-15T08:40:21.328222+00:00"
+        },
+        "personalized": false
+      },
+      "returned": 2,
+      "owners": [
+        "b88b2cb4-2601-492e-af83-c57311c94a08"
+      ],
+      "noticeVisible": false,
+      "editStateVisible": false,
+      "falseNoMatchState": false,
+      "dom": "- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08\n    - generic: LuminaR\n  - navigation \"LuminaR navigation\":\n    - link \"Graph Lab\":\n      - /url: /experimental/kg?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n    - link \"Browse Books\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/catalogue\n    - link \"New Arrivals\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/new-arrivals\n    - link \"Events\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/events\n    - link \"About\":\n      - /url: /?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08#about\n    - link \"Know More\":\n      - /url: /llm?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n    - link \"My Library\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/my-library\n  - button \"Notifications\":\n  - button \"Search the catalog\":\n    - generic: Search\n  - link \"My reading list\":\n    - /url: /reading-list?patron_library=b88b2cb4-2601-492e-af83-c57311c94a08\n  - button \"Open account menu for V2CA1 Browser Member\":\n    - generic: V2CA1 Browser Member\n- main:\n  - link \"V2CA1 Clause QA\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08\n  - generic: Member · Private institution\n  - navigation \"Library activity\":\n    - link \"My Library\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/my-library\n    - link \"Reservations\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/reservations\n    - link \"Fees\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/fees\n    - link \"Resources\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/resources\n  - combobox \"Switch patron library\":\n    - generic: V2CA1 Clause QA\n  - heading \"Browse Books\" [level=1]\n  - paragraph: Explore V2CA1 Clause QA’s collection.\n  - paragraph:\n    - generic: Library collection\n    - text: 3 local books in V2CA1 Clause QA\n    - generic: Library catalogue search\n  - link \"Library Knowledge Graph\":\n    - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/graph\n  - generic: Search V2CA1 Clause QA\n  - generic: Search mode\n  - combobox \"Search mode\":\n    - generic: Smart\n  - searchbox \"Search V2CA1 Clause QA\": rating above 3\n  - button \"Clear search\":\n  - button \"Search\"\n  - checkbox \"Personalized results\"\n  - text: Personalized results\n  - generic: Uses books in your Reading List.\n  - button \"Clear search context\"\n  - status: Refined from previous search\n  - group \"Interpreted search\":\n    - generic: \"Intent: Discover topic\"\n    - 'button \"Remove Topic: wizards\"': \"Topic: wizards ×\"\n    - 'button \"Remove Rating: > 3\"': \"Rating: > 3 ×\"\n  - generic \"Search filters\"\n  - group \"Category filters\":\n    - generic: \"Category:\"\n    - button \"All\" [pressed]\n    - button \"V2CA1 Private Orchid 3 books\": V2CA1 Private Orchid3\n    - button \"Fiction 2 books\": Fiction2\n    - button \"Mystery 1 book\": Mystery1\n    - button \"Romance 1 book\": Romance1\n    - button \"Wizards 1 book\": Wizards1\n    - link \"All subjects\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/genres\n  - text: Author\n  - textbox \"Filter by author\"\n  - text: Circulation status\n  - combobox \"Circulation status\":\n    - generic: All statuses\n  - heading \"Books\" [level=2]\n  - status: 2 books in this view\n  - article \"V2CA1 Wizards Fiction\":\n    - paragraph: Fiction\n    - link \"Cover for V2CA1 Wizards Fiction by Synthetic A1 Author V2CA1 Wizards Fiction Synthetic A1 Author Available now\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/books/9c90f3a0-4d55-418c-ba3b-7e2005bc6eb5\n      - img \"Cover for V2CA1 Wizards Fiction by Synthetic A1 Author\":\n        - generic: LuminaR\n        - paragraph: V2CA1 Wizards Fiction\n        - paragraph: Synthetic A1 Author\n      - heading \"V2CA1 Wizards Fiction\" [level=3]\n      - paragraph: Synthetic A1 Author\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf V2CA1-QA\n    - paragraph: ★ 4.5 (2)\n    - button \"Select V2CA1 Wizards Fiction\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL109579W\": More actions\n    - generic \"Why this result?\"\n    - button \"Request Book\"\n  - article \"V2CA1 Mystery Fiction\":\n    - paragraph: Fiction\n    - link \"Cover for V2CA1 Mystery Fiction by Synthetic A1 Author V2CA1 Mystery Fiction Synthetic A1 Author Available now\":\n      - /url: /libraries/b88b2cb4-2601-492e-af83-c57311c94a08/books/e71e8aa3-14a3-4890-811c-f9efcaf0fc27\n      - img \"Cover for V2CA1 Mystery Fiction by Synthetic A1 Author\":\n        - generic: LuminaR\n        - paragraph: V2CA1 Mystery Fiction\n        - paragraph: Synthetic A1 Author\n      - heading \"V2CA1 Mystery Fiction\" [level=3]\n      - paragraph: Synthetic A1 Author\n      - paragraph: Available now\n    - generic: Physical\n    - paragraph: Shelf V2CA1-QA\n    - paragraph: ★ 5.0 (1)\n    - button \"Select V2CA1 Mystery Fiction\":\n      - text: Select for AI\n    - button \"Add to Reading List\"\n    - generic \"More discovery actions for OL17918479W\": More actions\n    - generic \"Why this result?\"\n    - button \"Request Book\"\n  - navigation \"Catalogue pagination\":\n    - button \"Previous page\" [disabled]:\n      - generic: Previous\n    - generic: Page 1 of 1\n    - button \"Next page\" [disabled]:\n      - generic: Next page\n- button \"Ask LuminaR\":"
+    }
+  ],
+  "preserved": [
+    "user/JWT sid ownership",
+    "library/workspace isolation",
+    "expiry",
+    "clear/logout",
+    "membership revocation",
+    "default OFF and own Reading List only",
+    "bounded personalization and strict filter authority"
+  ],
+  "byte_for_byte_assertion": "Actual Mongo documents unchanged after contradiction in all five live contexts; later refinement retained wizards; clear deleted context; fresh search had no inherited rating."
+}

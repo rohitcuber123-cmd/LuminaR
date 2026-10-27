@@ -1,0 +1,5 @@
+# V2A metadata audit
+
+V1 canonical schema audit remains applicable (search_nlu_metadata_audit.md). Global subjects are pipe-delimited strings; tenant subjects/authors are arrays. There is no reliable normalized genre or difficulty column. Ratings/counts are global fields, hydrated onto globally linked tenant records; missing ratings never qualify for numeric bounds. Tenant publication_year/language/ISBN are optional real fields. The sampled global import lacks reliable publication-year/language/ISBN metadata, so controls remain unavailable globally. Format/availability derives from real holdings, Part 2B circulation, current active digital entitlements and authorized READY assets.
+
+The existing 5M global SQLite graph has Book, Author and Subject nodes, AUTHORED_BY/HAS_SUBJECT edges, indexed feature→book and book→feature access, and an immutable version/catalogue_hash. Tenant graph artifacts contain Book/Author/Subject/Classification nodes and metadata edges, scoped by library/generation/checksum/fingerprint. Neither graph has normalized subject-synonym edges. V2A uses bounded subject co-occurrence, never fabricates ontology or difficulty metadata.

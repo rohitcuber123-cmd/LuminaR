@@ -1,4 +1,5 @@
 import os
+from typing import Literal
 from fastapi import FastAPI, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -23,6 +24,13 @@ app = FastAPI(
     title="LuminaR Search API",
     version="1.0.0"
 )
+
+@app.middleware('http')
+async def private_search_responses(request, call_next):
+    response = await call_next(request)
+    response.headers['Cache-Control'] = 'private, no-store'
+    return response
+
 # ============================================================
 # CORS
 # ============================================================
@@ -59,10 +67,18 @@ print("=" * 60)
 engine = LuminaRSearchEngine()
 from search.ranked_pages import RankedSearchPages, SEARCH_MAX_RETURN_RESULTS
 ranked_search = RankedSearchPages(engine)
+from search.query_execution import GlobalQuerySearch, global_facets
+human_search = GlobalQuerySearch(engine)
+from search.library_intelligence_api import install as install_tenant_intelligence
+install_tenant_intelligence(app,engine)
+from search.interaction_api import install as install_search_interactions
+install_search_interactions(app,engine)
 
 
 @app.on_event("startup")
 def start_index_sync():
+    if os.getenv('SEARCH_GLOBAL_READ_ONLY')=='1':
+        return  # Explicit review mode freezes global writers; tenant jobs are independent.
     engine.index_manager.start()
     lexical_writer = getattr(engine, "lexical_writer", None)
     if lexical_writer is not None:
@@ -103,6 +119,19 @@ class SearchRequest(BaseModel):
     save_history: bool = True
     category: str = Field(default='', max_length=200)
     author: str = Field(default='', max_length=150)
+    mode: Literal['SMART','GENRE_SUBJECT','TITLE_AUTHOR','EXACT'] = 'SMART'
+    query_contract: Literal['HUMAN','MACHINE'] = 'HUMAN'
+    rating_min: float | None = Field(default=None, ge=0, le=5)
+    rating_max: float | None = Field(default=None, ge=0, le=5)
+    year_min: int | None = Field(default=None, ge=1000, le=2100)
+    year_max: int | None = Field(default=None, ge=1000, le=2100)
+    format: Literal['','ONLINE','PHYSICAL','BOTH'] = ''
+    availability: Literal['','AVAILABLE_NOW','REQUESTABLE'] = ''
+    language: str = Field(default='',max_length=60)
+    sort: Literal['RELEVANCE','RATING','NEWEST','TITLE'] = 'RELEVANCE'
+    omit: list[str] = Field(default_factory=list,max_length=12)
+    session_id: str | None = Field(default=None,max_length=36)
+    personalized: bool = False
 
 
 # ============================================================
@@ -215,7 +244,9 @@ def search(
 
     query = request.query.strip()
 
-    if not query:
+    if not query and (request.query_contract == 'MACHINE' or not request.session_id and not any(
+        [request.category,request.author,request.rating_min is not None,request.rating_max is not None,
+         request.year_min is not None,request.year_max is not None,request.format,request.availability,request.language,request.sort!='RELEVANCE'])):
 
         raise HTTPException(
             status_code=400,
@@ -260,11 +291,17 @@ def search(
 
     try:
 
+        if request.query_contract == 'HUMAN':
+            filters={key:getattr(request,key) for key in ('rating_min','rating_max','year_min','year_max','format','availability','language','sort','author')}
+            filters['subject']=request.category
+            try:result=human_search.search(query,user,mode=request.mode,filters=filters,omit=request.omit,offset=request.offset,limit=requested_limit,session_id=request.session_id,personalized=request.personalized)
+            except ValueError as error:raise HTTPException(422,str(error)) from error
+
         # ----------------------------------------------------
         # RUN LUMINAR SEARCH
         # ----------------------------------------------------
 
-        result = ranked_search.search(
+        else:result = ranked_search.search(
 
             query=query,
 
@@ -283,7 +320,7 @@ def search(
         # SAVE SEARCH HISTORY
         # ----------------------------------------------------
 
-        if request.save_history and request.offset == 0:
+        if request.save_history and request.offset == 0 and not request.session_id and result.get('interpretation',{}).get('decision',{}).get('decision_type','EXECUTABLE') in ('EXECUTABLE','EXECUTABLE_WITH_NOTICE'):
 
             # user["sub"] contains the string representation of integer user_id
             # e.g., "4" for user_id=4
@@ -320,6 +357,12 @@ def search(
             status_code=500,
             detail="LuminaR search is temporarily unavailable."
         )
+
+
+@app.get('/facets')
+def facets(authorization: str | None = Header(default=None)):
+    get_user_from_token(authorization)
+    return global_facets(engine)
 
 
 # ============================================================

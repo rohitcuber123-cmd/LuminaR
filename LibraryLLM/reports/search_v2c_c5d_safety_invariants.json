@@ -1,0 +1,67 @@
+{
+  "confidence_is_not_safety_proof": true,
+  "invariants": [
+    {
+      "established": "Fresh identity, library/workspace and owner checks precede native reads/choices/commits.",
+      "id": "AUTHORITY",
+      "shadow_limit": "No live authority proof is supplied; candidates cannot authorize or bypass native guards.",
+      "source": [
+        "authorization",
+        "resolution",
+        "tenant_boundary"
+      ]
+    },
+    {
+      "established": "Only the two executable kinds permit execution; blocked kinds return guarded responses.",
+      "id": "TYPED_BLOCK",
+      "shadow_limit": "Shadow recommendation may restrict baseline only, never promote a blocked result.",
+      "source": [
+        "validator",
+        "tenant_boundary"
+      ]
+    },
+    {
+      "established": "Numeric, format and canonical category contradictions block when their operands are present.",
+      "id": "CONSISTENCY",
+      "shadow_limit": "Cannot infer constraints omitted by recognizers.",
+      "source": [
+        "validator"
+      ]
+    },
+    {
+      "established": "Parsed year/language/availability and formats must fit supplied catalogue capabilities.",
+      "id": "CAPABILITY",
+      "shadow_limit": "Unrecognized unsupported operations have no parsed signal.",
+      "source": [
+        "validator"
+      ]
+    },
+    {
+      "established": "Recognized INCOMPLETE/AMBIGUOUS candidates cause clarification.",
+      "id": "MANDATORY_RESOLUTION",
+      "shadow_limit": "A full mandatory requirement inventory is a missing guarantee, not an existing field to assume true.",
+      "source": [
+        "final_decision",
+        "choices"
+      ]
+    },
+    {
+      "established": "Repair/correction evidence can yield notice without refusing an executable request.",
+      "id": "REPAIR_NOTICE",
+      "shadow_limit": "Uncertainty or a missing completeness certificate alone must not automatically reject every safe-uncertain request.",
+      "source": [
+        "policy",
+        "choices"
+      ]
+    },
+    {
+      "established": "Choice owner/mode/query/version/expiry, preview and reservation protect operations.",
+      "id": "NATIVE_PRECONDITIONS",
+      "shadow_limit": "Not assessable from offline single-turn predictions; no native calls.",
+      "source": [
+        "resolution"
+      ]
+    }
+  ],
+  "no_new_authorization_semantics": true
+}

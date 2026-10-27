@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="3.051" timestamp="2026-10-15T18:13:50.636491+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2g.test_query_v2c_b_stop_condition" name="test_forged_choice_must_not_delete_previous_accepted_context" time="2.592"><failure message="AssertionError: STOP: forged choice deleted the previous accepted V2B context&#10;assert None == {'_id': 'ab4046b8-4ac0-4f0e-b57d-8815fa488dca', 'user_id': '2', 'login_session': 'v2cb-login', 'scope': 'LIBRARY', ...}">query_library = ('3c276385-607a-4d76-bd83-9078840a0931', {'library_book_id': '1be9aedf-078e-4ce8-9e51-59da5a5e11c7', 'library_id': '3c...-15b5-4f5f-9ba0-64211706720f', 'library_id': '3c276385-607a-4d76-bd83-9078840a0931', 'target': 'KNOWLEDGE_GRAPH', ...})
+database = Database(MongoClient(host=['127.0.0.1:27017'], document_class=dict, tz_aware=False, connect=True), 'luminar_institution_v2g_test_ce00204d27204e30926c691b9671c7f4')
+
+    def test_forged_choice_must_not_delete_previous_accepted_context(query_library,database):
+        lid,_,_,worker,_,_=query_library
+        sid=str(uuid4());query='include Romance but exclude Romance'
+        tenant_search(worker,lid,ACTOR,'books about neural networks',session_id=sid)
+        before=deepcopy(collection().find_one({'_id':sid}));assert before
+        rejected=tenant_search(worker,lid,ACTOR,query,session_id=sid)
+        assert collection().find_one({'_id':sid})==before
+        public=rejected['interpretation']['clarification'];client=interaction_client(database,worker)
+        result=client.post('/query/resolve',json={'clarification_id':public['clarification_id'],
+            'choice_id':str(uuid4()),'query':query,'session_id':sid,'library_id':lid})
+        after=collection().find_one({'_id':sid})
+        evidence={'isolated_database':database.name,'accepted_context_existed_before':True,
+                  'rejected_query_preserved_previous_context':True,'forged_choice_http_status':result.status_code,
+                  'accepted_context_exists_after_forged_choice':bool(after),
+                  'accepted_context_unchanged':after==before,
+                  'cause':'authorized() catches the yielded body HTTPException(404) and calls invalidate(actor, library_id), deleting the caller contexts and pending choices.',
+                  'production_catalogue_modified':False,'required_invariant':'A forged choice must not mutate accepted Search state.'}
+        target=Path(__file__).resolve().parents[2]/'reports/search_v2c_b_stop_condition_observed.json'
+        target.write_text(json.dumps(evidence,indent=2),encoding='utf8')
+        assert result.status_code==404
+&gt;       assert after==before,'STOP: forged choice deleted the previous accepted V2B context'
+E       AssertionError: STOP: forged choice deleted the previous accepted V2B context
+E       assert None == {'_id': 'ab4046b8-4ac0-4f0e-b57d-8815fa488dca', 'user_id': '2', 'login_session': 'v2cb-login', 'scope': 'LIBRARY', ...}
+
+tests\institution_v2g\test_query_v2c_b_stop_condition.py:36: AssertionError</failure></testcase></testsuite></testsuites>

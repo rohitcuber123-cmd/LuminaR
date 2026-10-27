@@ -109,11 +109,19 @@ class LibraryAssetPipeline:
         directory.mkdir(parents=True, exist_ok=False)
         started = perf_counter()
         self.processing_stage = 'EXTRACTION'
-        pages = self.processor.extract_pdf(source)
+        if asset.get('asset_type', 'PDF') == 'PDF':
+            pages = self.processor.extract_pdf(source)
+        else:
+            from backend.services.library_asset_text import extract_text
+            text = extract_text(source.read_bytes(), asset['asset_type'])
+            pages = [{'page': 1, 'text': text, 'extraction_method': 'native_text'}]
         if not 0 < len(pages) <= 10000:
             raise HTTPException(413, 'PAGE_LIMIT')
         self.processing_stage = 'OCR'
-        pages, ocr = private_document_ocr.prepare(source, pages)
+        if asset.get('asset_type', 'PDF') == 'PDF':
+            pages, ocr = private_document_ocr.prepare(source, pages)
+        else:
+            ocr = {'native_pages': 1, 'ocr_pages': 0, 'failed_pages': 0}
         document_id = self.document_identity(asset, job['generation_id'])
         for page in pages:
             page.update(library_id=job['library_id'], asset_id=job['asset_id'],
