@@ -1,0 +1,113 @@
+{
+  "version": "V11-native-capabilities-v3",
+  "status": "FROZEN_DEVELOPMENT_PREVIEW_NOT_PRODUCTION_QUALIFIED",
+  "default_policy": "C4",
+  "preview_deployments": [
+    "development",
+    "test"
+  ],
+  "scopes": {
+    "GLOBAL": {
+      "rating": true,
+      "year": false,
+      "language": false,
+      "availability": false,
+      "formats": [
+        "ONLINE"
+      ],
+      "online_semantics": "current actor readable borrowing entitlement",
+      "physical_semantics": "known false in global catalogue projection"
+    },
+    "INSTITUTIONAL": {
+      "rating": true,
+      "year": true,
+      "language": true,
+      "availability": true,
+      "formats": [
+        "ONLINE",
+        "PHYSICAL",
+        "BOTH"
+      ],
+      "authority": "current native read_context; separate patron/staff workspaces"
+    }
+  },
+  "operators": {
+    "rating": [
+      ">",
+      ">=",
+      "<",
+      "<=",
+      "=",
+      "RANGE"
+    ],
+    "year": [
+      ">",
+      ">=",
+      "<",
+      "<=",
+      "=",
+      "RANGE"
+    ],
+    "author": [
+      "NORMALIZED_SUBSTRING_POSITIVE"
+    ],
+    "title": [
+      "TITLE_OR_AUTHOR_NORMALIZED_SUBSTRING"
+    ],
+    "literal": [
+      "NORMALIZED_TITLE_OR_IDENTIFIER_EQUALITY"
+    ],
+    "format": [
+      "PRESENT",
+      "ONLY",
+      "NOT_WITH_KNOWN_CANONICAL_FLAGS"
+    ],
+    "subject": [
+      "EXPLICIT_SCOPED_ALL",
+      "EXPLICIT_SCOPED_NOT_ANY"
+    ],
+    "language": [
+      "NORMALIZED_EQUALITY"
+    ],
+    "availability": [
+      "AVAILABLE_NOW",
+      "REQUESTABLE",
+      "PHYSICAL_REQUESTABILITY"
+    ],
+    "sort": [
+      "TITLE_ASC",
+      "RATING_DESC",
+      "NEWEST_DESC",
+      "RELEVANCE_PROVIDER"
+    ]
+  },
+  "unsupported": [
+    "page_count",
+    "commercial_price",
+    "publisher_filter",
+    "edition_filter",
+    "strict_title_only_substring",
+    "byte_exact_quoted_literal",
+    "author_negation",
+    "unsupported_cross_book_relations"
+  ],
+  "precedence": "Unsupported mandatory capability wins over missing operand. Missing state/source remains in IR; completing it cannot grant a native field.",
+  "category_policy": "Explicit registered category selections are hard; ordinary descriptive topics remain semantic. Source-only equivalent syntax normalization and source mappings preserve original source.",
+  "unknown_format_policy": "Negative/exclusive predicates require explicit bool capability evidence; unknown records are not admitted.",
+  "pagination": {
+    "global_ranked_window": 50,
+    "library_candidate_scan_budget": 5000,
+    "library_refill_batch": 1000,
+    "totals_complete": false,
+    "filter_before_user_page": true
+  },
+  "ownership": "Authenticated actor/login/library/workspace/mode/feature/source/IR/version/expiry bound in server CAS state. No client plan accepted.",
+  "review": "reports/search_arch11_contract_review.json",
+  "native_sources": [
+    "search/query_plan.py::matches",
+    "search/query_plan.py::sort_books",
+    "search/query_execution.py::GlobalQuerySearch",
+    "search/query_execution.py::_tenant_search",
+    "search/smart_preview.py::PreparedRuntime"
+  ]
+}

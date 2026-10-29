@@ -1,0 +1,96 @@
+"""One source of truth for IR, native projection, editing and measurement.
+
+Domain mapping never supplies an operand or grants backend capabilities. Numeric
+direction and exclusive bounds remain operators, not interchangeable aliases.
+"""
+from dataclasses import dataclass, asdict
+
+
+@dataclass(frozen=True)
+class Domain:
+    name: str
+    native: tuple
+    labels: tuple
+    operand: str
+    operators: tuple
+    polarity: str = 'POSITIVE'
+    cardinality: str = 'MANY_CONJUNCTIVE'
+    enforcement: str = 'NATIVE_MATCHES'
+    completion: bool = True
+    repair: str = 'EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY'
+
+
+DOMAINS = {d.name: d for d in (
+    Domain('author', ('author_text',), ('author','creator','writer','by'), 'string', ('CONTAINS',), cardinality='ONE_OR_CLARIFY'),
+    Domain('title', ('title_text',), ('title','titled','called','named'), 'string', ('CONTAINS',), cardinality='ONE_OR_CLARIFY'),
+    Domain('literal', ('exact_text',), ('exact literal','exact title','literal'), 'string', ('EXACT',), cardinality='ONE_OR_CLARIFY', enforcement='NATIVE_EXACT_TITLE_OR_IDENTIFIER'),
+    Domain('subject', ('subjects','include_terms'), ('subject','category','classification','facet','tag'), 'canonical_subject', ('INCLUDE',)),
+    Domain('excluded_subject', ('exclude_subjects',), ('subject','category','classification'), 'canonical_subject', ('NOT',), 'NEGATIVE'),
+    Domain('exclude', ('exclude_terms',), ('whole word','searchable text','word','phrase'), 'string', ('TEXT_NOT',), 'NEGATIVE'),
+    Domain('rating', ('rating_min','rating_max','rating_min_exclusive','rating_max_exclusive'), ('rating','ratings','rated','stars','cutoff'), 'number_0_to_5', ('>','>=','<','<=','=','RANGE')),
+    Domain('year', ('year_min','year_max','year_min_exclusive','year_max_exclusive'), ('publication','publication year','published','year'), 'integer_1000_to_2100', ('>','>=','<','<=','=','RANGE')),
+    Domain('format', ('formats','exclusive_formats'), ('format','online','digital','physical'), 'format_enum', ('PRESENT','ONLY')),
+    Domain('excluded_format', ('excluded_formats',), ('format','online','digital','physical'), 'format_enum', ('NOT',), 'NEGATIVE'),
+    Domain('availability', ('availability','physical_available_only'), ('available','availability','requestable'), 'availability_enum', ('PRESENT','=')),
+    Domain('language', ('language',), ('language',), 'string', ('EXACT',), cardinality='ONE_OR_CLARIFY'),
+    Domain('sort', ('sort',), ('sort','order','ordering'), 'sort_enum', ('=',), cardinality='ONE_OR_CLARIFY', enforcement='NATIVE_SORT_FIXED_DIRECTION'),
+    Domain('preference', (), ('preference','advisory','prefer'), 'string', ('SOFT',), enforcement='SEMANTIC_RANKING_ONLY', completion=False),
+    Domain('semantic', (), ('topic',), 'string', ('TOPIC',), enforcement='SEMANTIC_RETRIEVAL_ONLY', completion=False),
+    Domain('context', (), ('background',), 'string', ('NON_OPERATIVE',), enforcement='NON_OPERATIVE', completion=False),
+    Domain('publisher', (), ('publisher','publishing house','imprint'), 'string', ('EXACT','NOT'), enforcement='UNSUPPORTED', completion=False, repair='NEVER_TO_PUBLICATION_DATE'),
+    Domain('price', (), ('price','cost','currency'), 'number', ('>','>=','<','<=','=','NOT'), enforcement='UNSUPPORTED', completion=False),
+    Domain('edition', (), ('edition','edition count'), 'string', ('EXACT','NOT'), enforcement='UNSUPPORTED', completion=False),
+    Domain('relationship', (), ('relationship',), 'relation', ('ALTERNATIVE','CONFLICT','CROSS_BOOK','PROXIMITY'), enforcement='RELATION_SPECIFIC_OR_UNSUPPORTED', completion=False),
+)}
+FAMILIES = {d.name: list(d.native) for d in DOMAINS.values() if d.native}
+SORT_DIRECTIONS = {'TITLE':'ASC','RATING':'DESC','NEWEST':'DESC','RELEVANCE':'PROVIDER'}
+NATIVE = {name: d.name for d in DOMAINS.values() for name in d.native}
+ANNOTATION = {'soft_preferences':'preference','background':'context','semantic_text':'semantic','semantic_residue':'semantic'}
+
+
+@dataclass(frozen=True)
+class Target:
+    domain: str
+    operators: tuple
+    native_field: str | None = None
+
+
+def target(name):
+    if name in DOMAINS:
+        d=DOMAINS[name]
+        return Target(name,d.operators)
+    name=ANNOTATION.get(name,name)
+    if name in DOMAINS:
+        return Target(name,DOMAINS[name].operators)
+    if name not in NATIVE: raise ValueError('Unknown field/domain')
+    domain=NATIVE[name]; ops=DOMAINS[domain].operators
+    if domain in ('rating','year'):
+        if name.endswith('_exclusive'): raise ValueError('An exclusive flag is not an operand target')
+        ops=('>','>=','=','RANGE') if name.endswith('_min') else ('<','<=','=','RANGE')
+    elif name=='exclusive_formats': ops=('ONLY',)
+    elif name=='physical_available_only': raise ValueError('Derived availability flag has no independent operand')
+    return Target(domain,ops,name)
+
+
+def scoring_fields(domain,operator):
+    d=DOMAINS.get(domain)
+    if not d or operator not in d.operators: raise ValueError('Unknown/unsupported domain operator')
+    if domain in ('rating','year'):
+        sides=('min','max') if operator in ('=','RANGE') else ('min',) if operator in ('>','>=') else ('max',)
+        return tuple(domain+'_'+s for s in sides)
+    if domain=='format': return ('formats','exclusive_formats') if operator=='ONLY' else ('formats',)
+    return d.native
+
+
+def supports(domain,operator):
+    d=DOMAINS.get(domain)
+    return bool(d and d.native and d.enforcement!='UNSUPPORTED' and operator in d.operators)
+
+
+def manifest():
+    return {'domains':[asdict(d) for d in DOMAINS.values()], 'span_contract':'Python Unicode character offsets [start,end) into immutable original query; nonempty source substring verified',
+        'modality':'MUST/MUST_NOT hard; SHOULD/MAY advisory only; UNKNOWN/CONDITIONAL cannot authorize mandatory execution',
+        'range_semantics':'Inclusive RANGE; strictness explicit >/<; intersect conjunctive bounds; contradictory empty intersection blocks',
+        'sort_direction':'TITLE ascending; RATING descending; NEWEST descending; arbitrary direction unsupported',
+        'mapping_policy':'Native bound maps to domain AND admissible operators; never infer which of multiple source operands to edit',
+        'capability_policy':'Scope-specific backend capabilities still required; ontology recognition alone never grants support'}

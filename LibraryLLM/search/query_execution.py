@@ -55,10 +55,10 @@ def global_facets(engine):
 class GlobalQuerySearch:
     def __init__(self,engine):self.engine=engine
 
-    def search(self, query, actor, *, mode='SMART', filters=None, omit=(), offset=0, limit=10, diagnostics=False,kg_enabled=True,session_id=None,personalized=False,resolution=None):
+    def search(self, query, actor, *, mode='SMART', filters=None, omit=(), offset=0, limit=10, diagnostics=False,kg_enabled=True,session_id=None,personalized=False,resolution=None,runtime=None):
         start=perf_counter();engine=self.engine;facets=global_facets(engine)
-        plan,session=resolve_session(query,actor,[r['subject'] for r in facets['results']],mode=mode,filters=filters,omit=omit,session_id=session_id,capabilities=facets['capabilities'],**(resolution or {}))
-        interaction=interaction_for(plan,session,actor,query=query,mode=mode,filters=filters,omit=omit,session_id=session_id,capabilities=facets['capabilities']) if not resolution else None
+        plan,session=(runtime.resolve if runtime else resolve_session)(query,actor,[r['subject'] for r in facets['results']],mode=mode,filters=filters,omit=omit,session_id=session_id,capabilities=facets['capabilities'],**(resolution or {}))
+        interaction=interaction_for(plan,session,actor,query=query,mode=mode,filters=filters,omit=omit,session_id=session_id,capabilities=facets['capabilities']) if not resolution and runtime is None else None
         if not executable(plan):
             response=guarded_response(query,plan,session,personalized,offset,limit,start,diagnostics=diagnostics)
             response['interpretation']['clarification']=interaction
@@ -67,19 +67,20 @@ class GlobalQuerySearch:
         apply_expansion(plan,expansion)
         # Online means this account's existing digital reading entitlement.
         online=set()
-        if plan.formats or plan.availability:
+        if plan.formats or plan.availability or runtime is not None and plan.excluded_formats:
             from backend.services.book_capability_service import active_borrow_ids, catalog_capabilities
             online={r['work_id'] for r in catalog_capabilities(list(active_borrow_ids(int(actor['sub'])))) if r.get('readable')}
         def canonical(book):
             return dict(book,has_online=book.get('work_id') in online,has_physical=False)
-        def accepted(book):return matches(plan,canonical(book))
+        def accepted(book):return (runtime.matches if runtime else matches)(plan,canonical(book))
         provider='STRUCTURED_METADATA';hnsw=False;reranked=False;count=0;retrieval_diagnostics={}
         if plan.semantic_text and not plan.unknown_subject:
             constrained=bool(plan.subjects or plan.author_text or plan.rating_min is not None or plan.rating_max is not None or plan.year_min is not None or plan.year_max is not None or plan.formats or plan.availability or plan.language or plan.exclude_terms or plan.exclude_subjects)
+            if runtime is not None:constrained=runtime.has_hard(plan)
             options={}
             if plan.kg_expansion_used:options.update(expansion_query=expansion_query(plan),primary_predicate=lambda book:primary_match(plan,book))
             if plan.ranking_query()!=plan.semantic_text:options['rerank_query']=plan.ranking_query()
-            response=engine.search(query=plan.semantic_text,top_k=50,library_id=None,
+            response=engine.search(query=runtime.semantic_query(plan) if runtime else plan.semantic_text,top_k=50,library_id=None,
                                    available_at_library=False,diagnostics=True,metadata_predicate=accepted if constrained else None,**options)
             retrieval_diagnostics=response.get('diagnostics',{})
             ids=[r['work_id'] for r in response['results']];metadata=current_books(engine.books_collection,ids)
@@ -126,6 +127,7 @@ class GlobalQuerySearch:
                 if value is not None:rating[('$gt' if exclusive else '$gte') if low else ('$lt' if exclusive else '$lte')]=value
             if rating:predicates.append({'average_rating':{'$type':'number',**rating}})
             if plan.formats or plan.availability:predicates.append({'work_id':{'$in':sorted(online)}})
+            if runtime is not None and 'ONLINE' in plan.excluded_formats:predicates.append({'work_id':{'$nin':sorted(online)}})
             ids=None
             if plan.title_text or plan.exact_text:
                 ids=[];text=plan.exact_text or plan.title_text
@@ -193,7 +195,7 @@ def tenant_search(service,library_id,actor,query,**options):
         raise
 
 
-def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',filters=None,omit=(),offset=0,limit=20,diagnostics=False,kg_enabled=True,session_id=None,personalized=False,resolution=None):
+def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',filters=None,omit=(),offset=0,limit=20,diagnostics=False,kg_enabled=True,session_id=None,personalized=False,resolution=None,runtime=None):
     from backend.services import library_catalogue_experience as catalogue
     from backend.services import library_intelligence_store as store, library_intelligence_artifacts as artifacts
     from backend.services.library_intelligence_service import target_status
@@ -202,8 +204,8 @@ def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',fil
     with catalogue.read_context(library_id,actor,staff=staff) as (library,membership,canonical):
         facets=catalogue.subject_rows(library_id,limit=2048,staff=staff)
         capabilities={'rating':True,'year':True,'language':True,'availability':True,'formats':['ONLINE','PHYSICAL','BOTH']}
-        plan,session=resolve_session(query,actor,[r['subject'] for r in facets['results']],mode=mode,filters=filters,omit=omit,session_id=session_id,library_id=library_id,staff=staff,capabilities=capabilities,**(resolution or {}))
-        interaction=interaction_for(plan,session,actor,query=query,mode=mode,filters=filters,omit=omit,session_id=session_id,capabilities=capabilities,library_id=library_id,staff=staff) if not resolution else None
+        plan,session=(runtime.resolve if runtime else resolve_session)(query,actor,[r['subject'] for r in facets['results']],mode=mode,filters=filters,omit=omit,session_id=session_id,library_id=library_id,staff=staff,capabilities=capabilities,**(resolution or {}))
+        interaction=interaction_for(plan,session,actor,query=query,mode=mode,filters=filters,omit=omit,session_id=session_id,capabilities=capabilities,library_id=library_id,staff=staff) if not resolution and runtime is None else None
         status=target_status(library_id,'SEARCH_INDEX')
         source=catalogue.source_locked(library_id,library,membership,canonical,staff=staff)
         if not executable(plan):
@@ -220,7 +222,7 @@ def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',fil
                 if manifest['model_version']!=service.model_version:raise ValueError('Model version changed')
                 import numpy as np
                 with service.model_lock:
-                    vector=np.asarray(service.encoder([plan.semantic_text]),dtype=np.float32)
+                    vector=np.asarray(service.encoder([runtime.semantic_query(plan) if runtime else plan.semantic_text]),dtype=np.float32)
                     if vector.shape!=(1,384) or not np.isfinite(vector).all() or np.linalg.norm(vector)<1e-8:raise ValueError('Invalid query vector')
                     vector/=np.linalg.norm(vector,axis=1,keepdims=True)
                     constrained=bool(plan.subjects or plan.author_text or plan.rating_min is not None or plan.rating_max is not None or plan.year_min is not None or plan.year_max is not None or plan.formats or plan.availability or plan.language or plan.exclude_terms or plan.exclude_subjects)
@@ -247,9 +249,12 @@ def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',fil
         pipeline=catalogue.usable(library_id,staff=staff)
         if ids is not None:pipeline.append({'$match':{'library_book_id':{'$in':ids}}})
         if plan.subjects:pipeline.append({'$match':{'subjects':{'$all':plan.subjects}}})
-        raw=list(store.collection('library_books').aggregate([*pipeline,{'$limit':STRUCTURED_LIMIT}]))
+        if runtime is not None:
+            pipeline.extend(runtime.pushdown(plan))
+            raw=runtime.collect(store.collection('library_books'),pipeline)
+        else:raw=list(store.collection('library_books').aggregate([*pipeline,{'$limit':STRUCTURED_LIMIT}]))
         rows=catalogue.hydrate(library_id,actor,raw,canonical,staff=staff)
-        rows=[row for row in rows if matches(plan,row) and (not filters or not filters.get('circulation_status') or row.get('circulation_status')==filters['circulation_status'])]
+        rows=[row for row in rows if (runtime.matches if runtime else matches)(plan,row) and (not filters or not filters.get('circulation_status') or row.get('circulation_status')==filters['circulation_status'])]
         if fallback and plan.semantic_text:
             terms=normalize(plan.semantic_text).split()
             rows=[row for row in rows if all(term in normalize(' '.join([row.get('title',''), ' '.join(row.get('authors',[])), ' '.join(row.get('subjects',[])),row.get('description') or ''])) for term in terms)]

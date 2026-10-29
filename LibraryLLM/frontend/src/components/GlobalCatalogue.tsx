@@ -1,3 +1,5 @@
+import {SearchPreview} from './SearchPreview'
+import {useSearchPreviewGate} from '../lib/searchPreview'
 import {useSearchFacets} from '../hooks/useSearchFacets'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
@@ -17,7 +19,14 @@ import { SearchIntelligence } from './SearchIntelligence'
 import { searchOptions,hasSearchFilters,type SearchInterpretation } from '../lib/searchNlu'
 import { useSearchContext } from '../hooks/useSearchContext'
 import { rememberSearch } from '../lib/searchContext'
-export function GlobalCatalogue({ searchPage = false }: {searchPage?:boolean}) {
+export function GlobalCatalogue(props: {searchPage?:boolean}) {
+  const [params]=useSearchParams(),token=useAuthStore(s=>s.token)
+  const gate=useSearchPreviewGate(params.get('search_preview')==='1')
+  if(gate.pending)return <StatePanel title="Checking search preview…" kind="loading" />
+  if(gate.enabled){const exit=new URLSearchParams(params);exit.delete('search_preview');return <SearchPreview key={`global:${token}`} initialQuery={params.get('q')||''} initialMode={(params.get('mode')||'SMART') as import('../lib/searchNlu').SearchMode} exitPath={`/search?${exit}`}/>}
+  return <StableGlobalCatalogue {...props}/>
+}
+function StableGlobalCatalogue({ searchPage = false }: {searchPage?:boolean}) {
   const [params,setParams]=useSearchParams(), token=useAuthStore(s=>s.token)
   const context=useSearchContext()
   const query=params.get('q') || '',category=params.get('category') === 'All' ? '' : params.get('category') || '',author=params.get('author') || ''

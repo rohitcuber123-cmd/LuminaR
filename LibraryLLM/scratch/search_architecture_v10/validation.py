@@ -1,0 +1,45 @@
+"""Contract B: source evidence, independent obligations and capability checks."""
+import re
+from .obligations import verify_ir
+
+
+def local_evidence(r):
+    """Validate a proposed atom; this is NOT a semantic-completeness oracle."""
+    text=r.source_text;visible=re.sub(r'"[^"\n]*"|“[^”\n]*”',' ',text)
+    if r.ownership=='ADVISORY':
+        return r.field=='preference' and bool(re.search(r'\b(?:prefer\w*|optional|advisory|bonus|welcome|would\s+be\s+nice|should|may)\b',visible,re.I)) and not re.search(r'\b(?:must|required?|mandatory|strict)\b',visible,re.I)
+    if r.ownership=='NON_OPERATIVE':
+        return r.field=='context' and any(o['category']=='NON_OPERATIVE' and o['span'][0]<=r.source_span[0] and r.source_span[1]<=o['span'][1] for o in verify_ir_stub(text,r.source_span[0]))
+    if r.state.value!='EXPLICITLY_SUPPLIED':return r.value is not None or r.state.value in ['OMITTED_REQUIRED_VALUE','EXPLICITLY_EMPTY','PLACEHOLDER_AWAITING_COMPLETION']
+    if r.field=='literal':
+        quoted=[m[1] or m[2] for m in re.finditer(r'"([^"\n]*)"|“([^”\n]*)”',text)]
+        return r.operator=='EXACT' and r.value.casefold() in [' '.join(x.casefold().split()) for x in quoted] and bool(re.search(r'\b(?:exact\s+(?:title|literal)|exactly\s+(?:titled|called|named))\b',visible,re.I))
+    if r.field=='author':
+        return r.operator=='CONTAINS' and isinstance(r.value,str) and r.value.casefold() in text.casefold() and bool(re.search(r'\b(?:by|author|writer|creator)\b',visible,re.I)) and not re.search(r'\b(?:not|exclude|without)\b',visible,re.I)
+    if r.field=='semantic':return r.operator=='TOPIC' and isinstance(r.value,str) and r.value in text
+    return False
+
+
+def verify_ir_stub(text,offset):
+    from .obligations import scan
+    from dataclasses import asdict
+    rows=[]
+    for o in scan(text):
+        d=asdict(o);d['span']=[o.span[0]+offset,o.span[1]+offset];rows.append(d)
+    return rows
+
+
+def audit(ir):
+    result=verify_ir(ir)
+    result['invalid_atom_ids']=[]
+    for r in ir.requirements:
+        if r.provenance.get('origin')=='V10_INTERPRETATION':
+            from .semantic_interpretation import evidence
+            if not evidence(r,ir.raw_query):
+                result['invalid_atom_ids'].append(r.requirement_id)
+                result['violations'].append(dict(span=list(r.source_span),reason='V10_UNPROVEN_PROPOSAL',field=r.field,decision='UNSUPPORTED'))
+        if r.provenance.get('origin')=='V9_INTERPRETATION' and not local_evidence(r):
+            result['invalid_atom_ids'].append(r.requirement_id)
+            result['violations'].append(dict(span=list(r.source_span),reason='PROPOSED_MEANING_NOT_SOURCE_PROVEN',field=r.field,decision='UNSUPPORTED'))
+    result['recognized_obligations_complete']=not result['violations']
+    return result

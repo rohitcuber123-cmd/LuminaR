@@ -1,3 +1,5 @@
+import {SearchPreview} from '../components/SearchPreview'
+import {useSearchPreviewGate} from '../lib/searchPreview'
 import {useSearchFacets} from '../hooks/useSearchFacets'
 import { Link, useParams, useSearchParams, useNavigate,useLocation } from 'react-router-dom'
 import { useAuthStore } from '../store/useAuthStore'
@@ -24,7 +26,14 @@ export function CatalogueNotice({ source }: { source: CatalogueSource }) {
     {source.catalogue_source === 'LIBRARY_LOCAL' ? `${source.local_book_count.toLocaleString()} local ${source.local_book_count === 1 ? 'book' : 'books'} in ${source.library_name}` : 'Discover LuminaR’s global catalogue. These books are not currently held by this library.'}
     {source.search_source && <span className="ui-badge" data-search-source={source.search_source}>{source.search_source==='TENANT_SEMANTIC'?'Library semantic search':'Library catalogue search'}</span>}</p>
 }
-export function LibraryCataloguePage({ arrivals = false, popular = false,staff=false }: { arrivals?:boolean;popular?:boolean;staff?:boolean }) {
+export function LibraryCataloguePage(props: {arrivals?:boolean;popular?:boolean;staff?:boolean}) {
+  const [params]=useSearchParams(),{libraryId}=useParams(),token=useAuthStore(s=>s.token)
+  const gate=useSearchPreviewGate(params.get('search_preview')==='1')
+  if(gate.pending)return <StatePanel title="Checking search preview…" kind="loading" />
+  if(gate.enabled&&libraryId){const exit=new URLSearchParams(params);exit.delete('search_preview');return <SearchPreview key={`${libraryId}:${!!props.staff}:${token}`} libraryId={libraryId} staff={props.staff} initialQuery={params.get('search')||''} initialMode={(params.get('mode')||'SMART') as import('../lib/searchNlu').SearchMode} exitPath={workspacePath(libraryId,!!props.staff,`catalogue?${exit}`)}/>}
+  return <StableLibraryCataloguePage {...props}/>
+}
+function StableLibraryCataloguePage({ arrivals = false, popular = false,staff=false }: { arrivals?:boolean;popular?:boolean;staff?:boolean }) {
   const {libraryId}=useParams()
   const context=useSearchContext({libraryId,staff})
   const [params,setParams]=useSearchParams(),offset=productOffset(params.get('offset')),search=params.get('search') || '',subject=params.get('subject') || ''

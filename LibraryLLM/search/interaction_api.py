@@ -115,3 +115,5 @@ def install(app,engine):
             collection().delete_one({'_id':'clarification:'+str(clarification_id),**identity(actor,lid,staff)})
             return {'dismissed':True}
     app.include_router(router)
+    from search.preview_api import install as install_preview,configured_store
+    install_preview(app,engine,store=configured_store())
