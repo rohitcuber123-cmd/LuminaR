@@ -1,0 +1,211 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "ACKNOWLEDGEMENT_LOSS",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS"
+  ],
+  "events": [
+    {
+      "at": "2026-10-29 20:32:57.571262+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:59.549110+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-29 20:32:59.455000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "18d9acfd-5f0d-4d7b-8b7f-39531fe15db4",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:32:59.487000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-29 20:32:59.455000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:59.660365+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:32:59.455000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "18d9acfd-5f0d-4d7b-8b7f-39531fe15db4",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:32:59.487000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        101,
+        101,
+        "2026-10-29 20:32:59.455000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:59.769933+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:32:59.455000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "18d9acfd-5f0d-4d7b-8b7f-39531fe15db4",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:32:59.487000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-29 20:32:59.455000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-29 20:33:00.539019+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:32:59.455000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "18d9acfd-5f0d-4d7b-8b7f-39531fe15db4",
+          "stage": "PUBLISH",
+          "state": "PUBLISHING",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-29 20:33:00.493000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-29 20:32:59.455000",
+        1,
+        2
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": "NOT_LOADED_KG_OR_IDLE",
+  "current_library": "dc20a1c6-64d4-4a33-9651-efa2a24965d0",
+  "crash_job": {
+    "job_id": "18d9acfd-5f0d-4d7b-8b7f-39531fe15db4",
+    "library_id": "dc20a1c6-64d4-4a33-9651-efa2a24965d0",
+    "target": "KNOWLEDGE_GRAPH",
+    "requested_generation_id": "296c2abc-bc65-4bce-8e15-1f5ce387ea2c",
+    "artifact_generation_id": "c491cd99-db39-47b7-86f9-482ec19b5747",
+    "state": "PUBLISHING",
+    "stage": "PUBLISH",
+    "progress_current": 101,
+    "progress_total": 101,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-29 20:32:57.552000",
+    "started_at": "2026-10-29 20:32:59.455000",
+    "heartbeat_at": "2026-10-29 20:32:59.455000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "fence_token_digest": "a22fb01b209f032d8e467a912945f4d38d937e0ed476dff72dee56010feb6799",
+    "lease_expires_at": "2026-10-29 20:34:29.455000",
+    "require_nonempty": true,
+    "worker_id_digest": "f55cfc1a60b74f7fbb1e9f5afadd7f6bd75c2a5d6155ff8b563d5783031a4978"
+  },
+  "pointer_at_crash": {
+    "library_id": "dc20a1c6-64d4-4a33-9651-efa2a24965d0",
+    "target": "KNOWLEDGE_GRAPH",
+    "active_generation_id": "c491cd99-db39-47b7-86f9-482ec19b5747",
+    "active_job_id": "18d9acfd-5f0d-4d7b-8b7f-39531fe15db4",
+    "state": "READY",
+    "fence_token_digest": "a22fb01b209f032d8e467a912945f4d38d937e0ed476dff72dee56010feb6799",
+    "artifact_bytes": 128740,
+    "built_at": "2026-10-29 20:32:59.713000",
+    "edge_count": 404,
+    "error_code": null,
+    "manifest_checksum": "30eb1893a606d9ed2cf9e9840fe64242ccc2f804a12ea18eb57af4cb85cb1c1d",
+    "node_count": 105,
+    "previous_generation_id": null,
+    "published_by_job_id": "18d9acfd-5f0d-4d7b-8b7f-39531fe15db4",
+    "record_count": 101,
+    "source_fingerprint": "7d9a2323c10a59432c20f50374377091164ee5421dcca6d2ab81de77685b9b11",
+    "source_generation_id": "296c2abc-bc65-4bce-8e15-1f5ce387ea2c"
+  },
+  "telemetry_before_crash": {
+    "epoch": 13
+  },
+  "instance_ref": "450cca0c4896652d12a59e0958a505e24c078df226ef9872db034b7d1de18cab",
+  "genuine_process_exit": 77,
+  "snapshot_redaction": "Raw native fence/worker/boot values replaced by SHA256 digests; measurements unchanged."
+}

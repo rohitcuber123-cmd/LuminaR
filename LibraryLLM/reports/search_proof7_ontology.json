@@ -1,0 +1,427 @@
+{
+  "domains": [
+    {
+      "name": "author",
+      "native": [
+        "author_text"
+      ],
+      "labels": [
+        "author",
+        "creator",
+        "writer",
+        "by"
+      ],
+      "operand": "string",
+      "operators": [
+        "CONTAINS"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "ONE_OR_CLARIFY",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "title",
+      "native": [
+        "title_text"
+      ],
+      "labels": [
+        "title",
+        "titled",
+        "called",
+        "named"
+      ],
+      "operand": "string",
+      "operators": [
+        "CONTAINS"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "ONE_OR_CLARIFY",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "literal",
+      "native": [
+        "exact_text"
+      ],
+      "labels": [
+        "exact literal",
+        "exact title",
+        "literal"
+      ],
+      "operand": "string",
+      "operators": [
+        "EXACT"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "ONE_OR_CLARIFY",
+      "enforcement": "NATIVE_EXACT_TITLE_OR_IDENTIFIER",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "subject",
+      "native": [
+        "subjects",
+        "include_terms"
+      ],
+      "labels": [
+        "subject",
+        "category",
+        "classification",
+        "facet",
+        "tag"
+      ],
+      "operand": "canonical_subject",
+      "operators": [
+        "INCLUDE"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "excluded_subject",
+      "native": [
+        "exclude_subjects"
+      ],
+      "labels": [
+        "subject",
+        "category",
+        "classification"
+      ],
+      "operand": "canonical_subject",
+      "operators": [
+        "NOT"
+      ],
+      "polarity": "NEGATIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "exclude",
+      "native": [
+        "exclude_terms"
+      ],
+      "labels": [
+        "whole word",
+        "searchable text",
+        "word",
+        "phrase"
+      ],
+      "operand": "string",
+      "operators": [
+        "TEXT_NOT"
+      ],
+      "polarity": "NEGATIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "rating",
+      "native": [
+        "rating_min",
+        "rating_max",
+        "rating_min_exclusive",
+        "rating_max_exclusive"
+      ],
+      "labels": [
+        "rating",
+        "rated",
+        "stars",
+        "cutoff"
+      ],
+      "operand": "number_0_to_5",
+      "operators": [
+        ">",
+        ">=",
+        "<",
+        "<=",
+        "=",
+        "RANGE"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "year",
+      "native": [
+        "year_min",
+        "year_max",
+        "year_min_exclusive",
+        "year_max_exclusive"
+      ],
+      "labels": [
+        "publication",
+        "publication year",
+        "published",
+        "year"
+      ],
+      "operand": "integer_1000_to_2100",
+      "operators": [
+        ">",
+        ">=",
+        "<",
+        "<=",
+        "=",
+        "RANGE"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "format",
+      "native": [
+        "formats",
+        "exclusive_formats"
+      ],
+      "labels": [
+        "format",
+        "online",
+        "digital",
+        "physical"
+      ],
+      "operand": "format_enum",
+      "operators": [
+        "PRESENT",
+        "ONLY"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "excluded_format",
+      "native": [
+        "excluded_formats"
+      ],
+      "labels": [
+        "format",
+        "online",
+        "digital",
+        "physical"
+      ],
+      "operand": "format_enum",
+      "operators": [
+        "NOT"
+      ],
+      "polarity": "NEGATIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "availability",
+      "native": [
+        "availability",
+        "physical_available_only"
+      ],
+      "labels": [
+        "available",
+        "availability",
+        "requestable"
+      ],
+      "operand": "availability_enum",
+      "operators": [
+        "PRESENT",
+        "="
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "language",
+      "native": [
+        "language"
+      ],
+      "labels": [
+        "language"
+      ],
+      "operand": "string",
+      "operators": [
+        "EXACT"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "ONE_OR_CLARIFY",
+      "enforcement": "NATIVE_MATCHES",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "sort",
+      "native": [
+        "sort"
+      ],
+      "labels": [
+        "sort",
+        "order",
+        "ordering"
+      ],
+      "operand": "sort_enum",
+      "operators": [
+        "="
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "ONE_OR_CLARIFY",
+      "enforcement": "NATIVE_SORT_FIXED_DIRECTION",
+      "completion": true,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "preference",
+      "native": [],
+      "labels": [
+        "preference",
+        "advisory",
+        "prefer"
+      ],
+      "operand": "string",
+      "operators": [
+        "SOFT"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "SEMANTIC_RANKING_ONLY",
+      "completion": false,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "semantic",
+      "native": [],
+      "labels": [
+        "topic"
+      ],
+      "operand": "string",
+      "operators": [
+        "TOPIC"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "SEMANTIC_RETRIEVAL_ONLY",
+      "completion": false,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "context",
+      "native": [],
+      "labels": [
+        "background"
+      ],
+      "operand": "string",
+      "operators": [
+        "NON_OPERATIVE"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "NON_OPERATIVE",
+      "completion": false,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "publisher",
+      "native": [],
+      "labels": [
+        "publisher",
+        "publishing house",
+        "imprint"
+      ],
+      "operand": "string",
+      "operators": [
+        "EXACT",
+        "NOT"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "UNSUPPORTED",
+      "completion": false,
+      "repair": "NEVER_TO_PUBLICATION_DATE"
+    },
+    {
+      "name": "price",
+      "native": [],
+      "labels": [
+        "price",
+        "cost",
+        "currency"
+      ],
+      "operand": "number",
+      "operators": [
+        ">",
+        ">=",
+        "<",
+        "<=",
+        "=",
+        "NOT"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "UNSUPPORTED",
+      "completion": false,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "edition",
+      "native": [],
+      "labels": [
+        "edition",
+        "edition count"
+      ],
+      "operand": "string",
+      "operators": [
+        "EXACT",
+        "NOT"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "UNSUPPORTED",
+      "completion": false,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    },
+    {
+      "name": "relationship",
+      "native": [],
+      "labels": [
+        "relationship"
+      ],
+      "operand": "relation",
+      "operators": [
+        "ALTERNATIVE",
+        "CONFLICT",
+        "CROSS_BOOK",
+        "PROXIMITY"
+      ],
+      "polarity": "POSITIVE",
+      "cardinality": "MANY_CONJUNCTIVE",
+      "enforcement": "RELATION_SPECIFIC_OR_UNSUPPORTED",
+      "completion": false,
+      "repair": "EXPLICIT_LABEL_OR_SCOPED_CANONICAL_ONLY"
+    }
+  ],
+  "span_contract": "Python Unicode character offsets [start,end) into immutable original query; nonempty source substring verified",
+  "modality": "MUST/MUST_NOT hard; SHOULD/MAY advisory only; UNKNOWN/CONDITIONAL cannot authorize mandatory execution",
+  "range_semantics": "Inclusive RANGE; strictness explicit >/<; intersect conjunctive bounds; contradictory empty intersection blocks",
+  "sort_direction": "TITLE ascending; RATING descending; NEWEST descending; arbitrary direction unsupported",
+  "mapping_policy": "Native bound maps to domain AND admissible operators; never infer which of multiple source operands to edit",
+  "capability_policy": "Scope-specific backend capabilities still required; ontology recognition alone never grants support"
+}

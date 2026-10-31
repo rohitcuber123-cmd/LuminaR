@@ -1,0 +1,80 @@
+{
+  "population": "Exposed C5ER150; same order, facets, capabilities and calls; one serial and one four-worker pass per revision",
+  "results": {
+    "before": {
+      "serial": {
+        "count": 150,
+        "p50_ms": 20.78830000027665,
+        "p95_ms": 147.72890000040206,
+        "max_ms": 364.7836999998617
+      },
+      "four_workers": {
+        "count": 150,
+        "p50_ms": 60.23955000000569,
+        "p95_ms": 413.06879999956436,
+        "max_ms": 1231.726300000446
+      },
+      "CPU_ms": 11937.5,
+      "wall_ms": 12244.044699999904,
+      "rss_before": 33902592,
+      "rss_after": 36302848,
+      "errors": 0,
+      "calls": 300,
+      "serial_concurrent_identical": 150
+    },
+    "after": {
+      "serial": {
+        "count": 150,
+        "p50_ms": 20.521299999927578,
+        "p95_ms": 65.92089999958262,
+        "max_ms": 188.81940000028408
+      },
+      "four_workers": {
+        "count": 150,
+        "p50_ms": 41.52930000009292,
+        "p95_ms": 204.19499999934487,
+        "max_ms": 1056.8726000001334
+      },
+      "CPU_ms": 8015.625,
+      "wall_ms": 8270.7862999996,
+      "rss_before": 36302848,
+      "rss_after": 37109760,
+      "errors": 0,
+      "calls": 300,
+      "serial_concurrent_identical": 150
+    }
+  },
+  "matched_before_after_complete_plan_hashes": 150,
+  "before_sources": {
+    "scratch\\search_comp3_optimization_baseline2\\operands.py": "9b0e64045e8ad78fe7a9ed8a6ad411de88adf0633027538959fa035dff3ceb31",
+    "scratch\\search_comp3_optimization_baseline2\\ownership.py": "9b263cb50ada073f6950fa1f8e597670145b83d0be1587b73d66e0fb3b0a12ab",
+    "scratch\\search_comp3_optimization_baseline2\\parser.py": "c8468c7d655402c2e208d81d1f95a5001e8a5d105d6b83ca058f896b34ce0077",
+    "scratch\\search_comp3_optimization_baseline2\\query_ir.py": "0c73e5e1eb94293d37420ee0e66eefd43884c295b1c0332dab69d4d0de9ed001",
+    "scratch\\search_comp3_optimization_baseline2\\source_repair.py": "fd308fb3ff1e62d0be8fb85e29129bcde32747fd3c51a58df3f37a828f6c2170",
+    "scratch\\search_comp3_optimization_baseline2\\test_composition.py": "d655a057f02742d07170dd7a0769d9ebe7a2fb2e6a9be4ffd94b8068db13118e",
+    "scratch\\search_comp3_optimization_baseline2\\test_native_choices.py": "4d3822d15cf92cfd9e528169241cecd8c9fb3c6486df5187b684408dd1b72618",
+    "scratch\\search_comp3_optimization_baseline2\\test_source_ownership.py": "c59a66ec17637971fba889ba9e77d88f0b87c41e7b30c04a53d56f3fde0b0343",
+    "scratch\\search_comp3_optimization_baseline2\\vocabulary.py": "d16fd0e6099b1fe35434298e9681208ac8c474683bfefcd252b4f394872c4193",
+    "scratch\\search_comp3_optimization_baseline2\\__init__.py": "4920fea51f6b4fb8ed7032ab5845570d568f0184a422459e87ca3ca4dd2e4aa5"
+  },
+  "after_sources": {
+    "scratch\\search_compositional_recovery_v3\\operands.py": "9b0e64045e8ad78fe7a9ed8a6ad411de88adf0633027538959fa035dff3ceb31",
+    "scratch\\search_compositional_recovery_v3\\ownership.py": "9b263cb50ada073f6950fa1f8e597670145b83d0be1587b73d66e0fb3b0a12ab",
+    "scratch\\search_compositional_recovery_v3\\parser.py": "c8468c7d655402c2e208d81d1f95a5001e8a5d105d6b83ca058f896b34ce0077",
+    "scratch\\search_compositional_recovery_v3\\query_ir.py": "3a4ac19cb2499e3aa3f2c820199fea297157f8ff55c87e4ba14c2943a0a6e2ec",
+    "scratch\\search_compositional_recovery_v3\\source_repair.py": "fd308fb3ff1e62d0be8fb85e29129bcde32747fd3c51a58df3f37a828f6c2170",
+    "scratch\\search_compositional_recovery_v3\\test_composition.py": "d655a057f02742d07170dd7a0769d9ebe7a2fb2e6a9be4ffd94b8068db13118e",
+    "scratch\\search_compositional_recovery_v3\\test_native_choices.py": "4d3822d15cf92cfd9e528169241cecd8c9fb3c6486df5187b684408dd1b72618",
+    "scratch\\search_compositional_recovery_v3\\test_source_ownership.py": "c59a66ec17637971fba889ba9e77d88f0b87c41e7b30c04a53d56f3fde0b0343",
+    "scratch\\search_compositional_recovery_v3\\vocabulary.py": "ded2d186ec81b039e4e6b9562063bba4e32230fab669dd8a65ceba6451fb9292",
+    "scratch\\search_compositional_recovery_v3\\__init__.py": "4920fea51f6b4fb8ed7032ab5845570d568f0184a422459e87ca3ca4dd2e4aa5"
+  },
+  "optimization": "Confirmed repeated vocabulary enumeration and redundant edit-distance scan; immutable complete-scope length/token buckets preserve candidates, thresholds, margins and edit fallback.",
+  "limits": "Single shared host, sequential before then after, no statistical CI, warm process. Profiling timing not mixed with uninstrumented latency. No agreed staging SLO; no operational PASS.",
+  "Mongo_calls": 0,
+  "network_calls": 0,
+  "model_calls": 0,
+  "full_search_latency": "N/A",
+  "real_vector_relevance": "N/A",
+  "operational_SLO": "UNAGREED; future staging proposal parser p95 <=100ms, four-worker p95 <=300ms, full search to be agreed on hardware/data/index generation."
+}

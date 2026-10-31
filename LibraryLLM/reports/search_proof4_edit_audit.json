@@ -1,0 +1,41 @@
+{
+  "observations": [
+    {
+      "case": "decision reset preserves proof and rejects invented author",
+      "passed": true
+    },
+    {
+      "case": "SMART plan without proof cannot execute",
+      "passed": true
+    },
+    {
+      "case": "actual native correction_apply",
+      "status": 200,
+      "integration_compatible": true
+    },
+    {
+      "case": "actual native correction_keep",
+      "status": 422,
+      "integration_compatible": false
+    },
+    {
+      "case": "actual raw query schema",
+      "length": 150,
+      "accepted": true
+    },
+    {
+      "case": "actual raw query schema",
+      "length": 151,
+      "accepted": false
+    },
+    {
+      "case": "actual raw query schema",
+      "length": 500,
+      "accepted": false
+    }
+  ],
+  "assertions_passed": 7,
+  "Mongo_calls": 0,
+  "full_native_choice_compatible": false,
+  "limitation": "Legacy correction_keep removes a hard constraint without recompiling its source contract and is now rejected. Pure completion drafts do not implement durable one-use/CAS."
+}

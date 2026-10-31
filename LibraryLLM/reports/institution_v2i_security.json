@@ -1,0 +1,182 @@
+{
+  "status": "PASS",
+  "layers": [
+    "Fresh-identity exact-membership ASGI tests with dependency-injected fixture actor",
+    "Real signed JWT decoding/current identity/current membership in actual Chromium bridge",
+    "Actual isolated Mongo and native artifact builds/fault injection"
+  ],
+  "browser_steps": [
+    {
+      "check": "Admin status: NOT_BUILT after addition, no automatic jobs",
+      "passed": true
+    },
+    {
+      "check": "Manual SEARCH_INDEX build: browser \u2192 actual queue \u2192 native build \u2192 validated publication",
+      "passed": true
+    },
+    {
+      "check": "Manual KNOWLEDGE_GRAPH build: browser \u2192 actual queue \u2192 native build \u2192 validated publication",
+      "passed": true
+    },
+    {
+      "check": "Refresh restores both durable READY generations",
+      "passed": true
+    },
+    {
+      "check": "Metadata mutation becomes STALE with no automatic rebuild",
+      "passed": true
+    },
+    {
+      "check": "Manual Search rebuild publishes a new generation",
+      "passed": true
+    },
+    {
+      "check": "Manual KG rebuild publishes a new generation",
+      "passed": true
+    },
+    {
+      "check": "Known FAILED rebuild retains last-good generation and safe error",
+      "passed": true
+    },
+    {
+      "check": "RECOVERY_REQUIRED distinct from FAILED; no blind retry",
+      "passed": true
+    },
+    {
+      "check": "Controlled fixture explicitly invokes existing recovery; no automatic action",
+      "passed": true
+    },
+    {
+      "check": "Active polling displays durable progress, no fake counter",
+      "passed": true
+    },
+    {
+      "check": "Real JWT Librarian sees read-only status and API denies build",
+      "passed": true
+    },
+    {
+      "check": "General User denied",
+      "passed": true
+    },
+    {
+      "check": "Explicit Platform-only user denied tenant authority",
+      "passed": true
+    },
+    {
+      "check": "Delayed actual A response cannot replace B after SPA library switch",
+      "passed": true
+    },
+    {
+      "check": "Multi-library Admin switches between correct distinct durable contexts",
+      "passed": true
+    },
+    {
+      "check": "Revoked membership loses status with unchanged signed browser token",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 1440",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 1024",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 390",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 375",
+      "passed": true
+    },
+    {
+      "check": "Focused axe accessibility: no violations",
+      "passed": true
+    }
+  ],
+  "frozen_scope_groups": [
+    {
+      "group": "institution_v2h",
+      "exit": 0,
+      "tests": 30,
+      "passed": 30,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 11.777469100001326,
+      "files": [
+        "tests/institution_v2h"
+      ]
+    },
+    {
+      "group": "institution_v2g",
+      "exit": 0,
+      "tests": 134,
+      "passed": 134,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 65.54833370000415,
+      "files": [
+        "tests/institution_v2g/test_intelligence.py",
+        "tests/institution_v2g/test_validation_recovery.py",
+        "tests/institution_v2g/test_private_isolation.py",
+        "tests/institution_v2g/test_search_runtime.py"
+      ]
+    },
+    {
+      "group": "workspace_authorization",
+      "exit": 0,
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 11.643803699997079,
+      "files": [
+        "tests/frontend_workspace"
+      ]
+    },
+    {
+      "group": "catalogue_experience",
+      "exit": 0,
+      "tests": 88,
+      "passed": 88,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 52.42400259999704,
+      "files": [
+        "tests/library_catalogue_experience"
+      ]
+    },
+    {
+      "group": "institution_v2i",
+      "exit": 0,
+      "tests": 60,
+      "passed": 60,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 31.918096200002765,
+      "files": [
+        "tests/institution_v2i"
+      ]
+    }
+  ],
+  "focused_passed": 60,
+  "focused_total": 60,
+  "contract_checks": [
+    "Admin status/build allowed",
+    "Librarian status allowed/build denied",
+    "General User Staff denied",
+    "Explicit Platform-only denied",
+    "Foreign status/build/job/generation/artifact denied",
+    "Current membership demotion and revocation",
+    "Cross-library artifacts/status/runtime namespace isolation",
+    "Safe job error whitelist excludes paths, raw stack traces, fence and worker secret",
+    "No shared cache or authorization cache added",
+    "Stale browser signed token loses revoked tenant authority",
+    "No new diagnostic/cancellation/global endpoint"
+  ],
+  "limitations": [
+    "No production credentials, real production worker or TEST builds exercised",
+    "Chromium HTTP transport bridged to real TestClient; not a deployed network/proxy/load test"
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "EMBEDDING_BATCH",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 12:37:03.934932+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:05.845639+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 12:37:05.768000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "6b9ed471-48c2-4516-8ed4-adfd422c77e0",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:37:05.816000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 12:37:05.768000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:05.963666+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:37:05.768000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "6b9ed471-48c2-4516-8ed4-adfd422c77e0",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:37:05.816000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        151,
+        "2026-10-30 12:37:05.768000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:06.849943+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:37:05.768000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "6b9ed471-48c2-4516-8ed4-adfd422c77e0",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:37:06.845000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        151,
+        "2026-10-30 12:37:05.768000",
+        1,
+        2
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 327.5373000001309
+  },
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "JOB",
+      "rss_bytes": 848666624,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 849252352,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 850812928,
+      "cpu_delta_ms": 140.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 12,
+      "os_threads": 63
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 853159936,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0149999999998727,
+      "python_threads": 12,
+      "os_threads": 63
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 5,
+    "os": 56
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 8.282900000267546,
+  "observer_ready_ms": 35.18530000019382,
+  "threads_observing": {
+    "python": 10,
+    "os": 61
+  },
+  "mongo_connections_observing": 9,
+  "current_library": "a0254daf-6640-4e29-9f45-1697f8fd7e3d",
+  "crash_job": {
+    "job_id": "6b9ed471-48c2-4516-8ed4-adfd422c77e0",
+    "library_id": "a0254daf-6640-4e29-9f45-1697f8fd7e3d",
+    "target": "SEARCH_INDEX",
+    "requested_generation_id": "bb5b89c9-2987-424e-b6d2-a02a89b8bd34",
+    "artifact_generation_id": "1e296fbc-1817-44a1-9cfc-4b67f1cb3721",
+    "state": "RUNNING",
+    "stage": "EMBEDDING",
+    "progress_current": 0,
+    "progress_total": 151,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-30 12:37:03.891000",
+    "started_at": "2026-10-30 12:37:05.768000",
+    "heartbeat_at": "2026-10-30 12:37:05.768000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "lease_expires_at": "2026-10-30 12:38:35.768000",
+    "require_nonempty": true,
+    "fence_token_digest": "93c1c3bc9cab5df09e83f9efd12d2f69703064d9919589ba64b5ebe3fd155571",
+    "worker_id_digest": "fd08641764174beaae32062731953a735e7379a6c01daf10aa67bafedb1d38cb"
+  },
+  "pointer_at_crash": {
+    "library_id": "a0254daf-6640-4e29-9f45-1697f8fd7e3d",
+    "target": "SEARCH_INDEX",
+    "active_generation_id": null,
+    "active_job_id": "6b9ed471-48c2-4516-8ed4-adfd422c77e0",
+    "state": "BUILDING",
+    "fence_token_digest": "93c1c3bc9cab5df09e83f9efd12d2f69703064d9919589ba64b5ebe3fd155571"
+  },
+  "telemetry_before_crash": {
+    "epoch": 4
+  },
+  "instance_ref": "8ead5501020c36e07871d1aa15050314d5df554e86ab030525c31e17693741f4",
+  "genuine_process_exit": 77
+}

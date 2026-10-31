@@ -1,0 +1,94 @@
+{
+  "result": "PASS",
+  "native": {
+    "scope": "Disposable authenticated Mongo only, actual native worker and cached MiniLM/FAISS/KG.",
+    "cases": [
+      {
+        "name": "success",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 94.50200559999939,
+        "evidence": "institution_v2o_native_success.json"
+      },
+      {
+        "name": "crash_prepublication",
+        "exit": 77,
+        "expected": 77,
+        "seconds": 7.7447018999992,
+        "evidence": "institution_v2o_native_crash_prepublication.json"
+      },
+      {
+        "name": "restart_prepublication",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 5.9102703999997175,
+        "evidence": "institution_v2o_native_restart_prepublication.json"
+      },
+      {
+        "name": "manual_prepublication",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 2.59251409999888,
+        "evidence": "institution_v2o_native_manual_prepublication.json"
+      },
+      {
+        "name": "crash_postpublication",
+        "exit": 77,
+        "expected": 77,
+        "seconds": 7.889285200000813,
+        "evidence": "institution_v2o_native_crash_postpublication.json"
+      },
+      {
+        "name": "restart_postpublication",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 5.687038899999607,
+        "evidence": "institution_v2o_native_restart_postpublication.json"
+      },
+      {
+        "name": "manual_postpublication",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 2.5403394000004482,
+        "evidence": "institution_v2o_native_manual_postpublication.json"
+      }
+    ],
+    "authenticated_success": true,
+    "prepublication": {
+      "restart_preserved_job_and_pointer": true,
+      "last_good_artifact_hashes_preserved": true,
+      "manual_recovery_state": "FAILED",
+      "native_lease_constants_unchanged": true
+    },
+    "postpublication": {
+      "restart_preserved_job_and_pointer": true,
+      "last_good_artifact_hashes_preserved": true,
+      "manual_recovery_state": "SUCCEEDED",
+      "native_lease_constants_unchanged": true
+    },
+    "no_automatic_rebuild_or_recovery": true,
+    "principal": "fixture_application (named-resource compatibility envelope, not root)",
+    "owned_fixture_removed": true
+  },
+  "entrypoint_builds": [
+    {
+      "target": "SEARCH_INDEX",
+      "state": "SUCCEEDED",
+      "generation": "7954e8d7-7252-44f8-a8eb-1eb1b8a404d8"
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "state": "SUCCEEDED",
+      "generation": "7d232756-a120-43a8-b5f4-bc60296a268a"
+    }
+  ],
+  "protocol": {
+    "lease_seconds": 90,
+    "renewal_seconds": 10,
+    "idle_wait_seconds": 2,
+    "serial": true,
+    "close_joins_native_thread": false
+  },
+  "no_global_rebuild": true,
+  "no_automatic_build_or_recovery": true
+}

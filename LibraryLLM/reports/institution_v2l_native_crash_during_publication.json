@@ -1,0 +1,249 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "PUBLISH",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 10:42:09.344132+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 10:42:11.286165+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:42:11.180000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "70c35142-cd41-4ef5-8fa8-9d28fafe2925",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 10:42:11.209000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:42:11.180000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 10:42:11.417846+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:42:11.180000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "70c35142-cd41-4ef5-8fa8-9d28fafe2925",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 10:42:11.209000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        101,
+        101,
+        "2026-10-30 10:42:11.180000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 10:42:11.526039+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:42:11.180000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "70c35142-cd41-4ef5-8fa8-9d28fafe2925",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 10:42:11.209000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-30 10:42:11.180000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 10:42:12.303311+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:42:11.180000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "70c35142-cd41-4ef5-8fa8-9d28fafe2925",
+          "stage": "PUBLISH",
+          "state": "PUBLISHING",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-30 10:42:12.225000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-30 10:42:11.180000",
+        1,
+        2
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": "NOT_LOADED_KG_OR_IDLE",
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "JOB",
+      "rss_bytes": 70848512,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71512064,
+      "cpu_delta_ms": 62.5,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71712768,
+      "cpu_delta_ms": 156.25,
+      "interval_seconds": 1.0630000000001019,
+      "python_threads": 11,
+      "os_threads": 15
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71479296,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 11,
+      "os_threads": 15
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 4,
+    "os": 8
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 7.212900000013178,
+  "observer_ready_ms": 27.574400000048627,
+  "threads_observing": {
+    "python": 9,
+    "os": 13
+  },
+  "mongo_connections_observing": 9,
+  "current_library": "65087d30-c8f9-4bfd-98aa-7078c7b23983",
+  "crash_job": {
+    "job_id": "70c35142-cd41-4ef5-8fa8-9d28fafe2925",
+    "library_id": "65087d30-c8f9-4bfd-98aa-7078c7b23983",
+    "target": "KNOWLEDGE_GRAPH",
+    "requested_generation_id": "e78af330-9c93-40b9-8b73-2bb0541650f6",
+    "artifact_generation_id": "3f2370dd-efe8-45ce-96a6-d17b35acca97",
+    "state": "PUBLISHING",
+    "stage": "PUBLISH",
+    "progress_current": 101,
+    "progress_total": 101,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-30 10:42:09.277000",
+    "started_at": "2026-10-30 10:42:11.180000",
+    "heartbeat_at": "2026-10-30 10:42:11.180000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "lease_expires_at": "2026-10-30 10:43:41.180000",
+    "require_nonempty": true,
+    "fence_token_digest": "efa2cfd59590e4e351a813af89eee6d63c5d452faf7dff38a56600a405549047",
+    "worker_id_digest": "4fbd2ff03065a87e74efab24aa54ed7315765738cbad5d814156952effd4e827"
+  },
+  "pointer_at_crash": {
+    "target": "KNOWLEDGE_GRAPH",
+    "library_id": "65087d30-c8f9-4bfd-98aa-7078c7b23983",
+    "active_generation_id": null,
+    "active_job_id": "70c35142-cd41-4ef5-8fa8-9d28fafe2925",
+    "state": "BUILDING",
+    "fence_token_digest": "efa2cfd59590e4e351a813af89eee6d63c5d452faf7dff38a56600a405549047"
+  },
+  "telemetry_before_crash": {
+    "epoch": 13
+  },
+  "instance_ref": "a39918f67351c089a852a1fff61dedf526f8cd36f366acd56ef5fc704ee505a4",
+  "genuine_process_exit": 77
+}

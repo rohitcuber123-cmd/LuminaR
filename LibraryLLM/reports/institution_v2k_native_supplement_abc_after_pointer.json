@@ -1,0 +1,211 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "ACKNOWLEDGEMENT_LOSS",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH",
+    "FAISS_BUILD",
+    "FAISS_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION"
+  ],
+  "events": [
+    {
+      "at": "2026-10-29 20:36:04.618146+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-29 20:36:05.054508+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:36:06.584528+00:00",
+      "state": "RUNNING",
+      "stage": "KG_METADATA",
+      "current": 100,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:36:06.524000",
+      "pulse_seq": 1,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "KG_METADATA",
+        100,
+        101,
+        "2026-10-29 20:36:06.524000",
+        1,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:36:06.693465+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:36:06.524000",
+      "pulse_seq": 1,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-29 20:36:06.524000",
+        1,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:36:07.132430+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:36:06.524000",
+      "pulse_seq": 1,
+      "progress_seq": 5,
+      "progress": [
+        {
+          "job_id": "8c181800-2242-4b02-8ee9-6fb8fb403aa8",
+          "stage": "PUBLISH",
+          "state": "PUBLISHING",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-29 20:36:07.041000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-29 20:36:06.524000",
+        1,
+        5
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 357.70120000233874
+  },
+  "library_a_search": {
+    "library_id": "724d45dc-cbdc-489d-a3e7-79fe66be48df",
+    "job_id": "c79e7fb0-86d3-4409-b0d1-8d059de7bd4f",
+    "state": "SUCCEEDED"
+  },
+  "last_good": {
+    "generation_id": "f01c134f-fde3-470f-82cf-d9cb2d185c88",
+    "files": {
+      "C:\\Users\\balak\\AppData\\Local\\Temp\\luminar-v2k-auth-td188v1y\\tenant-artifacts\\686a378e-ceb1-4b68-b5ab-3b4f9410f482\\kg\\f01c134f-fde3-470f-82cf-d9cb2d185c88\\graph.json": "87179e1bfa3c9c8835fe4879e9b15dd533a9bf8f638c8b5772e718b9b08142a7",
+      "C:\\Users\\balak\\AppData\\Local\\Temp\\luminar-v2k-auth-td188v1y\\tenant-artifacts\\686a378e-ceb1-4b68-b5ab-3b4f9410f482\\kg\\f01c134f-fde3-470f-82cf-d9cb2d185c88\\manifest.json": "8354d6f05b0c2db3ac96d92c892879496f96a77d5e2469c2c80f106952858e19",
+      "C:\\Users\\balak\\AppData\\Local\\Temp\\luminar-v2k-auth-td188v1y\\tenant-artifacts\\686a378e-ceb1-4b68-b5ab-3b4f9410f482\\kg\\f01c134f-fde3-470f-82cf-d9cb2d185c88\\metadata.json": "240f49d73e30bd9f1cc92cccc8adc05a6bbab49f6df86b215d9e8dc75c09ecb9"
+    }
+  },
+  "current_library": "686a378e-ceb1-4b68-b5ab-3b4f9410f482",
+  "library_c_queued": {
+    "library_id": "c89d1223-10d7-4668-b214-cded8bd0df6b",
+    "job_id": "cafcd951-62c4-4614-9fa8-82005935521d"
+  },
+  "crash_job": {
+    "job_id": "8c181800-2242-4b02-8ee9-6fb8fb403aa8",
+    "library_id": "686a378e-ceb1-4b68-b5ab-3b4f9410f482",
+    "target": "KNOWLEDGE_GRAPH",
+    "requested_generation_id": "60f1ff20-a2fc-4a51-8b4d-d2c8183fccd3",
+    "artifact_generation_id": "86a91d16-63eb-4ea1-9a29-fd9bebd3f70a",
+    "state": "PUBLISHING",
+    "stage": "PUBLISH",
+    "progress_current": 101,
+    "progress_total": 101,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-29 20:36:04.586000",
+    "started_at": "2026-10-29 20:36:06.524000",
+    "heartbeat_at": "2026-10-29 20:36:06.524000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "lease_expires_at": "2026-10-29 20:37:36.524000",
+    "require_nonempty": true,
+    "fence_token_digest": "271e63b485bd181637bbc88b639e4c0a6fd0c1aae315aeb9396228393aee8e06",
+    "worker_id_digest": "b4f13c8fd92b3718188d99e6bb8f49b1a27bb05a893d0828079d7b5e2f2f87f3"
+  },
+  "pointer_at_crash": {
+    "library_id": "686a378e-ceb1-4b68-b5ab-3b4f9410f482",
+    "target": "KNOWLEDGE_GRAPH",
+    "active_generation_id": "86a91d16-63eb-4ea1-9a29-fd9bebd3f70a",
+    "state": "READY",
+    "artifact_bytes": 128740,
+    "built_at": "2026-10-29 20:36:06.672000",
+    "edge_count": 404,
+    "error_code": null,
+    "manifest_checksum": "1690587153149c1b7bb27a5edc4d5c3866e40aed7d2df6aa6da8d4e84707832b",
+    "node_count": 105,
+    "previous_generation_id": "f01c134f-fde3-470f-82cf-d9cb2d185c88",
+    "published_by_job_id": "8c181800-2242-4b02-8ee9-6fb8fb403aa8",
+    "record_count": 101,
+    "source_fingerprint": "e873440ce35424d652766ced0fb8e33983bb726e104bbcb5915f3da1e409f89f",
+    "source_generation_id": "60f1ff20-a2fc-4a51-8b4d-d2c8183fccd3",
+    "active_job_id": "8c181800-2242-4b02-8ee9-6fb8fb403aa8",
+    "fence_token_digest": "271e63b485bd181637bbc88b639e4c0a6fd0c1aae315aeb9396228393aee8e06"
+  },
+  "telemetry_before_crash": {
+    "epoch": 6
+  },
+  "instance_ref": "b38c862115621daed46166e6e08b15a0d40da8ba459ef0146fbc69ebc0a2731d",
+  "genuine_process_exit": 77,
+  "snapshot_redaction": "Raw native fence/worker/boot values replaced by SHA256 digests; measurements unchanged."
+}

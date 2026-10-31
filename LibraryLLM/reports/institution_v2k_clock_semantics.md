@@ -1,0 +1,5 @@
+# Clock semantics
+
+Auxiliary started/seen/stopped/progress/outcome timestamps use Mongo server $$NOW. Pulse scheduling uses local monotonic time. The observer's bound native lease check uses UTC wall time, matching the existing native lease model without changing it; skew can suppress evidence. It does not extend a lease. Reader captures server $$NOW and rejects future progress/pulse, started-after-seen and malformed dates. Comparing current server time below last_seen sets a sticky per-instance clock_rollback bit; all recency for that instance becomes UNKNOWN. A restart may establish a new instance but does not rewrite past native timestamps.
+
+Future timestamps, simulated backward last_seen and missing timestamps are tested. The real-crash stale threshold is explicitly evaluated at logical observer now+31s for prompt controlled validation; it is not described as a31-second wall-clock wait. No NTP discipline, multi-host clock proof, suspension or supervisor monotonic clock source is deployment-qualified. A forward server clock jump can temporarily make evidence look stale; no automatic corrective action follows.

@@ -1,0 +1,238 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "SERIALIZATION_ACK",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 12:37:27.350578+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:29.243862+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 12:37:29.197000",
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 12:37:29.197000",
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:29.361414+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 12:37:29.197000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "34def9e7-b602-470f-9b39-d184fab41db0",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:37:29.243000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 12:37:29.197000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:29.476687+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:37:29.197000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "34def9e7-b602-470f-9b39-d184fab41db0",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:37:29.243000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        151,
+        151,
+        "2026-10-30 12:37:29.197000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:30.359740+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:37:29.197000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "34def9e7-b602-470f-9b39-d184fab41db0",
+          "stage": "VALIDATION",
+          "state": "VALIDATING",
+          "progress_current": 151,
+          "last_progress_observed_at": "2026-10-30 12:37:30.259000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        151,
+        151,
+        "2026-10-30 12:37:29.197000",
+        1,
+        2
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": "NOT_LOADED_KG_OR_IDLE",
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "JOB",
+      "rss_bytes": 70647808,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71278592,
+      "cpu_delta_ms": 62.5,
+      "interval_seconds": 1.0,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71393280,
+      "cpu_delta_ms": 62.5,
+      "interval_seconds": 1.0160000000000764,
+      "python_threads": 11,
+      "os_threads": 15
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71634944,
+      "cpu_delta_ms": 109.375,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 15
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 4,
+    "os": 8
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 9.510700000191719,
+  "observer_ready_ms": 33.19389999978739,
+  "threads_observing": {
+    "python": 9,
+    "os": 13
+  },
+  "mongo_connections_observing": 9,
+  "current_library": "077f18e7-8d4b-4a74-a32b-aeea344587b9",
+  "crash_job": {
+    "job_id": "34def9e7-b602-470f-9b39-d184fab41db0",
+    "library_id": "077f18e7-8d4b-4a74-a32b-aeea344587b9",
+    "target": "KNOWLEDGE_GRAPH",
+    "requested_generation_id": "5c0cfcce-2940-4be2-8e1d-c5e06fc54d9f",
+    "artifact_generation_id": "1d44a381-d530-4d2e-a8f5-378aa4db68df",
+    "state": "VALIDATING",
+    "stage": "VALIDATION",
+    "progress_current": 151,
+    "progress_total": 151,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-30 12:37:27.330000",
+    "started_at": "2026-10-30 12:37:29.197000",
+    "heartbeat_at": "2026-10-30 12:37:29.197000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "lease_expires_at": "2026-10-30 12:38:59.197000",
+    "require_nonempty": true,
+    "fence_token_digest": "b8bb267db84dbfac94f2af57a97c275d1520272455d52ac6231788774e2f09c8",
+    "worker_id_digest": "78bdd4cd6ebdaee4e24a7c10c8cfff2e3151e6efc0cb33800173016d8435eb14"
+  },
+  "pointer_at_crash": {
+    "library_id": "077f18e7-8d4b-4a74-a32b-aeea344587b9",
+    "target": "KNOWLEDGE_GRAPH",
+    "active_generation_id": null,
+    "active_job_id": "34def9e7-b602-470f-9b39-d184fab41db0",
+    "state": "VALIDATING",
+    "fence_token_digest": "b8bb267db84dbfac94f2af57a97c275d1520272455d52ac6231788774e2f09c8"
+  },
+  "telemetry_before_crash": {
+    "epoch": 8
+  },
+  "instance_ref": "d95899ffc49e711d35835e6193fbe5922106fb03622bb7ee68f3b0caeb206f89",
+  "genuine_process_exit": 77
+}

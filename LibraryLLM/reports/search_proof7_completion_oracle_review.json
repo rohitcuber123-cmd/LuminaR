@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-10-28T13:25:13.742010+00:00",
+  "review_type": "INDEPENDENT_SOURCE_ONLY_DEVELOPMENT_COMPLETION_ORACLE_CONSISTENCY_AUDIT",
+  "fresh_acceptance": false,
+  "actual_runtime_model": "NOT_EXPOSED",
+  "human_reviewer_count": 0,
+  "desired_metrics_supplied": false,
+  "scope": {
+    "population_path": "D:\\SDC\\LibraryLLM\\reports\\search_proof6_reviewed_population.jsonl",
+    "case_filter": "case_id ends with -global and contains -i01-, -i02-, -i04-, or -i05-",
+    "allowed_population_fields": [
+      "query_text",
+      "completion_input",
+      "expected_completion",
+      "metric_applicability"
+    ],
+    "row_selection_metadata": [
+      "case_id",
+      "physical JSONL line number"
+    ],
+    "population_hash_policy": "Hashes cover only allowed projected fields in canonical sorted-key compact UTF-8 JSON. No full-population or unrelated-column content is included.",
+    "active_source_slices": [
+      {
+        "path": "D:\\SDC\\LibraryLLM\\search\\query_plan.py",
+        "first_line": 340,
+        "last_line": 344,
+        "sha256": "c469988fb096ad4b164497de4b90ea5744498eeb13bd98180d01af67af4754a9",
+        "hash_basis": "UTF-8 permitted line slice with original newline characters",
+        "source": "def sort_books(rows, plan):\n    if plan.sort=='TITLE':return sorted(rows,key=lambda r:(normalize(r.get('title')),r.get('work_id',r.get('display_id',''))))\n    if plan.sort=='RATING':return sorted(rows,key=lambda r:(-(r.get('average_rating',r.get('rating')) or 0),normalize(r.get('title'))))\n    if plan.sort=='NEWEST':return sorted(rows,key=lambda r:(r.get('publication_year') or 0,normalize(r.get('title'))),reverse=True)\n    return rows\n"
+      },
+      {
+        "path": "D:\\SDC\\LibraryLLM\\search\\query_confidence.py",
+        "first_line": 6,
+        "last_line": 17,
+        "sha256": "c988ff134f22652b62a28412c5e508db9c4ae271439c5fecefb012d44d5afb9d",
+        "hash_basis": "UTF-8 permitted line slice with original newline characters",
+        "source": "EXECUTABLE=('EXECUTABLE','EXECUTABLE_WITH_NOTICE')\nMESSAGES={'AMBIGUOUS':'This query could mean more than one thing. Add the field you mean, or use Exact mode for a literal search.',\n 'INCOMPLETE':'A search constraint is unfinished. Complete it and search again.',\n 'CONTRADICTORY':'These search filters conflict. Edit the query or remove a conflicting filter.',\n 'UNSUPPORTED':'This search requests a strict field that this catalogue cannot enforce. Edit that constraint and try again.'}\n\ndef decide(plan,kind='EXECUTABLE',reason='VALIDATED',spans=(),fields=(),unresolved=()):\n    plan.decision={'decision_type':kind,'reason_code':reason,'relevant_source_spans':list(spans),\n      'affected_fields':list(fields),'recognized_candidates':plan.constraint_candidates,\n      'unresolved_fragments':list(unresolved),'safe_public_message':MESSAGES.get(kind,''),'parser_version':plan.parser_version}\n    if kind not in EXECUTABLE:plan.interpretation_confidence=0.\n    return plan\n"
+      },
+      {
+        "path": "D:\\SDC\\LibraryLLM\\search\\query_confidence.py",
+        "first_line": 53,
+        "last_line": 53,
+        "sha256": "7468428f08fd71be9e5cb0f48f43a88c2230918997ecf7e0d9a7c6d469bc547e",
+        "hash_basis": "UTF-8 permitted line slice with original newline characters",
+        "source": "def executable(plan):return plan.decision.get('decision_type','EXECUTABLE') in EXECUTABLE\n"
+      }
+    ]
+  },
+  "contract_findings": [
+    "sort_books line 341 implements TITLE as ascending normalized title with identifier tie breaking. Lines 342-343 implement descending rating and newest-year order. Line 344 leaves the supplied row order unchanged for other sort values.",
+    "query_confidence lines 6-17 and 53 describe executable decision states; these lines supply no rule replacing an explicit sort during unrelated completion. They do not themselves establish a RELEVANCE ranking implementation.",
+    "Every audited completion edits a field other than sort. The four stored expected_completion objects use sort rather than expected_sort. Stored sort values agree with all four source queries and their sort applicability annotations.",
+    "The requested hypothetical accessor expected_completion.expected_sort with a RELEVANCE absence default conflicts with the three explicit Sort: title queries. It coincides with the unsorted-author-completion row only by default.",
+    "A future equivalent assertion is warranted to preserve the independently supplied order and use the documented stored sort key. This is a schema/accessor contract finding; no V7 code or prediction was inspected, so no claim is made about whether any candidate actually uses the hypothetical accessor."
+  ],
+  "findings": [
+    {
+      "case_id": "proof6-i01-missing-score-floor-global",
+      "population_source_line": 76,
+      "allowed_projection_sha256": "4e4d9d34b4f49bf093eeb72e3c53ed6aa040245494be954ea0e8520b6bb7ccbc",
+      "query_text": "Books by \"Oren Vale\", rated at least [value omitted]. Prefer an introduction. Sort: title.",
+      "completion_input": {
+        "field": "rating_min",
+        "value": "3.4"
+      },
+      "edit_targets_sort": false,
+      "source_explicit_sort_span": {
+        "span": [
+          78,
+          89
+        ],
+        "text": "Sort: title"
+      },
+      "independently_required_completion_sort": "TITLE",
+      "stored_expected_completion_sort": "TITLE",
+      "stored_expected_completion_sort_agrees_with_source": true,
+      "expected_completion_expected_sort_key_present": false,
+      "expected_sort_with_requested_absence_default": "RELEVANCE",
+      "defaulted_expected_sort_agrees_with_source": false,
+      "original_sort_metric_applicability": {
+        "reason": "Explicit title ordering.",
+        "status": "APPLICABLE"
+      },
+      "completed_sort_metric_applicability": {
+        "reason": "Explicit title ordering.",
+        "status": "APPLICABLE"
+      },
+      "finding": "STORED_ORACLE_CONSISTENT_BUT_ABSENT_EXPECTED_SORT_DEFAULT_CONTRADICTS_EXPLICIT_SOURCE",
+      "rationale": "Completing rating_min does not edit the explicit title ordering. The stored completion oracle already preserves TITLE; a lookup of absent expected_sort defaulting to RELEVANCE would discard the source order.",
+      "future_equivalent_replacement_assertion_warranted": true,
+      "future_assertion": {
+        "completed_plan_sort_equals": "TITLE",
+        "read_reviewed_completion_sort_from": "expected_completion.sort",
+        "preserve_other_source_conditions": true,
+        "schema_assertion": "Require the documented sort key, or explicitly validate any schema migration; do not silently use a differently named absent field to override source ordering."
+      }
+    },
+    {
+      "case_id": "proof6-i02-missing-author-amid-resolved-title-global",
+      "population_source_line": 81,
+      "allowed_projection_sha256": "7dd36f601ecdde5bf93921523f342481840a0dd60ab6294383bb5f4bc92179e7",
+      "query_text": "Find books by [author omitted], titled \"Salt Lattice\", without the whole word \"almanac\". Prefer advanced treatment.",
+      "completion_input": {
+        "field": "author_text",
+        "value": "Luma Fen"
+      },
+      "edit_targets_sort": false,
+      "source_explicit_sort_span": null,
+      "independently_required_completion_sort": "RELEVANCE",
+      "stored_expected_completion_sort": "RELEVANCE",
+      "stored_expected_completion_sort_agrees_with_source": true,
+      "expected_completion_expected_sort_key_present": false,
+      "expected_sort_with_requested_absence_default": "RELEVANCE",
+      "defaulted_expected_sort_agrees_with_source": true,
+      "original_sort_metric_applicability": {
+        "reason": "No requested order; native default relevance applies.",
+        "status": "APPLICABLE_ABSENCE"
+      },
+      "completed_sort_metric_applicability": {
+        "reason": "No requested order; native default relevance applies.",
+        "status": "APPLICABLE_ABSENCE"
+      },
+      "finding": "STORED_ORACLE_CONSISTENT_AND_ABSENT_EXPECTED_SORT_DEFAULT_COINCIDES_WITH_SOURCE",
+      "rationale": "No order is requested, and completing author_text adds no sort instruction. Stored sort RELEVANCE and the stipulated absent-key RELEVANCE default coincide; that coincidence does not validate the wrong key.",
+      "future_equivalent_replacement_assertion_warranted": true,
+      "future_assertion": {
+        "completed_plan_sort_equals": "RELEVANCE",
+        "read_reviewed_completion_sort_from": "expected_completion.sort",
+        "preserve_other_source_conditions": true,
+        "schema_assertion": "Require the documented sort key, or explicitly validate any schema migration; do not silently use a differently named absent field to override source ordering."
+      }
+    },
+    {
+      "case_id": "proof6-i04-missing-negative-word-global",
+      "population_source_line": 91,
+      "allowed_projection_sha256": "0c6db291e835f942690c25d8500aa5ad035556bb4599749b0ea56defd8baf6d3",
+      "query_text": "Include category Fiction and online access. Exclude the whole word [word omitted] from searchable text. Sort: title.",
+      "completion_input": {
+        "field": "exclude_terms",
+        "value": "tide"
+      },
+      "edit_targets_sort": false,
+      "source_explicit_sort_span": {
+        "span": [
+          104,
+          115
+        ],
+        "text": "Sort: title"
+      },
+      "independently_required_completion_sort": "TITLE",
+      "stored_expected_completion_sort": "TITLE",
+      "stored_expected_completion_sort_agrees_with_source": true,
+      "expected_completion_expected_sort_key_present": false,
+      "expected_sort_with_requested_absence_default": "RELEVANCE",
+      "defaulted_expected_sort_agrees_with_source": false,
+      "original_sort_metric_applicability": {
+        "reason": "Explicit title ordering.",
+        "status": "APPLICABLE"
+      },
+      "completed_sort_metric_applicability": {
+        "reason": "Explicit title ordering.",
+        "status": "APPLICABLE"
+      },
+      "finding": "STORED_ORACLE_CONSISTENT_BUT_ABSENT_EXPECTED_SORT_DEFAULT_CONTRADICTS_EXPLICIT_SOURCE",
+      "rationale": "Completing exclude_terms does not edit the explicit title ordering. The stored completion oracle already preserves TITLE; a lookup of absent expected_sort defaulting to RELEVANCE would discard the source order.",
+      "future_equivalent_replacement_assertion_warranted": true,
+      "future_assertion": {
+        "completed_plan_sort_equals": "TITLE",
+        "read_reviewed_completion_sort_from": "expected_completion.sort",
+        "preserve_other_source_conditions": true,
+        "schema_assertion": "Require the documented sort key, or explicitly validate any schema migration; do not silently use a differently named absent field to override source ordering."
+      }
+    },
+    {
+      "case_id": "proof6-i05-missing-canonical-category-global",
+      "population_source_line": 96,
+      "allowed_projection_sha256": "2d15d25946d360159bd1d76aea9ca8290df177dc47f4a24f7e8fb3ed29b07d94",
+      "query_text": "Books by \"Aven Rook\" must be in category [category omitted]. Prefer an introduction. Sort: title.",
+      "completion_input": {
+        "field": "subjects",
+        "value": "Fiction"
+      },
+      "edit_targets_sort": false,
+      "source_explicit_sort_span": {
+        "span": [
+          85,
+          96
+        ],
+        "text": "Sort: title"
+      },
+      "independently_required_completion_sort": "TITLE",
+      "stored_expected_completion_sort": "TITLE",
+      "stored_expected_completion_sort_agrees_with_source": true,
+      "expected_completion_expected_sort_key_present": false,
+      "expected_sort_with_requested_absence_default": "RELEVANCE",
+      "defaulted_expected_sort_agrees_with_source": false,
+      "original_sort_metric_applicability": {
+        "reason": "Explicit title ordering.",
+        "status": "APPLICABLE"
+      },
+      "completed_sort_metric_applicability": {
+        "reason": "Explicit title ordering.",
+        "status": "APPLICABLE"
+      },
+      "finding": "STORED_ORACLE_CONSISTENT_BUT_ABSENT_EXPECTED_SORT_DEFAULT_CONTRADICTS_EXPLICIT_SOURCE",
+      "rationale": "Completing subjects does not edit the explicit title ordering. The stored completion oracle already preserves TITLE; a lookup of absent expected_sort defaulting to RELEVANCE would discard the source order.",
+      "future_equivalent_replacement_assertion_warranted": true,
+      "future_assertion": {
+        "completed_plan_sort_equals": "TITLE",
+        "read_reviewed_completion_sort_from": "expected_completion.sort",
+        "preserve_other_source_conditions": true,
+        "schema_assertion": "Require the documented sort key, or explicitly validate any schema migration; do not silently use a differently named absent field to override source ordering."
+      }
+    }
+  ],
+  "summary": {
+    "reviewed_completion_rows": 4,
+    "stored_sort_oracle_consistent_rows": 4,
+    "hypothetical_absent_expected_sort_default_conflicts": 3,
+    "original_v6_gold_edit_warranted_by_this_audit": false,
+    "future_equivalent_replacement_assertion_warranted": true,
+    "recommended_assertion_scope": "Use source-owned TITLE on i01/i04/i05 and RELEVANCE on i02; validate that unrelated completions preserve sort; use expected_completion.sort or a validated explicit schema migration. Record developmental assertions separately rather than changing original reviewed population or reclassifying it as new acceptance."
+  },
+  "independence_and_limitations": {
+    "candidate_implementation_read": false,
+    "candidate_predictions_or_results_read": false,
+    "pilot_author_labels_read": false,
+    "candidate_execution": false,
+    "extra_model_calls": false,
+    "network_access": false,
+    "mongo_access": false,
+    "original_gold_mutated": false,
+    "limitations": [
+      "This audit reviews known developmental completion rows, not fresh held-out or independent acceptance evidence.",
+      "Only the four selected allowed projections and named active source slices were inspected; no completion editor or evaluator implementation was read.",
+      "The RELEVANCE absence default is stipulated by the audit request and supported by the selected metric-applicability annotations; the inspected sorter only proves fallback preserves incoming order, not that upstream relevance ranking is implemented.",
+      "This report establishes source and schema consistency without predicting any candidate outcome or metric.",
+      "Pilot author/referee disagreements were outside this audit and were not revisited."
+    ]
+  }
+}

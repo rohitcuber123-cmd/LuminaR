@@ -1,0 +1,70 @@
+"""Pure execution proof over the completed IR and its native projection."""
+from dataclasses import asdict
+import re,math
+from .contract import State,Proof,digest
+from .proposals import FAMILIES
+from .projection import _apply
+from types import SimpleNamespace
+from scratch.search_v2c_c5er.candidate_search_v4 import query_constraints as grammar
+from scratch.search_v2c_c5er.candidate_search_v4.query_plan import normalize,QueryPlan
+from scratch.search_v2c_c5er.candidate_search_v4.query_session import explicit_filters,omit_fields
+
+HARD_FIELDS=tuple(dict.fromkeys(k for names in FAMILIES.values() for k in names))
+def projection(plan):return {k:getattr(plan,k) for k in HARD_FIELDS}
+
+def validate_ir(ir,plan,expected_projection=None):
+    violations=[];states=[];fields=[];covered=[]
+    for r in ir.requirements:
+        if r.ownership=='REMOVED_BY_CONTROL':continue
+        a,b=r.source_span
+        if r.provenance.get('origin')!='TRUSTED_CONTROL':
+            if not (0<=a<b<=len(ir.raw_query)) or ir.raw_query[a:b]!=r.source_text:
+                violations.append((r.requirement_id,'INVALID_SOURCE_SPAN'));continue
+            if not r.clause_span[0]<=a<b<=r.clause_span[1]:violations.append((r.requirement_id,'INVALID_CLAUSE_OWNER'))
+        if r.ownership=='ADVISORY':covered.append(r.requirement_id);continue
+        state=State(r.state)
+        if state in [State.EMPTY,State.OMITTED,State.PLACEHOLDER]:states.append('INCOMPLETE');fields.append(r.field)
+        elif state==State.AMBIGUOUS:states.append('AMBIGUOUS');fields.append(r.field)
+        elif state==State.CONTRADICTORY:states.append('CONTRADICTORY');fields.append(r.field)
+        elif state==State.UNSUPPORTED or r.support!='SUPPORTED':states.append('UNSUPPORTED');fields.append(r.field)
+        elif r.representation=='HARD_FILTER':
+            if r.field not in FAMILIES:violations.append((r.requirement_id,'UNSUPPORTED_PROJECTION_FIELD'))
+            if r.value in (None,'',[]):violations.append((r.requirement_id,'EMPTY_RESOLVED_VALUE'))
+            if not r.provenance.get('recognizer'):violations.append((r.requirement_id,'NO_SOURCE_RECOGNIZER'))
+            if r.provenance.get('origin')!='TRUSTED_CONTROL':
+                text=r.provenance.get('interpreted_text',r.source_text)
+                # Numeric values/operators must be reproduced by the same pure
+                # bounded recognizer, not trusted from a proposed scalar.
+                if r.field in ['rating','year']:
+                    check=grammar.Source(text)
+                    (grammar.ratings if r.field=='rating' else grammar.years)(check)
+                    if not any(c.field==r.field and c.operator==r.operator and c.normalized_value==r.value for c in check.items):
+                        violations.append((r.requirement_id,'NUMERIC_EVIDENCE_MISMATCH'))
+                elif r.field in ['author','title']:
+                    cues=r'\b(?:by|author|creator|writer)\b' if r.field=='author' else r'\b(?:titled|called|named|title)\b'
+                    if not re.search(cues,text,re.I) or normalize(r.value) not in normalize(text):violations.append((r.requirement_id,'ENTITY_EVIDENCE_MISMATCH'))
+                elif r.field in ['subject','excluded_subject']:
+                    fact=r.provenance.get('canonical_fact')
+                    if not fact or fact.get('value')!=r.value or not fact.get('vocabulary_digest'):
+                        violations.append((r.requirement_id,'NO_SCOPED_CANONICAL_PROOF'))
+                elif r.field=='exclude' and (r.polarity!='NEGATIVE' or r.operator!='TEXT_NOT'):
+                    violations.append((r.requirement_id,'UNPROVEN_NEGATIVE_DOMAIN'))
+            covered.append(r.requirement_id)
+        else:covered.append(r.requirement_id)
+    active=[r for r in ir.requirements if r.state==State.SUPPLIED and r.support=='SUPPORTED' and r.ownership=='MANDATORY' and r.field in FAMILIES]
+    unresolved={f for r in ir.requirements if r.field=='relationship' and isinstance(r.value,dict) for f in r.value.get('fields',[])}
+    active=[r for r in active if r.field not in unresolved and not(r.field=='excluded_subject' and 'subject' in unresolved)]
+    rebuilt=QueryPlan(ir.raw_query,'SMART')
+    _apply(rebuilt,[SimpleNamespace(field=r.field,operator=r.operator,normalized_value=r.value,support_status='SUPPORTED') for r in active],set(FAMILIES))
+    explicit_filters(rebuilt,ir.trusted_controls.get('filters',{}));omit_fields(rebuilt,ir.trusted_controls.get('omit',()))
+    if projection(plan)!=projection(rebuilt):violations.append(('projection','UNPROVEN_PLAN_MUTATION'))
+    if expected_projection is not None and projection(plan)!=expected_projection:violations.append(('projection','RECORDED_PROJECTION_MISMATCH'))
+    for name,value in projection(plan).items():
+        if name.endswith('_exclusive') or name=='physical_available_only':
+            if type(value) is not bool:violations.append((name,'INVALID_BOOL_SCHEMA'))
+        elif name in ['rating_min','rating_max','year_min','year_max']:
+            if value is not None and (type(value) not in [int,float] or not math.isfinite(value)):violations.append((name,'INVALID_NUMBER_SCHEMA'))
+        elif isinstance(getattr(plan,name),list) and not all(isinstance(v,str) for v in value):violations.append((name,'INVALID_LIST_SCHEMA'))
+    if violations:states.append('UNSUPPORTED')
+    decision=next((k for k in ['CONTRADICTORY','INCOMPLETE','AMBIGUOUS','UNSUPPORTED'] if k in states),'EXECUTABLE')
+    return Proof(decision=='EXECUTABLE',decision,'IR_PROOF_VALID' if decision=='EXECUTABLE' else 'IR_'+decision,tuple(sorted(set(fields))),tuple(violations),tuple(covered))

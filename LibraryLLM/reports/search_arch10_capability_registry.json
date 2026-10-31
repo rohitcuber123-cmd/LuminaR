@@ -1,0 +1,551 @@
+{
+  "version": "V10-capability-registry-v2",
+  "status": "SOURCE_AUDITED_COMPONENT_CONTRACT_NOT_RUNTIME_QUALIFICATION",
+  "scopes": {
+    "GLOBAL": {
+      "rating": true,
+      "year": false,
+      "language": false,
+      "availability": false,
+      "formats": [
+        "ONLINE"
+      ],
+      "sort": true,
+      "semantic_retrieval": "INTERFACE_PRESENT_RUNTIME_UNVERIFIED",
+      "authorization": "BACKEND_BEFORE_FACETS_AND_AGAIN_BEFORE_HYDRATION",
+      "online_meaning": "ACTOR_ACTIVE_BORROW_READABLE_ENTITLEMENT"
+    },
+    "PUBLIC_TENANT_PATRON": {
+      "rating": true,
+      "year": true,
+      "language": true,
+      "availability": true,
+      "formats": [
+        "ONLINE",
+        "PHYSICAL",
+        "BOTH"
+      ],
+      "sort": true,
+      "semantic_retrieval": "INTERFACE_PRESENT_RUNTIME_UNVERIFIED",
+      "authorization": "BACKEND_BEFORE_FACETS_AND_AGAIN_BEFORE_HYDRATION",
+      "online_meaning": "TENANT_HYDRATED_ONLINE_CAPABILITY"
+    },
+    "PUBLIC_TENANT_STAFF": {
+      "rating": true,
+      "year": true,
+      "language": true,
+      "availability": true,
+      "formats": [
+        "ONLINE",
+        "PHYSICAL",
+        "BOTH"
+      ],
+      "sort": true,
+      "semantic_retrieval": "INTERFACE_PRESENT_RUNTIME_UNVERIFIED",
+      "authorization": "BACKEND_BEFORE_FACETS_AND_AGAIN_BEFORE_HYDRATION",
+      "online_meaning": "TENANT_HYDRATED_ONLINE_CAPABILITY"
+    },
+    "PRIVATE_TENANT_PATRON": {
+      "rating": true,
+      "year": true,
+      "language": true,
+      "availability": true,
+      "formats": [
+        "ONLINE",
+        "PHYSICAL",
+        "BOTH"
+      ],
+      "sort": true,
+      "semantic_retrieval": "INTERFACE_PRESENT_RUNTIME_UNVERIFIED",
+      "authorization": "BACKEND_BEFORE_FACETS_AND_AGAIN_BEFORE_HYDRATION",
+      "online_meaning": "TENANT_HYDRATED_ONLINE_CAPABILITY"
+    },
+    "PRIVATE_TENANT_STAFF": {
+      "rating": true,
+      "year": true,
+      "language": true,
+      "availability": true,
+      "formats": [
+        "ONLINE",
+        "PHYSICAL",
+        "BOTH"
+      ],
+      "sort": true,
+      "semantic_retrieval": "INTERFACE_PRESENT_RUNTIME_UNVERIFIED",
+      "authorization": "BACKEND_BEFORE_FACETS_AND_AGAIN_BEFORE_HYDRATION",
+      "online_meaning": "TENANT_HYDRATED_ONLINE_CAPABILITY"
+    }
+  },
+  "fields": {
+    "title": {
+      "native": [
+        "title_text"
+      ],
+      "operand": "string",
+      "operators": [
+        "NORMALIZED_SUBSTRING_TITLE_OR_AUTHOR"
+      ],
+      "semantics": "Title OR joined author normalized substring. General/approximate discovery allowed; fuzzy candidate selection followed by matches.",
+      "negation": false,
+      "strict_title_only": false,
+      "normalized_equality": false,
+      "exact_quoted_literal": false,
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "literal": {
+      "native": [
+        "exact_text"
+      ],
+      "operand": "string",
+      "operators": [
+        "NORMALIZED_TITLE_OR_IDENTIFIER_EQUALITY"
+      ],
+      "semantics": "Normalized title equality OR supported identifier; not byte/punctuation equality or exclusive title-domain equality.",
+      "negation": false,
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "author": {
+      "native": [
+        "author_text"
+      ],
+      "operand": "string",
+      "operators": [
+        "NORMALIZED_SUBSTRING"
+      ],
+      "negation": false,
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "subject": {
+      "native": [
+        "subjects",
+        "include_terms",
+        "exclude_subjects"
+      ],
+      "operand": "scope-canonical subject string",
+      "operators": [
+        "ALL",
+        "NOT_ANY"
+      ],
+      "negation": true,
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "exclude": {
+      "native": [
+        "exclude_terms"
+      ],
+      "operand": "string",
+      "operators": [
+        "WHOLE_WORD_TEXT_NOT"
+      ],
+      "negation": true,
+      "semantics": "Normalized searchable title/authors/subjects/description text; word boundaries, not publisher/author exclusion alias.",
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "rating": {
+      "native": [
+        "rating_min",
+        "rating_max",
+        "rating_min_exclusive",
+        "rating_max_exclusive"
+      ],
+      "operand": "finite number 0..5",
+      "operators": [
+        ">",
+        ">=",
+        "<",
+        "<=",
+        "=",
+        "RANGE"
+      ],
+      "negation": "Only represented numeric complement single interval; disjoint intervals unsupported",
+      "missing_data": "Missing/NaN/rating zero without count excluded for positive bounds",
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "year": {
+      "native": [
+        "year_min",
+        "year_max",
+        "year_min_exclusive",
+        "year_max_exclusive"
+      ],
+      "operand": "integer 1000..2100",
+      "operators": [
+        ">",
+        ">=",
+        "<",
+        "<=",
+        "=",
+        "RANGE"
+      ],
+      "negation": "Only represented single interval",
+      "semantics": "publication_year, else parseable first_publish_date; global disabled by scope",
+      "scopes": {
+        "GLOBAL": false,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "language": {
+      "native": [
+        "language"
+      ],
+      "operand": "string",
+      "operators": [
+        "NORMALIZED_EQUALITY"
+      ],
+      "negation": false,
+      "scopes": {
+        "GLOBAL": false,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "format": {
+      "native": [
+        "formats",
+        "excluded_formats",
+        "exclusive_formats"
+      ],
+      "operand": "ONLINE/PHYSICAL/BOTH",
+      "operators": [
+        "PRESENT",
+        "NOT",
+        "ONLY"
+      ],
+      "negation": true,
+      "semantics": "True capability flags; ONLY requires opposite-format exclusion in native projection. Missing negative flag is accepted by native matches.",
+      "production_defect": "Global negative-only ONLINE fails to load entitlement set; candidate adapter hydrates it for every global query. No production repair applied.",
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "availability": {
+      "native": [
+        "availability",
+        "physical_available_only"
+      ],
+      "operand": "AVAILABLE_NOW/REQUESTABLE/PHYSICAL_NOW/PHYSICAL_REQUESTABLE",
+      "operators": [
+        "PRESENT"
+      ],
+      "negation": false,
+      "semantics": "REQUESTABLE needs CIRCULATING and requestable_count>0. AVAILABLE_NOW also admits online. Physical-only flag requires requestability.",
+      "scopes": {
+        "GLOBAL": false,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "sort": {
+      "native": [
+        "sort"
+      ],
+      "operand": "enum",
+      "operators": [
+        "TITLE_ASC",
+        "RATING_DESC",
+        "NEWEST_DESC",
+        "RELEVANCE_PROVIDER"
+      ],
+      "negation": false,
+      "semantics": "NEWEST sorts publication_year only; differs from filtering fallback first_publish_date. Missing sort data uses native zero/empty fallback.",
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": true,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "semantic": {
+      "native": [
+        "semantic_text"
+      ],
+      "operand": "free-form string",
+      "operators": [
+        "PROVIDER_DISCOVERY"
+      ],
+      "negation": false,
+      "semantics": "No mandatory metadata may be silently removed into text. Advice passed as semantic provider text by isolated adapter; actual relevance unverified.",
+      "scopes": {
+        "GLOBAL": true,
+        "PUBLIC_TENANT_PATRON": true,
+        "PUBLIC_TENANT_STAFF": true,
+        "PRIVATE_TENANT_PATRON": true,
+        "PRIVATE_TENANT_STAFF": true
+      },
+      "hard_filter": false,
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "page_count": {
+      "native": [],
+      "operand": "number",
+      "operators": [],
+      "negation": false,
+      "hard_filter": false,
+      "scopes": {
+        "GLOBAL": false,
+        "PUBLIC_TENANT_PATRON": false,
+        "PUBLIC_TENANT_STAFF": false,
+        "PRIVATE_TENANT_PATRON": false,
+        "PRIVATE_TENANT_STAFF": false
+      },
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "price": {
+      "native": [],
+      "operand": "commercial price comparison",
+      "operators": [],
+      "negation": false,
+      "hard_filter": false,
+      "semantics": "Free-to-borrow is semantic access preference; no commercial price operand implied.",
+      "scopes": {
+        "GLOBAL": false,
+        "PUBLIC_TENANT_PATRON": false,
+        "PUBLIC_TENANT_STAFF": false,
+        "PRIVATE_TENANT_PATRON": false,
+        "PRIVATE_TENANT_STAFF": false
+      },
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "publisher": {
+      "native": [],
+      "operand": "string",
+      "operators": [],
+      "negation": false,
+      "hard_filter": false,
+      "scopes": {
+        "GLOBAL": false,
+        "PUBLIC_TENANT_PATRON": false,
+        "PUBLIC_TENANT_STAFF": false,
+        "PRIVATE_TENANT_PATRON": false,
+        "PRIVATE_TENANT_STAFF": false
+      },
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    },
+    "edition": {
+      "native": [],
+      "operand": "string",
+      "operators": [],
+      "negation": false,
+      "hard_filter": false,
+      "scopes": {
+        "GLOBAL": false,
+        "PUBLIC_TENANT_PATRON": false,
+        "PUBLIC_TENANT_STAFF": false,
+        "PRIVATE_TENANT_PATRON": false,
+        "PRIVATE_TENANT_STAFF": false
+      },
+      "enforcement_contract": {
+        "source": "immutable original query; [start,end) Unicode spans; bounded repair provenance",
+        "hard_filter": "Only supported mandatory resolved source-owned operands",
+        "retrieval": "Candidate generation is bounded; current hydrated record checked with native matches before pagination",
+        "pagination": "Filter and sort before slicing within bounded candidate universe; not whole-catalog recall/completeness",
+        "missing_data": "Required positive operands fail native predicate if data unavailable; negative format accepts absence (not proof of known absence)",
+        "errors": "Candidate adapter fails closed; production tenant encoder failure has lexical fallback, not guaranteed equivalent semantic relevance"
+      }
+    }
+  },
+  "source_hashes": {
+    "search/query_plan.py": "376224248025cd56008b03febd3e4b60527b2ae8da8c22188c508b058cab1152",
+    "search/query_execution.py": "055db8458d2407394e3a32888fe68a258c3649b939507c72c9d8253fa5d5ee00",
+    "search/query_confidence.py": "054e7fbe72b107b58d9146b737ebf63d4d2f81fc5237850f3bf4a6036141c428",
+    "backend/services/library_catalogue_experience.py": "a176ec1f6eed6a21051b275c825cc1026864ab948903c43e722c40e582742fe0",
+    "backend/services/library_book_formats.py": "6820097508392ee5d4fe8796cb7ad29da77d5ce9232f375c6904dd16fe0ab96d",
+    "backend/services/library_catalogue_availability.py": "b2212cd242418008ce6a7443e1f9668e058fe42eb9c80c0aab592402fc598b8a",
+    "backend/services/library_inventory_access.py": "8a52e0ce59c5dc293c4d2954852ea336ff7f9e6f4b4a9ae3923bf2debe5098de",
+    "backend/services/book_capability_service.py": "247f0e7ce22f5e65dd2126aaaa48d2b4ae19eaba220bb9a59753031592edc6fd",
+    "backend/institution_dependencies.py": "4f13e7aa07e3f491fb9a3790a98292e7f8120d98908799bfe29691151bc7ef5c",
+    "reports/search_arch9_capability_registry.json": "fa776ee6c8558596caeba7ba3678471fa11cb5b2890a1910e7946e3103dc77de",
+    "scratch/search_architecture_v9/test_roles_edits.py": "39bf23c16c5ed4fd1773f5b5e19906dd9c98da27af8eac8928199da9befbdf49",
+    "scratch/search_arch9_regression/test_search_v2c_c4_reviewed_legacy.py": "54ffdc6c10c327796eacd1de7f67684427be0ad50dd943e292d92b0d6dff0be3",
+    "reports/search_v2c_a_gold_queries.jsonl": "a8094c247bcfab8c168796ea7cd8c112cc8818a0b7ac8011197e0540dc655208",
+    "reports/search_v2c_c4_reviewed_contract.json": "96ea427dcb1a5531ecff1df09f59413533f99d44dd61e4959d38bf586cd0ea4b"
+  },
+  "independent_review": "reports/search_arch10_source_contract_review.json",
+  "changes_from_v9": [
+    "Removed false title normalized equality and author negation promises",
+    "Specified exact normalized title-or-identifier lookup",
+    "Scoped global online to readable borrowing entitlements",
+    "Recorded negative-only global native defect and isolated repair",
+    "Fixed sort directions and availability semantics",
+    "Separated hard-filter soundness from candidate completeness"
+  ],
+  "source_only_migration": {
+    "title_only_substring": "MIGRATED_WITH_REPLACEMENT_TESTS",
+    "missing_pages": "IMPLEMENTATION_REPAIRED_TO_INCOMPLETE_NO_MIGRATION"
+  }
+}

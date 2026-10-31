@@ -1,0 +1,5 @@
+# Legacy compatibility
+
+No migration/backfill of native jobs, targets or generations. Missing singleton, absent instance, malformed identity/timestamps, unknown old state and absent progress entry remain UNKNOWN/NOT_AVAILABLE. Old READY, FAILED and RECOVERY_REQUIRED objects continue to be interpreted by native 2G/J code. The new supplement returns an empty progress list for legacy jobs, never guessed timestamps or health. Old active lease survives worker instance rotation unchanged.
+
+Prototype writer requires explicit preprovisioned schema1 fixture record and exact DB-local privileges. A missing record does not cause an upsert, collection creation or repair. Original J CLI works independently with its frozen four-collection allowlist; its existing no-progress-time limitation remains true. Ordinary Staff routes receive no raw process/instance/fence or infrastructure fields. Frontend library switching and access rules remain protected by the frozen regression suites, with no new UI flow.

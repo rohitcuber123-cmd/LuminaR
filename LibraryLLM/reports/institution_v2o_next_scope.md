@@ -1,0 +1,3 @@
+# Next recommended scope
+
+Stop after Part2O. First obtain explicit review of the frozen J whole-page contract versus the authorized frontend refinement and the protected RAG hash conflict, with behavioral coverage preserved and no silent hash rebasing. Then assign/classify the actual installation, close dynamic conditional/minimum role and representative full-stack5M/network/service-profile coverage, and approve a protected coherent real backup/restore in an isolated environment. Only after those gates pass should a separately authorized maintenance window plan a live authentication cutover. Telemetry activation remains a distinct later approval; no automatic maintenance/distributed worker/cancellation/global rebuild is introduced.

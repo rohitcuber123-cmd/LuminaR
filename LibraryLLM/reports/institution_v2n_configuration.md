@@ -1,0 +1,9 @@
+# Configuration compatibility
+
+Opt-in contract: LUMINAR_MONGO_MODE=AUTHENTICATED, nonempty MONGO_URI containing SCRAM username/password, URI database exactly MONGO_DB_NAME, explicit authSource. Prefer a DB-local application principal; an explicitly chosen admin authSource can be used when supported by the reviewed deployment. Never infer authSource or use an anonymous fallback. A typo/missing selected DB fails before schema initialization. Unsupported/unknown mode fails with fixed safe code.
+
+Implementation paths: backend/database/mongo_configuration.py; backend/database/mongodb.py client before reading_list create_index; search/luminar_search.py separate catalogue client; search/maintenance.py manual operator constructor. Search still loads its existing models before its late direct-client initialization; backend imports may qualify earlier. No global Search algorithms, ranking/model logic, native store/worker, RAG or Recommendation algorithm changed. No maintenance/rebuild command was executed against current data.
+
+DEVELOPMENT preserves default URI/database and lazy client behavior. A legacy credential-bearing URI still uses existing driver authentication, but full enforcement/readiness qualification is guaranteed only in explicit authenticated mode. Existing tests/configurations do not become production-secure by continuing to work. Diagnostics/telemetry retain their independent stricter parsers and do not inherit MONGO_URI.
+
+Authenticated fixture verifies Core lifespan/index initialization, Staff login, tenant routes and native worker. Historical seed/migration/import CLIs that directly construct clients remain independently inventoried and unqualified for unattended deployment. Shared start_local.py environment cannot independently rotate per-service URI without a reviewed launcher/service boundary. No production launcher or secret injection was installed here.

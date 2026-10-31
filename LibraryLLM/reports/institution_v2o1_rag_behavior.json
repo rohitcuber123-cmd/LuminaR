@@ -1,0 +1,82 @@
+{
+  "groups": [
+    {
+      "group": "controlled_rag",
+      "exit": 0,
+      "passed": 242,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 53.638222400000814,
+      "targets": [
+        "tests/test_private_document_cache.py",
+        "tests/test_document_rag_latency.py",
+        "tests/test_rag_query_types.py",
+        "tests/test_rag_hard_negatives.py",
+        "tests/test_document_knowledge.py",
+        "tests/test_knowledge_artifacts.py",
+        "tests/test_knowledge_tools_v2_1.py",
+        "tests/test_urgent_document_rag.py::test_document_retrieval_current_asset_only",
+        "tests/test_urgent_document_rag.py::test_document_retrieval_cross_asset_denied",
+        "tests/test_urgent_document_rag.py::test_document_query_normalization",
+        "tests/test_urgent_document_rag.py::test_definition_grammar_keeps_claims_and_extra_instructions_strict",
+        "tests/test_urgent_document_rag.py::test_exact_phrase_lexical_fallback",
+        "tests/test_urgent_document_rag.py::test_definition_selection_excludes_foreign_candidates",
+        "tests/test_urgent_document_rag.py::test_unsupported_topic_preserves_authorized_semantic_evidence",
+        "tests/test_urgent_document_rag.py::test_flow_control_correct_chunk_in_top_context",
+        "tests/test_urgent_document_rag.py::test_supported_question_not_marked_unsupported",
+        "tests/test_urgent_document_rag.py::test_unsupported_question_still_unsupported",
+        "tests/test_urgent_document_rag.py::test_source_pages_match_used_chunks",
+        "tests/test_urgent_document_rag.py::test_catalogue_validator_and_citations_contract_unchanged"
+      ]
+    },
+    {
+      "group": "private_asset_isolation",
+      "exit": 0,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 9.536737000002177,
+      "targets": [
+        "tests/institution_v2f/test_asset_recovery.py"
+      ]
+    }
+  ],
+  "controlled_fixture_only": true,
+  "persistent_document_dependent_cases_not_selected": [
+    "tests/test_urgent_document_rag.py::test_document_contains_flow_control",
+    "tests/test_urgent_document_rag.py::test_flow_control_definition_chunk_identity_and_page",
+    "tests/test_urgent_document_rag.py::test_flow_control_semantic_or_hybrid_retrieval"
+  ],
+  "explanation": "Targeted controlled-fixture validation, not a changed/skipped frozen test. Existing full product groups run independently and unsuppressed. No private document content is copied to reports.",
+  "status": "PASS",
+  "totals": {
+    "passed": 253,
+    "failed": 0,
+    "skipped": 0
+  },
+  "source_hash_contract": "REQUIRES_APPROVAL; behavioral PASS does not approve protected source drift",
+  "coverage": {
+    "ownership_sessions_personal_isolation": "test_private_document_cache: active owner/session, cross-account bundles, logout/expiry/error invalidation; real HTTP ask adapter private/global/book/failure boundaries",
+    "selected_document_only": "test_urgent_document_rag: current asset only; cross-owner/document denied; definition selection excludes foreign candidates",
+    "grounding_citations_unsupported": "Supported and unsupported definitions, source pages/chunk identity, catalogue validator contract and document citation tests",
+    "prompt_models": "test_document_rag_latency verifies original extraction/decoding settings, classifier fallback, bounded scoped caches and no second Qwen instance",
+    "library_asset_isolation": "Full institution v2f/v2g plus separate controlled asset recovery group; explicit owner consent, library evidence and no personal history migration",
+    "errors_missing_documents": "Private cache/API missing or unowned documents return denial; ask failures clear selected runtime; no unauthorized context expansion"
+  },
+  "newly_exposed_preexisting_issue": {
+    "test": "tests.test_rag_query_types::test_overview_rule_never_accepts_added_premises[What are the major themes of this book?]",
+    "initial": {
+      "passed": 241,
+      "failed": 1,
+      "log": "institution_v2o1_rag_initial_theme_bypass.log",
+      "xml": "institution_v2o1_rag_initial_theme_bypass.xml"
+    },
+    "cause": "Recognized themes question plus three substantial generic passages bypassed the existing evidence validator.",
+    "repair": "Unprotected rag/query_types.py refuses the themes overview shortcut; existing validator decides support. Grammar stays factual.",
+    "authorization": "Part H Case 4 permits a behavior fix outside protected sources.",
+    "additional_actual_qa_checks": "Four O.1 tests; three grammar forms and actual LuminaRAG.ask with controlled generation/validator fixture",
+    "final": "PASS",
+    "new_O1_regression": false
+  },
+  "limits": "Controlled retrieval/model fixtures establish code-path and isolation contracts; no new live Qwen quality benchmark. Three persistent personal-document-dependent research cases were not selected for this extra targeted run; no accepted product group or frozen test was removed."
+}

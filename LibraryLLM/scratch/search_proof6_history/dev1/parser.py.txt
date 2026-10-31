@@ -1,0 +1,225 @@
+"""Disabled proof-carrying compiler: native fallback cannot authorize filters."""
+from dataclasses import asdict,replace
+from copy import deepcopy
+from types import SimpleNamespace
+import re
+from scratch.search_v2c_c5er.candidate_search_v4 import query_plan as native,query_confidence as decisions
+from scratch.search_v2c_c5er.candidate_search_v4.requirement_ledger import clauses,outside
+from scratch.search_v2c_c5er.candidate_search_v4.query_session import explicit_filters,omit_fields
+from .source_repair import prepare_source
+from .ownership import front_end,FIELD_WORDS
+from .proposals import understand,FAMILIES
+from .contract import QueryIR,Requirement,State,requirement,digest,encode
+from .projection import _apply
+from .proof import validate_ir,projection
+from .vocabulary import FacetVocabulary
+from .source_roles import partition,annotate,records,Modality,Role
+from .surface import claim_preferences,claim_frames,semantic_projection,generic_topic,CONSERVATIVE,residual_segments
+
+PARSER_VERSION='search-smarteng-disabled-proof-6'
+QueryPlan=native.QueryPlan
+normalize=native.normalize
+matches=native.matches
+sort_books=native.sort_books
+executable=decisions.executable
+assess=__import__('scratch.search_v2c_c5er.candidate_search_v4.query_calibration',fromlist=['assess']).assess
+FRAME=set('the a an and but then while both at same time in sense moment require requires required must be is are with without find show search use keep entries entry works work books book hits hit its each for every carry include exclude by of on only access simultaneously record records material materials written as sort first ascending mandatory strict condition constraints'.split())
+def __getattr__(name):return getattr(native,name)
+
+def decide(plan,*args,**kwargs):
+    metadata={k:deepcopy(plan.decision[k]) for k in ['query_ir_contract','execution_proof','query_ir'] if k in plan.decision}
+    result=decisions.decide(plan,*args,**kwargs);result.decision.update(metadata);return result
+
+def _decode(value):
+    return QueryIR(value['raw_query'],tuple(Requirement(**{**r,'state':State(r['state'])}) for r in value['requirements']),tuple(value['clauses']),value.get('trusted_controls',{}))
+
+def validate(plan,capabilities=None):
+    previous=deepcopy(plan.decision);blob=previous.get('query_ir_contract')
+    if not blob:
+        if plan.mode=='SMART' and not plan.exact_text:return decisions.decide(plan,'UNSUPPORTED','MISSING_IR_PROOF',fields=['requirement'])
+        return decisions.validate(plan,capabilities)
+    ir=_decode(blob)
+    proof=validate_ir(ir,plan,previous['execution_proof']['projection'])
+    if digest(blob)!=previous['execution_proof'].get('IR_digest'):
+        proof=replace(proof,valid=False,decision='UNSUPPORTED',reason='IR_CHANGED_AFTER_COMPILATION',violations=proof.violations+(('source','RECORDED_IR_DIGEST_MISMATCH'),))
+    checked=decisions.validate(plan,capabilities)
+    kind=checked.decision.get('decision_type')
+    if kind!='CONTRADICTORY' and not proof.valid:
+        decisions.decide(checked,proof.decision,proof.reason,fields=proof.fields,
+            unresolved=[{'field':r.field,'source_span':list(r.source_span),'text':r.source_text} for r in ir.requirements if r.state!=State.SUPPLIED and r.ownership=='MANDATORY'])
+    for key in ['query_ir_contract','execution_proof','query_ir','requirements','repair_notices','development_isolation']:
+        if key in previous:checked.decision[key]=previous[key]
+    checked.decision['execution_proof']['violations']=list(proof.violations)
+    return checked
+
+def parse_query(query,facets=(),mode='SMART',filters=None,omit=()):
+    raw=str(query)
+    if len(raw)>500:raise ValueError('Search query is too long.')
+    if filters:native._parse_legacy('',(),mode,filters,())
+    # Existing literal modes/identifiers are complete, bounded operations.
+    compact=re.sub(r'[-\s]','',raw)
+    if mode!='SMART' or re.fullmatch(r'(?:\d{13}|\d{9}[\dXx]|OL\d+W)',compact,re.I) or re.fullmatch(r'\s*["“][^"”]+["”]\s*',raw):
+        p=native.parse_query(raw,facets,mode,filters,omit);p.parser_version=PARSER_VERSION;p.decision['parser_version']=PARSER_VERSION;return p
+    prepared,repairs,offsets,rejected=prepare_source(raw)
+    role_units=partition(raw)
+    source,metadata=front_end(prepared,facets)
+    proposed=understand(prepared,facets,source)
+    claim_frames(proposed.source)
+    claim_preferences(proposed.source)
+    from .numeric_proposals import finalize
+    finalize(proposed.source)
+    s=proposed.source;requirements=[];canonical=FacetVocabulary(facets);vocab_hash=digest(tuple(facets))
+    def span(a,b):return (offsets[a],offsets[b-1]+1) if b>a else (0,0)
+    def owner(a,b):return next(((x,y) for x,y,_ in clauses(raw) if x<=a<b<=y),(a,b))
+    # Category shorthand is licensed by the complete remaining operand or an
+    # initial category expression, never by the legacy plan's proposed facets.
+    remainder=s.remaining(protect=False)
+    if generic_topic(prepared):
+        # A catalog noun used as a grammatical topic head is not a facet.
+        s.items=[c for c in s.items if not(c.field=='subject' and c.recognizer_id=='contract.category_expression')]
+        remainder=s.remaining(protect=False)
+    unassigned=re.fullmatch(r'\s*(.*?)\s+(\d+(?:\.\d+)?)\s*[.!?]?\s*',remainder)
+    if unassigned:
+        term=unassigned[1].strip()
+        value,_,_=canonical.resolve(term,False)
+        if value:
+            start=remainder.index(term);stop=start+len(term)
+            s.add_span('subject','INCLUDE',value,start,stop,'contract.category_expression')
+            s.add_span('ambiguous_number','UNASSIGNED',float(unassigned[2]),*unassigned.span(2),'contract.unassigned_number','AMBIGUOUS')
+            remainder=s.remaining(protect=False)
+    stripped=re.sub(r'\b(?:books?|with|and)\b',' ',remainder).strip(' ,;:.!?')
+    prefix=re.split(r'\b(?:books?|novels?|about|on)\b',remainder,maxsplit=1)[0].strip(' ,;:.!?')
+    for candidate in dict.fromkeys([stripped,prefix]):
+        if not candidate:continue
+        audience=any(c.field=='preference' and re.search(r'Introductory|Advanced',str(c.normalized_value)) for c in s.items)
+        if normalize(candidate).split()[0] in FRAME or generic_topic(prepared) or audience:continue
+        value,_,correction=canonical.resolve(candidate)
+        if value:
+            if normalize(candidate) in CONSERVATIVE and not re.search(r'\bbooks?\b',prepared):break
+            found=re.search(re.escape(candidate),s.text,re.I)
+            if found and s.free(*found.span()):
+                s.add_span('subject','INCLUDE',value,*found.span(),'contract.category_expression',repair=correction)
+                if correction:proposed.corrections.append({**correction,'source_span':list(s.span(*found.span()))})
+            break
+    for c in s.items:
+        if c.field=='connector':continue
+        a,b=span(c.source_span_start,c.source_span_end)
+        extra=metadata.get((c.source_span_start,c.source_span_end,c.field),{})
+        provenance={'origin':'SOURCE_RECOGNIZER','recognizer':c.recognizer_id,'interpreted_text':prepared[c.source_span_start:c.source_span_end],
+            'grammar_edits':[{k:r[k] for k in ['from','to','start','end']} for r in repairs if a<r['end'] and b>r['start']]}
+        if c.field in ['subject','excluded_subject']:
+            corrections=[x for x in proposed.corrections if x.get('to')==c.normalized_value and x['source_span'][0]<c.source_span_end and x['source_span'][1]>c.source_span_start]
+            if extra.get('correction'):corrections.append(extra['correction'])
+            quoted=re.search(r'["“]([^"”]+)["”]',c.source_text)
+            operand=corrections[0]['from'] if corrections else quoted[1] if quoted else c.normalized_value
+            provenance['canonical_fact']={'value':c.normalized_value,'vocabulary_digest':vocab_hash,'input_term':operand}
+        state=None
+        if c.support_status=='INCOMPLETE':state=State.EMPTY if re.search(r'"\s*"|“\s*”',c.source_text) else State.PLACEHOLDER if re.search(r'\[|<|\{|\.{3}|…|__',c.source_text) else State.OMITTED
+        if c.field in FAMILIES and c.support_status=='SUPPORTED' and re.search(r'\[[^\]]*\]|\.{3}|…|__',outside(c.source_text)):
+            state=State.PLACEHOLDER
+        requirements.append(requirement(raw,c.field,c.operator,c.normalized_value,(a,b),owner(a,b),status=c.support_status,
+            ownership=c.ownership,representation='ADVISORY' if c.field=='preference' else 'RELATIONSHIP' if c.field in ['relationship','text_relationship'] else 'SEMANTIC_RETRIEVAL' if c.field=='semantic' else c.representation,
+            provenance={**provenance,**extra},state=state))
+    # A complete mandatory clause cannot be discharged by consuming one known
+    # prefix. Preserve unknown operations as explicit unsupported requirements.
+    residue=s.remaining(protect=False);semantic=[]
+    for a,b,t in [segment for unit in partition(prepared) for segment in residual_segments(s,*unit.span)]:
+        words=normalize(t).split()
+        if not words or all(w in FRAME for w in words):continue
+        if re.search(r'\b(?:require\w*|must|mandatory|strict|hard\s+filter|only)\b',outside(t),re.I):
+            x,y=span(a,b);requirements.append(requirement(raw,'operation','UNREPRESENTED',t.strip(),(x,y),owner(x,y),status='UNSUPPORTED',representation='UNSUPPORTED',provenance={'recognizer':'contract.required_residue'}))
+        else:
+            value=t.strip(' ,;');semantic.append(value)
+            x,y=span(a,b)
+            requirements.append(requirement(raw,'semantic_residue','TOPIC',value,(x,y),owner(x,y),representation='SEMANTIC_RETRIEVAL',provenance={'recognizer':'contract.semantic_residue','interpreted_text':t}))
+    # Every scalar starts empty. Only SUPPLIED, supported, source-owned IR
+    # requirements are projected; no native legacy fields or decisions copied.
+    for family in ['author','title','language','sort']:
+        rr=[r for r in requirements if r.field==family and r.state==State.SUPPLIED and r.ownership=='MANDATORY']
+        if len({normalize(r.value) for r in rr})>1:
+            r=rr[-1]
+            requirements.append(requirement(raw,family,'MULTIPLE_VALUES',[x.value for x in rr],r.source_span,r.clause_span,
+                status='CONTRADICTORY' if family=='language' else 'AMBIGUOUS',representation='RELATIONSHIP',provenance={'recognizer':'contract.scalar_relationship'}))
+    ir=QueryIR(raw,tuple(requirements),tuple((a,b) for a,b,_ in clauses(raw)),{'filters':filters or {},'omit':list(omit)})
+    p=QueryPlan(raw,'SMART');p.parser_version=PARSER_VERSION;p.normalized_query=normalize(raw)
+    active=[r for r in requirements if r.state==State.SUPPLIED and r.support=='SUPPORTED' and r.ownership=='MANDATORY' and r.field in FAMILIES]
+    unresolved_families={f for r in requirements if r.field=='relationship' and isinstance(r.value,dict) for f in r.value.get('fields',[])}
+    active=[r for r in active if r.field not in unresolved_families and not(r.field=='excluded_subject' and 'subject' in unresolved_families)]
+    items=[SimpleNamespace(field=r.field,operator=r.operator,normalized_value=r.value,support_status='SUPPORTED') for r in active]
+    _apply(p,items,set(FAMILIES))
+    # Trusted UI controls are retained separately; never derive scope from text.
+    explicit_filters(p,filters or {});omit_fields(p,omit)
+    topic=[r.value for r in requirements if r.field=='semantic']
+    soft=native._parse_legacy('; '.join(semantic),(),'SMART',recognize_constraints=False)
+    p.semantic_text=semantic_projection(ir)
+    if not p.subjects and normalize(raw) in CONSERVATIVE:
+        suggested,_,_=canonical.resolve(raw,False)
+        if suggested:p.suggested_subject=suggested;p.interpretation_confidence=.6
+    advice=[r.value for r in requirements if r.ownership=='ADVISORY' and isinstance(r.value,str)]
+    p.soft_preference='; '.join(dict.fromkeys(advice)) or None
+    p.intent='FIND_AUTHOR' if p.author_text else 'FIND_EXACT' if p.title_text else 'BROWSE_CATEGORY' if p.subjects and not p.semantic_text else soft.intent
+    if p.soft_preference:
+        if re.search(r'beginner|introduct',p.soft_preference,re.I):p.intent='LEARN'
+        elif re.search(r'advanced|research',p.soft_preference,re.I):p.intent='RESEARCH'
+    p.constraint_candidates=[dict(asdict(c),source_query=raw,source_span_start=span(c.source_span_start,c.source_span_end)[0],source_span_end=span(c.source_span_start,c.source_span_end)[1],source_text=raw[slice(*span(c.source_span_start,c.source_span_end))]) for c in s.items]
+    for c in p.constraint_candidates:
+        if any(c['source_span_start']<r['end'] and c['source_span_end']>r['start'] for r in repairs):c['repair_provenance']='source-owned bounded grammar repair'
+    # Existing source-only semantic inventory supplies relationship/omission
+    # evidence, never filters or authority. Its proposed plan and decision are
+    # discarded. All outcomes are composed from the completed IR below.
+    from scratch.search_v2c_c5er.candidate_search_v4.semantic_safety import finish as semantic_inventory
+    probe=semantic_inventory(decisions.decide(deepcopy(p),'EXECUTABLE','PROPOSAL_ONLY'),raw,prepared,repairs,offsets,facets,filters or {},omit)
+    for evidence in probe.decision.get('requirements',[]):
+        status=evidence.get('status')
+        if status not in ['AMBIGUOUS','INCOMPLETE','UNSUPPORTED','CONTRADICTORY']:continue
+        # Generic residue coverage belongs exclusively to this compiler's IR.
+        # The older inventory uses a different recognizer set and cannot
+        # reject an operation already completely represented here.
+        if status=='UNSUPPORTED' and evidence['field']=='requirement':continue
+        field=evidence['field'];a,b=evidence.get('source_span',[0,len(raw)])
+        if a>=b:continue
+        ta=a;tb=b
+        while ta<tb and raw[ta].isspace():ta+=1
+        while tb>ta and raw[tb-1].isspace():tb-=1
+        if any(r.ownership in ['ADVISORY','NON_OPERATIVE'] and r.source_span[0]<=ta<tb<=r.source_span[1] for r in requirements):continue
+        if field in FIELD_WORDS:
+            cues=list(re.finditer(FIELD_WORDS[field],outside(raw[ta:tb]),re.I))
+            if cues and all(any(r.ownership in ['ADVISORY','NON_OPERATIVE'] and r.source_span[0]<=ta+m.start()<ta+m.end()<=r.source_span[1] for r in requirements) for m in cues):continue
+        if status=='INCOMPLETE':
+            if any(r.field==field and r.state in [State.EMPTY,State.PLACEHOLDER,State.OMITTED] and r.source_span[0]<=tb and r.source_span[1]>=ta for r in requirements):continue
+            if any(r.field!=field and r.field in FAMILIES and r.source_span[0]<=ta<tb<=r.source_span[1] for r in requirements):continue
+        if status=='INCOMPLETE' and field in ['author','title']:
+            complete=[r for r in requirements if r.field==field and r.state==State.SUPPLIED and r.source_span[0]>=a and r.source_span[1]<=b]
+            meta=re.search(r'\b(?:slot|box|operand|note|reference|required|mandatory|left)\b',outside(raw[a:b]),re.I)
+            if complete and not meta:continue
+        requirements.append(requirement(raw,field,'SOURCE_RELATIONSHIP',evidence.get('value'),(a,b),owner(a,b),status=status,
+            representation='RELATIONSHIP',provenance={'origin':'SOURCE_RECOGNIZER','recognizer':'inventory.source_relationship','rule':evidence.get('reason')}))
+    requirements=[replace(r,**annotate(r,role_units)) for r in requirements]
+    # A non-operative inquiry is not a request for a broad catalogue search.
+    operative=any(u.operative or u.modality in [Modality.UNKNOWN,Modality.CONDITIONAL] for u in role_units)
+    if requirements and not operative and all(r.ownership=='NON_OPERATIVE' for r in requirements):
+        r=requirements[0]
+        requirements.append(requirement(raw,'operation','NON_SEARCH_INQUIRY',None,r.source_span,r.clause_span,status='UNSUPPORTED',representation='UNSUPPORTED',provenance={'recognizer':'roles.non_search_inquiry'}))
+    ir=QueryIR(raw,tuple(requirements),ir.clauses,ir.trusted_controls)
+    p.source_spans=[{'kind':'STRUCTURED_CONSTRAINT','start':r.source_span[0],'end':r.source_span[1],'text':r.source_text,'source_query':raw} for r in requirements]
+    notices=[{k:r[k] for k in ['from','to']}|{'kind':'grammar','source_span':[r['start'],r['end']]} for r in repairs]
+    for correction in proposed.corrections+[{**x['correction'],'source_span':[a,b]} for (a,b,f),x in metadata.items() if x.get('correction')]:
+        a,b=span(*correction['source_span']);fragment=raw[a:b];found=re.search(re.escape(correction['from']),fragment,re.I)
+        if found:
+            item={k:correction[k] for k in ['from','to','kind']};item['from']=fragment[found.start():found.end()];p.corrections.append(item);notices.append({**item,'source_span':[a+found.start(),a+found.end()]})
+    decisions.decide(p,'EXECUTABLE_WITH_NOTICE' if notices else 'EXECUTABLE','SOURCE_CONTRACT_COMPILED')
+    # Native predicate contradictions remain part of the proof boundary.
+    for term in p.exclude_terms:
+        for field in ['author_text','title_text']:
+            if getattr(p,field) and re.search(r'(?<!\w)'+re.escape(normalize(term))+r'(?!\w)',normalize(getattr(p,field))):
+                decisions.decide(p,'CONTRADICTORY','CROSS_FIELD_REQUIRED_EXCLUSION',fields=[field,'exclude_terms'])
+    ledger=[]
+    for r in requirements:
+        d=asdict(r);d.update(status='ADVISORY' if r.ownership=='ADVISORY' else 'RESOLVED' if r.state==State.SUPPLIED else 'INCOMPLETE' if r.state in [State.EMPTY,State.OMITTED,State.PLACEHOLDER] else 'AMBIGUOUS' if r.state==State.AMBIGUOUS else 'UNSUPPORTED' if r.state==State.UNSUPPORTED else 'CONTRADICTORY',owning_clause_span=list(r.clause_span),owning_clause=raw[slice(*r.clause_span)]);ledger.append(d)
+    p.decision.update(requirements=ledger,repair_notices=notices,query_ir_contract=encode(ir),
+        source_roles=records(role_units),
+        query_ir={'version':6,'trusted_scope_from_text':False,'legacy_hard_filter_fallback':False,'not_requested_fields':sorted(set(FAMILIES)-{r.field for r in requirements})},
+        execution_proof={'projection':projection(p),'IR_digest':digest(encode(ir)),'violations':[]},development_isolation={'disabled_candidate':True,'confidence_is_probability':False})
+    # Apply non-hard UI omissions after semantic/preference construction too.
+    omit_fields(p,omit)
+    return validate(p)

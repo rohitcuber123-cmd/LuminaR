@@ -1,0 +1,214 @@
+{
+  "before": {
+    "books": {
+      "count": 151,
+      "bson_sha256": "096737aeade967b2a48b06f267150a086346c7cdc56ac598484cff6d4c6be626",
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "work_id": 1
+          },
+          "name": "work_id_1",
+          "unique": true
+        }
+      ],
+      "options": {}
+    },
+    "institution_intelligence_generations": {
+      "count": 0,
+      "bson_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "generation_id": 1
+          },
+          "name": "generation_id_1",
+          "unique": true
+        }
+      ],
+      "options": {}
+    },
+    "institution_intelligence_jobs": {
+      "count": 0,
+      "bson_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "job_id": 1
+          },
+          "name": "job_id_1",
+          "unique": true
+        },
+        {
+          "v": 2,
+          "key": {
+            "state": 1,
+            "created_at": 1
+          },
+          "name": "state_1_created_at_1"
+        },
+        {
+          "v": 2,
+          "key": {
+            "library_id": 1,
+            "target": 1
+          },
+          "name": "library_id_1_target_1",
+          "unique": true,
+          "partialFilterExpression": {
+            "effective_active": true
+          }
+        }
+      ],
+      "options": {}
+    },
+    "institution_intelligence_targets": {
+      "count": 0,
+      "bson_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        },
+        {
+          "v": 2,
+          "key": {
+            "library_id": 1,
+            "target": 1
+          },
+          "name": "library_id_1_target_1",
+          "unique": true
+        }
+      ],
+      "options": {}
+    },
+    "institution_libraries": {
+      "count": 1,
+      "bson_sha256": "2a89d68f6c02878bf8e74ec66c51cd360b0b2376aa693ddfa848a526d4a50b87",
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        }
+      ],
+      "options": {}
+    },
+    "institution_worker_telemetry_v2k": {
+      "count": 1,
+      "bson_sha256": "c33368075afd6d2ad70abd53c6b7b9d6b364b59b217315389d3021066008cfd6",
+      "indexes": [
+        {
+          "v": 2,
+          "key": {
+            "_id": 1
+          },
+          "name": "_id_"
+        }
+      ],
+      "options": {
+        "validator": {
+          "$and": [
+            {
+              "$jsonSchema": {
+                "bsonType": "object",
+                "required": [
+                  "_id",
+                  "schema",
+                  "epoch",
+                  "current",
+                  "previous"
+                ],
+                "properties": {
+                  "_id": {
+                    "enum": [
+                      "resident-tenant-worker-v1"
+                    ]
+                  },
+                  "schema": {
+                    "enum": [
+                      1
+                    ]
+                  },
+                  "epoch": {
+                    "bsonType": [
+                      "int",
+                      "long"
+                    ],
+                    "minimum": 0
+                  },
+                  "current": {
+                    "bsonType": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "progress": {
+                        "bsonType": "array",
+                        "maxItems": 8
+                      }
+                    }
+                  },
+                  "previous": {
+                    "bsonType": [
+                      "object",
+                      "null"
+                    ],
+                    "properties": {
+                      "progress": {
+                        "bsonType": "array",
+                        "maxItems": 8
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "$expr": {
+                "$lte": [
+                  {
+                    "$bsonSize": "$$ROOT"
+                  },
+                  16384
+                ]
+              }
+            }
+          ]
+        },
+        "validationLevel": "strict",
+        "validationAction": "error"
+      }
+    }
+  },
+  "after": {}
+}

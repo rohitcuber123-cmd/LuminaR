@@ -1,0 +1,5 @@
+# Next recommended scope
+
+Stop after Part2N. Next authorized planning scope should assign installation/DBA/application/Search/RAG/Recommendation/Windows-secret/backup owners and classify the endpoint. Close source/runtime dynamic privilege edges and trace a representative authenticated full-stack deployment with real service profiles and protected code/secret delivery. Approve and test a coherent real backup/restore in an isolated environment under a separate data-handling authorization, then review the downtime/rollback runbook and resolve the two preexisting backend failures.
+
+Only after those prerequisites are evidenced should an operator request a separate, explicit authentication cutover maintenance window. Telemetry enablement remains a later separately approved action after Mongo/application readiness; do not couple it to authentication migration. No authorization switch, production user provisioning/rotation, ACL/firewall change, service restart, automatic recovery/maintenance or global rebuild is authorized by this completed readiness scope.

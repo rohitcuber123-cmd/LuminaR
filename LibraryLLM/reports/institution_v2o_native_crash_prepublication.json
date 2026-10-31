@@ -1,0 +1,258 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "SERIALIZATION_ACK",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 15:17:16.023015+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 15:17:16.696381+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 15:17:17.833356+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 15:17:17.820000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 15:17:17.820000",
+        1,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 15:17:17.943705+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 15:17:17.820000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        151,
+        151,
+        "2026-10-30 15:17:17.820000",
+        1,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 15:17:18.725577+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 15:17:17.820000",
+      "pulse_seq": 1,
+      "progress_seq": 3,
+      "progress": [
+        {
+          "job_id": "1cc000bd-0e97-4211-8683-e64df4c449c5",
+          "stage": "VALIDATION",
+          "state": "VALIDATING",
+          "progress_current": 151,
+          "last_progress_observed_at": "2026-10-30 15:17:18.616000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        151,
+        151,
+        "2026-10-30 15:17:17.820000",
+        1,
+        3
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": "NOT_LOADED_KG_OR_IDLE",
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "IDLE",
+      "rss_bytes": 70987776,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 70590464,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.014999999999418,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 71352320,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 15
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71815168,
+      "cpu_delta_ms": 140.625,
+      "interval_seconds": 1.0,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71131136,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71892992,
+      "cpu_delta_ms": 171.875,
+      "interval_seconds": 1.0310000000008586,
+      "python_threads": 11,
+      "os_threads": 15
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 4,
+    "os": 8
+  },
+  "mongo_connections_before": null,
+  "native_start_return_ms": 8.829099999275059,
+  "observer_ready_ms": 38.473699998576194,
+  "threads_observing": {
+    "python": 9,
+    "os": 13
+  },
+  "mongo_connections_observing": null,
+  "last_good": {
+    "generation_id": "3cb665f2-7ddb-40d5-b2b8-c8183bc94086",
+    "files": {
+      "C:\\Users\\balak\\AppData\\Local\\Temp\\luminar-v2o-auth-xf49l7ek\\tenant-artifacts\\f4048637-4a5f-4232-8415-f079588d67fd\\kg\\3cb665f2-7ddb-40d5-b2b8-c8183bc94086\\graph.json": "4c3d3c43778bab73104af953442844effa33a85fc71ce71b1ecffce93202504d",
+      "C:\\Users\\balak\\AppData\\Local\\Temp\\luminar-v2o-auth-xf49l7ek\\tenant-artifacts\\f4048637-4a5f-4232-8415-f079588d67fd\\kg\\3cb665f2-7ddb-40d5-b2b8-c8183bc94086\\manifest.json": "8f83345a585659c19cb823ca899214f0ff771e63ae90cc509f2304efac56972b",
+      "C:\\Users\\balak\\AppData\\Local\\Temp\\luminar-v2o-auth-xf49l7ek\\tenant-artifacts\\f4048637-4a5f-4232-8415-f079588d67fd\\kg\\3cb665f2-7ddb-40d5-b2b8-c8183bc94086\\metadata.json": "a4990633febde963cc1715160b5f84b74f7a9bc8f7683b3d64e9a4047fd5c546"
+    }
+  },
+  "current_library": "f4048637-4a5f-4232-8415-f079588d67fd",
+  "crash_job": {
+    "job_id": "1cc000bd-0e97-4211-8683-e64df4c449c5",
+    "library_id": "f4048637-4a5f-4232-8415-f079588d67fd",
+    "target": "KNOWLEDGE_GRAPH",
+    "requested_generation_id": "19eaba21-ba66-4b2d-a032-f57391d5d9e2",
+    "artifact_generation_id": "2af81938-7618-4e75-8b90-7ebe6bdddd5e",
+    "state": "VALIDATING",
+    "stage": "VALIDATION",
+    "progress_current": 151,
+    "progress_total": 151,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-30 15:17:15.914000",
+    "started_at": "2026-10-30 15:17:17.820000",
+    "heartbeat_at": "2026-10-30 15:17:17.820000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "lease_expires_at": "2026-10-30 15:18:47.820000",
+    "require_nonempty": true,
+    "fence_token_digest": "a9fbba653333937a29d442ae15b752384187008fccf97326a18af62cb549ff88",
+    "worker_id_digest": "47bb8010a93ed3132877dd139fbbdfda49b0b05e3406bee532587bb0c51e9335"
+  },
+  "pointer_at_crash": {
+    "target": "KNOWLEDGE_GRAPH",
+    "library_id": "f4048637-4a5f-4232-8415-f079588d67fd",
+    "active_generation_id": "3cb665f2-7ddb-40d5-b2b8-c8183bc94086",
+    "state": "VALIDATING",
+    "artifact_bytes": 191990,
+    "built_at": "2026-10-30 15:17:15.793000",
+    "edge_count": 604,
+    "error_code": null,
+    "manifest_checksum": "8f83345a585659c19cb823ca899214f0ff771e63ae90cc509f2304efac56972b",
+    "node_count": 155,
+    "previous_generation_id": null,
+    "published_by_job_id": "c967477c-542f-4a8b-9435-ef68055027c3",
+    "record_count": 151,
+    "source_fingerprint": "b7d28490986118403892abf0f7f6739740c0854ee4ef6c9850c39cf62cbf3608",
+    "source_generation_id": "19eaba21-ba66-4b2d-a032-f57391d5d9e2",
+    "active_job_id": "1cc000bd-0e97-4211-8683-e64df4c449c5",
+    "fence_token_digest": "a9fbba653333937a29d442ae15b752384187008fccf97326a18af62cb549ff88"
+  },
+  "telemetry_before_crash": {
+    "epoch": 2
+  },
+  "instance_ref": "1a0d96a27a912e2e140f5e0740e0a71024de60c0cd8edd15d258240cd3b04705",
+  "genuine_process_exit": 77
+}

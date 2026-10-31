@@ -1,0 +1,275 @@
+{
+  "qualification": "ISOLATED_PROTOTYPE_ONLY",
+  "cases": [
+    {
+      "name": "lifecycle",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 82.62578349999967,
+      "evidence": "institution_v2k_native_lifecycle.json"
+    },
+    {
+      "name": "paired_false",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 52.13212249999924,
+      "evidence": "institution_v2k_native_paired_false.json"
+    },
+    {
+      "name": "paired_true",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 52.669624300004216,
+      "evidence": "institution_v2k_native_paired_true.json"
+    },
+    {
+      "name": "bad_writer",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 50.333799400003045,
+      "evidence": "institution_v2k_native_bad_writer.json"
+    },
+    {
+      "name": "crash_embedding",
+      "exit": 77,
+      "expected_exit": 77,
+      "seconds": 22.656039800000144,
+      "evidence": "institution_v2k_native_crash_embedding.json"
+    },
+    {
+      "name": "restart_embedding",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 5.588342200004263,
+      "evidence": "institution_v2k_native_restart_embedding.json"
+    },
+    {
+      "name": "crash_kg",
+      "exit": 77,
+      "expected_exit": 77,
+      "seconds": 5.332266699995671,
+      "evidence": "institution_v2k_native_crash_kg.json"
+    },
+    {
+      "name": "restart_kg",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 5.649937099995441,
+      "evidence": "institution_v2k_native_restart_kg.json"
+    },
+    {
+      "name": "crash_validation",
+      "exit": 77,
+      "expected_exit": 77,
+      "seconds": 5.412041200004751,
+      "evidence": "institution_v2k_native_crash_validation.json"
+    },
+    {
+      "name": "restart_validation",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 5.909350699999777,
+      "evidence": "institution_v2k_native_restart_validation.json"
+    },
+    {
+      "name": "crash_before_publication",
+      "exit": 77,
+      "expected_exit": 77,
+      "seconds": 5.611405800002103,
+      "evidence": "institution_v2k_native_crash_before_publication.json"
+    },
+    {
+      "name": "restart_before_publication",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 5.5713259000040125,
+      "evidence": "institution_v2k_native_restart_before_publication.json"
+    },
+    {
+      "name": "crash_during_publication",
+      "exit": 77,
+      "expected_exit": 77,
+      "seconds": 5.512991300005524,
+      "evidence": "institution_v2k_native_crash_during_publication.json"
+    },
+    {
+      "name": "restart_during_publication",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 5.91613530000177,
+      "evidence": "institution_v2k_native_restart_during_publication.json"
+    },
+    {
+      "name": "crash_after_pointer_before_ack",
+      "exit": 77,
+      "expected_exit": 77,
+      "seconds": 5.439156899999944,
+      "evidence": "institution_v2k_native_crash_after_pointer_before_ack.json"
+    },
+    {
+      "name": "restart_after_pointer_before_ack",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 5.528389300001436,
+      "evidence": "institution_v2k_native_restart_after_pointer_before_ack.json"
+    }
+  ],
+  "real_process_crashes": [
+    {
+      "name": "embedding",
+      "fault": "EMBEDDING_BATCH",
+      "target": "SEARCH_INDEX",
+      "job_state_before_restart": "RUNNING",
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "published_pointer_matches_crashed_job": false,
+      "new_instance": true,
+      "stale_after_31s_logical_observation": "STALE",
+      "qualification": "Actual os._exit(77); stale threshold evaluated with explicit future observer time, not a 31-second wall wait. Native lease was not shortened or recovered."
+    },
+    {
+      "name": "kg",
+      "fault": "KG_NODES",
+      "target": "KNOWLEDGE_GRAPH",
+      "job_state_before_restart": "RUNNING",
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "published_pointer_matches_crashed_job": false,
+      "new_instance": true,
+      "stale_after_31s_logical_observation": "STALE",
+      "qualification": "Actual os._exit(77); stale threshold evaluated with explicit future observer time, not a 31-second wall wait. Native lease was not shortened or recovered."
+    },
+    {
+      "name": "validation",
+      "fault": "VALIDATION",
+      "target": "KNOWLEDGE_GRAPH",
+      "job_state_before_restart": "VALIDATING",
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "published_pointer_matches_crashed_job": false,
+      "new_instance": true,
+      "stale_after_31s_logical_observation": "STALE",
+      "qualification": "Actual os._exit(77); stale threshold evaluated with explicit future observer time, not a 31-second wall wait. Native lease was not shortened or recovered."
+    },
+    {
+      "name": "before_publication",
+      "fault": "SERIALIZATION_ACK",
+      "target": "KNOWLEDGE_GRAPH",
+      "job_state_before_restart": "VALIDATING",
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "published_pointer_matches_crashed_job": false,
+      "new_instance": true,
+      "stale_after_31s_logical_observation": "STALE",
+      "qualification": "Actual os._exit(77); stale threshold evaluated with explicit future observer time, not a 31-second wall wait. Native lease was not shortened or recovered."
+    },
+    {
+      "name": "during_publication",
+      "fault": "PUBLISH",
+      "target": "KNOWLEDGE_GRAPH",
+      "job_state_before_restart": "PUBLISHING",
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "published_pointer_matches_crashed_job": false,
+      "new_instance": true,
+      "stale_after_31s_logical_observation": "STALE",
+      "qualification": "Actual os._exit(77); stale threshold evaluated with explicit future observer time, not a 31-second wall wait. Native lease was not shortened or recovered."
+    },
+    {
+      "name": "after_pointer_before_ack",
+      "fault": "ACKNOWLEDGEMENT_LOSS",
+      "target": "KNOWLEDGE_GRAPH",
+      "job_state_before_restart": "PUBLISHING",
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "published_pointer_matches_crashed_job": true,
+      "new_instance": true,
+      "stale_after_31s_logical_observation": "STALE",
+      "qualification": "Actual os._exit(77); stale threshold evaluated with explicit future observer time, not a 31-second wall wait. Native lease was not shortened or recovered."
+    }
+  ],
+  "production_enabled": false,
+  "limitations": [
+    "No deployment OS/supervisor proof.",
+    "Native adapter is confined process-global instrumentation, not an integration seam."
+  ],
+  "idle": {
+    "seconds": 32.00208310000016,
+    "cpu_ms": 78.125,
+    "rss_increase_bytes": 81920,
+    "pulse_seq": 4,
+    "lifecycle": "IDLE"
+  },
+  "actual_search_and_kg": [
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "f4490b8f-0b92-4be0-b25a-5f36f2f4044a",
+      "job_id": "9737debc-a76e-4f90-8fae-0d62a20e4a86",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 21272.327899998345,
+      "native_build_ms": 18021.0,
+      "cpu_ms": 1265.625,
+      "rss_increase_bytes": 83443712,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "62df79db-85b7-4ee4-84d7-e81056fa8007",
+      "job_id": "75beb70c-404a-4738-a2ac-0df46e608fb9",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 5721.236799996404,
+      "native_build_ms": 3827.0,
+      "cpu_ms": 218.75,
+      "rss_increase_bytes": 24576,
+      "pointer_ack_match": true
+    }
+  ],
+  "authenticated_operator_observation": {
+    "prototype_only": true,
+    "read_only": true,
+    "worker": {
+      "classification": "STOPPED_REPORTED",
+      "idle": "UNKNOWN",
+      "active_job_observed": false,
+      "process_independently_verified": false,
+      "stalled": "NOT_DETERMINED",
+      "evidence": "Recent self-report proves only a successful write at its recorded time.",
+      "restart_observed": false,
+      "instance_ref": "instance-0b734a81b9b7925c",
+      "pulse_age_seconds": 4.631
+    },
+    "progress": [
+      {
+        "job_id": "9737debc-a76e-4f90-8fae-0d62a20e4a86",
+        "target": "SEARCH_INDEX",
+        "recency": "RECENT_PROGRESS_OBSERVED",
+        "last_progress_observed_at": "2026-10-29T20:28:51.541000+00:00",
+        "progress_age_seconds": 12.864,
+        "publication": "ACKNOWLEDGED_POINTER_MATCH",
+        "stalled": "NOT_DETERMINED"
+      }
+    ],
+    "consistency": "BEST_EFFORT_REVALIDATED",
+    "timestamp_semantics": "Post-read observation of accepted native state; not its exact commit time."
+  },
+  "cli": [
+    {
+      "format": "json",
+      "exit": 0,
+      "bytes": 845,
+      "output": "{\"consistency\": \"BEST_EFFORT_REVALIDATED\", \"progress\": [{\"job_id\": \"9737debc-a76e-4f90-8fae-0d62a20e4a86\", \"last_progress_observed_at\": \"2026-10-29T20:28:51.541000+00:00\", \"progress_age_seconds\": 13.665, \"publication\": \"ACKNOWLEDGED_POINTER_MATCH\", \"recency\": \"RECENT_PROGRESS_OBSERVED\", \"stalled\": \"NOT_DETERMINED\", \"target\": \"SEARCH_INDEX\"}], \"prototype_only\": true, \"read_only\": true, \"timestamp_semantics\": \"Post-read observation of accepted native state; not its exact commit time.\", \"worker\": {\"active_job_observed\": false, \"classification\": \"STOPPED_REPORTED\", \"evidence\": \"Recent self-report proves only a successful write at its recorded time.\", \"idle\": \"UNKNOWN\", \"instance_ref\": \"instance-0b734a81b9b7925c\", \"process_independently_verified\": false, \"pulse_age_seconds\": 5.432, \"restart_observed\": false, \"stalled\": \"NOT_DETERMINED\"}}"
+    },
+    {
+      "format": "text",
+      "exit": 0,
+      "bytes": 521,
+      "output": "LuminaR 2K isolated prototype \u2014 read-only\nWorker self-report: STOPPED_REPORTED\nProcess independently verified: NO\nStalled: NOT_DETERMINED\nRecent self-report proves only a successful write at its recorded time.\nCorrelated progress: [{\"job_id\": \"9737debc-a76e-4f90-8fae-0d62a20e4a86\", \"last_progress_observed_at\": \"2026-10-29T20:28:51.541000+00:00\", \"progress_age_seconds\": 15.05, \"publication\": \"ACKNOWLEDGED_POINTER_MATCH\", \"recency\": \"RECENT_PROGRESS_OBSERVED\", \"stalled\": \"NOT_DETERMINED\", \"target\": \"SEARCH_INDEX\"}]"
+    }
+  ],
+  "operator_write_denied_code": 13,
+  "fixture_database_and_artifacts": "Owned mongod shutdown and TemporaryDirectory cleanup only; production untouched.",
+  "qualification_scope": "Actual TenantIntelligence.start/loop with cached real encoder and native builders; existing native backend router mounted with real JWT decoding. Full Search/global engine/backend-main deployment processes were not launched. Frozen application suites remain separate.",
+  "native_fault_isolation_evidence": "institution_v2k_native_faults.json"
+}

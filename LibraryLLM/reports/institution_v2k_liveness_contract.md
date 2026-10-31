@@ -1,0 +1,7 @@
+# Independent self-report channel
+
+Agent is separate from the native job lease renewal thread. Candidate pulse interval10s, idle and active; monotonic process scheduling and bounded500ms Mongo calls. It continues while embedding/validating/publishing, with no native lease update. Labels: RECENTLY_OBSERVED for a valid last server-written pulse within30s; STALE beyond30s; STOPPED_REPORTED only for coherent best-effort shutdown; UNKNOWN for missing/malformed/future/rollback evidence. IDLE/ACTIVE are explicitly the most recent self-report. Active self-report is not a present ownership guarantee.
+
+A durable pulse proves only successful writing at its recorded time. It never proves the process still executes. process_independently_verified is always false. No HEALTHY or PROCESS_VERIFIED_ALIVE classification exists. Stale/no-progress never asserts death or a stall; stalled stays NOT_DETERMINED. No ETA, CPU/RAM/GPU attribution is offered by the operator command. Harness-owned child PID measurements are controlled experiment measurements, not production identity verification.
+
+Native lifecycle evidence and actual CLI output are in native_validation.json and native_lifecycle.json; idle/return-to-idle and idle crash supplement are separately identified. A crash has no fabricated shutdown. STOPPED is attempted only after native thread join has ended; incomplete join produces no STOPPED. Native close behavior itself remains unchanged.

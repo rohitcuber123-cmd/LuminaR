@@ -1,0 +1,32 @@
+{
+  "candidate_id": "search-smarteng-disabled-proof-6",
+  "source_freeze_sha256": "ba927cad51f55a76114bec855a11fd473b295a1243d2954c446f005a30eae82b",
+  "primary_attempts_allowed": 1,
+  "population": {
+    "contexts": 150,
+    "families_minimum": 30,
+    "actual_topologies_minimum": 30,
+    "scopes": 5,
+    "strata": 6,
+    "contexts_per_cell": 5,
+    "independent_author_and_reviewer": true
+  },
+  "gates": {
+    "typed_minimum": 0.95,
+    "execution_minimum": 0.99,
+    "critical_false_execution_maximum": 0,
+    "missed_valid_maximum": 0.05,
+    "executed_mandatory_operand_loss_or_invention_maximum": 0,
+    "authorization_or_cross_tenant_leaks_maximum": 0
+  },
+  "scorer": "scripts/search_v2c_c5er_evaluation_adapter_v2.py",
+  "scorer_sha256": "bbd088d3704af6f01b0c00dcbb013c058969667b7cc6b477374b9f4033dfe93b",
+  "source_role_scoring": "Exact source substring/span and role/modality only where independently reviewed oracle supplied; no equivalence invented. Unknowns/N-A excluded explicitly.",
+  "native_actions": "Optional completion_input is query-only user input; capture source-owned draft separately, compare independently reviewed expected_completion after capture. Mock authority only, no live CAS claim.",
+  "operational_SLO": "NOT_AGREED",
+  "reviewer_predictions_visible": false,
+  "gold_edits_after_capture": false,
+  "after_primary_failure": "Preserve failure; do not revise candidate or call rerun fresh.",
+  "Mongo_writes": 0,
+  "sealed_evaluations": 0
+}

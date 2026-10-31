@@ -1,0 +1,9 @@
+# Explicit opt-in verified; production off
+
+Authoritative names: LUMINAR_WORKER_TELEMETRY_ENABLED must equal1, plus separate LUMINAR_WORKER_TELEMETRY_MONGO_URI. configured_factory returns None otherwise; it never loads .env itself or falls back to MONGO_URI/operator/JWT. The actual Search installer binds the writer to the native database and retains the existing resident-model startup gate. Prototype files, collections, credentials alone and Platform roles cannot activate it.
+
+The host audit checked process and project dotenv flag/URI presence without emitting values: explicit enablement is false, no writer/operator telemetry credential is configured. No environment, launcher, service or runtime file was modified by2M. Default-disabled behavior, URI-present/flag-off, missing/wrong credentials, wrong DB/authSource, denied role, timeout and successful authenticated opt-in are exercised in fresh tests/fixtures.
+
+Controlled native fixture phases alone opt in through a protected secret, then rotate and turn off at restart. The disabled restart and later manual Search/KG builds leave the retained telemetry record unchanged and create no observer. No runtime schema/account provisioning occurs. For a future production launcher, do not decrypt/inject a writer secret until deliberate approved enablement; the fixture intentionally injects a URI while disabled to prove that URI presence alone is ineffective.
+
+Stage5 activation is outside2M and blocked by production authorization, ACL/identity/secret and workload prerequisites. No production credential/collection/index/flag, service restart, automatic maintenance/scheduling/recovery/cancel/cleanup or global control is created. Default-disabled source is preserved rather than replaced with a deployment-specific second implementation.

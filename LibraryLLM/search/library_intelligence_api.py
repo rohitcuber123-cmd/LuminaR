@@ -3,6 +3,8 @@ from uuid import UUID
 from fastapi import APIRouter,Depends,Query,Response,HTTPException
 from backend.dependencies import get_current_user
 from search.library_intelligence import TenantIntelligence
+from backend.services.library_worker_observer import configured_factory
+from backend.services.library_intelligence_store import collection
 
 def install(app,engine):
     model=getattr(engine,'embedding_model',None)
@@ -13,7 +15,8 @@ def install(app,engine):
         if model is None:raise HTTPException(503,'Resident catalogue embedding model is unavailable.')
         return model.encode(texts,normalize_embeddings=True,convert_to_numpy=True,show_progress_bar=False)
     reranker=getattr(engine,'reranker',None)
-    service=TenantIntelligence(encode,(lambda pairs:reranker.predict(pairs,show_progress_bar=False)) if reranker is not None else None,version)
+    service=TenantIntelligence(encode,(lambda pairs:reranker.predict(pairs,show_progress_bar=False)) if reranker is not None else None,version,
+        observer_factory=configured_factory(collection('intelligence_jobs').database.name))
     app.state.tenant_intelligence=service
     router=APIRouter(prefix='/libraries/{library_id}/catalogue',tags=['Tenant semantic catalogue'])
     @router.get('/search')

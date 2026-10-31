@@ -1,0 +1,37 @@
+def normalized(text):
+    return ' '.join(unicodedata.normalize('NFKC', text).casefold().split())
+
+def mode(value):
+    return {'SEMANTIC': 'SMART', 'GENRE': 'GENRE_SUBJECT'}.get(value.upper(), value.upper())
+
+def structure(row):
+    """Conservative operation topology, independent of expected plans and outputs.
+
+    Merge even lexically different families when they share operation presence.
+    Native actions have distinct state transition graphs.
+    Literal modes are grouped together by mode. Scope is deliberately omitted:
+    it must not allow an exposed grammar into the final holdout.
+    """
+    if row.get('requires_native_execution'):
+        return 'NATIVE:' + (row.get('expected_action') or row['family_id'])
+    m = mode(row['search_mode'])
+    if m != 'SMART':
+        return 'LITERAL:' + m
+    q = normalized(row['query_text'])
+    features = []
+    for key, pattern in [
+        ('rating', r'\brat(?:ing|ings|ed)\b|\bstars?\b|\d\+'),
+        ('year', r'\b(?:publish\w*|release\w*|year|after|before|onward)\b'),
+        ('author', r'\bby\b'), ('title', r'\btitled\b'),
+        ('negative', r'\b(?:not|exclud\w*|without|except)\b'),
+        ('include', r'\b(?:include|included|subject|category)\b'),
+        ('format', r'\b(?:online|digital\w*|physical\w*|hardcover|binding)\b'),
+        ('availability', r'\b(?:available|request|loan|borrow)\b'),
+        ('metadata', r'\b(?:pages?|edition|language|french|dollars|costing|difficulty|audience)\b'),
+        ('preference', r'\b(?:beginner\w*|introduct\w*|advanced|research|reference|short\w*)\b'),
+        ('sort', r'\b(?:sort|highest|newest|oldest)\b')]:
+        if re.search(pattern, q):
+            features.append(key)
+    # Quoted and unquoted topic-only queries are conservatively one topology.
+    return 'SMART:' + ','.join(features)
+

@@ -8,24 +8,47 @@ from backend.services import library_intelligence_artifacts as artifacts
 from backend.services import library_catalogue_experience as catalogue
 
 class TenantIntelligence:
-    def __init__(self,encoder,reranker=None,model_version=store.MODEL,cache=None,fail=None):
+    def __init__(self,encoder,reranker=None,model_version=store.MODEL,cache=None,fail=None,observer_factory=None):
         self.encoder=encoder;self.reranker=reranker;self.model_version=model_version
         self.cache=cache or artifacts.ArtifactCache();self.fail=fail or (lambda stage:None)
         self.stop=Event();self.thread=None;self.model_lock=Lock();self.worker_id='tenant-'+str(uuid4())
+        self.lifecycle_lock=Lock();self.observer_factory=observer_factory;self.observer=None;self.observer_errors=0
+    def _observe(self,event,job=None,**options):
+        if self.observer is None:return
+        try:
+            # Never share mutable native job state or use an observer return value.
+            args=({k:job.get(k) for k in ('job_id','library_id','target','worker_id','fence_token')},) if job is not None else ()
+            getattr(self.observer,event)(*args,**options)
+        except Exception:
+            self.observer_errors=min(self.observer_errors+1,1000000)
+    def _progress(self,job,stage,current=0,total=0,state='RUNNING'):
+        store.progress(job,stage,current,total,state)
+        self._observe('progress',job)  # Hint only AFTER the existing durable update returned.
     def start(self):
-        store.initialize()
-        if self.thread and self.thread.is_alive():return
-        self.thread=Thread(target=self.loop,name='tenant-intelligence-worker',daemon=True);self.thread.start()
-    def close(self):self.stop.set();self.cache.clear()
+        with self.lifecycle_lock:
+            store.initialize()
+            if self.stop.is_set() or self.thread and self.thread.is_alive():return
+            if self.observer is None and self.observer_factory is not None:
+                try:self.observer=self.observer_factory(self.worker_id)
+                except Exception:self.observer_errors=min(self.observer_errors+1,1000000)
+            self._observe('started')
+            self.thread=Thread(target=self.loop,name='tenant-intelligence-worker',daemon=True);self.thread.start()
+    def close(self):
+        with self.lifecycle_lock:self.stop.set();self.cache.clear()
+        # Preserve native nonjoining shutdown; only the observer joins its own auxiliary thread.
+        self._observe('stopping',native_stopped=not self.thread or not self.thread.is_alive())
     def loop(self):
-        while not self.stop.is_set():
-            try:
-                if self.run_one():continue
-            except Exception:pass  # Durable state/reconciliation owns failures, never restart a publisher blindly.
-            self.stop.wait(2)
+        try:
+            while not self.stop.is_set():
+                try:
+                    if self.run_one():continue
+                except Exception:pass  # Durable state/reconciliation owns failures, never restart a publisher blindly.
+                self.stop.wait(2)
+        finally:self._observe('stopped')
     def run_one(self):
         job=store.claim(self.worker_id)
         if not job:return False
+        self._observe('claimed',job)
         stop=Event();lease_lost=Event()
         def renewal():
             while not stop.wait(10):
@@ -43,7 +66,7 @@ class TenantIntelligence:
             if temporary.resolve()!=temporary:raise HTTPException(409,'ARTIFACT_NAMESPACE_INVALID')
             temporary.mkdir(parents=True,exist_ok=False)
             store.durable_json(temporary/'metadata.json',records)
-            progress=lambda stage,current=0,total=0:store.progress(job,stage,current,total)
+            progress=lambda stage,current=0,total=0:self._progress(job,stage,current,total)
             if kind=='search':
                 with self.model_lock:details=artifacts.build_search(temporary,records,self.encoder,self.model_version,job['library_id'],progress,self.fail)
             else:details=artifacts.build_graph(temporary,records,progress,self.fail)
@@ -52,13 +75,13 @@ class TenantIntelligence:
                 'source_fingerprint':generation['source_fingerprint'],'target':job['target'],'schema_version':store.SCHEMA,'book_count':len(records),
                 'created_by_user_id':job['requested_by_user_id'],'job_id':job['job_id'],'built_at':store.now().isoformat(),'files':files,**details}
             self.fail('MANIFEST_WRITE');store.durable_json(temporary/'manifest.json',manifest)
-            store.progress(job,'VALIDATION',len(records),len(records),'VALIDATING');self.fail('VALIDATION')
+            self._progress(job,'VALIDATION',len(records),len(records),'VALIDATING');self.fail('VALIDATION')
             artifacts.validate(job['library_id'],job['target'],job['artifact_generation_id'],records,temporary)
             self.fail('SERIALIZATION_ACK');os.replace(temporary,final)
             digest=store.checksum(final/'manifest.json')
             self.fail('HEARTBEAT')
             if lease_lost.is_set():raise HTTPException(409,'HEARTBEAT_LOSS')
-            store.progress(job,'PUBLISH',len(records),len(records),'PUBLISHING')
+            self._progress(job,'PUBLISH',len(records),len(records),'PUBLISHING')
             with store.intelligence_barrier(job['library_id'],job):
                 store.check_lease(job);store.build_guard(job['library_id'],{'sub':str(job['requested_by_user_id'])},True)
                 if store.fingerprint(store.source_records(job['library_id']))!=generation['source_fingerprint']:raise HTTPException(409,'SOURCE_CHANGED')
@@ -82,7 +105,9 @@ class TenantIntelligence:
             if store.collection('intelligence_jobs').update_one(query,{'$set':{'state':state,'stage':state,'effective_active':unknown,'error_code':code,'error_message':'Build requires reconciliation.' if unknown else 'Build failed; previous validated generation is retained.','completed_at':store.now()}}).matched_count:
                 store.collection('intelligence_targets').update_one({'library_id':job['library_id'],'target':job['target'],'active_job_id':job['job_id'],'fence_token':job['fence_token']},{'$set':{'state':state,'error_code':code},**({} if unknown else {'$unset':{'active_job_id':'','fence_token':''}})})
                 store.build_audit(job,'RECOVERY_REQUIRED' if unknown else 'FAILED')
-        finally:stop.set();renewer.join(timeout=1)
+        finally:
+            stop.set();renewer.join(timeout=1)
+            self._observe('finished',job)
         return True
     def semantic(self,library_id,actor,query,*,staff=False,offset=0,limit=20,subject='',author='',circulation_status='',sort='title'):
         from backend.services.library_intelligence_service import target_status

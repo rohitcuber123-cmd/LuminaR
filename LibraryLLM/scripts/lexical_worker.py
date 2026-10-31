@@ -28,7 +28,7 @@ def main():
     if args.poll_seconds < 0.1:
         parser.error('--poll-seconds must be at least 0.1')
 
-    from pymongo import MongoClient
+    from backend.database.mongo_configuration import connect, settings
     from search.lexical_delta import LexicalDeltaWriter
     from search.lexical_store import default_path
     from search.sync_queue import SyncQueue, index_root
@@ -36,8 +36,8 @@ def main():
     source = os.getenv('MONGO_DB_NAME', 'luminar_library')
     root = args.root or default_path()
     logging.basicConfig(level=logging.INFO)
-    with MongoClient(os.getenv('MONGO_URI', 'mongodb://localhost:27017'),
-                     serverSelectionTimeoutMS=3000) as client:
+    with connect(settings(default_uri='mongodb://localhost:27017'),
+                 serverSelectionTimeoutMS=3000) as client:
         client.admin.command('ping')
         writer = LexicalDeltaWriter(root, client[source].books,
                                     SyncQueue(index_root()), expected_source_db=source)

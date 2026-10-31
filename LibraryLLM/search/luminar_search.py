@@ -17,7 +17,7 @@ import faiss
 import numpy as np
 import torch
 
-from pymongo import MongoClient
+from backend.database.mongo_configuration import connect, settings
 
 from sentence_transformers import (
     SentenceTransformer,
@@ -101,6 +101,8 @@ class LuminaRSearchEngine:
         return ids
 
     def __init__(self):
+
+        mongo_config = settings(default_uri="mongodb://localhost:27017")
 
         print("=" * 60)
         print("LUMINAR SEARCH ENGINE")
@@ -247,12 +249,10 @@ class LuminaRSearchEngine:
 
         start = time.perf_counter()
 
-        self.mongo_client = MongoClient(
-            MONGO_URI
-        )
+        self.mongo_client = connect(mongo_config)
 
         self.mongo_db = self.mongo_client[
-            MONGO_DATABASE
+            mongo_config.database
         ]
 
         self.library_inventory = (
@@ -286,14 +286,14 @@ class LuminaRSearchEngine:
         self.lexical_writer = None
         try:
             self.lexical_store = LexicalOverlayStore(default_path(),
-                expected_source_db=MONGO_DATABASE,event_queue=self.index_manager.queue)
+                expected_source_db=mongo_config.database,event_queue=self.index_manager.queue)
             # Live mutation consumption stays opt-in until the full Search/API
             # recovery and bounded overlay tests can run safely.
             if (os.getenv("LUMINAR_LEXICAL_SYNC_ENABLED", "false").lower()=="true"
                     and self.lexical_store.health()["lexical_available"]):
                 self.lexical_writer = LexicalDeltaWriter(
                     default_path(),self.books_collection,self.index_manager.queue,
-                    expected_source_db=MONGO_DATABASE)
+                    expected_source_db=mongo_config.database)
         except Exception as error:
             LOG.error("lexical_worker_unavailable error_type=%s",type(error).__name__)
         print("LuminaR search engine ready.")

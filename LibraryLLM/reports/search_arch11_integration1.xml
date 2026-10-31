@@ -1,0 +1,1156 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="16" skipped="0" tests="19" time="7.830" timestamp="2026-10-29T16:03:04.249804+05:30" hostname="Rohit-pc"><testcase classname="tests.test_search_arch11_integration" name="test_default_gate_and_client_cannot_enable" time="1.021"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:132: in test_default_gate_and_client_cannot_enable
+    assert a.client.get('/query/features').json()['smart_preview'] is False
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_all_institution_contexts_actual_route_native_filters[False-PUBLIC]" time="0.016"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:142: in test_all_institution_contexts_actual_route_native_filters
+    r=search(application,'books about biology; rating above 4; online format; published after 2018; language Spanish; sort by rating',library_id=LID,staff=staff)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_all_institution_contexts_actual_route_native_filters[False-PRIVATE]" time="0.015"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:142: in test_all_institution_contexts_actual_route_native_filters
+    r=search(application,'books about biology; rating above 4; online format; published after 2018; language Spanish; sort by rating',library_id=LID,staff=staff)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_all_institution_contexts_actual_route_native_filters[True-PUBLIC]" time="0.012"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:142: in test_all_institution_contexts_actual_route_native_filters
+    r=search(application,'books about biology; rating above 4; online format; published after 2018; language Spanish; sort by rating',library_id=LID,staff=staff)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_all_institution_contexts_actual_route_native_filters[True-PRIVATE]" time="0.013"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:142: in test_all_institution_contexts_actual_route_native_filters
+    r=search(application,'books about biology; rating above 4; online format; published after 2018; language Spanish; sort by rating',library_id=LID,staff=staff)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_global_native_negative_and_only_entitlements[books about biology; only online-ids0]" time="0.014"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:156: in test_global_native_negative_and_only_entitlements
+    r=search(application,query);assert r.status_code==200,r.text
+      ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_global_native_negative_and_only_entitlements[books about biology; exclude online format-ids1]" time="0.014"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:156: in test_global_native_negative_and_only_entitlements
+    r=search(application,query);assert r.status_code==200,r.text
+      ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_global_native_negative_and_only_entitlements[books about biology; exclude physical format-ids2]" time="0.016"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:156: in test_global_native_negative_and_only_entitlements
+    r=search(application,query);assert r.status_code==200,r.text
+      ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_unknown_negative_capability_is_not_known_absence" time="0.145" /><testcase classname="tests.test_search_arch11_integration" name="test_missing_pages_capability_first_and_missing_rating_distinct" time="0.013"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:170: in test_missing_pages_capability_first_and_missing_rating_distinct
+    r=search(application,q);assert r.status_code==200,r.text
+      ^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_author_completion_refinement_remove_replay_and_foreign_state" time="0.012"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:176: in test_author_completion_refinement_remove_replay_and_foreign_state
+    first=search(application,'books about biology; by [author]').json()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_source_correction_apply_keep" time="0.014"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:192: in test_source_correction_apply_keep
+    first=search(application,'include subject "Detectve Fiction"').json()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_scope_override_foreign_rows_outsider_and_staff" time="0.017"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:200: in test_scope_override_foreign_rows_outsider_and_staff
+    assert search(a,'biology',library_id=FOREIGN).status_code==404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_long_transport_and_exact_bypasses_experimental_compiler" time="0.013"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:214: in test_long_transport_and_exact_bypasses_experimental_compiler
+    r=search(application,'x'*n,mode='EXACT');assert r.status_code==200,r.text
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_expiry_and_failed_provider_do_not_consume_choice" time="0.016"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:220: in test_expiry_and_failed_provider_do_not_consume_choice
+    a=application;first=search(a,'books about biology; by [author]').json();state=first['preview'];old=deepcopy(a.store.rows[state['state_id']])
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_atomic_one_use_memory_contract_under_concurrency" time="0.013"><failure message="AssertionError: Real network forbidden">tests\test_search_arch11_integration.py:229: in test_atomic_one_use_memory_contract_under_concurrency
+    first=search(application,'books about biology; by [author]').json()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:123: in search
+    def search(app,query,**kw):return app.client.post('/query/preview',json=dict(query=query,**kw))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:555: in post
+    return super().post(
+.venv\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:351: in handle_request
+    with self.portal_factory() as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:426: in _portal_factory
+    with anyio.from_thread.start_blocking_portal(**self.async_backend) as portal:
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\from_thread.py:548: in start_blocking_portal
+    portal = future.result()
+             ^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:536: in run_blocking_portal
+    run_eventloop(
+.venv\Lib\site-packages\anyio\_core\_eventloop.py:83: in run
+    return async_backend.run(func, args, {}, backend_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2480: in run
+    with Runner(debug=debug, loop_factory=loop_factory) as runner:
+C:\Program Files\Python311\Lib\asyncio\runners.py:59: in __enter__
+    self._lazy_init()
+C:\Program Files\Python311\Lib\asyncio\runners.py:137: in _lazy_init
+    self._loop = events.new_event_loop()
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:810: in new_event_loop
+    return get_event_loop_policy().new_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\events.py:699: in new_event_loop
+    return self._loop_factory()
+           ^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\asyncio\windows_events.py:315: in __init__
+    super().__init__(proactor)
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:639: in __init__
+    self._make_self_pipe()
+C:\Program Files\Python311\Lib\asyncio\proactor_events.py:784: in _make_self_pipe
+    self._ssock, self._csock = socket.socketpair()
+                               ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\socket.py:641: in socketpair
+    csock.connect((addr, port))
+tests\test_search_arch11_integration.py:85: in &lt;lambda&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_search_arch11_integration.py:85: in &lt;genexpr&gt;
+    monkeypatch.setattr(socket.socket,'connect',lambda *a,**k:(_ for _ in ()).throw(AssertionError('Real network forbidden')))
+E   AssertionError: Real network forbidden</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_refill_beyond_initial_1000_and_missing_data" time="0.003"><failure message="TypeError: compile_query() missing 1 required positional argument: 'facets'">tests\test_search_arch11_integration.py:236: in test_refill_beyond_initial_1000_and_missing_data
+    collection=ReadOnlyCollection(rows);plan=compile_query('books about biology')[0]
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: compile_query() missing 1 required positional argument: 'facets'</failure></testcase><testcase classname="tests.test_search_arch11_integration" name="test_mongo_cas_uses_one_bound_conditional_replace_without_real_db" time="0.001" /><testcase classname="tests.test_search_arch11_integration" name="test_memory_store_never_configured_for_production" time="0.001" /></testsuite></testsuites>

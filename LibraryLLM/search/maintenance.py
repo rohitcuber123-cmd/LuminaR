@@ -36,15 +36,16 @@ def main():
     else:
         import logging
         import os
-        from pymongo import MongoClient
+        from backend.database.mongo_configuration import connect, settings
         from sentence_transformers import SentenceTransformer
         import torch
         from search.index_manager import IndexManager, MODEL
         logging.basicConfig(level=logging.INFO)
-        client = MongoClient(os.getenv("MONGO_URI", "mongodb://localhost:27017"))
+        mongo_config = settings(default_uri="mongodb://localhost:27017")
+        client = connect(mongo_config)
         model = SentenceTransformer(MODEL, device="cuda" if torch.cuda.is_available() else "cpu", local_files_only=True)
         model.max_seq_length = 256
-        manager = IndexManager(args.index_dir, client[os.getenv("MONGO_DB_NAME", "luminar_library")].books,
+        manager = IndexManager(args.index_dir, client[mongo_config.database].books,
                                model, legacy_dir=Path(__file__).resolve().parents[1] / "datasets/ai/embeddings",
                                recover=args.recover)
         manager.start()

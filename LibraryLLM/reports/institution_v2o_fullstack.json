@@ -1,0 +1,216 @@
+{
+  "scope": "Owned synthetic database only",
+  "mode": "AUTHENTICATED",
+  "connection_and_first_read": {
+    "n": 8,
+    "median_ms": 124.55754999973578,
+    "min_ms": 114.67769999944721,
+    "max_ms": 143.65499999985332,
+    "samples_ms": [
+      143.65499999985332,
+      121.15970000013476,
+      130.4098000000522,
+      123.84369999927003,
+      125.27140000020154,
+      121.35180000041146,
+      114.67769999944721,
+      141.46419999997306
+    ]
+  },
+  "core_module_import_ms": 3392.653499999142,
+  "core_lifespan_start_ms": 2545.4007999996975,
+  "staff_password_login_http": 200,
+  "catalogue_read": {
+    "n": 15,
+    "median_ms": 330.2764999989449,
+    "min_ms": 268.1291999997484,
+    "max_ms": 353.8312999990012,
+    "samples_ms": [
+      336.06570000119973,
+      353.8312999990012,
+      341.64939999936905,
+      315.89050000002317,
+      350.47019999910844,
+      317.75609999931476,
+      348.63140000015846,
+      268.1291999997484,
+      282.4550999994244,
+      345.5471999986912,
+      330.2764999989449,
+      273.3666000003723,
+      290.1602999991155,
+      306.15380000017467,
+      342.8098000003956
+    ]
+  },
+  "tenant_status": {
+    "n": 15,
+    "median_ms": 302.778400000534,
+    "min_ms": 240.7850999989023,
+    "max_ms": 436.94620000133,
+    "samples_ms": [
+      240.7850999989023,
+      249.49200000082783,
+      261.1334999983228,
+      319.2890999998781,
+      312.21699999878183,
+      249.56079999901704,
+      285.9974000002694,
+      436.94620000133,
+      340.53839999978663,
+      264.6841999994649,
+      306.3050000000658,
+      285.294100000101,
+      302.778400000534,
+      333.1918999992922,
+      333.4959000003437
+    ]
+  },
+  "isolation": [
+    {
+      "user": 1,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 3,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 4,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 2,
+      "http": 404,
+      "expected": 404
+    },
+    {
+      "user": 5,
+      "http": 404,
+      "expected": 404
+    },
+    {
+      "user": 6,
+      "http": 404,
+      "expected": 404
+    }
+  ],
+  "private_rag_metadata_retrieval": {
+    "n": 15,
+    "median_ms": 87.87219999976514,
+    "min_ms": 70.85459999871091,
+    "max_ms": 123.81879999884404,
+    "samples_ms": [
+      74.40110000061395,
+      78.37389999986044,
+      123.81879999884404,
+      97.28219999851717,
+      92.09160000136762,
+      117.4219999993511,
+      103.74530000080995,
+      99.50659999958589,
+      87.63279999948281,
+      87.87219999976514,
+      88.99560000099882,
+      75.3608000013628,
+      70.85459999871091,
+      79.21249999890279,
+      87.68640000016603
+    ]
+  },
+  "recommendation_history_retrieval": {
+    "n": 15,
+    "median_ms": 51.867300000594696,
+    "min_ms": 41.90269999890006,
+    "max_ms": 58.06290000145964,
+    "samples_ms": [
+      53.55550000058429,
+      54.591999998592655,
+      51.21549999967101,
+      51.867300000594696,
+      53.326600000218605,
+      51.768499999525375,
+      58.06290000145964,
+      56.87209999996412,
+      55.39129999851866,
+      54.64410000058706,
+      49.414599998272024,
+      47.839400000157184,
+      41.90269999890006,
+      47.76239999955578,
+      45.93949999980396
+    ]
+  },
+  "native_claim_ms": 75.21079999969515,
+  "native_lease_renewal": {
+    "n": 15,
+    "median_ms": 10.549700000410667,
+    "min_ms": 8.476799999698414,
+    "max_ms": 13.347199999770964,
+    "samples_ms": [
+      10.549700000410667,
+      9.801099999094731,
+      10.922899999059155,
+      10.917300000073737,
+      13.347199999770964,
+      10.852299999896786,
+      8.79470000108995,
+      9.819599999900674,
+      8.476799999698414,
+      12.562199999592849,
+      9.31500000115193,
+      9.676300000137417,
+      11.719300000549993,
+      11.608900000283029,
+      9.763100000782288
+    ]
+  },
+  "qualified_scope": "Core startup/JWT/Staff/catalogue/private authorization and RAG metadata/recommendation history. Full Qwen, 5M Search and semantic recommendation HTTP dependencies are not started.",
+  "entrypoints": {
+    "Search": {
+      "startup": "PASS",
+      "global_snapshot": "EMPTY_OWNED_FIXTURE_NO_REBUILD",
+      "telemetry_enabled": false
+    },
+    "Recommendation": {
+      "http": 200,
+      "transport": "Actual ASGI; Search HTTP dependency bridged to actual ASGI, not a network deployment."
+    },
+    "RAG_Qwen": {
+      "status": "SEPARATE_PROCESS_REHEARSAL_PENDING",
+      "reason": "Real Qwen/RAG startup runs separately after Search releases its models; no full5M global deployment qualification."
+    }
+  },
+  "global_search_http": 200,
+  "manual_builds": [
+    {
+      "target": "SEARCH_INDEX",
+      "state": "SUCCEEDED",
+      "generation": "7954e8d7-7252-44f8-a8eb-1eb1b8a404d8"
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "state": "SUCCEEDED",
+      "generation": "7d232756-a120-43a8-b5f4-bc60296a268a"
+    }
+  ],
+  "tenant_search_http": 200,
+  "tenant_recommendations_http": 200,
+  "document_pipeline": {
+    "upload_http": 202,
+    "status": "READY",
+    "chunks": 2,
+    "real_cached_encoder": true,
+    "faiss_validated": true,
+    "private_prepared_retrieval": "PASS",
+    "knowledge_summary": "PASS",
+    "engine_adapter": "Resident actual encoder only; Qwen/RAG API inference not started or claimed."
+  },
+  "serving_library": "d6c25290-1e20-4b45-97e7-12f2324cd516",
+  "artifact_root": "tenant-artifacts",
+  "completed": true,
+  "owned_fixture_removed": true
+}

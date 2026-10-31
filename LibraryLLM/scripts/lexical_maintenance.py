@@ -49,8 +49,8 @@ def main():
             print(json.dumps(store.health(),indent=2))
         finally: store.close()
     else:
-        from pymongo import MongoClient
-        with MongoClient(os.getenv('MONGO_URI','mongodb://localhost:27017')) as client:
+        from backend.database.mongo_configuration import connect, settings
+        with connect(settings(default_uri='mongodb://localhost:27017')) as client:
             writer=LexicalDeltaWriter(root,client[source].books,SyncQueue(index_root()),
                                       expected_source_db=source)
             try:

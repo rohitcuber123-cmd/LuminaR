@@ -1,0 +1,250 @@
+{
+  "private_isolation": [
+    {
+      "user": 1,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 3,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 4,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 2,
+      "http": 404,
+      "expected": 404
+    },
+    {
+      "user": 5,
+      "http": 404,
+      "expected": 404
+    },
+    {
+      "user": 6,
+      "http": 404,
+      "expected": 404
+    }
+  ],
+  "native_JWT_checks": [
+    {
+      "user": 2,
+      "status": 404,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 3,
+      "status": 200,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 4,
+      "status": 403,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 6,
+      "status": 404,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 2,
+      "status": 404,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 3,
+      "status": 200,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 4,
+      "status": 403,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 6,
+      "status": 404,
+      "no_telemetry_fields": true
+    }
+  ],
+  "browser_authorization": [
+    {
+      "check": "Admin status: NOT_BUILT after addition, no automatic jobs",
+      "passed": true
+    },
+    {
+      "check": "Manual SEARCH_INDEX build: browser \u2192 actual queue \u2192 native build \u2192 validated publication",
+      "passed": true
+    },
+    {
+      "check": "Manual KNOWLEDGE_GRAPH build: browser \u2192 actual queue \u2192 native build \u2192 validated publication",
+      "passed": true
+    },
+    {
+      "check": "Refresh restores both durable READY generations",
+      "passed": true
+    },
+    {
+      "check": "Metadata mutation becomes STALE with no automatic rebuild",
+      "passed": true
+    },
+    {
+      "check": "Manual Search rebuild publishes a new generation",
+      "passed": true
+    },
+    {
+      "check": "Manual KG rebuild publishes a new generation",
+      "passed": true
+    },
+    {
+      "check": "Known FAILED rebuild retains last-good generation and safe error",
+      "passed": true
+    },
+    {
+      "check": "RECOVERY_REQUIRED distinct from FAILED; no blind retry",
+      "passed": true
+    },
+    {
+      "check": "Controlled fixture explicitly invokes existing recovery; no automatic action",
+      "passed": true
+    },
+    {
+      "check": "Active polling displays durable progress, no fake counter",
+      "passed": true
+    },
+    {
+      "check": "Real JWT Librarian sees read-only status and API denies build",
+      "passed": true
+    },
+    {
+      "check": "General User denied",
+      "passed": true
+    },
+    {
+      "check": "Explicit Platform-only user denied tenant authority",
+      "passed": true
+    },
+    {
+      "check": "Delayed actual A response cannot replace B after SPA library switch",
+      "passed": true
+    },
+    {
+      "check": "Multi-library Admin switches between correct distinct durable contexts",
+      "passed": true
+    },
+    {
+      "check": "Revoked membership loses status with unchanged signed browser token",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 1440",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 1366",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 1024",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 768",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 390",
+      "passed": true
+    },
+    {
+      "check": "Responsive, no overflow, keyboard confirmation 375",
+      "passed": true
+    },
+    {
+      "check": "Focused axe accessibility: no violations",
+      "passed": true
+    },
+    {
+      "check": "Real browser logout and Staff password relogin restore fresh authorized status",
+      "passed": true
+    }
+  ],
+  "operator": {
+    "scope": "Fresh authenticated disposable CLI/writer fixture; telemetry production flag unchanged.",
+    "commands": [
+      {
+        "script": "diagnose_worker_telemetry.py",
+        "calls": 6,
+        "median_ms": 1300.2154999994673,
+        "samples_ms": [
+          1264.5093999999517,
+          1362.9794999997102,
+          1235.8938999987004,
+          1335.9215999989829,
+          1405.5685000002995,
+          1264.5068999991054
+        ],
+        "includes": "Python process/import/SCRAM/bounded empty-tenant reads/JSON or text serialization; model excluded."
+      },
+      {
+        "script": "diagnose_library_intelligence.py",
+        "calls": 6,
+        "median_ms": 1284.5506000003297,
+        "samples_ms": [
+          1301.071599998977,
+          1289.3139999996492,
+          1265.3098000009777,
+          1279.7872000010102,
+          1272.2006000003603,
+          1312.231800000518
+        ],
+        "includes": "Python process/import/SCRAM/bounded empty-tenant reads/JSON or text serialization; model excluded."
+      }
+    ],
+    "owned_fixture_removed": true
+  },
+  "restricted_writer_actual_denials": "Frozen N assertions replayed on O server; forbidden native/global writes denied13",
+  "secret_access": {
+    "scope": "Owned directory and synthetic DB principals only; no real service account or production ACL changed.",
+    "initial_protection": {
+      "current_sid": "S-1-5-21-4226139363-902846128-2016220542-1001",
+      "file_protected": true,
+      "recovered_matches": true,
+      "directory_protected": true,
+      "encryption": "Windows SecureString Export-Clixml DPAPI",
+      "file_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;;FA;;;SY)(A;;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "mode": "protect",
+      "directory_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "secret_value_returned": false
+    },
+    "access_probe": {
+      "restricted_token_denied": true,
+      "actual_other_service_account_tested": false,
+      "owner_read_allowed": true,
+      "production_acl_changed": false,
+      "restricted_token_read_error": 5
+    },
+    "replacement_protection": {
+      "file_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;;FA;;;SY)(A;;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "directory_protected": true,
+      "recovered_matches": true,
+      "directory_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "secret_value_returned": false,
+      "file_protected": true,
+      "current_sid": "S-1-5-21-4226139363-902846128-2016220542-1001",
+      "encryption": "Windows SecureString Export-Clixml DPAPI",
+      "mode": "protect"
+    },
+    "old_fresh_auth_revoked": true,
+    "rollback_to_valid_replacement": "PASS",
+    "missing_secret_fails_closed": true,
+    "owned_fixture_removed": true
+  },
+  "production_security_ready": false
+}

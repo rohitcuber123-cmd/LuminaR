@@ -1,0 +1,9 @@
+# Mongo authorization — observed deployment versus fixture
+
+Current deployment: sanitized read-only getCmdLineOpts/buildInfo/connectionStatus and anonymous tenant_id read are in host_audit.json. authorization is NOT_SET_DEFAULT, configured connection has no authenticated user and anonymous tenant read succeeds. No production denied-write probe was attempted, no users/roles/authorization files were changed and no anonymous write was used as a test. This deployment fails the authorization gate.
+
+Owned fixtures launch a separate loopback mongod with --auth, unique temp dbPath and ephemeral port. Only that administrator bootstraps disposable users/roles/validator. Telemetry writer checks the exact effective privilege set and database-local identity; read operator checks built-in read role only. Actual forbidden writes return Mongo code13; wrong/dropped credentials fail fresh authentication; unauthorized unrelated user cannot read/write telemetry. Runtime URI parser rejects anonymous/JWT/wrong DB/authSource/non-loopback/multi-endpoint inputs and never falls back to unrestricted app credentials.
+
+Operator-owned future authorization enablement requires a reviewed DBA plan for all existing application principals before touching the real Mongo service. Simply turning on --auth without existing Core/Search/RAG/Recommendation credential readiness could break unrelated services. This phase neither provisions that plan's accounts nor changes service flags. Collection/role presence is not proof of authorization enforcement.
+
+MongoDB documents authorization enablement through --auth or security.authorization in its [RBAC documentation](https://www.mongodb.com/docs/v8.0/core/authorization/). Source-accurate grants and live fixture server denials, rather than this documentation alone, form the2M evidence.

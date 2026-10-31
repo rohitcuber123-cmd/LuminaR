@@ -1,0 +1,7 @@
+# Improvement review
+
+The justified implementation is limited to eliminating redundant same-response artifact checks and target re-read. It does not claim O(1) status cost: catalogue extraction/fingerprint and artifact bytes still scale with the bounded tenant. Dataset sequences cannot safely substitute for metadata revisions. Full checksum verification continues after every new request, including after same-size corruption. No optimistic READY cache was deployed.
+
+The review found operational limits worth preserving explicitly: lock-induced 503 under multi-browser reads; one serial worker and long-job head-of-line blocking; no idle worker liveness proof; renewal heartbeat does not imply progress; no separate last-progress timestamp; no RAM/disk admission/reservation; retained failed artifacts can grow; explicit recovery and no job cancellation. None justifies silently adding a scheduler or changing accepted durable states.
+
+New tests target the actual duplication, relevant/irrelevant source fields, mutation bypass/enrichment, cross-request corruption, current authority, tenant separation, source changes during publication, real queue/progress and recommendation independence. Existing frozen suites and browser tests remain evidence with their precise limits. Preexisting regression failures are not hidden by deselection or expected-hash rebasing. Source/artifact/catalogue preservation is compared to the task-start baseline, not old 150-record assertions.

@@ -1,0 +1,51 @@
+{
+  "at_utc": "2026-10-28T16:08:17.718724+00:00",
+  "RAM": {
+    "total": 16438054912,
+    "available": 7867322368,
+    "percent": 52.1,
+    "used": 8570732544,
+    "free": 7867322368
+  },
+  "GPU": {
+    "name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "total_bytes": 8546942976,
+    "free_bytes": 8282701824,
+    "used_bytes": 0,
+    "utilization_percent": 0.0,
+    "driver": "610.88"
+  },
+  "runtime_versions": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.22.2",
+    "bitsandbytes": "0.50.2"
+  },
+  "quantization_inventory": {
+    "bitsandbytes": true,
+    "auto_gptq": false,
+    "awq": false,
+    "llama_cpp": false,
+    "onnxruntime": false
+  },
+  "checkpoint_format": "Unquantized BF16 safetensors,2shards;config torch_dtype=bfloat16; no artifact conversion or download",
+  "application_process_memory": [
+    {
+      "pid": 13080,
+      "name": "python.exe",
+      "RSS_bytes": 26394624,
+      "role_hint": "not_identified"
+    },
+    {
+      "pid": 19304,
+      "name": "python.exe",
+      "RSS_bytes": 4329472,
+      "role_hint": "not_identified"
+    }
+  ],
+  "required_services_terminated": 0,
+  "resource_budget_justification": "Use current availableRAM minus2GiB reserve and0.5GiB startup/allocator margin; round down256MiB and cap5.75GiB after observed4GiB failure at4,392,308,736bytes. Transformers5 retained both mmap shard handles and exceeded5.75GiB at6,186,856,448bytes. Use installed Accelerate per-shard dispatch with the same BF16 weights and prompt; no artifact conversion. Prior observed2.23GB startup makes3GiB minimum sensible but does not prove successful load. GPUcap separately min82%total,free minus1GiB reserve and128MiB margin. Guards remain active.",
+  "scope": "Standalone local experiment; complete separate baseV8 prompt deferred per user clarification"
+}

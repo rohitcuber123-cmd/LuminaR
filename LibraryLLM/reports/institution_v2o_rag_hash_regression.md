@@ -1,0 +1,7 @@
+# Protected RAG hash regression investigation
+
+RAG_HASH_DRIFT REQUIRES_APPROVAL. rag_hash_evidence.json records every expected/actual hash; the unchanged frozen assertion fails on rag/qa.py: expected0E78A7C780F691B14C8E3A3337F62054E4C117F0C2DF7828099D80DA90A793C6, actual4A1141649A4CE9B4BCE6413627C27557F5817BB8718A4E842A4D12021BD89DE3. rag/api.py also differs but is explicitly excluded by that test; llm/retriever/reranker/document_service match their frozen hashes.
+
+Git history and diff in rag_hash_history.json/rag_source_diff.txt show committed document-grounding additions (valid document IDs, definition evidence/category and unsupported citation suppression). Available Git blobs/line-ending hashes do not recreate the exact expected snapshot, so the precise first hash divergence is NOT_ESTABLISHED. This is source/byte drift, not a generated model/file output; normalizing line endings alone is not a justified repair. Existing document behavior is covered by frozen private-document/knowledge suites and actual unmodified RAG/Qwen startup/fixture requests.
+
+No protected source, frozen expected hash or test was changed. Reverting could destroy legitimate existing grounding behavior; rebasing/suppressing the test is prohibited. Explicit protected-file/baseline contract review is required before a repair is chosen. This remains one preexisting failure; full backend PASS is not claimed.

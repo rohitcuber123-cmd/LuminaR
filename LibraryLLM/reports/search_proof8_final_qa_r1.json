@@ -1,0 +1,641 @@
+{
+  "CURRENT_AVAILABLE_RAM": {
+    "bytes": 6181048320,
+    "resource_gate_artifact": "reports/search_proof8_resume_resource_gate.json"
+  },
+  "CURRENT_AVAILABLE_VRAM": {
+    "bytes": 8282701824,
+    "total_bytes": 8546942976
+  },
+  "MODEL_RESOURCE_GATE": {
+    "initialization": "SUCCEEDED_ATTEMPT3",
+    "latest_retry": "BLOCKED_CURRENT_HEADROOM",
+    "required_RAM_bytes": 7784628224,
+    "attempts": [
+      {
+        "attempt": 1,
+        "status": "RAM_BUDGET_EXCEEDED",
+        "loaded": false,
+        "predictions": 0,
+        "peak_tree_RAM_bytes": 4392308736,
+        "minimum_available_RAM_bytes": 4661018624
+      },
+      {
+        "attempt": 2,
+        "status": "RAM_BUDGET_EXCEEDED",
+        "loaded": false,
+        "predictions": 0,
+        "peak_tree_RAM_bytes": 6186856448,
+        "minimum_available_RAM_bytes": 3020754944
+      },
+      {
+        "attempt": 3,
+        "status": "QUERY_HARD_TIMEOUT",
+        "loaded": true,
+        "predictions": 2,
+        "peak_tree_RAM_bytes": 4819132416,
+        "minimum_available_RAM_bytes": 3158568960
+      }
+    ]
+  },
+  "MODEL_WORKER_MEMORY_CAP": {
+    "attempt3_RAM_bytes": 5100273664,
+    "CUDA_allocator_bytes": 7008493240,
+    "polling": "100ms tree RSS / 500ms global GPU; transient overshoot possible"
+  },
+  "MEMORY_RESERVE_PRESERVED": {
+    "during_measured_attempts": true,
+    "minimum_available_RAM_bytes": 3020754944,
+    "RAM_reserve_bytes": 2147483648,
+    "startup_margin_bytes": 536870912,
+    "attempt3_GPU_free_min_bytes": 1407188992,
+    "GPU_reserve_bytes": 1073741824
+  },
+  "MODEL_LOADING_SUCCESS": {
+    "success": true,
+    "successful_attempts": 1,
+    "attempts": 3,
+    "actual_predictions": true
+  },
+  "MODEL_LOADING_DURATION": {
+    "worker_ms": 27595.21280000081,
+    "parent_ms": 28931.564900000012,
+    "observations": 1,
+    "note": "Cold process; OS file cache may be warm"
+  },
+  "LEARNED_PREDICTIONS_CAPTURED": {
+    "serial": 2,
+    "planned": 18,
+    "repeated_concurrency_probes": 0,
+    "missing": 16,
+    "scope": "EXPOSED_DEVELOPMENT"
+  },
+  "LEARNED_TYPED_ACCURACY": {
+    "observed": {
+      "numerator": 0,
+      "denominator": 2,
+      "percent": 0.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "full_workflow": {
+      "numerator": 0,
+      "denominator": 16,
+      "percent": 0.0,
+      "status": "MEASURED_DEVELOPMENT"
+    },
+    "caveat": "Both observed outputs schema-rejected; full workflow substitutes clarification for 16 missing outputs; no raw six-class learned decision score"
+  },
+  "LEARNED_EXECUTION_ACCURACY": {
+    "observed": {
+      "numerator": 0,
+      "denominator": 2,
+      "percent": 0.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "full_workflow": {
+      "numerator": 8,
+      "denominator": 18,
+      "percent": 44.44444444444444,
+      "status": "MEASURED_DEVELOPMENT"
+    }
+  },
+  "LEARNED_FALSE_EXECUTION": {
+    "observed": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+    },
+    "full_workflow": {
+      "numerator": 0,
+      "denominator": 8,
+      "percent": 0.0,
+      "status": "MEASURED_DEVELOPMENT"
+    },
+    "caveat": "No blocked-oracle query received a model prediction"
+  },
+  "LEARNED_MISSED_EXECUTION": {
+    "observed": {
+      "numerator": 2,
+      "denominator": 2,
+      "percent": 100.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "full_workflow": {
+      "numerator": 10,
+      "denominator": 10,
+      "percent": 100.0,
+      "status": "MEASURED_DEVELOPMENT"
+    }
+  },
+  "LEARNED_MANDATORY_OMISSIONS": {
+    "numerator": 4,
+    "denominator": 4,
+    "percent": 100.0,
+    "status": "OBSERVED_DEVELOPMENT_ONLY"
+  },
+  "MODEL_PEAK_RAM": {
+    "attempt3_tree_bytes": 4819132416,
+    "all_attempts_peak_bytes": 6186856448
+  },
+  "MODEL_PEAK_VRAM": {
+    "peak_model_CUDA_allocated_bytes": 6507345920,
+    "peak_model_CUDA_reserved_bytes": 6746537984,
+    "global_GPU_peak_used_bytes": 6876561408,
+    "global_GPU_minimum_free_bytes": 1407188992
+  },
+  "MODEL_INFERENCE_P50": {
+    "serial_ms": 25327.387200000885,
+    "serial_n": 2,
+    "warm_ms": 11810.636800000793,
+    "warm_n": 1,
+    "representative": false
+  },
+  "MODEL_INFERENCE_P95": {
+    "serial_ms": 38844.13760000098,
+    "serial_n": 2,
+    "warm_ms": 11810.636800000793,
+    "warm_n": 1,
+    "representative": false
+  },
+  "DETERMINISTIC_BASELINE_COMPARISON": {
+    "control": "Frozen7r1; standaloneV8 adds no new semantic contract",
+    "full_development": {
+      "deterministic": {
+        "typed": {
+          "numerator": 16,
+          "denominator": 16,
+          "percent": 100.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "execution": {
+          "numerator": 18,
+          "denominator": 18,
+          "percent": 100.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 8,
+          "percent": 0.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "missed_valid": {
+          "numerator": 0,
+          "denominator": 10,
+          "percent": 0.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "native_field_workflow_agreement": {
+          "numerator": 29,
+          "denominator": 29,
+          "percent": 100.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "critical_executed_field_mismatch": {
+          "numerator": 0,
+          "denominator": 10,
+          "percent": 0.0,
+          "status": "MEASURED_DEVELOPMENT"
+        }
+      },
+      "restricted": {
+        "typed": {
+          "numerator": 0,
+          "denominator": 16,
+          "percent": 0.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "execution": {
+          "numerator": 8,
+          "denominator": 18,
+          "percent": 44.44444444444444,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 8,
+          "percent": 0.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "missed_valid": {
+          "numerator": 10,
+          "denominator": 10,
+          "percent": 100.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "native_field_workflow_agreement": {
+          "numerator": 4,
+          "denominator": 29,
+          "percent": 13.793103448275861,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "critical_executed_field_mismatch": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null,
+          "status": "N/A_NO_OUTPUT_OR_ORACLE"
+        }
+      },
+      "learned_proof": {
+        "typed": {
+          "numerator": 0,
+          "denominator": 16,
+          "percent": 0.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "execution": {
+          "numerator": 8,
+          "denominator": 18,
+          "percent": 44.44444444444444,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 8,
+          "percent": 0.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "missed_valid": {
+          "numerator": 10,
+          "denominator": 10,
+          "percent": 100.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "native_field_workflow_agreement": {
+          "numerator": 0,
+          "denominator": 29,
+          "percent": 0.0,
+          "status": "MEASURED_DEVELOPMENT"
+        },
+        "critical_executed_field_mismatch": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null,
+          "status": "N/A_NO_OUTPUT_OR_ORACLE"
+        }
+      }
+    },
+    "observed_common_subset": {
+      "deterministic": {
+        "typed": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "execution": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null,
+          "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+        },
+        "missed_valid": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        }
+      },
+      "restricted": {
+        "typed": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "execution": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null,
+          "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+        },
+        "missed_valid": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        }
+      },
+      "learned_proof": {
+        "typed": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "execution": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null,
+          "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+        },
+        "missed_valid": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        }
+      }
+    }
+  },
+  "SELECTED_ARCHITECTURE": "Retain frozen7r1 deterministic proof pipeline for continued disabled development; Qwen not selected. Neither pipeline production-qualified by this experiment.",
+  "FRESH_INDEPENDENT_ACCEPTANCE": {
+    "performed": false,
+    "count": 0,
+    "reason": "Exposed development data only; incomplete learned capture; separate baseV8 prompt deferred by user"
+  },
+  "PRODUCTION_READINESS": "BLOCKED; no activation, application integration, deployment or Mongo qualification",
+  "REMAINING_BLOCKERS": [
+    "Insufficient current RAM for guarded retry",
+    "16/18 model outputs missing after simultaneous telemetry gap and query hard timeout",
+    "0/2 observed outputs satisfy schema/source contract",
+    "No complete serial or bounded concurrent throughput/queue measurement",
+    "No measured relationship/negation behavior in observed subset",
+    "No fresh independent acceptance; two pilot typed notice subtypes unresolved",
+    "Separate baseV8 semantic/qualification requirements awaiting user prompt",
+    "Native database/JWT integration unqualified under no-Mongo-writes constraint",
+    "Cached model research license does not qualify commercial production deployment"
+  ],
+  "OPERATIONAL_FEASIBILITY": {
+    "serial_throughput": null,
+    "bounded_concurrent_throughput": null,
+    "queue_latency": null,
+    "status": "NOT_MEASURED_INTERRUPTED",
+    "CPU_seconds": 68.53125,
+    "CPU_peak_core_percent": 121.19104620997625,
+    "GPU_peak_utilization_percent": 99.0,
+    "GPU_mean_utilization_percent": 24.976377952755904,
+    "note": "Sampled GPU metrics global; gap excludes inference and contention conclusions"
+  },
+  "RAW_EXTRACTION_METRICS": {
+    "scope": "2 observed outputs, not the 18-query intended cohort",
+    "observed_ids": [
+      "v7_dev_pilot_01",
+      "v7_dev_pilot_02"
+    ],
+    "output_coverage": {
+      "numerator": 2,
+      "denominator": 18,
+      "percent": 11.11111111111111,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "observed_pipeline_metrics": {
+      "deterministic": {
+        "typed": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "execution": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null,
+          "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+        },
+        "missed_valid": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        }
+      },
+      "restricted": {
+        "typed": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "execution": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null,
+          "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+        },
+        "missed_valid": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        }
+      },
+      "learned_proof": {
+        "typed": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "execution": {
+          "numerator": 0,
+          "denominator": 2,
+          "percent": 0.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        },
+        "false_execution": {
+          "numerator": 0,
+          "denominator": 0,
+          "percent": null,
+          "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+        },
+        "missed_valid": {
+          "numerator": 2,
+          "denominator": 2,
+          "percent": 100.0,
+          "status": "OBSERVED_DEVELOPMENT_ONLY"
+        }
+      }
+    },
+    "observed_annotation_dimensions": {
+      "domain": {
+        "numerator": 0,
+        "denominator": 4,
+        "percent": 0.0,
+        "status": "OBSERVED_DEVELOPMENT_ONLY"
+      },
+      "operator": {
+        "numerator": 1,
+        "denominator": 4,
+        "percent": 25.0,
+        "status": "OBSERVED_DEVELOPMENT_ONLY"
+      },
+      "operand": {
+        "numerator": 1,
+        "denominator": 4,
+        "percent": 25.0,
+        "status": "OBSERVED_DEVELOPMENT_ONLY"
+      },
+      "role": {
+        "numerator": 0,
+        "denominator": 4,
+        "percent": 0.0,
+        "status": "OBSERVED_DEVELOPMENT_ONLY"
+      },
+      "modality": {
+        "numerator": 3,
+        "denominator": 4,
+        "percent": 75.0,
+        "status": "OBSERVED_DEVELOPMENT_ONLY"
+      },
+      "polarity": {
+        "numerator": 0,
+        "denominator": 4,
+        "percent": 0.0,
+        "status": "OBSERVED_DEVELOPMENT_ONLY"
+      },
+      "state": {
+        "numerator": 3,
+        "denominator": 4,
+        "percent": 75.0,
+        "status": "OBSERVED_DEVELOPMENT_ONLY"
+      },
+      "exact_source_span": {
+        "numerator": 0,
+        "denominator": 4,
+        "percent": 0.0,
+        "status": "OBSERVED_DEVELOPMENT_ONLY"
+      }
+    },
+    "predicted_source_substrings_valid": {
+      "numerator": 0,
+      "denominator": 5,
+      "percent": 0.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "mandatory_units_omitted_or_changed": {
+      "numerator": 4,
+      "denominator": 4,
+      "percent": 100.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "contexts_with_mandatory_omission": {
+      "numerator": 1,
+      "denominator": 1,
+      "percent": 100.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "schema_source_valid": {
+      "numerator": 0,
+      "denominator": 2,
+      "percent": 0.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "JSON_object_outputs": {
+      "numerator": 2,
+      "denominator": 2,
+      "percent": 100.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "relationship_accuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+    },
+    "negative_polarity_accuracy": {
+      "numerator": 0,
+      "denominator": 0,
+      "percent": null,
+      "status": "NOT_MEASURED_NO_APPLICABLE_OUTPUT"
+    },
+    "hard_invention": "NOT_FULLY_MEASURED: no complete absence oracle; no accepted hard filters because both outputs were rejected",
+    "completed_output_timeouts": {
+      "numerator": 0,
+      "denominator": 2,
+      "percent": 0.0,
+      "status": "OBSERVED_DEVELOPMENT_ONLY"
+    },
+    "started_queries": 3,
+    "completed_queries": 2,
+    "parent_hard_timeout_queries": 1,
+    "unstarted_queries": 15,
+    "missing_output_queries": 16,
+    "telemetry_gaps": [
+      {
+        "from_ms": 81507.8967999998,
+        "to_ms": 573159.7889999994,
+        "gap_ms": 491651.8921999996
+      }
+    ],
+    "interruption_cause": "Unconfirmed; simultaneous CPU/GPU sampling gap, not evidence of continuous inference for that interval",
+    "CPU_peak_core_percent_corrected": 121.19104620997625,
+    "CPU_peak_host_percent_corrected": 7.574440388123516,
+    "inherited_scoring_caveats": [
+      "a3 comparison_results raw annotation omissions include absent outputs over all 18. Use this supplementary observed-only view for model quality.",
+      "a3 comparison_results full-cohort learned metrics include 16 synthesized safe-clarification outcomes. They are workflow behavior, not 18 learned predictions.",
+      "a3 comparison_results CPU peak includes an invalid first-sample interval. Use corrected peak excluding the initial sample.",
+      "Attempts1/2 token-budget audit counted BatchEncoding keys (2), not tokens. Attempt3 fixes token count using input_ids.shape[-1].",
+      "Per-dimension raw alignment uses source-span IoU and may misalign incorrect offsets; exact source/schema rejection remains authoritative.",
+      "Warm latency has one completed observation; no throughput/concurrency/queue qualification."
+    ],
+    "observed_annotation_coverage": {
+      "observed_outputs": 2,
+      "contexts_with_agreed_annotation_units": 1,
+      "agreed_annotation_units": 4,
+      "contexts_with_agreed_mandatory_units": 1,
+      "note": "Query02 has no exact-span aligned author/reviewer units for dimension scoring; it is excluded, not treated as correct. Schema/source and pipeline metrics still cover both outputs."
+    }
+  },
+  "REGRESSION": {
+    "passed": 1705,
+    "deselected_reviewed_legacy_nodes": 6,
+    "evidence": "reports/search_proof8_readiness_tests.xml",
+    "repeated": false
+  },
+  "SCOPE": "Standalone V8 extra authorization; base prompt explicitly deferred by user",
+  "SAFETY": {
+    "disabled": true,
+    "Mongo_writes": 0,
+    "model_downloads": 0,
+    "remote_inferences": 0,
+    "training": false,
+    "private_data": false,
+    "production_activation": false,
+    "other_services_terminated": 0
+  },
+  "REPORTING_REVISION": {
+    "type": "Reporting revision only; no model, parser, prompt, labels or scorer modification",
+    "original_manifest_sha256": "f765c060b84d035b5c8ded858129bc2159082432873cc022869be56391c7e2bb",
+    "attempt3_actual_RAM_cap_bytes": 5100273664,
+    "correction": "Original report prose copied the5.75GiB maximum from attempt2. Attempt3 dynamically rounded down to4.75GiB. Its configuration and QA numeric cap were already correct.",
+    "annotation_coverage": {
+      "observed_outputs": 2,
+      "contexts_with_agreed_annotation_units": 1,
+      "agreed_annotation_units": 4,
+      "contexts_with_agreed_mandatory_units": 1,
+      "note": "Query02 has no exact-span aligned author/reviewer units for dimension scoring; it is excluded, not treated as correct. Schema/source and pipeline metrics still cover both outputs."
+    }
+  }
+}

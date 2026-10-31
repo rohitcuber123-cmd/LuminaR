@@ -1,0 +1,160 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "EMBEDDING_BATCH",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH"
+  ],
+  "events": [
+    {
+      "at": "2026-10-29 20:32:01.330192+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:03.198390+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-29 20:32:03.184000",
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-29 20:32:03.184000",
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:03.309544+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-29 20:32:03.184000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "b465b1d3-3b97-4563-a849-6a771eeca94f",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:32:03.249000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-29 20:32:03.184000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:04.295977+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-29 20:32:03.184000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "b465b1d3-3b97-4563-a849-6a771eeca94f",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:32:04.267000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-29 20:32:03.184000",
+        1,
+        2
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 373.4333000029437
+  },
+  "current_library": "f3133007-225d-433e-a1a9-7d44abda600a",
+  "crash_job": {
+    "job_id": "b465b1d3-3b97-4563-a849-6a771eeca94f",
+    "library_id": "f3133007-225d-433e-a1a9-7d44abda600a",
+    "target": "SEARCH_INDEX",
+    "requested_generation_id": "c1e5ad6f-648e-4aaa-aaee-4394f6cbd71e",
+    "artifact_generation_id": "b77831e4-7c93-4e86-894a-b9ff42584c2b",
+    "state": "RUNNING",
+    "stage": "EMBEDDING",
+    "progress_current": 0,
+    "progress_total": 10,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-29 20:32:01.306000",
+    "started_at": "2026-10-29 20:32:03.184000",
+    "heartbeat_at": "2026-10-29 20:32:03.184000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "fence_token_digest": "219f30d773c02dbd7cf4757ddb02eac20540a72e1e21cca55fd271a0ea09b811",
+    "lease_expires_at": "2026-10-29 20:33:33.184000",
+    "require_nonempty": true,
+    "worker_id_digest": "99587d2da3004af37f470707af17991fe60ba98f4806601188e98831c533b644"
+  },
+  "pointer_at_crash": {
+    "target": "SEARCH_INDEX",
+    "library_id": "f3133007-225d-433e-a1a9-7d44abda600a",
+    "active_generation_id": null,
+    "active_job_id": "b465b1d3-3b97-4563-a849-6a771eeca94f",
+    "state": "BUILDING",
+    "fence_token_digest": "219f30d773c02dbd7cf4757ddb02eac20540a72e1e21cca55fd271a0ea09b811"
+  },
+  "telemetry_before_crash": {
+    "epoch": 3
+  },
+  "instance_ref": "15ddb8dd9036d00e8a15f53319ccdfebeacd5bb7d6caabd2f141d0480f3b5321",
+  "genuine_process_exit": 77,
+  "snapshot_redaction": "Raw native fence/worker/boot values replaced by SHA256 digests; measurements unchanged."
+}

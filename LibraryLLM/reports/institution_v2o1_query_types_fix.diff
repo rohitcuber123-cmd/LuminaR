@@ -1,0 +1,32 @@
+--- HEAD/rag/query_types.py
++++ O1/rag/query_types.py
+@@ -124,6 +124,11 @@
+     key = _normalise(question)
+     if key not in _OVERVIEW_PATTERNS:
+         return False
++    # Recognizing a themes question does not establish its answer. Preserve the
++    # informational grammar, but require the existing evidence validator rather
++    # than treating arbitrary substantial passages as proof of specific themes.
++    if is_informational_book_query(question) == 'themes':
++        return False
+     if not work_id or not re.fullmatch(r'OL\d+W', work_id) or len(evidence_items) < 3:
+         return False
+     return (
+@@ -185,7 +190,7 @@
+         return 'character'
+     if re.match(r'^who\s+are\s+the\s+characters\b', key):
+         return 'character'
+-    # "who is [Name]" — single entity lookup (NOT "who is X to Y" or "who is X's Y")
++    # "who is [Name]" â€” single entity lookup (NOT "who is X to Y" or "who is X's Y")
+     m = re.match(r'^who\s+is\s+([a-z][a-z\s]{1,40})$', key)
+     if m and 'to' not in key.split() and "'" not in question:
+         return 'character'
+@@ -267,7 +272,7 @@
+         'what is the storyline': (None, 'plot'),
+     }
+     if key not in templates:
+-        # "who is [Name]" — entity lookup
++        # "who is [Name]" â€” entity lookup
+         m = re.match(r'^who\s+is\s+([a-z][a-z\s]{1,40})$', key)
+         if m and 'to' not in key.split() and "'" not in question:
+             name = m.group(1).strip()

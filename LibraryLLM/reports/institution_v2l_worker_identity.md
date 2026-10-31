@@ -1,0 +1,7 @@
+# Worker instance identity and restarts
+
+Reused K UUID4, random boot nonce digest and monotonic singleton epoch. Native worker_id remains tenant-UUID, separate from telemetry instance UUID and never an OS PID. Start CAS rotates current to previous; every pulse/progress update includes epoch, UUID and private boot digest. A late old instance cannot overwrite the new slot and now terminates its auxiliary loop after rejection. Same-UUID/different-boot collision is rejected against current/previous records. Only bounded history is retained; no indefinite collision registry or distributed worker coordination is implied.
+
+Reader exposes digest references and coherent server started/seen/stopped times, not raw native worker_id, boot secret, fence or process ID. Previous worker evidence is explicitly historical/current_instance=false; it is never current-instance health. A recent pulse proves successful writing only at that recorded time. Recent native heartbeat proves only lease renewal. PROCESS_VERIFICATION: NOT_AVAILABLE. No HEALTHY, independently verified process status, CPU/RAM/GPU attribution or crash inference from missing data is offered.
+
+Actual fresh-process restarts and crashes are recorded in native_validation.json and native_supplement.json. Old active jobs remain native-owned/unresolved after a new telemetry epoch. Existing legitimately queued jobs may execute under the normal serial native claim loop; telemetry never schedules them or creates replacements.

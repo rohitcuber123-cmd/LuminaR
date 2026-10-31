@@ -1,0 +1,34 @@
+{
+  "candidate_id": "search-smarteng-disabled-proof-9",
+  "selected_architecture_path": "PATH_C",
+  "decision_summary": "Path C (Neither architecture is currently adequate for production qualification).",
+  "evidence_deterministic": {
+    "strengths": [
+      "Eliminated all 12 false execution recommendations from V8 (0/138 false execution on exposed V8 cohort).",
+      "Achieved 0/360 false execution rate across all historical exposed cohorts (c5e90, c5er150, smarteng150, comp3_150).",
+      "1,757 / 1,759 regression pass rate (2 remaining are documented capability boundaries).",
+      "42 / 42 metamorphic property tests passed.",
+      "Fast interactive latency: p50 = 16.64 ms, p95 = 65.18 ms."
+    ],
+    "limitations": [
+      "Typed accuracy on reviewed 72-query dev cohort is 50.0% (36/72).",
+      "False execution on reviewed 72-query dev cohort is 10.4% (5/48).",
+      "Missed valid execution on complex multi-clause requests is 45.8% (11/24).",
+      "Independent obligation scanner has finite recall and cannot guarantee arbitrary linguistic completeness."
+    ]
+  },
+  "evidence_learned": {
+    "status": "DISQUALIFIED_FROM_CURRENT_CYCLE",
+    "resource_gate": "BLOCKED (Available System RAM is 2.60 GB vs required >= 7.25-7.78 GB guard).",
+    "latency": "BLOCKED (Prior measured latency 11.8s - 38.8s per query vs <50ms hot-path budget).",
+    "schema_validity": "0 / 2 valid raw predictions captured in prior trials (hallucinated domains, invalid enums, offset math failures).",
+    "feasibility_progress": "Compact proposal schema and lmformatenforcer integration demonstrated viable parser initialization."
+  },
+  "concrete_development_needs": [
+    "1. Formalize and enforce the restricted supported-search grammar contract documented in search_arch9_capability_registry.json.",
+    "2. Train specialized lightweight extraction heads (e.g. 500M distilled models) specifically fine-tuned on query constraint extraction with GGUF / int4 quantization.",
+    "3. Deploy lmformatenforcer schema constrained decoding asynchronously or offline rather than synchronously on the search hot-path.",
+    "4. Expand memory headroom (minimum 16 GB host RAM) before scheduling any local model deployment.",
+    "5. Maintain candidate disabled status in staging and production until independent qualification criteria are fully satisfied."
+  ]
+}

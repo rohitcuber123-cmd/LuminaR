@@ -124,6 +124,11 @@ def grounded_book_overview(question, evidence_items, work_id):
     key = _normalise(question)
     if key not in _OVERVIEW_PATTERNS:
         return False
+    # Recognizing a themes question does not establish its answer. Preserve the
+    # informational grammar, but require the existing evidence validator rather
+    # than treating arbitrary substantial passages as proof of specific themes.
+    if is_informational_book_query(question) == 'themes':
+        return False
     if not work_id or not re.fullmatch(r'OL\d+W', work_id) or len(evidence_items) < 3:
         return False
     return (

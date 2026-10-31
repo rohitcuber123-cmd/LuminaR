@@ -1,0 +1,1981 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="27" time="14.567" timestamp="2026-10-30T20:01:04.557381+05:30" hostname="Rohit-pc"><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_new_library_lending_canonical" time="1.399" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_new_library_reservation_canonical" time="0.210" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_new_library_fee_canonical" time="0.170" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_new_library_empty_counts_zero" time="0.223" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_registration_initialization_failure_is_not_active" time="0.164" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_empty_legacy_safe_promotion" time="0.157"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;8cfd2269-5e0a-4795-808a-c02f7570593b&quot; }, { canonical_library_id: &quot;8cfd2269-5e0a-4795-808a-c02f7570593b&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;8cfd2269-5e0a-4795-808a-c02f7570593b&quot; }, { canonical_library_id: &quot;8cfd2269-5e0a-4795-808a-c02f7570593b&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x0000018EE1B14790&gt;
+historical = '8cfd2269-5e0a-4795-808a-c02f7570593b'
+
+    def test_empty_legacy_safe_promotion(client,historical):
+&gt;       before=get(client,historical,'/staff/canonical-defaults/preflight').json()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:20: in get
+    return client.get('/libraries/' + lid + suffix, headers={'x-test-user':str(user)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv\Lib\site-packages\anyio\from_thread.py:338: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:263: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:88: in __call__
+    await self.app(scope, receive, send)
+backend\services\inventory_upload_limit.py:13: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_asset_upload_limit.py:16: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2685: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1766: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2740: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1786: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1265: in handle
+    await app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:151: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\routing.py:137: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\routing.py:691: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:347: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2641: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1033: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\routes\library_lending.py:37: in canonical_preflight
+    return promotion_preflight(str(library_id), actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:90: in promotion_preflight
+    return preflight(library_id)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:60: in preflight
+    if collection(name).find_one({'$or': [scope, {'canonical_library_id': library_id}]}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:1754: in find_one
+    for result in cursor.limit(-1):
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1166: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1142: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1090: in _refresh
+    self._send_message(q)
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:985: in _send_message
+    response = client._run_operation(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1956: in _run_operation
+    return self._retryable_read(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2076: in _retryable_read
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3043: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1947: in _cmd
+    return server.run_operation(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\server.py:227: in run_operation
+    _check_command_response(first, conn.max_wire_version, pool_opts=conn.opts)  # type:ignore[has-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_...fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False
+pool_opts = &lt;pymongo.pool_options.PoolOptions object at 0x0000018EBF801A60&gt;
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "8cfd2269-5e0a-4795-808a-c02f7570593b" }, { canonical_library_id: "8cfd2269-5e0a-4795-808a-c02f7570593b" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "8cfd2269-5e0a-4795-808a-c02f7570593b" }, { canonical_library_id: "8cfd2269-5e0a-4795-808a-c02f7570593b" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_blockers[test_promotion_active_legacy_loan_denied]" time="0.162"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;99371917-66c1-4a33-bc88-1a9cbe13913f&quot; }, { canonical_library_id: &quot;99371917-66c1-4a33-bc88-1a9cbe13913f&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;99371917-66c1-4a33-bc88-1a9cbe13913f&quot; }, { canonical_library_id: &quot;99371917-66c1-4a33-bc88-1a9cbe13913f&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x0000018EDF493A10&gt;
+historical = '99371917-66c1-4a33-bc88-1a9cbe13913f', collection = 'issues'
+record = {'issue_id': 88, 'status': 'ISSUED'}
+
+    @pytest.mark.parametrize('collection,record',[
+        ('issues',{'issue_id':88,'status':'ISSUED'}),
+        ('reservations',{'reservation_id':88,'status':'ACTIVE'}),
+        ('fines',{'fine_id':88,'is_paid':False}),
+        ('library_inventory',{'work_id':'OL1W','quantity':1}),
+        ('institution_library_aliases',{'legacy_library_id':'LIB001'}),
+        ('institution_inventory_migrations',{'source_key':'legacy:88'}),
+        ('institution_lending_config',{'state':'PREPARING'}),
+        ('institution_loans',{'loan_id':str(uuid4()),'status':'ACTIVE'}),
+    ],ids=['test_promotion_active_legacy_loan_denied','test_promotion_unresolved_reservations_denied',
+           'test_promotion_unresolved_fees_denied','mapped_inventory','test_real_legacy_library_not_force_promoted',
+           'migration_conflict','preparing_conflict','canonical_consistency'])
+    def test_promotion_blockers(client,historical,collection,record):
+        row={**record, 'canonical_library_id' if collection.endswith('library_aliases') else 'library_id':historical}
+        db[collection].insert_one(row)
+&gt;       preview=get(client,historical,'/staff/canonical-defaults/preflight')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:20: in get
+    return client.get('/libraries/' + lid + suffix, headers={'x-test-user':str(user)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv\Lib\site-packages\anyio\from_thread.py:338: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:263: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:88: in __call__
+    await self.app(scope, receive, send)
+backend\services\inventory_upload_limit.py:13: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_asset_upload_limit.py:16: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2685: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1766: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2740: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1786: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1265: in handle
+    await app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:151: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\routing.py:137: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\routing.py:691: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:347: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2641: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1033: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\routes\library_lending.py:37: in canonical_preflight
+    return promotion_preflight(str(library_id), actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:90: in promotion_preflight
+    return preflight(library_id)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:60: in preflight
+    if collection(name).find_one({'$or': [scope, {'canonical_library_id': library_id}]}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:1754: in find_one
+    for result in cursor.limit(-1):
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1166: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1142: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1090: in _refresh
+    self._send_message(q)
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:985: in _send_message
+    response = client._run_operation(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1956: in _run_operation
+    return self._retryable_read(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2076: in _retryable_read
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3043: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1947: in _cmd
+    return server.run_operation(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\server.py:227: in run_operation
+    _check_command_response(first, conn.max_wire_version, pool_opts=conn.opts)  # type:ignore[has-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_...fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False
+pool_opts = &lt;pymongo.pool_options.PoolOptions object at 0x0000018EBF801A60&gt;
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "99371917-66c1-4a33-bc88-1a9cbe13913f" }, { canonical_library_id: "99371917-66c1-4a33-bc88-1a9cbe13913f" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "99371917-66c1-4a33-bc88-1a9cbe13913f" }, { canonical_library_id: "99371917-66c1-4a33-bc88-1a9cbe13913f" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_blockers[test_promotion_unresolved_reservations_denied]" time="0.162"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;30646650-b79e-4147-a030-aca0fc9ed9c2&quot; }, { canonical_library_id: &quot;30646650-b79e-4147-a030-aca0fc9ed9c2&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;30646650-b79e-4147-a030-aca0fc9ed9c2&quot; }, { canonical_library_id: &quot;30646650-b79e-4147-a030-aca0fc9ed9c2&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x0000018EE323BE90&gt;
+historical = '30646650-b79e-4147-a030-aca0fc9ed9c2', collection = 'reservations'
+record = {'reservation_id': 88, 'status': 'ACTIVE'}
+
+    @pytest.mark.parametrize('collection,record',[
+        ('issues',{'issue_id':88,'status':'ISSUED'}),
+        ('reservations',{'reservation_id':88,'status':'ACTIVE'}),
+        ('fines',{'fine_id':88,'is_paid':False}),
+        ('library_inventory',{'work_id':'OL1W','quantity':1}),
+        ('institution_library_aliases',{'legacy_library_id':'LIB001'}),
+        ('institution_inventory_migrations',{'source_key':'legacy:88'}),
+        ('institution_lending_config',{'state':'PREPARING'}),
+        ('institution_loans',{'loan_id':str(uuid4()),'status':'ACTIVE'}),
+    ],ids=['test_promotion_active_legacy_loan_denied','test_promotion_unresolved_reservations_denied',
+           'test_promotion_unresolved_fees_denied','mapped_inventory','test_real_legacy_library_not_force_promoted',
+           'migration_conflict','preparing_conflict','canonical_consistency'])
+    def test_promotion_blockers(client,historical,collection,record):
+        row={**record, 'canonical_library_id' if collection.endswith('library_aliases') else 'library_id':historical}
+        db[collection].insert_one(row)
+&gt;       preview=get(client,historical,'/staff/canonical-defaults/preflight')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:20: in get
+    return client.get('/libraries/' + lid + suffix, headers={'x-test-user':str(user)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv\Lib\site-packages\anyio\from_thread.py:338: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:263: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:88: in __call__
+    await self.app(scope, receive, send)
+backend\services\inventory_upload_limit.py:13: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_asset_upload_limit.py:16: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2685: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1766: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2740: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1786: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1265: in handle
+    await app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:151: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\routing.py:137: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\routing.py:691: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:347: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2641: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1033: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\routes\library_lending.py:37: in canonical_preflight
+    return promotion_preflight(str(library_id), actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:90: in promotion_preflight
+    return preflight(library_id)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:60: in preflight
+    if collection(name).find_one({'$or': [scope, {'canonical_library_id': library_id}]}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:1754: in find_one
+    for result in cursor.limit(-1):
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1166: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1142: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1090: in _refresh
+    self._send_message(q)
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:985: in _send_message
+    response = client._run_operation(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1956: in _run_operation
+    return self._retryable_read(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2076: in _retryable_read
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3043: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1947: in _cmd
+    return server.run_operation(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\server.py:227: in run_operation
+    _check_command_response(first, conn.max_wire_version, pool_opts=conn.opts)  # type:ignore[has-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_...fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False
+pool_opts = &lt;pymongo.pool_options.PoolOptions object at 0x0000018EBF801A60&gt;
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "30646650-b79e-4147-a030-aca0fc9ed9c2" }, { canonical_library_id: "30646650-b79e-4147-a030-aca0fc9ed9c2" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "30646650-b79e-4147-a030-aca0fc9ed9c2" }, { canonical_library_id: "30646650-b79e-4147-a030-aca0fc9ed9c2" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_blockers[test_promotion_unresolved_fees_denied]" time="0.162"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;4bfe1fba-d06f-4114-890b-2e456fa41e33&quot; }, { canonical_library_id: &quot;4bfe1fba-d06f-4114-890b-2e456fa41e33&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;4bfe1fba-d06f-4114-890b-2e456fa41e33&quot; }, { canonical_library_id: &quot;4bfe1fba-d06f-4114-890b-2e456fa41e33&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x0000018EE344FFD0&gt;
+historical = '4bfe1fba-d06f-4114-890b-2e456fa41e33', collection = 'fines'
+record = {'fine_id': 88, 'is_paid': False}
+
+    @pytest.mark.parametrize('collection,record',[
+        ('issues',{'issue_id':88,'status':'ISSUED'}),
+        ('reservations',{'reservation_id':88,'status':'ACTIVE'}),
+        ('fines',{'fine_id':88,'is_paid':False}),
+        ('library_inventory',{'work_id':'OL1W','quantity':1}),
+        ('institution_library_aliases',{'legacy_library_id':'LIB001'}),
+        ('institution_inventory_migrations',{'source_key':'legacy:88'}),
+        ('institution_lending_config',{'state':'PREPARING'}),
+        ('institution_loans',{'loan_id':str(uuid4()),'status':'ACTIVE'}),
+    ],ids=['test_promotion_active_legacy_loan_denied','test_promotion_unresolved_reservations_denied',
+           'test_promotion_unresolved_fees_denied','mapped_inventory','test_real_legacy_library_not_force_promoted',
+           'migration_conflict','preparing_conflict','canonical_consistency'])
+    def test_promotion_blockers(client,historical,collection,record):
+        row={**record, 'canonical_library_id' if collection.endswith('library_aliases') else 'library_id':historical}
+        db[collection].insert_one(row)
+&gt;       preview=get(client,historical,'/staff/canonical-defaults/preflight')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:20: in get
+    return client.get('/libraries/' + lid + suffix, headers={'x-test-user':str(user)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv\Lib\site-packages\anyio\from_thread.py:338: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:263: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:88: in __call__
+    await self.app(scope, receive, send)
+backend\services\inventory_upload_limit.py:13: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_asset_upload_limit.py:16: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2685: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1766: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2740: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1786: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1265: in handle
+    await app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:151: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\routing.py:137: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\routing.py:691: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:347: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2641: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1033: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\routes\library_lending.py:37: in canonical_preflight
+    return promotion_preflight(str(library_id), actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:90: in promotion_preflight
+    return preflight(library_id)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:60: in preflight
+    if collection(name).find_one({'$or': [scope, {'canonical_library_id': library_id}]}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:1754: in find_one
+    for result in cursor.limit(-1):
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1166: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1142: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1090: in _refresh
+    self._send_message(q)
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:985: in _send_message
+    response = client._run_operation(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1956: in _run_operation
+    return self._retryable_read(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2076: in _retryable_read
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3043: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1947: in _cmd
+    return server.run_operation(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\server.py:227: in run_operation
+    _check_command_response(first, conn.max_wire_version, pool_opts=conn.opts)  # type:ignore[has-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_...fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False
+pool_opts = &lt;pymongo.pool_options.PoolOptions object at 0x0000018EBF801A60&gt;
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "4bfe1fba-d06f-4114-890b-2e456fa41e33" }, { canonical_library_id: "4bfe1fba-d06f-4114-890b-2e456fa41e33" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "4bfe1fba-d06f-4114-890b-2e456fa41e33" }, { canonical_library_id: "4bfe1fba-d06f-4114-890b-2e456fa41e33" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_blockers[mapped_inventory]" time="0.138"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;ec7d8946-851f-4f4f-859d-0e250d8e13ef&quot; }, { canonical_library_id: &quot;ec7d8946-851f-4f4f-859d-0e250d8e13ef&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;ec7d8946-851f-4f4f-859d-0e250d8e13ef&quot; }, { canonical_library_id: &quot;ec7d8946-851f-4f4f-859d-0e250d8e13ef&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x0000018EE31FF6D0&gt;
+historical = 'ec7d8946-851f-4f4f-859d-0e250d8e13ef'
+collection = 'library_inventory', record = {'work_id': 'OL1W', 'quantity': 1}
+
+    @pytest.mark.parametrize('collection,record',[
+        ('issues',{'issue_id':88,'status':'ISSUED'}),
+        ('reservations',{'reservation_id':88,'status':'ACTIVE'}),
+        ('fines',{'fine_id':88,'is_paid':False}),
+        ('library_inventory',{'work_id':'OL1W','quantity':1}),
+        ('institution_library_aliases',{'legacy_library_id':'LIB001'}),
+        ('institution_inventory_migrations',{'source_key':'legacy:88'}),
+        ('institution_lending_config',{'state':'PREPARING'}),
+        ('institution_loans',{'loan_id':str(uuid4()),'status':'ACTIVE'}),
+    ],ids=['test_promotion_active_legacy_loan_denied','test_promotion_unresolved_reservations_denied',
+           'test_promotion_unresolved_fees_denied','mapped_inventory','test_real_legacy_library_not_force_promoted',
+           'migration_conflict','preparing_conflict','canonical_consistency'])
+    def test_promotion_blockers(client,historical,collection,record):
+        row={**record, 'canonical_library_id' if collection.endswith('library_aliases') else 'library_id':historical}
+        db[collection].insert_one(row)
+&gt;       preview=get(client,historical,'/staff/canonical-defaults/preflight')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:20: in get
+    return client.get('/libraries/' + lid + suffix, headers={'x-test-user':str(user)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv\Lib\site-packages\anyio\from_thread.py:338: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:263: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:88: in __call__
+    await self.app(scope, receive, send)
+backend\services\inventory_upload_limit.py:13: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_asset_upload_limit.py:16: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2685: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1766: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2740: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1786: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1265: in handle
+    await app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:151: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\routing.py:137: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\routing.py:691: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:347: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2641: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1033: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\routes\library_lending.py:37: in canonical_preflight
+    return promotion_preflight(str(library_id), actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:90: in promotion_preflight
+    return preflight(library_id)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:60: in preflight
+    if collection(name).find_one({'$or': [scope, {'canonical_library_id': library_id}]}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:1754: in find_one
+    for result in cursor.limit(-1):
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1166: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1142: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1090: in _refresh
+    self._send_message(q)
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:985: in _send_message
+    response = client._run_operation(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1956: in _run_operation
+    return self._retryable_read(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2076: in _retryable_read
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3043: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1947: in _cmd
+    return server.run_operation(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\server.py:227: in run_operation
+    _check_command_response(first, conn.max_wire_version, pool_opts=conn.opts)  # type:ignore[has-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_...fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False
+pool_opts = &lt;pymongo.pool_options.PoolOptions object at 0x0000018EBF801A60&gt;
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "ec7d8946-851f-4f4f-859d-0e250d8e13ef" }, { canonical_library_id: "ec7d8946-851f-4f4f-859d-0e250d8e13ef" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "ec7d8946-851f-4f4f-859d-0e250d8e13ef" }, { canonical_library_id: "ec7d8946-851f-4f4f-859d-0e250d8e13ef" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_blockers[test_real_legacy_library_not_force_promoted]" time="0.128"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6&quot; }, { canonical_library_id: &quot;6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6&quot; }, { canonical_library_id: &quot;6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x0000018EE343CF10&gt;
+historical = '6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6'
+collection = 'institution_library_aliases'
+record = {'legacy_library_id': 'LIB001'}
+
+    @pytest.mark.parametrize('collection,record',[
+        ('issues',{'issue_id':88,'status':'ISSUED'}),
+        ('reservations',{'reservation_id':88,'status':'ACTIVE'}),
+        ('fines',{'fine_id':88,'is_paid':False}),
+        ('library_inventory',{'work_id':'OL1W','quantity':1}),
+        ('institution_library_aliases',{'legacy_library_id':'LIB001'}),
+        ('institution_inventory_migrations',{'source_key':'legacy:88'}),
+        ('institution_lending_config',{'state':'PREPARING'}),
+        ('institution_loans',{'loan_id':str(uuid4()),'status':'ACTIVE'}),
+    ],ids=['test_promotion_active_legacy_loan_denied','test_promotion_unresolved_reservations_denied',
+           'test_promotion_unresolved_fees_denied','mapped_inventory','test_real_legacy_library_not_force_promoted',
+           'migration_conflict','preparing_conflict','canonical_consistency'])
+    def test_promotion_blockers(client,historical,collection,record):
+        row={**record, 'canonical_library_id' if collection.endswith('library_aliases') else 'library_id':historical}
+        db[collection].insert_one(row)
+&gt;       preview=get(client,historical,'/staff/canonical-defaults/preflight')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:20: in get
+    return client.get('/libraries/' + lid + suffix, headers={'x-test-user':str(user)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv\Lib\site-packages\anyio\from_thread.py:338: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:263: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:88: in __call__
+    await self.app(scope, receive, send)
+backend\services\inventory_upload_limit.py:13: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_asset_upload_limit.py:16: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2685: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1766: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2740: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1786: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1265: in handle
+    await app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:151: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\routing.py:137: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\routing.py:691: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:347: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2641: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1033: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\routes\library_lending.py:37: in canonical_preflight
+    return promotion_preflight(str(library_id), actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:90: in promotion_preflight
+    return preflight(library_id)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:60: in preflight
+    if collection(name).find_one({'$or': [scope, {'canonical_library_id': library_id}]}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:1754: in find_one
+    for result in cursor.limit(-1):
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1166: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1142: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1090: in _refresh
+    self._send_message(q)
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:985: in _send_message
+    response = client._run_operation(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1956: in _run_operation
+    return self._retryable_read(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2076: in _retryable_read
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3043: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1947: in _cmd
+    return server.run_operation(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\server.py:227: in run_operation
+    _check_command_response(first, conn.max_wire_version, pool_opts=conn.opts)  # type:ignore[has-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_...fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False
+pool_opts = &lt;pymongo.pool_options.PoolOptions object at 0x0000018EBF801A60&gt;
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6" }, { canonical_library_id: "6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6" }, { canonical_library_id: "6dfd0009-09e1-4f23-b366-8d9bb5d7d2d6" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_blockers[migration_conflict]" time="0.133"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;991d538e-244e-48ab-a99b-a4a15d0bd3e7&quot; }, { canonical_library_id: &quot;991d538e-244e-48ab-a99b-a4a15d0bd3e7&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;991d538e-244e-48ab-a99b-a4a15d0bd3e7&quot; }, { canonical_library_id: &quot;991d538e-244e-48ab-a99b-a4a15d0bd3e7&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x0000018EE2802B90&gt;
+historical = '991d538e-244e-48ab-a99b-a4a15d0bd3e7'
+collection = 'institution_inventory_migrations'
+record = {'source_key': 'legacy:88'}
+
+    @pytest.mark.parametrize('collection,record',[
+        ('issues',{'issue_id':88,'status':'ISSUED'}),
+        ('reservations',{'reservation_id':88,'status':'ACTIVE'}),
+        ('fines',{'fine_id':88,'is_paid':False}),
+        ('library_inventory',{'work_id':'OL1W','quantity':1}),
+        ('institution_library_aliases',{'legacy_library_id':'LIB001'}),
+        ('institution_inventory_migrations',{'source_key':'legacy:88'}),
+        ('institution_lending_config',{'state':'PREPARING'}),
+        ('institution_loans',{'loan_id':str(uuid4()),'status':'ACTIVE'}),
+    ],ids=['test_promotion_active_legacy_loan_denied','test_promotion_unresolved_reservations_denied',
+           'test_promotion_unresolved_fees_denied','mapped_inventory','test_real_legacy_library_not_force_promoted',
+           'migration_conflict','preparing_conflict','canonical_consistency'])
+    def test_promotion_blockers(client,historical,collection,record):
+        row={**record, 'canonical_library_id' if collection.endswith('library_aliases') else 'library_id':historical}
+        db[collection].insert_one(row)
+&gt;       preview=get(client,historical,'/staff/canonical-defaults/preflight')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:20: in get
+    return client.get('/libraries/' + lid + suffix, headers={'x-test-user':str(user)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv\Lib\site-packages\anyio\from_thread.py:338: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:263: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:88: in __call__
+    await self.app(scope, receive, send)
+backend\services\inventory_upload_limit.py:13: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_asset_upload_limit.py:16: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2685: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1766: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2740: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1786: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1265: in handle
+    await app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:151: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\routing.py:137: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\routing.py:691: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:347: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2641: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1033: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\routes\library_lending.py:37: in canonical_preflight
+    return promotion_preflight(str(library_id), actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:90: in promotion_preflight
+    return preflight(library_id)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:60: in preflight
+    if collection(name).find_one({'$or': [scope, {'canonical_library_id': library_id}]}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:1754: in find_one
+    for result in cursor.limit(-1):
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1166: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1142: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1090: in _refresh
+    self._send_message(q)
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:985: in _send_message
+    response = client._run_operation(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1956: in _run_operation
+    return self._retryable_read(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2076: in _retryable_read
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3043: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1947: in _cmd
+    return server.run_operation(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\server.py:227: in run_operation
+    _check_command_response(first, conn.max_wire_version, pool_opts=conn.opts)  # type:ignore[has-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_...fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False
+pool_opts = &lt;pymongo.pool_options.PoolOptions object at 0x0000018EBF801A60&gt;
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "991d538e-244e-48ab-a99b-a4a15d0bd3e7" }, { canonical_library_id: "991d538e-244e-48ab-a99b-a4a15d0bd3e7" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "991d538e-244e-48ab-a99b-a4a15d0bd3e7" }, { canonical_library_id: "991d538e-244e-48ab-a99b-a4a15d0bd3e7" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_blockers[preparing_conflict]" time="0.148" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_blockers[canonical_consistency]" time="0.144"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;a8bde59a-d819-4f98-b134-da8fecf6a736&quot; }, { canonical_library_id: &quot;a8bde59a-d819-4f98-b134-da8fecf6a736&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: &quot;institution_v2c_migrations&quot;, filter: { $or: [ { library_id: &quot;a8bde59a-d819-4f98-b134-da8fecf6a736&quot; }, { canonical_library_id: &quot;a8bde59a-d819-4f98-b134-da8fecf6a736&quot; } ] }, limit: 1, singleBatch: true, lsid: { id: UUID(&quot;d7528af0-0fba-4ba8-b112-55542ff629fe&quot;) }, $db: &quot;luminar_v2n_fixture_298145b42b97441b&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x0000018EE3259A10&gt;
+historical = 'a8bde59a-d819-4f98-b134-da8fecf6a736'
+collection = 'institution_loans'
+record = {'loan_id': '903f2a56-3f5a-4bec-9bbc-634d2312248e', 'status': 'ACTIVE'}
+
+    @pytest.mark.parametrize('collection,record',[
+        ('issues',{'issue_id':88,'status':'ISSUED'}),
+        ('reservations',{'reservation_id':88,'status':'ACTIVE'}),
+        ('fines',{'fine_id':88,'is_paid':False}),
+        ('library_inventory',{'work_id':'OL1W','quantity':1}),
+        ('institution_library_aliases',{'legacy_library_id':'LIB001'}),
+        ('institution_inventory_migrations',{'source_key':'legacy:88'}),
+        ('institution_lending_config',{'state':'PREPARING'}),
+        ('institution_loans',{'loan_id':str(uuid4()),'status':'ACTIVE'}),
+    ],ids=['test_promotion_active_legacy_loan_denied','test_promotion_unresolved_reservations_denied',
+           'test_promotion_unresolved_fees_denied','mapped_inventory','test_real_legacy_library_not_force_promoted',
+           'migration_conflict','preparing_conflict','canonical_consistency'])
+    def test_promotion_blockers(client,historical,collection,record):
+        row={**record, 'canonical_library_id' if collection.endswith('library_aliases') else 'library_id':historical}
+        db[collection].insert_one(row)
+&gt;       preview=get(client,historical,'/staff/canonical-defaults/preflight')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.scratch\institution-v2n\auth_product_consistency\test_defaults.py:20: in get
+    return client.get('/libraries/' + lid + suffix, headers={'x-test-user':str(user)})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:482: in get
+    return super().get(
+.venv\Lib\site-packages\httpx\_client.py:1053: in get
+    return self.request(
+.venv\Lib\site-packages\starlette\testclient.py:454: in request
+    return super().request(
+.venv\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\testclient.py:356: in handle_request
+    raise exc
+.venv\Lib\site-packages\starlette\testclient.py:353: in handle_request
+    portal.call(self.app, scope, receive, send)
+.venv\Lib\site-packages\anyio\from_thread.py:338: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+.venv\Lib\site-packages\anyio\from_thread.py:263: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\applications.py:1163: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:90: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:88: in __call__
+    await self.app(scope, receive, send)
+backend\services\inventory_upload_limit.py:13: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_asset_upload_limit.py:16: in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:660: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2685: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1766: in handle
+    await self.original_router.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:2740: in handle
+    await included_router._handle_selected(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1786: in _handle_selected
+    await original_route.handle(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:1265: in handle
+    await app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\routing.py:151: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\fastapi\routing.py:137: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\fastapi\routing.py:691: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:347: in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\starlette\concurrency.py:34: in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\to_thread.py:65: in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:2641: in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+.venv\Lib\site-packages\anyio\_backends\_asyncio.py:1033: in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\routes\library_lending.py:37: in canonical_preflight
+    return promotion_preflight(str(library_id), actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:90: in promotion_preflight
+    return preflight(library_id)
+           ^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_canonical_defaults.py:60: in preflight
+    if collection(name).find_one({'$or': [scope, {'canonical_library_id': library_id}]}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:1754: in find_one
+    for result in cursor.limit(-1):
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1166: in __next__
+    return self.next()
+           ^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1142: in next
+    if len(self._data) or self._refresh():
+                          ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:1090: in _refresh
+    self._send_message(q)
+.venv\Lib\site-packages\pymongo\synchronous\cursor.py:985: in _send_message
+    response = client._run_operation(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1956: in _run_operation
+    return self._retryable_read(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2076: in _retryable_read
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+          ^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3043: in _read
+    return self._func(self._session, self._server, conn, read_pref)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1947: in _cmd
+    return server.run_operation(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\server.py:227: in run_operation
+    _check_command_response(first, conn.max_wire_version, pool_opts=conn.opts)  # type:ignore[has-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_...fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False
+pool_opts = &lt;pymongo.pool_options.PoolOptions object at 0x0000018EBF801A60&gt;
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "a8bde59a-d819-4f98-b134-da8fecf6a736" }, { canonical_library_id: "a8bde59a-d819-4f98-b134-da8fecf6a736" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_298145b42b97441b to execute command { find: "institution_v2c_migrations", filter: { $or: [ { library_id: "a8bde59a-d819-4f98-b134-da8fecf6a736" }, { canonical_library_id: "a8bde59a-d819-4f98-b134-da8fecf6a736" } ] }, limit: 1, singleBatch: true, lsid: { id: UUID("d7528af0-0fba-4ba8-b112-55542ff629fe") }, $db: "luminar_v2n_fixture_298145b42b97441b" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_promotion_general_user_and_platform_role_denied" time="0.160" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_first_local_book_switches_source" time="0.202" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_import_preview_does_not_switch_source" time="0.186" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_import_apply_switches_source" time="0.214" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_source_uses_active_records" time="0.212" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_defaults" name="test_inventory_availability_is_bulk" time="0.443" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_seed" name="test_seed_preserves_global_source" time="0.138" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_seed" name="test_seed_creates_canonical_local_records" time="0.166" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_seed" name="test_seed_avoids_existing_duplicates" time="0.189" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_seed" name="test_seed_holding_counts_valid" time="0.256" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_seed" name="test_seed_shelf_is_local_only" time="0.145" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_seed" name="test_seed_local_only_books_valid" time="0.156" /><testcase classname=".scratch.institution-v2n.auth_product_consistency.test_seed" name="test_test_library_source_local_after_seed" time="0.172" /></testsuite></testsuites>

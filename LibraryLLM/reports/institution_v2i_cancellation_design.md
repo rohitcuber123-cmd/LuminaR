@@ -1,0 +1,7 @@
+# Future cancellation feasibility — no implementation
+
+No cancellation endpoint/button was added. Existing UI label/constants mentioning CANCELLED do not establish a supported job transition or API. Current lease_query only accepts RUNNING/VALIDATING/PUBLISHING; introducing another state without compatibility/migration would risk losing renewal/publication ownership.
+
+Queued cancellation could eventually use conditional state+effective ownership under the tenant barrier and an idempotent request/audit contract. Running Search/KG would need cooperative checkpoints between bounded embedding batches/graph chunks and a durable intent separate from acknowledged terminal outcome; a native FAISS add or model call is not safely interruptible by killing the thread. Validation can stop only before publication ownership is committed, while retaining private evidence. Cancellation during process restart must not create two owners.
+
+The no-cancel boundary must begin before the publication critical section (rename/pointer/ack reconciliation protocol). After publication, success or RECOVERY_REQUIRED must be resolved from the actual pointer; a request cannot retroactively roll back a generation by declaring CANCELLED. Leases/fences and last-good protection continue to govern. New cancellation intent/state/index compatibility, restart/fault tests and artifact retention/audit are prerequisites requiring separate approval.

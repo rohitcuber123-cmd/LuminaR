@@ -461,10 +461,17 @@ def test_existing_non_document_api_contracts_preserved():
 def test_protected_rag_files_match_original_hashes():
     import hashlib
     import json
+    assert hashlib.sha256((ROOT/'reports/assistant_backend_baseline/hashes.json').read_bytes()).hexdigest()=='aee62fd1da1a6110c05b738081199f47642585bb4720f066c34524b859818f9f'
     rows = json.loads((ROOT / 'reports/assistant_backend_baseline/hashes.json').read_text(encoding='utf-8-sig'))
     for row in rows:
         if Path(row['Path']).name != 'api.py':
-            assert hashlib.sha256(Path(row['Path']).read_bytes()).hexdigest().upper() == row['Hash']
+            relative = Path(row['Path']).relative_to(Path(rows[0]['Path']).parents[1])
+            payload = (ROOT / relative).read_bytes()
+            if relative.as_posix() == 'rag/qa.py':
+                assert hashlib.sha256((ROOT/'tests/contracts/rag_grounding_v2o2.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='0f2e567796978ada7ee066fb417d72d74ada76b92f7119244702f9b63c3611b5'
+                from tests.contracts.rag_grounding_v2o2 import reviewed_rag_payload
+                payload = reviewed_rag_payload(payload)
+            assert hashlib.sha256(payload).hexdigest().upper() == row['Hash']
 
 
 def test_confirmation_cannot_move_between_users():

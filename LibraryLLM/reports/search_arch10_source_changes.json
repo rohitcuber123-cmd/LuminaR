@@ -1,0 +1,116 @@
+{
+  "candidate_id": "search-smarteng-disabled-proof-10",
+  "changes": [
+    {
+      "path": "scratch/search_architecture_v10/capabilities.py",
+      "parent": null,
+      "sha256": "f18c8628c5d3a0fedbcf74267afc09cea04acfac0ca948c2696db1754267c2d8",
+      "added": true
+    },
+    {
+      "path": "scratch/search_architecture_v10/intent.py",
+      "parent": null,
+      "sha256": "43f31ed87a2ce3b11ba6e2c4aba8a198509cfed2e6ed05a80af1f64990b2d6f0",
+      "added": true
+    },
+    {
+      "path": "scratch/search_architecture_v10/legacy.py",
+      "parent": "scratch/search_architecture_v9/legacy.py",
+      "parent_sha256": "bc06688a909e0b90db11ae95e9767758a30994856e18895e5f75a809c49bf3d8",
+      "sha256": "f2b232b9d271370e108a3e142b47c9973928901d55778ebe33917d13665ea823",
+      "diff": "--- scratch/search_architecture_v9/legacy.py\n+++ scratch/search_architecture_v10/legacy.py\n@@ -16,7 +16,7 @@\n from .source_roles import partition,annotate,records,Modality,Role\n from .surface import claim_preferences,claim_frames,semantic_projection,generic_topic,CONSERVATIVE,residual_segments\n \n-PARSER_VERSION='search-smarteng-disabled-proof-9'\n+PARSER_VERSION='search-smarteng-disabled-proof-10'\n QueryPlan=native.QueryPlan\n normalize=native.normalize\n matches=native.matches\n"
+    },
+    {
+      "path": "scratch/search_architecture_v10/obligations.py",
+      "parent": "scratch/search_architecture_v9/obligations.py",
+      "parent_sha256": "b5b0446c3d9088bb1b954a690a2818e255ec65e8288ffce48280126c1435a0d9",
+      "sha256": "40ca69bea2927c1e639c94f6e0e12d1d29bb6f75722fd200465e71af5d710883",
+      "diff": "--- scratch/search_architecture_v9/obligations.py\n+++ scratch/search_architecture_v10/obligations.py\n@@ -44,9 +44,9 @@\n     for a,b in intervals:\n         text=query[a:b];v=re.sub(r'\"[^\"\\n]*\"|\u201c[^\u201d\\n]*\u201d',lambda m:' '*(m.end()-m.start()),text);t=v.strip().casefold()\n         required=True;category='SEMANTIC_TOPIC';consequence='SEARCHABLE_TOPIC'\n-        if re.match(r'^(?:ignore|bypass|override|switch\\s+(?:the\\s+)?(?:library|tenant)|in\\s+(?:an?|the|my)\\s+(?:old|previous).*example|I\\s+(?:cannot\\s+remember\\b.*?\\b(?:another|different)\\s+book|remember|once\\s+read)|for\\s+example|suppose|imagine|explain|what\\s+(?:does|is))\\b',t,re.I) or re.search(r'\\b(?:for\\s+this\\s+correction|metalinguistic|correction\\s+instruction)\\b',t,re.I) or re.match(r'^(?:use\\s+[a-z\\s]+,\\s*not\\s+[a-z\\s]+,\\s*for\\s+this\\s+correction)\\b',t,re.I):\n+        if re.match(r'^(?:ignore|bypass|override|switch\\s+(?:the\\s+)?(?:library|tenant)|in\\s+(?:an?|the|my)\\s+(?:old|previous).*example|I\\s+(?:cannot\\s+remember\\b.*?\\b(?:another|different)\\s+book|remember|once\\s+read)|for\\s+example|suppose|imagine|explain|what\\s+(?:does|is))\\b',t,re.I) or re.search(r'\\b(?:for\\s+this\\s+correction|metalinguistic|correction\\s+instruction)\\b',t,re.I) or re.match(r'^(?:use\\s+[a-z\\s]+,\\s*not\\s+[a-z\\s]+,\\s*for\\s+this\\s+correction)\\b',t,re.I) or re.search(r'\\b(?:colleague|friend|teacher)\\s+said\\b.*\\b(?:would|ideal)\\b',t,re.I):\n             category='NON_OPERATIVE';required=False;consequence='NO_HARD_PREDICATES'\n-        elif re.search(r'\\b(?:prefer\\w*|optional|advisory|bonus|welcome|would\\s+be\\s+nice|should|may)\\b',t) and not re.search(r'\\b(?:must|required?|mandatory|hard\\s+(?:filter|condition)|strict)\\b',t):\n+        elif re.search(r'\\b(?:prefer\\w*|optional|advisory|bonus|welcome|would\\s+be\\s+nice|should|may)\\b',t) and not re.search(r'\\b(?:must|required?|mandatory|hard\\s+(?:filter|condition)|strict|no\\s+(?:returned\\s+)?(?:record|book|result))\\b',t):\n             category='OPTIONAL_PREFERENCE';required=False;consequence='NO_HARD_PREDICATES'\n         domains=[]\n         field_text=re.sub(r'\\b(?:sort|order)\\s+(?:on|by)\\b','sort ',t)\n@@ -55,6 +55,7 @@\n         topical=bool(re.search(r'\\b(?:about|topic\\s*(?::|is)?|discussing|accounts?\\s+of|studies?\\s+(?:on|about|of)|history\\s+of)\\b',t))\n         if required and domains:category='MANDATORY_REQUIREMENT';consequence='REPRESENT_AND_VERIFY'\n         if required and re.search(r'\\b(?:pages?|prices?|costs?|publishers?|imprints?|editions?)\\b',t) and not topical:category='UNSUPPORTED_REQUEST';consequence='BLOCK_UNSUPPORTED'\n+        if required and re.search(r'\\b(?:under|over|above|below|at\\s+least|at\\s+most)\\s+pages?\\b',t) and not re.search(r'\\d',t):category='MISSING_OPERAND';consequence='CLARIFY'\n         if required and re.search(r'\\b(?:forgot|cannot\\s+(?:remember|tell)|unclear|undecided|unsure|uncertain|wait\\s+for|need\\s+to\\s+(?:pick|choose)|resolve\\s+my\\s+choice)\\b',t):category='AMBIGUOUS_ALTERNATIVE';consequence='CLARIFY'\n         if required and (re.search(r'\\[[^\\]]*\\]|\\.{3,}|\u2026|_{2,}',v) or re.search(r'\\b(?:missing|blank|omitted|not\\s+supplied|to\\s+be\\s+filled)\\b',t)) and domains:category='MISSING_OPERAND';consequence='CLARIFY'\n         if required and re.search(r'\\b(?:same|different|higher|lower|earlier|later)\\b',t) and re.search(r'\\b(?:book|work|record)\\b',t) and re.search(r'\\b(?:than|as|of|from)\\b',t):category='UNSUPPORTED_RELATION';consequence='BLOCK_UNSUPPORTED'\n"
+    },
+    {
+      "path": "scratch/search_architecture_v10/orchestrator.py",
+      "parent": null,
+      "sha256": "576ecdd5616420d91537c2060d83b7db54101cf816935e8de1b8d2a46055912a",
+      "added": true
+    },
+    {
+      "path": "scratch/search_architecture_v10/parser.py",
+      "parent": "scratch/search_architecture_v9/parser.py",
+      "parent_sha256": "071f91bca2d517ea69a2d6745a46ee63ba80f09beb332fc0e4168e1a949dc793",
+      "sha256": "16a6329def0149bc3ff044726781023ed84ba42f45ed4151ceca77cdac513cec",
+      "diff": "--- scratch/search_architecture_v9/parser.py\n+++ scratch/search_architecture_v10/parser.py\n@@ -10,8 +10,10 @@\n from .language import interpret\n from .validation import audit\n from .planning import project\n+from .semantic_interpretation import overlay\n+from .intent import public_contract\n \n-PARSER_VERSION='search-smarteng-disabled-proof-9'\n+PARSER_VERSION='search-smarteng-disabled-proof-10'\n QueryPlan=legacy.QueryPlan\n normalize=legacy.normalize\n matches=legacy.matches\n@@ -26,7 +28,7 @@\n \n \n def validate(plan,capabilities=None):\n-    metadata={k:deepcopy(plan.decision[k]) for k in ['interpretation_contract','source_obligations','clarification_targets'] if k in plan.decision}\n+    metadata={k:deepcopy(plan.decision[k]) for k in ['interpretation_contract','source_obligations','clarification_targets','query_intent','accepted_source_refinement'] if k in plan.decision}\n     result=legacy.validate(plan,capabilities)\n     blob=result.decision.get('query_ir_contract')\n     if blob and metadata:\n@@ -37,6 +39,13 @@\n             # decide preserves the native proof/source contract through legacy wrapper.\n         metadata['source_obligations']=check\n     result.decision.update(metadata)\n+    blob=result.decision.get('query_ir_contract',{})\n+    reset=plan.decision.get('accepted_source_refinement',{})\n+    explicit_reset=(reset.get('rule')=='native.reset' and reset.get('submitted_query','').casefold() in\n+                    ('something different','new search','start over','clear search context'))\n+    if result.mode=='SMART' and not result.raw_query.strip() and not blob.get('trusted_controls',{}).get('filters') and not explicit_reset:\n+        legacy.decide(result,'UNSUPPORTED','EMPTY_SEARCH_OBJECTIVE',fields=['objective'])\n+        result.decision.update(metadata)\n     return result\n \n \n@@ -46,11 +55,18 @@\n     base=legacy.parse_query(raw,facets,mode,filters,omit)\n     if mode!='SMART' or 'query_ir_contract' not in base.decision:return base\n     ir,units,handled=interpret(raw,_decode(base.decision['query_ir_contract']))\n+    ir=overlay(raw,ir)\n+    for r in ir.requirements:\n+        if r.provenance.get('origin')=='V10_INTERPRETATION' and r.field=='language':\n+            m=re.search(r'\\b(languge|langauge)\\b',r.source_text,re.I)\n+            if m:\n+                base.decision.setdefault('repair_notices',[]).append(dict(kind='grammar_typo',source_span=list(r.source_span),\n+                    source_text=r.source_text,domain='language',from_text=m[0],to='language'))\n     obligations=audit(ir)\n     p=project(ir,base,PARSER_VERSION,obligations)\n     targets=[dict(field=r.field,state=r.state.value,span=list(r.source_span),source_text=r.source_text,requirement_id=r.requirement_id)\n              for r in ir.requirements if r.ownership=='MANDATORY' and r.state.value!='EXPLICITLY_SUPPLIED']\n     targets.extend(dict(field=x.get('field','requirement'),state='UNVERIFIED_SOURCE_OBLIGATION',span=x['span'],source_text=raw[slice(*x['span'])]) for x in obligations['violations'])\n     p.decision.update(interpretation_contract=dict(version=9,authority='PROPOSAL_ONLY',units=[asdict(u) for u in units],overlaid_units=handled),\n-                      source_obligations=obligations,clarification_targets=targets)\n+                      source_obligations=obligations,clarification_targets=targets,query_intent=public_contract(ir))\n     return validate(p)\n"
+    },
+    {
+      "path": "scratch/search_architecture_v10/projection.py",
+      "parent": "scratch/search_architecture_v9/projection.py",
+      "parent_sha256": "17c5334fbde35c8291f166ab8f712ac625c82bbac2039400acf32424cce106b4",
+      "sha256": "110f5d7077e481f724cb03233e4c1f62c3b804d52cff81c97fdaa907ad6e715a",
+      "diff": "--- scratch/search_architecture_v9/projection.py\n+++ scratch/search_architecture_v10/projection.py\n@@ -23,7 +23,9 @@\n                     if term.strip():plan.exclude_terms.append(term.strip())\n         elif f=='format':\n             plan.formats.append(v)\n-            if op=='ONLY':plan.exclusive_formats.append(v)\n+            if op=='ONLY':\n+                plan.exclusive_formats.append(v)\n+                if v in ['ONLINE','PHYSICAL']:plan.excluded_formats.append('PHYSICAL' if v=='ONLINE' else 'ONLINE')\n         elif f=='excluded_format':plan.excluded_formats.append(v)\n         elif f=='literal':plan.exact_text=v\n         elif f=='author':plan.author_text=v\n"
+    },
+    {
+      "path": "scratch/search_architecture_v10/proof.py",
+      "parent": "scratch/search_architecture_v9/proof.py",
+      "parent_sha256": "8b344b62b8469bab57d11a07f20052d31aa2b1e0b7774bfd9fbdce56e0705a5b",
+      "sha256": "e08d055258fc12d1c1c468a9243b8b828d5fb0a0af412a3c91b44987cfcdbec6",
+      "diff": "--- scratch/search_architecture_v9/proof.py\n+++ scratch/search_architecture_v10/proof.py\n@@ -25,13 +25,13 @@\n             if not (0<=a<b<=len(ir.raw_query)) or ir.raw_query[a:b]!=r.source_text:\n                 violations.append((r.requirement_id,'INVALID_SOURCE_SPAN'));continue\n             if not r.clause_span[0]<=a<b<=r.clause_span[1]:violations.append((r.requirement_id,'INVALID_CLAUSE_OWNER'))\n-        if r.provenance.get('origin') not in ['TRUSTED_CONTROL','V9_INTERPRETATION'] and r.operator!='NON_SEARCH_INQUIRY':\n+        if r.provenance.get('origin') not in ['TRUSTED_CONTROL','V9_INTERPRETATION','V10_INTERPRETATION'] and r.operator!='NON_SEARCH_INQUIRY':\n             expected=annotate(r,units)\n             if any(getattr(r,k)!=v for k,v in expected.items()):violations.append((r.requirement_id,'SOURCE_ROLE_MISMATCH'))\n         if r.ownership=='ADVISORY' and r.field!='preference':violations.append((r.requirement_id,'UNPROVEN_ADVISORY_DEMOTION'))\n         if r.ownership=='NON_OPERATIVE':\n             u=governing(units,a,b)\n-            if r.field!='context' or r.provenance.get('origin')!='V9_INTERPRETATION' and (u is None or u.modality!=Modality.NON_OPERATIVE):violations.append((r.requirement_id,'UNPROVEN_BACKGROUND_DEMOTION'))\n+            if r.field!='context' or r.provenance.get('origin') not in ['V9_INTERPRETATION','V10_INTERPRETATION'] and (u is None or u.modality!=Modality.NON_OPERATIVE):violations.append((r.requirement_id,'UNPROVEN_BACKGROUND_DEMOTION'))\n         if r.ownership in ['ADVISORY','NON_OPERATIVE']:covered.append(r.requirement_id);continue\n         if r.modality in [Modality.SHOULD,Modality.MAY,Modality.NON_OPERATIVE] and r.representation=='HARD_FILTER':violations.append((r.requirement_id,'NON_MANDATORY_HARD_FILTER'))\n         state=State(r.state)\n@@ -43,7 +43,13 @@\n             if r.field not in FAMILIES:violations.append((r.requirement_id,'UNSUPPORTED_PROJECTION_FIELD'))\n             if r.value in (None,'',[]):violations.append((r.requirement_id,'EMPTY_RESOLVED_VALUE'))\n             if not r.provenance.get('recognizer'):violations.append((r.requirement_id,'NO_SOURCE_RECOGNIZER'))\n-            if r.provenance.get('origin')=='V9_INTERPRETATION':\n+            if r.provenance.get('origin')=='V10_INTERPRETATION':\n+                from .semantic_interpretation import evidence\n+                if not evidence(r,ir.raw_query):violations.append((r.requirement_id,'V10_SOURCE_EVIDENCE_MISMATCH'))\n+            elif r.provenance.get('origin')=='V10_INTERPRETATION':\n+                from .semantic_interpretation import evidence\n+                if not evidence(r,ir.raw_query):violations.append((r.requirement_id,'V10_SOURCE_EVIDENCE_MISMATCH'))\n+            elif r.provenance.get('origin')=='V9_INTERPRETATION':\n                 from .validation import local_evidence\n                 if not local_evidence(r):violations.append((r.requirement_id,'V9_SOURCE_EVIDENCE_MISMATCH'))\n             elif r.provenance.get('origin')!='TRUSTED_CONTROL':\n"
+    },
+    {
+      "path": "scratch/search_architecture_v10/refinement.py",
+      "parent": "scratch/search_architecture_v9/refinement.py",
+      "parent_sha256": "6aeb8e37b83e432cffbf9be04ee87ad2a282fee7afc4962bb6704b3d7fb7171d",
+      "sha256": "d5d76f7f6a95ba41b56a3e3799435a3a5b882103d2d96a4f647d82c7e9c7e2b2",
+      "diff": "--- scratch/search_architecture_v9/refinement.py\n+++ scratch/search_architecture_v10/refinement.py\n@@ -28,6 +28,8 @@\n     rewrite=raw;fields=set();continued=True;rule='native.field_delta'\n     if text in ('something different','new search','start over','clear search context'):\n         p=parse_query('',facets,mode);continued=False;rule='native.reset'\n+        from .parser import decide\n+        decide(p,'EXECUTABLE','EXPLICIT_RESET_BROWSE')\n     else:\n         instead=re.fullmatch(r'(?:show me\\s+)?(.+?)\\s+instead',text) or re.fullmatch(r'instead\\s+(?:show me\\s+)?(.+)',text)\n         if instead and instead[1] not in ('physical','online','digital'):\n"
+    },
+    {
+      "path": "scratch/search_architecture_v10/refinement_workflow.py",
+      "parent": null,
+      "sha256": "11c38792b8bc3ad99ba25cf321b98a2e2f393a0028b3a785913ade18651c53e1",
+      "added": true
+    },
+    {
+      "path": "scratch/search_architecture_v10/semantic_interpretation.py",
+      "parent": null,
+      "sha256": "4cc460af9e7936a79f2b8546b61f12536e57e2e2fc62f36113f8eeb8b1ac6a6c",
+      "added": true
+    },
+    {
+      "path": "scratch/search_architecture_v10/test_extraction_compact.py",
+      "parent": "scratch/search_architecture_v9/test_extraction_compact.py",
+      "parent_sha256": "1ff6565aa14d44e472a1c74eb8fc783decd925fde5983d6f18f2ac828e0746ff",
+      "sha256": "74c294f96ddecbb67d5bc4fc40fcaf849c4153e194794ff91e8575e5d6b2c959",
+      "diff": "--- scratch/search_architecture_v9/test_extraction_compact.py\n+++ scratch/search_architecture_v10/test_extraction_compact.py\n@@ -1,6 +1,6 @@\n \"\"\"Test suite for compact proposal interface and deterministic normalization adapter.\"\"\"\n import pytest\n-from scratch.search_architecture_v9.extraction_compact import (\n+from scratch.search_architecture_v10.extraction_compact import (\n     CompactExtraction,\n     CompactConstraintProposal,\n     normalize_compact_proposal,\n"
+    },
+    {
+      "path": "scratch/search_architecture_v10/test_semantic_workflow.py",
+      "parent": null,
+      "sha256": "2ecfe793d0d5de187f8a5d4ad2b19541854cf6dbb181ef7a9c29af23f022c017",
+      "added": true
+    },
+    {
+      "path": "scratch/search_architecture_v10/validation.py",
+      "parent": "scratch/search_architecture_v9/validation.py",
+      "parent_sha256": "dba4118c6af79805689306532479a018eb37bb7bfd2bee7ab1cb449ff752ae30",
+      "sha256": "351cd409f4770237e7a18d0e9a87eaade980523dd85de7797474170b7fa335f8",
+      "diff": "--- scratch/search_architecture_v9/validation.py\n+++ scratch/search_architecture_v10/validation.py\n@@ -33,6 +33,11 @@\n     result=verify_ir(ir)\n     result['invalid_atom_ids']=[]\n     for r in ir.requirements:\n+        if r.provenance.get('origin')=='V10_INTERPRETATION':\n+            from .semantic_interpretation import evidence\n+            if not evidence(r,ir.raw_query):\n+                result['invalid_atom_ids'].append(r.requirement_id)\n+                result['violations'].append(dict(span=list(r.source_span),reason='V10_UNPROVEN_PROPOSAL',field=r.field,decision='UNSUPPORTED'))\n         if r.provenance.get('origin')=='V9_INTERPRETATION' and not local_evidence(r):\n             result['invalid_atom_ids'].append(r.requirement_id)\n             result['violations'].append(dict(span=list(r.source_span),reason='PROPOSED_MEANING_NOT_SOURCE_PROVEN',field=r.field,decision='UNSUPPORTED'))\n"
+    }
+  ],
+  "new_scripts": {
+    "scripts/search_arch10_audit.py": "b7d94ae5e06ff6d3bc3f87ca99fe7cf2a4cf0c0e394ee75aca0f2ed6b6e95a49",
+    "scripts/search_arch10_embedding_probe.py": "343de1b9e0b33081a2d323fea3cbc1b8ae2b1f3ae005d53c415529c9d2a5995d",
+    "scripts/search_arch10_embedding_probe_worker.py": "a3efd294f44547d5616fe6904985fce94a00263d8df67377a8fb7376aeb304d2",
+    "scripts/search_arch10_evaluate.py": "c567ba93da1ba560983471c2c6687eaa001118ef8ef80ae365eefa6248daf1fa",
+    "scripts/search_arch10_evaluate_dev.py": "9f548c25c8119118ff1a831de1b05fd07bd09682522fc8ec8f09c817a894f4cf",
+    "scripts/search_arch10_finalize.py": "3d37090dbec5dc61b9e4b25951d330e10338ba843879a9a734fce6ff470e3a71",
+    "scripts/search_arch10_historical.py": "83b3d6245c9da98180f2b4a077e3659eb2e3ccce0612cd6dc5287d8e6bd9e5c8",
+    "scripts/search_arch10_intent_audit.py": "43d03332758240c29f91ba74f22d6a1b5ec64d24ea487381e8d7b6f79a4cf15a",
+    "scripts/search_arch10_native.py": "33963c0c63fbbd73700b367017600769e2c102a41be62246ff2eaf9ce6dc4a0c",
+    "scripts/search_arch10_performance.py": "e923c647b8678e9150ce1914956d8cdb1dea8b1e0bfde991c494bddbd504e512",
+    "scripts/search_arch10_population.py": "2fa75ff9102ded26f67aaeded9b6c8e4c2efea1d87f762dec460954c05c3dfe8",
+    "scripts/search_arch10_regress.py": "4e5672ad58154a210525ac8479abfc8024fe6fc6a405c568f8c4b86947e61daf"
+  },
+  "protected_sources_modified": false,
+  "historical_assertions_modified": false,
+  "full_candidate_manifest": "reports/search_arch10_source_freeze.json",
+  "new_regression_directory": "scratch/search_arch10_regression",
+  "regression_copy_policy": "Source-only V9-to-V10 target import/version rebinding. Original assertions/gold retained; reviewed deselections documented separately."
+}

@@ -1,0 +1,131 @@
+{
+  "fresh_N": {
+    "group": "institution_v2n",
+    "exit": 0,
+    "tests": 26,
+    "passed": 26,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 9.787246500000037,
+    "files": [
+      "tests/institution_v2n"
+    ]
+  },
+  "actual_Mongo_server": true,
+  "application_auth_suites": {
+    "passed": 985,
+    "failed": 0,
+    "skipped": 0
+  },
+  "native": {
+    "scope": "Disposable authenticated Mongo only, actual native worker and cached MiniLM/FAISS/KG.",
+    "cases": [
+      {
+        "name": "success",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 94.84613769999851,
+        "evidence": "institution_v2n_native_success.json"
+      },
+      {
+        "name": "crash_prepublication",
+        "exit": 77,
+        "expected": 77,
+        "seconds": 7.427261000000726,
+        "evidence": "institution_v2n_native_crash_prepublication.json"
+      },
+      {
+        "name": "restart_prepublication",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 5.512752500000715,
+        "evidence": "institution_v2n_native_restart_prepublication.json"
+      },
+      {
+        "name": "manual_prepublication",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 2.4749161999989155,
+        "evidence": "institution_v2n_native_manual_prepublication.json"
+      },
+      {
+        "name": "crash_postpublication",
+        "exit": 77,
+        "expected": 77,
+        "seconds": 7.48929710000084,
+        "evidence": "institution_v2n_native_crash_postpublication.json"
+      },
+      {
+        "name": "restart_postpublication",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 5.624028799998996,
+        "evidence": "institution_v2n_native_restart_postpublication.json"
+      },
+      {
+        "name": "manual_postpublication",
+        "exit": 0,
+        "expected": 0,
+        "seconds": 2.368578100000377,
+        "evidence": "institution_v2n_native_manual_postpublication.json"
+      }
+    ],
+    "authenticated_success": true,
+    "prepublication": {
+      "restart_preserved_job_and_pointer": true,
+      "last_good_artifact_hashes_preserved": true,
+      "manual_recovery_state": "FAILED",
+      "native_lease_constants_unchanged": true
+    },
+    "postpublication": {
+      "restart_preserved_job_and_pointer": true,
+      "last_good_artifact_hashes_preserved": true,
+      "manual_recovery_state": "SUCCEEDED",
+      "native_lease_constants_unchanged": true
+    },
+    "no_automatic_rebuild_or_recovery": true,
+    "principal": "fixture_application (named-resource compatibility envelope, not root)",
+    "owned_fixture_removed": true
+  },
+  "operator_cli": {
+    "scope": "Fresh authenticated disposable CLI/writer fixture; telemetry production flag unchanged.",
+    "commands": [
+      {
+        "script": "diagnose_worker_telemetry.py",
+        "calls": 6,
+        "median_ms": 1344.7979500006113,
+        "samples_ms": [
+          1309.671500001059,
+          1304.958099999567,
+          1300.5164000005607,
+          1379.9244000001636,
+          1498.793899998418,
+          1426.7340999995213
+        ],
+        "includes": "Python process/import/SCRAM/bounded empty-tenant reads/JSON or text serialization; model excluded."
+      },
+      {
+        "script": "diagnose_library_intelligence.py",
+        "calls": 6,
+        "median_ms": 1321.1999999994077,
+        "samples_ms": [
+          1394.5506999989448,
+          1297.0656000015879,
+          1355.945100000099,
+          1299.797600000602,
+          1308.5388999988936,
+          1333.8610999999219
+        ],
+        "includes": "Python process/import/SCRAM/bounded empty-tenant reads/JSON or text serialization; model excluded."
+      }
+    ],
+    "owned_fixture_removed": true
+  },
+  "known_harness_discoveries": [
+    "Initial encoding typo corrected in new fixture only.",
+    "Missing institution_migrations and constant-named library_asset_jobs grants corrected in fixture role; initial denials retained.",
+    "Expected outsider404 corrected in new benchmark, no product behavior altered.",
+    "Tool URI default DB caused no-op restore; snapshot equality caught it and corrected invocation passes."
+  ],
+  "limits": "Named-resource fixture envelope is broader than minimum deployment roles; full external-model/global service workload not qualified."
+}

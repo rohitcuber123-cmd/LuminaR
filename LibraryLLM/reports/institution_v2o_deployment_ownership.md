@@ -1,0 +1,7 @@
+# Deployment ownership and approval checklist
+
+Read-only host_audit.json/boundary.json/extended_audit.json: Mongo8.3.4 on loopback27017, Windows service MongoDB Running/Auto with StartName NT AUTHORITY\NetworkService. Process owner/executable command-line inspection is partly inaccessible; generic listener/process providers can return empty records despite connectivity. Current interactive identity is ROHIT-PC\Rohit Siddani. Existing local source launcher is guarded for luminar_local and one shared child environment; actual database luminar_library does not establish development/staging/production purpose.
+
+CURRENT_DEPLOYMENT_CLASS UNKNOWN. Actual Core/Search/RAG/Recommendation owner/supervisor and native-worker process ownership remain unconfirmed. No port number, workspace username, service name or successful localhost read is treated as installation ownership or production approval.
+
+Installation owner must supply: deployment class/asset identifier; approved Mongo host/DB/config/service and backup authority; actual per-process account/supervisor/launch command without secret values; named DBA, application/Search/RAG/Recommendation, Windows-secret, backup and incident owners; maintenance window, minimum-role and full-stack proof; protected DPAPI profile enrollment/rotation/rollback proof; restore checkpoint approval. Run migration_preflight.py with a completed reviewed manifest. Unknown owners keep the live cutover blocked. No real service/terminal process was restarted in O; only independently verified task-owned fixture processes were cleaned up.

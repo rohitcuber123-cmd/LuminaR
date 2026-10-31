@@ -1,0 +1,7 @@
+# Improvement review
+
+N closes a source-level readiness gap: explicit authenticated mode now checks actual authenticated identity, existing selected DB and denied anonymous access before import-time indexes. It retains deliberate development behavior and startup-only deadlines, sanitizes connection errors and never substitutes anonymous application access. New actual-server tests catch invalid credentials, authorization-disabled servers and a database typo. Three connection-site changes avoid service-specific inconsistent fallback.
+
+Fresh application rehearsal uses a separate named-resource identity rather than the root maintenance account. Source and runtime evidence exposed missing migration marker/asset job permissions and the collStats need for catalogue totals; corrections remain fixture-only and traceable. A real no-op mongorestore exit0 was caught by content/index/validator equivalence, showing why exit status alone is insufficient. Real native crashes establish restart preservation and manual recovery under the application credential.
+
+Remaining evidence gaps prevent PASS. The compatibility envelope intentionally includes setup/cleanup grants; a source lower bound is not a deployable least-privilege role. The local shared launcher, dynamic call edges, full model/global workloads, approved real restore, actual service identities/DPAPI profiles and effective remote network boundary require owner-led qualification. No unrelated Search/RAG/Recommendation algorithm changes or new maintenance automation were introduced.

@@ -1,0 +1,68 @@
+{
+  "cases": [
+    {
+      "fault": "permission",
+      "exit": 0,
+      "seconds": 63.76631780000025,
+      "evidence": "institution_v2k_native_fault_permission.json",
+      "agent_errors": {
+        "PROGRESS_OBSERVATION_UNAVAILABLE": 14,
+        "PULSE_UNAVAILABLE": 2
+      },
+      "telemetry_metrics": {
+        "boot_read": 1,
+        "boot_write": 1,
+        "pulse_write": 3,
+        "job_read": 1,
+        "progress_read": 1,
+        "progress_write": 1,
+        "errors_PERMISSION_DENIED": 16
+      },
+      "native_outcomes": [
+        {
+          "target": "SEARCH_INDEX",
+          "state": "SUCCEEDED",
+          "pointer_ack_match": true
+        },
+        {
+          "target": "KNOWLEDGE_GRAPH",
+          "state": "SUCCEEDED",
+          "pointer_ack_match": true
+        }
+      ]
+    },
+    {
+      "fault": "timeout",
+      "exit": 0,
+      "seconds": 53.93520620000345,
+      "evidence": "institution_v2k_native_fault_timeout.json",
+      "agent_errors": {
+        "PROGRESS_OBSERVATION_UNAVAILABLE": 1
+      },
+      "telemetry_metrics": {
+        "boot_read": 1,
+        "boot_write": 1,
+        "pulse_write": 4,
+        "job_read": 6,
+        "progress_read": 6,
+        "errors_AUXILIARY_UNAVAILABLE": 1,
+        "progress_write": 3,
+        "identical_progress_ignored": 2,
+        "pointer_read": 2
+      },
+      "native_outcomes": [
+        {
+          "target": "SEARCH_INDEX",
+          "state": "SUCCEEDED",
+          "pointer_ack_match": true
+        },
+        {
+          "target": "KNOWLEDGE_GRAPH",
+          "state": "SUCCEEDED",
+          "pointer_ack_match": true
+        }
+      ]
+    }
+  ],
+  "qualification": "Actual authenticated mongod auxiliary faults during native MiniLM/FAISS Search, then native KG; no mandatory job DB outage."
+}

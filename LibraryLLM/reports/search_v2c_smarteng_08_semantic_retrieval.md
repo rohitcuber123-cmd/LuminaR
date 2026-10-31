@@ -1,0 +1,6 @@
+# Semantic retrieval and mandatory filters
+Eight global cases execute the exact protected native GlobalQuerySearch implementation against read-only metadata and a fixed-ID synthetic semantic provider.40 public/private patron/staff local searches execute exact native tenant functions with read-only collection doubles. Verified: literal/author/category/ratings/whole-word exclusions, subject-filter transport, semantic topic delivered to provider, hydration predicate checks, pagination, serialization, empty matches and EXACT behavior.
+
+The semantic provider is NOT a measured embedding/HNSW service. Native diagnostic `hnsw_used` on the synthetic branch does not establish a real index lookup. Ranking relevance, vector latency, real Mongo latency and real end-to-end service behavior are N/A. No ranking improvement is claimed. Source tests found and fixed Aster→after author corruption before acceptance; fresh acceptance still lost a WITHOUT word exclusion and invented a Records facet, so global semantic constraint correctness is not qualified.
+
+Raw observations: [search_v2c_smarteng_retrieval_contracts_final.json](D:/SDC/LibraryLLM/reports/search_v2c_smarteng_retrieval_contracts_final.json); [search_v2c_smarteng_offline_native_components_final.json](D:/SDC/LibraryLLM/reports/search_v2c_smarteng_offline_native_components_final.json).

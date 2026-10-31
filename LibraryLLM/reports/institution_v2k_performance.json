@@ -1,0 +1,678 @@
+{
+  "qualification": "Disposable local auth-enabled mongod; no production SLO claim.",
+  "scenarios": [
+    {
+      "scenario": "empty",
+      "history_count": 0,
+      "pairs": [
+        {
+          "telemetry_enabled": false,
+          "read_ms": {
+            "median": 11.872249997395556,
+            "p95": 18.412800003716256,
+            "min": 9.9463000005926,
+            "max": 18.412800003716256,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 0.0,
+            "p95": 15.625,
+            "min": 0.0,
+            "max": 15.625,
+            "samples": 20
+          },
+          "rss_delta_bytes": 2056192,
+          "max_output_bytes": 4430
+        },
+        {
+          "telemetry_enabled": true,
+          "read_ms": {
+            "median": 13.533300003473414,
+            "p95": 18.778799996653106,
+            "min": 11.510900003486313,
+            "max": 18.778799996653106,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 0.0,
+            "p95": 15.625,
+            "min": 0.0,
+            "max": 15.625,
+            "samples": 20
+          },
+          "rss_delta_bytes": 356352,
+          "max_output_bytes": 5011
+        }
+      ],
+      "native_reader_query_plans": [
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "aggregate",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_locks",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        }
+      ],
+      "native_reader_documents_examined": 0,
+      "plan_note": "Actual server explain executionStats, exact queries outside timed samples; telemetry singleton reads measured separately.",
+      "auxiliary_documents_examined": 1,
+      "auxiliary_keys_examined": 1,
+      "auxiliary_storage_bson_bytes": 420,
+      "auxiliary_document_count": 1
+    },
+    {
+      "scenario": "one_queued",
+      "history_count": 1,
+      "pairs": [
+        {
+          "telemetry_enabled": false,
+          "read_ms": {
+            "median": 15.398100000311388,
+            "p95": 18.034200002148282,
+            "min": 11.699699993187096,
+            "max": 18.034200002148282,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 15.625,
+            "p95": 15.625,
+            "min": 0.0,
+            "max": 15.625,
+            "samples": 20
+          },
+          "rss_delta_bytes": -57344,
+          "max_output_bytes": 8601
+        },
+        {
+          "telemetry_enabled": true,
+          "read_ms": {
+            "median": 16.022250001697103,
+            "p95": 24.78700000210665,
+            "min": 13.35780000226805,
+            "max": 24.78700000210665,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 15.625,
+            "p95": 15.625,
+            "min": 0.0,
+            "max": 15.625,
+            "samples": 20
+          },
+          "rss_delta_bytes": 262144,
+          "max_output_bytes": 9182
+        }
+      ],
+      "native_reader_query_plans": [
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "aggregate",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "find",
+          "collection": "institution_locks",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        }
+      ],
+      "native_reader_documents_examined": 5,
+      "plan_note": "Actual server explain executionStats, exact queries outside timed samples; telemetry singleton reads measured separately.",
+      "auxiliary_documents_examined": 1,
+      "auxiliary_keys_examined": 1,
+      "auxiliary_storage_bson_bytes": 420,
+      "auxiliary_document_count": 1
+    },
+    {
+      "scenario": "one_active",
+      "history_count": 1,
+      "pairs": [
+        {
+          "telemetry_enabled": false,
+          "read_ms": {
+            "median": 12.686599999142345,
+            "p95": 15.926000000035856,
+            "min": 11.960199997702148,
+            "max": 15.926000000035856,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 0.0,
+            "p95": 15.625,
+            "min": 0.0,
+            "max": 15.625,
+            "samples": 20
+          },
+          "rss_delta_bytes": 155648,
+          "max_output_bytes": 8611
+        },
+        {
+          "telemetry_enabled": true,
+          "read_ms": {
+            "median": 16.668300002493197,
+            "p95": 20.70599999569822,
+            "min": 12.968800001544878,
+            "max": 20.70599999569822,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 15.625,
+            "p95": 31.25,
+            "min": 0.0,
+            "max": 31.25,
+            "samples": 20
+          },
+          "rss_delta_bytes": -65536,
+          "max_output_bytes": 9579
+        }
+      ],
+      "native_reader_query_plans": [
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "aggregate",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_locks",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 1,
+          "keys_examined": 1
+        }
+      ],
+      "native_reader_documents_examined": 6,
+      "plan_note": "Actual server explain executionStats, exact queries outside timed samples; telemetry singleton reads measured separately.",
+      "auxiliary_documents_examined": 1,
+      "auxiliary_keys_examined": 1,
+      "auxiliary_storage_bson_bytes": 1280,
+      "auxiliary_document_count": 1
+    },
+    {
+      "scenario": "history_10",
+      "history_count": 10,
+      "pairs": [
+        {
+          "telemetry_enabled": false,
+          "read_ms": {
+            "median": 13.558299997384893,
+            "p95": 18.54260000254726,
+            "min": 11.32750000397209,
+            "max": 18.54260000254726,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 7.8125,
+            "p95": 15.625,
+            "min": 0.0,
+            "max": 15.625,
+            "samples": 20
+          },
+          "rss_delta_bytes": 393216,
+          "max_output_bytes": 16346
+        },
+        {
+          "telemetry_enabled": true,
+          "read_ms": {
+            "median": 16.518649998033652,
+            "p95": 22.725999995600432,
+            "min": 15.373700000054669,
+            "max": 22.725999995600432,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 15.625,
+            "p95": 46.875,
+            "min": 0.0,
+            "max": 46.875,
+            "samples": 20
+          },
+          "rss_delta_bytes": -131072,
+          "max_output_bytes": 17264
+        }
+      ],
+      "native_reader_query_plans": [
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 10,
+          "keys_examined": 10
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "aggregate",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_locks",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 10,
+          "keys_examined": 10
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        }
+      ],
+      "native_reader_documents_examined": 20,
+      "plan_note": "Actual server explain executionStats, exact queries outside timed samples; telemetry singleton reads measured separately.",
+      "auxiliary_documents_examined": 1,
+      "auxiliary_keys_examined": 1,
+      "auxiliary_storage_bson_bytes": 1146,
+      "auxiliary_document_count": 1
+    },
+    {
+      "scenario": "history_100",
+      "history_count": 100,
+      "pairs": [
+        {
+          "telemetry_enabled": false,
+          "read_ms": {
+            "median": 14.944950002245605,
+            "p95": 20.391600002767518,
+            "min": 13.179399997170549,
+            "max": 20.391600002767518,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 15.625,
+            "p95": 31.25,
+            "min": 0.0,
+            "max": 31.25,
+            "samples": 20
+          },
+          "rss_delta_bytes": 114688,
+          "max_output_bytes": 27390
+        },
+        {
+          "telemetry_enabled": true,
+          "read_ms": {
+            "median": 18.635300002642907,
+            "p95": 23.329200004809536,
+            "min": 16.785100000561215,
+            "max": 23.329200004809536,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 15.625,
+            "p95": 15.625,
+            "min": 0.0,
+            "max": 15.625,
+            "samples": 20
+          },
+          "rss_delta_bytes": 192512,
+          "max_output_bytes": 28308
+        }
+      ],
+      "native_reader_query_plans": [
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 21,
+          "keys_examined": 21
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "aggregate",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_locks",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 20,
+          "keys_examined": 37
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        }
+      ],
+      "native_reader_documents_examined": 41,
+      "plan_note": "Actual server explain executionStats, exact queries outside timed samples; telemetry singleton reads measured separately.",
+      "auxiliary_documents_examined": 1,
+      "auxiliary_keys_examined": 1,
+      "auxiliary_storage_bson_bytes": 1146,
+      "auxiliary_document_count": 1
+    },
+    {
+      "scenario": "history_1000",
+      "history_count": 1000,
+      "pairs": [
+        {
+          "telemetry_enabled": false,
+          "read_ms": {
+            "median": 14.852700001938501,
+            "p95": 17.349499998090323,
+            "min": 13.33840000006603,
+            "max": 17.349499998090323,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 15.625,
+            "p95": 31.25,
+            "min": 0.0,
+            "max": 31.25,
+            "samples": 20
+          },
+          "rss_delta_bytes": 294912,
+          "max_output_bytes": 27390
+        },
+        {
+          "telemetry_enabled": true,
+          "read_ms": {
+            "median": 17.9232000009506,
+            "p95": 26.23660000244854,
+            "min": 14.143300002615433,
+            "max": 26.23660000244854,
+            "samples": 20
+          },
+          "cpu_ms": {
+            "median": 15.625,
+            "p95": 31.25,
+            "min": 0.0,
+            "max": 31.25,
+            "samples": 20
+          },
+          "rss_delta_bytes": 20480,
+          "max_output_bytes": 28308
+        }
+      ],
+      "native_reader_query_plans": [
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 21,
+          "keys_examined": 21
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "aggregate",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_locks",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 20,
+          "keys_examined": 40
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_targets",
+          "documents_examined": 0,
+          "keys_examined": 0
+        },
+        {
+          "operation": "find",
+          "collection": "institution_intelligence_jobs",
+          "documents_examined": 0,
+          "keys_examined": 0
+        }
+      ],
+      "native_reader_documents_examined": 41,
+      "plan_note": "Actual server explain executionStats, exact queries outside timed samples; telemetry singleton reads measured separately.",
+      "auxiliary_documents_examined": 1,
+      "auxiliary_keys_examined": 1,
+      "auxiliary_storage_bson_bytes": 1146,
+      "auxiliary_document_count": 1
+    }
+  ],
+  "before": "Unchanged Part 2J full bounded inspection.",
+  "after": "Same Part 2J inspection plus fixture telemetry supplement.",
+  "cpu_memory_limit": "In-process diagnostics time.process_time and RSS delta; resident native child idle/build pairs recorded separately.",
+  "auxiliary_write_ms": {
+    "median": 2.050849998340709,
+    "p95": 2.92539999645669,
+    "min": 1.6246000013779849,
+    "max": 2.92539999645669,
+    "samples": 20
+  },
+  "actor_metrics": {
+    "boot_read": 1,
+    "boot_write": 1,
+    "pulse_write": 26,
+    "job_read": 1,
+    "progress_read": 1,
+    "progress_write": 1
+  },
+  "retention": "One preallocated document; current + previous, max eight progress entries each, max16384 BSON bytes; no telemetry insert/delete grant."
+}

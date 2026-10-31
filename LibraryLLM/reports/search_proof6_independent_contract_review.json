@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "review_status": "AI_REVIEWED_INDEPENDENT_CONTRACT_DECISION",
+  "human_reviewers": 0,
+  "ai_reviewers": 1,
+  "reviewer_provenance": {
+    "identity": "Codex review subagent /root/v6_contract_review",
+    "base_identity_available": "Codex, an agent based on GPT-6",
+    "exact_runtime_model_id": null,
+    "independence": "Separate delegated reviewer; decisions formed from pre-V6 source, reviewed contracts and historical/focused tests. No V6 implementation or predictions opened. This is AI review, not human review.",
+    "requested_by": "Parent agent /root under the user's explicit independent-review requirement"
+  },
+  "scope": {
+    "method": "Static read-only contract and source inspection; no parser, model, network, Mongo, production endpoint or benchmark execution.",
+    "modified_artifacts": [
+      "reports/search_proof6_independent_contract_review.json"
+    ],
+    "gold_modified": false,
+    "test_assertions_modified": false,
+    "candidate6_implementation_opened": false,
+    "candidate6_predictions_opened": false,
+    "new_validation_population_opened": false,
+    "heldout_access": false,
+    "search_scope_deviation": "One broad rg search over scratch test files unintentionally printed matching historical assertion lines from scratch/search_proof6_regression/test_candidate_semantics.py and test_requirement_inventory.py. These matched the pre-existing V5 regression lines; no V6 implementation, predictions, new population, or full V6 file was opened. All subsequent reads used explicit pre-V6 paths. This exposure is disclosed rather than claiming perfect path isolation."
+  },
+  "authority": {
+    "production": "search-v2c-c4-deterministic-1",
+    "v5": "Disabled engineering candidate, not an independently qualified production successor",
+    "rule": "Retain historical artifacts and their original strict scores. A versioned supported-language migration can be justified by independent source-level semantics; a candidate output or observed failure alone cannot justify it.",
+    "citations": [
+      "E01",
+      "E02",
+      "E03",
+      "E18"
+    ]
+  },
+  "decisions": [
+    {
+      "id": "QUOTED_PARTIAL_LOOKING_TITLE",
+      "query": "titled \"A ...\"; by Alder Vale",
+      "historical_assertion": "INCOMPLETE and non-executable",
+      "decision": "REVIEWED_VERSIONED_MIGRATION_JUSTIFIED",
+      "supported_decision": "EXECUTABLE",
+      "required_interpretation": {
+        "title_text": "a ...",
+        "author_text": "alder vale",
+        "title_operator": "Existing literal title CONTAINS predicate",
+        "missing_title_requirement": false
+      },
+      "reasoning": [
+        "The historical regression explicitly places this case among missing values, but offers no external statement that the title is unfinished. The ellipsis occurs inside a nonempty quoted title operand.",
+        "C4 protects quotations and has an explicit title recognizer that owns the entire quoted operand. Its comment forbids interpreting interior content as numeric or subject syntax. V5's written contract generalizes this: quoted bibliographic owners consume their complete operands and interior keywords cannot create filters.",
+        "The frozen V5 operand scanner detects placeholder syntax immediately after the external field cue, before any opening quote. Its declared contract says quoted text stays literal. V5's supplied-state placeholder check applies outside(c.source_text), preserving quoted punctuation. These are independent grammar rules supporting literal treatment, not a response to V6 predictions.",
+        "Treating punctuation as a hidden placeholder only inside this particular title would weaken quoting as a stable literal boundary. Preserve the quote boundary and require an external incompleteness cue to request clarification."
+      ],
+      "boundaries": [
+        "Empty quoted operands remain INCOMPLETE.",
+        "Unquoted terminal markers such as titled ... and titled [to be supplied] remain INCOMPLETE.",
+        "An explicit external statement that the title operand is missing, partial, or unresolved remains subject to the mandatory missing/relationship rules.",
+        "This does not license a broad search by silently discarding an unresolved title. The complete quoted title predicate and independent author predicate must both survive."
+      ],
+      "compatibility_effect": "Changes typed decision and permits the literal title/author conjunction where the historical assertion blocked execution; therefore a real versioned semantic migration, not a harmless metric normalization.",
+      "historical_reporting": "Keep the original assertion and record its failure in historical strict regression results. A separate reviewed V6 contract view may assert literal execution and must cite this decision.",
+      "citations": [
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E23",
+        "E24",
+        "E25"
+      ]
+    },
+    {
+      "id": "CANONICAL_ALIAS_AND_TYPO_NOTICE",
+      "queries": [
+        {
+          "historical_id": "gold-036",
+          "query": "sci fi",
+          "canonical_subject": "Science fiction",
+          "repair_kind": "alias"
+        },
+        {
+          "historical_id": "gold-129",
+          "query": "fictin",
+          "canonical_subject": "Fiction",
+          "repair_kind": "typo"
+        },
+        {
+          "historical_id": "gold-130",
+          "query": "histroy",
+          "canonical_subject": "History",
+          "repair_kind": "typo"
+        },
+        {
+          "historical_id": "gold-131",
+          "query": "biograpy",
+          "canonical_subject": "Biography",
+          "repair_kind": "typo"
+        },
+        {
+          "historical_id": "gold-132",
+          "query": "science fictin",
+          "canonical_subject": "Science fiction",
+          "repair_kind": "typo"
+        }
+      ],
+      "historical_assertion": "Typed decision EXECUTABLE",
+      "decision": "REVIEWED_VERSIONED_TYPED_NOTICE_MIGRATION_JUSTIFIED",
+      "supported_decision": "EXECUTABLE_WITH_NOTICE",
+      "supported_execution_policy": "EXECUTE_WITH_NOTICE",
+      "reasoning": [
+        "Active C4 vocabulary resolution explicitly returns alias provenance for sci fi and typo provenance for conservative fuzzy/transposition repairs. These repairs are conditional on the scoped canonical vocabulary, not universal identity claims.",
+        "Active C4 calibration requires EXECUTE_WITH_NOTICE whenever corrections or repair_provenance are present. Thus visible notice is already the production policy contract for these successful repairs.",
+        "C4 query_repair.compose ends by deciding EXECUTABLE, and explicit mode delegation also defaults to EXECUTABLE. Therefore C4 does not already mandate typed EXECUTABLE_WITH_NOTICE for these SMART cases. The historical typed labels are real C4 compatibility expectations, and this review must not misstate them as nonexistent.",
+        "Frozen V5 retains canonical correction provenance and emits typed EXECUTABLE_WITH_NOTICE when notices exist. The frozen regression explicitly requires both typed notice and policy notice for bounded grammar repairs. Making the typed label reflect the existing visible-repair policy is coherent and more informative, provided blocking decisions remain authoritative.",
+        "Suppressing correction provenance or silently rewriting repaired inputs merely to reproduce EXECUTABLE would violate the active notice policy. Preserve repaired operands, canonical predicates, original source evidence and visible notice; document the typed migration separately."
+      ],
+      "boundaries": [
+        "Canonical exact inputs with no repair evidence may remain EXECUTABLE/AUTO_EXECUTE.",
+        "No canonical subject is invented if the scoped vocabulary lacks the target or the conservative resolver cannot uniquely justify it.",
+        "INCOMPLETE, AMBIGUOUS, UNSUPPORTED and CONTRADICTORY override notice and remain blocked.",
+        "EXACT and explicit literal modes retain their literal semantics; do not apply SMART repair migration globally.",
+        "Predicate eligibility is unchanged for the listed successful repairs; the migration changes typed notice classification and retains already-required user-visible policy."
+      ],
+      "historical_reporting": "Preserve gold-036 and gold-129..132 and C4 reviewed legacy assertions. Report their strict typed mismatches. A separately versioned reviewed contract may project EXECUTABLE_WITH_NOTICE for these entries without editing the original gold.",
+      "citations": [
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E19"
+      ]
+    }
+  ],
+  "legacy_refine_binding_assessment": {
+    "decision": "LEGITIMATE_AS_AN_EXPLICIT_CANDIDATE_COMPATIBILITY_HARNESS_BINDING_WITH_CONDITIONS",
+    "implementation_reviewed": false,
+    "reasoning": [
+      "Frozen V5 regression imports bind parse_query/validate to the proof-aware compiler but refine to an older native session module. The older session module imports its own parser, so a refine call can bypass the candidate compiler even when a direct parse uses it.",
+      "Native refine edits scalar fields, resets raw_query to the newest short input, emits SESSION_EDIT candidates and calls native decide/validate. Those transformations cannot independently establish that a proof-aware plan's original source/IR and resulting projection agree.",
+      "V5's written native contract explicitly identifies conversational refinement and inherited context composition as unintegrated, and requires full resulting-source recompilation and preservation checks for source edits. Its semantics contract rejects SMART plans without IR and invalidates source/projection/digest changes.",
+      "Binding only copied candidate regression imports to a new refine adapter is a legitimate way to test the candidate's corresponding interface while keeping old assertions unchanged. It is not proof that legacy production refine or routes are integrated."
+    ],
+    "required_conditions": [
+      "Keep original tests, original assertions, original gold and production imports immutable; disclose adapter binding in the candidate test manifest.",
+      "The adapter must implement bounded existing continuation/reset/replacement semantics and return the same (plan, continuation) interface; it must not special-case test names, IDs, fixture queries, expected values or benchmark membership.",
+      "Compile first turns through the candidate parser; derive subsequent accepted source from explicit permitted edits and preserved previous source/requirements, and recompile the whole accepted source through the candidate compiler.",
+      "Preserve source-backed predicates and proof for untouched mandatory requirements, and retain original versus accepted/refined source provenance. Do not treat mutated scalar fields or a synthetic projection as source authority.",
+      "Reject stale/forged source, IR, projection or trusted controls; retain blocked typed decisions, capability checks, explicit modes, parser bounds and source evidence.",
+      "Measure adapter regressions as engineering component compatibility. Do not count them as validation of production API, session ownership, authorization, durable single use or commit lifecycle.",
+      "Record any source-display/raw_query compatibility difference separately; do not silently normalize it away solely to make legacy assertions pass."
+    ],
+    "citations": [
+      "E16",
+      "E18",
+      "E20",
+      "E21",
+      "E22"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "E01",
+      "path": "search/query_plan.py",
+      "lines": [
+        15,
+        15
+      ],
+      "supports": "Current production parser version."
+    },
+    {
+      "id": "E02",
+      "path": "reports/search_proof5_semantics_contract.md",
+      "lines": [
+        1,
+        1
+      ],
+      "supports": "V5 disabled status, authoritative frozen source and source-map reference."
+    },
+    {
+      "id": "E03",
+      "path": "reports/search_v2c_c4_reviewed_contract.json",
+      "lines": [
+        2,
+        7
+      ],
+      "supports": "C4 accepted contract metadata: AI reviewed, zero human review, parser output hidden."
+    },
+    {
+      "id": "E04",
+      "path": "scratch/search_proof5_regression/test_candidate_semantics.py",
+      "lines": [
+        37,
+        43
+      ],
+      "supports": "Original titled A ellipsis assertion expects INCOMPLETE."
+    },
+    {
+      "id": "E05",
+      "path": "search/query_constraints.py",
+      "lines": [
+        19,
+        34
+      ],
+      "supports": "Protected quoted spans are opaque to free recognizers."
+    },
+    {
+      "id": "E06",
+      "path": "search/query_constraints.py",
+      "lines": [
+        293,
+        299
+      ],
+      "supports": "Explicit title syntax owns quoted operand and forbids internal numeric/subject parsing."
+    },
+    {
+      "id": "E07",
+      "path": "scratch/search_proof_recovery_v5/operands.py",
+      "lines": [
+        1,
+        1
+      ],
+      "supports": "Declared operand rule: quoted text stays literal."
+    },
+    {
+      "id": "E08",
+      "path": "scratch/search_proof_recovery_v5/operands.py",
+      "lines": [
+        35,
+        71
+      ],
+      "supports": "Field introducers outside quote license slots; direct external placeholder, empty and omitted operand detection."
+    },
+    {
+      "id": "E09",
+      "path": "scratch/search_proof_recovery_v5/parser.py",
+      "lines": [
+        108,
+        113
+      ],
+      "supports": "Placeholder promotion of supplied operands examines outside(c.source_text)."
+    },
+    {
+      "id": "E10",
+      "path": "reports/search_proof5_semantics_contract.md",
+      "lines": [
+        9,
+        11
+      ],
+      "supports": "Distinct missing states and complete quoted bibliographic ownership."
+    },
+    {
+      "id": "E11",
+      "path": "reports/search_v2c_a_gold_queries.jsonl",
+      "lines": [
+        36,
+        36
+      ],
+      "supports": "Historical sci fi typed EXECUTABLE and Science fiction subject expectation."
+    },
+    {
+      "id": "E12",
+      "path": "reports/search_v2c_a_gold_queries.jsonl",
+      "lines": [
+        129,
+        132
+      ],
+      "supports": "Historical four bare typo typed EXECUTABLE expectations and canonical subjects."
+    },
+    {
+      "id": "E13",
+      "path": "search/query_plan.py",
+      "lines": [
+        36,
+        65
+      ],
+      "supports": "Scoped aliases, conservative typo resolution and explicit from/to/kind correction evidence."
+    },
+    {
+      "id": "E14",
+      "path": "search/query_calibration.py",
+      "lines": [
+        16,
+        20
+      ],
+      "supports": "Active C4 policy requires visible notice for corrections/repair provenance."
+    },
+    {
+      "id": "E15",
+      "path": "search/query_repair.py",
+      "lines": [
+        165,
+        172
+      ],
+      "supports": "C4 SMART decision ultimately defaults to EXECUTABLE, so typed notice is a migration."
+    },
+    {
+      "id": "E16",
+      "path": "scratch/search_proof5_regression/test_search_v2c_c4_reviewed_legacy.py",
+      "lines": [
+        1,
+        28
+      ],
+      "supports": "Original gold plus C4 overrides retained; candidate parse and older native refine imports differ; typed strict comparisons remain."
+    },
+    {
+      "id": "E17",
+      "path": "scratch/search_proof_recovery_v5/parser.py",
+      "lines": [
+        194,
+        199
+      ],
+      "supports": "Frozen V5 produces repair notices/corrections and typed EXECUTABLE_WITH_NOTICE."
+    },
+    {
+      "id": "E18",
+      "path": "reports/search_proof5_semantics_contract.md",
+      "lines": [
+        13,
+        19
+      ],
+      "supports": "Proof boundary, no-IR SMART rejection, unintegrated native transformations and preservation of historical scores."
+    },
+    {
+      "id": "E19",
+      "path": "scratch/search_proof5_regression/test_candidate_semantics.py",
+      "lines": [
+        20,
+        31
+      ],
+      "supports": "Pre-V6 tests require bounded repairs visible with typed and policy notice."
+    },
+    {
+      "id": "E20",
+      "path": "search/query_session.py",
+      "lines": [
+        1,
+        4
+      ],
+      "supports": "Native session module imports its own native parser."
+    },
+    {
+      "id": "E21",
+      "path": "search/query_session.py",
+      "lines": [
+        53,
+        138
+      ],
+      "supports": "Native continuation semantics, scalar edits, latest-turn raw query, session candidates and native validation."
+    },
+    {
+      "id": "E22",
+      "path": "reports/search_proof5_native_contract.md",
+      "lines": [
+        1,
+        9
+      ],
+      "supports": "Disabled pure prototype, conversational refinement integration gap, source recompilation and authorization/lifecycle limits."
+    },
+    {
+      "id": "E23",
+      "path": "scratch/search_proof_recovery_v5/test_roles_edits.py",
+      "lines": [
+        41,
+        47
+      ],
+      "supports": "Focused tests distinguish explicit missing operand from quoted filter words owned by title."
+    },
+    {
+      "id": "E24",
+      "path": "scratch/search_proof_recovery_v5/test_contract.py",
+      "lines": [
+        26,
+        40
+      ],
+      "supports": "Focused tests require missing external operands blocked and quoted entity words literal."
+    },
+    {
+      "id": "E25",
+      "path": "reports/search_proof5_source_map.json",
+      "lines": [
+        402,
+        410
+      ],
+      "supports": "Frozen symbol map corroborates exact focused-test locations."
+    },
+    {
+      "id": "E26",
+      "path": "reports/search_proof5_source_freeze.json",
+      "lines": [
+        4,
+        20
+      ],
+      "supports": "Frozen hashes for inspected V5 grammar and focused tests."
+    }
+  ],
+  "conclusion": "Both narrowly described semantic migrations are justified by pre-V6 evidence. Keep original strict assertions/gold immutable and report failures honestly; use an explicitly versioned reviewed contract view for migrated expectations. A proof-aware refine import binding is legitimate as an engineering test adapter only under the stated source/proof and reporting conditions. This review does not validate any V6 implementation or production readiness.",
+  "created_at_utc": "2026-10-28T10:13:22.593478+00:00",
+  "reviewed_source_hashes": [
+    {
+      "path": "reports/search_proof5_native_contract.md",
+      "sha256": "ae4f15a0245b1d83b7e8ed6a414e44e614bb2ebeec9404ab9fcb6926098c1198"
+    },
+    {
+      "path": "reports/search_proof5_semantics_contract.md",
+      "sha256": "fbc65dd49c74ab0721ff983f162e14b9c3fe95c045c10c0dc1b48e18aab00c40"
+    },
+    {
+      "path": "reports/search_proof5_source_freeze.json",
+      "sha256": "4d2caa6284152babb9545c1629f5e7230b85fe9e6c90255d68ccbeaa4a14802e"
+    },
+    {
+      "path": "reports/search_proof5_source_map.json",
+      "sha256": "3d70ea61e1bb3bf0d00cd8dbe4f3e2bc2df2857e5cefab7bd6d50302205f6cfc"
+    },
+    {
+      "path": "reports/search_v2c_a_gold_queries.jsonl",
+      "sha256": "a8094c247bcfab8c168796ea7cd8c112cc8818a0b7ac8011197e0540dc655208"
+    },
+    {
+      "path": "reports/search_v2c_c4_reviewed_contract.json",
+      "sha256": "96ea427dcb1a5531ecff1df09f59413533f99d44dd61e4959d38bf586cd0ea4b"
+    },
+    {
+      "path": "scratch/search_proof5_regression/test_candidate_semantics.py",
+      "sha256": "f4c91e4be1f13305ee38850476c4ee332ece83d01f16908dddbb1b07c09401b5"
+    },
+    {
+      "path": "scratch/search_proof5_regression/test_search_v2c_c4_reviewed_legacy.py",
+      "sha256": "0ea368a123a826f126f7f5bab1beb8c0a95515a94cc2eef345f44aa1b65c010a"
+    },
+    {
+      "path": "scratch/search_proof_recovery_v5/operands.py",
+      "sha256": "6be33e70f0c6080818246dcb1e7e00b725ea1a819afef679ef36e7071182c4ff",
+      "v5_frozen_sha256": "6be33e70f0c6080818246dcb1e7e00b725ea1a819afef679ef36e7071182c4ff",
+      "matches_v5_freeze": true
+    },
+    {
+      "path": "scratch/search_proof_recovery_v5/parser.py",
+      "sha256": "011922f2c11c15a9a18898244ca677e8843a5ab517bc9e43479c765c2ca691a6",
+      "v5_frozen_sha256": "011922f2c11c15a9a18898244ca677e8843a5ab517bc9e43479c765c2ca691a6",
+      "matches_v5_freeze": true
+    },
+    {
+      "path": "scratch/search_proof_recovery_v5/test_contract.py",
+      "sha256": "70a5973bfb2a8fe9211e340e9c821322d81a7c7b208e0eb13e88f3d3e55c2182",
+      "v5_frozen_sha256": "70a5973bfb2a8fe9211e340e9c821322d81a7c7b208e0eb13e88f3d3e55c2182",
+      "matches_v5_freeze": true
+    },
+    {
+      "path": "scratch/search_proof_recovery_v5/test_roles_edits.py",
+      "sha256": "7f9bdcc2c752b90d6fdce805d03333a5d028d3f24ffea45ca28ca194e6ebf395",
+      "v5_frozen_sha256": "7f9bdcc2c752b90d6fdce805d03333a5d028d3f24ffea45ca28ca194e6ebf395",
+      "matches_v5_freeze": true
+    },
+    {
+      "path": "search/query_calibration.py",
+      "sha256": "a874fc2f2e8876c70ee30faacc9a7bab86f3e9099ffc7f14605ff0a18c2d1393"
+    },
+    {
+      "path": "search/query_constraints.py",
+      "sha256": "40d98864665f1aeafa902e92c45ee892d6018de266bab86cd66222be8d298774"
+    },
+    {
+      "path": "search/query_plan.py",
+      "sha256": "376224248025cd56008b03febd3e4b60527b2ae8da8c22188c508b058cab1152"
+    },
+    {
+      "path": "search/query_repair.py",
+      "sha256": "0f4906eda7a3e5ff46aaca37f40aa3a1cbe47515f92f645261c45c1a3c5af9c3"
+    },
+    {
+      "path": "search/query_session.py",
+      "sha256": "ed0cbe643a5a43e9f3c1af006848a38ce9abf3a4bb2e1ea7bd795b74274b6233"
+    }
+  ]
+}

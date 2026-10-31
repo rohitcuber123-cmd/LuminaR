@@ -1,0 +1,3 @@
+# staging prerequisites
+
+All Mongo writes remain prohibited, including disposable databases. Future explicit authorization must name a unique disposable namespace and restricted credentials, permit index startup writes and exact cleanup, and cover real JWT/current membership changes, patron/staff/outsider concealment, one-use choice/CAS/expiry/recovery,500-character binding, typed completion, actual vectors with paired generations and independently labeled relevance, concurrent load, agreed SLO and rollback. Current resident health was not polled; last historical observation remains STALE/degraded, baseline_verified=False. No catalog reduction or HNSW/KG rebuild occurred.

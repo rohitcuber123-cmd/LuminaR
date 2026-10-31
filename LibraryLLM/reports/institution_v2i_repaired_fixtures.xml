@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="2.815" timestamp="2026-10-30T00:29:22.756331+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2i.test_maintenance" name="test_recommendations_do_not_require_ready_intelligence" time="1.709"><failure message="fastapi.exceptions.HTTPException: 403: Insufficient library permissions.">client = &lt;starlette.testclient.TestClient object at 0x000001AFC5E1B390&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001AFC83C1080&gt;
+
+    def test_recommendations_do_not_require_ready_intelligence(client, library):
+        a, b = library(), library(owner=2)
+        own = book(client, a)
+        assert client.post(f'/libraries/{b}/inventory/books', headers={'x-test-user': '2'},
+            json={'title': 'Foreign title', 'subjects': ['Technology'], 'copies': 1, 'idempotency_key': str(uuid4())}).status_code == 201
+        # Status observation cannot make recommendations depend on HNSW or KG.
+        assert service.status(a, ACTOR)['search']['status'] == 'NOT_BUILT'
+&gt;       result = catalogue.recommendations(a, ACTOR, ['OL999W'], 10)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2i\test_maintenance.py:253: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\services\library_catalogue_experience.py:223: in recommendations
+    with read_context(library_id, actor) as (library, membership, canonical):
+C:\Program Files\Python311\Lib\contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+backend\services\library_catalogue_experience.py:33: in read_context
+    library, membership = guard(library_id, actor)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^
+backend\services\library_inventory_access.py:27: in require_library_patron
+    result = patron_guard(library_id, eligible_actor(actor), locked=locked)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\institution_dependencies.py:60: in require_library_patron
+    return require_library_role(library_id, current_user, 'GENERAL_USER', locked=locked)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+library_id = 'be08e186-80c6-4f7a-9a13-4d9c4d1d41b3'
+current_user = {'sub': '1', 'role': 'GENERAL_USER', 'email': 'v2f-1@example.com'}
+locked = False, roles = ('GENERAL_USER',)
+
+    def require_library_role(library_id, current_user, *roles, locked=False):
+        library, membership = require_library_membership(library_id, current_user, locked=locked)
+        if membership['role'] not in roles:
+&gt;           raise HTTPException(403, 'Insufficient library permissions.')
+E           fastapi.exceptions.HTTPException: 403: Insufficient library permissions.
+
+backend\institution_dependencies.py:50: HTTPException</failure></testcase><testcase classname="tests.institution_v2i.test_maintenance" name="test_actual_flat_hnsw_add_but_no_supported_remove" time="0.132" /></testsuite></testsuites>

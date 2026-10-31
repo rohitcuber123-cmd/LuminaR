@@ -1,0 +1,153 @@
+diff --git a/LibraryLLM/tests/institution_v2j/test_diagnostics.py b/LibraryLLM/tests/institution_v2j/test_diagnostics.py
+--- a/LibraryLLM/tests/institution_v2j/test_diagnostics.py
++++ b/LibraryLLM/tests/institution_v2j/test_diagnostics.py
+@@ -391,8 +391,14 @@
+ def test_existing_staff_status_unchanged():
+     baseline=json.loads((ROOT/'reports/institution_v2j_baseline.json').read_text())
+     for file in ['backend/services/library_intelligence_service.py','backend/services/library_intelligence_store.py',
+-                 'backend/routes/library_intelligence.py','frontend/src/pages/LibraryIntelligence.tsx']:
++                 'backend/routes/library_intelligence.py']:
+         assert hashlib.sha256((ROOT/file).read_bytes()).hexdigest()==baseline['source_sha256'][file]
++    # Proposed O.3 audited JSX boundary; separate user approval required.
++    assert hashlib.sha256((ROOT/'tests/contracts/staff_boundary_v2o3.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='38ce3cc8357dd22b32b55a49c46ef1f615444d9732c314014d1e5dadfb4b5cc7'
++    assert hashlib.sha256((ROOT/'tests/contracts/staff_boundary_v2o3.cjs').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='29fd9343e7808583e2f900cb5dabfe9486c2fb6af7dc9d7f4dc91bd81dbebf28'
++    assert hashlib.sha256((ROOT/'tests/contracts/staff_boundary_v2o3.json').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='45b249cb83389f1b659d5848c126b96f888b637a62c1e124998e46540059baf3'
++    from tests.contracts.staff_boundary_v2o3 import assert_staff_contract
++    assert_staff_contract(ROOT)
+     # Part2L explicitly integrates the native worker. Its original job protocol
+     # is pinned/compared by test_native_protocol_matches_original_j_baseline;
+     # whole-file identity would also forbid the authorized observer lifecycle.
+diff --git a/LibraryLLM/tests/contracts/staff_boundary_v2o3.py b/LibraryLLM/tests/contracts/staff_boundary_v2o3.py
+new file mode 100644
+--- /dev/null
++++ b/LibraryLLM/tests/contracts/staff_boundary_v2o3.py
+@@ -0,0 +1,20 @@
++"""Candidate full transport + executable page boundary. No product code executes."""
++import hashlib
++import json
++from pathlib import Path
++import subprocess
++
++
++def assert_staff_contract(root, *, compiler_root=None):
++    root=Path(root)
++    manifest=json.loads(Path(__file__).with_suffix('.json').read_text())
++    for name,expected in manifest['full_transport_modules'].items():
++        assert hashlib.sha256((root/name).read_bytes()).hexdigest()==expected, f'FULL_TRANSPORT_CHANGED:{name}'
++    for name,expected in manifest['backend_authority'].items():
++        assert hashlib.sha256((root/name).read_bytes()).hexdigest()==expected, f'BACKEND_AUTHORITY_CHANGED:{name}'
++    compiler=Path(compiler_root or Path(__file__).resolve().parents[2])/'frontend/node_modules/typescript'
++    result=subprocess.run(['node',str(Path(__file__).with_suffix('.cjs')),str(root/'frontend/src/pages/LibraryIntelligence.tsx'),str(compiler),str(Path(__file__).with_suffix('.json'))],
++                          capture_output=True,text=True,timeout=20,check=True)
++    verdict=json.loads(result.stdout)
++    assert verdict['ok'], verdict['errors']
++    return verdict
+diff --git a/LibraryLLM/tests/contracts/staff_boundary_v2o3.cjs b/LibraryLLM/tests/contracts/staff_boundary_v2o3.cjs
+new file mode 100644
+--- /dev/null
++++ b/LibraryLLM/tests/contracts/staff_boundary_v2o3.cjs
+@@ -0,0 +1,63 @@
++// Candidate only: fingerprint executable AST, retaining full bodies/dependencies.
++// This is a reviewed source boundary, not a heuristic JavaScript security proof.
++const fs = require('node:fs');
++const crypto = require('node:crypto');
++const ts = require(process.argv[3]);
++const source = ts.createSourceFile('LibraryIntelligence.tsx', fs.readFileSync(process.argv[2], 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
++const errors = source.parseDiagnostics.map(d => `PARSE_ERROR:${d.code}`);
++if (source.pragmas.size) errors.push('UNREVIEWED_COMPILER_PRAGMA');
++const passiveTags = new Set(['div','section','article','main','header','footer','aside','nav','p','span','h1','h2','h3','h4','h5','h6','dl','dt','dd','ul','ol','li','strong','em','small','br','hr']);
++const interactionTags = new Set(['details','summary','label','progress','button']);
++const presentationAttributes = new Set(['className','title','aria-label','aria-describedby','htmlFor','id']);
++const jsxKind = n => ts.isJsxElement(n) || ts.isJsxSelfClosingElement(n) || ts.isJsxFragment(n);
++const digest = x => crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');
++
++// Flatten only passive JSX wrappers/text. All JS expressions, component names,
++// event handlers, spreads, props and conditional control remain in the digest.
++function jsx(n) {
++  if (ts.isJsxFragment(n)) return children(n.children);
++  const opening = ts.isJsxElement(n) ? n.openingElement : n;
++  const tag = opening.tagName.getText(source);
++  const native = /^[a-z]/.test(tag);
++  const passive = passiveTags.has(tag);
++  if (native && !passive && !interactionTags.has(tag)) errors.push(`UNREVIEWED_HTML_CAPABILITY:${tag}`);
++  const attrs = [];
++  for (const a of opening.attributes.properties) {
++    if (passive && ts.isJsxAttribute(a) && presentationAttributes.has(a.name.text) && a.initializer && ts.isStringLiteral(a.initializer)) continue;
++    attrs.push(shape(a));
++  }
++  const child = ts.isJsxElement(n) ? children(n.children) : [];
++  if (passive && attrs.length === 0) return child;
++  return [['jsx', passive ? 'passive' : tag, attrs, child]];
++}
++function children(nodes) {
++  const out = [];
++  for (const n of nodes) {
++    if (ts.isJsxText(n)) continue;
++    if (jsxKind(n)) out.push(...jsx(n));
++    else if (ts.isJsxExpression(n)) { if (n.expression) out.push(shape(n.expression)); }
++    else out.push(shape(n));
++  }
++  return out;
++}
++function shape(n) {
++  if (jsxKind(n)) return ['jsx-content', jsx(n)];
++  if (ts.isJsxText(n)) return null;
++  const value = ts.isIdentifier(n) || ts.isPrivateIdentifier(n) || ts.isLiteralExpression(n) || ts.isTemplateLiteralToken(n) ? n.text : null;
++  const nested = [];
++  ts.forEachChild(n, x => { nested.push(shape(x)); });
++  return [n.kind, value, nested];
++}
++const sections = {};
++source.statements.forEach((s, i) => { sections[`${i}:${ts.SyntaxKind[s.kind]}`] = digest(shape(s)); });
++// Comments can carry compiler/bundler semantics (for example PURE annotations).
++// The reviewed page has no comment markers. Pin the raw marker envelope rather
++// than silently erasing directives as ordinary AST trivia. Layout/copy may evolve.
++sections['source_comment_markers'] = digest(source.text.match(/\/\*|\/\//g) || []);
++if (process.argv[4]) {
++  const expected = JSON.parse(fs.readFileSync(process.argv[4], 'utf8')).page_executable_sections;
++  for (const key of new Set([...Object.keys(expected), ...Object.keys(sections)])) {
++    if (sections[key] !== expected[key]) errors.push(`UNREVIEWED_EXECUTABLE_SECTION:${key}`);
++  }
++}
++process.stdout.write(JSON.stringify({ok: errors.length === 0, errors: [...new Set(errors)], sections}));
+diff --git a/LibraryLLM/tests/contracts/staff_boundary_v2o3.json b/LibraryLLM/tests/contracts/staff_boundary_v2o3.json
+new file mode 100644
+--- /dev/null
++++ b/LibraryLLM/tests/contracts/staff_boundary_v2o3.json
+@@ -0,0 +1,36 @@
++{
++  "schema": 2,
++  "reviewed_page_origin_sha256": "51f58263f2c06fda2bb3f6669de94a735af2d0b97e3cf4497bc154c1375adfd3",
++  "page_executable_sections": {
++    "0:ImportDeclaration": "0c44a0124b302b22b5685f325ef1867f877aaaf1b74486f848294a7ededc9cac",
++    "1:ImportDeclaration": "7ca6a2243aa7d266e0e46b030f1fb47f5563a66325a49d3422cbf71f42cb52c8",
++    "2:ImportDeclaration": "18234db8d304aa3f4c68afd700370901decc2ad2fdb7ba3d7dcfab94b89a3c89",
++    "3:ImportDeclaration": "6818566a6b6c69b30b1ca65a44dc98470d45dde1a79a0d7448247fe7c21e63af",
++    "4:ImportDeclaration": "e4c6be3a9dc835eb0ff0451f60c0fad5bf4124dfbb3ca7dbd66640e9117dbc7f",
++    "5:ImportDeclaration": "70dd30a67e4692f7c7a9710f24fe5cb13db95c8f406e847394d1a044a99fe185",
++    "6:ImportDeclaration": "62202dbc4b23b845cdbe3b43c528f7f1169441d161852c01d85b669644aa75c1",
++    "7:ImportDeclaration": "334d122b363d0bb8f9b0a45153fbf9e9fde479fdba4c5ae9250835e84727c6ad",
++    "8:ImportDeclaration": "697185218de1bf4bfe367f29ebd2d9262def7570ad9dafcbcaaa04144db90bfa",
++    "9:FirstStatement": "aca3ae98af7b48af628994bcac6a4f029e46924acb98d28404fe5cdaf6a486a7",
++    "10:FirstStatement": "4e030d03abc0fc730bdf52110bba0f6caa166a50ab76fd0b5b969f3803919fe3",
++    "11:FirstStatement": "8f3e7aa970a6a4cd8d65fe2990bc74b857d646bb2e55f90187b3bf550ea527e6",
++    "12:FirstStatement": "da3e34fc60ca0da2be7c32317c0b0b0b5a95cfbe04528b80dc26e3849d98eca7",
++    "13:FirstStatement": "3894fc476e7f12bc5a8e07fe4c75b42fba617d173c99777b4117e324ca45f548",
++    "14:FunctionDeclaration": "aae5647d2c9c1c246a8315b7b06afe83712b3ee50f5ae88c4bf42842b7f6d0ba",
++    "15:FunctionDeclaration": "bc260acf60c1f864ea34cb83ca28104209fea20ab2ffdddb152ff66d63f8c15c",
++    "16:FunctionDeclaration": "44ce9d0c1a6d1ce631569422dd496848f6857c11b619fcdb33e93b1edec12880",
++    "source_comment_markers": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
++  },
++  "full_transport_modules": {
++    "frontend/src/lib/libraryIntelligence.ts": "812b2fac2f6da3589f26c988a5922fe3814f758e0a609cdfdea33fc3218ed9da",
++    "frontend/src/lib/institutions.ts": "d306300550899c9756c34766c29a7a3a2fa3737ac0578c9e629e1781d5d6603d",
++    "frontend/src/lib/api.ts": "a62df6a8acc949f7544acef00a5147faa515537ff5e75c9389880fd7e7b8a184"
++  },
++  "backend_authority": {
++    "backend/services/library_intelligence_service.py": "f90c4948ea7db781e143d100b7ad6d24e5a698b0c2a10c19c3c1e5c8989a7b01",
++    "backend/services/library_intelligence_store.py": "54b5efbba8713ced652bdafa4aa055d05ffa25dfd046c9446580d6d8a22fb153",
++    "backend/routes/library_intelligence.py": "a23cf94a701a440d9b3cf4a7bd4fe8ddecafbbf9285c96e53e90558eaa45b973"
++  },
++  "boundary": "Only reviewed native passive tags ignore fixed literal presentation attributes. Custom component props and native interactive/semantic tags retain complete structure; executable code remains pinned.",
++  "approval_status": "PROPOSED_AUDITED_REVISION_AWAITING_USER_APPROVAL"
++}

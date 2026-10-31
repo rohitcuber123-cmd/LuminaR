@@ -1,0 +1,3 @@
+# choice integration
+
+Actual ChoiceRequest.query limit is150 raw characters; parser/session500. UUID references still require exact raw-query equality, so no reference-only bypass is supported. No truncation/schema change occurred. Pure completion prototype performs only a bound draft; actual issuance/CAS durability requires approved integration. Native correction_keep now rejects422 because removing a hard field without recompiling its IR is unproven; this is a compatibility blocker, not a passing native-edit claim. [search_proof4_edit_audit.json](D:/SDC/LibraryLLM/reports/search_proof4_edit_audit.json)

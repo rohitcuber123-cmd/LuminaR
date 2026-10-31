@@ -1,0 +1,912 @@
+{
+  "scenario": "benchmark",
+  "enabled": true,
+  "fault": "",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH",
+    "FAISS_BUILD",
+    "FAISS_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 12:35:16.455515+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 3,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        3,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:18.548783+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 12:35:18.441000",
+      "pulse_seq": 3,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 12:35:18.441000",
+        3,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:18.668700+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:18.441000",
+      "pulse_seq": 3,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:35:18.566000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        151,
+        "2026-10-30 12:35:18.441000",
+        3,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:19.656454+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:18.441000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:35:19.581000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        151,
+        "2026-10-30 12:35:18.441000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:24.948671+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 32,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:18.441000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:35:19.581000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        32,
+        151,
+        "2026-10-30 12:35:18.441000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:28.483309+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 64,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:28.456000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:35:19.581000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        64,
+        151,
+        "2026-10-30 12:35:28.456000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:31.923772+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 96,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:28.456000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:35:19.581000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        96,
+        151,
+        "2026-10-30 12:35:28.456000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:35.465598+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 128,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:28.456000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:35:19.581000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        128,
+        151,
+        "2026-10-30 12:35:28.456000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:38.584866+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 128,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:38.472000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:35:19.581000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        128,
+        151,
+        "2026-10-30 12:35:38.472000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:38.913981+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:38.472000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:35:19.581000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        151,
+        151,
+        "2026-10-30 12:35:38.472000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:40.242873+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:40.916350+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 12:35:40.887000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 12:35:40.887000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:41.138516+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:40.887000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        151,
+        151,
+        "2026-10-30 12:35:40.887000",
+        4,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:35:41.247099+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:35:40.887000",
+      "pulse_seq": 4,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        151,
+        151,
+        "2026-10-30 12:35:40.887000",
+        4,
+        2
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "3bb2325c-f3fa-41e7-b4e1-52b1365c8606",
+      "job_id": "009a1bd8-aff4-4d52-b1a5-c8a04eb7eea7",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 23734.82379999996,
+      "native_build_ms": 20434.0,
+      "cpu_ms": 5250.0,
+      "rss_increase_bytes": 108576768,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "1d7cac30-5cf1-4968-94b2-bf9db9772a47",
+      "job_id": "9545a8cb-cae9-489d-b1c5-839c2ecb2e8d",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2303.8033000002542,
+      "native_build_ms": 283.0,
+      "cpu_ms": 250.0,
+      "rss_increase_bytes": 73728,
+      "pointer_ack_match": true
+    }
+  ],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 336.10520000002
+  },
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846823424,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846823424,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0929999999998472,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0929999999998472,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846827520,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 846880768,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847556608,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847556608,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847556608,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847556608,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847556608,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0929999999998472,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847556608,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847556608,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0779999999999745,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847556608,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0160000000000764,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 849657856,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.0779999999999745,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 850132992,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 854155264,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.1100000000001273,
+      "python_threads": 12,
+      "os_threads": 65
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 854765568,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0929999999998472,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 854605824,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0160000000000764,
+      "python_threads": 8,
+      "os_threads": 61
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 888938496,
+      "cpu_delta_ms": 359.375,
+      "interval_seconds": 3.6089999999999236,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 957149184,
+      "cpu_delta_ms": 890.625,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 957149184,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 957149184,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 959913984,
+      "cpu_delta_ms": 812.5,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960589824,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960589824,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960770048,
+      "cpu_delta_ms": 343.75,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960847872,
+      "cpu_delta_ms": 500.0,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960847872,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960847872,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 961024000,
+      "cpu_delta_ms": 968.75,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 961024000,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 961024000,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 955588608,
+      "cpu_delta_ms": 343.75,
+      "interval_seconds": 1.0,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 956166144,
+      "cpu_delta_ms": 500.0,
+      "interval_seconds": 1.0,
+      "python_threads": 8,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 956227584,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0,
+      "python_threads": 8,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 956239872,
+      "cpu_delta_ms": 171.875,
+      "interval_seconds": 1.0,
+      "python_threads": 8,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 956239872,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0,
+      "python_threads": 8,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 956239872,
+      "cpu_delta_ms": 62.5,
+      "interval_seconds": 1.0,
+      "python_threads": 8,
+      "os_threads": 80
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 5,
+    "os": 56
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 7.358500000009371,
+  "observer_ready_ms": 33.470800000031886,
+  "threads_observing": {
+    "python": 10,
+    "os": 61
+  },
+  "mongo_connections_observing": 9,
+  "idle": {
+    "seconds": 22.00165059999972,
+    "cpu_ms": 234.375,
+    "rss_increase_bytes": 733184,
+    "pulse_seq": 3,
+    "lifecycle": "IDLE",
+    "telemetry_enabled": true,
+    "record_scope": "THIS_INSTANCE"
+  },
+  "current_library": "1d7cac30-5cf1-4968-94b2-bf9db9772a47",
+  "injected_observer_failure": "Actual authenticated auxiliary actor raises at observer-loop boundary while native model build remains active.",
+  "native_serial": true,
+  "telemetry_metrics": {
+    "boot_read": 1,
+    "boot_write": 1,
+    "pulse_write": 4,
+    "job_read": 2,
+    "progress_read": 2,
+    "progress_write": 2
+  },
+  "latencies": [
+    {
+      "kind": "boot_read",
+      "ms": 0.9180000001833832
+    },
+    {
+      "kind": "boot_write",
+      "ms": 2.094999999826541
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 17.88689999966664
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 2.3922000000311527
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 2.4038999999902444
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.5932000001157576
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.9622000002309505
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.39770000007411
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.6562000000703847
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.1101000000053318
+    },
+    {
+      "kind": "progress_write",
+      "ms": 3.1221999997796956
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 2.41280000000188
+    }
+  ],
+  "instance_ref": "eff896e9fae50bc4750eb179305a1ce32b40f28bfbd9b1f75bef4ffc92042401",
+  "agent_errors": {
+    "OBSERVER_LOOP_UNAVAILABLE": 1
+  },
+  "native_close_return_ms": 0.07119999963833834,
+  "worker_end_ms": 0.17529999968246557,
+  "observer_thread_ended": true,
+  "observer_final_state": "UNAVAILABLE",
+  "mongo_connections_after_close": 7,
+  "shutdown_lifecycle": "STOPPING",
+  "worker_thread_ended": true,
+  "retained_targets_validated": [
+    {
+      "library_id": "4cff79e2-8b08-4cc3-ac9d-914c33f279c8",
+      "target": "SEARCH_INDEX",
+      "generation_id": "eeafdb16-7a96-4806-af8c-5d7dededa3fe"
+    },
+    {
+      "library_id": "aa7d4bc3-3e8c-4941-b13d-c38f2cfd1bde",
+      "target": "KNOWLEDGE_GRAPH",
+      "generation_id": "ba6bfd4d-a0cb-41c2-a9bd-0938e958f632"
+    },
+    {
+      "library_id": "6469a518-7ce4-4bde-bdf2-fc5b17d22226",
+      "target": "SEARCH_INDEX",
+      "generation_id": "cf685c62-7543-4502-93b3-190caf718015"
+    },
+    {
+      "library_id": "4d42bc4a-2e8d-4599-ac63-69938cd2b4fc",
+      "target": "KNOWLEDGE_GRAPH",
+      "generation_id": "45dd9e0b-a586-43ed-b92b-f165e574cc1d"
+    },
+    {
+      "library_id": "3bb2325c-f3fa-41e7-b4e1-52b1365c8606",
+      "target": "SEARCH_INDEX",
+      "generation_id": "f7a1bf56-561a-4585-a159-ae4b03c2adfe"
+    },
+    {
+      "library_id": "1d7cac30-5cf1-4968-94b2-bf9db9772a47",
+      "target": "KNOWLEDGE_GRAPH",
+      "generation_id": "5f7cce77-4fa5-4044-8ff2-b2bbe044e394"
+    }
+  ]
+}

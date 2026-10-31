@@ -1,0 +1,51 @@
+{
+  "at_utc": "2026-10-28T15:15:27.642008+00:00",
+  "RAM": {
+    "total": 16438054912,
+    "available": 9124679680,
+    "percent": 44.5,
+    "used": 7313375232,
+    "free": 9124679680
+  },
+  "GPU": {
+    "name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "total_bytes": 8546942976,
+    "free_bytes": 8282701824,
+    "used_bytes": 0,
+    "utilization_percent": 0.0,
+    "driver": "610.88"
+  },
+  "runtime_versions": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.22.2",
+    "bitsandbytes": "0.50.2"
+  },
+  "quantization_inventory": {
+    "bitsandbytes": true,
+    "auto_gptq": false,
+    "awq": false,
+    "llama_cpp": false,
+    "onnxruntime": false
+  },
+  "checkpoint_format": "Unquantized BF16 safetensors,2shards;config torch_dtype=bfloat16; no artifact conversion or download",
+  "application_process_memory": [
+    {
+      "pid": 41360,
+      "name": "python.exe",
+      "RSS_bytes": 26902528,
+      "role_hint": "not_identified"
+    },
+    {
+      "pid": 41492,
+      "name": "python.exe",
+      "RSS_bytes": 4304896,
+      "role_hint": "not_identified"
+    }
+  ],
+  "required_services_terminated": 0,
+  "resource_budget_justification": "Use current availableRAM minus2GiB reserve and0.5GiB startup/allocator margin; round down256MiB and cap4GiB. Prior observed2.23GB startup makes3GiB minimum sensible but does not prove successful load. GPUcap separately min82%total,free minus1GiB reserve and128MiB margin. Guards remain active.",
+  "scope": "Standalone local experiment; complete separate baseV8 prompt deferred per user clarification"
+}

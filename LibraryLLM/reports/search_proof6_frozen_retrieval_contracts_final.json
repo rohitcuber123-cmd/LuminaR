@@ -1,0 +1,228 @@
+{
+  "status": "PASS_COMPONENT_CONTRACTS_ONLY",
+  "global_cases": [
+    {
+      "query": "Topic: coastal navigation; include subject History; rated at least 4; exclude the searchable-text whole word \"workbook\"",
+      "mode": "SMART",
+      "expected_fixture_matches": 2,
+      "actual": 2,
+      "provider": "GLOBAL_SEMANTIC",
+      "elapsed_ms": 57.23090000083175
+    },
+    {
+      "query": "beginner-friendly coastal navigation; rated at least 4",
+      "mode": "SMART",
+      "expected_fixture_matches": 2,
+      "actual": 2,
+      "provider": "GLOBAL_SEMANTIC",
+      "elapsed_ms": 22.45630000015808
+    },
+    {
+      "query": "advanced research about harbors; rated above 4",
+      "mode": "SMART",
+      "expected_fixture_matches": 2,
+      "actual": 2,
+      "provider": "GLOBAL_SEMANTIC",
+      "elapsed_ms": 21.10409999932017
+    },
+    {
+      "query": "books by Aster Vale",
+      "mode": "SMART",
+      "expected_fixture_matches": 2,
+      "actual": 2,
+      "provider": "STRUCTURED_METADATA",
+      "elapsed_ms": 10.873000000174216
+    },
+    {
+      "query": "Harbor Primer",
+      "mode": "EXACT",
+      "expected_fixture_matches": 1,
+      "actual": 1,
+      "provider": "EXACT_LOOKUP",
+      "elapsed_ms": 0.8969999998953426
+    },
+    {
+      "query": "include subject History; rated above 4",
+      "mode": "SMART",
+      "expected_fixture_matches": 2,
+      "actual": 2,
+      "provider": "STRUCTURED_METADATA",
+      "elapsed_ms": 39.76050000073883
+    },
+    {
+      "query": "include subject History; exclude the searchable-text whole word \"Harbor\"",
+      "mode": "SMART",
+      "expected_fixture_matches": 1,
+      "actual": 1,
+      "provider": "STRUCTURED_METADATA",
+      "elapsed_ms": 13.419400000202586
+    },
+    {
+      "query": "include subject Navigation; rated above 4.9",
+      "mode": "SMART",
+      "expected_fixture_matches": 0,
+      "actual": 0,
+      "provider": "STRUCTURED_METADATA",
+      "elapsed_ms": 11.170300000230782
+    }
+  ],
+  "semantic_provider_inputs": [
+    {
+      "query": "coastal navigation",
+      "top_k": 50,
+      "library_id": null,
+      "available_at_library": false,
+      "diagnostics": true
+    },
+    {
+      "query": "coastal navigation",
+      "top_k": 50,
+      "library_id": null,
+      "available_at_library": false,
+      "diagnostics": true
+    },
+    {
+      "query": "-friendly coastal navigation",
+      "top_k": 50,
+      "library_id": null,
+      "available_at_library": false,
+      "diagnostics": true,
+      "rerank_query": "introductory beginner guide to -friendly coastal navigation"
+    },
+    {
+      "query": "-friendly coastal navigation",
+      "top_k": 50,
+      "library_id": null,
+      "available_at_library": false,
+      "diagnostics": true,
+      "rerank_query": "introductory beginner guide to -friendly coastal navigation"
+    },
+    {
+      "query": "research harbors",
+      "top_k": 50,
+      "library_id": null,
+      "available_at_library": false,
+      "diagnostics": true,
+      "rerank_query": "research studies about research harbors"
+    },
+    {
+      "query": "research harbors",
+      "top_k": 50,
+      "library_id": null,
+      "available_at_library": false,
+      "diagnostics": true,
+      "rerank_query": "research studies about research harbors"
+    }
+  ],
+  "structured_queries": [
+    {
+      "$and": [
+        {
+          "authors": {
+            "$regex": "aster\\ vale",
+            "$options": "i"
+          }
+        }
+      ]
+    },
+    {
+      "$and": [
+        {
+          "authors": {
+            "$regex": "aster\\ vale",
+            "$options": "i"
+          }
+        }
+      ]
+    },
+    {
+      "$and": [
+        {
+          "$or": [
+            {
+              "isbn_10": "Harbor Primer"
+            },
+            {
+              "isbn_13": "Harbor Primer"
+            },
+            {
+              "work_id": "Harbor Primer"
+            },
+            {
+              "title": {
+                "$regex": "^Harbor\\ Primer$",
+                "$options": "i"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$and": [
+        {
+          "subjects": {
+            "$regex": "(^|\\|)\\s*History\\s*(\\||$)",
+            "$options": "i"
+          }
+        },
+        {
+          "average_rating": {
+            "$type": "number",
+            "$gt": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "$and": [
+        {
+          "subjects": {
+            "$regex": "(^|\\|)\\s*History\\s*(\\||$)",
+            "$options": "i"
+          }
+        },
+        {
+          "average_rating": {
+            "$type": "number",
+            "$gt": 4.0
+          }
+        }
+      ]
+    },
+    {
+      "$and": [
+        {
+          "subjects": {
+            "$regex": "(^|\\|)\\s*History\\s*(\\||$)",
+            "$options": "i"
+          }
+        }
+      ]
+    },
+    {
+      "$and": [
+        {
+          "subjects": {
+            "$regex": "(^|\\|)\\s*Navigation\\s*(\\||$)",
+            "$options": "i"
+          }
+        },
+        {
+          "average_rating": {
+            "$type": "number",
+            "$gt": 4.9
+          }
+        }
+      ]
+    }
+  ],
+  "semantic_constraint_correctness": "Mandatory/negative predicates verified against deterministic fixture metadata after native hydration; semantic topic reaches native provider.",
+  "ranking_relevance": "N/A: fixed-ID semantic provider, no independent embedding/ranking relevance oracle or real vector service.",
+  "scope_and_authority": "40 local-library native-function fixtures separate; mocked authority/collection execution is not full live Mongo/API qualification.",
+  "Mongo_calls": 0,
+  "network_calls": 0,
+  "production_files_changed": 0,
+  "HNSW_KG_rebuilds": 0,
+  "full_end_to_end_qualified": false
+}

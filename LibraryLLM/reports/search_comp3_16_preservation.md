@@ -1,0 +1,3 @@
+# Evidence preservation
+
+All 2450 protected union entries and the frozen candidate sources are byte-verified. Historical2224 and original production462 are included. No tracked/staged changes. Complete new evidence/source hashes and final verification are provided by [search_comp3_freeze_manifest.json](D:/SDC/LibraryLLM/reports/search_comp3_freeze_manifest.json) and [search_comp3_freeze_verification.json](D:/SDC/LibraryLLM/reports/search_comp3_freeze_verification.json). Earlier failed experiments and independent outcomes remain untouched. Mongo writes0, production activation0, HNSW/KG rebuilds0, resident health polls0, heldout evaluations0. The sealed auditor may project structural metadata internally; no heldout text, labels or identifiers were emitted.

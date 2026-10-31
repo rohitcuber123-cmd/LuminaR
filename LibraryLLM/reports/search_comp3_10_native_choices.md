@@ -1,0 +1,5 @@
+# Native notices, choices and limits
+
+Fifty read-only exact native schema/transform/load checks passed: [search_comp3_final_native_contracts.json](D:/SDC/LibraryLLM/reports/search_comp3_final_native_contracts.json). Raw query >150 counts: C5E 90/90, C5E-R 138/150, previous Smart Engineering 35/150. These counts concern raw echoed ChoiceRequest.query; the limit is not an option-label limit. Short/long correction transforms preserve the other fields in isolation, but a >150 request cannot reach them through the current API. Placeholder completion rejects422. No truncation, request bound change, token or persistent protocol was introduced.
+
+The actual load_choice read checks preserve owner/login/scope/workspace, raw query, session ID, parser version and expiry. They do not qualify real membership authorization or Mongo CAS/durability. Required integration alternatives and safe span completion proposal: [search_comp3_staging_proposal.md](D:/SDC/LibraryLLM/reports/search_comp3_staging_proposal.md).

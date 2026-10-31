@@ -1,0 +1,223 @@
+{
+  "actual_native_crashes": [
+    {
+      "name": "idle",
+      "genuine_exit": 77,
+      "job_unchanged": true,
+      "pointer_unchanged": true,
+      "new_instance": true,
+      "stale_with_explicit_logical_31s_observer": "STALE",
+      "job_state": null,
+      "published_before_ack": false
+    },
+    {
+      "name": "embedding",
+      "genuine_exit": 77,
+      "job_unchanged": true,
+      "pointer_unchanged": true,
+      "new_instance": true,
+      "stale_with_explicit_logical_31s_observer": "STALE",
+      "job_state": "RUNNING",
+      "published_before_ack": false
+    },
+    {
+      "name": "kg",
+      "genuine_exit": 77,
+      "job_unchanged": true,
+      "pointer_unchanged": true,
+      "new_instance": true,
+      "stale_with_explicit_logical_31s_observer": "STALE",
+      "job_state": "RUNNING",
+      "published_before_ack": false
+    },
+    {
+      "name": "validation",
+      "genuine_exit": 77,
+      "job_unchanged": true,
+      "pointer_unchanged": true,
+      "new_instance": true,
+      "stale_with_explicit_logical_31s_observer": "STALE",
+      "job_state": "VALIDATING",
+      "published_before_ack": false
+    },
+    {
+      "name": "before_publication",
+      "genuine_exit": 77,
+      "job_unchanged": true,
+      "pointer_unchanged": true,
+      "new_instance": true,
+      "stale_with_explicit_logical_31s_observer": "STALE",
+      "job_state": "VALIDATING",
+      "published_before_ack": false
+    },
+    {
+      "name": "during_publication",
+      "genuine_exit": 77,
+      "job_unchanged": true,
+      "pointer_unchanged": true,
+      "new_instance": true,
+      "stale_with_explicit_logical_31s_observer": "STALE",
+      "job_state": "PUBLISHING",
+      "published_before_ack": false
+    },
+    {
+      "name": "after_pointer_before_ack",
+      "genuine_exit": 77,
+      "job_unchanged": true,
+      "pointer_unchanged": true,
+      "new_instance": true,
+      "stale_with_explicit_logical_31s_observer": "STALE",
+      "job_state": "PUBLISHING",
+      "published_before_ack": true
+    }
+  ],
+  "auxiliary_failures_during_real_Search_KG": {
+    "cases": [
+      {
+        "fault": "permission",
+        "exit": 0,
+        "seconds": 73.34585749999951,
+        "evidence": "institution_v2l_native_fault_permission.json",
+        "agent_errors": {
+          "PROGRESS_OBSERVATION_UNAVAILABLE": 12,
+          "PULSE_UNAVAILABLE": 1
+        },
+        "telemetry_metrics": {
+          "boot_read": 1,
+          "boot_write": 1,
+          "pulse_write": 4,
+          "job_read": 9,
+          "progress_read": 9,
+          "progress_write": 5,
+          "errors_PERMISSION_DENIED": 13,
+          "identical_progress_ignored": 4,
+          "pointer_read": 2
+        },
+        "native_outcomes": [
+          {
+            "target": "SEARCH_INDEX",
+            "state": "SUCCEEDED",
+            "pointer_ack_match": true
+          },
+          {
+            "target": "KNOWLEDGE_GRAPH",
+            "state": "SUCCEEDED",
+            "pointer_ack_match": true
+          }
+        ]
+      },
+      {
+        "fault": "timeout",
+        "exit": 0,
+        "seconds": 59.21833760000027,
+        "evidence": "institution_v2l_native_fault_timeout.json",
+        "agent_errors": {
+          "PROGRESS_OBSERVATION_UNAVAILABLE": 1
+        },
+        "telemetry_metrics": {
+          "boot_read": 1,
+          "boot_write": 1,
+          "pulse_write": 4,
+          "job_read": 6,
+          "progress_read": 6,
+          "errors_AUXILIARY_UNAVAILABLE": 1,
+          "progress_write": 3,
+          "identical_progress_ignored": 2,
+          "pointer_read": 2
+        },
+        "native_outcomes": [
+          {
+            "target": "SEARCH_INDEX",
+            "state": "SUCCEEDED",
+            "pointer_ack_match": true
+          },
+          {
+            "target": "KNOWLEDGE_GRAPH",
+            "state": "SUCCEEDED",
+            "pointer_ack_match": true
+          }
+        ]
+      }
+    ],
+    "qualification": "Actual authenticated mongod auxiliary faults during native MiniLM/FAISS Search, then native KG; no mandatory job DB outage."
+  },
+  "observer_loop_crash_real_Search_KG": {
+    "evidence": "institution_v2l_native_observer_crash.json",
+    "agent_errors": {
+      "OBSERVER_LOOP_UNAVAILABLE": 1
+    },
+    "builds": [
+      {
+        "target": "SEARCH_INDEX",
+        "library_id": "0d65bbc8-f765-4acc-8f90-5e8a2794a513",
+        "job_id": "2d277c2e-d4b9-4f64-87c7-1b310b311363",
+        "state": "SUCCEEDED",
+        "error_code": null,
+        "submit_to_observed_ms": 7802.646300000561,
+        "native_build_ms": 4501.0,
+        "cpu_ms": 1296.875,
+        "rss_increase_bytes": 90890240,
+        "pointer_ack_match": true
+      },
+      {
+        "target": "KNOWLEDGE_GRAPH",
+        "library_id": "38382ae6-0a8b-4058-b4bf-324ba2b3dd21",
+        "job_id": "09939f9d-e3dd-4ea4-82b5-27c95e28beac",
+        "state": "SUCCEEDED",
+        "error_code": null,
+        "submit_to_observed_ms": 2344.1805000002205,
+        "native_build_ms": 327.0,
+        "cpu_ms": 250.0,
+        "rss_increase_bytes": 344064,
+        "pointer_ack_match": true
+      }
+    ],
+    "observer_ended": true
+  },
+  "explicit_recovery_and_last_good": [
+    {
+      "case": "last_good_before_pointer",
+      "before_restart": "VALIDATING",
+      "old_job_unchanged_by_restart": true,
+      "last_good_bytes_retained": true,
+      "explicit_native_recovery_http": 200,
+      "explicit_native_recovered_state": "FAILED",
+      "lease_expiry": "Injected only into this disposable native job after restart; source lease90s/renewal10s unchanged."
+    },
+    {
+      "case": "abc_after_pointer",
+      "before_restart": "PUBLISHING",
+      "old_job_unchanged_by_restart": true,
+      "last_good_bytes_retained": true,
+      "explicit_native_recovery_http": 200,
+      "explicit_native_recovered_state": "SUCCEEDED",
+      "lease_expiry": "Injected only into this disposable native job after restart; source lease90s/renewal10s unchanged.",
+      "library_a": {
+        "library_id": "c66e0c89-07a7-4403-8bb6-bffaf306c920",
+        "job_id": "97a06ec6-dc1c-4140-8e90-a4b4e138e4cb",
+        "state": "SUCCEEDED"
+      },
+      "library_b": "d91f5fa5-113b-4361-9703-53c175eff278",
+      "library_c": {
+        "library_id": "9ee3dd3b-0487-472e-96fd-ee75e049cec9",
+        "job_id": "7b191c17-2be5-4d95-a060-cfcb478af3f0"
+      },
+      "library_c_before": "QUEUED",
+      "library_c_after_restart": "SUCCEEDED",
+      "no_cross_library_output": true
+    }
+  ],
+  "focused_cases": {
+    "server_timeout_connection_reset_permission_revocation": "Real auth-enabled mongod failCommand/revokeRoles; configured auxiliary app only.",
+    "missing_invalid_credentials": "No fallback, bounded unavailable startup, client release.",
+    "bad_document": "Server BSON/array cap121; no writes to mandatory state.",
+    "CAS_old_instance": "Old pulse denied and observer terminates; concurrent instance race tested.",
+    "clock_skew": "K future/rollback tests remain enabled; no OS clock mutation.",
+    "thread_exception": "Fixed-code catch; actual native builds continue; new hints stop.",
+    "shutdown_timeout": "Intentionally blocked test callback,3-second return then explicit release; no unsafe thread termination.",
+    "disk_full": "Controlled OSError simulation only. Physical disk exhaustion NOT_QUALIFIED.",
+    "Mongo_unavailable": "Bounded auxiliary connection/auth failures tested. Full mandatory native database outage not hidden or bypassed."
+  },
+  "no_automatic_native_action": true,
+  "no_production_fault_or_artifact_corruption": true
+}

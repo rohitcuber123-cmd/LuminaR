@@ -1,7 +1,7 @@
 import os
 
 from dotenv import load_dotenv
-from pymongo import MongoClient
+from backend.database.mongo_configuration import connect, settings
 
 
 load_dotenv()
@@ -13,7 +13,7 @@ MONGO_DB_NAME = os.getenv(
     "luminar_library"
 )
 
-client = MongoClient(MONGO_URI)
+client = connect(settings())
 
 db = client[MONGO_DB_NAME]
 

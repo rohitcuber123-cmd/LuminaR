@@ -1,0 +1,1220 @@
+{
+  "task": "Independent normative review of150 query-only contexts. Do not infer desired labels from IDs; judge user semantics and actual scope contracts.",
+  "scopes": {
+    "GLOBAL": {
+      "canonical_subjects": [
+        "History",
+        "Fiction",
+        "Physics",
+        "Ecology",
+        "Astronomy",
+        "Computer science",
+        "Mystery",
+        "Wizards"
+      ],
+      "capabilities": {
+        "availability": false,
+        "formats": [
+          "ONLINE"
+        ],
+        "language": false,
+        "rating": true,
+        "year": false
+      },
+      "workspace_type": "GLOBAL"
+    },
+    "PRIVATE_TENANT_PATRON": {
+      "canonical_subjects": [
+        "Fiction",
+        "Mystery",
+        "Neural Networks",
+        "Wizards",
+        "Detective Fiction"
+      ],
+      "capabilities": {
+        "availability": true,
+        "formats": [
+          "PHYSICAL",
+          "ONLINE",
+          "BOTH"
+        ],
+        "language": true,
+        "rating": true,
+        "year": true
+      },
+      "workspace_type": "PATRON"
+    },
+    "PRIVATE_TENANT_STAFF": {
+      "canonical_subjects": [
+        "Fiction",
+        "Mystery",
+        "Neural Networks",
+        "Wizards",
+        "Detective Fiction"
+      ],
+      "capabilities": {
+        "availability": true,
+        "formats": [
+          "PHYSICAL",
+          "ONLINE",
+          "BOTH"
+        ],
+        "language": true,
+        "rating": true,
+        "year": true
+      },
+      "workspace_type": "STAFF"
+    },
+    "PUBLIC_TENANT_PATRON": {
+      "canonical_subjects": [
+        "History",
+        "Fiction",
+        "Physics",
+        "Ecology",
+        "Community archives",
+        "Quantum computing",
+        "Climate change mitigation",
+        "Computer science"
+      ],
+      "capabilities": {
+        "availability": true,
+        "formats": [
+          "PHYSICAL",
+          "ONLINE",
+          "BOTH"
+        ],
+        "language": true,
+        "rating": true,
+        "year": true
+      },
+      "workspace_type": "PATRON"
+    },
+    "PUBLIC_TENANT_STAFF": {
+      "canonical_subjects": [
+        "History",
+        "Fiction",
+        "Physics",
+        "Ecology",
+        "Community archives",
+        "Quantum computing",
+        "Climate change mitigation",
+        "Computer science"
+      ],
+      "capabilities": {
+        "availability": true,
+        "formats": [
+          "PHYSICAL",
+          "ONLINE",
+          "BOTH"
+        ],
+        "language": true,
+        "rating": true,
+        "year": true
+      },
+      "workspace_type": "STAFF"
+    }
+  },
+  "normative_rules": [
+    "Supported mandatory operands must retain meaning; advisory conditions are not hard filters. Background narration is not a requirement.",
+    "Unresolved mandatory alternatives/association => AMBIGUOUS; explicitly missing required value => INCOMPLETE; unenforceable strict aggregate/relational/metadata operation => UNSUPPORTED; incompatible resolved predicates => CONTRADICTORY.",
+    "Clear supported multi-filter intersections execute. Safe unique field/canonical spelling repairs execute with source-backed notice. Unknown bibliography identities must not be invented.",
+    "Author/title quoted field strings are literal contains operands in the native contract, not bibliographic identity proofs. Unowned quoted text stays literal.",
+    "Canonical category exclusions differ from whole-word searchable-text exclusions; do not manufacture Boolean/proximity/aggregate capabilities. Global caps do not support year/language/availability/physical access.",
+    "Every topology feature must represent meaningful requested semantics, no inert padding. Pure structure includes quoted words. Verify actual topology against supplied allowlist. Use multiple topologies, five genuinely different families per stratum; scope substitutions are not extra structural families."
+  ],
+  "schema": {
+    "keys": [
+      "case_id",
+      "query_text",
+      "scope_type",
+      "workspace_type",
+      "search_mode",
+      "decision_stratum",
+      "family_id",
+      "structural_component_id",
+      "shared_semantic_pattern_id",
+      "expected_typed_decision",
+      "expected_executable",
+      "expected_hard_constraints",
+      "metric_applicability",
+      "semantic_justification"
+    ],
+    "masks": "unprefixed scalar field names; mask objects with status and reason. Known absent list=[],scalar=None,bool=False; unknown values UNRESOLVED. Preserve partial resolved common lists explicitly.",
+    "other_fields": "expected_sort enum RELEVANCE/RATING/NEWEST/TITLE; expected_semantic_remainder string only if a definite literal topic is asserted, otherwise null with N/A mask; expected_soft_preferences structured objects separately, no string equivalence; unadapted mandatory assertions preserved separately.",
+    "scalar_fields": [
+      "subjects",
+      "exclude_subjects",
+      "exclude_terms",
+      "author_text",
+      "title_text",
+      "exact_text",
+      "rating_min",
+      "rating_max",
+      "rating_min_exclusive",
+      "rating_max_exclusive",
+      "year_min",
+      "year_max",
+      "year_min_exclusive",
+      "year_max_exclusive",
+      "formats",
+      "exclusive_formats",
+      "excluded_formats",
+      "availability",
+      "language"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "smarteng_01_global",
+      "query_text": "Find records rated at least 3.6 by \"Mira Vale\", titled \"Copper Orchard\", without the whole word \"abridged\".",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_01_private_tenant_patron",
+      "query_text": "Find records rated at least 3.6 by \"Mira Vale\", titled \"Copper Orchard\", without the whole word \"abridged\".",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_01_private_tenant_staff",
+      "query_text": "Find records rated at least 3.6 by \"Mira Vale\", titled \"Copper Orchard\", without the whole word \"abridged\".",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_01_public_tenant_patron",
+      "query_text": "Find records rated at least 3.6 by \"Mira Vale\", titled \"Copper Orchard\", without the whole word \"abridged\".",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_01_public_tenant_staff",
+      "query_text": "Find records rated at least 3.6 by \"Mira Vale\", titled \"Copper Orchard\", without the whole word \"abridged\".",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_02_global",
+      "query_text": "Find online records by \"Oren Reed\" rated at most 4.7; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_02_private_tenant_patron",
+      "query_text": "Find online records by \"Oren Reed\" rated at most 4.7; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_02_private_tenant_staff",
+      "query_text": "Find online records by \"Oren Reed\" rated at most 4.7; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_02_public_tenant_patron",
+      "query_text": "Find online records by \"Oren Reed\" rated at most 4.7; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_02_public_tenant_staff",
+      "query_text": "Find online records by \"Oren Reed\" rated at most 4.7; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_03_global",
+      "query_text": "Find records titled \"Glass Ferry\" rated above 2.8, excluding the whole word \"workbook\"; sort highest rating first.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_03_private_tenant_patron",
+      "query_text": "Find records titled \"Glass Ferry\" rated above 2.8, excluding the whole word \"workbook\"; sort highest rating first.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_03_private_tenant_staff",
+      "query_text": "Find records titled \"Glass Ferry\" rated above 2.8, excluding the whole word \"workbook\"; sort highest rating first.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_03_public_tenant_patron",
+      "query_text": "Find records titled \"Glass Ferry\" rated above 2.8, excluding the whole word \"workbook\"; sort highest rating first.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_03_public_tenant_staff",
+      "query_text": "Find records titled \"Glass Ferry\" rated above 2.8, excluding the whole word \"workbook\"; sort highest rating first.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_04_global",
+      "query_text": "Require category Fiction, by \"Nila Brook\", titled \"Lantern Atlas\"; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_04_private_tenant_patron",
+      "query_text": "Require category Fiction, by \"Nila Brook\", titled \"Lantern Atlas\"; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_04_private_tenant_staff",
+      "query_text": "Require category Fiction, by \"Nila Brook\", titled \"Lantern Atlas\"; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_04_public_tenant_patron",
+      "query_text": "Require category Fiction, by \"Nila Brook\", titled \"Lantern Atlas\"; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_04_public_tenant_staff",
+      "query_text": "Require category Fiction, by \"Nila Brook\", titled \"Lantern Atlas\"; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_05_global",
+      "query_text": "Require category Fiction and rating at least 4.1. Prefer beginner material; sort highest rating first.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_05_private_tenant_patron",
+      "query_text": "Require category Fiction and rating at least 4.1. Prefer beginner material; sort highest rating first.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_05_private_tenant_staff",
+      "query_text": "Require category Fiction and rating at least 4.1. Prefer beginner material; sort highest rating first.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_05_public_tenant_patron",
+      "query_text": "Require category Fiction and rating at least 4.1. Prefer beginner material; sort highest rating first.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_05_public_tenant_staff",
+      "query_text": "Require category Fiction and rating at least 4.1. Prefer beginner material; sort highest rating first.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_06_global",
+      "query_text": "Require category Fictoin, by \"Pavo Lin\"; prefer French language when possible; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_06_private_tenant_patron",
+      "query_text": "Require category Fictoin, by \"Pavo Lin\"; prefer French language when possible; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_06_private_tenant_staff",
+      "query_text": "Require category Fictoin, by \"Pavo Lin\"; prefer French language when possible; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_06_public_tenant_patron",
+      "query_text": "Require category Fictoin, by \"Pavo Lin\"; prefer French language when possible; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_06_public_tenant_staff",
+      "query_text": "Require category Fictoin, by \"Pavo Lin\"; prefer French language when possible; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_07_global",
+      "query_text": "Require category Fictoin and rating above 3.2; prefer available now when possible; sort highest rating first.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_07_private_tenant_patron",
+      "query_text": "Require category Fictoin and rating above 3.2; prefer available now when possible; sort highest rating first.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_07_private_tenant_staff",
+      "query_text": "Require category Fictoin and rating above 3.2; prefer available now when possible; sort highest rating first.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_07_public_tenant_patron",
+      "query_text": "Require category Fictoin and rating above 3.2; prefer available now when possible; sort highest rating first.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_07_public_tenant_staff",
+      "query_text": "Require category Fictoin and rating above 3.2; prefer available now when possible; sort highest rating first.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_08_global",
+      "query_text": "Require category Fictoin and online access; prefer records published from 2018 onward when possible; sort title ascending.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_08_private_tenant_patron",
+      "query_text": "Require category Fictoin and online access; prefer records published from 2018 onward when possible; sort title ascending.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_08_private_tenant_staff",
+      "query_text": "Require category Fictoin and online access; prefer records published from 2018 onward when possible; sort title ascending.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_08_public_tenant_patron",
+      "query_text": "Require category Fictoin and online access; prefer records published from 2018 onward when possible; sort title ascending.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_08_public_tenant_staff",
+      "query_text": "Require category Fictoin and online access; prefer records published from 2018 onward when possible; sort title ascending.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_09_global",
+      "query_text": "Require category Fictoin and records titled \"Willow Ledger\"; prefer advanced material in French language when possible.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_09_private_tenant_patron",
+      "query_text": "Require category Fictoin and records titled \"Willow Ledger\"; prefer advanced material in French language when possible.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_09_private_tenant_staff",
+      "query_text": "Require category Fictoin and records titled \"Willow Ledger\"; prefer advanced material in French language when possible.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_09_public_tenant_patron",
+      "query_text": "Require category Fictoin and records titled \"Willow Ledger\"; prefer advanced material in French language when possible.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_09_public_tenant_staff",
+      "query_text": "Require category Fictoin and records titled \"Willow Ledger\"; prefer advanced material in French language when possible.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_10_global",
+      "query_text": "Require category Fictoin and online access by \"Eda Rain\", excluding the whole word \"facsimile\"; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_10_private_tenant_patron",
+      "query_text": "Require category Fictoin and online access by \"Eda Rain\", excluding the whole word \"facsimile\"; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_10_private_tenant_staff",
+      "query_text": "Require category Fictoin and online access by \"Eda Rain\", excluding the whole word \"facsimile\"; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_10_public_tenant_patron",
+      "query_text": "Require category Fictoin and online access by \"Eda Rain\", excluding the whole word \"facsimile\"; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_10_public_tenant_staff",
+      "query_text": "Require category Fictoin and online access by \"Eda Rain\", excluding the whole word \"facsimile\"; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_11_global",
+      "query_text": "Find records rated at least 3.9, titled \"Amber Dock\", without the whole word \"digest\"; prefer beginner material. By \"Kavi Moss\" or by \"Rena Stone\"; I require one creator but have yet to choose.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_11_private_tenant_patron",
+      "query_text": "Find records rated at least 3.9, titled \"Amber Dock\", without the whole word \"digest\"; prefer beginner material. By \"Kavi Moss\" or by \"Rena Stone\"; I require one creator but have yet to choose.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_11_private_tenant_staff",
+      "query_text": "Find records rated at least 3.9, titled \"Amber Dock\", without the whole word \"digest\"; prefer beginner material. By \"Kavi Moss\" or by \"Rena Stone\"; I require one creator but have yet to choose.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_11_public_tenant_patron",
+      "query_text": "Find records rated at least 3.9, titled \"Amber Dock\", without the whole word \"digest\"; prefer beginner material. By \"Kavi Moss\" or by \"Rena Stone\"; I require one creator but have yet to choose.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_11_public_tenant_staff",
+      "query_text": "Find records rated at least 3.9, titled \"Amber Dock\", without the whole word \"digest\"; prefer beginner material. By \"Kavi Moss\" or by \"Rena Stone\"; I require one creator but have yet to choose.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_12_global",
+      "query_text": "Find records by \"Sela Moon\" rated at least 3.4; sort by title. Either include category Fiction or exclude category Fiction; I have yet to choose which restriction.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_12_private_tenant_patron",
+      "query_text": "Find records by \"Sela Moon\" rated at least 3.4; sort by title. Either include category Fiction or exclude category Fiction; I have yet to choose which restriction.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_12_private_tenant_staff",
+      "query_text": "Find records by \"Sela Moon\" rated at least 3.4; sort by title. Either include category Fiction or exclude category Fiction; I have yet to choose which restriction.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_12_public_tenant_patron",
+      "query_text": "Find records by \"Sela Moon\" rated at least 3.4; sort by title. Either include category Fiction or exclude category Fiction; I have yet to choose which restriction.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_12_public_tenant_staff",
+      "query_text": "Find records by \"Sela Moon\" rated at least 3.4; sort by title. Either include category Fiction or exclude category Fiction; I have yet to choose which restriction.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_13_global",
+      "query_text": "Find records by \"Toma Fern\" titled \"Salt Garden\" and include category Fiction; prefer French language when possible; sort title ascending. Exclude the whole word \"manual\" from either the title alone or all searchable text; I have yet to choose the field. Prefer reference material.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_13_private_tenant_patron",
+      "query_text": "Find records by \"Toma Fern\" titled \"Salt Garden\" and include category Fiction; prefer French language when possible; sort title ascending. Exclude the whole word \"manual\" from either the title alone or all searchable text; I have yet to choose the field. Prefer reference material.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_13_private_tenant_staff",
+      "query_text": "Find records by \"Toma Fern\" titled \"Salt Garden\" and include category Fiction; prefer French language when possible; sort title ascending. Exclude the whole word \"manual\" from either the title alone or all searchable text; I have yet to choose the field. Prefer reference material.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_13_public_tenant_patron",
+      "query_text": "Find records by \"Toma Fern\" titled \"Salt Garden\" and include category Fiction; prefer French language when possible; sort title ascending. Exclude the whole word \"manual\" from either the title alone or all searchable text; I have yet to choose the field. Prefer reference material.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_13_public_tenant_staff",
+      "query_text": "Find records by \"Toma Fern\" titled \"Salt Garden\" and include category Fiction; prefer French language when possible; sort title ascending. Exclude the whole word \"manual\" from either the title alone or all searchable text; I have yet to choose the field. Prefer reference material.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_14_global",
+      "query_text": "Find records titled \"Ochre Trail\" in category Fiction; prefer reference material. The rating cutoff is 4.0, but I have yet to choose above versus below.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_14_private_tenant_patron",
+      "query_text": "Find records titled \"Ochre Trail\" in category Fiction; prefer reference material. The rating cutoff is 4.0, but I have yet to choose above versus below.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_14_private_tenant_staff",
+      "query_text": "Find records titled \"Ochre Trail\" in category Fiction; prefer reference material. The rating cutoff is 4.0, but I have yet to choose above versus below.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_14_public_tenant_patron",
+      "query_text": "Find records titled \"Ochre Trail\" in category Fiction; prefer reference material. The rating cutoff is 4.0, but I have yet to choose above versus below.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_14_public_tenant_staff",
+      "query_text": "Find records titled \"Ochre Trail\" in category Fiction; prefer reference material. The rating cutoff is 4.0, but I have yet to choose above versus below.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_15_global",
+      "query_text": "Find records by \"Enna Pine\" titled \"Silver Courtyard\"; prefer introductory material. Require online access, but I have yet to choose whether physical copies may coexist.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_15_private_tenant_patron",
+      "query_text": "Find records by \"Enna Pine\" titled \"Silver Courtyard\"; prefer introductory material. Require online access, but I have yet to choose whether physical copies may coexist.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_15_private_tenant_staff",
+      "query_text": "Find records by \"Enna Pine\" titled \"Silver Courtyard\"; prefer introductory material. Require online access, but I have yet to choose whether physical copies may coexist.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_15_public_tenant_patron",
+      "query_text": "Find records by \"Enna Pine\" titled \"Silver Courtyard\"; prefer introductory material. Require online access, but I have yet to choose whether physical copies may coexist.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_15_public_tenant_staff",
+      "query_text": "Find records by \"Enna Pine\" titled \"Silver Courtyard\"; prefer introductory material. Require online access, but I have yet to choose whether physical copies may coexist.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_16_global",
+      "query_text": "Find records by \"Ivo Dale\" titled \"Reed Compass\" in category Fiction; prefer beginner material. Rating must be at least [value omitted].",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_16_private_tenant_patron",
+      "query_text": "Find records by \"Ivo Dale\" titled \"Reed Compass\" in category Fiction; prefer beginner material. Rating must be at least [value omitted].",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_16_private_tenant_staff",
+      "query_text": "Find records by \"Ivo Dale\" titled \"Reed Compass\" in category Fiction; prefer beginner material. Rating must be at least [value omitted].",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_16_public_tenant_patron",
+      "query_text": "Find records by \"Ivo Dale\" titled \"Reed Compass\" in category Fiction; prefer beginner material. Rating must be at least [value omitted].",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_16_public_tenant_staff",
+      "query_text": "Find records by \"Ivo Dale\" titled \"Reed Compass\" in category Fiction; prefer beginner material. Rating must be at least [value omitted].",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_17_global",
+      "query_text": "Find online records rated below 4.8, excluding the whole word \"summary\"; sort by title. By [creator text omitted].",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_17_private_tenant_patron",
+      "query_text": "Find online records rated below 4.8, excluding the whole word \"summary\"; sort by title. By [creator text omitted].",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_17_private_tenant_staff",
+      "query_text": "Find online records rated below 4.8, excluding the whole word \"summary\"; sort by title. By [creator text omitted].",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_17_public_tenant_patron",
+      "query_text": "Find online records rated below 4.8, excluding the whole word \"summary\"; sort by title. By [creator text omitted].",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_17_public_tenant_staff",
+      "query_text": "Find online records rated below 4.8, excluding the whole word \"summary\"; sort by title. By [creator text omitted].",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_18_global",
+      "query_text": "Find records rated at least 2.9 in category Fiction, excluding the whole word \"solutions\"; sort by title. By \"Vera Ash\". Titled [field text omitted].",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_18_private_tenant_patron",
+      "query_text": "Find records rated at least 2.9 in category Fiction, excluding the whole word \"solutions\"; sort by title. By \"Vera Ash\". Titled [field text omitted].",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_18_private_tenant_staff",
+      "query_text": "Find records rated at least 2.9 in category Fiction, excluding the whole word \"solutions\"; sort by title. By \"Vera Ash\". Titled [field text omitted].",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_18_public_tenant_patron",
+      "query_text": "Find records rated at least 2.9 in category Fiction, excluding the whole word \"solutions\"; sort by title. By \"Vera Ash\". Titled [field text omitted].",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_18_public_tenant_staff",
+      "query_text": "Find records rated at least 2.9 in category Fiction, excluding the whole word \"solutions\"; sort by title. By \"Vera Ash\". Titled [field text omitted].",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_19_global",
+      "query_text": "Find records by \"Asha Flint\" in category Fiction, excluding the whole word \"notes\". Require language [value omitted].",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_19_private_tenant_patron",
+      "query_text": "Find records by \"Asha Flint\" in category Fiction, excluding the whole word \"notes\". Require language [value omitted].",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_19_private_tenant_staff",
+      "query_text": "Find records by \"Asha Flint\" in category Fiction, excluding the whole word \"notes\". Require language [value omitted].",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_19_public_tenant_patron",
+      "query_text": "Find records by \"Asha Flint\" in category Fiction, excluding the whole word \"notes\". Require language [value omitted].",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_19_public_tenant_staff",
+      "query_text": "Find records by \"Asha Flint\" in category Fiction, excluding the whole word \"notes\". Require language [value omitted].",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_20_global",
+      "query_text": "Find online records titled \"Ivory Basin\"; prefer advanced material. Exclude the whole word [term omitted].",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_20_private_tenant_patron",
+      "query_text": "Find online records titled \"Ivory Basin\"; prefer advanced material. Exclude the whole word [term omitted].",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_20_private_tenant_staff",
+      "query_text": "Find online records titled \"Ivory Basin\"; prefer advanced material. Exclude the whole word [term omitted].",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_20_public_tenant_patron",
+      "query_text": "Find online records titled \"Ivory Basin\"; prefer advanced material. Exclude the whole word [term omitted].",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_20_public_tenant_staff",
+      "query_text": "Find online records titled \"Ivory Basin\"; prefer advanced material. Exclude the whole word [term omitted].",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_21_global",
+      "query_text": "Find records rated at least 3.7 by \"Dara Wren\". Require the combined pages across every edition of each work to exceed 900; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_21_private_tenant_patron",
+      "query_text": "Find records rated at least 3.7 by \"Dara Wren\". Require the combined pages across every edition of each work to exceed 900; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_21_private_tenant_staff",
+      "query_text": "Find records rated at least 3.7 by \"Dara Wren\". Require the combined pages across every edition of each work to exceed 900; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_21_public_tenant_patron",
+      "query_text": "Find records rated at least 3.7 by \"Dara Wren\". Require the combined pages across every edition of each work to exceed 900; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_21_public_tenant_staff",
+      "query_text": "Find records rated at least 3.7 by \"Dara Wren\". Require the combined pages across every edition of each work to exceed 900; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_22_global",
+      "query_text": "Find records titled \"Blue Causeway\", excluding the whole word \"index\". Require more pages than the companion volume; prefer reference material.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_22_private_tenant_patron",
+      "query_text": "Find records titled \"Blue Causeway\", excluding the whole word \"index\". Require more pages than the companion volume; prefer reference material.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_22_private_tenant_staff",
+      "query_text": "Find records titled \"Blue Causeway\", excluding the whole word \"index\". Require more pages than the companion volume; prefer reference material.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_22_public_tenant_patron",
+      "query_text": "Find records titled \"Blue Causeway\", excluding the whole word \"index\". Require more pages than the companion volume; prefer reference material.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_22_public_tenant_staff",
+      "query_text": "Find records titled \"Blue Causeway\", excluding the whole word \"index\". Require more pages than the companion volume; prefer reference material.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_23_global",
+      "query_text": "Find online records in category Fiction rated at least 4.2. By \"Lira Elm\". Require costing under 12 dollars; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_23_private_tenant_patron",
+      "query_text": "Find online records in category Fiction rated at least 4.2. By \"Lira Elm\". Require costing under 12 dollars; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_23_private_tenant_staff",
+      "query_text": "Find online records in category Fiction rated at least 4.2. By \"Lira Elm\". Require costing under 12 dollars; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_23_public_tenant_patron",
+      "query_text": "Find online records in category Fiction rated at least 4.2. By \"Lira Elm\". Require costing under 12 dollars; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_23_public_tenant_staff",
+      "query_text": "Find online records in category Fiction rated at least 4.2. By \"Lira Elm\". Require costing under 12 dollars; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_24_global",
+      "query_text": "Find records by \"Rafi Dew\" titled \"Cedar Geometry\"; prefer beginner material. Require difficulty exactly level 7; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_24_private_tenant_patron",
+      "query_text": "Find records by \"Rafi Dew\" titled \"Cedar Geometry\"; prefer beginner material. Require difficulty exactly level 7; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_24_private_tenant_staff",
+      "query_text": "Find records by \"Rafi Dew\" titled \"Cedar Geometry\"; prefer beginner material. Require difficulty exactly level 7; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_24_public_tenant_patron",
+      "query_text": "Find records by \"Rafi Dew\" titled \"Cedar Geometry\"; prefer beginner material. Require difficulty exactly level 7; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_24_public_tenant_staff",
+      "query_text": "Find records by \"Rafi Dew\" titled \"Cedar Geometry\"; prefer beginner material. Require difficulty exactly level 7; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_25_global",
+      "query_text": "Find online records rated at least 3.1, excluding the whole word \"extract\". Require an edition with the same translator as its companion edition.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_25_private_tenant_patron",
+      "query_text": "Find online records rated at least 3.1, excluding the whole word \"extract\". Require an edition with the same translator as its companion edition.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_25_private_tenant_staff",
+      "query_text": "Find online records rated at least 3.1, excluding the whole word \"extract\". Require an edition with the same translator as its companion edition.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_25_public_tenant_patron",
+      "query_text": "Find online records rated at least 3.1, excluding the whole word \"extract\". Require an edition with the same translator as its companion edition.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_25_public_tenant_staff",
+      "query_text": "Find online records rated at least 3.1, excluding the whole word \"extract\". Require an edition with the same translator as its companion edition.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_26_global",
+      "query_text": "Find online records rated above 4.3 and at most 4.3; prefer short material; sort highest rating first.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_26_private_tenant_patron",
+      "query_text": "Find online records rated above 4.3 and at most 4.3; prefer short material; sort highest rating first.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_26_private_tenant_staff",
+      "query_text": "Find online records rated above 4.3 and at most 4.3; prefer short material; sort highest rating first.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_26_public_tenant_patron",
+      "query_text": "Find online records rated above 4.3 and at most 4.3; prefer short material; sort highest rating first.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_26_public_tenant_staff",
+      "query_text": "Find online records rated above 4.3 and at most 4.3; prefer short material; sort highest rating first.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_27_global",
+      "query_text": "Require category Fiction and exclude category Fiction; find records by \"Lumi Shore\" rated at least 3.5; prefer reference material and require online access; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_27_private_tenant_patron",
+      "query_text": "Require category Fiction and exclude category Fiction; find records by \"Lumi Shore\" rated at least 3.5; prefer reference material and require online access; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_27_private_tenant_staff",
+      "query_text": "Require category Fiction and exclude category Fiction; find records by \"Lumi Shore\" rated at least 3.5; prefer reference material and require online access; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_27_public_tenant_patron",
+      "query_text": "Require category Fiction and exclude category Fiction; find records by \"Lumi Shore\" rated at least 3.5; prefer reference material and require online access; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_27_public_tenant_staff",
+      "query_text": "Require category Fiction and exclude category Fiction; find records by \"Lumi Shore\" rated at least 3.5; prefer reference material and require online access; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_28_global",
+      "query_text": "Require online access and exclude online access; find records titled \"Opal Bridge\", rated at least 3.0 by \"Neri Bay\"; sort by title.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_28_private_tenant_patron",
+      "query_text": "Require online access and exclude online access; find records titled \"Opal Bridge\", rated at least 3.0 by \"Neri Bay\"; sort by title.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_28_private_tenant_staff",
+      "query_text": "Require online access and exclude online access; find records titled \"Opal Bridge\", rated at least 3.0 by \"Neri Bay\"; sort by title.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_28_public_tenant_patron",
+      "query_text": "Require online access and exclude online access; find records titled \"Opal Bridge\", rated at least 3.0 by \"Neri Bay\"; sort by title.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_28_public_tenant_staff",
+      "query_text": "Require online access and exclude online access; find records titled \"Opal Bridge\", rated at least 3.0 by \"Neri Bay\"; sort by title.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_29_global",
+      "query_text": "Require records titled exactly \"Maple Harbor\", and exclude the whole word \"Maple\" from all searchable text; include category Fiction; prefer French language when possible; sort title ascending.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_29_private_tenant_patron",
+      "query_text": "Require records titled exactly \"Maple Harbor\", and exclude the whole word \"Maple\" from all searchable text; include category Fiction; prefer French language when possible; sort title ascending.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_29_private_tenant_staff",
+      "query_text": "Require records titled exactly \"Maple Harbor\", and exclude the whole word \"Maple\" from all searchable text; include category Fiction; prefer French language when possible; sort title ascending.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_29_public_tenant_patron",
+      "query_text": "Require records titled exactly \"Maple Harbor\", and exclude the whole word \"Maple\" from all searchable text; include category Fiction; prefer French language when possible; sort title ascending.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_29_public_tenant_staff",
+      "query_text": "Require records titled exactly \"Maple Harbor\", and exclude the whole word \"Maple\" from all searchable text; include category Fiction; prefer French language when possible; sort title ascending.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_30_global",
+      "query_text": "Find records by \"A Quill Moss\", exclude the whole word \"Quill\" from all searchable text, and require online access; prefer advanced material.",
+      "scope_type": "GLOBAL",
+      "workspace_type": "GLOBAL",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_30_private_tenant_patron",
+      "query_text": "Find records by \"A Quill Moss\", exclude the whole word \"Quill\" from all searchable text, and require online access; prefer advanced material.",
+      "scope_type": "PRIVATE_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_30_private_tenant_staff",
+      "query_text": "Find records by \"A Quill Moss\", exclude the whole word \"Quill\" from all searchable text, and require online access; prefer advanced material.",
+      "scope_type": "PRIVATE_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_30_public_tenant_patron",
+      "query_text": "Find records by \"A Quill Moss\", exclude the whole word \"Quill\" from all searchable text, and require online access; prefer advanced material.",
+      "scope_type": "PUBLIC_TENANT_PATRON",
+      "workspace_type": "PATRON",
+      "search_mode": "SMART"
+    },
+    {
+      "case_id": "smarteng_30_public_tenant_staff",
+      "query_text": "Find records by \"A Quill Moss\", exclude the whole word \"Quill\" from all searchable text, and require online access; prefer advanced material.",
+      "scope_type": "PUBLIC_TENANT_STAFF",
+      "workspace_type": "STAFF",
+      "search_mode": "SMART"
+    }
+  ],
+  "output": "reports/search_v2c_smarteng_independent_review.json",
+  "source_query_artifact_sha256": "dc757084e8e90ef76f61601b8110b1e0a6fdce29518957b8e1459c783bd638c4"
+}

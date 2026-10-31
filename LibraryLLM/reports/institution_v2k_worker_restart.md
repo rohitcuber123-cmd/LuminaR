@@ -1,0 +1,5 @@
+# Restart and shutdown
+
+Native worker start installs no telemetry hook. The child-only adapter starts Agent, then actual native start/serial loop. New Agent gets a new UUID/epoch, old record rotates to previous, and old pulse/progress CAS fails. Restart never transfers a native lease or rewrites ownership. Native claim still considers only existing manually queued jobs; an abandoned active job remains unresolved. Existing explicit recovery alone may fence/repair it.
+
+Native close does not join. Laboratory adapter requests close and joins at most5s; only if native thread ended does Agent attempt STOPPED, then Agent has at most3s join and500ms individual Mongo deadlines. This is best-effort, not a production lifecycle guarantee. Crash uses actual os._exit(77), so no Python finally/shutdown path runs. Six native crash stages and repeated fresh-process restarts are recorded in native_validation.json; idle crash, return to idle, last-good retention, A/B/C queue and explicit native recovery are in native_supplement.json. Explicit expiry injection/recovery is isolated fixture work and is never triggered by a telemetry reader.

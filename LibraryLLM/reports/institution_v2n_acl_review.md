@@ -1,0 +1,7 @@
+# Windows ACL review
+
+AUDITED read-only: host_audit.json filesystem_acls and boundary.json database_path_acl. Project .env owner Builtin Administrators, protected DACL, but Authenticated Users Modify and Builtin Users ReadAndExecute. Code launcher, local logs, tenant intelligence artifacts and rag/private_documents include broad inherited local-group grants. Database directory has NetworkService full control plus inherited Users/application-package read/execute. No recursive effective-access certification is claimed.
+
+Current interactive identity observed as ROHIT-PC\Rohit Siddani. Workspace path naming does not establish execution owner. MongoDB Windows service declares NetworkService; actual app service accounts/secret enrollment contexts are unknown. No current .env, service-account ACL, database path DACL or firewall rule was modified. Only newly created owned temporary tool-secret directories received fixture ACLs.
+
+Review is complete as an evidence inventory with NOT_VERIFIED child-file/effective-access/account gaps. Hardening is not complete. Owner-approved follow-up must preserve recovery access, protect executable code/launcher/secret parents and files, separate readers from writers, verify actual service profile DPAPI decrypt/restart/rotation, and establish backup ACLs. Do not remove inherited ACEs or change service identities by applying a generic copied ACL. Actual production approval and deployment qualification remain absent.

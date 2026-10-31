@@ -1,0 +1,88 @@
+"""Independent high-recall source obligations, not derived from proposed atoms.
+
+This intentionally uses separate source rules from interpretation.decode. It
+checks recognized obligations, and explicitly cannot prove arbitrary English.
+"""
+import re
+from dataclasses import dataclass,asdict
+
+
+@dataclass(frozen=True)
+class Obligation:
+    span:tuple
+    text:str
+    category:str
+    domains:tuple
+    required:bool
+    consequence:str
+
+
+def scan(query):
+    # Separate scanner: quotation state and decimal/initial boundary handling.
+    intervals=[];start=0;quote=None
+    for i,c in enumerate(query):
+        if c in '"“”':
+            if quote is None:quote='”' if c=='“' else c
+            elif c==quote:quote=None
+            continue
+        if quote or c not in ';,.!?:\n':continue
+        if c==':':
+            prefix=re.sub(r'"[^"\n]*"|“[^”\n]*”',lambda m:' '*(m.end()-m.start()),query[start:i])
+            if not re.search(r'\b(?:correction|instruction|note)\b',prefix,re.I):continue
+        if c==',':
+            next_text=re.sub(r'^\s*(?:but|and)\s+','',query[i+1:],flags=re.I)
+            starts_argument=bool(re.match(r'\s*(?:by|rated|rating|published|language|exclud\w*|includ\w*|must|require|prefer\w*|optional|advisory|should|may)\b',next_text,re.I))
+            optional_tail=bool(re.match(r'[^,;.!?]*\b(?:optional|advisory|preferable)\b',next_text,re.I))
+            has_argument=bool(re.search(r'\b(?:by|rated|rating|published|language|about|topic)\b',query[start:i],re.I))
+            if not (starts_argument or optional_tail and has_argument):continue
+        if c=='.' and (i+1<len(query) and not query[i+1].isspace() and query[i+1] not in '"“”' or i and i+1<len(query) and query[i-1].isdigit() and query[i+1].isdigit() or i and query[i-1]=='.' or i+1<len(query) and query[i+1]=='.'):continue
+        if c=='.' and re.search(r'\b(?:by|author|writer|creator)\b[^;!?]*\b[A-Z]\.$',query[start:i+1],re.I) and i+1<len(query) and re.match(r'\s*(?:[A-Z]\.\s*)?[A-Z][a-z]',query[i+1:]):continue
+        if query[start:i].strip():intervals.append((start,i))
+        start=i+1
+    if query[start:].strip():intervals.append((start,len(query)))
+    result=[]
+    for a,b in intervals:
+        text=query[a:b];v=re.sub(r'"[^"\n]*"|“[^”\n]*”',lambda m:' '*(m.end()-m.start()),text);t=v.strip().casefold()
+        required=True;category='SEMANTIC_TOPIC';consequence='SEARCHABLE_TOPIC'
+        if re.match(r'^(?:ignore|bypass|override|switch\s+(?:the\s+)?(?:library|tenant)|in\s+(?:an?|the|my)\s+(?:old|previous).*example|I\s+(?:cannot\s+remember\b.*?\b(?:another|different)\s+book|remember|once\s+read)|for\s+example|suppose|imagine|explain|what\s+(?:does|is))\b',t,re.I) or re.search(r'\b(?:for\s+this\s+correction|metalinguistic|correction\s+instruction)\b',t,re.I) or re.match(r'^(?:use\s+[a-z\s]+,\s*not\s+[a-z\s]+,\s*for\s+this\s+correction)\b',t,re.I):
+            category='NON_OPERATIVE';required=False;consequence='NO_HARD_PREDICATES'
+        elif re.search(r'\b(?:prefer\w*|optional|advisory|bonus|welcome|would\s+be\s+nice|should|may)\b',t) and not re.search(r'\b(?:must|required?|mandatory|hard\s+(?:filter|condition)|strict)\b',t):
+            category='OPTIONAL_PREFERENCE';required=False;consequence='NO_HARD_PREDICATES'
+        domains=[]
+        field_text=re.sub(r'\b(?:sort|order)\s+(?:on|by)\b','sort ',t)
+        for field,pattern in [('author',r'\b(?:by|author\s+(?:names?|text)|writer\s+name)\b'),('literal',r'\b(?:exact\s+(?:title|literal)|exactly\s+(?:titled|called|named)|(?:entries\s+|books?\s+)?titled)\b'),('rating',r'\b(?:ratings?|rated|stars?|floor|cutoff)\b'),('year',r'\b(?:published|publication\s+year|issued)\b'),('language',r'\blanguage\s*[:=]?\s+\w+'),('format',r'\b(?:online|digital|physical|hardcover)\b'),('sort',r'\b(?:sort|order)\b'),('subject',r'\b(?:include|category|subject)\b'),('exclude',r'\b(?:exclud\w*|without|remove\s+every)\b')]:
+            if re.search(pattern,field_text):domains.append(field)
+        topical=bool(re.search(r'\b(?:about|topic\s*(?::|is)?|discussing|accounts?\s+of|studies?\s+(?:on|about|of)|history\s+of)\b',t))
+        if required and domains:category='MANDATORY_REQUIREMENT';consequence='REPRESENT_AND_VERIFY'
+        if required and re.search(r'\b(?:pages?|prices?|costs?|publishers?|imprints?|editions?)\b',t) and not topical:category='UNSUPPORTED_REQUEST';consequence='BLOCK_UNSUPPORTED'
+        if required and re.search(r'\b(?:forgot|cannot\s+(?:remember|tell)|unclear|undecided|unsure|uncertain|wait\s+for|need\s+to\s+(?:pick|choose)|resolve\s+my\s+choice)\b',t):category='AMBIGUOUS_ALTERNATIVE';consequence='CLARIFY'
+        if required and (re.search(r'\[[^\]]*\]|\.{3,}|…|_{2,}',v) or re.search(r'\b(?:missing|blank|omitted|not\s+supplied|to\s+be\s+filled)\b',t)) and domains:category='MISSING_OPERAND';consequence='CLARIFY'
+        if required and re.search(r'\b(?:same|different|higher|lower|earlier|later)\b',t) and re.search(r'\b(?:book|work|record)\b',t) and re.search(r'\b(?:than|as|of|from)\b',t):category='UNSUPPORTED_RELATION';consequence='BLOCK_UNSUPPORTED'
+        if required and not domains and category=='SEMANTIC_TOPIC' and re.search(r'\b(?:must|required?|mandatory|hard\s+(?:condition|filter)|strict)\b',t) and not topical:category='UNKNOWN_MANDATORY';consequence='CLARIFY'
+        result.append(Obligation((a,b),text,category,tuple(domains),required,consequence))
+    return tuple(result)
+
+
+def verify_ir(ir):
+    records=[];violations=[]
+    for o in scan(ir.raw_query):
+        a,b=o.span;rr=[r for r in ir.requirements if r.source_span[0]<b and a<r.source_span[1]]
+        hard=[r for r in rr if r.ownership=='MANDATORY'];blocked=[r for r in hard if r.state.value!='EXPLICITLY_SUPPLIED' or r.support!='SUPPORTED']
+        errors=[]
+        topical=re.search(r'\b(?:about|topic\s*(?::|is))\b',o.text,re.I)
+        if o.category=='SEMANTIC_TOPIC' and topical:
+            if any(r.representation=='HARD_FILTER' and r.source_span[0]>=a+topical.end() for r in hard):errors.append('TOPICAL_MENTION_PROMOTED_TO_HARD_FIELD')
+        if o.category in ['NON_OPERATIVE','OPTIONAL_PREFERENCE']:
+            if hard:errors.append('NON_MANDATORY_SOURCE_PROMOTED')
+        elif o.category in ['AMBIGUOUS_ALTERNATIVE','MISSING_OPERAND','UNKNOWN_MANDATORY']:
+            if not blocked:errors.append('UNRESOLVED_SOURCE_NOT_REPRESENTED')
+        elif o.category in ['UNSUPPORTED_REQUEST','UNSUPPORTED_RELATION']:
+            if not any(r.state.value=='UNSUPPORTED_REQUIREMENT' for r in hard):errors.append('UNSUPPORTED_SOURCE_NOT_REPRESENTED')
+        elif o.category=='MANDATORY_REQUIREMENT':
+            aliases={'literal':{'literal','title'},'rating':{'rating','sort'},'year':{'year','sort'},'subject':{'subject','excluded_subject','label_reference'},'exclude':{'exclude','excluded_format','excluded_subject','publisher','relationship','label_reference','exclude_terms'},'format':{'format','excluded_format','availability'}}
+            for field in o.domains:
+                if not any(r.field in aliases.get(field,{field}) for r in hard) and not blocked:errors.append('UNREPRESENTED_'+field.upper())
+        for e in errors:violations.append(dict(span=list(o.span),source_text=o.text,reason=e,category=o.category,decision='AMBIGUOUS' if o.consequence=='CLARIFY' else 'UNSUPPORTED'))
+        records.append(dict(asdict(o),represented=[r.requirement_id for r in rr],violations=errors))
+    return dict(version=9,obligations=records,violations=violations,recognized_obligations_complete=not violations,
+                limitation='Independent source cue audit with finite recall. Does not prove arbitrary language completeness; unidentified mandatory meaning can remain missed.')

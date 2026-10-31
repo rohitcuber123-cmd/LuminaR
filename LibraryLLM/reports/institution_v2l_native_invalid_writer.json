@@ -1,0 +1,492 @@
+{
+  "scenario": "benchmark",
+  "enabled": true,
+  "fault": "",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH",
+    "FAISS_BUILD",
+    "FAISS_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 10:40:39.993073+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 6,
+      "progress_seq": 8,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        6,
+        8
+      ]
+    },
+    {
+      "at": "2026-10-30 10:40:42.020661+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:40:41.960000",
+      "pulse_seq": 6,
+      "progress_seq": 8,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:40:41.960000",
+        6,
+        8
+      ]
+    },
+    {
+      "at": "2026-10-30 10:40:44.932020+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:40:41.960000",
+      "pulse_seq": 6,
+      "progress_seq": 8,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-30 10:40:41.960000",
+        6,
+        8
+      ]
+    },
+    {
+      "at": "2026-10-30 10:40:45.255195+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:40:41.960000",
+      "pulse_seq": 6,
+      "progress_seq": 8,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-30 10:40:41.960000",
+        6,
+        8
+      ]
+    },
+    {
+      "at": "2026-10-30 10:40:46.605000+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 6,
+      "progress_seq": 8,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        6,
+        8
+      ]
+    },
+    {
+      "at": "2026-10-30 10:40:47.289942+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:40:47.267000",
+      "pulse_seq": 6,
+      "progress_seq": 8,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:40:47.267000",
+        6,
+        8
+      ]
+    },
+    {
+      "at": "2026-10-30 10:40:47.513138+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:40:47.267000",
+      "pulse_seq": 6,
+      "progress_seq": 8,
+      "progress": [],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        101,
+        101,
+        "2026-10-30 10:40:47.267000",
+        6,
+        8
+      ]
+    },
+    {
+      "at": "2026-10-30 10:40:47.627222+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:40:47.267000",
+      "pulse_seq": 6,
+      "progress_seq": 8,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-30 10:40:47.267000",
+        6,
+        8
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "e7314844-48bc-4531-ac91-45554c131b13",
+      "job_id": "cb9dd90b-2692-4c47-b422-46ced36e4059",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 6619.122000000061,
+      "native_build_ms": 3285.0,
+      "cpu_ms": 1156.25,
+      "rss_increase_bytes": 91590656,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "b7b45257-fd63-4d87-a7c3-e8366dcf7c97",
+      "job_id": "75f1d53c-e8cf-466d-8164-a788d9385de5",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2244.494499999746,
+      "native_build_ms": 269.0,
+      "cpu_ms": 281.25,
+      "rss_increase_bytes": 249856,
+      "pointer_ack_match": true
+    }
+  ],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 351.46550000081334
+  },
+  "telemetry_writer_mode": "UNQUALIFIED_READ_ONLY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847204352,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 9,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847114240,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.0929999999998472,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0320000000001528,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847118336,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 7,
+      "os_threads": 58
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.014999999999418,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0470000000004802,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847163392,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 848637952,
+      "cpu_delta_ms": 109.375,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 848637952,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 7,
+      "os_threads": 60
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 882130944,
+      "cpu_delta_ms": 375.0,
+      "interval_seconds": 3.344000000000051,
+      "python_threads": 9,
+      "os_threads": 80
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 938065920,
+      "cpu_delta_ms": 609.375,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 8,
+      "os_threads": 79
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 938921984,
+      "cpu_delta_ms": 93.75,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 8,
+      "os_threads": 79
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 938995712,
+      "cpu_delta_ms": 171.875,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 8,
+      "os_threads": 79
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 939008000,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 8,
+      "os_threads": 79
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 5,
+    "os": 56
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 8.114400000522437,
+  "observer_ready_ms": 27.16670000063459,
+  "threads_observing": {
+    "python": 9,
+    "os": 60
+  },
+  "mongo_connections_observing": 8,
+  "idle": {
+    "seconds": 22.001602099999218,
+    "cpu_ms": 468.75,
+    "rss_increase_bytes": -40960,
+    "pulse_seq": 6,
+    "lifecycle": "STOPPED",
+    "telemetry_enabled": true,
+    "record_scope": "RETAINED_OTHER_INSTANCE_OR_ABSENT"
+  },
+  "current_library": "b7b45257-fd63-4d87-a7c3-e8366dcf7c97",
+  "native_serial": true,
+  "agent_errors": {
+    "TELEMETRY_UNAVAILABLE": 1
+  },
+  "native_close_return_ms": 0.07959999948070617,
+  "worker_end_ms": 0.19960000008723,
+  "observer_thread_ended": true,
+  "observer_final_state": "UNAVAILABLE",
+  "mongo_connections_after_close": 7,
+  "shutdown_lifecycle": "STOPPED",
+  "worker_thread_ended": true
+}

@@ -1,0 +1,211 @@
+{
+  "scenario": "benchmark",
+  "enabled": true,
+  "fault": "",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH",
+    "FAISS_BUILD",
+    "FAISS_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION"
+  ],
+  "events": [
+    {
+      "at": "2026-10-29 20:31:33.304636+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-29 20:31:33.232000",
+      "pulse_seq": 5,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-29 20:31:33.232000",
+        5,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:31:34.250415+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-29 20:31:33.232000",
+      "pulse_seq": 5,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-29 20:31:33.232000",
+        5,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:31:34.571132+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-29 20:31:33.232000",
+      "pulse_seq": 5,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-29 20:31:33.232000",
+        5,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:31:35.886144+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 5,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        5,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:31:36.540717+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-29 20:31:36.526000",
+      "pulse_seq": 5,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-29 20:31:36.526000",
+        5,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:31:36.765856+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:31:36.526000",
+      "pulse_seq": 5,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-29 20:31:36.526000",
+        5,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:31:36.872075+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:31:36.526000",
+      "pulse_seq": 5,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-29 20:31:36.526000",
+        5,
+        4
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "53bb5129-b4b7-45e2-a7c2-1ff312a92527",
+      "job_id": "edc1a012-4f70-40da-982d-66e585a9bb3a",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2613.861000005272,
+      "native_build_ms": 1286.0,
+      "cpu_ms": 843.75,
+      "rss_increase_bytes": 91602944,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "e5e3eba2-513c-444a-8d59-2ff89d1ca3a6",
+      "job_id": "8799c91c-faf1-4f0c-a24c-fe6ab76845de",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2239.629000003333,
+      "native_build_ms": 243.0,
+      "cpu_ms": 78.125,
+      "rss_increase_bytes": 192512,
+      "pointer_ack_match": true
+    }
+  ],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 325.4111999995075
+  },
+  "idle": {
+    "seconds": 22.00169370000367,
+    "cpu_ms": 31.25,
+    "rss_increase_bytes": -25481216,
+    "pulse_seq": 5,
+    "lifecycle": "STOPPED"
+  },
+  "current_library": "e5e3eba2-513c-444a-8d59-2ff89d1ca3a6",
+  "native_serial": true,
+  "shutdown_lifecycle": "STOPPED",
+  "worker_thread_ended": true
+}

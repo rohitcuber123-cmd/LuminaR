@@ -1,0 +1,7 @@
+# Improvement review
+
+Implemented real UX corrections on the existing page rather than recreating2H; tests cover malformed counters, stage completion vs publication, latest attempt, worker unknown, date safety, unauthorized focus, role/logout/visibility/network/503 lifecycle. Actual Chromium uses real JWT/ASGI/Mongo and actual cached encoder/native builds at six sizes with keyboard/axe checks.
+
+N shortcomings improved through runtime constructor/command stacks, cold+warm initialization and lookup-source evidence, exact command-derived roles with group subtraction/revocation, actual Core/Search/Recommendation and separate real Qwen/RAG serving, private document/Knowledge Tools, protected-token ACL denial/DPAPI rotation, child ACL/network inventory and45-collection cross-store restore checked through real APIs. Narrow config fixes unify selected DB and close active lexical CLI authentication-gate gaps. The lexical500 is fixed without changing ranking/schema/tests.
+
+Remaining technical conflict: J's frozen whole-page SHA forbids the requested frontend changes; no test/hash is weakened, so one NEW guard failure is reported. Protected RAG hash drift remains one preexisting review requirement. Representative5M/network/service-profile/deployment role coverage and real owner/restore/cutover approvals remain incomplete. Partial is an evidence result, not a reason to perform unapproved security or source changes.

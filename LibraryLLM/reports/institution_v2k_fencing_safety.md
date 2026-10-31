@@ -1,0 +1,7 @@
+# Native correctness remains authoritative
+
+All original 2G–2J source hashes are compared with the task-start1590-file baseline. Native lease90s, renewal10s, serial daemon, claim barrier, lease_query, fence token, Admin/source rechecks, artifact validation, atomic rename, pointer fence, last-good and acknowledgement order are unmodified. Actor privilege enforcement denies native collection writes. Telemetry CAS protects only auxiliary current-instance evidence; it cannot confer a job fence.
+
+Actual tests reject stale context/fence and expired lease; readers invalidate mismatches. Late old-instance pulse fails epoch/UUID/boot filter. Concurrent starts leave only the final epoch current. Genuine child crashes leave native active state and publication pointer unchanged on restart, including pointer-published-before-ack. Separate explicit native recovery fixture experiments retain existing semantics: unpublished→FAILED, matching validated published pointer→SUCCEEDED. These actions use the existing Library Admin endpoint, never diagnostic code.
+
+No telemetry path imports native job mutation helpers. It cannot claim, renew, recover, retry, cancel, publish, unlock barriers or create jobs. Observer failure cannot turn an unacknowledged native job into successful publication. Source preservation and server denied-write tests are stronger evidence than a function-name-only test; see focused.xml, native_validation.json and preservation.json.

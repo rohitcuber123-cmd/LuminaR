@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="86" time="55.907" timestamp="2026-10-30T19:59:00.196072+05:30" hostname="Rohit-pc"><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_legacy_role_never_grants_platform_or_library[ADMIN]" time="1.778" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_legacy_role_never_grants_platform_or_library[LIBRARIAN]" time="0.431" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_legacy_role_never_grants_platform_or_library[GENERAL_USER]" time="0.450" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes0]" time="0.145" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes1]" time="0.125" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes2]" time="0.118" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes3]" time="0.115" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes4]" time="0.109" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes5]" time="0.109" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_incomplete_revoked_expired_platform_grant_denies[changes6]" time="0.110" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_separate_explicit_authorities_and_fresh_revocation" time="0.473" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_identity_status_revokes_platform_access" time="0.139" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_no_api_role_or_membership_grant" time="0.133" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/issues/issue-body0]" time="0.119" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/issues/return/1-body1]" time="0.131" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/reservations/-body2]" time="0.124" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/reservations/cancel/1-body3]" time="0.122" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/fines/pay/1-body4]" time="0.112" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/inventory/-body5]" time="0.128" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_retired_endpoints_cannot_write[/issues/1/renew-body6]" time="0.130" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_compatibility_admin_api_redirects_only" time="0.124" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_direct_retired_services_have_no_second_writer" time="0.100" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_migration_dry_run_never_infers_legacy_roles" time="0.103" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_migration_separates_explicit_grants" time="0.320"><failure message="pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_138a4d8958be4a27 to execute command { insert: &quot;authority_migration_locks&quot;, ordered: true, lsid: { id: UUID(&quot;d871297d-17c9-4b56-885f-9b35d3e8b6f2&quot;) }, $db: &quot;luminar_v2n_fixture_138a4d8958be4a27&quot; }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_138a4d8958be4a27 to execute command { insert: &quot;authority_migration_locks&quot;, ordered: true, lsid: { id: UUID(&quot;d871297d-17c9-4b56-885f-9b35d3e8b6f2&quot;) }, $db: &quot;luminar_v2n_fixture_138a4d8958be4a27&quot; }', 'code': 13, 'codeName': 'Unauthorized'}">client = &lt;starlette.testclient.TestClient object at 0x000001821C7310D0&gt;
+libraries = [{'id': 'b6241980-49bf-4ec3-8bc7-b32d346ce475', 'base': '/libraries/b6241980-49bf-4ec3-8bc7-b32d346ce475', 'book': 'c7...': '/libraries/35cbf96d-344a-4fcd-abaa-f0a7bdd86260', 'book': '43d29671-6c43-402d-b504-7b797cfe69c4', 'owner': 2, ...}]
+
+    def test_migration_separates_explicit_grants(client, libraries):
+        mapping = {'platform_assignments': [approved()], 'library_memberships': [approved(user_id=3, role='LIBRARIAN', library_id=libraries[0]['id'], legacy_library_id='REVIEWED-LEGACY')]}
+        proposal = migration.plan(db, mapping)
+        assert db.platform_role_assignments.count_documents({}) == 0
+&gt;       migration.apply(db, proposal)
+
+.scratch\institution-v2n\auth_dashboard_convergence\test_authority.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\migrate_management_authority.py:88: in apply
+    database.authority_migration_locks.insert_one(lock)
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:890: in insert_one
+    self._insert_one(
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:830: in _insert_one
+    self._database.client._retryable_write(
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2113: in _retryable_write
+    return self._retry_with_session(retryable, func, s, bulk, operation, operation_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:1986: in _retry_with_session
+    return self._retry_internal(
+.venv\Lib\site-packages\pymongo\_csot.py:125: in csot_wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2038: in _retry_internal
+    ).run()
+      ^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:2811: in run
+    res = self._read() if self._is_read else self._write()
+                                             ^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\mongo_client.py:3014: in _write
+    return self._func(self._session, conn, self._retryable)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\collection.py:818: in _insert_command
+    result = conn.command(
+.venv\Lib\site-packages\pymongo\synchronous\helpers.py:53: in inner
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pymongo\synchronous\pool.py:403: in command
+    return command(
+.venv\Lib\site-packages\pymongo\synchronous\network.py:212: in command
+    helpers_shared._check_command_response(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+response = {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_138a4d8958be4a27 to execute command { insert: "authority_...7c9-4b56-885f-9b35d3e8b6f2") }, $db: "luminar_v2n_fixture_138a4d8958be4a27" }', 'code': 13, 'codeName': 'Unauthorized'}
+max_wire_version = 28, allowable_errors = None
+parse_write_concern_error = False, pool_opts = None
+
+    def _check_command_response(
+        response: _DocumentOut,
+        max_wire_version: Optional[int],
+        allowable_errors: Optional[Container[Union[int, str]]] = None,
+        parse_write_concern_error: bool = False,
+        pool_opts: Optional[PoolOptions] = None,
+    ) -&gt; None:
+        """Check the response to a command for errors."""
+        if "ok" not in response:
+            # Server didn't recognize our message as a command.
+            raise OperationFailure(
+                response.get("$err"),  # type: ignore[arg-type]
+                response.get("code"),
+                response,
+                max_wire_version,
+            )
+    
+        if parse_write_concern_error and "writeConcernError" in response:
+            _error = response["writeConcernError"]
+            _labels = response.get("errorLabels")
+            if _labels:
+                _error.update({"errorLabels": _labels})
+            _raise_write_concern_error(_error)
+    
+        if response["ok"]:
+            return
+    
+        details = response
+        # Mongos returns the error details in a 'raw' object
+        # for some errors.
+        if "raw" in response:
+            for shard in response["raw"].values():
+                # Grab the first non-empty raw error from a shard.
+                if shard.get("errmsg") and not shard.get("ok"):
+                    details = shard
+                    break
+    
+        errmsg = details["errmsg"]
+        code = details.get("code")
+    
+        # For allowable errors, only check for error messages when the code is not
+        # included.
+        if allowable_errors:
+            if code is not None:
+                if code in allowable_errors:
+                    return
+            elif errmsg in allowable_errors:
+                return
+    
+        # Server is "not primary" or "recovering"
+        if code is not None:
+            if code in _NOT_PRIMARY_CODES:
+                raise NotPrimaryError(errmsg, response)
+        elif HelloCompat.LEGACY_ERROR in errmsg or "node is recovering" in errmsg:
+            raise NotPrimaryError(errmsg, response)
+    
+        # Other errors
+        # findAndModify with upsert can raise duplicate key error
+        if code in (11000, 11001, 12582):
+            raise DuplicateKeyError(errmsg, code, response, max_wire_version)
+        elif code == 50:
+            # Append timeout details to MaxTimeMSExpired responses.
+            if pool_opts:
+                timeout_details = _get_timeout_details(pool_opts)
+                errmsg += format_timeout_details(timeout_details)
+            raise ExecutionTimeout(errmsg, code, response, max_wire_version)
+        elif code == 43:
+            raise CursorNotFound(errmsg, code, response, max_wire_version)
+    
+&gt;       raise OperationFailure(errmsg, code, response, max_wire_version)
+E       pymongo.errors.OperationFailure: not authorized on luminar_v2n_fixture_138a4d8958be4a27 to execute command { insert: "authority_migration_locks", ordered: true, lsid: { id: UUID("d871297d-17c9-4b56-885f-9b35d3e8b6f2") }, $db: "luminar_v2n_fixture_138a4d8958be4a27" }, full error: {'ok': 0.0, 'errmsg': 'not authorized on luminar_v2n_fixture_138a4d8958be4a27 to execute command { insert: "authority_migration_locks", ordered: true, lsid: { id: UUID("d871297d-17c9-4b56-885f-9b35d3e8b6f2") }, $db: "luminar_v2n_fixture_138a4d8958be4a27" }', 'code': 13, 'codeName': 'Unauthorized'}
+
+.venv\Lib\site-packages\pymongo\helpers_shared.py:284: OperationFailure</failure></testcase><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_migration_rejects_unapproved_or_ambiguous[change0]" time="0.103" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_migration_rejects_unapproved_or_ambiguous[change1]" time="0.104" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_migration_rejects_unapproved_or_ambiguous[change2]" time="0.103" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_migration_rejects_unapproved_or_ambiguous[change3]" time="0.100" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_assisted_renewal_and_receipt_use_canonical_journal" time="0.572" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_platform_alone_and_cross_tenant_cannot_receive_or_renew" time="0.494" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_existing_patron_return_can_be_received_without_duplicate" time="0.482" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_platform_provisioning_never_grants_authority" time="0.575" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_assisted_receipt_failure_is_safe_and_resumable" time="0.492" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_staff_cannot_use_assisted_path_for_own_personal_loan" time="0.459" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_legacy_inventory_reads_require_explicit_alias_and_local_membership" time="0.355" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_conflicting_legacy_mapping_rejected_before_any_grant" time="0.317" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_migrated_activity_is_canonical_scoped_staff_read_only" time="0.357" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_authority" name="test_staff_login_accepts_explicit_authority_on_general_identity" time="0.139" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_libraries_route_exists" time="0.141" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_libraries_requires_platform_admin" time="0.108" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_legacy_admin_denied_platform_libraries" time="0.111" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_library_admin_denied_platform_libraries" time="0.306" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_lists_libraries" time="0.330" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_search_libraries[name]" time="0.341" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_search_libraries[slug]" time="0.325" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_search_libraries[library_id]" time="0.326" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_search_libraries[owner_email]" time="0.318" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_search_libraries[owner_name]" time="0.358" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_filter_status[ACTIVE]" time="0.324" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_filter_status[SUSPENDED]" time="0.315" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_filter_status[REMOVED]" time="0.320" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_filter_type[PUBLIC_LIBRARY]" time="0.353" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_filter_type[PRIVATE_INSTITUTION]" time="0.318" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_library_detail" time="0.329" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_suspend" time="0.430" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_suspend_requires_reason[None]" time="0.318" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_suspend_requires_reason[]" time="0.306" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_suspend_requires_reason[   ]" time="0.310" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_restore" time="0.422" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_soft_remove" time="0.319" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_remove_requires_reason[None]" time="0.318" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_remove_requires_reason[]" time="0.321" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_remove_requires_reason[   ]" time="0.330" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_removed_library_data_preserved" time="0.360" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_removed_library_hidden_from_discovery" time="0.335" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_removed_library_join_denied" time="0.361" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_restore_removed_library" time="0.393" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_edit_inventory_without_membership" time="0.311" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_approve_request_without_membership" time="0.310" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_manage_staff_without_membership" time="0.333" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_waive_fee_without_membership" time="0.311" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_change_tenant_internals[POST-/staff/loans/{id}/receive-body0]" time="0.313" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_change_tenant_internals[PUT-/access-code-body1]" time="0.334" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_change_tenant_internals[PATCH--body2]" time="0.336" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_change_tenant_internals[PUT-/access-body3]" time="0.340" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_admin_cannot_change_tenant_internals[POST-/settings/fee-policy-body4]" time="0.311" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_role_revocation" time="0.371" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_dual_authority_independently_checked" time="0.361" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_lifecycle_idempotency_and_stale_state" time="0.341" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_restore_revalidates_owner_and_canonical_integrity" time="0.358" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_directory_bounded_input[params0]" time="0.147" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_directory_bounded_input[params1]" time="0.112" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_directory_bounded_input[params2]" time="0.105" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_directory_bounded_input[params3]" time="0.110" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_platform_directory_bounded_input[params4]" time="0.110" /><testcase classname=".scratch.institution-v2n.auth_dashboard_convergence.test_platform_libraries" name="test_lifecycle_uncertain_ack_retains_gate_and_recovers" time="30.331" /></testsuite></testsuites>

@@ -1,0 +1,70 @@
+{
+  "scope": "Disposable authenticated Mongo only, actual native worker and cached MiniLM/FAISS/KG.",
+  "cases": [
+    {
+      "name": "success",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 94.84613769999851,
+      "evidence": "institution_v2n_native_success.json"
+    },
+    {
+      "name": "crash_prepublication",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 7.427261000000726,
+      "evidence": "institution_v2n_native_crash_prepublication.json"
+    },
+    {
+      "name": "restart_prepublication",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 5.512752500000715,
+      "evidence": "institution_v2n_native_restart_prepublication.json"
+    },
+    {
+      "name": "manual_prepublication",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 2.4749161999989155,
+      "evidence": "institution_v2n_native_manual_prepublication.json"
+    },
+    {
+      "name": "crash_postpublication",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 7.48929710000084,
+      "evidence": "institution_v2n_native_crash_postpublication.json"
+    },
+    {
+      "name": "restart_postpublication",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 5.624028799998996,
+      "evidence": "institution_v2n_native_restart_postpublication.json"
+    },
+    {
+      "name": "manual_postpublication",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 2.368578100000377,
+      "evidence": "institution_v2n_native_manual_postpublication.json"
+    }
+  ],
+  "authenticated_success": true,
+  "prepublication": {
+    "restart_preserved_job_and_pointer": true,
+    "last_good_artifact_hashes_preserved": true,
+    "manual_recovery_state": "FAILED",
+    "native_lease_constants_unchanged": true
+  },
+  "postpublication": {
+    "restart_preserved_job_and_pointer": true,
+    "last_good_artifact_hashes_preserved": true,
+    "manual_recovery_state": "SUCCEEDED",
+    "native_lease_constants_unchanged": true
+  },
+  "no_automatic_rebuild_or_recovery": true,
+  "principal": "fixture_application (named-resource compatibility envelope, not root)",
+  "owned_fixture_removed": true
+}

@@ -1,0 +1,180 @@
+{
+  "layer": "Auth-enabled disposable Mongo; real read principal, actual diagnostic implementation; no production reads/writes",
+  "samples_per_case": 15,
+  "cases": [
+    {
+      "historical_jobs": 0,
+      "service_ms": {
+        "median": 13.78860000113491,
+        "p90": 17.235600003914442,
+        "p95": 17.358500001137145,
+        "min": 9.790500000235625,
+        "max": 17.358500001137145
+      },
+      "cpu_ms": {
+        "median": 15.625,
+        "p90": 15.625,
+        "p95": 15.625,
+        "min": 0.0,
+        "max": 15.625
+      },
+      "max_output_bytes": 5089,
+      "tracemalloc_peak_bytes": 17058,
+      "observed_mongo_operations": 8,
+      "documents_examined_profile_sample": 0,
+      "namespaces": {
+        "institution_intelligence_jobs": 5,
+        "institution_intelligence_targets": 2,
+        "institution_locks": 1
+      },
+      "returned_job_rows": 0,
+      "artifact_checksum_bytes": 0,
+      "catalogue_queries": 0
+    },
+    {
+      "historical_jobs": 1,
+      "service_ms": {
+        "median": 13.880200000130571,
+        "p90": 17.996999995375518,
+        "p95": 20.317300004535355,
+        "min": 12.21330000407761,
+        "max": 20.317300004535355
+      },
+      "cpu_ms": {
+        "median": 0.0,
+        "p90": 15.625,
+        "p95": 31.25,
+        "min": 0.0,
+        "max": 31.25
+      },
+      "max_output_bytes": 9297,
+      "tracemalloc_peak_bytes": 21494,
+      "observed_mongo_operations": 9,
+      "documents_examined_profile_sample": 2,
+      "namespaces": {
+        "institution_intelligence_jobs": 6,
+        "institution_intelligence_targets": 2,
+        "institution_locks": 1
+      },
+      "returned_job_rows": 1,
+      "artifact_checksum_bytes": 0,
+      "catalogue_queries": 0
+    },
+    {
+      "historical_jobs": 100,
+      "service_ms": {
+        "median": 32.632900001772214,
+        "p90": 39.52649999700952,
+        "p95": 40.79189999902155,
+        "min": 27.655699996103067,
+        "max": 40.79189999902155
+      },
+      "cpu_ms": {
+        "median": 31.25,
+        "p90": 46.875,
+        "p95": 62.5,
+        "min": 15.625,
+        "max": 62.5
+      },
+      "max_output_bytes": 49751,
+      "tracemalloc_peak_bytes": 91621,
+      "observed_mongo_operations": 9,
+      "documents_examined_profile_sample": 41,
+      "namespaces": {
+        "institution_intelligence_jobs": 6,
+        "institution_intelligence_targets": 2,
+        "institution_locks": 1
+      },
+      "returned_job_rows": 20,
+      "artifact_checksum_bytes": 0,
+      "catalogue_queries": 0
+    },
+    {
+      "historical_jobs": 1000,
+      "service_ms": {
+        "median": 30.78049999749055,
+        "p90": 36.445500001718756,
+        "p95": 40.81749999750173,
+        "min": 26.29539999907138,
+        "max": 40.81749999750173
+      },
+      "cpu_ms": {
+        "median": 31.25,
+        "p90": 31.25,
+        "p95": 46.875,
+        "min": 15.625,
+        "max": 46.875
+      },
+      "max_output_bytes": 49751,
+      "tracemalloc_peak_bytes": 91261,
+      "observed_mongo_operations": 9,
+      "documents_examined_profile_sample": 41,
+      "namespaces": {
+        "institution_intelligence_jobs": 6,
+        "institution_intelligence_targets": 2,
+        "institution_locks": 1
+      },
+      "returned_job_rows": 20,
+      "artifact_checksum_bytes": 0,
+      "catalogue_queries": 0
+    },
+    {
+      "historical_jobs": 10000,
+      "service_ms": {
+        "median": 32.71780000068247,
+        "p90": 36.082600003283005,
+        "p95": 37.297399998351466,
+        "min": 24.865600003977306,
+        "max": 37.297399998351466
+      },
+      "cpu_ms": {
+        "median": 31.25,
+        "p90": 31.25,
+        "p95": 31.25,
+        "min": 15.625,
+        "max": 31.25
+      },
+      "max_output_bytes": 49751,
+      "tracemalloc_peak_bytes": 92125,
+      "observed_mongo_operations": 9,
+      "documents_examined_profile_sample": 41,
+      "namespaces": {
+        "institution_intelligence_jobs": 6,
+        "institution_intelligence_targets": 2,
+        "institution_locks": 1
+      },
+      "returned_job_rows": 20,
+      "artifact_checksum_bytes": 0,
+      "catalogue_queries": 0
+    }
+  ],
+  "cold_definition": "New CLI process first observation; OS/Mongo caches not flushed.",
+  "limits": "Local development samples, not a production SLO. Per-query deadline bounds sparse history index scans; returned rows are bounded independently.",
+  "sparse_explicit_job_lookup": {
+    "returned_jobs": 1,
+    "query_hint": "job_id_1",
+    "mongo_operations": 10
+  },
+  "application_cold_cli_wall_ms": {
+    "median": 1403.1107999981032,
+    "p90": 1486.6535000037402,
+    "p95": 1486.6535000037402,
+    "min": 1348.09910000331,
+    "max": 1486.6535000037402
+  },
+  "concurrent": {
+    "workers": 4,
+    "requests": 12,
+    "errors": 0,
+    "service_ms": {
+      "median": 29.07834999859915,
+      "p90": 38.6374999943655,
+      "p95": 40.58970000187401,
+      "min": 20.382499998959247,
+      "max": 40.58970000187401
+    },
+    "authorization": "Fresh database authentication per invocation; no cache or mutation locks"
+  },
+  "staff_status_preservation": "Part 2I service/store/worker/routes/UI hashes unchanged; its 60 regression checks still run. Diagnostic code is not installed in that call graph.",
+  "status": "PASS"
+}

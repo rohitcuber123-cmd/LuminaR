@@ -1,0 +1,75 @@
+diff --git a/LibraryLLM/tests/institution_v2j/test_diagnostics.py b/LibraryLLM/tests/institution_v2j/test_diagnostics.py
+--- a/LibraryLLM/tests/institution_v2j/test_diagnostics.py
++++ b/LibraryLLM/tests/institution_v2j/test_diagnostics.py
+@@ -391,8 +391,13 @@
+ def test_existing_staff_status_unchanged():
+     baseline=json.loads((ROOT/'reports/institution_v2j_baseline.json').read_text())
+     for file in ['backend/services/library_intelligence_service.py','backend/services/library_intelligence_store.py',
+-                 'backend/routes/library_intelligence.py','frontend/src/pages/LibraryIntelligence.tsx']:
++                 'backend/routes/library_intelligence.py']:
+         assert hashlib.sha256((ROOT/file).read_bytes()).hexdigest()==baseline['source_sha256'][file]
++    # Part2O frontend evolution: approved boundary + behavioral tests replace whole-page immutability.
++    assert hashlib.sha256((ROOT/'tests/contracts/staff_intelligence_v2o1.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='13ebac832e2605c9c480ec636c988239f310ca71c2a2069515a4b35210f85a70'
++    assert hashlib.sha256((ROOT/'tests/contracts/staff_intelligence_v2o1.cjs').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='c91e8b11a075dac7031098f76f5a6dcba0ddccb7bdeb0b13eec1bfa1371728c7'
++    from tests.contracts.staff_intelligence_v2o1 import assert_staff_contract
++    assert_staff_contract(ROOT)
+     # Part2L explicitly integrates the native worker. Its original job protocol
+     # is pinned/compared by test_native_protocol_matches_original_j_baseline;
+     # whole-file identity would also forbid the authorized observer lifecycle.
+diff --git a/LibraryLLM/tests/contracts/staff_intelligence_v2o1.py b/LibraryLLM/tests/contracts/staff_intelligence_v2o1.py
+new file mode 100644
+--- /dev/null
++++ b/LibraryLLM/tests/contracts/staff_intelligence_v2o1.py
+@@ -0,0 +1,17 @@
++"""PROPOSED: reviewed transport fingerprint + AST boundary, alongside UI behavior tests."""
++import hashlib,json,subprocess
++from pathlib import Path
++
++TRANSPORT_SHA256 = '2ea2e6e79c2d4767438a0d40442fe493838c81df20b13b6725592ee6db4dc091'
++
++
++def assert_staff_contract(root, *, compiler_root=None):
++    root=Path(root)
++    helper=(root/'frontend/src/lib/libraryIntelligence.ts').read_text(encoding='utf8')
++    lines='\n'.join(line for line in helper.splitlines() if line.startswith(('export const activeBuild =','export const intelligenceStatus =','export const requestIntelligenceBuild =')))+'\n'
++    assert hashlib.sha256(lines.encode()).hexdigest()==TRANSPORT_SHA256,'Reviewed tenant transport/active-state contract changed'
++    compiler=Path(compiler_root or root)/'frontend/node_modules/typescript'
++    analyzer=Path(__file__).with_suffix('.cjs')
++    result=subprocess.run(['node',str(analyzer),str(root/'frontend/src/pages/LibraryIntelligence.tsx'),str(compiler)],capture_output=True,text=True,timeout=10,check=True)
++    verdict=json.loads(result.stdout)
++    assert verdict['ok'],verdict['errors']
+diff --git a/LibraryLLM/tests/contracts/staff_intelligence_v2o1.cjs b/LibraryLLM/tests/contracts/staff_intelligence_v2o1.cjs
+new file mode 100644
+--- /dev/null
++++ b/LibraryLLM/tests/contracts/staff_intelligence_v2o1.cjs
+@@ -0,0 +1,30 @@
++// Proposed reviewed test-only AST boundary; never executes application code.
++const fs=require('node:fs'),path=require('node:path');
++const ts=require(process.argv[3]);
++const source=ts.createSourceFile('LibraryIntelligence.tsx',fs.readFileSync(process.argv[2],'utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
++const allowed=new Set(['react','react-router-dom','../components/WorkspaceUI','../components/StaffUI','../store/useAuthStore','../store/useInstitutionStore','../lib/libraryWorkspace','../lib/libraryIntelligence','./LibraryIntelligence.css']);
++const forbidden=new Set(['fetch','XMLHttpRequest','WebSocket','EventSource','sendBeacon','eval','Function','require','exec','spawn','fence_token','worker_id','mongo_uri']);
++const errors=[];let reads=0,commands=0;
++function inspect(node){
++ if(ts.isImportDeclaration(node)){
++  if(!allowed.has(node.moduleSpecifier.text))errors.push('UNREVIEWED_IMPORT');
++  const bindings=node.importClause?.namedBindings;
++  if(bindings&&ts.isNamespaceImport(bindings))errors.push('NAMESPACE_IMPORT');
++  if(bindings&&ts.isNamedImports(bindings)&&bindings.elements.some(x=>x.propertyName))errors.push('ALIASED_IMPORT');
++ }
++ if(ts.isIdentifier(node)&&forbidden.has(node.text))errors.push('FORBIDDEN_CAPABILITY');
++ if(ts.isStringLiteralLike(node)&&(/mongodb(?:\+srv)?:\/\//i.test(node.text)||/^\/(?:operator|diagnostic)/i.test(node.text)||/powershell|cmd\.exe/i.test(node.text)))errors.push('INFRASTRUCTURE_LITERAL');
++ if(ts.isCallExpression(node)){
++  if(node.expression.kind===ts.SyntaxKind.ImportKeyword)errors.push('DYNAMIC_IMPORT');
++  const name=ts.isIdentifier(node.expression)?node.expression.text:'';
++  if(['intelligenceStatus','requestIntelligenceBuild'].includes(name)){
++   if(!node.arguments[0]||!ts.isIdentifier(node.arguments[0])||node.arguments[0].text!=='id')errors.push('NONCANONICAL_SCOPE');
++   if(name==='intelligenceStatus')reads++;
++   else{commands++;let p=node.parent;while(p&&!ts.isFunctionDeclaration(p))p=p.parent;if(!p||p.name?.text!=='build')errors.push('COMMAND_OUTSIDE_EXPLICIT_ACTION');}
++  }
++ }
++ ts.forEachChild(node,inspect);
++}
++inspect(source);
++if(reads!==1||commands!==1)errors.push('TRANSPORT_SURFACE_CHANGED');
++process.stdout.write(JSON.stringify({ok:errors.length===0,errors:[...new Set(errors)]}));

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="19.423" timestamp="2026-10-30T20:27:54.481719+05:30" hostname="Rohit-pc"><testcase classname="tests.test_lexical_api_fallback" name="test_search_route_works_with_failed_lexical_and_keeps_public_schema" time="17.758"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">tmp_path = WindowsPath('C:/Users/balak/AppData/Local/Temp/pytest-of-Rohit Siddani/pytest-147/test_search_route_works_with_f0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001B0FF67FF50&gt;
+
+    def test_search_route_works_with_failed_lexical_and_keeps_public_schema(tmp_path,monkeypatch):
+        import search.luminar_search as lm
+        rows={'A':{'work_id':'A','title':'Current title','authors':'Author',
+                   'description':'Current Mongo description','total_copies':1,'available_copies':1}}
+        class Books:
+            def find(self,query,projection=None):
+                return [dict(rows[wid]) for wid in query['work_id']['$in'] if wid in rows]
+        snapshot=types.SimpleNamespace(base=types.SimpleNamespace(ntotal=2),delta=types.SimpleNamespace(ntotal=0),
+            candidates=lambda vector,count:[{'work_id':'A','hnsw_score':.9},{'work_id':'deleted','hnsw_score':.8}])
+        engine=lm.LuminaRSearchEngine.__new__(lm.LuminaRSearchEngine)
+        engine.device='cpu'
+        engine.index_manager=types.SimpleNamespace(snapshot=snapshot,encode=lambda texts:np.ones((1,8),dtype=np.float32),
+            status=lambda:{'index_status':'STALE','active_vectors':2},start=lambda:None)
+        engine.books_collection=Books()
+        engine.library_inventory=Books()
+        engine.reranker=types.SimpleNamespace(predict=lambda pairs,**kw:np.ones(len(pairs)))
+        monkeypatch.setattr(lm,'LuminaRSearchEngine',lambda:engine)
+        # Isolated test doubles avoid loading any production auth/database service.
+        jwt=types.ModuleType('backend.utils.jwt_utils')
+        jwt.decode_access_token=lambda token: {'sub':'1'} if token=='isolated-test' else None
+        history=types.ModuleType('backend.services.search_history_service')
+        history.create_search_history=lambda **kw: (_ for _ in ()).throw(AssertionError('History write'))
+        history.get_user_search_history=lambda *a,**kw: []
+        monkeypatch.setitem(sys.modules,jwt.__name__,jwt)
+        monkeypatch.setitem(sys.modules,history.__name__,history)
+        path=Path(__file__).resolve().parents[1]/'search/api.py'
+        spec=importlib.util.spec_from_file_location('isolated_search_api',path)
+        api=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(api)
+        client=TestClient(api.app)  # No lifespan: do not start any worker.
+        health=client.get('/health').json()
+        assert 'lexical' in health and not health['lexical']['lexical_available']
+        assert client.post('/search',json={'query':'test','save_history':False}).status_code==401
+        for state in ('missing','corrupt','stale'):
+            root=tmp_path/state
+            if state=='corrupt':
+                root.mkdir()
+                (root/'active_lexical.json').write_text('not json')
+            if state=='stale':
+                from search.lexical_build import build_snapshot
+                build_snapshot([{'work_id':'A','title':'Old title'}],root,source_db='test')
+            lexical=LexicalSearchStore(root,required_generation=999 if state=='stale' else None)
+            diagnostic=search_with_lexical_diagnostics(engine,lexical,'test')
+            assert not diagnostic['lexical_diagnostics']['health']['lexical_available']
+            response=client.post('/search',headers={'Authorization':'Bearer isolated-test'},
+                json={'query':'test','save_history':False,'diagnostics':True})
+&gt;           assert response.status_code==200
+E           assert 500 == 200
+E            +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:59: AssertionError</failure></testcase><testcase classname="tests.test_assistant_backend" name="test_protected_rag_files_match_original_hashes" time="0.007"><failure message="AssertionError: assert '4A1141649A4C...D12021BD89DE3' == '0E78A7C780F6...D80DA90A793C6'&#10;  &#10;  - 0E78A7C780F691B14C8E3A3337F62054E4C117F0C2DF7828099D80DA90A793C6&#10;  + 4A1141649A4CE9B4BCE6413627C27557F5817BB8718A4E842A4D12021BD89DE3">def test_protected_rag_files_match_original_hashes():
+        import hashlib
+        import json
+        rows = json.loads((ROOT / 'reports/assistant_backend_baseline/hashes.json').read_text(encoding='utf-8-sig'))
+        for row in rows:
+            if Path(row['Path']).name != 'api.py':
+&gt;               assert hashlib.sha256(Path(row['Path']).read_bytes()).hexdigest().upper() == row['Hash']
+E               AssertionError: assert '4A1141649A4C...D12021BD89DE3' == '0E78A7C780F6...D80DA90A793C6'
+E                 
+E                 - 0E78A7C780F691B14C8E3A3337F62054E4C117F0C2DF7828099D80DA90A793C6
+E                 + 4A1141649A4CE9B4BCE6413627C27557F5817BB8718A4E842A4D12021BD89DE3
+
+tests\test_assistant_backend.py:467: AssertionError</failure></testcase></testsuite></testsuites>

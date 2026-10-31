@@ -1,0 +1,37 @@
+{
+  "commands": [
+    {
+      "entrypoint": [
+        "scripts/build_lexical_sidecar.py",
+        "--check"
+      ],
+      "result": "MISSING_SECRET_DENIED_BEFORE_MONGO_CONNECTION",
+      "exit": 1
+    },
+    {
+      "entrypoint": [
+        "scripts/lexical_maintenance.py",
+        "process-once"
+      ],
+      "result": "MISSING_SECRET_DENIED_BEFORE_MONGO_CONNECTION",
+      "exit": 1
+    },
+    {
+      "entrypoint": [
+        "scripts/lexical_worker.py",
+        "--apply"
+      ],
+      "result": "MISSING_SECRET_DENIED_BEFORE_MONGO_CONNECTION",
+      "exit": 1
+    },
+    {
+      "entrypoint": [
+        "-m",
+        "search.maintenance"
+      ],
+      "result": "MISSING_SECRET_DENIED_BEFORE_MONGO_CONNECTION",
+      "exit": 1
+    }
+  ],
+  "owned_directory_removed": true
+}

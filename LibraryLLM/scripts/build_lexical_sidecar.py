@@ -42,8 +42,8 @@ def main():
                                   a.output,source_db=source_db,limit=a.limit)
         print(json.dumps(result,indent=2))
         return
-    from pymongo import MongoClient
-    with MongoClient(os.getenv('MONGO_URI','mongodb://localhost:27017')) as client:
+    from backend.database.mongo_configuration import connect, settings
+    with connect(settings(default_uri='mongodb://localhost:27017')) as client:
         books=client[source_db].books
         estimated=books.estimated_document_count()
         check=preflight(a.output,estimated,source_db)

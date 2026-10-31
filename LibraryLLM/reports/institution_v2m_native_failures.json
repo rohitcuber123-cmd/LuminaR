@@ -1,0 +1,177 @@
+{
+  "scope": "Fresh authenticated2M disposable native crash/failure experiments; no production faults.",
+  "cases": [
+    {
+      "case": "aux_permission",
+      "scenario": "benchmark",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 74.0353599,
+      "evidence": "institution_v2m_failure_aux_permission.json"
+    },
+    {
+      "case": "aux_timeout",
+      "scenario": "benchmark",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 58.302949300000364,
+      "evidence": "institution_v2m_failure_aux_timeout.json"
+    },
+    {
+      "case": "observer_exception",
+      "scenario": "benchmark",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 74.52618669999993,
+      "evidence": "institution_v2m_failure_observer_exception.json"
+    },
+    {
+      "case": "connection_failure",
+      "scenario": "benchmark",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 57.00695510000014,
+      "evidence": "institution_v2m_failure_connection_failure.json"
+    },
+    {
+      "case": "crash_embedding",
+      "scenario": "crash",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 21.885276700000304,
+      "evidence": "institution_v2m_failure_crash_embedding.json"
+    },
+    {
+      "case": "restart_embedding",
+      "scenario": "restart",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 5.994331900000361,
+      "evidence": "institution_v2m_failure_restart_embedding.json"
+    },
+    {
+      "case": "crash_kg",
+      "scenario": "crash",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 5.460252100000162,
+      "evidence": "institution_v2m_failure_crash_kg.json"
+    },
+    {
+      "case": "restart_kg",
+      "scenario": "restart",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 5.97726990000001,
+      "evidence": "institution_v2m_failure_restart_kg.json"
+    },
+    {
+      "case": "crash_before_publication",
+      "scenario": "crash",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 5.601074900000185,
+      "evidence": "institution_v2m_failure_crash_before_publication.json"
+    },
+    {
+      "case": "restart_before_publication",
+      "scenario": "restart",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 6.075759500000004,
+      "evidence": "institution_v2m_failure_restart_before_publication.json"
+    },
+    {
+      "case": "manual_recover_before_publication",
+      "scenario": "recover",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 2.4269164000002093,
+      "evidence": "institution_v2m_failure_manual_recover_before_publication.json"
+    },
+    {
+      "case": "crash_after_pointer",
+      "scenario": "crash",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 5.459872700000233,
+      "evidence": "institution_v2m_failure_crash_after_pointer.json"
+    },
+    {
+      "case": "restart_after_pointer",
+      "scenario": "restart",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 6.581179199999951,
+      "evidence": "institution_v2m_failure_restart_after_pointer.json"
+    },
+    {
+      "case": "manual_recover_after_pointer",
+      "scenario": "recover",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 2.5824259999999413,
+      "evidence": "institution_v2m_failure_manual_recover_after_pointer.json"
+    }
+  ],
+  "crashes": [
+    {
+      "name": "embedding",
+      "stage_hook": "EMBEDDING_BATCH",
+      "genuine_process_exit": 77,
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "state_before_restart": "RUNNING",
+      "fresh_instance": true,
+      "stale_with_logical_now_plus31s": "STALE"
+    },
+    {
+      "name": "kg",
+      "stage_hook": "KG_NODES",
+      "genuine_process_exit": 77,
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "state_before_restart": "RUNNING",
+      "fresh_instance": true,
+      "stale_with_logical_now_plus31s": "STALE"
+    },
+    {
+      "name": "before_publication",
+      "stage_hook": "SERIALIZATION_ACK",
+      "genuine_process_exit": 77,
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "state_before_restart": "VALIDATING",
+      "fresh_instance": true,
+      "stale_with_logical_now_plus31s": "STALE",
+      "explicit_manual_recovery": {
+        "http": 200,
+        "state": "FAILED",
+        "lease_expiry": "Injected only into this disposable native job after unchanged restart proof; native90s constant untouched."
+      }
+    },
+    {
+      "name": "after_pointer",
+      "stage_hook": "ACKNOWLEDGEMENT_LOSS",
+      "genuine_process_exit": 77,
+      "job_unchanged_by_restart": true,
+      "pointer_unchanged_by_restart": true,
+      "state_before_restart": "PUBLISHING",
+      "fresh_instance": true,
+      "stale_with_logical_now_plus31s": "STALE",
+      "explicit_manual_recovery": {
+        "http": 200,
+        "state": "SUCCEEDED",
+        "lease_expiry": "Injected only into this disposable native job after unchanged restart proof; native90s constant untouched."
+      }
+    }
+  ],
+  "limits": "One cached encoder per owned native process; no monitoring process/model added to production. Logical future observation used for stale threshold, not wall-clock31s wait.",
+  "late_instance_and_clock": {
+    "old_pulse_rejected": true,
+    "rollback_bit_sticky": true,
+    "classification": "UNKNOWN",
+    "native_jobs_unchanged": true
+  },
+  "owned_fixture_removed": true
+}

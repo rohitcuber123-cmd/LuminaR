@@ -1,0 +1,1377 @@
+{
+  "scenario": "benchmark",
+  "enabled": true,
+  "fault": "",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH",
+    "FAISS_BUILD",
+    "FAISS_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 10:39:33.863810+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 3,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        3,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:35.799084+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:39:35.770000",
+      "pulse_seq": 3,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:39:35.770000",
+        3,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:35.914340+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:35.770000",
+      "pulse_seq": 3,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "6cad5335-404b-420e-8562-cac814ad660c",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 10:39:35.899000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-30 10:39:35.770000",
+        3,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:39.091005+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:35.770000",
+      "pulse_seq": 3,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "6cad5335-404b-420e-8562-cac814ad660c",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 10:39:35.899000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-30 10:39:35.770000",
+        3,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:39.889265+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:35.770000",
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "6cad5335-404b-420e-8562-cac814ad660c",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 10,
+          "last_progress_observed_at": "2026-10-30 10:39:39.777000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-30 10:39:35.770000",
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:40.444199+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:41.127353+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:39:41.082000",
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:39:41.082000",
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:41.240409+00:00",
+      "state": "RUNNING",
+      "stage": "KG_METADATA",
+      "current": 100,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:41.082000",
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "KG_METADATA",
+        100,
+        101,
+        "2026-10-30 10:39:41.082000",
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:41.350566+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:41.082000",
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-30 10:39:41.082000",
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:41.928283+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:41.082000",
+      "pulse_seq": 3,
+      "progress_seq": 3,
+      "progress": [
+        {
+          "job_id": "74111953-86c1-4883-bf82-bbfa1ad70caa",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-30 10:39:41.824000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-30 10:39:41.082000",
+        3,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:42.709871+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 3,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        3,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:42.949493+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 4,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        4,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:43.392140+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:39:43.348000",
+      "pulse_seq": 4,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:39:43.348000",
+        4,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:43.503114+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:43.348000",
+      "pulse_seq": 4,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-30 10:39:43.348000",
+        4,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:43.724085+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:43.348000",
+      "pulse_seq": 4,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        10,
+        10,
+        "2026-10-30 10:39:43.348000",
+        4,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:43.846865+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:43.348000",
+      "pulse_seq": 4,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-30 10:39:43.348000",
+        4,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:43.964006+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:43.348000",
+      "pulse_seq": 4,
+      "progress_seq": 4,
+      "progress": [
+        {
+          "job_id": "05165052-967e-47d0-84dc-9380f90e614a",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 10,
+          "last_progress_observed_at": "2026-10-30 10:39:43.852000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-30 10:39:43.348000",
+        4,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:45.093044+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 4,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        4,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:45.758411+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:39:45.745000",
+      "pulse_seq": 4,
+      "progress_seq": 4,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:39:45.745000",
+        4,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:45.994975+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:45.745000",
+      "pulse_seq": 4,
+      "progress_seq": 5,
+      "progress": [
+        {
+          "job_id": "6caaff49-7432-48f8-95de-bce6ed5bb408",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 10:39:45.885000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-30 10:39:45.745000",
+        4,
+        5
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:47.011816+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:45.745000",
+      "pulse_seq": 4,
+      "progress_seq": 6,
+      "progress": [
+        {
+          "job_id": "6caaff49-7432-48f8-95de-bce6ed5bb408",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-30 10:39:46.908000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-30 10:39:45.745000",
+        4,
+        6
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:47.343948+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 4,
+      "progress_seq": 6,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        4,
+        6
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:48.027727+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:39:47.998000",
+      "pulse_seq": 4,
+      "progress_seq": 6,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:39:47.998000",
+        4,
+        6
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:48.138269+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:47.998000",
+      "pulse_seq": 4,
+      "progress_seq": 6,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-30 10:39:47.998000",
+        4,
+        6
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:48.363091+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:47.998000",
+      "pulse_seq": 4,
+      "progress_seq": 6,
+      "progress": [],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        10,
+        10,
+        "2026-10-30 10:39:47.998000",
+        4,
+        6
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:48.474670+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:47.998000",
+      "pulse_seq": 4,
+      "progress_seq": 6,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-30 10:39:47.998000",
+        4,
+        6
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:49.046744+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:39:47.998000",
+      "pulse_seq": 4,
+      "progress_seq": 7,
+      "progress": [
+        {
+          "job_id": "76b430d0-2038-4423-ab09-af6cb74d498b",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 10,
+          "last_progress_observed_at": "2026-10-30 10:39:48.938000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-30 10:39:47.998000",
+        4,
+        7
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:49.712694+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 4,
+      "progress_seq": 7,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        4,
+        7
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:50.506734+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:39:50.396000",
+      "pulse_seq": 4,
+      "progress_seq": 7,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:39:50.396000",
+        4,
+        7
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:50.617570+00:00",
+      "state": "VALIDATING",
+      "stage": "VALIDATION",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:50.396000",
+      "pulse_seq": 4,
+      "progress_seq": 7,
+      "progress": [],
+      "key": [
+        "VALIDATING",
+        "VALIDATION",
+        101,
+        101,
+        "2026-10-30 10:39:50.396000",
+        4,
+        7
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:50.727996+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:50.396000",
+      "pulse_seq": 4,
+      "progress_seq": 7,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-30 10:39:50.396000",
+        4,
+        7
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:51.076495+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:50.396000",
+      "pulse_seq": 4,
+      "progress_seq": 8,
+      "progress": [
+        {
+          "job_id": "4209b7d0-27bc-4558-9995-c4470259ab86",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-30 10:39:50.968000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-30 10:39:50.396000",
+        4,
+        8
+      ]
+    },
+    {
+      "at": "2026-10-30 10:39:52.999290+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-30 10:39:50.396000",
+      "pulse_seq": 5,
+      "progress_seq": 8,
+      "progress": [
+        {
+          "job_id": "4209b7d0-27bc-4558-9995-c4470259ab86",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-30 10:39:50.968000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-30 10:39:50.396000",
+        5,
+        8
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "30360063-bacb-46e2-b6a2-9a4eb26dd35d",
+      "job_id": "6cad5335-404b-420e-8562-cac814ad660c",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 6629.794200000106,
+      "native_build_ms": 3299.0,
+      "cpu_ms": 1062.5,
+      "rss_increase_bytes": 93687808,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "5b305fcb-c85d-4619-94cd-7e7d00215c57",
+      "job_id": "74111953-86c1-4883-bf82-bbfa1ad70caa",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2235.442299999704,
+      "native_build_ms": 250.0,
+      "cpu_ms": 218.75,
+      "rss_increase_bytes": 229376,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "7938003d-73f6-4ffc-80ed-5d3f80fd2d97",
+      "job_id": "05165052-967e-47d0-84dc-9380f90e614a",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2396.802299999763,
+      "native_build_ms": 385.0,
+      "cpu_ms": 625.0,
+      "rss_increase_bytes": 1904640,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "b4f274cf-6874-4d19-a29c-ca60691673a7",
+      "job_id": "6caaff49-7432-48f8-95de-bce6ed5bb408",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2247.094699999252,
+      "native_build_ms": 241.0,
+      "cpu_ms": 218.75,
+      "rss_increase_bytes": 28672,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "c87cebba-7421-4d55-9eb4-3d8bc652a5a8",
+      "job_id": "76b430d0-2038-4423-ab09-af6cb74d498b",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2388.5073999999804,
+      "native_build_ms": 379.0,
+      "cpu_ms": 593.75,
+      "rss_increase_bytes": 36864,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "6d1dde6f-88cb-464b-838f-308b7d4d12a9",
+      "job_id": "4209b7d0-27bc-4558-9995-c4470259ab86",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2237.3736999998073,
+      "native_build_ms": 259.0,
+      "cpu_ms": 265.625,
+      "rss_increase_bytes": 0,
+      "pointer_ack_match": true
+    }
+  ],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 333.798100000422
+  },
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847261696,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847990784,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847994880,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847994880,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847994880,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847994880,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847994880,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847994880,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847994880,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848007168,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.014999999999418,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848011264,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848011264,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848011264,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0320000000001528,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.014999999999418,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 848338944,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 850812928,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 851406848,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 885305344,
+      "cpu_delta_ms": 406.25,
+      "interval_seconds": 3.532000000000153,
+      "python_threads": 13,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 941305856,
+      "cpu_delta_ms": 515.625,
+      "interval_seconds": 1.014999999999418,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 942243840,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 942276608,
+      "cpu_delta_ms": 171.875,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 942358528,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 943460352,
+      "cpu_delta_ms": 546.875,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944185344,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944259072,
+      "cpu_delta_ms": 125.0,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 13,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944238592,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.014999999999418,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944238592,
+      "cpu_delta_ms": 93.75,
+      "interval_seconds": 1.0160000000005311,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944271360,
+      "cpu_delta_ms": 531.25,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944287744,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944287744,
+      "cpu_delta_ms": 187.5,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944287744,
+      "cpu_delta_ms": 62.5,
+      "interval_seconds": 1.0150000000003274,
+      "python_threads": 12,
+      "os_threads": 83
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 944287744,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0159999999996217,
+      "python_threads": 12,
+      "os_threads": 83
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 5,
+    "os": 56
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 8.180599999832339,
+  "observer_ready_ms": 44.8577999995905,
+  "threads_observing": {
+    "python": 10,
+    "os": 61
+  },
+  "mongo_connections_observing": 9,
+  "idle": {
+    "seconds": 22.001295300000493,
+    "cpu_ms": 421.875,
+    "rss_increase_bytes": 1077248,
+    "pulse_seq": 3,
+    "lifecycle": "IDLE",
+    "telemetry_enabled": true,
+    "record_scope": "THIS_INSTANCE"
+  },
+  "current_library": "6d1dde6f-88cb-464b-838f-308b7d4d12a9",
+  "native_serial": true,
+  "telemetry_metrics": {
+    "boot_read": 1,
+    "boot_write": 1,
+    "pulse_write": 5,
+    "job_read": 9,
+    "progress_read": 9,
+    "progress_write": 8,
+    "identical_progress_ignored": 1,
+    "pointer_read": 6
+  },
+  "latencies": [
+    {
+      "kind": "boot_read",
+      "ms": 1.6752999999880558
+    },
+    {
+      "kind": "boot_write",
+      "ms": 2.2221999997782405
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 13.10269999976299
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 3.519800000503892
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 2.4883000005502254
+    },
+    {
+      "kind": "job_read",
+      "ms": 2.3289000000659144
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.1309000001347158
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.946699999483826
+    },
+    {
+      "kind": "job_read",
+      "ms": 19.39589999983582
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.1772000007113093
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.787000000149419
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.7497000005969312
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 0.9140000001934823
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.6828000000023167
+    },
+    {
+      "kind": "job_read",
+      "ms": 23.089599999366328
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.0830999999598134
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 0.934400000005553
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.7706999999281834
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 2.4256999995486694
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.5462000001207343
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.8133999999699881
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 0.789200000326673
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.697500000067521
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.0621999999784748
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.7779999996273546
+    },
+    {
+      "kind": "progress_write",
+      "ms": 3.21429999985412
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.2725000005957554
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.3447999999698368
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 1.148299999840674
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.927599999566155
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.87149999965186
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.7961999999679392
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 0.8176999999705004
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.6453000000401516
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.6863000000739703
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.772299999880488
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 0.8317000001625274
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.449999999953434
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 14.338299999508308
+    }
+  ],
+  "instance_ref": "115bb1e756901677c41b52c4b2189690abb3e8320dca9152b7b83bac4adfbdee",
+  "agent_errors": {},
+  "native_close_return_ms": 5.561500000112574,
+  "worker_end_ms": 5.729600000449864,
+  "observer_thread_ended": true,
+  "observer_final_state": "STOPPED",
+  "mongo_connections_after_close": 8,
+  "shutdown_lifecycle": "STOPPED",
+  "worker_thread_ended": true
+}

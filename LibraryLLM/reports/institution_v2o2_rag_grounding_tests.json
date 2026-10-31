@@ -1,0 +1,79 @@
+{
+  "groups": [
+    {
+      "group": "grounding_security",
+      "exit": 0,
+      "passed": 273,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 58.19160069999998,
+      "targets": [
+        "tests/test_private_document_cache.py",
+        "tests/test_private_preparation_status.py",
+        "tests/test_document_rag_latency.py",
+        "tests/test_rag_query_types.py",
+        "tests/test_rag_hard_negatives.py",
+        "tests/test_document_knowledge.py",
+        "tests/test_knowledge_artifacts.py",
+        "tests/test_knowledge_tools_v2_1.py",
+        "tests/test_urgent_document_rag.py",
+        "tests/test_rag_attention.py",
+        "tests/test_rag_decoding.py",
+        "tests/institution_v2o1/test_rag_evidence_validation.py",
+        "tests/institution_v2o2/test_grounding_boundary.py"
+      ],
+      "xml": "institution_v2o2_grounding_security.xml"
+    },
+    {
+      "group": "library_asset_security",
+      "exit": 0,
+      "passed": 183,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 96.01538989999972,
+      "targets": [
+        "tests/institution_v2f"
+      ],
+      "xml": "institution_v2o2_library_asset_security.xml"
+    },
+    {
+      "group": "lexical_fallback",
+      "exit": 0,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 25.43201599999884,
+      "targets": [
+        "tests/test_lexical_api_fallback.py",
+        "tests/institution_v2o/test_facet_fallback.py"
+      ],
+      "xml": "institution_v2o2_lexical_fallback.xml"
+    }
+  ],
+  "totals": {
+    "passed": 459,
+    "failed": 0,
+    "skipped": 0
+  },
+  "status": "PASS",
+  "guard_candidate": {
+    "positive_versions": 2,
+    "rejected_mutations": 11,
+    "original_manifest_pinned_and_unchanged": true,
+    "accepted_sha256": [
+      "0e78a7c780f691b14c8e3a3337f62054e4c117f0c2df7828099d80da90a793c6",
+      "4a1141649a4ce9b4bce6413627c27557f5817bb8718a4e842a4d12021bd89de3"
+    ],
+    "newline_normalized_third_version_accepted": false
+  },
+  "scope": "Focused production grounding/private-document/session/API/latency/attention/decoding, all urgent-document cases, full institution 2F asset security, and lexical fallback. Existing source tests run unchanged. No training/dataset-generation/experimental ranking research executed.",
+  "model_scope": "Real selection, fast filter, private ownership and route code; controlled model answers/validator verdicts. No live Qwen quality benchmark or semantic perfection claim.",
+  "persistent_documents": "Existing urgent-document read-only fixtures ran successfully; no user content copied into approval package.",
+  "additional_coverage": [
+    "Full real fast filter reaches unchanged validator for document definitions; supported and unsupported verdicts propagated.",
+    "Foreign evidence excluded before validation and generation; no selected evidence means neither called.",
+    "Claim-bearing questions receive no definition category. Work-ID discriminator grants no ownership.",
+    "PrivateDocuments.owned checks current owner, session, ACTIVE state and expiry before index access; selected runtime is lock-scoped and cleared.",
+    "Full private cache/API tests verify cross-account denial, logout, missing documents, error cleanup and no context leakage."
+  ]
+}

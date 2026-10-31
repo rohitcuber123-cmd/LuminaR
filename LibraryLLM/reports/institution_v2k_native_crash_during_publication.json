@@ -1,0 +1,190 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "PUBLISH",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH"
+  ],
+  "events": [
+    {
+      "at": "2026-10-29 20:32:46.243118+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:48.109241+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-29 20:32:48.081000",
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-29 20:32:48.081000",
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:48.217700+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-29 20:32:48.081000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "da5e50e0-65f9-45b9-84e8-b4b5bea8e6c1",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:32:48.142000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-29 20:32:48.081000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:48.327763+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:32:48.081000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "da5e50e0-65f9-45b9-84e8-b4b5bea8e6c1",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:32:48.142000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-29 20:32:48.081000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-29 20:32:49.203343+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:32:48.081000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "da5e50e0-65f9-45b9-84e8-b4b5bea8e6c1",
+          "stage": "PUBLISH",
+          "state": "PUBLISHING",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-29 20:32:49.157000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        101,
+        101,
+        "2026-10-29 20:32:48.081000",
+        1,
+        2
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": "NOT_LOADED_KG_OR_IDLE",
+  "current_library": "1bcf5f61-7837-4d28-99b3-f3e8042121b6",
+  "crash_job": {
+    "job_id": "da5e50e0-65f9-45b9-84e8-b4b5bea8e6c1",
+    "library_id": "1bcf5f61-7837-4d28-99b3-f3e8042121b6",
+    "target": "KNOWLEDGE_GRAPH",
+    "requested_generation_id": "233f02a3-71c0-46ce-b8f2-e72c92b2f7d0",
+    "artifact_generation_id": "95fce981-f716-4da7-9256-9c354ad5f514",
+    "state": "PUBLISHING",
+    "stage": "PUBLISH",
+    "progress_current": 101,
+    "progress_total": 101,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-29 20:32:46.219000",
+    "started_at": "2026-10-29 20:32:48.081000",
+    "heartbeat_at": "2026-10-29 20:32:48.081000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "fence_token_digest": "a2a5d0dc5f19058dd5720ea9669f35796d6c5cffbc4acafd25cd0cccd8947c63",
+    "lease_expires_at": "2026-10-29 20:34:18.081000",
+    "require_nonempty": true,
+    "worker_id_digest": "ba336dc3f21a4434da5e455f8cf78f5f44e49d5be8e63311f6bb24d085ca7e5e"
+  },
+  "pointer_at_crash": {
+    "library_id": "1bcf5f61-7837-4d28-99b3-f3e8042121b6",
+    "target": "KNOWLEDGE_GRAPH",
+    "active_generation_id": null,
+    "active_job_id": "da5e50e0-65f9-45b9-84e8-b4b5bea8e6c1",
+    "state": "BUILDING",
+    "fence_token_digest": "a2a5d0dc5f19058dd5720ea9669f35796d6c5cffbc4acafd25cd0cccd8947c63"
+  },
+  "telemetry_before_crash": {
+    "epoch": 11
+  },
+  "instance_ref": "41e0723208d9d07c3ec6acbd88a9192e1e4a0cd841f3d7c5b5dae36ef561f8c3",
+  "genuine_process_exit": 77,
+  "snapshot_redaction": "Raw native fence/worker/boot values replaced by SHA256 digests; measurements unchanged."
+}

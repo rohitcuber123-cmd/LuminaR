@@ -1,0 +1,380 @@
+{
+  "schema_version": 1,
+  "audit_status": "AI_REVIEWED_POST_PRIMARY_MEASUREMENT_DEFECTS",
+  "human_reviewers": 0,
+  "ai_reviewers": 1,
+  "reviewer_provenance": {
+    "identity": "Codex independent review subagent /root/v6_contract_review",
+    "exact_runtime_model_id": null,
+    "independence": "Separate static audit of field schemas and call boundaries, without inspecting metric outcomes or desired scores."
+  },
+  "scope": {
+    "candidate_execution": false,
+    "fresh_capture_or_rerun": false,
+    "scoring_execution": false,
+    "predictions_content_inspected": false,
+    "metric_outputs_inspected": false,
+    "network_or_Mongo_access": false,
+    "candidate_or_scorer_modified": false,
+    "gold_or_annotations_modified": false,
+    "captured_predictions_modified": false,
+    "modified_artifacts": [
+      "reports/search_proof6_measurement_audit.json"
+    ],
+    "annotation_inspection": "Only a few field-name examples were emitted from reviewed JSONL: source-role fields on lines 1-3 and one completion field example each on lines 76,81,91,96. No desired decisions, hard constraints, role/modality labels, completion values or metric results were emitted. Frozen packet schema and code definitions were inspected."
+  },
+  "findings": [
+    {
+      "id": "ROLE_FIELD_NAMESPACE_MISMATCH",
+      "classification": "SCORING_ADAPTER_DEFECT",
+      "confidence": "CONFIRMED_STATIC_CODE_PATH",
+      "observation": "The scorer selects QueryIR requirements using r.field == oracle.field before comparing source_role/modality. Reviewed role annotations use native projection field names; the IR uses domain/family names.",
+      "examples": [
+        {
+          "annotation_field": "author_text",
+          "IR_field": "author"
+        },
+        {
+          "annotation_field": "title_text",
+          "IR_field": "title"
+        },
+        {
+          "annotation_field": "rating_min",
+          "IR_field": "rating"
+        },
+        {
+          "annotation_field": "formats",
+          "IR_field": "format"
+        },
+        {
+          "annotation_field": "subjects",
+          "IR_field": "subject"
+        },
+        {
+          "annotation_field": "exclude_terms",
+          "IR_field": "exclude"
+        }
+      ],
+      "mechanism": "For mismatched names, a correct source-owned IR requirement cannot enter match even when its span, role and modality are correct. The scorer then obtains empty actual_roles/actual_modalities and records comparisons as false. A role-correctness failure caused solely by this filter is not evidence of incorrect parser role assignment.",
+      "interpretation": "Any aggregate zero or other rate computed using these cross-namespace comparisons is contaminated and cannot be presented as a valid estimate of parser source-role/modality accuracy. Preserve the original reported value as a primary measurement artifact and identify the defect. This audit does not establish a corrected rate or imply every role annotation is correct.",
+      "boundaries": [
+        "Fields that already have identical names, such as sort, language and availability, are not invalid merely because other names differ.",
+        "Span selection, enum agreement, multiple matching requirements, absent IR and oracle applicability can still cause genuine failures after a namespace mapping.",
+        "A role annotation field is a projection label here, not proof that an arbitrary native scalar itself is an IR requirement. Mapping must follow frozen definitions and must not choose a domain to maximize agreement."
+      ],
+      "citations": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06"
+      ]
+    },
+    {
+      "id": "COMPLETION_INPUT_FIELD_NAMESPACE_MISMATCH",
+      "classification": "PREDICTOR_TO_COMPONENT_ADAPTER_DEFECT",
+      "confidence": "CONFIRMED_STATIC_CODE_PATH",
+      "observation": "Primary predictor forwards completion_input.field directly to issue_choice. Reviewed completion examples use rating_min, author_text, exclude_terms and subjects. issue_choice selects IR requirements by exact r.field == field, which instead expects rating, author, exclude and subject.",
+      "mechanism": "The mismatch makes the supplied field fail the native_adapter's unique source-owned operand selection. issue_choice raises ValueError before issue_completion, request construction, resolve_choice or recompile can test the proposed operand. The predictor catches this as a REJECTED completion_prediction.",
+      "interpretation": "This is a real failure of the captured predictor/adapter workflow as wired. It is not a valid zero estimate of the underlying source-owned completion semantics, nor evidence that the candidate successfully completed those cases. The semantic completion was not reached for the mismatched names.",
+      "boundaries": [
+        "This static audit does not assert that correcting the namespace would make completion succeed: original IR presence, unique missing owner, placeholder selection, numeric validation, remaining requirements, preservation checks, capability checks and context binding still apply.",
+        "If the parser fails before completion or never represents a suitable missing IR owner, that remains a genuine separate failure.",
+        "Completion results already captured as rejections cannot be converted to success by a score-only namespace substitution. No successful completed plan is present merely because the adapter call was wrong.",
+        "Mock authorization and commit_performed=False cannot qualify live authorization, durable one-use choice consumption or Mongo CAS."
+      ],
+      "citations": [
+        "M07",
+        "M08",
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ]
+    }
+  ],
+  "separate_diagnostic_assessment": {
+    "permissible": true,
+    "required_label": "NOW_EXPOSED_POST_PRIMARY_NAMESPACE_DIAGNOSTIC_NOT_INDEPENDENT_PRIMARY",
+    "primary_attempt_count": "Remains 1; never overwrite, rename as successful, or replace the primary parser capture or its original score artifacts.",
+    "source_role_diagnostic": "A separate scorer may rescore already captured IR using a predeclared, frozen inverse mapping derived from FAMILIES, while preserving original oracles and outputting both original and mapped matches. No parser rerun is needed for that diagnostic. Report mappings, excluded/unmapped/ambiguous fields, denominators, residual failures and post-exposure status.",
+    "completion_diagnostic": "A separate input adapter may map native projection fields to IR domains before issuance. Testing resulting completions requires newly generated component outputs, not a reinterpretation of the already rejected captures. Such execution would be a separate now-exposed engineering diagnostic with a distinct script/output/freeze and explicit authorization; it must not recapture or replace the independent primary run. No such execution was performed in this audit.",
+    "mapping_rules": [
+      "Derive mappings from the frozen FAMILIES relation, not from observed desired scores or case IDs.",
+      "Author_text -> author; title_text -> title; subjects/include_terms -> subject; exclude_subjects -> excluded_subject; exclude_terms -> exclude; formats/exclusive_formats -> format; excluded_formats -> excluded_format.",
+      "Rating bound projection names -> rating, and year bound projection names -> year, for domain matching only. The actual span, source operator and operand obligation must still identify the correct requirement; a field-name map cannot establish which of multiple numeric owners is completable.",
+      "Availability, physical_available_only, language and sort follow their frozen families. Identity names may pass through when independently defined as IR domains.",
+      "Do not guess a mapping for exact_text, semantic residue, structured preferences or unknown fields solely from similar spelling. Declare unsupported mappings N/A or require separately justified source-schema evidence.",
+      "Preserve blocking decisions, original annotations, scalar predicates, source spans, roles, modalities, ownership and trusted controls. A namespace bridge must not normalize semantic mismatches away."
+    ],
+    "gate_reporting": "Do not silently recompute the registered primary acceptance gate as if it had used the corrected adapter. Retain original outcomes and report the affected measurement/gate as defective or unqualified; report any mapped diagnostic outcome separately. This audit neither passes nor fails the candidate's substantive parser behavior.",
+    "citations": [
+      "M03",
+      "M09",
+      "M10",
+      "M11",
+      "M13"
+    ]
+  },
+  "field_name_examples": {
+    "source_roles": [
+      {
+        "path": "reports/search_proof6_reviewed_population.jsonl",
+        "line": 1,
+        "fields": [
+          "formats",
+          "author_text",
+          "title_text",
+          "rating_min",
+          "sort"
+        ]
+      },
+      {
+        "path": "reports/search_proof6_reviewed_population.jsonl",
+        "line": 2,
+        "fields": [
+          "formats",
+          "author_text",
+          "title_text",
+          "rating_min",
+          "sort"
+        ]
+      },
+      {
+        "path": "reports/search_proof6_reviewed_population.jsonl",
+        "line": 3,
+        "fields": [
+          "formats",
+          "author_text",
+          "title_text",
+          "rating_min",
+          "sort"
+        ]
+      }
+    ],
+    "completion_inputs": [
+      {
+        "path": "reports/search_proof6_reviewed_population.jsonl",
+        "line": 76,
+        "field": "rating_min"
+      },
+      {
+        "path": "reports/search_proof6_reviewed_population.jsonl",
+        "line": 81,
+        "field": "author_text"
+      },
+      {
+        "path": "reports/search_proof6_reviewed_population.jsonl",
+        "line": 91,
+        "field": "exclude_terms"
+      },
+      {
+        "path": "reports/search_proof6_reviewed_population.jsonl",
+        "line": 96,
+        "field": "subjects"
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "id": "M01",
+      "path": "scripts/search_proof6_independent_score.py",
+      "lines": [
+        24,
+        34
+      ],
+      "supports": "Direct cross-namespace equality filter precedes role/modality comparison."
+    },
+    {
+      "id": "M02",
+      "path": "reports/search_proof6_blind_reviewer_packet.json",
+      "lines": [
+        5745,
+        5746
+      ],
+      "supports": "Role/completion field annotations requested without an explicit IR-domain namespace bridge."
+    },
+    {
+      "id": "M03",
+      "path": "scratch/search_proof_recovery_v6/proposals.py",
+      "lines": [
+        35,
+        37
+      ],
+      "supports": "Authoritative family-to-native-field mapping."
+    },
+    {
+      "id": "M04",
+      "path": "scratch/search_proof_recovery_v6/projection.py",
+      "lines": [
+        9,
+        36
+      ],
+      "supports": "Actual IR-domain projection into native fields corroborates namespace distinction."
+    },
+    {
+      "id": "M05",
+      "path": "reports/search_proof6_blind_reviewer_packet.json",
+      "lines": [
+        5765,
+        5786
+      ],
+      "supports": "Native scalar fields listed by annotation schema."
+    },
+    {
+      "id": "M06",
+      "path": "reports/search_proof6_reviewed_population.jsonl",
+      "lines": [
+        1,
+        3
+      ],
+      "supports": "Field-name-only examples: formats, author_text, title_text, rating_min and sort."
+    },
+    {
+      "id": "M07",
+      "path": "reports/search_proof6_reviewed_population.jsonl",
+      "lines": [
+        76,
+        76
+      ],
+      "supports": "Completion field-name example rating_min."
+    },
+    {
+      "id": "M08",
+      "path": "scripts/search_proof6_independent_predict.py",
+      "lines": [
+        87,
+        103
+      ],
+      "supports": "Direct field forwarding at line 97 and rejection capture before successful completion output."
+    },
+    {
+      "id": "M09",
+      "path": "scratch/search_proof_recovery_v6/native_adapter.py",
+      "lines": [
+        39,
+        47
+      ],
+      "supports": "Exact IR-domain field and unique mandatory missing-operand requirement for choice issuance."
+    },
+    {
+      "id": "M10",
+      "path": "scratch/search_proof_recovery_v6/native_adapter.py",
+      "lines": [
+        49,
+        68
+      ],
+      "supports": "Resolve binding, issue_completion dispatch and no implicit native-field conversion."
+    },
+    {
+      "id": "M11",
+      "path": "scratch/search_proof_recovery_v6/recompilation.py",
+      "lines": [
+        40,
+        61
+      ],
+      "supports": "Completion domain ownership, marker and operand validation remain substantive requirements."
+    },
+    {
+      "id": "M12",
+      "path": "reports/search_proof6_reviewed_population.jsonl",
+      "lines": [
+        81,
+        81
+      ],
+      "supports": "Completion field-name example author_text; additional examples exclude_terms at line 91 and subjects at line 96 are separately recorded above."
+    },
+    {
+      "id": "M13",
+      "path": "scripts/search_proof6_independent_score.py",
+      "lines": [
+        43,
+        59
+      ],
+      "supports": "Primary role/completion metrics and gates are registered primary artifacts; rerun/recapture prohibited."
+    },
+    {
+      "id": "M14",
+      "path": "scratch/search_proof_recovery_v6/recompilation.py",
+      "lines": [
+        85,
+        105
+      ],
+      "supports": "Full source recompilation, capabilities and untouched requirement preservation cannot be inferred from a field mapping."
+    },
+    {
+      "id": "M15",
+      "path": "scratch/search_proof_recovery_v6/native_adapter.py",
+      "lines": [
+        1,
+        5
+      ],
+      "supports": "Test-only adapter lacks durable lifecycle and production authorization IO."
+    }
+  ],
+  "limitations": [
+    "No candidate or scorer execution, capture replay, role rescoring or completion retry occurred.",
+    "No corrected accuracy, denominator, count of impacted records, or substantive parser outcome is claimed.",
+    "A few annotation shapes establish the namespace contract mismatch; they do not establish uniformity or correctness of all annotations.",
+    "Main parser typed decisions and hard-field captures are a separate measurement path. This audit neither validates nor invalidates their independently assessed accuracy merely from the two adapter defects.",
+    "This review became possible after the primary population was exposed. Any corrected diagnostic is post-primary and cannot become a new independent primary evaluation."
+  ],
+  "conclusion": "The role scorer and completion predictor use incompatible field namespaces at their component boundaries. Retain the primary artifacts unchanged and disclose the resulting measurement defects. A separately labeled now-exposed diagnostic with explicit frozen mappings is permissible; it cannot be called a fresh independent primary evaluation or erase the captured end-to-end workflow failures.",
+  "created_at_utc": "2026-10-28T11:00:08.395357+00:00",
+  "inspected_artifact_hashes": [
+    {
+      "path": "reports/search_proof6_blind_reviewer_packet.json",
+      "sha256": "4bf249d3d5b8e9b368ceffa9c2fdf645092ce4179a62e8230112a7c87623e7b0",
+      "acceptance_freeze_sha256": "4bf249d3d5b8e9b368ceffa9c2fdf645092ce4179a62e8230112a7c87623e7b0",
+      "matches_acceptance_freeze": true
+    },
+    {
+      "path": "reports/search_proof6_reviewed_population.jsonl",
+      "sha256": "a1190f4db9d6d710b856ad5e56cc05974e75471c29b0c4a7cde3fdd2ee609d48",
+      "acceptance_freeze_sha256": "a1190f4db9d6d710b856ad5e56cc05974e75471c29b0c4a7cde3fdd2ee609d48",
+      "matches_acceptance_freeze": true
+    },
+    {
+      "path": "scratch/search_proof_recovery_v6/native_adapter.py",
+      "sha256": "ff66f52a925fd96bed22be7408737a5ef4e8b47e8019945f81e0a16c51ba9408",
+      "acceptance_freeze_sha256": "ff66f52a925fd96bed22be7408737a5ef4e8b47e8019945f81e0a16c51ba9408",
+      "matches_acceptance_freeze": true
+    },
+    {
+      "path": "scratch/search_proof_recovery_v6/projection.py",
+      "sha256": "ef80d1771b70fd12253935fd79bc729f02c1100fff08fbabe7ad07aeb6d8ad0a",
+      "acceptance_freeze_sha256": "ef80d1771b70fd12253935fd79bc729f02c1100fff08fbabe7ad07aeb6d8ad0a",
+      "matches_acceptance_freeze": true
+    },
+    {
+      "path": "scratch/search_proof_recovery_v6/proposals.py",
+      "sha256": "80a1657ab82e5186e07ed1676baa478cc75c4f82fd0d863f3f53591c484ff4fe",
+      "acceptance_freeze_sha256": "80a1657ab82e5186e07ed1676baa478cc75c4f82fd0d863f3f53591c484ff4fe",
+      "matches_acceptance_freeze": true
+    },
+    {
+      "path": "scratch/search_proof_recovery_v6/recompilation.py",
+      "sha256": "257a4232187247a265a3b352aff57abb3d94d110bfaca292da69204a9338e91c",
+      "acceptance_freeze_sha256": "257a4232187247a265a3b352aff57abb3d94d110bfaca292da69204a9338e91c",
+      "matches_acceptance_freeze": true
+    },
+    {
+      "path": "scripts/search_proof6_independent_predict.py",
+      "sha256": "ea5258705e603aee74b6278b7d24f8a40b88c00dc4b1402cc7286f471a0f861c",
+      "acceptance_freeze_sha256": "ea5258705e603aee74b6278b7d24f8a40b88c00dc4b1402cc7286f471a0f861c",
+      "matches_acceptance_freeze": true
+    },
+    {
+      "path": "scripts/search_proof6_independent_score.py",
+      "sha256": "5344af6c903b95a734289c76d5f26417dd37395f8b0fdc9c883f5ec64638db29",
+      "acceptance_freeze_sha256": "5344af6c903b95a734289c76d5f26417dd37395f8b0fdc9c883f5ec64638db29",
+      "matches_acceptance_freeze": true
+    }
+  ],
+  "frozen_code_verification": {
+    "freeze_path": "reports/search_proof6_acceptance_freeze.json",
+    "matching_inspected_artifacts": 8,
+    "all_registered_inspected_hashes_match": true
+  }
+}

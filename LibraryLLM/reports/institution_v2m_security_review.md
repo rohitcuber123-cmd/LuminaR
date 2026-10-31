@@ -1,0 +1,9 @@
+# Security decision — production NOT_QUALIFIED
+
+Read-only production observations found MongoDB8.3.4, no credentials in the configured native connection, zero authenticated users on that connection, security.authorization not set and a successful anonymous tenant_id read. No production write was attempted. Actual custom-role/denied-write enforcement is proved only in separately owned auth-enabled fixtures. Runtime role metadata checks alone are not deployment authorization certification.
+
+The project .env DACL grants Authenticated Users Modify and Builtin Users ReadAndExecute, despite being a protected DACL. Source launcher/log/artifact paths also have broad local-group grants in the audit. These are unsuitable as evidence of a protected dedicated deployment secret/code boundary. No production ACL or service authorization setting was changed. No existing secret value, raw process command line or password was emitted or stored in reports.
+
+The source-default application service ports were not observed active; no exact resident Search service identity, assigned DBA/service/operator owner or production secret enrollment was verified. There is no trusted supervisor binding to native worker UUID/boot. New protected DPAPI/NTFS files in owned fixtures qualify same-user/machine behavior, not a different production service account or cross-account access denial. Same local test OS identity handled both credential files; Mongo identities and privileges were independently enforced.
+
+FIXTURE_QUALIFIED: YES when all recorded fixture assertions complete. DEPLOYMENT_PREREQUISITES_SATISFIED: NO. PRODUCTION_ENABLEMENT_APPROVED: NO. PRODUCTION_ENABLED: NO. Global authentication hardening, owned service/account/ACL/secret enrollment and representative full-stack workload remain separate operator-owned prerequisites. No activation or credential creation is authorized by these fixture results.

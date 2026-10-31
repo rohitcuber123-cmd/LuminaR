@@ -1,0 +1,191 @@
+{
+  "scope": "Protected-secret authenticated deployment fixture only; no production enablement/credentials/ACL changes.",
+  "phases": [
+    {
+      "name": "disabled_before",
+      "enabled": false,
+      "exit": 0,
+      "seconds": 126.83986870000035,
+      "evidence": "institution_v2m_native_disabled_before.json"
+    },
+    {
+      "name": "enabled_rollout",
+      "enabled": true,
+      "exit": 0,
+      "seconds": 74.09320680000019,
+      "evidence": "institution_v2m_native_enabled_rollout.json"
+    },
+    {
+      "name": "rotated_writer",
+      "enabled": true,
+      "exit": 0,
+      "seconds": 73.06705280000006,
+      "evidence": "institution_v2m_native_rotated_writer.json"
+    },
+    {
+      "name": "rollback_restart_only",
+      "enabled": false,
+      "exit": 0,
+      "seconds": 7.780402299999878,
+      "evidence": "institution_v2m_native_rollback_restart_only.json"
+    },
+    {
+      "name": "disabled_after_rollback",
+      "enabled": false,
+      "exit": 0,
+      "seconds": 72.60228259999985,
+      "evidence": "institution_v2m_native_disabled_after_rollback.json"
+    }
+  ],
+  "secret_storage": [
+    {
+      "purpose": "writer",
+      "file_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;;FA;;;SY)(A;;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "secret_value_returned": false,
+      "directory_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "current_sid": "S-1-5-21-4226139363-902846128-2016220542-1001",
+      "file_protected": true,
+      "recovered_matches": true,
+      "mode": "protect",
+      "directory_protected": true,
+      "encryption": "Windows SecureString Export-Clixml DPAPI",
+      "plaintext_absent_from_ciphertext": true
+    },
+    {
+      "purpose": "reader",
+      "mode": "protect",
+      "recovered_matches": true,
+      "file_protected": true,
+      "secret_value_returned": false,
+      "encryption": "Windows SecureString Export-Clixml DPAPI",
+      "current_sid": "S-1-5-21-4226139363-902846128-2016220542-1001",
+      "directory_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "directory_protected": true,
+      "file_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;;FA;;;SY)(A;;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "plaintext_absent_from_ciphertext": true
+    },
+    {
+      "purpose": "rotated_writer",
+      "current_sid": "S-1-5-21-4226139363-902846128-2016220542-1001",
+      "file_protected": true,
+      "file_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;;FA;;;SY)(A;;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "secret_value_returned": false,
+      "recovered_matches": true,
+      "directory_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+      "mode": "protect",
+      "directory_protected": true,
+      "encryption": "Windows SecureString Export-Clixml DPAPI",
+      "plaintext_absent_from_ciphertext": true
+    }
+  ],
+  "rollout": "PASS",
+  "rollback": "PASS",
+  "production_equivalence": "Tenant fixture151 books; actual native class/JWT router/models, not the full5M global Search service or approved service-account deployment.",
+  "operator_cli": [
+    {
+      "format": "json",
+      "exit": 0,
+      "bytes": 1720,
+      "output": "{\"associated_job\": null, \"consistency\": \"BEST_EFFORT_REVALIDATED\", \"previous_worker\": {\"active_job_observed\": false, \"classification\": \"UNKNOWN\", \"current_instance\": false, \"evidence\": \"Recent self-report proves only a successful write at its recorded time.\", \"historical\": true, \"idle\": \"UNKNOWN\", \"instance_ref\": null, \"last_seen_at\": null, \"lifecycle_report\": \"UNKNOWN\", \"process_independently_verified\": false, \"pulse_age_seconds\": null, \"restart_observed\": false, \"stalled\": \"NOT_DETERMINED\", \"started_at\": null, \"stopped_at\": null}, \"process_verification\": \"NOT_AVAILABLE\", \"progress\": [{\"heartbeat_age_seconds\": 31.837, \"heartbeat_evidence\": \"STALE\", \"job_id\": \"753719f2-4279-4de1-8a41-f6f633554446\", \"last_progress_observed_at\": \"2026-10-30T12:31:49.118000+00:00\", \"native_job_state\": \"SUCCEEDED\", \"outcome\": \"SUCCEEDED\", \"progress\": {\"current\": 151, \"total\": 151}, \"progress_age_seconds\": 25.811, \"publication\": \"ACKNOWLEDGED_POINTER_MATCH\", \"recency\": \"RECENT_PROGRESS_OBSERVED\", \"stage\": \"COMPLETE\", \"stalled\": \"NOT_DETERMINED\", \"target\": \"SEARCH_INDEX\"}], \"prototype_only\": false, \"read_only\": true, \"timestamp_semantics\": \"Post-read observation of accepted native state; not its exact commit time.\", \"worker\": {\"active_job_observed\": false, \"classification\": \"RECENTLY_OBSERVED\", \"evidence\": \"Recent self-report proves only a successful write at its recorded time.\", \"idle\": false, \"instance_ref\": \"instance-dace628dab0690ac\", \"last_seen_at\": \"2026-10-30T12:32:07.894000+00:00\", \"lifecycle_report\": \"STOPPING\", \"process_independently_verified\": false, \"pulse_age_seconds\": 7.035, \"restart_observed\": false, \"stalled\": \"NOT_DETERMINED\", \"started_at\": \"2026-10-30T12:31:19.005000+00:00\", \"stopped_at\": null}}"
+    },
+    {
+      "format": "text",
+      "exit": 0,
+      "bytes": 853,
+      "output": "LuminaR worker telemetry \u2014 read-only observation\nWorker self-report: RECENTLY_OBSERVED\nPrevious instance (historical): UNKNOWN\nIdle (latest report): False\nLast pulse age seconds: 9.28\nAssociated scoped job: null\nProcess verification: NOT_AVAILABLE\nStalled: NOT_DETERMINED\nRecent self-report proves only a successful write at its recorded time.\nAccepted progress observations: [{\"heartbeat_age_seconds\": 34.082, \"heartbeat_evidence\": \"STALE\", \"job_id\": \"753719f2-4279-4de1-8a41-f6f633554446\", \"last_progress_observed_at\": \"2026-10-30T12:31:49.118000+00:00\", \"native_job_state\": \"SUCCEEDED\", \"outcome\": \"SUCCEEDED\", \"progress\": {\"current\": 151, \"total\": 151}, \"progress_age_seconds\": 28.056, \"publication\": \"ACKNOWLEDGED_POINTER_MATCH\", \"recency\": \"RECENT_PROGRESS_OBSERVED\", \"stage\": \"COMPLETE\", \"stalled\": \"NOT_DETERMINED\", \"target\": \"SEARCH_INDEX\"}]"
+    }
+  ],
+  "old_credential_fresh_auth_rejected": true,
+  "rotation": {
+    "old_fresh_auth_rejected": true,
+    "new_principal_authenticated": true,
+    "new_epoch": 2,
+    "old_epoch": 1,
+    "instance_rotated": true,
+    "native_data_unchanged_by_credential_operations": true
+  },
+  "rollback_evidence": {
+    "disable_restart_native_data_unchanged": true,
+    "old_artifact_bytes_retained": true,
+    "telemetry_document_unchanged_while_disabled": true,
+    "native_builds_after_rollback": [
+      {
+        "target": "SEARCH_INDEX",
+        "library_id": "26341c42-a9d6-4677-a376-eb919efdc3a7",
+        "job_id": "f08412a8-c844-4408-a690-c75de53519f8",
+        "state": "SUCCEEDED",
+        "error_code": null,
+        "submit_to_observed_ms": 7306.245000000217,
+        "native_build_ms": 4011.9999999999995,
+        "cpu_ms": 5265.625,
+        "rss_increase_bytes": 112529408,
+        "pointer_ack_match": true
+      },
+      {
+        "target": "KNOWLEDGE_GRAPH",
+        "library_id": "45b0b6bc-ef24-4500-bb65-8f2b3f53fd56",
+        "job_id": "49cab30c-0fc4-4a6f-808d-c0b8a6aa8654",
+        "state": "SUCCEEDED",
+        "error_code": null,
+        "submit_to_observed_ms": 2304.4671999996353,
+        "native_build_ms": 314.0,
+        "cpu_ms": 187.5,
+        "rss_increase_bytes": 229376,
+        "pointer_ack_match": true
+      },
+      {
+        "target": "SEARCH_INDEX",
+        "library_id": "409919b6-7a47-4b78-aeae-b27adec2beb1",
+        "job_id": "4821106c-10b6-4e0a-8eb7-05c2de506989",
+        "state": "SUCCEEDED",
+        "error_code": null,
+        "submit_to_observed_ms": 5158.091099999638,
+        "native_build_ms": 3178.0,
+        "cpu_ms": 4937.5,
+        "rss_increase_bytes": 10076160,
+        "pointer_ack_match": true
+      },
+      {
+        "target": "KNOWLEDGE_GRAPH",
+        "library_id": "1a7e36ac-f71b-4721-9576-12b801ac2f62",
+        "job_id": "c07540d7-04d9-4ddd-978f-5a14753fd8c0",
+        "state": "SUCCEEDED",
+        "error_code": null,
+        "submit_to_observed_ms": 2397.9991000001064,
+        "native_build_ms": 374.0,
+        "cpu_ms": 296.875,
+        "rss_increase_bytes": 20480,
+        "pointer_ack_match": true
+      },
+      {
+        "target": "SEARCH_INDEX",
+        "library_id": "f4753ba1-2a3b-4abf-9ba4-9fc1dc88e082",
+        "job_id": "5eee6024-a32e-4a63-ad4d-e75b4e61983b",
+        "state": "SUCCEEDED",
+        "error_code": null,
+        "submit_to_observed_ms": 5209.033200000249,
+        "native_build_ms": 3191.0,
+        "cpu_ms": 4468.75,
+        "rss_increase_bytes": 1409024,
+        "pointer_ack_match": true
+      },
+      {
+        "target": "KNOWLEDGE_GRAPH",
+        "library_id": "fffaddae-2ca6-4f62-9479-f1483e7a4861",
+        "job_id": "1697b807-a3df-4900-822a-ab24b72289e1",
+        "state": "SUCCEEDED",
+        "error_code": null,
+        "submit_to_observed_ms": 2244.9038999998265,
+        "native_build_ms": 282.0,
+        "cpu_ms": 171.875,
+        "rss_increase_bytes": 0,
+        "pointer_ack_match": true
+      }
+    ],
+    "retained_targets_validated": 24,
+    "no_cancel_recover_unlock_delete_or_rewrite": true
+  },
+  "operator_write_denied_code": 13,
+  "owned_fixture_removed": true,
+  "completed_at": "2026-10-30T12:34:53.755093+00:00"
+}

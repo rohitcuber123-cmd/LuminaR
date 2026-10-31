@@ -1,0 +1,6 @@
+# Native integration limits
+No Mongo connection or write occurred. The user expressly prohibited all Mongo writes, including disposable databases. Therefore the previously passing310 real native scenarios/833 boundaries/529 denials remain HISTORICAL evidence; they are not fresh qualification of this candidate.
+
+Fresh evidence:40 local and8 global exact-native-function cases with in-memory dependencies; four native choice projections; four actual native transformer checks (Apply,Keep,literal resolution,and rejected placeholder completion). Scoped one-edit canonicalization is now shared with native correction transforms. Current ownership/role/provider dependencies in the read-only harness are explicit doubles. Current membership, expiry/CAS, one-use commit, inventory/borrowing and full HTTP authorization were not freshly exercised. No authorization implementation changed.
+
+An explicit omitted slot cannot be repaired by merely appending a value under the existing native `complete` operation: it correctly rejects422. Also, native ChoiceRequest permits150 query characters, while parser permits500; 35/150 acceptance queries exceed the choice length. These are integration prerequisites, not deployed fixes. [search_v2c_smarteng_native_contract_limits.json](D:/SDC/LibraryLLM/reports/search_v2c_smarteng_native_contract_limits.json).

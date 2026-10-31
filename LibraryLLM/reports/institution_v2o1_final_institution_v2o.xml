@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="30" time="46.519" timestamp="2026-10-30T22:23:43.933682+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2o.test_authentication" name="test_authenticated_mongo_connect" time="2.452" /><testcase classname="tests.institution_v2o.test_authentication" name="test_anonymous_mongo_denied" time="0.014" /><testcase classname="tests.institution_v2o.test_authentication" name="test_invalid_credential_denied" time="0.050" /><testcase classname="tests.institution_v2o.test_authentication" name="test_wrong_auth_source_denied" time="0.049" /><testcase classname="tests.institution_v2o.test_authentication" name="test_wrong_database_denied" time="0.033" /><testcase classname="tests.institution_v2o.test_authentication" name="test_application_runtime_permissions" time="40.041"><failure message="backend.database.mongo_configuration.MongoConfigurationError: MONGO_AUTH_CONNECTION_NOT_QUALIFIED">server = &lt;scripts.institution_v2o_fixture.AuthMongo object at 0x000002843C957290&gt;
+
+    def test_application_runtime_permissions(server):
+&gt;       with connect(configuration(server)) as client:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+config = MongoSettings(database='luminar_v2o_fixture_0692e24724274524', authenticated=True)
+options = {}
+
+    def connect(config, **options):
+        if not config.authenticated:
+            return MongoClient(config.uri, **options)
+        client = None
+        try:
+            bounds = {'serverSelectionTimeoutMS': 3000, 'connectTimeoutMS': 3000}
+            bounds.update(options)
+            client = MongoClient(config.uri, **bounds)
+            _qualify(client, config)
+            return client
+        except Exception as error:
+            if client is not None:
+                client.close()
+            if isinstance(error, MongoConfigurationError):
+                raise
+&gt;           raise MongoConfigurationError('MONGO_AUTH_CONNECTION_NOT_QUALIFIED') from None
+E           backend.database.mongo_configuration.MongoConfigurationError: MONGO_AUTH_CONNECTION_NOT_QUALIFIED
+
+backend\database\mongo_configuration.py:102: MongoConfigurationError</failure></testcase><testcase classname="tests.institution_v2o.test_authentication" name="test_worker_job_claim_permission" time="0.055" /><testcase classname="tests.institution_v2o.test_authentication" name="test_worker_lease_renewal_permission" time="0.053" /><testcase classname="tests.institution_v2o.test_authentication" name="test_worker_generation_publish_permission" time="0.043" /><testcase classname="tests.institution_v2o.test_authentication" name="test_telemetry_writer_restricted" time="0.045" /><testcase classname="tests.institution_v2o.test_authentication" name="test_operator_reader_read_only" time="0.024" /><testcase classname="tests.institution_v2o.test_authentication" name="test_operator_reader_cannot_write" time="0.026" /><testcase classname="tests.institution_v2o.test_authentication" name="test_no_unrestricted_fallback" time="0.028" /><testcase classname="tests.institution_v2o.test_authentication" name="test_no_credentials_in_logs" time="0.016" /><testcase classname="tests.institution_v2o.test_authentication" name="test_no_secrets_in_report" time="0.123" /><testcase classname="tests.institution_v2o.test_authentication" name="test_private_library_isolation" time="0.209" /><testcase classname="tests.institution_v2o.test_authentication" name="test_platform_role_no_tenant_bypass" time="0.001" /><testcase classname="tests.institution_v2o.test_authentication" name="test_unauthorized_collection_read_denied" time="0.039" /><testcase classname="tests.institution_v2o.test_authentication" name="test_auth_mode_missing_secret_fails_closed[change0]" time="0.001" /><testcase classname="tests.institution_v2o.test_authentication" name="test_auth_mode_missing_secret_fails_closed[change1]" time="0.001" /><testcase classname="tests.institution_v2o.test_authentication" name="test_auth_mode_missing_secret_fails_closed[change2]" time="0.001" /><testcase classname="tests.institution_v2o.test_authentication" name="test_authenticated_runtime_reconnect" time="0.117" /><testcase classname="tests.institution_v2o.test_authentication" name="test_authenticated_fixture_rollback" time="0.064" /><testcase classname="tests.institution_v2o.test_authentication" name="test_global_indexes_unchanged" time="0.030" /><testcase classname="tests.institution_v2o.test_authentication" name="test_valid_login_unrelated_role_fails_qualification" time="0.064" /><testcase classname="tests.institution_v2o.test_authentication" name="test_auth_mode_rejects_server_without_authorization" time="1.490" /><testcase classname="tests.institution_v2o.test_facet_fallback" name="test_find_only_catalogue_has_optional_empty_facets" time="0.001" /><testcase classname="tests.institution_v2o.test_facet_fallback" name="test_mongo_facet_authorization_error_is_not_hidden" time="0.001" /><testcase classname="tests.institution_v2o.test_preflight" name="test_false_strings_do_not_qualify_preflight" time="0.001" /><testcase classname="tests.institution_v2o.test_preflight" name="test_production_manifest_rejects_fixture_restore_evidence" time="0.014" /></testsuite></testsuites>

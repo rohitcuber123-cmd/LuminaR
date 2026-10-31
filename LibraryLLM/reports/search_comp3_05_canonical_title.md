@@ -1,0 +1,7 @@
+# Canonical repair and title refusal investigation
+
+A fully owned category correction and quoted title left a grammatical noun frame under a mandatory Require clause. It was then classified as an unrepresented mandatory operation. Recognized bibliographic noun frames are consumed without erasing unknown required operations. Explicit canonical correction retains bounded scoped vocabulary resolution, repair source coordinates and notices; quoted title content is not repaired.
+
+The five exposed refusals now produce EXECUTABLE_WITH_NOTICE. The same candidate FacetVocabulary is used by understanding and extracted native correction apply/keep transforms. The later performance change preserves the native candidate eligibility, ratios, .86 threshold, .05 tie margin and unique scoped edit fallback using length/token buckets. It is not a probability or broad fuzzy permission. See [vocabulary.py](D:/SDC/LibraryLLM/scratch/search_compositional_recovery_v3/vocabulary.py) and [search_comp3_final_native_contracts.json](D:/SDC/LibraryLLM/reports/search_comp3_final_native_contracts.json).
+
+**Fresh acceptance finding:** Fresh limitation: quoted canonical operands bypass the new recognizer because protected spans are masked; fallback uses a different vocabulary path. Five Fictiom subject repairs are refused, and optional numeric legacy evidence blocks other valid repaired queries. This fix is PARTIAL.

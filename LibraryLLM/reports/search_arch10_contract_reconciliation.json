@@ -1,0 +1,37 @@
+{
+  "original_regression_failures": 2,
+  "new_reviewed_migrations": 1,
+  "inherited_reviewed_migrations": 6,
+  "source_only_review": "reports/search_arch10_source_contract_review.json",
+  "review_sha256": "bac9146738e4307eef372c9ee53f6b914e67dbeb748ed69ba049536d3383903b",
+  "assertions_or_gold_changed": false,
+  "old_tests_retained": true,
+  "title": {
+    "original": "scratch/search_architecture_v9/test_roles_edits.py::test_quoted_filter_words_owned_by_literal_title",
+    "original_file_sha256": "39bf23c16c5ed4fd1773f5b5e19906dd9c98da27af8eac8928199da9befbdf49",
+    "candidate_deselected_node": "scratch/search_architecture_v10/test_roles_edits.py::test_quoted_filter_words_owned_by_literal_title",
+    "reason": "Title-only containment cannot be enforced by title-or-author substring. Source-only migration approved.",
+    "replacements": [
+      "test_semantic_workflow.py::test_reviewed_title_only_migration (3 parameter cases)",
+      "test_semantic_workflow.py::test_native_title_strengths_are_distinct"
+    ]
+  },
+  "pages": {
+    "original": "scratch/search_arch9_regression/test_search_v2c_c4_reviewed_legacy.py::test_curated_candidate_plan[gold-088]",
+    "resolution": "IMPLEMENTATION_REPAIR_RETAINS_INCOMPLETE",
+    "reason": "Missing operand state retained; incomplete-first policy explicitly selected. Supplying any page constraint remains UNSUPPORTED.",
+    "migration": false
+  },
+  "total_deselected": 7,
+  "additional_silent_deselections": 0,
+  "current_regression_population": {
+    "passed": 1820,
+    "failed": 0,
+    "skipped": 0,
+    "deselected": 7,
+    "source": "reports/search_arch10_verified_tests.xml",
+    "development": true,
+    "measured": true
+  },
+  "count_reconciliation": "V9 broad run omitted 18 of its 42 separately reported metamorphic cases plus 5 compact-extractor tests. V10 includes all 42 and all 5, repairs pages (+1), replaces title assertion (-1 failed node), and adds 39 workflow cases. Historical 1757 passing +23 newly included inherited tests +1 repaired assertion +39 new tests =1820 passing. Original assertions preserved."
+}

@@ -1,0 +1,3558 @@
+{
+  "population": "205 fresh primary contexts, now exposed development; no recapture or retuning",
+  "parser_calls": 0,
+  "primary_predictions_sha256": "df5dd9f25c2dc0411e827c22448d26e69148501f9a00facdc67f461cf8af1bf5",
+  "candidate_source_changed": false,
+  "gold_changed_after_primary": false,
+  "unsafe_by_expected_kind": {
+    "AMBIGUOUS": 6,
+    "INCOMPLETE": 1,
+    "UNSUPPORTED": 4,
+    "CONTRADICTORY": 1
+  },
+  "confusion": {
+    "EXECUTABLE -> EXECUTABLE": 9,
+    "EXECUTABLE -> UNSUPPORTED": 31,
+    "EXECUTABLE -> INCOMPLETE": 2,
+    "EXECUTABLE -> AMBIGUOUS": 2,
+    "EXECUTABLE_WITH_NOTICE -> EXECUTABLE": 9,
+    "EXECUTABLE_WITH_NOTICE -> EXECUTABLE_WITH_NOTICE": 2,
+    "EXECUTABLE_WITH_NOTICE -> UNSUPPORTED": 7,
+    "EXECUTABLE_WITH_NOTICE -> AMBIGUOUS": 5,
+    "AMBIGUOUS -> AMBIGUOUS": 19,
+    "AMBIGUOUS -> EXECUTABLE": 6,
+    "AMBIGUOUS -> UNSUPPORTED": 9,
+    "AMBIGUOUS -> INCOMPLETE": 1,
+    "INCOMPLETE -> INCOMPLETE": 18,
+    "INCOMPLETE -> EXECUTABLE": 1,
+    "INCOMPLETE -> UNSUPPORTED": 14,
+    "INCOMPLETE -> AMBIGUOUS": 1,
+    "UNSUPPORTED -> UNSUPPORTED": 27,
+    "UNSUPPORTED -> INCOMPLETE": 3,
+    "UNSUPPORTED -> EXECUTABLE": 4,
+    "CONTRADICTORY -> CONTRADICTORY": 11,
+    "CONTRADICTORY -> UNSUPPORTED": 21,
+    "CONTRADICTORY -> EXECUTABLE": 1,
+    "CONTRADICTORY -> AMBIGUOUS": 1,
+    "CONTRADICTORY -> INCOMPLETE": 1
+  },
+  "executed_contexts": 32,
+  "executed_critical_contexts": 31,
+  "valid_gold_executed_contexts": 20,
+  "valid_gold_executed_critical": 20,
+  "critical_field_frequency": {
+    "author_text": 18,
+    "exact_text": 18,
+    "title_text": 18,
+    "subjects": 1,
+    "include_terms": 1,
+    "formats": 1,
+    "rating_min": 1,
+    "exclude_terms": 2,
+    "excluded_formats": 1
+  },
+  "unsafe_with_recorded_complete_coverage": 12,
+  "unsafe_coverage_denominator": 12,
+  "missed_by_reason": {
+    "IR_UNSUPPORTED": 38,
+    "IR_INCOMPLETE": 2,
+    "IR_AMBIGUOUS": 7
+  },
+  "generalized_findings": [
+    {
+      "classification": "Recognition completeness is not established by IR self-consistency",
+      "evidence": "All unsafe recommendations have recorded coverage_complete=true; unrecognized source requirements become semantic residue outside the obligation set.",
+      "next_requirement": "Independent source-obligation/ownership analysis must challenge extraction, not only validate the recognized subset."
+    },
+    {
+      "classification": "Operator and entity ownership are lost",
+      "evidence": "Exact-title requests become title_text containment; explicitly named authors are omitted. Native title_text also matches authors, so this is a real enforcement weakening.",
+      "next_requirement": "Represent operation, operand and source owner independently with complete entity/operator boundaries and native capability proof."
+    },
+    {
+      "classification": "Unresolved choices and missing operands become searchable residue",
+      "evidence": "Six ambiguous and one incomplete gold contexts are recommended executable; one missing By: placeholder is not represented as an edit obligation.",
+      "next_requirement": "Typed unresolved owner/value/direction state across clauses and punctuation, with no execution on an unresolved mandatory obligation."
+    },
+    {
+      "classification": "Unsupported numeric metadata and nested record relations escape the boundary",
+      "evidence": "Four unsupported contexts execute, including mandatory page/price restrictions and relative rating references. A referenced title can become a result filter.",
+      "next_requirement": "Domain-owned unsupported/reference nodes must precede scalar/text exclusion fallback, including inflection and nested reference graphs."
+    },
+    {
+      "classification": "Negation and explanatory ownership are confused",
+      "evidence": "Not a union invents a text exclusion; exclude prices becomes broad text; removing online access fails to produce the required negative format predicate.",
+      "next_requirement": "Negation must bind to a semantic domain and governing speech act; metalinguistic negation is not a retrieval exclusion."
+    },
+    {
+      "classification": "Benign context/advisory paraphrases overblock and contaminate topic transport",
+      "evidence": "47/67 valid searches blocked;38 IR_UNSUPPORTED,7 IR_AMBIGUOUS,2 IR_INCOMPLETE. Source-role/modality agreement is low and semantic strings retain framing prose.",
+      "next_requirement": "Stabilize grammatical segments and source roles, preserving free topical text and advisory preferences without inventing hard metadata."
+    }
+  ],
+  "unsafe_traces": [
+    {
+      "case_id": "v8_fresh_16_03",
+      "query": "For our collection session, find handmade paper: Sort newest first. Require online format. Exclude whole searchable word \"dynasty\". Exactly titled \"Reeds ... and Rain\". I meant one rating floor, 3.4 versus 3.9; wait for my choice.",
+      "scope": "PUBLIC_TENANT_STAFF",
+      "expected": "AMBIGUOUS",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "exact_text": {
+          "expected": "Reeds ... and Rain",
+          "actual": null,
+          "mask": {
+            "reason": "Resolved mandatory source operand.",
+            "status": "APPLICABLE"
+          }
+        },
+        "title_text": {
+          "expected": null,
+          "actual": "reeds ... and rain",
+          "mask": {
+            "reason": "No operative source condition supplies this native field.",
+            "status": "APPLICABLE_ABSENCE"
+          }
+        },
+        "semantic_text": {
+          "expected": "handmade paper",
+          "actual": "for our collection session handmade paper: exactly i meant one floor 3.4 versus 3.9 wait for my choice",
+          "mask": {
+            "reason": "Source explicitly owns a definite semantic topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "AMBIGUOUS",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "exact_text",
+        "title_text"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            90,
+            130
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Exclude whole searchable word \"dynasty\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_text"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "5056ebd9f7ee8959b71a",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            91,
+            130
+          ],
+          "source_text": "Exclude whole searchable word \"dynasty\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "dynasty"
+        },
+        {
+          "clause_span": [
+            0,
+            66
+          ],
+          "field": "sort",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Sort newest first",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.sort"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "f1234f2f239755e670e5",
+          "resolution": "RESOLVED",
+          "source_role": "USER_REQUESTED_OPERATION",
+          "source_span": [
+            49,
+            66
+          ],
+          "source_text": "Sort newest first",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "NEWEST"
+        },
+        {
+          "clause_span": [
+            131,
+            167
+          ],
+          "field": "title",
+          "modality": "MUST",
+          "operator": "CONTAINS",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "titled \"Reeds ... and Rain\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ir.literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "5216d6bf4f6a2cced801",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            140,
+            167
+          ],
+          "source_text": "titled \"Reeds ... and Rain\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "reeds ... and rain"
+        },
+        {
+          "clause_span": [
+            67,
+            89
+          ],
+          "field": "format",
+          "modality": "MUST",
+          "operator": "PRESENT",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "online format",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "format.online"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "3b10a9ad25658c505a03",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            76,
+            89
+          ],
+          "source_text": "online format",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "ONLINE"
+        },
+        {
+          "clause_span": [
+            0,
+            66
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "For our collection session",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "2e852c961d8ac692c33c",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            26
+          ],
+          "source_text": "For our collection session",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "For our collection session"
+        },
+        {
+          "clause_span": [
+            0,
+            66
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "find handmade paper: ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "74b31cfbe7f89a57e6ad",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            28,
+            49
+          ],
+          "source_text": "find handmade paper: ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "find handmade paper:"
+        },
+        {
+          "clause_span": [
+            131,
+            167
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Exactly ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "e35f589c3b4d0aedff44",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            131,
+            140
+          ],
+          "source_text": " Exactly ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Exactly"
+        },
+        {
+          "clause_span": [
+            168,
+            209
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " I meant one rating floor",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "2d0102bd61bf9de7e91c",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            168,
+            193
+          ],
+          "source_text": " I meant one rating floor",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "I meant one rating floor"
+        },
+        {
+          "clause_span": [
+            168,
+            209
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "3.4 versus 3.9",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "05145664c678ffce5cda",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            195,
+            209
+          ],
+          "source_text": "3.4 versus 3.9",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "3.4 versus 3.9"
+        },
+        {
+          "clause_span": [
+            210,
+            229
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " wait for my choice",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "d42ee2f60df71f01ca95",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            210,
+            229
+          ],
+          "source_text": " wait for my choice",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "wait for my choice"
+        }
+      ],
+      "normative_rationale": "An intended rating boundary value is expressly unchosen: AMBIGUOUS is strict. This is unresolved intent rather than an explicit record union."
+    },
+    {
+      "case_id": "v8_fresh_17_02",
+      "query": "Choose one subject, Fiction or History, once I resolve my choice. By author text \"Tariq Noor\". My topic is local storytelling. Exactly titled \"Stone Lanterns\". Published from 2015 onward. Advanced discussion is a bonus.",
+      "scope": "PUBLIC_TENANT_PATRON",
+      "expected": "AMBIGUOUS",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "author_text": {
+          "expected": "Tariq Noor",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "exact_text": {
+          "expected": "Stone Lanterns",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "title_text": {
+          "expected": null,
+          "actual": "stone lanterns",
+          "mask": {
+            "reason": "No mandatory source constraint for this native field.",
+            "status": "APPLICABLE_ABSENCE"
+          }
+        },
+        "semantic_text": {
+          "expected": "local storytelling",
+          "actual": "choose one subject fiction or history once i resolve my choice by author text tariq noor my topic is local storytelling exactly discussion is a bonus",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "AMBIGUOUS",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "author_text",
+        "exact_text",
+        "title_text"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            159,
+            186
+          ],
+          "field": "year",
+          "modality": "MUST",
+          "operator": ">=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Published from 2015 onward",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "year.publication_onward"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "a1561046f0e6efe35650",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            160,
+            186
+          ],
+          "source_text": "Published from 2015 onward",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": 2015
+        },
+        {
+          "clause_span": [
+            126,
+            158
+          ],
+          "field": "title",
+          "modality": "MUST",
+          "operator": "CONTAINS",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "titled \"Stone Lanterns\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ir.literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "cec81c3a6d2a358f9c04",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            135,
+            158
+          ],
+          "source_text": "titled \"Stone Lanterns\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "stone lanterns"
+        },
+        {
+          "clause_span": [
+            187,
+            218
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Advanced",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "surface.descriptive_preference"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "cd5d978b09dab36b9cc2",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            188,
+            196
+          ],
+          "source_text": "Advanced",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Advanced (preference)"
+        },
+        {
+          "clause_span": [
+            0,
+            64
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "Choose one subject",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "883b04d6ff12b19b4d23",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            18
+          ],
+          "source_text": "Choose one subject",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Choose one subject"
+        },
+        {
+          "clause_span": [
+            0,
+            64
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "Fiction or History",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "dcdd1da482ba534ad6b1",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            20,
+            38
+          ],
+          "source_text": "Fiction or History",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Fiction or History"
+        },
+        {
+          "clause_span": [
+            0,
+            64
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "once I resolve my choice",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "fea665864a71583ee19b",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            40,
+            64
+          ],
+          "source_text": "once I resolve my choice",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "once I resolve my choice"
+        },
+        {
+          "clause_span": [
+            65,
+            93
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By author text \"Tariq Noor\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "64e19938b3117a8949fd",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            65,
+            93
+          ],
+          "source_text": " By author text \"Tariq Noor\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By author text \"Tariq Noor\""
+        },
+        {
+          "clause_span": [
+            94,
+            125
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " My topic is local storytelling",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "f204b60686dc5ec0daba",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            94,
+            125
+          ],
+          "source_text": " My topic is local storytelling",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "My topic is local storytelling"
+        },
+        {
+          "clause_span": [
+            126,
+            158
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Exactly ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "0e482a90f05b19a89f9b",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            126,
+            135
+          ],
+          "source_text": " Exactly ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Exactly"
+        },
+        {
+          "clause_span": [
+            187,
+            218
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " discussion is a bonus",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "cebfd5e8a7ec3164c479",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            196,
+            218
+          ],
+          "source_text": " discussion is a bonus",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "discussion is a bonus"
+        }
+      ],
+      "normative_rationale": "Unresolved mandatory choice, direction, ownership, or writer/editor association."
+    },
+    {
+      "case_id": "v8_fresh_17_03",
+      "query": "For our collection session, find clay sculpture: Published from 1998 onward. Sort titles A to Z. Exclude whole searchable word \"dynasty\". By author text \"Anika Rao\". I meant one category: Fiction versus History; my intended one is unclear.",
+      "scope": "PUBLIC_TENANT_STAFF",
+      "expected": "AMBIGUOUS",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "author_text": {
+          "expected": "Anika Rao",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "semantic_text": {
+          "expected": "clay sculpture",
+          "actual": "for our collection session clay sculpture: by author text anika rao i meant one category: fiction versus history my intended one is unclear",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "AMBIGUOUS",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "author_text"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            76,
+            136
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Exclude whole searchable word \"dynasty\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_text"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "6977cfc494400efdc0f0",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            97,
+            136
+          ],
+          "source_text": "Exclude whole searchable word \"dynasty\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "dynasty"
+        },
+        {
+          "clause_span": [
+            76,
+            136
+          ],
+          "field": "sort",
+          "modality": "MUST_NOT",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Sort titles A to Z",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.sort"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "85772fc7be85d3d43e08",
+          "resolution": "RESOLVED",
+          "source_role": "USER_REQUESTED_OPERATION",
+          "source_span": [
+            77,
+            95
+          ],
+          "source_text": "Sort titles A to Z",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "TITLE"
+        },
+        {
+          "clause_span": [
+            0,
+            75
+          ],
+          "field": "year",
+          "modality": "MUST",
+          "operator": ">=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Published from 1998 onward",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "year.publication_onward"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "df5278e5bb102801c70d",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            49,
+            75
+          ],
+          "source_text": "Published from 1998 onward",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": 1998
+        },
+        {
+          "clause_span": [
+            0,
+            75
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "For our collection session",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "2e852c961d8ac692c33c",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            26
+          ],
+          "source_text": "For our collection session",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "For our collection session"
+        },
+        {
+          "clause_span": [
+            0,
+            75
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "find clay sculpture: ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "dbe7ea66e98830f54ff6",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            28,
+            49
+          ],
+          "source_text": "find clay sculpture: ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "find clay sculpture:"
+        },
+        {
+          "clause_span": [
+            137,
+            164
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By author text \"Anika Rao\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "08f882b92ac1edb40a9a",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            137,
+            164
+          ],
+          "source_text": " By author text \"Anika Rao\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By author text \"Anika Rao\""
+        },
+        {
+          "clause_span": [
+            165,
+            210
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " I meant one category: Fiction versus History",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "6ebdbf4d8d123579ed6f",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            165,
+            210
+          ],
+          "source_text": " I meant one category: Fiction versus History",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "I meant one category: Fiction versus History"
+        },
+        {
+          "clause_span": [
+            211,
+            238
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " my intended one is unclear",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "6476879239a1affc189e",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            211,
+            238
+          ],
+          "source_text": " my intended one is unclear",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "my intended one is unclear"
+        }
+      ],
+      "normative_rationale": "Unresolved mandatory choice, direction, ownership, or writer/editor association."
+    },
+    {
+      "case_id": "v8_fresh_17_04",
+      "query": "The subject is Fiction or Mystery, not a union; I still need to pick. Search orchard science; By author text \"Jules Marin\". Exclude whole searchable word \"gladiator\". Published from 1999 onward. Available now.",
+      "scope": "PRIVATE_TENANT_PATRON",
+      "expected": "AMBIGUOUS",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "author_text": {
+          "expected": "Jules Marin",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "exclude_terms": {
+          "expected": [
+            "gladiator"
+          ],
+          "actual": [
+            "union",
+            "gladiator"
+          ],
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "semantic_text": {
+          "expected": "orchard science",
+          "actual": "the subject is fiction or mystery i still need to pick search orchard science by author text jules marin",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "AMBIGUOUS",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "author_text",
+        "exclude_terms"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            0,
+            46
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "not a union",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "dc77ed9b8e04f1f01cd9",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            35,
+            46
+          ],
+          "source_text": "not a union",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "union"
+        },
+        {
+          "clause_span": [
+            123,
+            165
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Exclude whole searchable word \"gladiator\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_text"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "068c07c77bcbf0042ad8",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            124,
+            165
+          ],
+          "source_text": "Exclude whole searchable word \"gladiator\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "gladiator"
+        },
+        {
+          "clause_span": [
+            166,
+            193
+          ],
+          "field": "year",
+          "modality": "MUST",
+          "operator": ">=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Published from 1999 onward",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "year.publication_onward"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "59a9009cc1808b568fcc",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            167,
+            193
+          ],
+          "source_text": "Published from 1999 onward",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": 1999
+        },
+        {
+          "clause_span": [
+            194,
+            208
+          ],
+          "field": "availability",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Available now",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "availability.now"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "913212c0a88bc01689e5",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            195,
+            208
+          ],
+          "source_text": "Available now",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "AVAILABLE_NOW"
+        },
+        {
+          "clause_span": [
+            0,
+            46
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "The subject is Fiction or Mystery",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "1f78a55a3fa9c677665e",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            33
+          ],
+          "source_text": "The subject is Fiction or Mystery",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "The subject is Fiction or Mystery"
+        },
+        {
+          "clause_span": [
+            47,
+            68
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " I still need to pick",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "c4b62937c47c3b3671db",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            47,
+            68
+          ],
+          "source_text": " I still need to pick",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "I still need to pick"
+        },
+        {
+          "clause_span": [
+            69,
+            92
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Search orchard science",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "c58038ef3c04494739d7",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            69,
+            92
+          ],
+          "source_text": " Search orchard science",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Search orchard science"
+        },
+        {
+          "clause_span": [
+            93,
+            122
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By author text \"Jules Marin\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "fc261d978724e15ddc92",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            93,
+            122
+          ],
+          "source_text": " By author text \"Jules Marin\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By author text \"Jules Marin\""
+        }
+      ],
+      "normative_rationale": "Unresolved mandatory choice, direction, ownership, or writer/editor association."
+    },
+    {
+      "case_id": "v8_fresh_18_01",
+      "query": "Search woodland memoirs. Exactly titled \"The Copper Tide\" or \"Amber Roads\"; I meant one but forgot which. By author text \"Tariq Noor\". Exclude whole searchable word \"piracy\". Sort newest first. An illustrated edition is welcome, but optional.",
+      "scope": "GLOBAL",
+      "expected": "AMBIGUOUS",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "author_text": {
+          "expected": "Tariq Noor",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "title_text": {
+          "expected": null,
+          "actual": "the copper tide",
+          "mask": {
+            "reason": "No mandatory source constraint for this native field.",
+            "status": "APPLICABLE_ABSENCE"
+          }
+        },
+        "semantic_text": {
+          "expected": "woodland memoirs",
+          "actual": "search woodland memoirs exactly or amber roads i meant one forgot which by author text tariq noor an illustrated edition is welcome",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "AMBIGUOUS",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "author_text",
+        "title_text"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            193,
+            241
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "but optional",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "roles.segment.advisory"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "468b221f4511380577cc",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            229,
+            241
+          ],
+          "source_text": "but optional",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "but optional"
+        },
+        {
+          "clause_span": [
+            134,
+            173
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Exclude whole searchable word \"piracy\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_text"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "cf8e914d4bc5a426a184",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            135,
+            173
+          ],
+          "source_text": "Exclude whole searchable word \"piracy\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "piracy"
+        },
+        {
+          "clause_span": [
+            174,
+            192
+          ],
+          "field": "sort",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Sort newest first",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.sort"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "0d09e2ddcb2b6b95274c",
+          "resolution": "RESOLVED",
+          "source_role": "USER_REQUESTED_OPERATION",
+          "source_span": [
+            175,
+            192
+          ],
+          "source_text": "Sort newest first",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "NEWEST"
+        },
+        {
+          "clause_span": [
+            24,
+            74
+          ],
+          "field": "title",
+          "modality": "MUST",
+          "operator": "CONTAINS",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "titled \"The Copper Tide\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ir.literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "35afd7bb4915dd792afd",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            33,
+            57
+          ],
+          "source_text": "titled \"The Copper Tide\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "the copper tide"
+        },
+        {
+          "clause_span": [
+            0,
+            23
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "Search woodland memoirs",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "36e89aa0d736416d7794",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            23
+          ],
+          "source_text": "Search woodland memoirs",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Search woodland memoirs"
+        },
+        {
+          "clause_span": [
+            24,
+            74
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Exactly ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "9b17a95eefa128091bab",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            24,
+            33
+          ],
+          "source_text": " Exactly ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Exactly"
+        },
+        {
+          "clause_span": [
+            24,
+            74
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " or \"Amber Roads\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "de8a707ded8955c09e63",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            57,
+            74
+          ],
+          "source_text": " or \"Amber Roads\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "or \"Amber Roads\""
+        },
+        {
+          "clause_span": [
+            75,
+            104
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " I meant one but forgot which",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "0f0abf0d2b84e423956e",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            75,
+            104
+          ],
+          "source_text": " I meant one but forgot which",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "I meant one but forgot which"
+        },
+        {
+          "clause_span": [
+            105,
+            133
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By author text \"Tariq Noor\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "9d6c11dbe38a84613bae",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            105,
+            133
+          ],
+          "source_text": " By author text \"Tariq Noor\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By author text \"Tariq Noor\""
+        },
+        {
+          "clause_span": [
+            193,
+            241
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " An illustrated edition is welcome",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "854d409b044d29f91981",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            193,
+            227
+          ],
+          "source_text": " An illustrated edition is welcome",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "An illustrated edition is welcome"
+        }
+      ],
+      "normative_rationale": "Unresolved mandatory choice, direction, ownership, or writer/editor association."
+    },
+    {
+      "case_id": "v8_fresh_20_01",
+      "query": "Search mountain ecology. Rating 3.1: I forgot whether that was lower or upper bound. By author text \"Jules Marin\". Exactly titled \"Stone Lanterns\". Sort highest rating first. An illustrated edition is welcome, but optional.",
+      "scope": "GLOBAL",
+      "expected": "AMBIGUOUS",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "author_text": {
+          "expected": "Jules Marin",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "exact_text": {
+          "expected": "Stone Lanterns",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "title_text": {
+          "expected": null,
+          "actual": "stone lanterns",
+          "mask": {
+            "reason": "No mandatory source constraint for this native field.",
+            "status": "APPLICABLE_ABSENCE"
+          }
+        },
+        "semantic_text": {
+          "expected": "mountain ecology",
+          "actual": "search mountain ecology : i forgot whether that was lower or upper bound by author text jules marin exactly an illustrated edition is welcome",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "AMBIGUOUS",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "author_text",
+        "exact_text",
+        "title_text"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            174,
+            222
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "but optional",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "roles.segment.advisory"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "128c60ec7132a30912e8",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            210,
+            222
+          ],
+          "source_text": "but optional",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "but optional"
+        },
+        {
+          "clause_span": [
+            147,
+            173
+          ],
+          "field": "sort",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Sort highest rating first",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.sort"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "8b25c56d5a76bbe0a39f",
+          "resolution": "RESOLVED",
+          "source_role": "USER_REQUESTED_OPERATION",
+          "source_span": [
+            148,
+            173
+          ],
+          "source_text": "Sort highest rating first",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "RATING"
+        },
+        {
+          "clause_span": [
+            24,
+            83
+          ],
+          "field": "rating",
+          "modality": "UNKNOWN",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Rating 3.1",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "rating.explicit_value"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "c0eb3cac20b52eeabdb5",
+          "resolution": "RESOLVED",
+          "source_role": "UNRESOLVED_RELATION_OR_ALTERNATIVE",
+          "source_span": [
+            25,
+            35
+          ],
+          "source_text": "Rating 3.1",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": 3.1
+        },
+        {
+          "clause_span": [
+            114,
+            146
+          ],
+          "field": "title",
+          "modality": "MUST",
+          "operator": "CONTAINS",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "titled \"Stone Lanterns\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ir.literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "dbb42478a071f7e9c989",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            123,
+            146
+          ],
+          "source_text": "titled \"Stone Lanterns\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "stone lanterns"
+        },
+        {
+          "clause_span": [
+            0,
+            23
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "Search mountain ecology",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "b7319f5d2c6bd2e8ff76",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            23
+          ],
+          "source_text": "Search mountain ecology",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Search mountain ecology"
+        },
+        {
+          "clause_span": [
+            24,
+            83
+          ],
+          "field": "semantic_residue",
+          "modality": "UNKNOWN",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": ": I forgot whether that was lower or upper bound",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "633cb9c5b49c03586f39",
+          "resolution": "RESOLVED",
+          "source_role": "UNRESOLVED_RELATION_OR_ALTERNATIVE",
+          "source_span": [
+            35,
+            83
+          ],
+          "source_text": ": I forgot whether that was lower or upper bound",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": ": I forgot whether that was lower or upper bound"
+        },
+        {
+          "clause_span": [
+            84,
+            113
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By author text \"Jules Marin\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "ba0ddf77711b55533458",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            84,
+            113
+          ],
+          "source_text": " By author text \"Jules Marin\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By author text \"Jules Marin\""
+        },
+        {
+          "clause_span": [
+            114,
+            146
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Exactly ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "23fba68476141a3bcde2",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            114,
+            123
+          ],
+          "source_text": " Exactly ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Exactly"
+        },
+        {
+          "clause_span": [
+            174,
+            222
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " An illustrated edition is welcome",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "8fba863719f07b8300be",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            174,
+            208
+          ],
+          "source_text": " An illustrated edition is welcome",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "An illustrated edition is welcome"
+        }
+      ],
+      "normative_rationale": "Unresolved mandatory choice, direction, ownership, or writer/editor association."
+    },
+    {
+      "case_id": "v8_fresh_22_03",
+      "query": "For our collection session, find regional embroidery: A beginner approach is preferable. Available now. Published from 2003 onward. Require online format. By: [name to be filled in].",
+      "scope": "PUBLIC_TENANT_STAFF",
+      "expected": "INCOMPLETE",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "semantic_text": {
+          "expected": "regional embroidery",
+          "actual": "by: [name to be filled in]",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "INCOMPLETE",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            0,
+            87
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "For our collection session, find regional embroidery: A beginner approach is preferable",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.advisory"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "723185d683279efe838c",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            0,
+            87
+          ],
+          "source_text": "For our collection session, find regional embroidery: A beginner approach is preferable",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "for our collection session, find regional embroidery: a beginner approach is preferable"
+        },
+        {
+          "clause_span": [
+            103,
+            130
+          ],
+          "field": "year",
+          "modality": "MUST",
+          "operator": ">=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Published from 2003 onward",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "year.publication_onward"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "39060b14caeb58c6067f",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            104,
+            130
+          ],
+          "source_text": "Published from 2003 onward",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": 2003
+        },
+        {
+          "clause_span": [
+            131,
+            153
+          ],
+          "field": "format",
+          "modality": "MUST",
+          "operator": "PRESENT",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "online format",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "format.online"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "2aac6a0d3e24db882c4b",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            140,
+            153
+          ],
+          "source_text": "online format",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "ONLINE"
+        },
+        {
+          "clause_span": [
+            88,
+            102
+          ],
+          "field": "availability",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Available now",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "availability.now"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "ae5049831f71feea3b96",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            89,
+            102
+          ],
+          "source_text": "Available now",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "AVAILABLE_NOW"
+        },
+        {
+          "clause_span": [
+            154,
+            181
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By: [name to be filled in]",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "2851ab1e658ba62ba5df",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            154,
+            181
+          ],
+          "source_text": " By: [name to be filled in]",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By: [name to be filled in]"
+        }
+      ],
+      "normative_rationale": "Explicitly missing mandatory operand."
+    },
+    {
+      "case_id": "v8_fresh_30_05",
+      "query": "I am preparing a reading list about urban farming. Exactly 260 pages is a hard condition. Exactly titled \"Reeds ... and Rain\". Require online format. Available now. A beginner approach is preferable.",
+      "scope": "PRIVATE_TENANT_STAFF",
+      "expected": "UNSUPPORTED",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "exact_text": {
+          "expected": "Reeds ... and Rain",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "title_text": {
+          "expected": null,
+          "actual": "reeds ... and rain",
+          "mask": {
+            "reason": "No mandatory source constraint for this native field.",
+            "status": "APPLICABLE_ABSENCE"
+          }
+        },
+        "semantic_text": {
+          "expected": "urban farming",
+          "actual": "i am preparing a reading list urban farming exactly 260 pages is a hard condition exactly",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "UNSUPPORTED",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "exact_text",
+        "title_text"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            164,
+            198
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": " A beginner approach is preferable",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.advisory"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "82dd7f26ccac55a76832",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            164,
+            198
+          ],
+          "source_text": " A beginner approach is preferable",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "a beginner approach is preferable"
+        },
+        {
+          "clause_span": [
+            89,
+            125
+          ],
+          "field": "title",
+          "modality": "MUST",
+          "operator": "CONTAINS",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "titled \"Reeds ... and Rain\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ir.literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "97cb0aff731779c5c667",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            98,
+            125
+          ],
+          "source_text": "titled \"Reeds ... and Rain\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "reeds ... and rain"
+        },
+        {
+          "clause_span": [
+            126,
+            148
+          ],
+          "field": "format",
+          "modality": "MUST",
+          "operator": "PRESENT",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "online format",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "format.online"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "76164e8aeba380e0aaa5",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            135,
+            148
+          ],
+          "source_text": "online format",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "ONLINE"
+        },
+        {
+          "clause_span": [
+            149,
+            163
+          ],
+          "field": "availability",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Available now",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "availability.now"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "a403dfb42f447492b5ff",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            150,
+            163
+          ],
+          "source_text": "Available now",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "AVAILABLE_NOW"
+        },
+        {
+          "clause_span": [
+            0,
+            49
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "I am preparing a reading list about urban farming",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "6da90c8d45ce52926b6d",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            49
+          ],
+          "source_text": "I am preparing a reading list about urban farming",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "I am preparing a reading list about urban farming"
+        },
+        {
+          "clause_span": [
+            50,
+            88
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Exactly 260 pages is a hard condition",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "e1931d28e7e9314d6175",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            50,
+            88
+          ],
+          "source_text": " Exactly 260 pages is a hard condition",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Exactly 260 pages is a hard condition"
+        },
+        {
+          "clause_span": [
+            89,
+            125
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Exactly ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "bfe4e2b380f2e5dcce85",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            89,
+            98
+          ],
+          "source_text": " Exactly ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Exactly"
+        }
+      ],
+      "normative_rationale": "Native contract lacks this negative-author or price/page metadata operation."
+    },
+    {
+      "case_id": "v8_fresh_32_01",
+      "query": "Search harbor engineering. Keep ratings higher than the rating of the book exactly titled \"The Copper Tide\". Exclude whole searchable word \"piracy\". Sort highest rating first. Introductory treatment would be welcome. An illustrated edition is welcome, but optional.",
+      "scope": "GLOBAL",
+      "expected": "UNSUPPORTED",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "title_text": {
+          "expected": null,
+          "actual": "the copper tide",
+          "mask": {
+            "reason": "The quoted title identifies the comparison reference only. No title constraint on returned records is requested. A referenced field does not justify N/A for an otherwise known absent result filter.",
+            "status": "APPLICABLE_ABSENCE"
+          }
+        },
+        "semantic_text": {
+          "expected": "harbor engineering",
+          "actual": "search harbor engineering keep higher than the of the exactly treatment would be welcome an illustrated edition is welcome",
+          "mask": {
+            "reason": "Source explicitly owns a definite semantic topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "UNSUPPORTED",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "title_text"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            216,
+            264
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "but optional",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "roles.segment.advisory"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "32119e2871b202cdd252",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            252,
+            264
+          ],
+          "source_text": "but optional",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "but optional"
+        },
+        {
+          "clause_span": [
+            108,
+            147
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Exclude whole searchable word \"piracy\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_text"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "58dd2e8062774e762a6f",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            109,
+            147
+          ],
+          "source_text": "Exclude whole searchable word \"piracy\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "piracy"
+        },
+        {
+          "clause_span": [
+            148,
+            174
+          ],
+          "field": "sort",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Sort highest rating first",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.sort"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "0c91eceab58a0be92b6c",
+          "resolution": "RESOLVED",
+          "source_role": "USER_REQUESTED_OPERATION",
+          "source_span": [
+            149,
+            174
+          ],
+          "source_text": "Sort highest rating first",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "RATING"
+        },
+        {
+          "clause_span": [
+            26,
+            107
+          ],
+          "field": "title",
+          "modality": "MUST",
+          "operator": "CONTAINS",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "titled \"The Copper Tide\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ir.literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "61634c711c385b6d6b86",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            83,
+            107
+          ],
+          "source_text": "titled \"The Copper Tide\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "the copper tide"
+        },
+        {
+          "clause_span": [
+            175,
+            215
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Introductory",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "surface.descriptive_preference"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "21b309729709ae94d8da",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            176,
+            188
+          ],
+          "source_text": "Introductory",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Introductory / beginner (preference)"
+        },
+        {
+          "clause_span": [
+            0,
+            25
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "Search harbor engineering",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "5350dd46317c5085ab41",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            25
+          ],
+          "source_text": "Search harbor engineering",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Search harbor engineering"
+        },
+        {
+          "clause_span": [
+            26,
+            107
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Keep ratings higher than the rating of the book exactly ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "51366328ece7e3e25629",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            26,
+            83
+          ],
+          "source_text": " Keep ratings higher than the rating of the book exactly ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Keep ratings higher than the rating of the book exactly"
+        },
+        {
+          "clause_span": [
+            175,
+            215
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " treatment would be welcome",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "f24c516e78fd3f9b6b2e",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            188,
+            215
+          ],
+          "source_text": " treatment would be welcome",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "treatment would be welcome"
+        },
+        {
+          "clause_span": [
+            216,
+            264
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " An illustrated edition is welcome",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "765e5e5d7acb2e427585",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            216,
+            250
+          ],
+          "source_text": " An illustrated edition is welcome",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "An illustrated edition is welcome"
+        }
+      ],
+      "normative_rationale": "A numeric boundary depends on another record current rating. The native contract provides no such lookup/join: UNSUPPORTED. A comparison reference title is not a result-title predicate."
+    },
+    {
+      "case_id": "v8_fresh_35_03",
+      "query": "For our collection session, find boat restoration: Sort titles A to Z. Exactly titled \"The Copper Tide\". By author text \"O. L. Vale\". Require rating at least 3.6. Keep prices of at most 25 dollars.",
+      "scope": "PUBLIC_TENANT_STAFF",
+      "expected": "UNSUPPORTED",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "author_text": {
+          "expected": "O. L. Vale",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "exact_text": {
+          "expected": "The Copper Tide",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "title_text": {
+          "expected": null,
+          "actual": "the copper tide",
+          "mask": {
+            "reason": "No mandatory source constraint for this native field.",
+            "status": "APPLICABLE_ABSENCE"
+          }
+        },
+        "semantic_text": {
+          "expected": "boat restoration",
+          "actual": "for our collection session boat restoration: . exactly by author text o. l. vale keep prices of at most 25 dollars",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "UNSUPPORTED",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "author_text",
+        "exact_text",
+        "title_text"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            0,
+            103
+          ],
+          "field": "sort",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Sort titles A to Z",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.sort"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "820eaa0f5d7e4e8442ba",
+          "resolution": "RESOLVED",
+          "source_role": "USER_REQUESTED_OPERATION",
+          "source_span": [
+            51,
+            69
+          ],
+          "source_text": "Sort titles A to Z",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "TITLE"
+        },
+        {
+          "clause_span": [
+            133,
+            161
+          ],
+          "field": "rating",
+          "modality": "MUST",
+          "operator": ">=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "rating at least 3.6",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "rating.field_operator"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "0b3a7235c4015bd060e7",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            142,
+            161
+          ],
+          "source_text": "rating at least 3.6",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": 3.6
+        },
+        {
+          "clause_span": [
+            0,
+            103
+          ],
+          "field": "title",
+          "modality": "MUST",
+          "operator": "CONTAINS",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "titled \"The Copper Tide\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ir.literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "0e4b3f2b4c762f0784c0",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            79,
+            103
+          ],
+          "source_text": "titled \"The Copper Tide\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "the copper tide"
+        },
+        {
+          "clause_span": [
+            0,
+            103
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "For our collection session",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "2e852c961d8ac692c33c",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            26
+          ],
+          "source_text": "For our collection session",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "For our collection session"
+        },
+        {
+          "clause_span": [
+            0,
+            103
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "find boat restoration: ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "6a1d6d8c48205138d0d3",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            28,
+            51
+          ],
+          "source_text": "find boat restoration: ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "find boat restoration:"
+        },
+        {
+          "clause_span": [
+            0,
+            103
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": ". Exactly ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "3c8539c1cd9be7ab4544",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            69,
+            79
+          ],
+          "source_text": ". Exactly ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": ". Exactly"
+        },
+        {
+          "clause_span": [
+            104,
+            132
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By author text \"O. L. Vale\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "90fa41409279c9453a42",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            104,
+            132
+          ],
+          "source_text": " By author text \"O. L. Vale\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By author text \"O. L. Vale\""
+        },
+        {
+          "clause_span": [
+            162,
+            196
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Keep prices of at most 25 dollars",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "01b6df20598d93649063",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            162,
+            196
+          ],
+          "source_text": " Keep prices of at most 25 dollars",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Keep prices of at most 25 dollars"
+        }
+      ],
+      "normative_rationale": "Native contract lacks this negative-author or price/page metadata operation."
+    },
+    {
+      "case_id": "v8_fresh_35_05",
+      "query": "I am preparing a reading list about festival cooking. Exclude prices above 35 dollars. Require rating at least 3.8. By author text \"Anika Rao\". Exclude whole searchable word \"vampire\". A beginner approach is preferable.",
+      "scope": "PRIVATE_TENANT_STAFF",
+      "expected": "UNSUPPORTED",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "author_text": {
+          "expected": "Anika Rao",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "exclude_terms": {
+          "expected": [
+            "vampire"
+          ],
+          "actual": [
+            "prices above 35 dollars",
+            "vampire"
+          ],
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "semantic_text": {
+          "expected": "festival cooking",
+          "actual": "i am preparing a reading list festival cooking by author text anika rao",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "UNSUPPORTED",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "author_text",
+        "exclude_terms"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            184,
+            218
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": " A beginner approach is preferable",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.advisory"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "0a39c421cf787f8fb1bd",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            184,
+            218
+          ],
+          "source_text": " A beginner approach is preferable",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "a beginner approach is preferable"
+        },
+        {
+          "clause_span": [
+            53,
+            85
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Exclude prices above 35 dollars",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_literal"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "367b4223576efc2c4786",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            54,
+            85
+          ],
+          "source_text": "Exclude prices above 35 dollars",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "prices above 35 dollars"
+        },
+        {
+          "clause_span": [
+            143,
+            183
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Exclude whole searchable word \"vampire\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_text"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "e486e1b7e84c30d5718f",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            144,
+            183
+          ],
+          "source_text": "Exclude whole searchable word \"vampire\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "vampire"
+        },
+        {
+          "clause_span": [
+            86,
+            114
+          ],
+          "field": "rating",
+          "modality": "MUST",
+          "operator": ">=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "rating at least 3.8",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "rating.field_operator"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "bb4b5d4177cd14826e1e",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            95,
+            114
+          ],
+          "source_text": "rating at least 3.8",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": 3.8
+        },
+        {
+          "clause_span": [
+            0,
+            52
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "I am preparing a reading list about festival cooking",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "f7262d4bf13eb498a7c5",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            0,
+            52
+          ],
+          "source_text": "I am preparing a reading list about festival cooking",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "I am preparing a reading list about festival cooking"
+        },
+        {
+          "clause_span": [
+            115,
+            142
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By author text \"Anika Rao\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "91c4eb1bcde9f34621b5",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            115,
+            142
+          ],
+          "source_text": " By author text \"Anika Rao\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By author text \"Anika Rao\""
+        }
+      ],
+      "normative_rationale": "Native contract lacks this negative-author or price/page metadata operation."
+    },
+    {
+      "case_id": "v8_fresh_39_04",
+      "query": "Use online format, but remove every record with online access. Search regional kitchens; By author text \"O. L. Vale\". Exclude whole searchable word \"gladiator\". Sort newest first. Introductory treatment would be welcome.",
+      "scope": "PRIVATE_TENANT_PATRON",
+      "expected": "CONTRADICTORY",
+      "actual": "EXECUTABLE",
+      "mismatches": {
+        "author_text": {
+          "expected": "O. L. Vale",
+          "actual": null,
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "excluded_formats": {
+          "expected": [
+            "ONLINE"
+          ],
+          "actual": [],
+          "mask": {
+            "reason": "Explicit resolved source constraint.",
+            "status": "APPLICABLE"
+          }
+        },
+        "semantic_text": {
+          "expected": "regional kitchens",
+          "actual": "remove every record search regional kitchens by author text o. l. vale treatment would be welcome",
+          "mask": {
+            "reason": "Definite literal topic.",
+            "status": "APPLICABLE"
+          }
+        },
+        "decision": {
+          "expected": "CONTRADICTORY",
+          "actual": "EXECUTABLE"
+        },
+        "execution_allowed": {
+          "expected": false,
+          "actual": true
+        }
+      },
+      "critical_fields": [
+        "author_text",
+        "excluded_formats"
+      ],
+      "recorded_coverage_complete": true,
+      "proof_violations": [],
+      "source_requirements": [
+        {
+          "clause_span": [
+            117,
+            159
+          ],
+          "field": "exclude",
+          "modality": "MUST_NOT",
+          "operator": "TEXT_NOT",
+          "ownership": "MANDATORY",
+          "polarity": "NEGATIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Exclude whole searchable word \"gladiator\"",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.negative_text"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "c98727512238a30777bb",
+          "resolution": "RESOLVED",
+          "source_role": "EXPLICIT_EXCLUSION",
+          "source_span": [
+            118,
+            159
+          ],
+          "source_text": "Exclude whole searchable word \"gladiator\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "gladiator"
+        },
+        {
+          "clause_span": [
+            160,
+            178
+          ],
+          "field": "sort",
+          "modality": "MUST",
+          "operator": "=",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Sort newest first",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "ownership.sort"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "a6bfb76a178b1f2ebece",
+          "resolution": "RESOLVED",
+          "source_role": "USER_REQUESTED_OPERATION",
+          "source_span": [
+            161,
+            178
+          ],
+          "source_text": "Sort newest first",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "NEWEST"
+        },
+        {
+          "clause_span": [
+            0,
+            61
+          ],
+          "field": "format",
+          "modality": "MUST",
+          "operator": "PRESENT",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "online format",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "format.online"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "2982e1f0f0c284b6c15c",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            4,
+            17
+          ],
+          "source_text": "online format",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "ONLINE"
+        },
+        {
+          "clause_span": [
+            0,
+            61
+          ],
+          "field": "format",
+          "modality": "MUST",
+          "operator": "PRESENT",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "online access",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "format.online"
+          },
+          "representation": "HARD_FILTER",
+          "requirement_id": "5c4aede3ff19c46003fa",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            48,
+            61
+          ],
+          "source_text": "online access",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "ONLINE"
+        },
+        {
+          "clause_span": [
+            179,
+            219
+          ],
+          "field": "preference",
+          "modality": "SHOULD",
+          "operator": "SOFT",
+          "ownership": "ADVISORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "grammar_edits": [],
+            "interpreted_text": "Introductory",
+            "origin": "SOURCE_RECOGNIZER",
+            "recognizer": "surface.descriptive_preference"
+          },
+          "representation": "ADVISORY",
+          "requirement_id": "4f1f40c40e7c848365ce",
+          "resolution": "RESOLVED",
+          "source_role": "OPTIONAL_PREFERENCE",
+          "source_span": [
+            180,
+            192
+          ],
+          "source_text": "Introductory",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Introductory / beginner (preference)"
+        },
+        {
+          "clause_span": [
+            0,
+            61
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": "but remove every record with ",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "296e02860a3759a4f6ad",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            19,
+            48
+          ],
+          "source_text": "but remove every record with ",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "but remove every record with"
+        },
+        {
+          "clause_span": [
+            62,
+            87
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " Search regional kitchens",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "8e612b8a78106f30aee4",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            62,
+            87
+          ],
+          "source_text": " Search regional kitchens",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "Search regional kitchens"
+        },
+        {
+          "clause_span": [
+            88,
+            116
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " By author text \"O. L. Vale\"",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "9a93c88566737a6708e1",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            88,
+            116
+          ],
+          "source_text": " By author text \"O. L. Vale\"",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "By author text \"O. L. Vale\""
+        },
+        {
+          "clause_span": [
+            179,
+            219
+          ],
+          "field": "semantic_residue",
+          "modality": "MUST",
+          "operator": "TOPIC",
+          "ownership": "MANDATORY",
+          "polarity": "POSITIVE",
+          "provenance": {
+            "interpreted_text": " treatment would be welcome",
+            "recognizer": "contract.semantic_residue"
+          },
+          "representation": "SEMANTIC_RETRIEVAL",
+          "requirement_id": "a8219acceee9b1a6c231",
+          "resolution": "RESOLVED",
+          "source_role": "MANDATORY_SEARCH_CONDITION",
+          "source_span": [
+            192,
+            219
+          ],
+          "source_text": " treatment would be welcome",
+          "state": "EXPLICITLY_SUPPLIED",
+          "support": "SUPPORTED",
+          "value": "treatment would be welcome"
+        }
+      ],
+      "normative_rationale": "Resolved mandatory predicates cannot simultaneously hold on one record; no correction supersedes them."
+    }
+  ],
+  "critical_case_ids": [
+    "v8_fresh_01_01",
+    "v8_fresh_01_04",
+    "v8_fresh_03_04",
+    "v8_fresh_03_05",
+    "v8_fresh_05_04",
+    "v8_fresh_06_03",
+    "v8_fresh_06_04",
+    "v8_fresh_07_01",
+    "v8_fresh_07_04",
+    "v8_fresh_08_01",
+    "v8_fresh_08_02",
+    "v8_fresh_08_03",
+    "v8_fresh_08_04",
+    "v8_fresh_08_05",
+    "v8_fresh_09_01",
+    "v8_fresh_09_03",
+    "v8_fresh_09_04",
+    "v8_fresh_11_02",
+    "v8_fresh_11_04",
+    "v8_fresh_12_01",
+    "v8_fresh_16_03",
+    "v8_fresh_17_02",
+    "v8_fresh_17_03",
+    "v8_fresh_17_04",
+    "v8_fresh_18_01",
+    "v8_fresh_20_01",
+    "v8_fresh_30_05",
+    "v8_fresh_32_01",
+    "v8_fresh_35_03",
+    "v8_fresh_35_05",
+    "v8_fresh_39_04"
+  ],
+  "missed_case_ids": [
+    "v8_fresh_01_03",
+    "v8_fresh_01_05",
+    "v8_fresh_02_01",
+    "v8_fresh_02_02",
+    "v8_fresh_02_03",
+    "v8_fresh_02_04",
+    "v8_fresh_02_05",
+    "v8_fresh_03_01",
+    "v8_fresh_03_02",
+    "v8_fresh_03_03",
+    "v8_fresh_04_01",
+    "v8_fresh_04_02",
+    "v8_fresh_04_03",
+    "v8_fresh_04_04",
+    "v8_fresh_04_05",
+    "v8_fresh_05_01",
+    "v8_fresh_05_02",
+    "v8_fresh_05_03",
+    "v8_fresh_05_05",
+    "v8_fresh_06_01",
+    "v8_fresh_06_02",
+    "v8_fresh_06_05",
+    "v8_fresh_07_02",
+    "v8_fresh_07_03",
+    "v8_fresh_07_05",
+    "v8_fresh_09_02",
+    "v8_fresh_09_05",
+    "v8_fresh_10_01",
+    "v8_fresh_10_02",
+    "v8_fresh_10_03",
+    "v8_fresh_10_04",
+    "v8_fresh_10_05",
+    "v8_fresh_11_01",
+    "v8_fresh_11_03",
+    "v8_fresh_12_03",
+    "v8_fresh_12_04",
+    "v8_fresh_12_05",
+    "v8_fresh_13_01",
+    "v8_fresh_13_02",
+    "v8_fresh_13_03",
+    "v8_fresh_13_04",
+    "v8_fresh_13_05",
+    "v8_fresh_14_01",
+    "v8_fresh_14_02",
+    "v8_fresh_14_03",
+    "v8_fresh_14_04",
+    "v8_fresh_14_05"
+  ],
+  "limitations": [
+    "Strict semantic string mismatch is not a vector relevance judgment.",
+    "Incorrect nonempty scalar replacement is counted conservatively as both lost intended value and invented actual value.",
+    "Development success did not qualify generalization; no new phrase patches or acceptance rerun performed."
+  ],
+  "next_bounded_investigation": {
+    "objective": "Replace the recognition/coverage circularity with a compositional typed source front end or a schema-constrained learned proposal component plus independent proof. Compare complete pipelines on newly declared development data; do not extend phrase lists indefinitely.",
+    "cached_model_resource_requirement_available_RAM_bytes": 7784628224,
+    "model_quality_requirement": "Repair and freeze schema/domain/operator/source ownership extraction; more RAM alone does not fix0/2 schema-valid observed predictions.",
+    "model_policy": "Existing cached revision only under guards; no training/downloads/remote inference without separate authorization.",
+    "acceptance_policy": "This205-context primary is now exposed development. Any later acceptance needs a new independently authored/reviewed isolated set after another complete freeze."
+  }
+}

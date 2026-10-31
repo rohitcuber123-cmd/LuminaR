@@ -1,0 +1,669 @@
+{
+  "surface": "scripts/diagnose_library_intelligence.py",
+  "transport": "Actual local subprocess CLI / auth-enabled Mongo / built-in database read principal",
+  "production_operator_credential_provisioned": false,
+  "browser": "NOT_RUN; CLI surface chosen",
+  "steps": [
+    {
+      "check": "Authorized operator inspects a private library; FIFO ties are a range and barrier evidence is explicit",
+      "passed": true
+    },
+    {
+      "check": "No operator credential denied",
+      "passed": true
+    },
+    {
+      "check": "Platform application identity grants no operator authority",
+      "passed": true
+    },
+    {
+      "check": "General application identity denied",
+      "passed": true
+    },
+    {
+      "check": "Wrong database credential denied",
+      "passed": true
+    },
+    {
+      "check": "Real durable RUNNING state and recent renewal do not claim a healthy process or progressing work",
+      "passed": true
+    },
+    {
+      "check": "Stale heartbeat is distinguishable from recent renewal",
+      "passed": true
+    },
+    {
+      "check": "Expired lease is a derived recovery observation; durable state is untouched",
+      "passed": true
+    },
+    {
+      "check": "FAILED is known failure; last published generation remains separately visible and checksum-anchored",
+      "passed": true
+    },
+    {
+      "check": "Unknown publication after pointer update is distinct from FAILED and requires manual investigation",
+      "passed": true
+    },
+    {
+      "check": "Invalid retained temporary generation is visible without repair, promotion or deletion",
+      "passed": true
+    },
+    {
+      "check": "Missing or never-created temporary/final candidates are reported without guessing the outcome",
+      "passed": true
+    },
+    {
+      "check": "Readable text and structured JSON use the same bounded diagnostic model",
+      "passed": true
+    },
+    {
+      "check": "Every actual diagnostic call preserves durable rows, artifact bytes and mtimes; no global rebuild path exists",
+      "passed": true
+    }
+  ],
+  "observations": [
+    {
+      "case": "private_queued",
+      "report": {
+        "schema": "tenant-intelligence-diagnostics-v1",
+        "observation_started_at": "2026-10-29T19:57:25.141232+00:00",
+        "observed_at": "2026-10-29T19:57:25.162905+00:00",
+        "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+        "read_only": true,
+        "authorization": "LOCAL_MONGODB_AUTHENTICATED_READ_PRINCIPAL; not application/platform authority",
+        "consistency": "BEST_EFFORT_READ_ONLY; not a transactional snapshot",
+        "jobs": [
+          {
+            "job_id": "8fc526a6-32cb-48bc-ad18-43597092924a",
+            "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+            "target": "SEARCH_INDEX",
+            "state": "QUEUED",
+            "stage": "QUEUED",
+            "worker_reference": null,
+            "progress": {
+              "current": 2,
+              "total": 10,
+              "last_progress_at": "NOT_AVAILABLE",
+              "recency": "UNKNOWN"
+            },
+            "created_at": "2026-10-29T19:47:23.106000+00:00",
+            "queued_at": "2026-10-29T19:47:23.106000+00:00",
+            "queued_at_basis": "created_at; no separate queued timestamp",
+            "started_at": null,
+            "heartbeat_at": "2026-10-29T19:57:18.106000+00:00",
+            "heartbeat_age_seconds": 7.056905,
+            "heartbeat_evidence": "RECENT",
+            "lease_expires_at": "2026-10-29T19:58:48.106000+00:00",
+            "lease_valid": true,
+            "last_updated_at": "NOT_AVAILABLE",
+            "completed_at": null,
+            "duration_seconds": null,
+            "duration_basis": "elapsed observation",
+            "failure_category": null,
+            "recovery_required": false,
+            "lease_expired": false,
+            "publication_outcome": "NOT_TERMINAL",
+            "manual_intervention_required": false,
+            "artifact_generation_id": "929fb2ad-774d-48ab-83b7-927aebea3ea7",
+            "source_generation_id": "4452a6bc-138b-4d07-a05a-92350f514eaf"
+          }
+        ],
+        "selected_job": {
+          "job_id": "8fc526a6-32cb-48bc-ad18-43597092924a",
+          "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+          "target": "SEARCH_INDEX",
+          "state": "QUEUED",
+          "stage": "QUEUED",
+          "worker_reference": null,
+          "progress": {
+            "current": 2,
+            "total": 10,
+            "last_progress_at": "NOT_AVAILABLE",
+            "recency": "UNKNOWN"
+          },
+          "created_at": "2026-10-29T19:47:23.106000+00:00",
+          "queued_at": "2026-10-29T19:47:23.106000+00:00",
+          "queued_at_basis": "created_at; no separate queued timestamp",
+          "started_at": null,
+          "heartbeat_at": "2026-10-29T19:57:18.106000+00:00",
+          "heartbeat_age_seconds": 7.056905,
+          "heartbeat_evidence": "RECENT",
+          "lease_expires_at": "2026-10-29T19:58:48.106000+00:00",
+          "lease_valid": true,
+          "last_updated_at": "NOT_AVAILABLE",
+          "completed_at": null,
+          "duration_seconds": null,
+          "duration_basis": "elapsed observation",
+          "failure_category": null,
+          "recovery_required": false,
+          "lease_expired": false,
+          "publication_outcome": "NOT_TERMINAL",
+          "manual_intervention_required": false,
+          "artifact_generation_id": "929fb2ad-774d-48ab-83b7-927aebea3ea7",
+          "source_generation_id": "4452a6bc-138b-4d07-a05a-92350f514eaf"
+        },
+        "tenant_active_jobs": [
+          {
+            "job_id": "8fc526a6-32cb-48bc-ad18-43597092924a",
+            "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+            "target": "SEARCH_INDEX",
+            "state": "QUEUED",
+            "stage": "QUEUED",
+            "worker_reference": null,
+            "progress": {
+              "current": 2,
+              "total": 10,
+              "last_progress_at": "NOT_AVAILABLE",
+              "recency": "UNKNOWN"
+            },
+            "created_at": "2026-10-29T19:47:23.106000+00:00",
+            "queued_at": "2026-10-29T19:47:23.106000+00:00",
+            "queued_at_basis": "created_at; no separate queued timestamp",
+            "started_at": null,
+            "heartbeat_at": "2026-10-29T19:57:18.106000+00:00",
+            "heartbeat_age_seconds": 7.056905,
+            "heartbeat_evidence": "RECENT",
+            "lease_expires_at": "2026-10-29T19:58:48.106000+00:00",
+            "lease_valid": true,
+            "last_updated_at": "NOT_AVAILABLE",
+            "completed_at": null,
+            "duration_seconds": null,
+            "duration_basis": "elapsed observation",
+            "failure_category": null,
+            "recovery_required": false,
+            "lease_expired": false,
+            "publication_outcome": "NOT_TERMINAL",
+            "manual_intervention_required": false,
+            "artifact_generation_id": "929fb2ad-774d-48ab-83b7-927aebea3ea7",
+            "source_generation_id": "4452a6bc-138b-4d07-a05a-92350f514eaf"
+          }
+        ],
+        "pagination": {
+          "limit": 20,
+          "has_more": false,
+          "next_cursor": null,
+          "order": "Mongo insertion _id descending; not FIFO order",
+          "filter_states": [
+            "FAILED",
+            "PUBLISHING",
+            "QUEUED",
+            "RECOVERY_REQUIRED",
+            "RUNNING",
+            "SUCCEEDED",
+            "VALIDATING"
+          ]
+        },
+        "worker": {
+          "classification": "STALE_HEARTBEAT",
+          "process_alive": "UNKNOWN",
+          "startup": "NOT_AVAILABLE",
+          "shutdown": "NOT_AVAILABLE",
+          "restart": "NOT_AVAILABLE",
+          "current_executing_observations": [
+            {
+              "job_id": "7c065b7d-2a39-424d-b009-83d377130167",
+              "library_id": "da7d5e1e-fc09-4caf-a366-c0163b533752",
+              "target": "SEARCH_INDEX",
+              "state": "RUNNING",
+              "stage": "EMBEDDING",
+              "worker_reference": null,
+              "progress": {
+                "current": 2,
+                "total": 10,
+                "last_progress_at": "NOT_AVAILABLE",
+                "recency": "UNKNOWN"
+              },
+              "created_at": "2026-10-29T19:55:23.106000+00:00",
+              "queued_at": "2026-10-29T19:55:23.106000+00:00",
+              "queued_at_basis": "created_at; no separate queued timestamp",
+              "started_at": "2026-10-29T18:57:23.106000+00:00",
+              "heartbeat_at": "2026-10-29T19:57:18.106000+00:00",
+              "heartbeat_age_seconds": 7.056905,
+              "heartbeat_evidence": "RECENT",
+              "lease_expires_at": "2026-10-29T19:58:48.106000+00:00",
+              "lease_valid": true,
+              "last_updated_at": "NOT_AVAILABLE",
+              "completed_at": null,
+              "duration_seconds": 3602.056905,
+              "duration_basis": "elapsed observation",
+              "failure_category": null,
+              "recovery_required": false,
+              "lease_expired": false,
+              "publication_outcome": "NOT_TERMINAL",
+              "manual_intervention_required": false,
+              "artifact_generation_id": "30f03ebd-e093-4d4f-b8e5-8f9dd2ea04e8",
+              "source_generation_id": "e8cc3d24-a4ac-485e-bdcf-43f01eedffa7"
+            },
+            {
+              "job_id": "0315ac6b-db34-449f-86ea-ad054a770d83",
+              "library_id": "367257ec-7211-484c-99ce-0efb30df5abd",
+              "target": "SEARCH_INDEX",
+              "state": "RUNNING",
+              "stage": "EMBEDDING",
+              "worker_reference": null,
+              "progress": {
+                "current": 2,
+                "total": 10,
+                "last_progress_at": "NOT_AVAILABLE",
+                "recency": "UNKNOWN"
+              },
+              "created_at": "2026-10-29T19:55:23.106000+00:00",
+              "queued_at": "2026-10-29T19:55:23.106000+00:00",
+              "queued_at_basis": "created_at; no separate queued timestamp",
+              "started_at": "2026-10-29T19:56:23.106000+00:00",
+              "heartbeat_at": "2026-10-29T19:56:38.106000+00:00",
+              "heartbeat_age_seconds": 47.056905,
+              "heartbeat_evidence": "STALE",
+              "lease_expires_at": "2026-10-29T19:58:48.106000+00:00",
+              "lease_valid": true,
+              "last_updated_at": "NOT_AVAILABLE",
+              "completed_at": null,
+              "duration_seconds": 62.056905,
+              "duration_basis": "elapsed observation",
+              "failure_category": null,
+              "recovery_required": false,
+              "lease_expired": false,
+              "publication_outcome": "NOT_TERMINAL",
+              "manual_intervention_required": false,
+              "artifact_generation_id": "d6cf14bf-89b0-4d52-a5dd-cf58c8cafa22",
+              "source_generation_id": "5b1327f3-bd8a-49d7-9bd2-6babf35068f9"
+            },
+            {
+              "job_id": "4adc70c0-34fd-47c4-8db5-7ebe541a5f91",
+              "library_id": "0322157c-af96-4319-8d69-f0af54b8ffdb",
+              "target": "SEARCH_INDEX",
+              "state": "RUNNING",
+              "stage": "EMBEDDING",
+              "worker_reference": null,
+              "progress": {
+                "current": 2,
+                "total": 10,
+                "last_progress_at": "NOT_AVAILABLE",
+                "recency": "UNKNOWN"
+              },
+              "created_at": "2026-10-29T19:55:23.106000+00:00",
+              "queued_at": "2026-10-29T19:55:23.106000+00:00",
+              "queued_at_basis": "created_at; no separate queued timestamp",
+              "started_at": "2026-10-29T19:56:23.106000+00:00",
+              "heartbeat_at": "2026-10-29T19:57:18.106000+00:00",
+              "heartbeat_age_seconds": 7.056905,
+              "heartbeat_evidence": "RECENT",
+              "lease_expires_at": "2026-10-29T19:57:22.106000+00:00",
+              "lease_valid": false,
+              "last_updated_at": "NOT_AVAILABLE",
+              "completed_at": null,
+              "duration_seconds": 62.056905,
+              "duration_basis": "elapsed observation",
+              "failure_category": null,
+              "recovery_required": true,
+              "lease_expired": true,
+              "publication_outcome": "UNKNOWN",
+              "manual_intervention_required": true,
+              "artifact_generation_id": "caff411d-e798-42cd-8727-3c5dbdd33eb2",
+              "source_generation_id": "bd6286aa-5e07-4815-b9b8-4bfd40e3f7e9"
+            }
+          ],
+          "observed_worker_references": [],
+          "reason": "Job renewal is stale or its lease expired; this does not prove the process is dead.",
+          "heartbeat_recent_window_seconds": 30,
+          "heartbeat_window_basis": "three existing ten-second renewal intervals; diagnostic only",
+          "progress_recency": "UNKNOWN",
+          "health_is_durable_job_state": false
+        },
+        "queue": {
+          "scope": "AUTHORIZED_DATABASE_JOB_QUEUE; intentionally includes other tenant UUIDs",
+          "queued_total": 2,
+          "executing_total": 3,
+          "recovery_required_total": 1,
+          "oldest_queued_age_seconds": 602.056905,
+          "executing_total_basis": "durable executing states; not proof of a live process",
+          "oldest_observed_jobs": [
+            {
+              "job_id": "8fc526a6-32cb-48bc-ad18-43597092924a",
+              "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+              "target": "SEARCH_INDEX",
+              "state": "QUEUED",
+              "stage": "QUEUED",
+              "worker_reference": null,
+              "progress": {
+                "current": 2,
+                "total": 10,
+                "last_progress_at": "NOT_AVAILABLE",
+                "recency": "UNKNOWN"
+              },
+              "created_at": "2026-10-29T19:47:23.106000+00:00",
+              "queued_at": "2026-10-29T19:47:23.106000+00:00",
+              "queued_at_basis": "created_at; no separate queued timestamp",
+              "started_at": null,
+              "heartbeat_at": "2026-10-29T19:57:18.106000+00:00",
+              "heartbeat_age_seconds": 7.056905,
+              "heartbeat_evidence": "RECENT",
+              "lease_expires_at": "2026-10-29T19:58:48.106000+00:00",
+              "lease_valid": true,
+              "last_updated_at": "NOT_AVAILABLE",
+              "completed_at": null,
+              "duration_seconds": null,
+              "duration_basis": "elapsed observation",
+              "failure_category": null,
+              "recovery_required": false,
+              "lease_expired": false,
+              "publication_outcome": "NOT_TERMINAL",
+              "manual_intervention_required": false,
+              "artifact_generation_id": "929fb2ad-774d-48ab-83b7-927aebea3ea7",
+              "source_generation_id": "4452a6bc-138b-4d07-a05a-92350f514eaf",
+              "tenant_barrier_observed": true
+            },
+            {
+              "job_id": "a2ba7ce4-af8d-4fb2-bd82-c2dcf6325b4d",
+              "library_id": "05cdad4a-d18c-4a33-a05a-b52fcc546537",
+              "target": "SEARCH_INDEX",
+              "state": "QUEUED",
+              "stage": "QUEUED",
+              "worker_reference": null,
+              "progress": {
+                "current": 2,
+                "total": 10,
+                "last_progress_at": "NOT_AVAILABLE",
+                "recency": "UNKNOWN"
+              },
+              "created_at": "2026-10-29T19:47:23.106000+00:00",
+              "queued_at": "2026-10-29T19:47:23.106000+00:00",
+              "queued_at_basis": "created_at; no separate queued timestamp",
+              "started_at": null,
+              "heartbeat_at": "2026-10-29T19:57:18.106000+00:00",
+              "heartbeat_age_seconds": 7.056905,
+              "heartbeat_evidence": "RECENT",
+              "lease_expires_at": "2026-10-29T19:58:48.106000+00:00",
+              "lease_valid": true,
+              "last_updated_at": "NOT_AVAILABLE",
+              "completed_at": null,
+              "duration_seconds": null,
+              "duration_basis": "elapsed observation",
+              "failure_category": null,
+              "recovery_required": false,
+              "lease_expired": false,
+              "publication_outcome": "NOT_TERMINAL",
+              "manual_intervention_required": false,
+              "artifact_generation_id": "5e27d000-95d2-4613-9a41-68e9391f2131",
+              "source_generation_id": "4a4e8586-63a0-44e4-bd4d-ba2ed61595f9",
+              "tenant_barrier_observed": false
+            }
+          ],
+          "executing_observations_truncated": false,
+          "selected_job_position_range": {
+            "minimum": 1,
+            "maximum": 2,
+            "basis": "created_at FIFO; worker has no tie-breaker; approximate point-in-time range"
+          },
+          "eta": "NOT_AVAILABLE",
+          "head_of_line": "POTENTIAL_TENANT_BARRIER_BLOCK",
+          "wait_policy": "No ETA, queue age is observed; no prolonged-wait SLO exists. Ties are not deterministic."
+        },
+        "targets": [
+          {
+            "target": "SEARCH_INDEX",
+            "stored_state": "UNKNOWN",
+            "published_generation_id": null,
+            "previous_generation_id": null,
+            "published_by_job_id": null,
+            "record_count": null,
+            "manifest_observation": "NO_PUBLISHED_REFERENCE",
+            "published_checksum_integrity": "NOT_VERIFIED",
+            "runtime_usable": "NOT_DETERMINED; catalogue freshness and native structure not checked",
+            "last_good_reference_present": false,
+            "previous_retained_reference_present": false,
+            "latest_observed_attempt": {
+              "job_id": "8fc526a6-32cb-48bc-ad18-43597092924a",
+              "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+              "target": "SEARCH_INDEX",
+              "state": "QUEUED",
+              "stage": "QUEUED",
+              "worker_reference": null,
+              "progress": {
+                "current": 2,
+                "total": 10,
+                "last_progress_at": "NOT_AVAILABLE",
+                "recency": "UNKNOWN"
+              },
+              "created_at": "2026-10-29T19:47:23.106000+00:00",
+              "queued_at": "2026-10-29T19:47:23.106000+00:00",
+              "queued_at_basis": "created_at; no separate queued timestamp",
+              "started_at": null,
+              "heartbeat_at": "2026-10-29T19:57:18.106000+00:00",
+              "heartbeat_age_seconds": 7.056905,
+              "heartbeat_evidence": "RECENT",
+              "lease_expires_at": "2026-10-29T19:58:48.106000+00:00",
+              "lease_valid": true,
+              "last_updated_at": "NOT_AVAILABLE",
+              "completed_at": null,
+              "duration_seconds": null,
+              "duration_basis": "elapsed observation",
+              "failure_category": null,
+              "recovery_required": false,
+              "lease_expired": false,
+              "publication_outcome": "NOT_TERMINAL",
+              "manual_intervention_required": false,
+              "artifact_generation_id": "929fb2ad-774d-48ab-83b7-927aebea3ea7",
+              "source_generation_id": "4452a6bc-138b-4d07-a05a-92350f514eaf"
+            },
+            "latest_observed_timestamp_tie": false,
+            "latest_attempt_coverage": "bounded page, selected job and current tenant active jobs; not complete history",
+            "manual_investigation_required": false
+          },
+          {
+            "target": "KNOWLEDGE_GRAPH",
+            "stored_state": "READY",
+            "published_generation_id": "01878580-6bc7-4e63-b495-5b94779d06c8",
+            "previous_generation_id": null,
+            "published_by_job_id": "f3193c4b-4db4-476e-af26-72c7336acfd5",
+            "record_count": 0,
+            "manifest_observation": "POINTER_ANCHORED_MANIFEST",
+            "published_checksum_integrity": "VERIFIED_WITHIN_BUDGET",
+            "runtime_usable": "NOT_DETERMINED; catalogue freshness and native structure not checked",
+            "last_good_reference_present": true,
+            "previous_retained_reference_present": false,
+            "latest_observed_attempt": null,
+            "latest_observed_timestamp_tie": false,
+            "latest_attempt_coverage": "bounded page, selected job and current tenant active jobs; not complete history",
+            "manual_investigation_required": false
+          }
+        ],
+        "artifacts": {
+          "generations": [
+            {
+              "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+              "target": "SEARCH_INDEX",
+              "generation_id": "929fb2ad-774d-48ab-83b7-927aebea3ea7",
+              "temporary": false,
+              "manifest": "MISSING_GENERATION",
+              "checksums": "NOT_REQUESTED",
+              "ownership": "NOT_VERIFIED",
+              "directory_present": false,
+              "known_file_bytes": 0,
+              "native_structure": "NOT_CHECKED",
+              "record_ownership": "NOT_CHECKED",
+              "catalogue_freshness": "NOT_CHECKED",
+              "reference": "job_artifact_reference",
+              "associated_jobs": [
+                {
+                  "job_id": "8fc526a6-32cb-48bc-ad18-43597092924a",
+                  "state": "QUEUED"
+                }
+              ],
+              "job_reference": "NOT_VERIFIED",
+              "reconciliation": "NOT_CREATED_OR_MISSING",
+              "dataset_reference": "NOT_VERIFIED"
+            },
+            {
+              "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+              "target": "SEARCH_INDEX",
+              "generation_id": "929fb2ad-774d-48ab-83b7-927aebea3ea7",
+              "temporary": true,
+              "manifest": "MISSING_GENERATION",
+              "checksums": "NOT_REQUESTED",
+              "ownership": "NOT_VERIFIED",
+              "directory_present": false,
+              "known_file_bytes": 0,
+              "native_structure": "NOT_CHECKED",
+              "record_ownership": "NOT_CHECKED",
+              "catalogue_freshness": "NOT_CHECKED",
+              "reference": "job_temporary_candidate",
+              "associated_jobs": [
+                {
+                  "job_id": "8fc526a6-32cb-48bc-ad18-43597092924a",
+                  "state": "QUEUED"
+                }
+              ],
+              "job_reference": "NOT_VERIFIED",
+              "reconciliation": "NOT_CREATED_OR_MISSING",
+              "dataset_reference": "NOT_VERIFIED"
+            },
+            {
+              "library_id": "38d898c0-8017-40d8-9de0-249ad8411d3c",
+              "target": "KNOWLEDGE_GRAPH",
+              "generation_id": "01878580-6bc7-4e63-b495-5b94779d06c8",
+              "temporary": false,
+              "manifest": "POINTER_ANCHORED_MANIFEST",
+              "checksums": "MATCH",
+              "ownership": "MANIFEST_SCOPE_MATCH",
+              "directory_present": true,
+              "known_file_bytes": 605,
+              "native_structure": "NOT_CHECKED",
+              "record_ownership": "NOT_CHECKED",
+              "catalogue_freshness": "NOT_CHECKED",
+              "source_generation_id": "ad243d6d-1f9f-479b-99a7-61e430ed65d3",
+              "source_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "manifest_job_id": "f3193c4b-4db4-476e-af26-72c7336acfd5",
+              "book_count": 0,
+              "reference": "active_generation_id",
+              "associated_jobs": [
+                {
+                  "job_id": "f3193c4b-4db4-476e-af26-72c7336acfd5",
+                  "state": "SUCCEEDED"
+                }
+              ],
+              "job_reference": "MATCH",
+              "reconciliation": "PUBLISHED_REFERENCE",
+              "dataset_reference": "MATCH"
+            }
+          ],
+          "coverage": {
+            "SEARCH_INDEX": {
+              "entries_examined": 0,
+              "truncated": false,
+              "directory": "NOT_PRESENT",
+              "candidate_limit": 22
+            },
+            "KNOWLEDGE_GRAPH": {
+              "entries_examined": 1,
+              "truncated": false,
+              "order": "prioritize pointers and bounded job references, then filesystem enumeration; not exhaustive history",
+              "candidate_limit": 22
+            }
+          },
+          "observed_generation_count": 1,
+          "observed_reference_count": 3,
+          "present_directory_count": 1,
+          "missing_reference_count": 2,
+          "observed_known_file_bytes": 605,
+          "estimated_total_disk_consumption": "NOT_AVAILABLE; bounded known files only",
+          "checksum_bytes_read": 25,
+          "manifest_bytes_read": 580,
+          "file_reads": 3,
+          "read_only": true
+        },
+        "resources": {
+          "worker_cpu": "NOT_AVAILABLE",
+          "worker_memory": "NOT_AVAILABLE",
+          "gpu_memory": "NOT_AVAILABLE",
+          "disk": {
+            "status": "OBSERVED_LOCAL_VOLUME",
+            "total_bytes": 509722226688,
+            "free_bytes": 144213360640,
+            "worker_admission_check": false
+          },
+          "reason": "No trustworthy PID/resource mapping from resident worker_id; no worker telemetry was added."
+        },
+        "bounds": {
+          "job_page_limit": 20,
+          "artifact_entries_per_target": 20,
+          "checksum_budget_bytes": 16777216,
+          "mongo_operations": 12,
+          "db_operation_timeout_ms": 1000,
+          "catalogue_reads": 0,
+          "authorization_cached": false,
+          "checksum_default": "OFF; explicit opt-in and shared byte/deadline budget"
+        },
+        "actions_available": []
+      }
+    }
+  ],
+  "actual_cli_mongo_profile": [
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_jobs",
+      "documents_examined": 1
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_targets",
+      "documents_examined": 1
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_jobs",
+      "documents_examined": 4
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_jobs",
+      "documents_examined": 1
+    },
+    {
+      "operation": "aggregate",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_jobs",
+      "documents_examined": 6
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_jobs",
+      "documents_examined": 2
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_locks",
+      "documents_examined": 1
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_jobs",
+      "documents_examined": 1
+    },
+    {
+      "operation": "aggregate",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_jobs",
+      "documents_examined": 2
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_jobs",
+      "documents_examined": 2
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_generations",
+      "documents_examined": 1
+    },
+    {
+      "operation": "find",
+      "namespace": "luminar_v2j_test_944e99d74e1a4cc6.institution_intelligence_targets",
+      "documents_examined": 1
+    }
+  ],
+  "state_unchanged": true,
+  "artifact_bytes_and_mtimes_unchanged": true,
+  "private_outsider_denied": true,
+  "secrets_in_output": false,
+  "status": "PASS",
+  "task_owned_fixture_server_stopped": true
+}

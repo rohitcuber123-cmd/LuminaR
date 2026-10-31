@@ -1,0 +1,88 @@
+{
+  "result": "PASS_TESTED_SCOPE",
+  "authenticated_real_JWT_fixture": [
+    {
+      "user": 1,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 3,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 4,
+      "http": 200,
+      "expected": 200
+    },
+    {
+      "user": 2,
+      "http": 404,
+      "expected": 404
+    },
+    {
+      "user": 5,
+      "http": 404,
+      "expected": 404
+    },
+    {
+      "user": 6,
+      "http": 404,
+      "expected": 404
+    }
+  ],
+  "two_private_library_UUIDs": true,
+  "private_institution_private_code": true,
+  "staff_password_login_http": 200,
+  "native_JWT_status_checks": [
+    {
+      "user": 2,
+      "status": 404,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 3,
+      "status": 200,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 4,
+      "status": 403,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 6,
+      "status": 404,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 2,
+      "status": 404,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 3,
+      "status": 200,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 4,
+      "status": 403,
+      "no_telemetry_fields": true
+    },
+    {
+      "user": 6,
+      "status": 404,
+      "no_telemetry_fields": true
+    }
+  ],
+  "authenticated_suites": {
+    "passed": 985,
+    "failed": 0,
+    "skipped": 0
+  },
+  "infrastructure_login_is_not_app_membership": "Actual server login cannot mint JWT; current identity/membership guards remain unchanged.",
+  "platform_admin_no_tenant_bypass": "Explicit approved fixture platform assignment user5 remains404 on unrelated private inventory/RAG metadata; frozen platform/tenant suites also exercised.",
+  "limits": "Private RAG metadata and frozen asset pipeline tests, not fresh complete Qwen model serving across a full production stack."
+}

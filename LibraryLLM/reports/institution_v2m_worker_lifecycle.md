@@ -1,0 +1,9 @@
+# Native worker correctness preserved
+
+All preexisting native/observer/store/diagnostic source bytes are compared with the2M start snapshot. Existing source/defaults remain90s native lease,10s native renewal,2s idle wait and serial execution. Claim/progress/validation/publication/ack/fence/Admin/source/last-good/recovery are unchanged. L's original-SHA-pinned native protocol test and current full regression are rerun without altering any prior test/hash in2M.
+
+Actual fixture processes run the existing TenantIntelligence.start/loop/close and existing JWT build router, with one cached offline MiniLM encoder per worker process and native FAISS/KG builders. They do not create another production monitoring worker/model or start the full5M global Search service. Lifecycle evidence covers disabled/enabled idle, accepted stages/counters, validation/publication, completion/return idle, bounded auxiliary shutdown and restart. Native close still does not join an in-flight build; STOPPED is not invented before actual native exit.
+
+Native151-book phased builds, writer replacement, disabled rollback, actual process exits during embedding/KG/before publication/after pointer and independent auxiliary faults are recorded separately. Crashed jobs/pointers are unchanged by telemetry restart. Explicit expiry injection and existing Library Admin recovery in disposable cases are labelled manual tests, never telemetry-triggered actions. Fresh inherited K/L tests also exercise clock rollback/future timestamps, late epochs, shutdown timeout, no orphan in normal shutdown and no false verified health.
+
+The architecture does not supply a trusted OS supervisor binding. Actual deployment did not show a running Search listener at inspected ports or an approved worker service identity; source startup wiring and fixture success do not qualify production lifecycle ownership.

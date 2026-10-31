@@ -1,0 +1,1001 @@
+{
+  "scenario": "benchmark",
+  "enabled": true,
+  "fault": "",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH",
+    "FAISS_BUILD",
+    "FAISS_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 12:34:16.696176+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 3,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        3,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:18.588334+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 3,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 12:34:18.555000",
+        3,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:18.804089+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 3,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:34:18.728000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        151,
+        "2026-10-30 12:34:18.555000",
+        3,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:21.294409+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:34:21.272000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        151,
+        "2026-10-30 12:34:18.555000",
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:23.385007+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 32,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:34:21.272000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        32,
+        151,
+        "2026-10-30 12:34:18.555000",
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:23.947875+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 64,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 3,
+      "progress_seq": 3,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 32,
+          "last_progress_observed_at": "2026-10-30 12:34:23.855000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        64,
+        151,
+        "2026-10-30 12:34:18.555000",
+        3,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:24.493397+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 96,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 3,
+      "progress_seq": 3,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 32,
+          "last_progress_observed_at": "2026-10-30 12:34:23.855000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        96,
+        151,
+        "2026-10-30 12:34:18.555000",
+        3,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:24.977367+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 96,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 4,
+      "progress_seq": 4,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 96,
+          "last_progress_observed_at": "2026-10-30 12:34:24.874000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        96,
+        151,
+        "2026-10-30 12:34:18.555000",
+        4,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:25.086223+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 128,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 4,
+      "progress_seq": 4,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 96,
+          "last_progress_observed_at": "2026-10-30 12:34:24.874000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        128,
+        151,
+        "2026-10-30 12:34:18.555000",
+        4,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:25.632592+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 4,
+      "progress_seq": 4,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 96,
+          "last_progress_observed_at": "2026-10-30 12:34:24.874000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        151,
+        151,
+        "2026-10-30 12:34:18.555000",
+        4,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:25.742485+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 4,
+      "progress_seq": 4,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 96,
+          "last_progress_observed_at": "2026-10-30 12:34:24.874000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        151,
+        151,
+        "2026-10-30 12:34:18.555000",
+        4,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:25.976047+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:18.555000",
+      "pulse_seq": 4,
+      "progress_seq": 5,
+      "progress": [
+        {
+          "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 151,
+          "last_progress_observed_at": "2026-10-30 12:34:25.886000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        151,
+        151,
+        "2026-10-30 12:34:18.555000",
+        4,
+        5
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:26.971043+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 4,
+      "progress_seq": 5,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        4,
+        5
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:27.733242+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 12:34:27.655000",
+      "pulse_seq": 4,
+      "progress_seq": 5,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 12:34:27.655000",
+        4,
+        5
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:27.842768+00:00",
+      "state": "RUNNING",
+      "stage": "KG_METADATA",
+      "current": 100,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:27.655000",
+      "pulse_seq": 4,
+      "progress_seq": 5,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "KG_METADATA",
+        100,
+        151,
+        "2026-10-30 12:34:27.655000",
+        4,
+        5
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:27.985251+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:27.655000",
+      "pulse_seq": 4,
+      "progress_seq": 6,
+      "progress": [
+        {
+          "job_id": "49c23906-8ca6-41da-951c-44476d4464a5",
+          "stage": "VALIDATION",
+          "state": "VALIDATING",
+          "progress_current": 151,
+          "last_progress_observed_at": "2026-10-30 12:34:27.911000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        151,
+        151,
+        "2026-10-30 12:34:27.655000",
+        4,
+        6
+      ]
+    },
+    {
+      "at": "2026-10-30 12:34:28.992534+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:34:27.655000",
+      "pulse_seq": 4,
+      "progress_seq": 7,
+      "progress": [
+        {
+          "job_id": "49c23906-8ca6-41da-951c-44476d4464a5",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 151,
+          "last_progress_observed_at": "2026-10-30 12:34:28.921000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        151,
+        151,
+        "2026-10-30 12:34:27.655000",
+        4,
+        7
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "6469a518-7ce4-4bde-bdf2-fc5b17d22226",
+      "job_id": "26c0a728-a790-43a5-bdc2-65c174f7c804",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 10362.046100000043,
+      "native_build_ms": 7090.0,
+      "cpu_ms": 5109.375,
+      "rss_increase_bytes": 112357376,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "4d42bc4a-2e8d-4599-ac63-69938cd2b4fc",
+      "job_id": "49c23906-8ca6-41da-951c-44476d4464a5",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2269.3647999999484,
+      "native_build_ms": 286.0,
+      "cpu_ms": 406.25,
+      "rss_increase_bytes": 57344,
+      "pointer_ack_match": true
+    }
+  ],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 337.22130000023753
+  },
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "timeout",
+  "resource_samples": [
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847204352,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0149999999998727,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0160000000000764,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0929999999998472,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847208448,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847261696,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847974400,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847974400,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0160000000000764,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847974400,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847974400,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847974400,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847974400,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0929999999998472,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847974400,
+      "cpu_delta_ms": 0.0,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "IDLE",
+      "rss_bytes": 847974400,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 850055168,
+      "cpu_delta_ms": 93.75,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 850681856,
+      "cpu_delta_ms": 31.25,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 64
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 854528000,
+      "cpu_delta_ms": 156.25,
+      "interval_seconds": 1.0,
+      "python_threads": 12,
+      "os_threads": 65
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 855232512,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0160000000000764,
+      "python_threads": 12,
+      "os_threads": 65
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 855232512,
+      "cpu_delta_ms": 62.5,
+      "interval_seconds": 1.0,
+      "python_threads": 12,
+      "os_threads": 65
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 887595008,
+      "cpu_delta_ms": 281.25,
+      "interval_seconds": 1.6720000000000255,
+      "python_threads": 13,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 963338240,
+      "cpu_delta_ms": 1656.25,
+      "interval_seconds": 1.0,
+      "python_threads": 13,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 965103616,
+      "cpu_delta_ms": 1625.0,
+      "interval_seconds": 1.0,
+      "python_threads": 13,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960348160,
+      "cpu_delta_ms": 1125.0,
+      "interval_seconds": 1.030999999999949,
+      "python_threads": 12,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960348160,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0,
+      "python_threads": 12,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960405504,
+      "cpu_delta_ms": 250.0,
+      "interval_seconds": 1.094000000000051,
+      "python_threads": 12,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960405504,
+      "cpu_delta_ms": 140.625,
+      "interval_seconds": 1.0149999999998727,
+      "python_threads": 12,
+      "os_threads": 84
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 960405504,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0160000000000764,
+      "python_threads": 12,
+      "os_threads": 84
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 5,
+    "os": 56
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 8.197300000119867,
+  "observer_ready_ms": 37.85230000039519,
+  "threads_observing": {
+    "python": 10,
+    "os": 61
+  },
+  "mongo_connections_observing": 9,
+  "idle": {
+    "seconds": 22.00193890000037,
+    "cpu_ms": 281.25,
+    "rss_increase_bytes": 765952,
+    "pulse_seq": 3,
+    "lifecycle": "IDLE",
+    "telemetry_enabled": true,
+    "record_scope": "THIS_INSTANCE"
+  },
+  "current_library": "4d42bc4a-2e8d-4599-ac63-69938cd2b4fc",
+  "telemetry_fault_injected": "Actual server auxiliary update block1200ms against500ms client deadline during native Search.",
+  "native_serial": true,
+  "telemetry_metrics": {
+    "boot_read": 1,
+    "boot_write": 1,
+    "pulse_write": 4,
+    "job_read": 9,
+    "progress_read": 9,
+    "progress_write": 7,
+    "errors_AUXILIARY_UNAVAILABLE": 1,
+    "identical_progress_ignored": 1,
+    "pointer_read": 2
+  },
+  "latencies": [
+    {
+      "kind": "boot_read",
+      "ms": 0.9737999998833402
+    },
+    {
+      "kind": "boot_write",
+      "ms": 2.535799999805022
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 10.84290000017063
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 2.506999999695836
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 3.7812999999005115
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.818100000036793
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.2031999999635445
+    },
+    {
+      "kind": "progress_write",
+      "ms": 3.0773000003136985
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.9328999997014762
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.2526000000434578
+    },
+    {
+      "kind": "progress_write",
+      "ms": 512.9627000001165
+    },
+    {
+      "kind": "job_read",
+      "ms": 9.41610000018045
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.3381999997363891
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.877500000067812
+    },
+    {
+      "kind": "job_read",
+      "ms": 20.672499999818683
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.6301999999086547
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.7498000001978653
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.9805999998206971
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.4908000000323227
+    },
+    {
+      "kind": "job_read",
+      "ms": 2.858199999991484
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.429800000096293
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.937800000381685
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 2.5924000001396053
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.6898000003493507
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.3460999998642365
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 0.9893999999803782
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.3314999998547137
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.8387000000075204
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.4314999998532585
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.4726000001464854
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.4163999999254884
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.0180999997828621
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 1.0271999999531545
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.1863000001758337
+    }
+  ],
+  "instance_ref": "0a900e84375887903d275fc1dcf7fab879444e565b8c7b4ec1ecd0c74edea7f3",
+  "agent_errors": {
+    "PROGRESS_OBSERVATION_UNAVAILABLE": 1
+  },
+  "native_close_return_ms": 4.738300000099116,
+  "worker_end_ms": 4.900800000086747,
+  "observer_thread_ended": true,
+  "observer_final_state": "STOPPED",
+  "mongo_connections_after_close": 8,
+  "shutdown_lifecycle": "STOPPING",
+  "worker_thread_ended": true,
+  "retained_targets_validated": [
+    {
+      "library_id": "4cff79e2-8b08-4cc3-ac9d-914c33f279c8",
+      "target": "SEARCH_INDEX",
+      "generation_id": "eeafdb16-7a96-4806-af8c-5d7dededa3fe"
+    },
+    {
+      "library_id": "aa7d4bc3-3e8c-4941-b13d-c38f2cfd1bde",
+      "target": "KNOWLEDGE_GRAPH",
+      "generation_id": "ba6bfd4d-a0cb-41c2-a9bd-0938e958f632"
+    },
+    {
+      "library_id": "6469a518-7ce4-4bde-bdf2-fc5b17d22226",
+      "target": "SEARCH_INDEX",
+      "generation_id": "cf685c62-7543-4502-93b3-190caf718015"
+    },
+    {
+      "library_id": "4d42bc4a-2e8d-4599-ac63-69938cd2b4fc",
+      "target": "KNOWLEDGE_GRAPH",
+      "generation_id": "45dd9e0b-a586-43ed-b92b-f165e574cc1d"
+    }
+  ]
+}

@@ -46,7 +46,11 @@ def guarded_response(query,plan,session,personalized,offset,limit,start,source=N
 
 
 def global_facets(engine):
-    rows = list(engine.books_collection.database.book_categories.find({}, {'_id':0,'name':1,'category':1,'count':1}).sort('count',-1).limit(4096))
+    # Facets are optional enrichment for catalogue providers exposing only find.
+    # Preserve normal Mongo failures (including authorization), rather than
+    # substituting another client or changing semantic ranking on an error.
+    database = getattr(engine.books_collection, 'database', None)
+    rows = [] if database is None else list(database.book_categories.find({}, {'_id':0,'name':1,'category':1,'count':1}).sort('count',-1).limit(4096))
     facets = [{'subject':r.get('name') or r.get('category'),'count':r.get('count',0)} for r in rows if r.get('name') or r.get('category')]
     return {'results':facets,'capabilities':{'rating':True,'year':False,'language':False,
             'formats':['ONLINE'],'availability':False},'has_more':len(rows)==4096}

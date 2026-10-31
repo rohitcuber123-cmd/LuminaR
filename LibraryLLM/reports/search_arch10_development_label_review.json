@@ -1,0 +1,330 @@
+{
+  "review_id": "V10_REALISTIC_DEVELOPMENT_SOURCE_LABEL_REVIEW_V1",
+  "reviewer_task": "/root/source_contract_review",
+  "reviewed_at_utc": "2026-10-29T09:21:34.640242+00:00",
+  "review_status": "REVIEWED_WITH_REQUIRED_ORACLE_CORRECTION_AND_EXPLICIT_CAPABILITY_CONDITIONS",
+  "review_type": "SOURCE_ONLY_DEVELOPMENT_LABEL_REVIEW_BEFORE_REVIEWER_PREDICTION_ACCESS",
+  "inputs": {
+    "reports/search_arch10_realistic_development.jsonl": {
+      "sha256": "9d4b1b8a7c4988c88fe83fd9ce028b30409ecd7b399d88a42f84daa67a60ff7f"
+    },
+    "scripts/search_arch10_population.py": {
+      "sha256": "2fa75ff9102ded26f67aaeded9b6c8e4c2efea1d87f762dec460954c05c3dfe8"
+    },
+    "reports/search_arch10_source_contract_review.json": {
+      "sha256": "bac9146738e4307eef372c9ee53f6b914e67dbeb748ed69ba049536d3383903b"
+    }
+  },
+  "candidate_implementation_accessed": false,
+  "candidate_predictions_accessed": false,
+  "heldout_accessed": false,
+  "authored_population_edited": false,
+  "counts": {
+    "population": "realistic authored exposed development",
+    "contexts": 235,
+    "unique_query_templates": 47,
+    "self_labelled_family_ids": 47,
+    "scope_replicas_per_template": 5,
+    "context_length_buckets": {
+      "short": 210,
+      "medium": 15,
+      "long": 10
+    },
+    "template_length_buckets": {
+      "short": 42,
+      "medium": 3,
+      "long": 2
+    },
+    "authored_decision_context_counts": {
+      "EXECUTABLE": 156,
+      "UNSUPPORTED": 34,
+      "INCOMPLETE": 20,
+      "AMBIGUOUS": 10,
+      "CONTRADICTORY": 15
+    },
+    "metric_status": "Authored labels/counts measured from source file; no predictions or quality scores computed"
+  },
+  "findings": [
+    {
+      "id": "RATING_STRICTNESS_046",
+      "severity": "REQUIRED_ORACLE_CORRECTION",
+      "case_ids": [
+        "v10_dev_046_GLOBAL",
+        "v10_dev_046_PUBLIC_TENANT_PATRON",
+        "v10_dev_046_PUBLIC_TENANT_STAFF",
+        "v10_dev_046_PRIVATE_TENANT_PATRON",
+        "v10_dev_046_PRIVATE_TENANT_STAFF"
+      ],
+      "source_reason": "The authored long research request explicitly says rating above 3.5. The expected native field set has rating_min=3.5 but omits strictness, so a >=3.5 projection can incorrectly pass the predeclared oracle.",
+      "suggested_overlay": {
+        "fields_add": {
+          "rating_min_exclusive": true
+        }
+      },
+      "label_decision_change": false
+    },
+    {
+      "id": "GLOBAL_NEGATIVE_ONLINE_020",
+      "severity": "CAPABILITY_CONDITIONAL_LABEL",
+      "case_ids": [
+        "v10_dev_020_GLOBAL"
+      ],
+      "source_reason": "Native GlobalQuerySearch populates entitlement-derived online only when formats or availability positive fields are present; excluded_formats alone is omitted. A raw native negative-only ONLINE plan can therefore accept entitled online records incorrectly.",
+      "suggested_overlay": {
+        "expected_decision_without_isolated_repair": "UNSUPPORTED",
+        "expected_decision_after_explicit_tested_adapter_repair": "EXECUTABLE"
+      },
+      "required_precondition": "Before retaining EXECUTABLE pre-register tested isolated entitlement derivation and both pre/post-hydration predicate enforcement; interpretation must use trusted authenticated actor entitlement, not model-proposed metadata."
+    },
+    {
+      "id": "MISSING_PAGES_034",
+      "severity": "POLICY_PREREGISTRATION_REQUIRED",
+      "case_ids": [
+        "v10_dev_034_GLOBAL",
+        "v10_dev_034_PUBLIC_TENANT_PATRON",
+        "v10_dev_034_PUBLIC_TENANT_STAFF",
+        "v10_dev_034_PRIVATE_TENANT_PATRON",
+        "v10_dev_034_PRIVATE_TENANT_STAFF"
+      ],
+      "source_reason": "INCOMPLETE is execution-safe and defensible if missing-supportedness diagnostics are retained; source proves page count is unsupported regardless of operand but does not mandate typed precedence. Prior source review recommended capability-first UNSUPPORTED to avoid implying operand completion would enable this operation.",
+      "suggested_overlay": {
+        "if_capability_first_policy": "UNSUPPORTED",
+        "if_missing_operand_first_policy": "INCOMPLETE with unsupported capability explicitly recorded; numeric completion must remain nonexecutable"
+      },
+      "required_precondition": "Record the typed policy before scoring; do not choose it in response to predictions."
+    },
+    {
+      "id": "GLOBAL_ONLINE_MEANING",
+      "severity": "INTERPRETATION_BOUNDARY",
+      "case_ids": [
+        "v10_dev_012_GLOBAL",
+        "v10_dev_019_GLOBAL",
+        "v10_dev_045_GLOBAL"
+      ],
+      "source_reason": "Global ONLINE is currently active-borrow AND readable entitlement, while tenant ONLINE is authorized READY library asset. The same words do not establish identical data availability across scopes.",
+      "suggested_overlay": {
+        "decision": "EXECUTABLE only under documented native entitlement meaning",
+        "assert_result_entitlement": true
+      },
+      "warning": "Do not describe these as complete catalog-wide ebook discovery. If the user explicitly requires all online-available catalog books, native entitlement filtering is an unsatisfied semantic operation."
+    },
+    {
+      "id": "GLOBAL_NEWEST_025",
+      "severity": "QUALIFICATION_LIMITATION",
+      "case_ids": [
+        "v10_dev_025_GLOBAL"
+      ],
+      "source_reason": "Native sort has NEWEST enum but uses publication_year only. GLOBAL advertises year=False, and source does not establish populated global publication years.",
+      "suggested_overlay": {
+        "current_label": "EXECUTABLE may denote supported sort transport only",
+        "result_order_quality": "UNVERIFIED until authorized data/result fixture proves usable publication_year ordering"
+      },
+      "warning": "Do not infer meaningful newest-first ordering from the sort enum or parser projection alone. Required unknown year values must not be represented as verified newest ordering."
+    },
+    {
+      "id": "EXACT_TITLE_017",
+      "severity": "NATIVE_SEMANTICS_SCOPE",
+      "case_ids": [
+        "v10_dev_017_GLOBAL",
+        "v10_dev_017_PUBLIC_TENANT_PATRON",
+        "v10_dev_017_PUBLIC_TENANT_STAFF",
+        "v10_dev_017_PRIVATE_TENANT_PATRON",
+        "v10_dev_017_PRIVATE_TENANT_STAFF"
+      ],
+      "source_reason": "exact_text enforces normalized title OR identifier equality, not raw quoted bytes or title-only equality. The existing native convention makes the EXECUTABLE label acceptable for a normalized title lookup but not a proof of strict title matching.",
+      "suggested_overlay": {
+        "label_name": "normalized title-or-identifier lookup",
+        "reject_claims": [
+          "byte-exact quoted matching",
+          "case/punctuation literal equality",
+          "strict title-only catalog completeness"
+        ]
+      }
+    },
+    {
+      "id": "UNSUPPORTED_SCOPE_FIELD_ASSERTIONS",
+      "severity": "SCORER_MASK_REQUIRED",
+      "case_ids": [
+        "v10_dev_039_GLOBAL",
+        "v10_dev_040_GLOBAL",
+        "v10_dev_041_GLOBAL",
+        "v10_dev_042_GLOBAL"
+      ],
+      "source_reason": "Rows correctly label GLOBAL UNSUPPORTED but retain fields and semantic_contains shared from tenant executable replicas. A safe architecture may keep operands in IR while emitting no native plan at all.",
+      "suggested_overlay": {
+        "native_fields_scoring": "N/A for blocked plan; do not require executable projection",
+        "IR_operand_preservation": "APPLICABLE and must be checked",
+        "semantic_source_preservation": "APPLICABLE in retained intent; do not demand actual provider execution"
+      }
+    },
+    {
+      "id": "NEGATIVE_FIELD_ABSENCE_ORACLE",
+      "severity": "SCORER_STRENGTHENING",
+      "case_ids": [
+        "v10_dev_001_GLOBAL",
+        "v10_dev_001_PUBLIC_TENANT_PATRON",
+        "v10_dev_001_PUBLIC_TENANT_STAFF",
+        "v10_dev_001_PRIVATE_TENANT_PATRON",
+        "v10_dev_001_PRIVATE_TENANT_STAFF",
+        "v10_dev_002_GLOBAL",
+        "v10_dev_002_PUBLIC_TENANT_PATRON",
+        "v10_dev_002_PUBLIC_TENANT_STAFF",
+        "v10_dev_002_PRIVATE_TENANT_PATRON",
+        "v10_dev_002_PRIVATE_TENANT_STAFF",
+        "v10_dev_003_GLOBAL",
+        "v10_dev_003_PUBLIC_TENANT_PATRON",
+        "v10_dev_003_PUBLIC_TENANT_STAFF",
+        "v10_dev_003_PRIVATE_TENANT_PATRON",
+        "v10_dev_003_PRIVATE_TENANT_STAFF",
+        "v10_dev_004_GLOBAL",
+        "v10_dev_004_PUBLIC_TENANT_PATRON",
+        "v10_dev_004_PUBLIC_TENANT_STAFF",
+        "v10_dev_004_PRIVATE_TENANT_PATRON",
+        "v10_dev_004_PRIVATE_TENANT_STAFF",
+        "v10_dev_005_GLOBAL",
+        "v10_dev_005_PUBLIC_TENANT_PATRON",
+        "v10_dev_005_PUBLIC_TENANT_STAFF",
+        "v10_dev_005_PRIVATE_TENANT_PATRON",
+        "v10_dev_005_PRIVATE_TENANT_STAFF",
+        "v10_dev_006_GLOBAL",
+        "v10_dev_006_PUBLIC_TENANT_PATRON",
+        "v10_dev_006_PUBLIC_TENANT_STAFF",
+        "v10_dev_006_PRIVATE_TENANT_PATRON",
+        "v10_dev_006_PRIVATE_TENANT_STAFF",
+        "v10_dev_007_GLOBAL",
+        "v10_dev_007_PUBLIC_TENANT_PATRON",
+        "v10_dev_007_PUBLIC_TENANT_STAFF",
+        "v10_dev_007_PRIVATE_TENANT_PATRON",
+        "v10_dev_007_PRIVATE_TENANT_STAFF",
+        "v10_dev_008_GLOBAL",
+        "v10_dev_008_PUBLIC_TENANT_PATRON",
+        "v10_dev_008_PUBLIC_TENANT_STAFF",
+        "v10_dev_008_PRIVATE_TENANT_PATRON",
+        "v10_dev_008_PRIVATE_TENANT_STAFF",
+        "v10_dev_009_GLOBAL",
+        "v10_dev_009_PUBLIC_TENANT_PATRON",
+        "v10_dev_009_PUBLIC_TENANT_STAFF",
+        "v10_dev_009_PRIVATE_TENANT_PATRON",
+        "v10_dev_009_PRIVATE_TENANT_STAFF",
+        "v10_dev_010_GLOBAL",
+        "v10_dev_010_PUBLIC_TENANT_PATRON",
+        "v10_dev_010_PUBLIC_TENANT_STAFF",
+        "v10_dev_010_PRIVATE_TENANT_PATRON",
+        "v10_dev_010_PRIVATE_TENANT_STAFF",
+        "v10_dev_011_GLOBAL",
+        "v10_dev_011_PUBLIC_TENANT_PATRON",
+        "v10_dev_011_PUBLIC_TENANT_STAFF",
+        "v10_dev_011_PRIVATE_TENANT_PATRON",
+        "v10_dev_011_PRIVATE_TENANT_STAFF"
+      ],
+      "source_reason": "fields={} does not assert that no author/rating/year/format/language/subject filter was invented. Token containment can pass despite hidden hard filter invention.",
+      "suggested_overlay": {
+        "assert_native_hard_projection": "Complete absence mask for every nonrequested hard field",
+        "ordinary_semantics": "Retain whole objective/advisory meaning, not only selected topic tokens"
+      }
+    },
+    {
+      "id": "SEMANTIC_ORACLE_COVERAGE",
+      "severity": "SCORER_STRENGTHENING",
+      "case_ids": [
+        "v10_dev_002_GLOBAL",
+        "v10_dev_002_PUBLIC_TENANT_PATRON",
+        "v10_dev_002_PUBLIC_TENANT_STAFF",
+        "v10_dev_002_PRIVATE_TENANT_PATRON",
+        "v10_dev_002_PRIVATE_TENANT_STAFF",
+        "v10_dev_003_GLOBAL",
+        "v10_dev_003_PUBLIC_TENANT_PATRON",
+        "v10_dev_003_PUBLIC_TENANT_STAFF",
+        "v10_dev_003_PRIVATE_TENANT_PATRON",
+        "v10_dev_003_PRIVATE_TENANT_STAFF",
+        "v10_dev_006_GLOBAL",
+        "v10_dev_006_PUBLIC_TENANT_PATRON",
+        "v10_dev_006_PUBLIC_TENANT_STAFF",
+        "v10_dev_006_PRIVATE_TENANT_PATRON",
+        "v10_dev_006_PRIVATE_TENANT_STAFF",
+        "v10_dev_010_GLOBAL",
+        "v10_dev_010_PUBLIC_TENANT_PATRON",
+        "v10_dev_010_PUBLIC_TENANT_STAFF",
+        "v10_dev_010_PRIVATE_TENANT_PATRON",
+        "v10_dev_010_PRIVATE_TENANT_STAFF",
+        "v10_dev_015_GLOBAL",
+        "v10_dev_015_PUBLIC_TENANT_PATRON",
+        "v10_dev_015_PUBLIC_TENANT_STAFF",
+        "v10_dev_015_PRIVATE_TENANT_PATRON",
+        "v10_dev_015_PRIVATE_TENANT_STAFF",
+        "v10_dev_022_GLOBAL",
+        "v10_dev_022_PUBLIC_TENANT_PATRON",
+        "v10_dev_022_PUBLIC_TENANT_STAFF",
+        "v10_dev_022_PRIVATE_TENANT_PATRON",
+        "v10_dev_022_PRIVATE_TENANT_STAFF"
+      ],
+      "source_reason": "Selected substring checks do not cover beginner-friendly, introductory, short/approachable, Python 3 versus Windows 11, Mystery topic in rating-range query, or practical examples/exercises advisory meaning. A candidate can preserve required substrings while losing important meaning.",
+      "suggested_overlay": {
+        "semantic_source_oracle": "Check source-grounded semantic objective and preferences without prescribing exact normalized string",
+        "special_tokens": "Preserve C++ and version/topic numbers; do not treat valid punctuation normalization as semantic equivalence without a specific oracle",
+        "ranking_claim": "Advisory text reaching retrieval is not proof of desired ranking quality"
+      }
+    },
+    {
+      "id": "EXCLUSIVE_ONLINE_019",
+      "severity": "INTERPRETATION_PREDECLARATION",
+      "case_ids": [
+        "v10_dev_019_GLOBAL",
+        "v10_dev_019_PUBLIC_TENANT_PATRON",
+        "v10_dev_019_PUBLIC_TENANT_STAFF",
+        "v10_dev_019_PRIVATE_TENANT_PATRON",
+        "v10_dev_019_PRIVATE_TENANT_STAFF"
+      ],
+      "source_reason": "The oracle interprets only online as digital-only and excludes books that also have physical copies. That is an explicit exclusive-format interpretation; common users may mean any book accessible online.",
+      "suggested_overlay": {
+        "author_intended_semantics": "Digital-only, excluding physical availability",
+        "alternative_query_for_unambiguous_oracle": "books about ecology; require online format and exclude physical format"
+      },
+      "warning": "Keep exposed authored query immutable; record this interpretation assumption instead of claiming language ambiguity solved."
+    },
+    {
+      "id": "POPULATION_ISOLATION",
+      "severity": "AUTHORING_DEPENDENCY",
+      "case_ids": [],
+      "source_reason": "The population script imports SCOPES from scratch.search_architecture_v10.capabilities. This reviewer did not execute that import or inspect the candidate. A declaration-only trusted scope tuple should be independent of candidate code.",
+      "suggested_overlay": {
+        "future_author_script_scope_list": [
+          "GLOBAL",
+          "PUBLIC_TENANT_PATRON",
+          "PUBLIC_TENANT_STAFF",
+          "PRIVATE_TENANT_PATRON",
+          "PRIVATE_TENANT_STAFF"
+        ],
+        "candidate_execution_for_authoring": "Avoid"
+      }
+    },
+    {
+      "id": "COHORT_COVERAGE_GAPS",
+      "severity": "LIMITATION",
+      "case_ids": [],
+      "source_reason": "The 47 templates include 42 short, 3 medium and 2 long queries. No multi-turn refinement/correction, missing format/title/language operand, multiple malformed input variants, negative author/language, public/private ownership or actual record relevance judgments are represented in this file. Scope replications test masks but do not increase linguistic-family diversity.",
+      "suggested_overlay": {
+        "report_population": "235 development contexts; 47 distinct authored query templates/self-labelled families",
+        "length_coverage": "42 short/3 medium/2 long templates",
+        "independent_acceptance": false,
+        "relevance_evaluation": false
+      }
+    }
+  ],
+  "accepted_source_semantics": [
+    "Ordinary topical discovery executable without invented taxonomy or metadata filters.",
+    "Dates governed by history-topic text stay semantic; published-after year is institutional-only.",
+    "Free-to-borrow may remain access-preference semantic text, not an automatic commercial price comparison.",
+    "Explicit title-only substring unsupported; general title-or-author and normalized identity are separate native operations.",
+    "Rating comparisons, missing supported operands, contradictions, unsupported metadata and unsupported sort directions are distinguishable.",
+    "Text attempting scope escalation cannot choose scope and may remain nonoperative while a valid ecology objective executes in trusted scope.",
+    "Empty input nonexecution is valid; UNSUPPORTED versus INCOMPLETE is a typed policy choice rather than native retrieval fact."
+  ],
+  "limits": [
+    "The review is independent of candidate predictions/implementation but is not fresh independent acceptance or an external human review.",
+    "Substring preservation and native projection labels are development transport/interpretation oracles, not book-result relevance judgments.",
+    "No parser, native provider, DB, JWT, HNSW, model, or production route was executed by this reviewer.",
+    "Corrections must be recorded in a versioned reviewed overlay with provenance; the authored cohort remains immutable.",
+    "This reviewer cannot verify whether predictions exist elsewhere; it has not opened, requested or used any."
+  ]
+}

@@ -1,0 +1,1736 @@
+{
+  "author_scalar_assertions": "Excluded for all five: intentionally unknown query operands, not missing gold.",
+  "cases": [
+    {
+      "actor_is_supplied_context_not_predicted": true,
+      "actor_role_context": "GENERAL_USER",
+      "all_scored_dimensions_correct": false,
+      "assertions": [
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_subjects",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_terms",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "excluded_formats",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclusive_formats",
+          "partial": false
+        },
+        {
+          "actual": [
+            "ONLINE"
+          ],
+          "correct": true,
+          "expected": [
+            "ONLINE"
+          ],
+          "field": "formats",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "rating_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": 4.0,
+          "correct": true,
+          "expected": 4.0,
+          "field": "rating_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": "my two-author note lists novra ashven talven caldris beside titles \"the distant garden\" \"a river causeway\"",
+          "correct": false,
+          "expected": "",
+          "field": "semantic_text",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "subjects",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": false,
+          "expected": "The Distant Garden",
+          "field": "title_text",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_unsupported_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_incomplete_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_contradiction_fields",
+          "partial": false
+        }
+      ],
+      "case_id": "C5A-1-3-11",
+      "categorical_assessment": {
+        "bucket": "AMBIGUOUS",
+        "plan_risk": "BLOCKED_BY_TYPED_DECISION",
+        "policy": "CLARIFY",
+        "repair_certainty": "NO_REPAIR",
+        "score_kind": "categorical heuristic evidence; not probability",
+        "slots": {
+          "author": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "author",
+                "operator": "CONTAINS",
+                "recognizer_id": "author.by",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Novra Ashven and Talven Caldris beside titles \"The Distant Garden\" and \"A River Causeway\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Distant Garden\"; rated at least 4 stars; digital format.",
+                "source_span_end": 234,
+                "source_span_start": 182,
+                "source_text": "by the author my note pairs with the requested title",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "availability": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "correction_candidate": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "format": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "format",
+                "operator": "PRESENT",
+                "recognizer_id": "format.online",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Novra Ashven and Talven Caldris beside titles \"The Distant Garden\" and \"A River Causeway\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Distant Garden\"; rated at least 4 stars; digital format.",
+                "source_span_end": 303,
+                "source_span_start": 289,
+                "source_text": "digital format",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "negative_constraint": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "rating_operator": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "rating",
+                "operator": ">=",
+                "recognizer_id": "rating.field_operator",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Novra Ashven and Talven Caldris beside titles \"The Distant Garden\" and \"A River Causeway\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Distant Garden\"; rated at least 4 stars; digital format.",
+                "source_span_end": 287,
+                "source_span_start": 265,
+                "source_text": "rated at least 4 stars",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "semantic_remainder": {
+            "calibration_bucket": "LITERAL_OR_SEMANTIC",
+            "recognized": true,
+            "source_evidence": [],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "subject": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "title_entity": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "title",
+                "operator": "CONTAINS",
+                "recognizer_id": "ir.literal",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Novra Ashven and Talven Caldris beside titles \"The Distant Garden\" and \"A River Causeway\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Distant Garden\"; rated at least 4 stars; digital format.",
+                "source_span_end": 263,
+                "source_span_start": 236,
+                "source_text": "titled \"The Distant Garden\"",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "year_operator": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          }
+        },
+        "typed_decision": "AMBIGUOUS"
+      },
+      "cohort": "NEW_REVIEWED_CORE",
+      "decision": "AMBIGUOUS",
+      "evaluation_unit": "LOGICAL_PARSER_CONTEXT",
+      "execution": false,
+      "execution_correct": true,
+      "expected_decision": "AMBIGUOUS",
+      "expected_execution": false,
+      "foreign_canonical_values": [],
+      "gold_artifact_sha256": "135d2bf9220376bd53df9f7cd474bb0cfbe5e4c8f616edf4f66ff786d5c3f00b",
+      "independent_pattern_id": "c5b-independent-ambiguous-mandatory-author-title-association",
+      "mismatches": {
+        "semantic_text": {
+          "actual": "my two-author note lists novra ashven talven caldris beside titles \"the distant garden\" \"a river causeway\"",
+          "expected": ""
+        },
+        "title_text": {
+          "actual": null,
+          "expected": "The Distant Garden"
+        }
+      },
+      "mode": "SMART",
+      "native_interpretation_confidence": 0.0,
+      "policy": "CLARIFY",
+      "prediction_output_sha256": "d4ffa26fdaad7f6c9574c75b991d50b2277a63acbbe5d37686d88883e9fe2c61",
+      "protected_entity_content_preserved": true,
+      "query_text": "Find books my two-author note lists Novra Ashven and Talven Caldris beside titles \"The Distant Garden\" and \"A River Causeway\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Distant Garden\"; rated at least 4 stars; digital format.",
+      "review_status": "AI_REVIEWED",
+      "scope": "GLOBAL",
+      "scoring_excluded_fields": {
+        "author_text": {
+          "grounded_author_value_available": false,
+          "query_requirement_present": true,
+          "reason": "The QUERY deliberately leaves a mandatory author operand unknown. This is a definitive ambiguity annotation, not a missing typed-decision/execution gold label.",
+          "required_annotation_label_unresolved": false,
+          "status": "UNRESOLVED",
+          "strict_author_value_scoring": "INAPPLICABLE_UNTIL_CLARIFICATION"
+        },
+        "availability": {
+          "reason": "This filter is absent from the frozen scope capability profile and is not asserted as enforceable.",
+          "status": "INAPPLICABLE"
+        },
+        "exact_text": {
+          "reason": "No scalar applicability/reference in frozen schema.",
+          "status": "NO_GOLD_FIELD"
+        },
+        "language": {
+          "reason": "This filter is absent from the frozen scope capability profile and is not asserted as enforceable.",
+          "status": "INAPPLICABLE"
+        },
+        "soft_preferences": {
+          "frozen_status": "APPLICABLE",
+          "gold": {},
+          "reason": "Structured advisory object vs native display-string; no frozen scoring equivalence. Remains unscored, including partial advisory components.",
+          "status": "UNAVAILABLE_OUTPUT_ORACLE_ADAPTER"
+        },
+        "year_max": {
+          "reason": "This filter is absent from the frozen scope capability profile and is not asserted as enforceable.",
+          "status": "INAPPLICABLE"
+        },
+        "year_max_exclusive": {
+          "reason": "This filter is absent from the frozen scope capability profile and is not asserted as enforceable.",
+          "status": "INAPPLICABLE"
+        },
+        "year_min": {
+          "reason": "This filter is absent from the frozen scope capability profile and is not asserted as enforceable.",
+          "status": "INAPPLICABLE"
+        },
+        "year_min_exclusive": {
+          "reason": "This filter is absent from the frozen scope capability profile and is not asserted as enforceable.",
+          "status": "INAPPLICABLE"
+        }
+      },
+      "semantic_f1": 0.0,
+      "stratum": "AMBIGUOUS",
+      "strict_plan_match_limitation": "All scored dimensions only; excludes frozen unresolved/inapplicable fields and unavailable structured-advisory adapter.",
+      "typed_correct": true,
+      "valid_output": true,
+      "workspace": "GLOBAL"
+    },
+    {
+      "actor_is_supplied_context_not_predicted": true,
+      "actor_role_context": "GENERAL_USER",
+      "all_scored_dimensions_correct": false,
+      "assertions": [
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "availability",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_subjects",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_terms",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "excluded_formats",
+          "partial": false
+        },
+        {
+          "actual": [
+            "ONLINE"
+          ],
+          "correct": true,
+          "expected": [
+            "ONLINE"
+          ],
+          "field": "exclusive_formats",
+          "partial": false
+        },
+        {
+          "actual": [
+            "ONLINE"
+          ],
+          "correct": true,
+          "expected": [
+            "ONLINE"
+          ],
+          "field": "formats",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "language",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "rating_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": 4.0,
+          "correct": true,
+          "expected": 4.0,
+          "field": "rating_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": "my two-author note lists luriel darsel sivren harveth beside titles \"the glass notebook\" \"the amber compass\"",
+          "correct": false,
+          "expected": "",
+          "field": "semantic_text",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "subjects",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": false,
+          "expected": "The Glass Notebook",
+          "field": "title_text",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "year_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "year_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": 2011,
+          "correct": true,
+          "expected": 2011,
+          "field": "year_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "year_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_unsupported_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_incomplete_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_contradiction_fields",
+          "partial": false
+        }
+      ],
+      "case_id": "C5A-2-3-11",
+      "categorical_assessment": {
+        "bucket": "AMBIGUOUS",
+        "plan_risk": "BLOCKED_BY_TYPED_DECISION",
+        "policy": "CLARIFY",
+        "repair_certainty": "NO_REPAIR",
+        "score_kind": "categorical heuristic evidence; not probability",
+        "slots": {
+          "author": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "author",
+                "operator": "CONTAINS",
+                "recognizer_id": "author.by",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Luriel Darsel and Sivren Harveth beside titles \"The Glass Notebook\" and \"The Amber Compass\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Glass Notebook\"; rated at least 4 stars; published from 2011 onward; online only.",
+                "source_span_end": 236,
+                "source_span_start": 184,
+                "source_text": "by the author my note pairs with the requested title",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "availability": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "correction_candidate": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "format": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "format",
+                "operator": "ONLY",
+                "recognizer_id": "format.online",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Luriel Darsel and Sivren Harveth beside titles \"The Glass Notebook\" and \"The Amber Compass\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Glass Notebook\"; rated at least 4 stars; published from 2011 onward; online only.",
+                "source_span_end": 330,
+                "source_span_start": 319,
+                "source_text": "online only",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "negative_constraint": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "rating_operator": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "rating",
+                "operator": ">=",
+                "recognizer_id": "rating.field_operator",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Luriel Darsel and Sivren Harveth beside titles \"The Glass Notebook\" and \"The Amber Compass\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Glass Notebook\"; rated at least 4 stars; published from 2011 onward; online only.",
+                "source_span_end": 289,
+                "source_span_start": 267,
+                "source_text": "rated at least 4 stars",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "semantic_remainder": {
+            "calibration_bucket": "LITERAL_OR_SEMANTIC",
+            "recognized": true,
+            "source_evidence": [],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "subject": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "title_entity": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "title",
+                "operator": "CONTAINS",
+                "recognizer_id": "ir.literal",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Luriel Darsel and Sivren Harveth beside titles \"The Glass Notebook\" and \"The Amber Compass\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Glass Notebook\"; rated at least 4 stars; published from 2011 onward; online only.",
+                "source_span_end": 265,
+                "source_span_start": 238,
+                "source_text": "titled \"The Glass Notebook\"",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "year_operator": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "year",
+                "operator": ">=",
+                "recognizer_id": "year.publication_onward",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Luriel Darsel and Sivren Harveth beside titles \"The Glass Notebook\" and \"The Amber Compass\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Glass Notebook\"; rated at least 4 stars; published from 2011 onward; online only.",
+                "source_span_end": 317,
+                "source_span_start": 291,
+                "source_text": "published from 2011 onward",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          }
+        },
+        "typed_decision": "AMBIGUOUS"
+      },
+      "cohort": "NEW_REVIEWED_CORE",
+      "decision": "AMBIGUOUS",
+      "evaluation_unit": "LOGICAL_PARSER_CONTEXT",
+      "execution": false,
+      "execution_correct": true,
+      "expected_decision": "AMBIGUOUS",
+      "expected_execution": false,
+      "foreign_canonical_values": [],
+      "gold_artifact_sha256": "135d2bf9220376bd53df9f7cd474bb0cfbe5e4c8f616edf4f66ff786d5c3f00b",
+      "independent_pattern_id": "c5b-independent-ambiguous-mandatory-author-title-association",
+      "mismatches": {
+        "semantic_text": {
+          "actual": "my two-author note lists luriel darsel sivren harveth beside titles \"the glass notebook\" \"the amber compass\"",
+          "expected": ""
+        },
+        "title_text": {
+          "actual": null,
+          "expected": "The Glass Notebook"
+        }
+      },
+      "mode": "SMART",
+      "native_interpretation_confidence": 0.0,
+      "policy": "CLARIFY",
+      "prediction_output_sha256": "f62fe1b2a462080052c75929a3e5ca3525f27e930e53914b70ee384a0788af33",
+      "protected_entity_content_preserved": true,
+      "query_text": "Find books my two-author note lists Luriel Darsel and Sivren Harveth beside titles \"The Glass Notebook\" and \"The Amber Compass\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Glass Notebook\"; rated at least 4 stars; published from 2011 onward; online only.",
+      "review_status": "AI_REVIEWED",
+      "scope": "PUBLIC_TENANT_PATRON",
+      "scoring_excluded_fields": {
+        "author_text": {
+          "grounded_author_value_available": false,
+          "query_requirement_present": true,
+          "reason": "The QUERY deliberately leaves a mandatory author operand unknown. This is a definitive ambiguity annotation, not a missing typed-decision/execution gold label.",
+          "required_annotation_label_unresolved": false,
+          "status": "UNRESOLVED",
+          "strict_author_value_scoring": "INAPPLICABLE_UNTIL_CLARIFICATION"
+        },
+        "exact_text": {
+          "reason": "No scalar applicability/reference in frozen schema.",
+          "status": "NO_GOLD_FIELD"
+        },
+        "soft_preferences": {
+          "frozen_status": "APPLICABLE",
+          "gold": {},
+          "reason": "Structured advisory object vs native display-string; no frozen scoring equivalence. Remains unscored, including partial advisory components.",
+          "status": "UNAVAILABLE_OUTPUT_ORACLE_ADAPTER"
+        }
+      },
+      "semantic_f1": 0.0,
+      "stratum": "AMBIGUOUS",
+      "strict_plan_match_limitation": "All scored dimensions only; excludes frozen unresolved/inapplicable fields and unavailable structured-advisory adapter.",
+      "typed_correct": true,
+      "valid_output": true,
+      "workspace": "PATRON"
+    },
+    {
+      "actor_is_supplied_context_not_predicted": true,
+      "actor_role_context": "STAFF",
+      "all_scored_dimensions_correct": false,
+      "assertions": [
+        {
+          "actual": "AVAILABLE_NOW",
+          "correct": true,
+          "expected": "AVAILABLE_NOW",
+          "field": "availability",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_subjects",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_terms",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "excluded_formats",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclusive_formats",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "formats",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "language",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "rating_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "rating_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": "my two-author note lists yvren mosveil velis dalmere beside titles \"the lantern harbor\" \"a tidal cistern\"",
+          "correct": false,
+          "expected": "",
+          "field": "semantic_text",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "subjects",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": false,
+          "expected": "The Lantern Harbor",
+          "field": "title_text",
+          "partial": false
+        },
+        {
+          "actual": 2016,
+          "correct": true,
+          "expected": 2016,
+          "field": "year_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "year_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": 2016,
+          "correct": true,
+          "expected": 2016,
+          "field": "year_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "year_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_unsupported_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_incomplete_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_contradiction_fields",
+          "partial": false
+        }
+      ],
+      "case_id": "C5A-3-3-11",
+      "categorical_assessment": {
+        "bucket": "AMBIGUOUS",
+        "plan_risk": "BLOCKED_BY_TYPED_DECISION",
+        "policy": "CLARIFY",
+        "repair_certainty": "NO_REPAIR",
+        "score_kind": "categorical heuristic evidence; not probability",
+        "slots": {
+          "author": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "author",
+                "operator": "CONTAINS",
+                "recognizer_id": "author.by",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Yvren Mosveil and Velis Dalmere beside titles \"The Lantern Harbor\" and \"A Tidal Cistern\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Lantern Harbor\"; published exactly in 2016; available to borrow now.",
+                "source_span_end": 233,
+                "source_span_start": 181,
+                "source_text": "by the author my note pairs with the requested title",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "availability": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "availability",
+                "operator": "=",
+                "recognizer_id": "availability.borrow_now",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Yvren Mosveil and Velis Dalmere beside titles \"The Lantern Harbor\" and \"A Tidal Cistern\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Lantern Harbor\"; published exactly in 2016; available to borrow now.",
+                "source_span_end": 314,
+                "source_span_start": 291,
+                "source_text": "available to borrow now",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "correction_candidate": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "format": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "negative_constraint": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "rating_operator": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "semantic_remainder": {
+            "calibration_bucket": "LITERAL_OR_SEMANTIC",
+            "recognized": true,
+            "source_evidence": [],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "subject": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "title_entity": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "title",
+                "operator": "CONTAINS",
+                "recognizer_id": "ir.literal",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Yvren Mosveil and Velis Dalmere beside titles \"The Lantern Harbor\" and \"A Tidal Cistern\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Lantern Harbor\"; published exactly in 2016; available to borrow now.",
+                "source_span_end": 262,
+                "source_span_start": 235,
+                "source_text": "titled \"The Lantern Harbor\"",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "year_operator": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "year",
+                "operator": "=",
+                "recognizer_id": "year.explicit_exact_in",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Yvren Mosveil and Velis Dalmere beside titles \"The Lantern Harbor\" and \"A Tidal Cistern\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Lantern Harbor\"; published exactly in 2016; available to borrow now.",
+                "source_span_end": 289,
+                "source_span_start": 264,
+                "source_text": "published exactly in 2016",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          }
+        },
+        "typed_decision": "AMBIGUOUS"
+      },
+      "cohort": "NEW_REVIEWED_CORE",
+      "decision": "AMBIGUOUS",
+      "evaluation_unit": "LOGICAL_PARSER_CONTEXT",
+      "execution": false,
+      "execution_correct": true,
+      "expected_decision": "AMBIGUOUS",
+      "expected_execution": false,
+      "foreign_canonical_values": [],
+      "gold_artifact_sha256": "135d2bf9220376bd53df9f7cd474bb0cfbe5e4c8f616edf4f66ff786d5c3f00b",
+      "independent_pattern_id": "c5b-independent-ambiguous-mandatory-author-title-association",
+      "mismatches": {
+        "semantic_text": {
+          "actual": "my two-author note lists yvren mosveil velis dalmere beside titles \"the lantern harbor\" \"a tidal cistern\"",
+          "expected": ""
+        },
+        "title_text": {
+          "actual": null,
+          "expected": "The Lantern Harbor"
+        }
+      },
+      "mode": "SMART",
+      "native_interpretation_confidence": 0.0,
+      "policy": "CLARIFY",
+      "prediction_output_sha256": "66b851595b4b8de3e523340ecd74972e3d607a09f5d4bbb066cef3b441397e50",
+      "protected_entity_content_preserved": true,
+      "query_text": "Find books my two-author note lists Yvren Mosveil and Velis Dalmere beside titles \"The Lantern Harbor\" and \"A Tidal Cistern\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Lantern Harbor\"; published exactly in 2016; available to borrow now.",
+      "review_status": "AI_REVIEWED",
+      "scope": "PUBLIC_TENANT_STAFF",
+      "scoring_excluded_fields": {
+        "author_text": {
+          "grounded_author_value_available": false,
+          "query_requirement_present": true,
+          "reason": "The QUERY deliberately leaves a mandatory author operand unknown. This is a definitive ambiguity annotation, not a missing typed-decision/execution gold label.",
+          "required_annotation_label_unresolved": false,
+          "status": "UNRESOLVED",
+          "strict_author_value_scoring": "INAPPLICABLE_UNTIL_CLARIFICATION"
+        },
+        "exact_text": {
+          "reason": "No scalar applicability/reference in frozen schema.",
+          "status": "NO_GOLD_FIELD"
+        },
+        "soft_preferences": {
+          "frozen_status": "APPLICABLE",
+          "gold": {},
+          "reason": "Structured advisory object vs native display-string; no frozen scoring equivalence. Remains unscored, including partial advisory components.",
+          "status": "UNAVAILABLE_OUTPUT_ORACLE_ADAPTER"
+        }
+      },
+      "semantic_f1": 0.0,
+      "stratum": "AMBIGUOUS",
+      "strict_plan_match_limitation": "All scored dimensions only; excludes frozen unresolved/inapplicable fields and unavailable structured-advisory adapter.",
+      "typed_correct": true,
+      "valid_output": true,
+      "workspace": "STAFF"
+    },
+    {
+      "actor_is_supplied_context_not_predicted": true,
+      "actor_role_context": "GENERAL_USER",
+      "all_scored_dimensions_correct": false,
+      "assertions": [
+        {
+          "actual": "AVAILABLE_NOW",
+          "correct": true,
+          "expected": "AVAILABLE_NOW",
+          "field": "availability",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_subjects",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_terms",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "excluded_formats",
+          "partial": false
+        },
+        {
+          "actual": [
+            "PHYSICAL"
+          ],
+          "correct": true,
+          "expected": [
+            "PHYSICAL"
+          ],
+          "field": "exclusive_formats",
+          "partial": false
+        },
+        {
+          "actual": [
+            "PHYSICAL"
+          ],
+          "correct": true,
+          "expected": [
+            "PHYSICAL"
+          ],
+          "field": "formats",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "language",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "rating_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": 4.0,
+          "correct": true,
+          "expected": 4.0,
+          "field": "rating_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": "my two-author note lists talven dalmere evara veylish beside titles \"the hidden workshop\" \"the distant archive\"",
+          "correct": false,
+          "expected": "",
+          "field": "semantic_text",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "subjects",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": false,
+          "expected": "The Hidden Workshop",
+          "field": "title_text",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "year_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "year_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "year_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "year_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_unsupported_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_incomplete_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_contradiction_fields",
+          "partial": false
+        }
+      ],
+      "case_id": "C5A-4-3-11",
+      "categorical_assessment": {
+        "bucket": "AMBIGUOUS",
+        "plan_risk": "BLOCKED_BY_TYPED_DECISION",
+        "policy": "CLARIFY",
+        "repair_certainty": "NO_REPAIR",
+        "score_kind": "categorical heuristic evidence; not probability",
+        "slots": {
+          "author": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "author",
+                "operator": "CONTAINS",
+                "recognizer_id": "author.by",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Talven Dalmere and Evara Veylish beside titles \"The Hidden Workshop\" and \"The Distant Archive\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Hidden Workshop\"; rated at least 4 stars; physical format only; available to borrow now.",
+                "source_span_end": 239,
+                "source_span_start": 187,
+                "source_text": "by the author my note pairs with the requested title",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "availability": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "availability",
+                "operator": "=",
+                "recognizer_id": "availability.borrow_now",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Talven Dalmere and Evara Veylish beside titles \"The Hidden Workshop\" and \"The Distant Archive\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Hidden Workshop\"; rated at least 4 stars; physical format only; available to borrow now.",
+                "source_span_end": 340,
+                "source_span_start": 317,
+                "source_text": "available to borrow now",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "correction_candidate": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "format": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "format",
+                "operator": "ONLY",
+                "recognizer_id": "format.explicit_only_modifier",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Talven Dalmere and Evara Veylish beside titles \"The Hidden Workshop\" and \"The Distant Archive\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Hidden Workshop\"; rated at least 4 stars; physical format only; available to borrow now.",
+                "source_span_end": 315,
+                "source_span_start": 295,
+                "source_text": "physical format only",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "negative_constraint": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "rating_operator": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "rating",
+                "operator": ">=",
+                "recognizer_id": "rating.field_operator",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Talven Dalmere and Evara Veylish beside titles \"The Hidden Workshop\" and \"The Distant Archive\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Hidden Workshop\"; rated at least 4 stars; physical format only; available to borrow now.",
+                "source_span_end": 293,
+                "source_span_start": 271,
+                "source_text": "rated at least 4 stars",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "semantic_remainder": {
+            "calibration_bucket": "LITERAL_OR_SEMANTIC",
+            "recognized": true,
+            "source_evidence": [],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "subject": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "title_entity": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "title",
+                "operator": "CONTAINS",
+                "recognizer_id": "ir.literal",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Talven Dalmere and Evara Veylish beside titles \"The Hidden Workshop\" and \"The Distant Archive\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Hidden Workshop\"; rated at least 4 stars; physical format only; available to borrow now.",
+                "source_span_end": 269,
+                "source_span_start": 241,
+                "source_text": "titled \"The Hidden Workshop\"",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "year_operator": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          }
+        },
+        "typed_decision": "AMBIGUOUS"
+      },
+      "cohort": "NEW_REVIEWED_CORE",
+      "decision": "AMBIGUOUS",
+      "evaluation_unit": "LOGICAL_PARSER_CONTEXT",
+      "execution": false,
+      "execution_correct": true,
+      "expected_decision": "AMBIGUOUS",
+      "expected_execution": false,
+      "foreign_canonical_values": [],
+      "gold_artifact_sha256": "135d2bf9220376bd53df9f7cd474bb0cfbe5e4c8f616edf4f66ff786d5c3f00b",
+      "independent_pattern_id": "c5b-independent-ambiguous-mandatory-author-title-association",
+      "mismatches": {
+        "semantic_text": {
+          "actual": "my two-author note lists talven dalmere evara veylish beside titles \"the hidden workshop\" \"the distant archive\"",
+          "expected": ""
+        },
+        "title_text": {
+          "actual": null,
+          "expected": "The Hidden Workshop"
+        }
+      },
+      "mode": "SMART",
+      "native_interpretation_confidence": 0.0,
+      "policy": "CLARIFY",
+      "prediction_output_sha256": "d826b416e268852a0dddcaf29243fc1327e041461f09f7c520e15104aefacfb2",
+      "protected_entity_content_preserved": true,
+      "query_text": "Find books my two-author note lists Talven Dalmere and Evara Veylish beside titles \"The Hidden Workshop\" and \"The Distant Archive\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Hidden Workshop\"; rated at least 4 stars; physical format only; available to borrow now.",
+      "review_status": "AI_REVIEWED",
+      "scope": "PRIVATE_TENANT_PATRON",
+      "scoring_excluded_fields": {
+        "author_text": {
+          "grounded_author_value_available": false,
+          "query_requirement_present": true,
+          "reason": "The QUERY deliberately leaves a mandatory author operand unknown. This is a definitive ambiguity annotation, not a missing typed-decision/execution gold label.",
+          "required_annotation_label_unresolved": false,
+          "status": "UNRESOLVED",
+          "strict_author_value_scoring": "INAPPLICABLE_UNTIL_CLARIFICATION"
+        },
+        "exact_text": {
+          "reason": "No scalar applicability/reference in frozen schema.",
+          "status": "NO_GOLD_FIELD"
+        },
+        "soft_preferences": {
+          "frozen_status": "APPLICABLE",
+          "gold": {},
+          "reason": "Structured advisory object vs native display-string; no frozen scoring equivalence. Remains unscored, including partial advisory components.",
+          "status": "UNAVAILABLE_OUTPUT_ORACLE_ADAPTER"
+        }
+      },
+      "semantic_f1": 0.0,
+      "stratum": "AMBIGUOUS",
+      "strict_plan_match_limitation": "All scored dimensions only; excludes frozen unresolved/inapplicable fields and unavailable structured-advisory adapter.",
+      "typed_correct": true,
+      "valid_output": true,
+      "workspace": "PATRON"
+    },
+    {
+      "actor_is_supplied_context_not_predicted": true,
+      "actor_role_context": "STAFF",
+      "all_scored_dimensions_correct": false,
+      "assertions": [
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "availability",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_subjects",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclude_terms",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "excluded_formats",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "exclusive_formats",
+          "partial": false
+        },
+        {
+          "actual": [
+            "ONLINE",
+            "PHYSICAL"
+          ],
+          "correct": true,
+          "expected": [
+            "ONLINE",
+            "PHYSICAL"
+          ],
+          "field": "formats",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "language",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "rating_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": 4.0,
+          "correct": true,
+          "expected": 4.0,
+          "field": "rating_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "rating_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": "my two-author note lists narela umbrin aveli caldris beside titles \"the silver observatory\" \"a midnight signal\"",
+          "correct": false,
+          "expected": "",
+          "field": "semantic_text",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "subjects",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": false,
+          "expected": "The Silver Observatory",
+          "field": "title_text",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "year_max",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "year_max_exclusive",
+          "partial": false
+        },
+        {
+          "actual": null,
+          "correct": true,
+          "expected": null,
+          "field": "year_min",
+          "partial": false
+        },
+        {
+          "actual": false,
+          "correct": true,
+          "expected": false,
+          "field": "year_min_exclusive",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_unsupported_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_incomplete_fields",
+          "partial": false
+        },
+        {
+          "actual": [],
+          "correct": true,
+          "expected": [],
+          "field": "expected_contradiction_fields",
+          "partial": false
+        }
+      ],
+      "case_id": "C5A-5-3-11",
+      "categorical_assessment": {
+        "bucket": "AMBIGUOUS",
+        "plan_risk": "BLOCKED_BY_TYPED_DECISION",
+        "policy": "CLARIFY",
+        "repair_certainty": "NO_REPAIR",
+        "score_kind": "categorical heuristic evidence; not probability",
+        "slots": {
+          "author": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "author",
+                "operator": "CONTAINS",
+                "recognizer_id": "author.by",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Narela Umbrin and Aveli Caldris beside titles \"The Silver Observatory\" and \"A Midnight Signal\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Silver Observatory\"; rated at least 4 stars; in both physical and online formats.",
+                "source_span_end": 239,
+                "source_span_start": 187,
+                "source_text": "by the author my note pairs with the requested title",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "availability": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "correction_candidate": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "format": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "format",
+                "operator": "PRESENT",
+                "recognizer_id": "format.combined",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Narela Umbrin and Aveli Caldris beside titles \"The Silver Observatory\" and \"A Midnight Signal\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Silver Observatory\"; rated at least 4 stars; in both physical and online formats.",
+                "source_span_end": 333,
+                "source_span_start": 298,
+                "source_text": "in both physical and online formats",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "negative_constraint": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "rating_operator": {
+            "calibration_bucket": "SOURCE_BACKED",
+            "recognized": true,
+            "source_evidence": [
+              {
+                "field": "rating",
+                "operator": ">=",
+                "recognizer_id": "rating.field_operator",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Narela Umbrin and Aveli Caldris beside titles \"The Silver Observatory\" and \"A Midnight Signal\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Silver Observatory\"; rated at least 4 stars; in both physical and online formats.",
+                "source_span_end": 296,
+                "source_span_start": 274,
+                "source_text": "rated at least 4 stars",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "semantic_remainder": {
+            "calibration_bucket": "LITERAL_OR_SEMANTIC",
+            "recognized": true,
+            "source_evidence": [],
+            "support_status": "SUPPORTED",
+            "unresolved": false
+          },
+          "subject": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          },
+          "title_entity": {
+            "calibration_bucket": "UNRESOLVED",
+            "recognized": false,
+            "source_evidence": [
+              {
+                "field": "title",
+                "operator": "CONTAINS",
+                "recognizer_id": "ir.literal",
+                "repair_provenance": null,
+                "source_query": "Find books my two-author note lists Narela Umbrin and Aveli Caldris beside titles \"The Silver Observatory\" and \"A Midnight Signal\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Silver Observatory\"; rated at least 4 stars; in both physical and online formats.",
+                "source_span_end": 272,
+                "source_span_start": 241,
+                "source_text": "titled \"The Silver Observatory\"",
+                "support_status": "SUPPORTED"
+              }
+            ],
+            "support_status": "UNRESOLVED",
+            "unresolved": true
+          },
+          "year_operator": {
+            "calibration_bucket": "ABSENT",
+            "recognized": false,
+            "source_evidence": [],
+            "support_status": "ABSENT",
+            "unresolved": false
+          }
+        },
+        "typed_decision": "AMBIGUOUS"
+      },
+      "cohort": "NEW_REVIEWED_CORE",
+      "decision": "AMBIGUOUS",
+      "evaluation_unit": "LOGICAL_PARSER_CONTEXT",
+      "execution": false,
+      "execution_correct": true,
+      "expected_decision": "AMBIGUOUS",
+      "expected_execution": false,
+      "foreign_canonical_values": [],
+      "gold_artifact_sha256": "135d2bf9220376bd53df9f7cd474bb0cfbe5e4c8f616edf4f66ff786d5c3f00b",
+      "independent_pattern_id": "c5b-independent-ambiguous-mandatory-author-title-association",
+      "mismatches": {
+        "semantic_text": {
+          "actual": "my two-author note lists narela umbrin aveli caldris beside titles \"the silver observatory\" \"a midnight signal\"",
+          "expected": ""
+        },
+        "title_text": {
+          "actual": null,
+          "expected": "The Silver Observatory"
+        }
+      },
+      "mode": "SMART",
+      "native_interpretation_confidence": 0.0,
+      "policy": "CLARIFY",
+      "prediction_output_sha256": "5f88ae6ac9b86c4cd76209ac70f64912a78685947f0d6a4380be758c3cc0f5f2",
+      "protected_entity_content_preserved": true,
+      "query_text": "Find books my two-author note lists Narela Umbrin and Aveli Caldris beside titles \"The Silver Observatory\" and \"A Midnight Signal\"; I cannot remember which author belongs to which title; by the author my note pairs with the requested title; titled \"The Silver Observatory\"; rated at least 4 stars; in both physical and online formats.",
+      "review_status": "AI_REVIEWED",
+      "scope": "PRIVATE_TENANT_STAFF",
+      "scoring_excluded_fields": {
+        "author_text": {
+          "grounded_author_value_available": false,
+          "query_requirement_present": true,
+          "reason": "The QUERY deliberately leaves a mandatory author operand unknown. This is a definitive ambiguity annotation, not a missing typed-decision/execution gold label.",
+          "required_annotation_label_unresolved": false,
+          "status": "UNRESOLVED",
+          "strict_author_value_scoring": "INAPPLICABLE_UNTIL_CLARIFICATION"
+        },
+        "exact_text": {
+          "reason": "No scalar applicability/reference in frozen schema.",
+          "status": "NO_GOLD_FIELD"
+        },
+        "soft_preferences": {
+          "frozen_status": "APPLICABLE",
+          "gold": {},
+          "reason": "Structured advisory object vs native display-string; no frozen scoring equivalence. Remains unscored, including partial advisory components.",
+          "status": "UNAVAILABLE_OUTPUT_ORACLE_ADAPTER"
+        }
+      },
+      "semantic_f1": 0.0,
+      "stratum": "AMBIGUOUS",
+      "strict_plan_match_limitation": "All scored dimensions only; excludes frozen unresolved/inapplicable fields and unavailable structured-advisory adapter.",
+      "typed_correct": true,
+      "valid_output": true,
+      "workspace": "STAFF"
+    }
+  ],
+  "false_execution_count": 0,
+  "not_tuning_targets": true,
+  "safe_non_execution": {
+    "denominator": 5,
+    "numerator": 5,
+    "percent": 100.0,
+    "status": "MEASURED"
+  },
+  "typed_recognition": {
+    "denominator": 5,
+    "numerator": 5,
+    "percent": 100.0,
+    "status": "MEASURED"
+  }
+}

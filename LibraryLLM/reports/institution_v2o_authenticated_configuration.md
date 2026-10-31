@@ -1,0 +1,9 @@
+# Authenticated mode compatibility fixes
+
+Preserved backend/database/mongo_configuration.py byte-for-byte: explicit AUTHENTICATED mode, explicit credential/database/authSource/SCRAM validation, expected authenticated identity, existing authorized DB and users readiness check, deny-only anonymous enforcement probe, safe fixed errors, bounded startup, no anonymous runtime fallback or new empty DB initialization. Actual environment/.env/service mode unchanged.
+
+Fixed a configuration inconsistency in search/luminar_search.py: settings are captured once for construction, and that same database is used for client selection and lexical expected-source binding. Previously a fresh helper settings read could qualify a new environment DB while module-level MONGO_DATABASE selected an older one. search/maintenance.py now also selects the database from the validated settings object.
+
+Three active lexical tools (build_lexical_sidecar --check, lexical_worker, lexical_maintenance process-once) previously constructed PyMongo directly and ignored authenticated-mode qualification. They now use connect/settings with the original development URI default. Four actual CLI missing-secret probes fail before connection/work and emit the fixed safe code; command preflight/explicit --apply boundaries remain unchanged. No lexical/global build/process was run against current deployment data.
+
+Actual-server O tests replay frozen N assertions: missing/wrong credentials, authSource/DB/collection privileges, enforcement-disabled server, reconnect, rollback and no unrestricted fallback. CLI logs may include source-code localhost literals in Python tracebacks but never configured credential values; the probe tests the actual supplied URI is absent. Historical audit/seed/migration tools remain separately inventoried and not automatically deployment-approved.

@@ -20,15 +20,22 @@ def pointer_manifest(library_id,target,row):
         artifact=path/name
         if artifact.resolve()!=artifact or artifact.stat().st_size>MAX_ARTIFACT_BYTES or store.checksum(artifact)!=digest:raise HTTPException(409,'ARTIFACT_CORRUPT')
     return manifest
-def target_status(library_id,target,source_fingerprint=None,observe_stale=True):
+def _target_observation(library_id,target,source_fingerprint=None,observe_stale=True):
+    """One request-local pointer verification, never a cross-request cache.
+
+    Keep the verified pointer and outcome together so Staff presentation does
+    not re-read/re-hash the same generation. Runtime callers still verify on
+    every target_status call and receive precisely the existing status shape.
+    """
     library_id=store.canonical(library_id)
     row=store.collection('intelligence_targets').find_one({'library_id':library_id,'target':target}) or {}
     job=store.collection('intelligence_jobs').find_one({'library_id':library_id,'target':target,'effective_active':True})
-    state=row.get('state','NOT_BUILT');error=row.get('error_code')
+    state=row.get('state','NOT_BUILT');error=row.get('error_code');verified=False
     if job and job['state']!='QUEUED' and expired(job):state='RECOVERY_REQUIRED';error='LEASE_EXPIRED'
     if row.get('active_generation_id'):
         try:
             pointer_manifest(library_id,target,row)
+            verified=True
             source_fingerprint=source_fingerprint or store.fingerprint(store.source_records(library_id))
             if state in {'READY','EMPTY'} and source_fingerprint!=row.get('source_fingerprint'):
                 state='STALE'
@@ -38,11 +45,14 @@ def target_status(library_id,target,source_fingerprint=None,observe_stale=True):
                     row=store.collection('intelligence_targets').find_one({'library_id':library_id,'target':target}) or row
         except (HTTPException,ValueError,KeyError,OSError):state='RECOVERY_REQUIRED';error='ARTIFACT_CORRUPT'
     elif state in {'READY','EMPTY'}:state='RECOVERY_REQUIRED';error='PUBLISH_POINTER_MISSING'
-    return {'target':target,'status':state,'active_generation_id':row.get('active_generation_id'),'source_generation_id':row.get('source_generation_id'),
+    current={'target':target,'status':state,'active_generation_id':row.get('active_generation_id'),'source_generation_id':row.get('source_generation_id'),
         'source_fingerprint':row.get('source_fingerprint'),'manifest_checksum':row.get('manifest_checksum'),'record_count':row.get('record_count',0),
         'built_at':row.get('built_at'),'stale_since':row.get('stale_since') if state=='STALE' else None,'current_job':store.safe_job(job) if job else None,
         'error_code':error,'node_count':row.get('node_count'),'edge_count':row.get('edge_count'),'artifact_bytes':row.get('artifact_bytes',0),
         'fallback_policy':'Current tenant-local catalogue when not READY; no global filler.'}
+    return current,row,verified
+def target_status(library_id,target,source_fingerprint=None,observe_stale=True):
+    return _target_observation(library_id,target,source_fingerprint,observe_stale)[0]
 def status(library_id,actor):
     require_library_staff(store.canonical(library_id),actor)
     with store.library_mutation(library_id,wait_seconds=30):
@@ -56,14 +66,9 @@ def status(library_id,actor):
 
 def control_status(library_id,target,fp):
     """Presentation over Part 2G; catalogue reader/fallback decisions are unchanged."""
-    current=target_status(library_id,target,fp)
-    pointer=store.collection('intelligence_targets').find_one({'library_id':library_id,'target':target}) or {}
+    current,pointer,valid=_target_observation(library_id,target,fp)
     latest=store.collection('intelligence_jobs').find_one({'library_id':library_id,'target':target},sort=[('created_at',-1)])
     published=store.collection('intelligence_jobs').find_one({'library_id':library_id,'job_id':pointer.get('published_by_job_id')}) if pointer.get('published_by_job_id') else None
-    valid=False
-    if pointer.get('active_generation_id'):
-        try:pointer_manifest(library_id,target,pointer);valid=True
-        except (HTTPException,ValueError,KeyError,OSError):pass
     active='NOT_BUILT' if not pointer.get('active_generation_id') else 'RECOVERY_REQUIRED' if not valid else 'READY' if fp==pointer.get('source_fingerprint') else 'STALE'
     sequence=store.collection('intelligence_jobs').count_documents({'library_id':library_id,'target':target,'state':'SUCCEEDED'}) if published else None
     duration=None

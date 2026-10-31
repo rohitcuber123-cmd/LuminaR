@@ -1,0 +1,9 @@
+# Actual tenant KG incremental feasibility
+
+`artifacts.build_graph` creates Book `book:{library_book_id}` nodes with title/global_work_id and canonical shared feature nodes via `knowledge_graph.core.terms/feature_id`. Features are Author, Subject and Classification; relation names come from `knowledge_graph.relations.RELATIONS` or HAS_CLASSIFICATION. Canonical term deduplication is per book; feature nodes use deterministic IDs and first-seen labels. Edges are source Book → feature with relation, sorted deterministically, serialized as one graph.json next to metadata.json and the checksummed manifest.
+
+Book source provenance is implicit in each edge's source ID and the complete metadata snapshot, not an incremental event/edge ownership journal. There is no per-record mutation ledger, shared-node reference count, tombstone/update API or orphan cleanup protocol. Validation reconstructs expected nodes/edges from the entire source records, checks duplicate node IDs/edge tuples, ownership/counts and graph equality. This is whole-generation consistency.
+
+A single book edit could theoretically replace its outgoing relationships, but removing a shared author/subject/classification requires reference accounting and deterministic label selection when the first contributing book disappears. Book deletion, relationship removal, canonicalization collisions, duplicate imports, orphan removal and global provenance changes must agree with full reconstruction. Current graph has no cross-book extraction edges beyond shared feature nodes; future graph schemas may add more dependencies. Runtime traversals/filters must never see half-applied metadata/graph revisions.
+
+Recommend full immutable generation rebuild with existing validation/publication until a separately reviewed provenance/reference-count or persistent graph design proves equivalence and rollback/restart safety. No incremental KG code, schema or extraction change was made.

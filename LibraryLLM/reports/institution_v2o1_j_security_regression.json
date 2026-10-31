@@ -1,0 +1,172 @@
+{
+  "functional_status": "PASS",
+  "frozen_J_contract_status": "REQUIRES_APPROVAL",
+  "frozen_J_guard_retained_and_failing": true,
+  "groups": [
+    {
+      "group": "security",
+      "exit": 0,
+      "tests": 126,
+      "passed": 116,
+      "failed": 0,
+      "skipped": 10,
+      "seconds": 33.39742909999768,
+      "files": [
+        "tests/test_book_access_control.py",
+        "tests/test_document_rag_latency.py",
+        "tests/test_dynamic_book_capabilities.py",
+        "tests/test_private_document_cache.py"
+      ]
+    },
+    {
+      "group": "institution_v2b",
+      "exit": 0,
+      "tests": 57,
+      "passed": 57,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 47.518428700001095,
+      "files": [
+        "tests/institution_v2b"
+      ]
+    },
+    {
+      "group": "institution_v2f",
+      "exit": 0,
+      "tests": 183,
+      "passed": 183,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 75.28794579999885,
+      "files": [
+        "tests/institution_v2f"
+      ]
+    },
+    {
+      "group": "institution_v2g",
+      "exit": 0,
+      "tests": 134,
+      "passed": 134,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 74.99111110000013,
+      "files": [
+        "tests/institution_v2g/test_intelligence.py",
+        "tests/institution_v2g/test_validation_recovery.py",
+        "tests/institution_v2g/test_private_isolation.py",
+        "tests/institution_v2g/test_search_runtime.py"
+      ]
+    },
+    {
+      "group": "institution_v2i",
+      "exit": 0,
+      "tests": 60,
+      "passed": 60,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 30.044420000001992,
+      "files": [
+        "tests/institution_v2i"
+      ]
+    },
+    {
+      "group": "institution_v2j",
+      "exit": 1,
+      "tests": 54,
+      "passed": 53,
+      "failed": 1,
+      "skipped": 0,
+      "seconds": 9.854808300002333,
+      "files": [
+        "tests/institution_v2j"
+      ]
+    },
+    {
+      "group": "institution_v2l",
+      "exit": 0,
+      "tests": 67,
+      "passed": 67,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 25.558030500000314,
+      "files": [
+        "tests/institution_v2l"
+      ]
+    },
+    {
+      "group": "institution_v2n",
+      "exit": 0,
+      "tests": 26,
+      "passed": 26,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 8.201043299999583,
+      "files": [
+        "tests/institution_v2n"
+      ]
+    },
+    {
+      "group": "institution_v2o",
+      "exit": 0,
+      "tests": 30,
+      "passed": 30,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 48.508399099999224,
+      "files": [
+        "tests/institution_v2o"
+      ],
+      "initial_attempt": {
+        "group": "institution_v2o",
+        "exit": 1,
+        "tests": 30,
+        "passed": 29,
+        "failed": 1,
+        "skipped": 0,
+        "seconds": 48.508399099999224,
+        "files": [
+          "tests/institution_v2o"
+        ]
+      },
+      "initial_failures": [
+        {
+          "test": "tests.institution_v2o.test_authentication::test_application_runtime_permissions",
+          "kind": "failure",
+          "message": "backend.database.mongo_configuration.MongoConfigurationError: MONGO_AUTH_CONNECTION_NOT_QUALIFIED"
+        }
+      ],
+      "confirmation_xml": "institution_v2o1_o_confirmation.xml",
+      "confirmation_note": "Whole unchanged group rerun in fresh isolated fixture. Initial qualification error retained; underlying driver cause unproven."
+    },
+    {
+      "group": "institution_v2o1",
+      "exit": 0,
+      "tests": 19,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 26.070368400000007,
+      "files": [
+        "tests/institution_v2o1"
+      ]
+    }
+  ],
+  "review_and_mutation_tests": {
+    "passed": 19,
+    "failed": 0,
+    "skipped": 0,
+    "failures": [],
+    "xml": "institution_v2o1_review_tests.xml"
+  },
+  "coverage": {
+    "operator_only_diagnostics": "J tests: explicit read role, platform-only denial, outside private library denial, read-only Mongo enforcement and redaction",
+    "canonical_tenant_membership": "B/G authenticated API tests and Chromium actual JWT/membership revocation/library-switch checks",
+    "role_matrix": "Admin manual confirmation/build; Librarian status read and build denied; General User and Platform-only denied",
+    "fencing_and_last_good": "G/L tests and native fixture browser builds: serial owner fences, publication acknowledgement, failure/recovery and retained last-good",
+    "mongo_fail_closed": "N/O isolated real authorization on separate Mongo port: absent/invalid/revoked credentials, wrong DB/authSource, anonymous denial, no anonymous retry",
+    "no_secret_worker_fence_output": "J redaction and staff response schema tests plus source review; React has no operator infrastructure request",
+    "no_automatic_commands": "J no mutation/recovery/global-control test, G job dedupe/fencing, frontend cancel/confirmation and browser no-auto-build",
+    "frontend_boundary_candidate": "Six mutation checks reject operator fetch, foreign scope, extra command, shell import, raw fence and endpoint changes; candidate only, frozen guard not changed"
+  },
+  "limits": "AST allowlist is an additional review guard, not a proof against all possible JavaScript. Backend authority, helper fingerprints, actual behavior tests and review remain required."
+}

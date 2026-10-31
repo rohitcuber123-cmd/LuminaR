@@ -1,0 +1,91 @@
+{
+  "status": "BLIND_NORMATIVE_RECONCILIATION_COMPLETE",
+  "author_identity": "/root/v6_fresh_author",
+  "actual_model_identity": "NOT_EXPOSED",
+  "human_authors": 0,
+  "isolation": "Only the original authored population was inspected for this reconciliation. No candidate implementation, predictions, reviewer file, network, or inference API was accessed. Parent supplied schema-only comparison findings.",
+  "preserved_originals": {
+    "population": {
+      "path": "reports/search_proof6_authored.jsonl",
+      "sha256": "24d7df1707e25b6fdd1fd380b48756b0fe5bec1da3c5b823ea55e2ce9f9033dd"
+    },
+    "provenance": {
+      "path": "reports/search_proof6_author_provenance.json",
+      "sha256": "c89b9abd4d08eb8af12aa288766af484955e3421df3244c04271d7b8889077e2"
+    }
+  },
+  "findings": [
+    {
+      "field": "exclusive_formats",
+      "position": "AGREE_WITH_LIST_SCHEMA; DISAGREE_WITH_BLANKET_EMPTY_LIST_NORMALIZATION",
+      "observed_original_shapes": {
+        "false_boolean": 145,
+        "true_boolean": 5
+      },
+      "reason": "I incorrectly modeled exclusive_formats as a boolean. The blind brief listed the field but omitted its native collection shape; the parent now supplies a list schema. Known absence should therefore be []. However, the actual authored population has 145 false values and five true values, not 150 false values. The five true values correspond to a mandatory only-online condition, so replacing those five with [] would erase requested exclusivity. A schema correction must preserve that meaning.",
+      "recommended_reviewed_changes": [
+        {
+          "match": {
+            "exclusive_formats": false
+          },
+          "case_count": 145,
+          "expected_hard_constraints": {
+            "exclusive_formats": []
+          },
+          "metric_applicability": {
+            "exclusive_formats": {
+              "status": "APPLICABLE_ABSENCE",
+              "reason": "No mandatory exclusive-format condition is asserted."
+            }
+          }
+        },
+        {
+          "case_ids": [
+            "proof6-c03-required-and-excluded-online-format-global",
+            "proof6-c03-required-and-excluded-online-format-public_tenant_patron",
+            "proof6-c03-required-and-excluded-online-format-public_tenant_staff",
+            "proof6-c03-required-and-excluded-online-format-private_tenant_patron",
+            "proof6-c03-required-and-excluded-online-format-private_tenant_staff"
+          ],
+          "case_count": 5,
+          "expected_hard_constraints": {
+            "exclusive_formats": [
+              "ONLINE"
+            ]
+          },
+          "metric_applicability": {
+            "exclusive_formats": {
+              "status": "APPLICABLE",
+              "reason": "The source explicitly requires only ONLINE; native list shape preserves that mandatory exclusivity."
+            }
+          }
+        }
+      ],
+      "completion_oracles": "Apply the same false-to-empty-list schema normalization to exclusive_formats in any expected_completion.hard_constraints. No authored completion case asserts exclusivity.",
+      "decision_effect": "None. The five exclusive-online cases also exclude ONLINE, retaining their resolved contradiction."
+    },
+    {
+      "case_id": "proof6-u01-author-level-aggregate-global",
+      "field": "year_min",
+      "position": "AGREE_WITH_REVIEWER_OPERAND_2014",
+      "original_value": null,
+      "recommended_value": 2014,
+      "reason": "The publication floor is a resolved mandatory source operand, independent of execution capability. My original representation preserved it in unadapted_mandatory_assertions while leaving the unsupported GLOBAL hard slot absent. For a normative source-operand oracle, year_min=2014 is clearer and avoids conflating a known requested value with its unavailable execution capability. Retaining the operand does not authorize applying a year filter in GLOBAL because expected_executable remains false and the unavailable capability remains explicitly recorded.",
+      "recommended_reviewed_changes": {
+        "expected_hard_constraints": {
+          "year_min": 2014
+        },
+        "metric_applicability": {
+          "year_min": {
+            "status": "APPLICABLE",
+            "reason": "Resolved mandatory source publication floor; GLOBAL cannot execute it, which remains separately recorded and does not make the operand unknown."
+          }
+        }
+      },
+      "preserve": "Retain the unadapted mandatory publication assertion and mandatory bibliography-median assertion; retain UNSUPPORTED and expected_executable=false.",
+      "decision_effect": "None. The mandatory bibliography median is unsupported in every scope, and GLOBAL additionally lacks the requested year capability."
+    }
+  ],
+  "agreement_scope": "No change is proposed to typed decisions, executable flags, sort values, queries, families, topologies, source-role annotations, or original artifacts.",
+  "expected_separate_reviewed_population": "Normalize absent exclusive-format values to []; preserve only-online as [ONLINE] in the five identified cases; retain the known global year floor as 2014 while keeping execution unsupported."
+}

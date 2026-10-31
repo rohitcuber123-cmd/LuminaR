@@ -1,0 +1,99 @@
+--- accepted-2J/LibraryIntelligence.tsx
++++ accepted-2O/LibraryIntelligence.tsx
+@@ -5,18 +5,23 @@
+ import { useAuthStore } from '../store/useAuthStore'
+ import { useInstitutionStore } from '../store/useInstitutionStore'
+ import { libraryRole } from '../lib/libraryWorkspace'
+-import { activeBuild, intelligenceStatus, requestIntelligenceBuild, type IntelligenceStatus, type IntelligenceTarget } from '../lib/libraryIntelligence'
++import { activeBuild, stageProgress, intelligenceStatus, requestIntelligenceBuild, type IntelligenceStatus, type IntelligenceTarget } from '../lib/libraryIntelligence'
+ import './LibraryIntelligence.css'
+ 
+-const labels: Record<string,string> = { NOT_BUILT:'Not built', EMPTY:'Not available yet', READY:'Ready', STALE:'Update available', QUEUED:'Queued', BUILDING:'Building', RUNNING:'Building', VALIDATING:'Validating', PUBLISHING:'Publishing', FAILED:'Build failed', RECOVERY_REQUIRED:'Needs recovery', SUCCEEDED:'Succeeded', CANCELLED:'Cancelled' }
++const labels: Record<string,string> = { NOT_BUILT:'Not built', EMPTY:'Not available yet', READY:'Ready', STALE:'Update available', QUEUED:'Queued', BUILDING:'Building', RUNNING:'Building', VALIDATING:'Validating', PUBLISHING:'Publishing', FAILED:'Build failed', RECOVERY_REQUIRED:'Needs recovery', SUCCEEDED:'Succeeded' }
+ const stages: Record<string,string> = { QUEUED:'Waiting for worker', DATASET:'Preparing catalogue snapshot', EMBEDDING:'Embedding books', KG_METADATA:'Building catalogue relationships', VALIDATION:'Validating artifacts', PUBLISH:'Publishing generation', COMPLETE:'Complete', RECOVERED:'Outcome reconciled', FAILED:'Build failed', RECOVERY_REQUIRED:'Needs recovery' }
+-const date = (value: string | null) => value ? new Date(value.endsWith('Z') || /[+-]\d\d:\d\d$/.test(value) ? value : value+'Z').toLocaleString(undefined, { dateStyle:'medium', timeStyle:'short' }) : 'Not yet'
++const date = (value: string | null | undefined) => {
++  if (!value) return 'Not yet'
++  const parsed = new Date(value.endsWith('Z') || /[+-]\d\d:\d\d$/.test(value) ? value : value+'Z')
++  return Number.isFinite(parsed.getTime()) ? parsed.toLocaleString(undefined, { dateStyle:'medium', timeStyle:'short' }) : 'Unavailable'
++}
+ const name = (target: IntelligenceTarget) => target.target === 'SEARCH_INDEX' ? 'Search Index' : 'Knowledge Graph'
+ const actionLabel = (target: IntelligenceTarget) => target.latest_job?.state === 'FAILED' && target.can_retry ? 'Retry Build' : `${target.active_generation_id ? 'Rebuild' : 'Build'} ${name(target)}`
+ 
+ export function LibraryIntelligencePage() {
+   const { libraryId = '' } = useParams(), token = useAuthStore(s => s.token)
+-  return <IntelligenceSession key={`${libraryId}:${token}`} id={libraryId} />
++  const library = useInstitutionStore(s => s.libraries.find(l => l.library_id === libraryId))
++  return <IntelligenceSession key={`${libraryId}:${token}:${libraryRole(library || null)}`} id={libraryId} />
+ }
+ 
+ function IntelligenceSession({ id }: { id: string }) {
+@@ -33,9 +38,14 @@
+     buildController.current = actionController
+     let mounted = true
+     let timer: ReturnType<typeof setTimeout> | undefined, controller: AbortController | undefined
++    const allowed = role === 'ADMIN' || role === 'LIBRARIAN'
+     async function load() {
++      if (!allowed || document.visibilityState === 'hidden') return
+       clearTimeout(timer); controller?.abort(); controller = new AbortController()
+       const current = ++sequence.current
++      const requestController = controller
++      let timedOut = false
++      const deadline = setTimeout(() => { timedOut = true; requestController.abort() },10000)
+       try {
+         const value = await intelligenceStatus(id,controller.signal)
+         if (!mounted || current !== sequence.current) return
+@@ -43,16 +53,21 @@
+         setData(value);setError('')
+         if ([value.search,value.kg].some(activeBuild)) timer = setTimeout(() => void load(),3000)
+       } catch (reason) {
+-        if (mounted && current === sequence.current && !(reason instanceof DOMException && reason.name === 'AbortError')) {
++        if (mounted && current === sequence.current && (timedOut || !(reason instanceof DOMException && reason.name === 'AbortError'))) {
+           setData(null);setError('Unable to load intelligence status. Refresh to verify current access and build state.')
+         }
+-      }
++      } finally { clearTimeout(deadline) }
+     }
+     refresh.current = () => void load()
+     const focus = () => refresh.current()
+-    if (role === 'ADMIN' || role === 'LIBRARIAN') void load()
++    const visibility = () => {
++      if (document.visibilityState === 'hidden') { clearTimeout(timer);++sequence.current;controller?.abort() }
++      else refresh.current()
++    }
++    if (allowed) void load()
+     window.addEventListener('focus',focus)
+-    return () => { mounted=false;alive.current=false;clearTimeout(timer);controller?.abort();actionController.abort();window.removeEventListener('focus',focus) }
++    document.addEventListener('visibilitychange',visibility)
++    return () => { mounted=false;alive.current=false;clearTimeout(timer);controller?.abort();actionController.abort();window.removeEventListener('focus',focus);document.removeEventListener('visibilitychange',visibility) }
+   },[id,role])
+ 
+   async function build() {
+@@ -90,21 +105,24 @@
+   const failed = target.latest_job?.state === 'FAILED', empty = data.eligible_book_count === 0
+   const state = recovery ? 'RECOVERY_REQUIRED' : running ? target.current_job!.state : failed && target.active_status === 'READY' ? 'READY' : target.status
+   const job = target.current_job
+-  const current = Math.max(0,Math.min(job?.progress_current || 0,job?.progress_total || 0)), total = Math.max(0,job?.progress_total || 0)
++  const progress = stageProgress(job), latest = target.latest_job
+   return <section className="ui-card intelligence-card" aria-labelledby={`intelligence-${target.target}`}>
+     <h2 id={`intelligence-${target.target}`}>{target.target === 'SEARCH_INDEX' ? 'Semantic Search Index' : 'Knowledge Graph'}</h2>
+     <p role="status" aria-live="polite" aria-atomic="true"><span className="ui-badge">{empty && !running && !target.active_generation_id ? 'Not available yet' : labels[state] || 'Status unavailable'}</span></p>
+     {empty && <p>Add books to the library before building {target.target === 'SEARCH_INDEX' ? 'semantic search' : 'the graph'}.</p>}
+     {target.status === 'NOT_BUILT' && !empty && <p>Your library currently uses standard local catalogue search. No build starts automatically when books are added.</p>}
+     {(target.status === 'STALE' || target.active_status === 'STALE') && <p>The catalogue has changed since this generation was built. Rebuild to include the latest metadata; local fallback remains available.</p>}
+-    {failed && !recovery && <p>Latest build attempt: Build failed. {target.active_generation_id ? 'The previous validated generation is retained.' : 'Standard local catalogue search remains available.'} You can retry this known outcome.</p>}
++    {failed && !recovery && <p>Latest build attempt: Build failed. {target.active_generation_id ? target.artifact_verified ? 'The previous validated generation is retained.' : 'The previous generation pointer is retained; artifact validation is not confirmed.' : 'Standard local catalogue search remains available.'} You can retry this known outcome.</p>}
+     {recovery && <p>The previous build outcome needs operator reconciliation. Build and Retry are unavailable until the outcome is safely resolved.</p>}
+     <dl><dt>Eligible books</dt><dd>{data.eligible_book_count.toLocaleString()}</dd><dt>{target.target === 'SEARCH_INDEX' ? 'Books indexed' : 'Books represented'}</dt><dd>{target.record_count.toLocaleString()}</dd>
+       {target.target === 'KNOWLEDGE_GRAPH' && <><dt>Nodes</dt><dd>{target.node_count?.toLocaleString() ?? 'Not yet'}</dd><dt>Relationships</dt><dd>{target.edge_count?.toLocaleString() ?? 'Not yet'}</dd></>}
+       <dt>Active generation</dt><dd>{target.active_generation_id ? `Generation ${target.generation_sequence ?? '—'}` : 'Not yet'}</dd><dt>Last successful build</dt><dd>{date(target.built_at)}</dd>
+       <dt>Last build duration</dt><dd>{target.last_build_duration_seconds == null ? 'Not yet' : `${target.last_build_duration_seconds.toFixed(1)} seconds`}</dd>
++      <dt>Latest attempt</dt><dd>{latest ? labels[latest.state] || 'Status unavailable' : 'Not yet'}</dd>
++      <dt>Attempt requested</dt><dd>{date(latest?.created_at)}</dd><dt>Attempt ended</dt><dd>{date(latest?.completed_at)}</dd>
++      <dt>Worker activity</dt><dd>Not available. Build status reflects durable job records.</dd>
+     </dl>
+-    {running && job && <div className="intelligence-progress"><p role="status">Stage: {stages[job.stage] || 'Building catalogue artifacts'}</p><label htmlFor={`progress-${target.target}`}>{current} / {total || 'Preparing'} books</label><progress id={`progress-${target.target}`} aria-label={`${name(target)} build progress`} max={total || 1} {...(total ? {value:current} : {})} /></div>}
++    {running && job && <div className="intelligence-progress"><p role="status">Stage: {stages[job.stage] || 'Building catalogue artifacts'}</p><label htmlFor={`progress-${target.target}`}>{progress ? `${progress.current} / ${progress.total} stage items (${progress.percent}%)` : 'Stage progress unavailable'}</label><progress id={`progress-${target.target}`} aria-label={`${name(target)} build progress`} aria-describedby={`progress-note-${target.target}`} max={progress?.total || 1} {...(progress ? {value:progress.current} : {})} /><p id={`progress-note-${target.target}`}>Stage progress only. Completion requires validated publication and a successful job acknowledgement.</p><p>Last durable job heartbeat: {date(job.heartbeat_at)}</p></div>}
+     <details><summary>Technical details</summary><dl><dt>Current dataset generation</dt><dd>{data.dataset.generation_id || 'Not yet'}</dd><dt>Active source dataset</dt><dd>{target.source_generation_id || 'Not yet'}</dd><dt>Active generation UUID</dt><dd>{target.active_generation_id || 'Not yet'}</dd><dt>Artifact verification</dt><dd>{target.artifact_verified ? 'Verified' : 'No validated generation'}</dd>
+       {target.target === 'SEARCH_INDEX' && <><dt>Model</dt><dd>{target.model}</dd><dt>Embedding dimension</dt><dd>{target.dimension}</dd><dt>HNSW M</dt><dd>{target.parameters.M}</dd><dt>efConstruction</dt><dd>{target.parameters.efConstruction}</dd><dt>efSearch</dt><dd>{target.parameters.efSearch}</dd></>}
+     </dl></details>

@@ -1,0 +1,3 @@
+# missing and completion
+
+States distinguish supplied, empty, omitted, placeholder, ambiguous, contradictory and unsupported. Partial operands containing unquoted placeholder syntax cannot execute. Literal quoted content stays opaque, creating some historical wire/interpretation disagreements. Pure source-span draft: [completion.py](D:/SDC/LibraryLLM/scratch/search_proof_recovery_v4/completion.py). It checks owner/login/library/workspace, parser/mode, query digest, base version, expiry/used status, source owner and untouched projection. It does not implement actual one-use CAS or authentication.

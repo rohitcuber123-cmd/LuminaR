@@ -1,0 +1,210 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "EMBEDDING_BATCH",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 10:41:23.748608+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 10:41:25.547529+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 10:41:25.533000",
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 10:41:25.533000",
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 10:41:25.657690+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:41:25.533000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "f1ad0bb6-a610-47d4-8a9b-3e4f9ca6e25a",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 10:41:25.599000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-30 10:41:25.533000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 10:41:26.675631+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-30 10:41:25.533000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "f1ad0bb6-a610-47d4-8a9b-3e4f9ca6e25a",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 10:41:26.613000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-30 10:41:25.533000",
+        1,
+        2
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 334.97690000058356
+  },
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "JOB",
+      "rss_bytes": 848531456,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 849285120,
+      "cpu_delta_ms": 62.5,
+      "interval_seconds": 1.0470000000004802,
+      "python_threads": 11,
+      "os_threads": 62
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 849756160,
+      "cpu_delta_ms": 62.5,
+      "interval_seconds": 1.014999999999418,
+      "python_threads": 12,
+      "os_threads": 63
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 850448384,
+      "cpu_delta_ms": 15.625,
+      "interval_seconds": 1.0320000000001528,
+      "python_threads": 12,
+      "os_threads": 63
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 5,
+    "os": 56
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 7.952500000101281,
+  "observer_ready_ms": 47.859600000265345,
+  "threads_observing": {
+    "python": 10,
+    "os": 61
+  },
+  "mongo_connections_observing": 9,
+  "current_library": "6fd00731-4904-4aec-9960-d33cc612d727",
+  "crash_job": {
+    "job_id": "f1ad0bb6-a610-47d4-8a9b-3e4f9ca6e25a",
+    "library_id": "6fd00731-4904-4aec-9960-d33cc612d727",
+    "target": "SEARCH_INDEX",
+    "requested_generation_id": "d7b2c8fd-725e-42fd-9566-90cdb50afcd3",
+    "artifact_generation_id": "685efa2b-3ffa-444a-86df-d14b015db2ff",
+    "state": "RUNNING",
+    "stage": "EMBEDDING",
+    "progress_current": 0,
+    "progress_total": 10,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-30 10:41:23.663000",
+    "started_at": "2026-10-30 10:41:25.533000",
+    "heartbeat_at": "2026-10-30 10:41:25.533000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "lease_expires_at": "2026-10-30 10:42:55.533000",
+    "require_nonempty": true,
+    "fence_token_digest": "81d338651ae55ade1a3b81aa02557f2809094d07280c11e70da1c6c5cd71ed17",
+    "worker_id_digest": "88bd1552a822e27d903218ee8dc10b214906b3c054eec3d2e2c37213201f2942"
+  },
+  "pointer_at_crash": {
+    "library_id": "6fd00731-4904-4aec-9960-d33cc612d727",
+    "target": "SEARCH_INDEX",
+    "active_generation_id": null,
+    "active_job_id": "f1ad0bb6-a610-47d4-8a9b-3e4f9ca6e25a",
+    "state": "BUILDING",
+    "fence_token_digest": "81d338651ae55ade1a3b81aa02557f2809094d07280c11e70da1c6c5cd71ed17"
+  },
+  "telemetry_before_crash": {
+    "epoch": 5
+  },
+  "instance_ref": "58be325325225ede2601d18a6b8e2b64c30e5cdca9dc1b386d767655bb7334b5",
+  "genuine_process_exit": 77
+}

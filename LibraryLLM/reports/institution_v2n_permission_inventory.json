@@ -1,0 +1,4731 @@
+{
+  "status": "AUDITED_STATIC_LOWER_BOUND_NOT_DEPLOYMENT_ROLE",
+  "collections": [
+    {
+      "collection": "activity",
+      "actions": [
+        "createIndex",
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one",
+        "insert_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/admin_operation_service.py",
+          "line": 68,
+          "function": "operations",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/admin_operation_service.py",
+          "line": 31,
+          "function": "operations",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/activity_service.py",
+          "line": 12,
+          "function": "get_next_activity_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/activity_service.py",
+          "line": 113,
+          "function": "get_activity_by_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/activity_service.py",
+          "line": 64,
+          "function": "create_activity",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/activity_service.py",
+          "line": 78,
+          "function": "get_user_activity",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/activity_service.py",
+          "line": 97,
+          "function": "get_all_activity",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/activity_service.py",
+          "line": 62,
+          "function": "create_activity",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/activity_service.py",
+          "line": 63,
+          "function": "create_activity",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/activity_service.py",
+          "line": 69,
+          "function": "create_activity",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 31,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 32,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 33,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 34,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "book_categories",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "find"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/book_service.py",
+          "line": 65,
+          "function": "get_top_categories",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "books",
+      "actions": [
+        "collStats",
+        "find",
+        "insert",
+        "remove",
+        "update"
+      ],
+      "operations": [
+        "count_documents",
+        "delete_one",
+        "distinct",
+        "estimated_document_count",
+        "find",
+        "find_one",
+        "find_one_and_update",
+        "insert_one"
+      ],
+      "evidence": [
+        {
+          "path": "search/luminar_search.py",
+          "line": 337,
+          "function": "_get_library_inventory",
+          "operation": "find"
+        },
+        {
+          "path": "rag/create_rag_mapping.py",
+          "line": 21,
+          "function": "register_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "rag/find_catalog_books.py",
+          "line": 226,
+          "function": "get_candidate_documents",
+          "operation": "find"
+        },
+        {
+          "path": "rag/find_catalog_books.py",
+          "line": 241,
+          "function": "get_candidate_documents",
+          "operation": "find"
+        },
+        {
+          "path": "recommendation/recommendation_service.py",
+          "line": 157,
+          "function": "get_book_by_work_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 144,
+          "function": "get_book_by_work_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 162,
+          "function": "create_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 173,
+          "function": "create_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 255,
+          "function": "update_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 236,
+          "function": "create_book",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 266,
+          "function": "update_book",
+          "operation": "find_one_and_update"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 298,
+          "function": "delete_book",
+          "operation": "delete_one"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 51,
+          "function": "get_books",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 51,
+          "function": "get_books",
+          "operation": "estimated_document_count"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 88,
+          "function": "get_popular_books",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 117,
+          "function": "get_new_arrivals",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 37,
+          "function": "get_books",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/book_capability_service.py",
+          "line": 116,
+          "function": "get_readable_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/book_capability_service.py",
+          "line": 36,
+          "function": "catalog_capabilities",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/book_capability_service.py",
+          "line": 48,
+          "function": "with_issue_capabilities",
+          "operation": "distinct"
+        },
+        {
+          "path": "backend/services/book_capability_service.py",
+          "line": 78,
+          "function": "get_know_more_books",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/book_capability_service.py",
+          "line": 87,
+          "function": "_catalogue_capability",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/admin_operation_service.py",
+          "line": 40,
+          "function": "operations",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/reading_list_service.py",
+          "line": 91,
+          "function": "add_to_reading_list",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/reading_list_service.py",
+          "line": 86,
+          "function": "add_to_reading_list",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 74,
+          "function": "source_records",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_catalogue_linking.py",
+          "line": 12,
+          "function": "verified_work",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 97,
+          "function": "hydrate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/inventory_service.py",
+          "line": 27,
+          "function": "get_inventory",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 46,
+          "function": "validate_books",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 70,
+          "function": "hydrate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/notifications.py",
+          "line": 87,
+          "function": "summary",
+          "operation": "estimated_document_count"
+        },
+        {
+          "path": "backend/routes/assistant_catalogue.py",
+          "line": 33,
+          "function": "resolve",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Recommendation",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "counters",
+      "actions": [
+        "find",
+        "update"
+      ],
+      "operations": [
+        "find_one",
+        "find_one_and_update",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/search_history_service.py",
+          "line": 28,
+          "function": "initialize_search_id_counter",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/search_history_service.py",
+          "line": 53,
+          "function": "get_next_search_id",
+          "operation": "find_one_and_update"
+        },
+        {
+          "path": "backend/services/search_history_service.py",
+          "line": 38,
+          "function": "initialize_search_id_counter",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/identity_service.py",
+          "line": 40,
+          "function": "next_user_id",
+          "operation": "find_one_and_update"
+        },
+        {
+          "path": "backend/services/identity_service.py",
+          "line": 37,
+          "function": "next_user_id",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/identity_service.py",
+          "line": 39,
+          "function": "next_user_id",
+          "operation": "update_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Recommendation",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "email_verifications",
+      "actions": [
+        "find",
+        "insert",
+        "remove",
+        "update"
+      ],
+      "operations": [
+        "delete_many",
+        "delete_one",
+        "find_one",
+        "find_one_and_update",
+        "insert_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 80,
+          "function": "register_user",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 121,
+          "function": "consume_verification_otp",
+          "operation": "find_one_and_update"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 134,
+          "function": "consume_verification_otp",
+          "operation": "delete_one"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 187,
+          "function": "resend_verification_otp",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 216,
+          "function": "resend_verification_otp",
+          "operation": "delete_many"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 228,
+          "function": "resend_verification_otp",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 96,
+          "function": "register_user",
+          "operation": "delete_many"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 244,
+          "function": "resend_verification_otp",
+          "operation": "delete_many"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "event_user_state",
+      "actions": [
+        "find",
+        "update"
+      ],
+      "operations": [
+        "find_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/event_service.py",
+          "line": 194,
+          "function": "state",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 198,
+          "function": "state",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 201,
+          "function": "state",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 233,
+          "function": "mark_seen",
+          "operation": "update_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "events",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "aggregate",
+        "count_documents",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/event_service.py",
+          "line": 62,
+          "function": "document",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 185,
+          "function": "listing",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 184,
+          "function": "listing",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 189,
+          "function": "recent",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 172,
+          "function": "listing",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/notifications.py",
+          "line": 89,
+          "function": "summary",
+          "operation": "count_documents"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "fines",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 70,
+          "function": "reconcile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 157,
+          "function": "activate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 67,
+          "function": "preflight",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/fine_service.py",
+          "line": 7,
+          "function": "get_fine_by_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/fine_service.py",
+          "line": 20,
+          "function": "get_user_fines",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/fine_service.py",
+          "line": 39,
+          "function": "get_all_fines",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_attempts",
+      "actions": [
+        "find",
+        "update"
+      ],
+      "operations": [
+        "find_one_and_update"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 138,
+          "function": "consume_join_budget",
+          "operation": "find_one_and_update"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 142,
+          "function": "consume_join_budget",
+          "operation": "find_one_and_update"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "institution_audit",
+      "actions": [
+        "find",
+        "update"
+      ],
+      "operations": [
+        "count_documents",
+        "find",
+        "find_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_book_formats.py",
+          "line": 14,
+          "function": "unstocked_origin",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_analytics_service.py",
+          "line": 112,
+          "function": "collection_metrics",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 415,
+          "function": "audit_events",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 428,
+          "function": "operational_activity",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 412,
+          "function": "audit_events",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 425,
+          "function": "operational_activity",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/institution_repository.py",
+          "line": 104,
+          "function": "audit",
+          "operation": "update_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_copies",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "count_documents",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 61,
+          "function": "availability_locked",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 62,
+          "function": "availability_locked",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 78,
+          "function": "release_effect",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 63,
+          "function": "availability_locked",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 145,
+          "function": "activate",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 146,
+          "function": "activate",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 149,
+          "function": "activate",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 179,
+          "function": "borrow",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 291,
+          "function": "review_return",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 385,
+          "function": "manage",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 404,
+          "function": "manage",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 416,
+          "function": "manage",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 423,
+          "function": "manage",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_analytics_service.py",
+          "line": 129,
+          "function": "collection_metrics",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_fee_ledger",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "create_index",
+        "find"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 26,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 94,
+          "function": "verify_ledger",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_fee_policies",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "create_index",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 51,
+          "function": "reconcile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 27,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 164,
+          "function": "activate",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 22,
+          "function": "current_policy",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 78,
+          "function": "policy",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 33,
+          "function": "verify_initialized",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_analytics_service.py",
+          "line": 238,
+          "function": "fee_metrics",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_fees",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "distinct",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_v2c_legacy.py",
+          "line": 28,
+          "function": "guard_fee",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 57,
+          "function": "reconcile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 82,
+          "function": "reconcile",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 24,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 25,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 158,
+          "function": "activate",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 52,
+          "function": "fee_effects",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 108,
+          "function": "details",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 161,
+          "function": "mutate",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 147,
+          "function": "rows",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 131,
+          "function": "rows",
+          "operation": "distinct"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 135,
+          "function": "rows",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_holdings",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 49,
+          "function": "book_holding",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 144,
+          "function": "activate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 377,
+          "function": "manage",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_intelligence_generations",
+      "actions": [
+        "createIndex",
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "create_index",
+        "find_one",
+        "insert_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 90,
+          "function": "initialize",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 91,
+          "function": "initialize",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 194,
+          "function": "scoped_generation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 178,
+          "function": "dataset",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 162,
+          "function": "dataset",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 164,
+          "function": "dataset",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 183,
+          "function": "dataset",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 128,
+          "function": "request_build",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 186,
+          "function": "dataset",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 61,
+          "function": "status",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_artifacts.py",
+          "line": 93,
+          "function": "validate",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_intelligence_jobs",
+      "actions": [
+        "createIndex",
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one",
+        "find_one_and_update",
+        "insert_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "search/library_intelligence.py",
+          "line": 62,
+          "function": "run_one",
+          "operation": "update_one"
+        },
+        {
+          "path": "search/library_intelligence.py",
+          "line": 105,
+          "function": "run_one",
+          "operation": "update_one"
+        },
+        {
+          "path": "search/library_intelligence.py",
+          "line": 97,
+          "function": "run_one",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_worker_telemetry.py",
+          "line": 145,
+          "function": "observe",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 92,
+          "function": "initialize",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 93,
+          "function": "initialize",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 94,
+          "function": "initialize",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 138,
+          "function": "claim",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 189,
+          "function": "scoped_job",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 119,
+          "function": "request_build",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 133,
+          "function": "request_build",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 142,
+          "function": "claim",
+          "operation": "find_one_and_update"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 148,
+          "function": "check_lease",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 150,
+          "function": "heartbeat",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 153,
+          "function": "progress",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 32,
+          "function": "_target_observation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 70,
+          "function": "control_status",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 71,
+          "function": "control_status",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 73,
+          "function": "control_status",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 122,
+          "function": "recover",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 133,
+          "function": "recover",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 143,
+          "function": "recover",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 99,
+          "function": "reconcile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 146,
+          "function": "recover",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 111,
+          "function": "reconcile",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 128,
+          "function": "recover",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 94,
+          "function": "reconcile",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_intelligence_sequences",
+      "actions": [
+        "createIndex",
+        "find",
+        "update"
+      ],
+      "operations": [
+        "create_index",
+        "find_one_and_update"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 89,
+          "function": "initialize",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 171,
+          "function": "dataset",
+          "operation": "find_one_and_update"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_intelligence_targets",
+      "actions": [
+        "createIndex",
+        "find",
+        "update"
+      ],
+      "operations": [
+        "create_index",
+        "find_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "search/library_intelligence.py",
+          "line": 89,
+          "function": "run_one",
+          "operation": "find_one"
+        },
+        {
+          "path": "search/library_intelligence.py",
+          "line": 93,
+          "function": "run_one",
+          "operation": "update_one"
+        },
+        {
+          "path": "search/library_intelligence.py",
+          "line": 98,
+          "function": "run_one",
+          "operation": "update_one"
+        },
+        {
+          "path": "search/library_intelligence.py",
+          "line": 106,
+          "function": "run_one",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_worker_telemetry.py",
+          "line": 170,
+          "function": "observe",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 95,
+          "function": "initialize",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 154,
+          "function": "progress",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 134,
+          "function": "request_build",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 144,
+          "function": "claim",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 31,
+          "function": "_target_observation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 144,
+          "function": "recover",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 88,
+          "function": "reconcile",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 137,
+          "function": "recover",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 127,
+          "function": "recover",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 44,
+          "function": "_target_observation",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 45,
+          "function": "_target_observation",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_inventory_imports",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 90,
+          "function": "validate_restore",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 78,
+          "function": "preflight",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "institution_invitations",
+      "actions": [
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "count_documents",
+        "find",
+        "find_one",
+        "insert_one",
+        "update_many",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/institution_dependencies.py",
+          "line": 28,
+          "function": "resolve_library_membership",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 238,
+          "function": "expire_invitations",
+          "operation": "update_many"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 285,
+          "function": "invitation_for_account",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 281,
+          "function": "pending_invitations",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 336,
+          "function": "respond_invitation",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 357,
+          "function": "list_invitations",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 363,
+          "function": "revoke_invitation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 370,
+          "function": "revoke_invitation",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 261,
+          "function": "invite_staff",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 309,
+          "function": "respond_invitation",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 315,
+          "function": "respond_invitation",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 275,
+          "function": "pending_invitations",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 356,
+          "function": "list_invitations",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_lending_config",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "create_index",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 69,
+          "function": "detail",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 143,
+          "function": "activate",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_legacy.py",
+          "line": 10,
+          "function": "blocked_library",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_legacy.py",
+          "line": 20,
+          "function": "guard_issue",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 24,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 43,
+          "function": "state",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_inventory_access.py",
+          "line": 34,
+          "function": "require_lending_readable",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 31,
+          "function": "verify_initialized",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_lending_operations",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "create_index",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 98,
+          "function": "materialize",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 90,
+          "function": "validate_restore",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 25,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 26,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 27,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 64,
+          "function": "receipt",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 121,
+          "function": "commit",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 78,
+          "function": "preflight",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 116,
+          "function": "recover_initialization",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_book_formats.py",
+          "line": 10,
+          "function": "unstocked_origin",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_analytics_service.py",
+          "line": 111,
+          "function": "collection_metrics",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_lending_requests",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_v2c_plan.py",
+          "line": 142,
+          "function": "extend",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_plan.py",
+          "line": 133,
+          "function": "extend",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 31,
+          "function": "reconcile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 74,
+          "function": "create",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 44,
+          "function": "advance_locked",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 46,
+          "function": "advance_locked",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 58,
+          "function": "availability_locked",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 97,
+          "function": "expire_locked",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 191,
+          "function": "request_record",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 259,
+          "function": "return_request",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 169,
+          "function": "borrow",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 172,
+          "function": "borrow",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 364,
+          "function": "rows",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 384,
+          "function": "manage",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 94,
+          "function": "expire_locked",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 32,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 33,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 34,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 36,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 25,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 188,
+          "function": "summary",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 88,
+          "function": "hydrate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/library_reservations_fees.py",
+          "line": 45,
+          "function": "book_state",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_libraries",
+      "actions": [
+        "createIndex",
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "aggregate",
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one",
+        "insert_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/institution_dependencies.py",
+          "line": 19,
+          "function": "resolve_library_membership",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 19,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 54,
+          "function": "library_record",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 143,
+          "function": "recover_lifecycle",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 114,
+          "function": "lifecycle",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 48,
+          "function": "directory",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 154,
+          "function": "recover_lifecycle",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_legacy.py",
+          "line": 31,
+          "function": "legacy_gates",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_catalogue_repository.py",
+          "line": 77,
+          "function": "accession",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 40,
+          "function": "initialize_new",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 115,
+          "function": "recover_initialization",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 56,
+          "function": "preflight",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 45,
+          "function": "get_library",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 83,
+          "function": "register_library",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 105,
+          "function": "discover",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 213,
+          "function": "change_access",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 224,
+          "function": "update_profile",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 278,
+          "function": "pending_invitations",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 72,
+          "function": "register_library",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 106,
+          "function": "discover",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/inventory.py",
+          "line": 194,
+          "function": "legacy_staff_context",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_library_aliases",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_v2c_legacy.py",
+          "line": 8,
+          "function": "blocked",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 152,
+          "function": "activate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 139,
+          "function": "activate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 321,
+          "function": "renew",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_legacy.py",
+          "line": 8,
+          "function": "blocked_library",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_legacy.py",
+          "line": 28,
+          "function": "legacy_gates",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 41,
+          "function": "initialize_new",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 55,
+          "function": "preflight",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/inventory.py",
+          "line": 192,
+          "function": "legacy_staff_context",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_library_asset_jobs",
+      "actions": [
+        "createIndex",
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "create_index",
+        "find",
+        "find_one",
+        "find_one_and_update",
+        "insert_one",
+        "update_many",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 43,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 44,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 45,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 131,
+          "function": "public",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 217,
+          "function": "new_job",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 429,
+          "function": "renew_job",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 471,
+          "function": "_fail_locked",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 333,
+          "function": "reprocess",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 353,
+          "function": "delete",
+          "operation": "update_many"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 437,
+          "function": "complete_job",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 465,
+          "function": "complete_job",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 279,
+          "function": "upload",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 499,
+          "function": "retire_generation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 292,
+          "function": "upload",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 414,
+          "function": "claim_job",
+          "operation": "find_one_and_update"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 394,
+          "function": "claim_job",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 384,
+          "function": "claim_job",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 403,
+          "function": "claim_job",
+          "operation": "update_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen"
+      ]
+    },
+    {
+      "collection": "institution_library_assets",
+      "actions": [
+        "createIndex",
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one",
+        "insert_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_book_formats.py",
+          "line": 21,
+          "function": "capabilities",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 37,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 38,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 39,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 40,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 41,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 42,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 107,
+          "function": "authorize_asset",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 169,
+          "function": "_listing_locked",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 247,
+          "function": "upload",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 254,
+          "function": "upload",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 311,
+          "function": "update",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 336,
+          "function": "reprocess",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 344,
+          "function": "delete",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 352,
+          "function": "delete",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 373,
+          "function": "delete",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 440,
+          "function": "complete_job",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 461,
+          "function": "complete_job",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 475,
+          "function": "_fail_locked",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 484,
+          "function": "fail_job",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 277,
+          "function": "upload",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 285,
+          "function": "upload",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 496,
+          "function": "retire_generation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 290,
+          "function": "upload",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 390,
+          "function": "claim_job",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 416,
+          "function": "claim_job",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 404,
+          "function": "claim_job",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 168,
+          "function": "_listing_locked",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_library_books",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "aggregate",
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "search/library_intelligence.py",
+          "line": 138,
+          "function": "semantic",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/reading_list_service.py",
+          "line": 79,
+          "function": "add_to_reading_list",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/reading_list_service.py",
+          "line": 54,
+          "function": "get_user_reading_list",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 31,
+          "function": "safe_summary",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 23,
+          "function": "reconcile",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 48,
+          "function": "book_holding",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 376,
+          "function": "manage",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 69,
+          "function": "source_records",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 175,
+          "function": "dataset",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 70,
+          "function": "source_records",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 157,
+          "function": "graph",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_intelligence_artifacts.py",
+          "line": 99,
+          "function": "validate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_catalogue_service.py",
+          "line": 267,
+          "function": "list_books",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 22,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 23,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 60,
+          "function": "source_locked",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 154,
+          "function": "subject_rows",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 199,
+          "function": "home",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 200,
+          "function": "home",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 211,
+          "function": "home",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 267,
+          "function": "detail",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 274,
+          "function": "global_context",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 228,
+          "function": "recommendations",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 233,
+          "function": "recommendations",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 251,
+          "function": "books",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 209,
+          "function": "linked_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 127,
+          "function": "public",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 165,
+          "function": "_listing_locked",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/library_lending.py",
+          "line": 18,
+          "function": "resolve",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_loans",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "aggregate",
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_v2c_legacy.py",
+          "line": 31,
+          "function": "guard_fee",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 53,
+          "function": "reconcile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 58,
+          "function": "reconcile",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 156,
+          "function": "activate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 168,
+          "function": "activate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 74,
+          "function": "create",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 43,
+          "function": "advance_locked",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 59,
+          "function": "availability_locked",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 239,
+          "function": "loan_record",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 169,
+          "function": "borrow",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 383,
+          "function": "manage",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_legacy.py",
+          "line": 40,
+          "function": "guard_loan",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_journal.py",
+          "line": 38,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 143,
+          "function": "rows",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 24,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 182,
+          "function": "popular_rows",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 189,
+          "function": "summary",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 100,
+          "function": "hydrate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/library_reservations_fees.py",
+          "line": 46,
+          "function": "book_state",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_locks",
+      "actions": [
+        "find",
+        "insert",
+        "remove",
+        "update"
+      ],
+      "operations": [
+        "delete_one",
+        "find_one",
+        "insert_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 156,
+          "function": "recover_lifecycle",
+          "operation": "delete_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 140,
+          "function": "recover_lifecycle",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_store.py",
+          "line": 24,
+          "function": "intelligence_barrier",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 120,
+          "function": "recover",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_intelligence_service.py",
+          "line": 129,
+          "function": "recover",
+          "operation": "delete_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 118,
+          "function": "recover_initialization",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_repository.py",
+          "line": 89,
+          "function": "require_readable",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_repository.py",
+          "line": 85,
+          "function": "library_mutation",
+          "operation": "delete_one"
+        },
+        {
+          "path": "backend/services/institution_repository.py",
+          "line": 70,
+          "function": "library_mutation",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/institution_repository.py",
+          "line": 79,
+          "function": "library_mutation",
+          "operation": "delete_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_memberships",
+      "actions": [
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "aggregate",
+        "count_documents",
+        "find",
+        "find_one",
+        "insert_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/institution_dependencies.py",
+          "line": 24,
+          "function": "resolve_library_membership",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 60,
+          "function": "append_intents",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 82,
+          "function": "validate_restore",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 29,
+          "function": "safe_summary",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 30,
+          "function": "safe_summary",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_v2c_legacy.py",
+          "line": 16,
+          "function": "guard_reserve",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 361,
+          "function": "rows",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_legacy.py",
+          "line": 17,
+          "function": "guard_issue",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_legacy.py",
+          "line": 27,
+          "function": "legacy_gates",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 129,
+          "function": "recover_initialization",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 152,
+          "function": "join_library",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 79,
+          "function": "register_library",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 109,
+          "function": "discover",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 172,
+          "function": "join_library",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 324,
+          "function": "respond_invitation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 333,
+          "function": "respond_invitation",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 350,
+          "function": "list_staff",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 378,
+          "function": "change_membership",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 387,
+          "function": "change_membership",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 404,
+          "function": "change_membership",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 179,
+          "function": "join_library",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 252,
+          "function": "invite_staff",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 102,
+          "function": "discover",
+          "operation": "aggregate"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 391,
+          "function": "change_membership",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 117,
+          "function": "my_libraries",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 346,
+          "function": "list_staff",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/platform.py",
+          "line": 117,
+          "function": "migration_review",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/routes/auth.py",
+          "line": 242,
+          "function": "staff_login",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_notification_outbox",
+      "actions": [
+        "createIndex",
+        "find",
+        "update"
+      ],
+      "operations": [
+        "create_index",
+        "find",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 34,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 35,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 36,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 101,
+          "function": "materialize",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 123,
+          "function": "materialize",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 95,
+          "function": "materialize",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 115,
+          "function": "materialize",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/tenant_notification_service.py",
+          "line": 130,
+          "function": "materialize",
+          "operation": "update_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_reservation_counters",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "create_index",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 43,
+          "function": "reconcile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 20,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 81,
+          "function": "create",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_reservations",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "distinct",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_v2c_plan.py",
+          "line": 136,
+          "function": "extend",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_legacy.py",
+          "line": 21,
+          "function": "guard_reservation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 20,
+          "function": "reconcile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 21,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 22,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 23,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 54,
+          "function": "blocks_direct",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 99,
+          "function": "cancel",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 113,
+          "function": "rows",
+          "operation": "distinct"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 74,
+          "function": "create",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 76,
+          "function": "create",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 130,
+          "function": "rows",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 136,
+          "function": "rows",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 39,
+          "function": "advance_locked",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 59,
+          "function": "renewal_blocked",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 78,
+          "function": "create",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 129,
+          "function": "rows",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 154,
+          "function": "activate",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 126,
+          "function": "rows",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 102,
+          "function": "expire_locked",
+          "operation": "distinct"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 65,
+          "function": "availability_locked",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 26,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 190,
+          "function": "summary",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/library_catalogue_experience.py",
+          "line": 102,
+          "function": "hydrate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/library_reservations_fees.py",
+          "line": 44,
+          "function": "book_state",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/routes/library_reservations_fees.py",
+          "line": 51,
+          "function": "book_state",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/routes/library_reservations_fees.py",
+          "line": 50,
+          "function": "book_state",
+          "operation": "count_documents"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "institution_security",
+      "actions": [
+        "find",
+        "insert",
+        "update"
+      ],
+      "operations": [
+        "find_one",
+        "insert_one",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 83,
+          "function": "validate_restore",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 85,
+          "function": "validate_restore",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 129,
+          "function": "recover_initialization",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 76,
+          "function": "register_library",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 161,
+          "function": "join_library",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 169,
+          "function": "join_library",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 187,
+          "function": "access_settings",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 198,
+          "function": "change_code",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 210,
+          "function": "change_access",
+          "operation": "update_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "institution_sequences",
+      "actions": [
+        "find",
+        "update"
+      ],
+      "operations": [
+        "find_one_and_update"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/library_catalogue_repository.py",
+          "line": 74,
+          "function": "accession",
+          "operation": "find_one_and_update"
+        },
+        {
+          "path": "backend/services/library_catalogue_repository.py",
+          "line": 76,
+          "function": "accession",
+          "operation": "find_one_and_update"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "institution_v2c_config",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "create_index",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 70,
+          "function": "detail",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_plan.py",
+          "line": 16,
+          "function": "enabled",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_legacy.py",
+          "line": 10,
+          "function": "blocked",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_integrity.py",
+          "line": 52,
+          "function": "reconcile",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 19,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 149,
+          "function": "activate",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 32,
+          "function": "verify_initialized",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/routes/library_reservations_fees.py",
+          "line": 18,
+          "function": "config",
+          "operation": "find_one"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "issues",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "create_index",
+        "distinct",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "recommendation/ranked_pages.py",
+          "line": 17,
+          "function": "exclusions",
+          "operation": "find"
+        },
+        {
+          "path": "recommendation/recommendation_service.py",
+          "line": 101,
+          "function": "get_user_behavior",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 291,
+          "function": "delete_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/book_capability_service.py",
+          "line": 21,
+          "function": "active_borrow_ids",
+          "operation": "distinct"
+        },
+        {
+          "path": "backend/services/book_capability_service.py",
+          "line": 25,
+          "function": "has_active_borrow",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 30,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 268,
+          "function": "scan_due",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 238,
+          "function": "scan_due",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 254,
+          "function": "scan_due",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_v2c_legacy.py",
+          "line": 30,
+          "function": "guard_fee",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 140,
+          "function": "activate",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_canonical_defaults.py",
+          "line": 66,
+          "function": "preflight",
+          "operation": "distinct"
+        },
+        {
+          "path": "backend/services/issue_service.py",
+          "line": 30,
+          "function": "get_issue_by_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/issue_service.py",
+          "line": 11,
+          "function": "get_user_issues",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/knowledge_graph.py",
+          "line": 39,
+          "function": "exclusions",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/issues.py",
+          "line": 100,
+          "function": "all_issues",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Recommendation",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "library_inventory",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "search/luminar_search.py",
+          "line": 365,
+          "function": "_get_library_inventory",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/book_service.py",
+          "line": 293,
+          "function": "delete_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/availability_service.py",
+          "line": 28,
+          "function": "get_availability_context",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/availability_service.py",
+          "line": 78,
+          "function": "with_batch_availability",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/inventory_service.py",
+          "line": 35,
+          "function": "get_inventory_book",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/inventory_service.py",
+          "line": 24,
+          "function": "get_inventory",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "notifications",
+      "actions": [
+        "createIndex",
+        "find",
+        "update"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one",
+        "update_many",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/admin_operation_service.py",
+          "line": 85,
+          "function": "user_activity",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/admin_operation_service.py",
+          "line": 83,
+          "function": "user_activity",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 21,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 22,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 23,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 24,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 25,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 26,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 27,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 28,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 29,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 78,
+          "function": "insert_notice",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 102,
+          "function": "list_own",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 114,
+          "function": "unread",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 121,
+          "function": "mark_read",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 178,
+          "function": "get_own",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 187,
+          "function": "read_all",
+          "operation": "update_many"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 87,
+          "function": "send_admin",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 119,
+          "function": "mark_read",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 109,
+          "function": "list_own",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 201,
+          "function": "sent",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 122,
+          "function": "mark_read",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 194,
+          "function": "sent",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 104,
+          "function": "list_own",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 106,
+          "function": "list_own",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "platform_audit",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 20,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 21,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 22,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 109,
+          "function": "lifecycle",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 141,
+          "function": "recover_lifecycle",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 64,
+          "function": "audit_rows",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 132,
+          "function": "lifecycle",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 154,
+          "function": "recover_lifecycle",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 63,
+          "function": "audit_rows",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core"
+      ]
+    },
+    {
+      "collection": "platform_role_assignments",
+      "actions": [
+        "createIndex",
+        "find"
+      ],
+      "operations": [
+        "count_documents",
+        "create_index",
+        "find"
+      ],
+      "evidence": [
+        {
+          "path": "backend/routes/notifications.py",
+          "line": 88,
+          "function": "summary",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/platform_dependencies.py",
+          "line": 12,
+          "function": "platform_assignments",
+          "operation": "find"
+        },
+        {
+          "path": "backend/platform_dependencies.py",
+          "line": 51,
+          "function": "ensure_indexes",
+          "operation": "create_index"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "reading_list",
+      "actions": [
+        "createIndex",
+        "find",
+        "remove",
+        "update"
+      ],
+      "operations": [
+        "create_index",
+        "delete_one",
+        "find",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "search/personalization.py",
+          "line": 63,
+          "function": "get_profile",
+          "operation": "find"
+        },
+        {
+          "path": "search/personalization.py",
+          "line": 72,
+          "function": "get_profile",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/reading_list_service.py",
+          "line": 96,
+          "function": "add_to_reading_list",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/reading_list_service.py",
+          "line": 121,
+          "function": "remove_from_reading_list",
+          "operation": "delete_one"
+        },
+        {
+          "path": "backend/services/reading_list_service.py",
+          "line": 23,
+          "function": "get_user_reading_list",
+          "operation": "find"
+        },
+        {
+          "path": "backend/database/mongodb.py",
+          "line": 65,
+          "function": "<module>",
+          "operation": "create_index"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Recommendation",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "recommendation_feedbacks",
+      "actions": [
+        "find",
+        "insert"
+      ],
+      "operations": [
+        "find",
+        "find_one",
+        "insert_one"
+      ],
+      "evidence": [
+        {
+          "path": "recommendation/api.py",
+          "line": 115,
+          "function": "get_next_feedback_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "recommendation/api.py",
+          "line": 290,
+          "function": "submit_feedback",
+          "operation": "insert_one"
+        },
+        {
+          "path": "recommendation/api.py",
+          "line": 330,
+          "function": "get_feedback",
+          "operation": "find"
+        },
+        {
+          "path": "recommendation/recommendation_service.py",
+          "line": 130,
+          "function": "get_user_behavior",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Recommendation"
+      ]
+    },
+    {
+      "collection": "reservations",
+      "actions": [
+        "find"
+      ],
+      "operations": [
+        "find",
+        "find_one"
+      ],
+      "evidence": [
+        {
+          "path": "recommendation/ranked_pages.py",
+          "line": 18,
+          "function": "exclusions",
+          "operation": "find"
+        },
+        {
+          "path": "recommendation/recommendation_service.py",
+          "line": 115,
+          "function": "get_user_behavior",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/reservation_service.py",
+          "line": 26,
+          "function": "get_reservation_by_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/reservation_service.py",
+          "line": 40,
+          "function": "get_next_reservation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/reservation_service.py",
+          "line": 8,
+          "function": "get_user_reservations",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 153,
+          "function": "activate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 327,
+          "function": "renew",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/routes/reservations.py",
+          "line": 92,
+          "function": "all_reservations",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/knowledge_graph.py",
+          "line": 40,
+          "function": "exclusions",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Recommendation",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "search_history",
+      "actions": [
+        "find",
+        "insert"
+      ],
+      "operations": [
+        "find",
+        "find_one",
+        "insert_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/search_history_service.py",
+          "line": 19,
+          "function": "initialize_search_id_counter",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/search_history_service.py",
+          "line": 87,
+          "function": "create_search_history",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/search_history_service.py",
+          "line": 108,
+          "function": "get_user_search_history",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Recommendation",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "search_sessions_v2b",
+      "actions": [
+        "createIndex",
+        "find",
+        "insert",
+        "remove",
+        "update"
+      ],
+      "operations": [
+        "create_index",
+        "delete_many",
+        "delete_one",
+        "find",
+        "find_one",
+        "insert_one",
+        "replace_one"
+      ],
+      "evidence": [
+        {
+          "path": "search/session_store.py",
+          "line": 19,
+          "function": "collection",
+          "operation": "create_index"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 20,
+          "function": "collection",
+          "operation": "create_index"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 51,
+          "function": "clear",
+          "operation": "find_one"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 55,
+          "function": "clear",
+          "operation": "delete_one"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 56,
+          "function": "clear",
+          "operation": "delete_many"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 79,
+          "function": "resolve",
+          "operation": "find_one"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 122,
+          "function": "resolve",
+          "operation": "replace_one"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 84,
+          "function": "resolve",
+          "operation": "delete_one"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 130,
+          "function": "resolve",
+          "operation": "insert_one"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 136,
+          "function": "resolve",
+          "operation": "delete_many"
+        },
+        {
+          "path": "search/session_store.py",
+          "line": 127,
+          "function": "resolve",
+          "operation": "find"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "Search_and_native_worker"
+      ]
+    },
+    {
+      "collection": "users",
+      "actions": [
+        "find",
+        "insert",
+        "listIndexes",
+        "remove",
+        "update"
+      ],
+      "operations": [
+        "count_documents",
+        "delete_one",
+        "find",
+        "find_one",
+        "insert_one",
+        "list_indexes",
+        "update_one"
+      ],
+      "evidence": [
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 148,
+          "function": "verify_email_otp",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 162,
+          "function": "complete_staff_setup",
+          "operation": "update_one"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 68,
+          "function": "register_user",
+          "operation": "insert_one"
+        },
+        {
+          "path": "backend/services/auth_service.py",
+          "line": 100,
+          "function": "register_user",
+          "operation": "delete_one"
+        },
+        {
+          "path": "backend/services/admin_operation_service.py",
+          "line": 73,
+          "function": "user_activity",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/admin_operation_service.py",
+          "line": 15,
+          "function": "operations",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/admin_operation_service.py",
+          "line": 38,
+          "function": "operations",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 81,
+          "function": "validate_restore",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/platform_library_service.py",
+          "line": 27,
+          "function": "safe_summary",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 43,
+          "function": "directory",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 56,
+          "function": "recipients",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 197,
+          "function": "sent",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/notification_service.py",
+          "line": 41,
+          "function": "directory",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_reservation_service.py",
+          "line": 132,
+          "function": "rows",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_lending_service.py",
+          "line": 360,
+          "function": "rows",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 139,
+          "function": "rows",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_fee_service.py",
+          "line": 132,
+          "function": "rows",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/library_asset_service.py",
+          "line": 126,
+          "function": "public",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/library_activity_identity.py",
+          "line": 16,
+          "function": "hydrate_activity_identities",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 288,
+          "function": "invitation_for_account",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 321,
+          "function": "respond_invitation",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/institution_service.py",
+          "line": 347,
+          "function": "list_staff",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/identity_service.py",
+          "line": 31,
+          "function": "next_user_id",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/identity_service.py",
+          "line": 51,
+          "function": "current_identity",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/identity_service.py",
+          "line": 20,
+          "function": "email_exists",
+          "operation": "find_one"
+        },
+        {
+          "path": "backend/services/identity_service.py",
+          "line": 23,
+          "function": "ensure_identity_indexes",
+          "operation": "list_indexes"
+        },
+        {
+          "path": "backend/services/identity_service.py",
+          "line": 16,
+          "function": "find_user_by_email",
+          "operation": "find"
+        },
+        {
+          "path": "backend/services/event_service.py",
+          "line": 74,
+          "function": "hydrate",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/platform.py",
+          "line": 119,
+          "function": "migration_review",
+          "operation": "count_documents"
+        },
+        {
+          "path": "backend/routes/platform.py",
+          "line": 112,
+          "function": "migration_review",
+          "operation": "find"
+        },
+        {
+          "path": "backend/routes/notifications.py",
+          "line": 87,
+          "function": "summary",
+          "operation": "count_documents"
+        }
+      ],
+      "service_import_closures": [
+        "Core",
+        "RAG_Qwen",
+        "Recommendation",
+        "Search_and_native_worker"
+      ]
+    }
+  ],
+  "service_import_closures": {
+    "Core": [
+      "backend.database.mongo_configuration",
+      "backend.database.mongodb",
+      "backend.dependencies",
+      "backend.institution_dependencies",
+      "backend.main",
+      "backend.platform_dependencies",
+      "backend.routes.activity",
+      "backend.routes.assistant_catalogue",
+      "backend.routes.auth",
+      "backend.routes.books",
+      "backend.routes.events",
+      "backend.routes.fines",
+      "backend.routes.institutions",
+      "backend.routes.inventory",
+      "backend.routes.issues",
+      "backend.routes.know_more",
+      "backend.routes.knowledge_graph",
+      "backend.routes.library_analytics",
+      "backend.routes.library_assets",
+      "backend.routes.library_catalogue_experience",
+      "backend.routes.library_events",
+      "backend.routes.library_intelligence",
+      "backend.routes.library_inventory",
+      "backend.routes.library_lending",
+      "backend.routes.library_reservations_fees",
+      "backend.routes.notifications",
+      "backend.routes.platform",
+      "backend.routes.reading_list",
+      "backend.routes.renewals",
+      "backend.routes.reservations",
+      "backend.routes.search_context",
+      "backend.routes.staff",
+      "backend.schemas.events",
+      "backend.schemas.institution_models",
+      "backend.schemas.institutions",
+      "backend.schemas.library_assets",
+      "backend.schemas.library_catalogue",
+      "backend.schemas.library_lending",
+      "backend.schemas.library_reservations_fees",
+      "backend.schemas.notifications",
+      "backend.services.activity_service",
+      "backend.services.admin_operation_service",
+      "backend.services.auth_service",
+      "backend.services.availability_service",
+      "backend.services.book_capability_service",
+      "backend.services.book_service",
+      "backend.services.email_service",
+      "backend.services.event_publish_validation",
+      "backend.services.event_service",
+      "backend.services.fine_service",
+      "backend.services.identity_service",
+      "backend.services.institution_repository",
+      "backend.services.institution_security",
+      "backend.services.institution_service",
+      "backend.services.inventory_import_service",
+      "backend.services.inventory_service",
+      "backend.services.inventory_upload_limit",
+      "backend.services.issue_service",
+      "backend.services.library_activity_identity",
+      "backend.services.library_analytics_service",
+      "backend.services.library_asset_service",
+      "backend.services.library_asset_text",
+      "backend.services.library_asset_upload_limit",
+      "backend.services.library_book_formats",
+      "backend.services.library_canonical_defaults",
+      "backend.services.library_catalogue_availability",
+      "backend.services.library_catalogue_experience",
+      "backend.services.library_catalogue_identity",
+      "backend.services.library_catalogue_linking",
+      "backend.services.library_catalogue_repository",
+      "backend.services.library_catalogue_service",
+      "backend.services.library_event_service",
+      "backend.services.library_fee_service",
+      "backend.services.library_intelligence_artifacts",
+      "backend.services.library_intelligence_service",
+      "backend.services.library_intelligence_store",
+      "backend.services.library_inventory_access",
+      "backend.services.library_inventory_import",
+      "backend.services.library_isbn_lookup",
+      "backend.services.library_lending_journal",
+      "backend.services.library_lending_legacy",
+      "backend.services.library_lending_service",
+      "backend.services.library_reservation_service",
+      "backend.services.library_v2c_integrity",
+      "backend.services.library_v2c_plan",
+      "backend.services.loan_notification_service",
+      "backend.services.loan_renewal_service",
+      "backend.services.login_sessions",
+      "backend.services.notification_service",
+      "backend.services.notification_worker",
+      "backend.services.platform_account_service",
+      "backend.services.platform_library_service",
+      "backend.services.reading_list_service",
+      "backend.services.reservation_service",
+      "backend.services.tenant_notification_service",
+      "backend.services.tenant_notification_worker",
+      "backend.utils.auth_rate_limit",
+      "backend.utils.jwt_utils",
+      "backend.utils.security_audit",
+      "knowledge_graph.core",
+      "knowledge_graph.metrics",
+      "knowledge_graph.relations",
+      "rag.book_assets",
+      "scripts.lending_v2b_operations",
+      "search.catalogue",
+      "search.personalization",
+      "search.query_confidence",
+      "search.query_constraints",
+      "search.query_execution",
+      "search.query_expansion",
+      "search.query_interaction",
+      "search.query_numeric",
+      "search.query_plan",
+      "search.query_repair",
+      "search.query_session",
+      "search.scope_authorization",
+      "search.session_store",
+      "search.structured_subjects",
+      "search.sync_queue"
+    ],
+    "Search_and_native_worker": [
+      "backend.database.mongo_configuration",
+      "backend.database.mongodb",
+      "backend.dependencies",
+      "backend.institution_dependencies",
+      "backend.platform_dependencies",
+      "backend.schemas.library_catalogue",
+      "backend.schemas.notifications",
+      "backend.services.availability_service",
+      "backend.services.book_capability_service",
+      "backend.services.identity_service",
+      "backend.services.institution_repository",
+      "backend.services.issue_service",
+      "backend.services.library_book_formats",
+      "backend.services.library_catalogue_availability",
+      "backend.services.library_catalogue_experience",
+      "backend.services.library_fee_service",
+      "backend.services.library_intelligence_artifacts",
+      "backend.services.library_intelligence_service",
+      "backend.services.library_intelligence_store",
+      "backend.services.library_inventory_access",
+      "backend.services.library_lending_journal",
+      "backend.services.library_lending_legacy",
+      "backend.services.library_lending_service",
+      "backend.services.library_reservation_service",
+      "backend.services.library_v2c_integrity",
+      "backend.services.library_v2c_plan",
+      "backend.services.library_worker_observer",
+      "backend.services.loan_notification_service",
+      "backend.services.loan_renewal_service",
+      "backend.services.login_sessions",
+      "backend.services.notification_service",
+      "backend.services.ranked_result_cache",
+      "backend.services.search_history_service",
+      "backend.services.tenant_notification_service",
+      "backend.utils.jwt_utils",
+      "knowledge_graph.core",
+      "knowledge_graph.relations",
+      "rag.book_assets",
+      "scripts.lending_v2b_operations",
+      "search.api",
+      "search.catalogue",
+      "search.embedding_cache",
+      "search.index_manager",
+      "search.interaction_api",
+      "search.lexical_build",
+      "search.lexical_delta",
+      "search.lexical_integration",
+      "search.lexical_store",
+      "search.library_intelligence",
+      "search.library_intelligence_api",
+      "search.luminar_search",
+      "search.personalization",
+      "search.preview_api",
+      "search.preview_service",
+      "search.preview_state",
+      "search.query_confidence",
+      "search.query_constraints",
+      "search.query_execution",
+      "search.query_expansion",
+      "search.query_interaction",
+      "search.query_numeric",
+      "search.query_plan",
+      "search.query_repair",
+      "search.query_session",
+      "search.query_suggestions",
+      "search.ranked_pages",
+      "search.scope_authorization",
+      "search.session_store",
+      "search.smart_preview",
+      "search.structured_subjects",
+      "search.sync_queue",
+      "search.typo_assistance"
+    ],
+    "Recommendation": [
+      "backend.database.mongo_configuration",
+      "backend.database.mongodb",
+      "backend.services.identity_service",
+      "backend.services.login_sessions",
+      "backend.services.ranked_result_cache",
+      "backend.services.search_history_service",
+      "backend.utils.jwt_utils",
+      "recommendation.api",
+      "recommendation.ranked_pages",
+      "recommendation.recommendation_service",
+      "search.catalogue",
+      "search.sync_queue"
+    ],
+    "RAG_Qwen": [
+      "assistant.api",
+      "assistant.contextual",
+      "assistant.kg_routing",
+      "assistant.lending_boundary",
+      "assistant.orchestrator",
+      "assistant.profiling",
+      "assistant.qwen",
+      "assistant.reservation_boundary",
+      "assistant.router_v2",
+      "assistant.router_v2_legacy",
+      "assistant.router_v3",
+      "assistant.router_v4",
+      "assistant.router_v5.binding",
+      "assistant.router_v5.gateway",
+      "assistant.routing",
+      "assistant.schemas",
+      "assistant.selected_context",
+      "assistant.semantic",
+      "assistant.state",
+      "assistant.tools",
+      "backend.database.mongo_configuration",
+      "backend.database.mongodb",
+      "backend.dependencies",
+      "backend.institution_dependencies",
+      "backend.services.book_capability_service",
+      "backend.services.identity_service",
+      "backend.services.institution_repository",
+      "backend.services.library_asset_service",
+      "backend.services.library_asset_text",
+      "backend.services.library_asset_upload_limit",
+      "backend.services.library_inventory_access",
+      "backend.services.login_sessions",
+      "backend.utils.jwt_utils",
+      "rag.api",
+      "rag.attention",
+      "rag.book_assets",
+      "rag.decoding",
+      "rag.document_grounding",
+      "rag.document_latency",
+      "rag.evidence",
+      "rag.fast_filter",
+      "rag.llm",
+      "rag.qa",
+      "rag.query_types",
+      "rag.reranker",
+      "rag.retriever",
+      "rag.services.book_access",
+      "rag.services.book_runtime",
+      "rag.services.cloze_grading",
+      "rag.services.document_knowledge",
+      "rag.services.document_service",
+      "rag.services.knowledge_algorithms",
+      "rag.services.knowledge_artifacts",
+      "rag.services.knowledge_cloze",
+      "rag.services.knowledge_encoder",
+      "rag.services.knowledge_match",
+      "rag.services.knowledge_mcq",
+      "rag.services.knowledge_quiz",
+      "rag.services.knowledge_quiz_evidence",
+      "rag.services.knowledge_quiz_relations",
+      "rag.services.knowledge_quiz_sources",
+      "rag.services.knowledge_routes",
+      "rag.services.library_asset_pipeline",
+      "rag.services.library_asset_routes",
+      "rag.services.local_document_cache",
+      "rag.services.private_document_ocr",
+      "rag.services.private_document_routes",
+      "rag.services.private_documents",
+      "rag.telemetry"
+    ]
+  },
+  "scope": "Core/Search/RAG/Recommendation module import reachability includes imports inside functions and branches; it does not imply every operation executes in every process.",
+  "limits": [
+    "Dynamic loops/specs, imported aliases, aggregation lookups, bulk models and script-passed databases require manual source and runtime trace reconciliation.",
+    "Implicit upsert needs insert as well as update where creation is possible; the listed update action alone is not a complete deployable grant.",
+    "Aggregate with lookups requires find on every source; $out/$merge would need additional output privileges. No broad aggregate privilege is invented.",
+    "No explicit runtime transactions or change streams found; implicit driver sessions do not justify cluster administration.",
+    "The fixture role includes all six data/index actions on named resources for test setup/cleanup, and is deliberately broader than this source lower bound."
+  ],
+  "deployment_role_qualified": false
+}

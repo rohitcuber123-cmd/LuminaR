@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="1.804" timestamp="2026-10-31T06:49:40.554665+05:30" hostname="Rohit-pc"><testcase classname="tests.test_assistant_backend" name="test_protected_rag_files_match_original_hashes" time="0.022"><failure message="AssertionError: assert '4A1141649A4C...D12021BD89DE3' == '0E78A7C780F6...D80DA90A793C6'&#10;  &#10;  - 0E78A7C780F691B14C8E3A3337F62054E4C117F0C2DF7828099D80DA90A793C6&#10;  + 4A1141649A4CE9B4BCE6413627C27557F5817BB8718A4E842A4D12021BD89DE3">def test_protected_rag_files_match_original_hashes():
+        import hashlib
+        import json
+        rows = json.loads((ROOT / 'reports/assistant_backend_baseline/hashes.json').read_text(encoding='utf-8-sig'))
+        for row in rows:
+            if Path(row['Path']).name != 'api.py':
+&gt;               assert hashlib.sha256(Path(row['Path']).read_bytes()).hexdigest().upper() == row['Hash']
+E               AssertionError: assert '4A1141649A4C...D12021BD89DE3' == '0E78A7C780F6...D80DA90A793C6'
+E                 
+E                 - 0E78A7C780F691B14C8E3A3337F62054E4C117F0C2DF7828099D80DA90A793C6
+E                 + 4A1141649A4CE9B4BCE6413627C27557F5817BB8718A4E842A4D12021BD89DE3
+
+tests\test_assistant_backend.py:467: AssertionError</failure></testcase></testsuite></testsuites>

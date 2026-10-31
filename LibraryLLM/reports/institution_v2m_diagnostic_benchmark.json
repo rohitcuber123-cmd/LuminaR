@@ -1,0 +1,45 @@
+{
+  "scope": "Actual CLI/SCRAM/DPAPI startup/read/serialization timings; coherent synthetic native records, not an actual worker or serving artifact. No production SLO.",
+  "commands": [
+    {
+      "command": "diagnose_worker_telemetry.py",
+      "end_to_end_ms": {
+        "median": 2392.4627000001237,
+        "p95": 2519.7949999997036,
+        "samples": 10,
+        "min": 2262.4942000002193,
+        "max": 2519.7949999997036
+      },
+      "max_output_bytes": 1834,
+      "includes": "PowerShell process + DPAPI import + Python process/import + SCRAM + bounded reads + JSON serialization."
+    },
+    {
+      "command": "diagnose_library_intelligence.py",
+      "end_to_end_ms": {
+        "median": 2355.470050000122,
+        "p95": 2465.0446000000557,
+        "samples": 10,
+        "min": 2277.170400000159,
+        "max": 2465.0446000000557
+      },
+      "max_output_bytes": 12424,
+      "includes": "PowerShell process + DPAPI import + Python process/import + SCRAM + bounded reads + JSON serialization."
+    }
+  ],
+  "secret_protection": {
+    "mode": "protect",
+    "encryption": "Windows SecureString Export-Clixml DPAPI",
+    "directory_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+    "current_sid": "S-1-5-21-4226139363-902846128-2016220542-1001",
+    "file_protected": true,
+    "file_sddl": "O:S-1-5-21-4226139363-902846128-2016220542-1001G:S-1-5-21-4226139363-902846128-2016220542-1001D:PAI(A;;FA;;;SY)(A;;FA;;;S-1-5-21-4226139363-902846128-2016220542-1001)",
+    "directory_protected": true,
+    "recovered_matches": true,
+    "secret_value_returned": false,
+    "plaintext_absent_from_ciphertext": true
+  },
+  "telemetry_BSON_bytes": 1280,
+  "auxiliary_documents_examined": 1,
+  "auxiliary_keys_examined": 1,
+  "owned_fixture_removed": true
+}

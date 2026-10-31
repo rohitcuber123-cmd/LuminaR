@@ -1,0 +1,7 @@
+# Improvement review
+
+2M changed no production runtime, previous tests, frontend or accepted telemetry contract. It adds read-only deployment/ACL evidence, protected disposable secret injection, fresh server-denied writer/reader/rotation cases, native151-book rollout/rollback/failure measurements and concrete owner-controlled runbooks. It identifies actual unmet prerequisites instead of interpreting fixture success as authorization.
+
+Two substantive deployment blockers are observed: anonymous tenant access on the actual Mongo service and broad .env/launch-path local group ACLs. Actual Search/Core/RAG/Recommendation/frontend processes were not observed on source-default ports, so their service/account ownership and full-stack readiness cannot be attested. Only current-user DPAPI/NTFS behavior was exercised; a different production service identity/profile and cross-account denial remain unqualified.
+
+The fixture storage and opt-in boundaries are useful but limited: native job/pointer authority stays separate; both DB identities are independently enforced; encrypted secrets never appear in argv/repo; disabled restart preserves native data and allows manual builds. Sampling, current/previous retention, no OS proof, small n3 per-target tails, cold/warm model effects and lack of production-scale/global workload remain operational limits. Do not remove these qualifiers to obtain a PASS.

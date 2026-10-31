@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="2.823" timestamp="2026-10-30T00:15:33.316789+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2i.test_maintenance" name="test_verification_exactly_once_per_target_per_control_read" time="2.197"><failure message="AssertionError: assert [('ebbc5993-9..._INDEX'), ...] == [('ebbc5993-9...LEDGE_GRAPH')]&#10;  &#10;  At index 1 diff: ('ebbc5993-9054-402d-9d6a-a383af6716cd', 'SEARCH_INDEX') != ('ebbc5993-9054-402d-9d6a-a383af6716cd', 'KNOWLEDGE_GRAPH')&#10;  Left contains 4 more items, first extra item: ('ebbc5993-9054-402d-9d6a-a383af6716cd', 'SEARCH_INDEX')&#10;  Use -v to get more diff">client = &lt;starlette.testclient.TestClient object at 0x000001A06C71E650&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001A06EEF5C60&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001A06EF219D0&gt;
+
+    def test_verification_exactly_once_per_target_per_control_read(client, library, monkeypatch):
+        lib = library()
+        book(client, lib)
+        build(lib)
+        build(lib, 'KNOWLEDGE_GRAPH')
+        original, calls = service.pointer_manifest, []
+        def observed(*args, **kw):
+            calls.append((args[0], args[1]))
+            return original(*args, **kw)
+        monkeypatch.setattr(service, 'pointer_manifest', observed)
+        for _ in range(2):
+            assert service.status(lib, ACTOR)['search']['status'] == 'READY'
+&gt;       assert calls == [(lib, 'SEARCH_INDEX'), (lib, 'KNOWLEDGE_GRAPH')] * 2
+E       AssertionError: assert [('ebbc5993-9..._INDEX'), ...] == [('ebbc5993-9...LEDGE_GRAPH')]
+E         
+E         At index 1 diff: ('ebbc5993-9054-402d-9d6a-a383af6716cd', 'SEARCH_INDEX') != ('ebbc5993-9054-402d-9d6a-a383af6716cd', 'KNOWLEDGE_GRAPH')
+E         Left contains 4 more items, first extra item: ('ebbc5993-9054-402d-9d6a-a383af6716cd', 'SEARCH_INDEX')
+E         Use -v to get more diff
+
+tests\institution_v2i\test_maintenance.py:151: AssertionError</failure></testcase></testsuite></testsuites>

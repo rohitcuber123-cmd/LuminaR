@@ -1,0 +1,252 @@
+{
+  "scenario": "crash",
+  "enabled": true,
+  "fault": "ACKNOWLEDGEMENT_LOSS",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS"
+  ],
+  "events": [
+    {
+      "at": "2026-10-30 12:37:41.486661+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:43.276970+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-30 12:37:43.198000",
+      "pulse_seq": 1,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-30 12:37:43.198000",
+        1,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:43.402154+00:00",
+      "state": "RUNNING",
+      "stage": "KG_METADATA",
+      "current": 100,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:37:43.198000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "6fc7816f-4db0-4eeb-9408-ab1902c1051a",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:37:43.277000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "KG_METADATA",
+        100,
+        151,
+        "2026-10-30 12:37:43.198000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:43.508823+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:37:43.198000",
+      "pulse_seq": 1,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "6fc7816f-4db0-4eeb-9408-ab1902c1051a",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-30 12:37:43.277000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        151,
+        151,
+        "2026-10-30 12:37:43.198000",
+        1,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-30 12:37:44.402661+00:00",
+      "state": "PUBLISHING",
+      "stage": "PUBLISH",
+      "current": 151,
+      "total": 151,
+      "heartbeat_at": "2026-10-30 12:37:43.198000",
+      "pulse_seq": 1,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "6fc7816f-4db0-4eeb-9408-ab1902c1051a",
+          "stage": "PUBLISH",
+          "state": "PUBLISHING",
+          "progress_current": 151,
+          "last_progress_observed_at": "2026-10-30 12:37:44.284000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "PUBLISHING",
+        "PUBLISH",
+        151,
+        151,
+        "2026-10-30 12:37:43.198000",
+        1,
+        2
+      ]
+    }
+  ],
+  "builds": [],
+  "security": [],
+  "model": "NOT_LOADED_KG_OR_IDLE",
+  "telemetry_writer_mode": "RESTRICTED_AUXILIARY_WRITER",
+  "telemetry_fault": "",
+  "resource_samples": [
+    {
+      "phase": "IDLE",
+      "rss_bytes": 70139904,
+      "cpu_delta_ms": null,
+      "interval_seconds": null,
+      "python_threads": 12,
+      "os_threads": 16
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71122944,
+      "cpu_delta_ms": 46.875,
+      "interval_seconds": 1.0,
+      "python_threads": 10,
+      "os_threads": 14
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71360512,
+      "cpu_delta_ms": 125.0,
+      "interval_seconds": 1.0149999999998727,
+      "python_threads": 11,
+      "os_threads": 15
+    },
+    {
+      "phase": "JOB",
+      "rss_bytes": 71725056,
+      "cpu_delta_ms": 78.125,
+      "interval_seconds": 1.0,
+      "python_threads": 11,
+      "os_threads": 15
+    }
+  ],
+  "frozen_baseline_native": false,
+  "native_method_monkeypatching": false,
+  "extra_models": 0,
+  "threads_before_start": {
+    "python": 4,
+    "os": 8
+  },
+  "mongo_connections_before": 6,
+  "native_start_return_ms": 18.973400000049878,
+  "observer_ready_ms": 77.75209999999788,
+  "threads_observing": {
+    "python": 9,
+    "os": 13
+  },
+  "mongo_connections_observing": 9,
+  "current_library": "a2ff024a-1864-4c4c-b245-d6b5738d3545",
+  "crash_job": {
+    "job_id": "6fc7816f-4db0-4eeb-9408-ab1902c1051a",
+    "library_id": "a2ff024a-1864-4c4c-b245-d6b5738d3545",
+    "target": "KNOWLEDGE_GRAPH",
+    "requested_generation_id": "0db9c24c-5863-4504-b352-37558eb1eace",
+    "artifact_generation_id": "eb8170bf-bc7a-4604-b948-51591610a628",
+    "state": "PUBLISHING",
+    "stage": "PUBLISH",
+    "progress_current": 151,
+    "progress_total": 151,
+    "attempt": 1,
+    "requested_by_user_id": 1,
+    "created_at": "2026-10-30 12:37:41.387000",
+    "started_at": "2026-10-30 12:37:43.198000",
+    "heartbeat_at": "2026-10-30 12:37:43.198000",
+    "completed_at": null,
+    "error_code": null,
+    "error_message": null,
+    "effective_active": true,
+    "lease_expires_at": "2026-10-30 12:39:13.198000",
+    "require_nonempty": true,
+    "fence_token_digest": "fa51e0d1eec1ccbedbe0013222a2c71aa11e3e00ef3cb7d8d093bdcfc77852dc",
+    "worker_id_digest": "efc6227e607eef8ea604888a4aa73a6a69cd3a3d185d61c1405af6f02ba87852"
+  },
+  "pointer_at_crash": {
+    "target": "KNOWLEDGE_GRAPH",
+    "library_id": "a2ff024a-1864-4c4c-b245-d6b5738d3545",
+    "active_generation_id": "eb8170bf-bc7a-4604-b948-51591610a628",
+    "active_job_id": "6fc7816f-4db0-4eeb-9408-ab1902c1051a",
+    "state": "READY",
+    "artifact_bytes": 191990,
+    "built_at": "2026-10-30 12:37:43.491000",
+    "edge_count": 604,
+    "error_code": null,
+    "manifest_checksum": "fc9684620eef19442cdea419e15bd178ebf89d03828157c9b82e398085885c56",
+    "node_count": 155,
+    "previous_generation_id": null,
+    "published_by_job_id": "6fc7816f-4db0-4eeb-9408-ab1902c1051a",
+    "record_count": 151,
+    "source_fingerprint": "2a3effd78c000997057713eda4318e83e951ba184c451dfa437997bb7c9920bd",
+    "source_generation_id": "0db9c24c-5863-4504-b352-37558eb1eace",
+    "fence_token_digest": "fa51e0d1eec1ccbedbe0013222a2c71aa11e3e00ef3cb7d8d093bdcfc77852dc"
+  },
+  "telemetry_before_crash": {
+    "epoch": 10
+  },
+  "instance_ref": "e1ae81ed2de76ba8f773c8a96b9f0f7e8e4d20566300c020aa0035a43f51f355",
+  "genuine_process_exit": 77
+}

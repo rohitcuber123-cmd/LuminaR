@@ -1,0 +1,48 @@
+{
+  "baseline_execution": 97,
+  "baseline_false": 8,
+  "baseline_missed": 45,
+  "baseline_typed": 57,
+  "confirmed_causes": [
+    {
+      "cause": "Advisory modality assigned after extraction, with a four-adjective vocabulary",
+      "evidence": "A01/A02 global change AMBIGUOUS to scope UNSUPPORTED while tenant variants execute; S04 advisory language blocks GLOBAL.",
+      "first_incorrect_stage": "requirement_ledger.own leaves preferred year/language/availability unowned; query_repair._compose installs hard predicates",
+      "source": "scratch/search_v2c_c5er/candidate_search_v4/requirement_ledger.py:own; query_repair.py:_compose; query_confidence.py:validate"
+    },
+    {
+      "cause": "Unquoted explicit facet operands are treated as broad prose",
+      "evidence": "C02/C04/C05 and S01-S05 canonical category/subject requests become unresolved; no valid correction is issued.",
+      "first_incorrect_stage": "subject_clauses skips subject qualifier but not the category/classification owner; fuzzy repair is limited to quoted owner path",
+      "source": "scratch/search_v2c_c5er/candidate_search_v4/query_constraints.py:subject_clauses,owned_literals"
+    },
+    {
+      "cause": "Field recognition and missing-operand guard compete over the same sort phrase",
+      "evidence": "C01 is INCOMPLETE despite its resolved rating and explicit sort request.",
+      "first_incorrect_stage": "unsupported_and_sorts recognizes sort by, not equivalent sort on; dangling rating in highest rating enters missing_pattern",
+      "source": "scratch/search_v2c_c5er/candidate_search_v4/query_constraints.py:unsupported_and_sorts; query_repair.py:_compose"
+    },
+    {
+      "cause": "Relationships are word-triggered rather than preserved as operands and operators",
+      "evidence": "Eight tenant A01/A02 unsafe recommendations; all25 ambiguity labels missed.",
+      "first_incorrect_stage": "required relationships do not cover deferred either/or association; scalar recognizers retain one value or strongest bound",
+      "source": "scratch/search_v2c_c5er/candidate_search_v4/requirement_ledger.py:own; semantic_safety.py:finish"
+    },
+    {
+      "cause": "Decision composition is spread across parser, ledger and capability validator",
+      "evidence": "Global missing/ambiguous requests become scope UNSUPPORTED; X05 contradiction is hidden by preferred language.",
+      "first_incorrect_stage": "capability checks overwrite unresolved/incomplete typing caused by unrelated advisory metadata",
+      "source": "scratch/search_v2c_c5er/candidate_search_v4/query_confidence.py:validate; semantic_safety.py:finish"
+    },
+    {
+      "cause": "Negative domains and postfix canonical ownership are incomplete",
+      "evidence": "C03 executes with wrong negative filters; searchable-text whole word exclusions are lost.",
+      "first_incorrect_stage": "text exclusion recognizer accepts a narrower surface template; classification suffix is retained as broad text",
+      "source": "scratch/search_v2c_c5er/candidate_search_v4/query_constraints.py:owned_literals,subject_clauses"
+    }
+  ],
+  "entire_population_traced": 150,
+  "hypotheses": "No claim that finite deterministic grammar covers unrestricted language; source coverage and retrieval meaning require independent tests.",
+  "production_route": "search.query_plan.parse_query -> search.query_repair.compose -> typed query_confidence and C4 query_calibration; native search.query_execution and scope_authorization remain unchanged.",
+  "trace_artifact": "reports\\search_v2c_smarteng_baseline_traces.jsonl"
+}

@@ -1,0 +1,7 @@
+# Part 2J improvement review
+
+The task adds a cohesive authenticated local diagnostic surface without editing existing runtime code. It avoids the mutation-lock/stale_since side effects and catalogue/checksum cost of ordinary status, yet keeps that status authoritative. It does not create a second dashboard or overload PLATFORM_ADMIN.
+
+Review-driven safety improvements: require explicit database-local read identity rather than app JWT or anonymous environment defaults; redact raw exception/path/fence/owner strings; retain actual counters and unavailable timestamps; range FIFO positions across ties; distinguish current tenant jobs from intentional database queue context; preserve pointer and attempt separately; batch job identity associations using existing unique indexes instead of an unindexed artifact-history scan; bound manifests, candidates, outputs and shared checksum bytes; flag concurrent pointer/file changes; deny any action/grant/cleanup mode.
+
+Known limits remain visible: no independent idle/process liveness or progress recency, no native/full catalogue validation, bounded non-exhaustive retained inventory, best-effort multi-query observation and sparse history scans bounded by timeout. Production infrastructure operator credential/authentication/OS-secret deployment is not provisioned by this task. The two existing backend failures remain enabled and are not rebased. These limits support a PARTIAL overall result rather than a clean production acceptance claim.

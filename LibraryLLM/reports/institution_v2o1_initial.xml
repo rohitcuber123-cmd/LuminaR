@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="3" time="29.510" timestamp="2026-10-30T22:04:46.714302+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2j.test_diagnostics" name="test_existing_staff_status_unchanged" time="1.832"><failure message="AssertionError: assert '51f58263f2c0...154c1375adfd3' == '874adf27e1ef...5210f27d62765'&#10;  &#10;  - 874adf27e1efd90899d4ba8c7d7019872af7d1e69627446de825210f27d62765&#10;  + 51f58263f2c06fda2bb3f6669de94a735af2d0b97e3cf4497bc154c1375adfd3">def test_existing_staff_status_unchanged():
+        baseline=json.loads((ROOT/'reports/institution_v2j_baseline.json').read_text())
+        for file in ['backend/services/library_intelligence_service.py','backend/services/library_intelligence_store.py',
+                     'backend/routes/library_intelligence.py','frontend/src/pages/LibraryIntelligence.tsx']:
+&gt;           assert hashlib.sha256((ROOT/file).read_bytes()).hexdigest()==baseline['source_sha256'][file]
+E           AssertionError: assert '51f58263f2c0...154c1375adfd3' == '874adf27e1ef...5210f27d62765'
+E             
+E             - 874adf27e1efd90899d4ba8c7d7019872af7d1e69627446de825210f27d62765
+E             + 51f58263f2c06fda2bb3f6669de94a735af2d0b97e3cf4497bc154c1375adfd3
+
+tests\institution_v2j\test_diagnostics.py:395: AssertionError</failure></testcase><testcase classname="tests.test_assistant_backend" name="test_protected_rag_files_match_original_hashes" time="0.006"><failure message="AssertionError: assert '4A1141649A4C...D12021BD89DE3' == '0E78A7C780F6...D80DA90A793C6'&#10;  &#10;  - 0E78A7C780F691B14C8E3A3337F62054E4C117F0C2DF7828099D80DA90A793C6&#10;  + 4A1141649A4CE9B4BCE6413627C27557F5817BB8718A4E842A4D12021BD89DE3">def test_protected_rag_files_match_original_hashes():
+        import hashlib
+        import json
+        rows = json.loads((ROOT / 'reports/assistant_backend_baseline/hashes.json').read_text(encoding='utf-8-sig'))
+        for row in rows:
+            if Path(row['Path']).name != 'api.py':
+&gt;               assert hashlib.sha256(Path(row['Path']).read_bytes()).hexdigest().upper() == row['Hash']
+E               AssertionError: assert '4A1141649A4C...D12021BD89DE3' == '0E78A7C780F6...D80DA90A793C6'
+E                 
+E                 - 0E78A7C780F691B14C8E3A3337F62054E4C117F0C2DF7828099D80DA90A793C6
+E                 + 4A1141649A4CE9B4BCE6413627C27557F5817BB8718A4E842A4D12021BD89DE3
+
+tests\test_assistant_backend.py:467: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_search_route_works_with_failed_lexical_and_keeps_public_schema" time="25.727" /></testsuite></testsuites>

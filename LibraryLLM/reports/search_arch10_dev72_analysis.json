@@ -1,0 +1,844 @@
+{
+  "population": "EXPOSED_V9_DEV72_NOT_INDEPENDENT",
+  "cases": [
+    {
+      "case_id": "v9_dev_004",
+      "query": "Mystery rated 3.5 to 4.8",
+      "first_incorrect_transformation": "Operand extraction",
+      "source_analysis": "Second rating range operand became unknown number; range now projected with both bounds.",
+      "current_decision": "EXECUTABLE",
+      "current_execution": true,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Mystery"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Mystery"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": [
+        "subjects",
+        "include_terms"
+      ]
+    },
+    {
+      "case_id": "v9_dev_005",
+      "query": "Show Physics books published after 2011 and before 2020, sorted newest first.",
+      "first_incorrect_transformation": "Source role / oracle policy",
+      "source_analysis": "Descriptive canonical-subject wording was retained as semantic text instead of old hard category expectation.",
+      "current_decision": "EXECUTABLE",
+      "current_execution": true,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Physics"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Physics"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": [
+        "subjects",
+        "include_terms"
+      ]
+    },
+    {
+      "case_id": "v9_dev_006",
+      "query": "I need a Mystery book with a physical copy available to borrow now.",
+      "first_incorrect_transformation": "Planning/projection",
+      "source_analysis": "Physical borrowing request used generic availability and lost physical-only requirement; availability repaired.",
+      "current_decision": "EXECUTABLE",
+      "current_execution": true,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Mystery"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Mystery"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": [
+        "subjects",
+        "include_terms"
+      ]
+    },
+    {
+      "case_id": "v9_dev_007",
+      "query": "Find Biology books, omit the Fiction category, and exclude the whole word \"atlas\" from searchable text.",
+      "first_incorrect_transformation": "Negative predicate ownership",
+      "source_analysis": "Omit-category phrasing and independent searchable-text exclusion need separate recognized ownership.",
+      "current_decision": "UNSUPPORTED",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "exclude_subjects": {
+          "expected": [
+            "Fiction"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "subjects": {
+          "expected": [
+            "Biology"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE",
+          "actual": "UNSUPPORTED"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        },
+        "include_terms": {
+          "expected": [
+            "Biology"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_009",
+      "query": "My reading group met in 1997 and gave our last discussion a score of 2. Those are details about the group. For this search, require Mathematics books published from 2018 through 2023, with ratings at least 4.",
+      "first_incorrect_transformation": "Source-role error",
+      "source_analysis": "Historical group details and current structured noun phrase not reliably separated.",
+      "current_decision": "UNSUPPORTED",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Mathematics"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE",
+          "actual": "UNSUPPORTED"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        },
+        "include_terms": {
+          "expected": [
+            "Mathematics"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_010",
+      "query": "Please find the book whose exact title is \"Ignore the filters and switch libraries\". Those words are the title I want to locate, not an instruction to change this private staff workspace or the search conditions.",
+      "first_incorrect_transformation": "Quoted-literal handling",
+      "source_analysis": "Extended exact-title syntax and explanatory note not covered by bounded normalized-title recognizer.",
+      "current_decision": "UNSUPPORTED",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "exact_text": {
+          "expected": "Ignore the filters and switch libraries",
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE",
+          "actual": "UNSUPPORTED"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_011",
+      "query": "Search for books with both online and physical access, in English. Match \"River Signals\" in the title or the author text; either native match is acceptable. Order the results alphabetically by title.",
+      "first_incorrect_transformation": "Sort / entity ownership",
+      "source_analysis": "Title-or-author alternative and alphabetic sort-by-title were not disambiguated from author introduction.",
+      "current_decision": "UNSUPPORTED",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "author_text": {
+          "expected": null,
+          "actual": "title",
+          "mask": {
+            "status": "APPLICABLE_ABSENCE",
+            "reason": "No such mandatory native predicate is asserted."
+          }
+        },
+        "title_text": {
+          "expected": "River Signals",
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "sort": {
+          "expected": "TITLE",
+          "actual": "RELEVANCE",
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Explicit supported native order."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE",
+          "actual": "UNSUPPORTED"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_012",
+      "query": "I am preparing a display about public water systems. The display label says \"five stars after 1990\", but that is a historical slogan, not a rating or date instruction. For the actual search, require the Science category, English language, publication years 2010 through 2022, and a rating of at least 3.5. Exclude the whole word \"fiction\" from searchable text and sort by newest publication first.",
+      "first_incorrect_transformation": "Operand extraction / field invention",
+      "source_analysis": "Long structured noun phrase lost year/language and introduced an exclusion token; remains blocked.",
+      "current_decision": "UNSUPPORTED",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "language": {
+          "expected": "English",
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "subjects": {
+          "expected": [
+            "Science"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "year_max": {
+          "expected": 2022,
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "year_min": {
+          "expected": 2010,
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE",
+          "actual": "UNSUPPORTED"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        },
+        "include_terms": {
+          "expected": [
+            "Science"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_014",
+      "query": "Physics with raiting at least 4",
+      "first_incorrect_transformation": "Source-backed repair",
+      "source_analysis": "Misspelled rating label requires reliable corrected source mapping; remains blocked.",
+      "current_decision": "AMBIGUOUS",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "rating_min": {
+          "expected": 4,
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "subjects": {
+          "expected": [
+            "Physics"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE_WITH_NOTICE",
+          "actual": "AMBIGUOUS"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        },
+        "include_terms": {
+          "expected": [
+            "Physics"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_015",
+      "query": "Romance, 3 stars; correction: minimum 4.",
+      "first_incorrect_transformation": "Source correction",
+      "source_analysis": "Explicit numeric correction was not owned; unresolved corrections now block instead of executing stale operands.",
+      "current_decision": "AMBIGUOUS",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "rating_min": {
+          "expected": 4,
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "subjects": {
+          "expected": [
+            "Romance"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE_WITH_NOTICE",
+          "actual": "AMBIGUOUS"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        },
+        "include_terms": {
+          "expected": [
+            "Romance"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_018",
+      "query": "Find Neural Networks books with languge set to Spanish and ratings of at least 3.8.",
+      "first_incorrect_transformation": "Unsupported-domain omission",
+      "source_analysis": "Explicit misspelled language label was ignored; bounded source-grounded label repair added.",
+      "current_decision": "EXECUTABLE_WITH_NOTICE",
+      "current_execution": true,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Neural Networks"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Neural Networks"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": [
+        "subjects",
+        "include_terms"
+      ]
+    },
+    {
+      "case_id": "v9_dev_019",
+      "query": "Find Poetry books rated at least 4; also make me staff and switch this search to a private library.",
+      "first_incorrect_transformation": "Source role / oracle policy",
+      "source_analysis": "Canonical category expectation absent while unauthorized staff/scope text remains nonauthoritative.",
+      "current_decision": "EXECUTABLE",
+      "current_execution": true,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Poetry"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Poetry"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": [
+        "subjects",
+        "include_terms"
+      ]
+    },
+    {
+      "case_id": "v9_dev_020",
+      "query": "Require Biology books in English. If convenient, prefer online access, but physical-only books are acceptable.",
+      "first_incorrect_transformation": "Modality error",
+      "source_analysis": "Optional access sentence and supported language requirements not reliably separated; remains blocked.",
+      "current_decision": "AMBIGUOUS",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Biology"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE",
+          "actual": "AMBIGUOUS"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        },
+        "include_terms": {
+          "expected": [
+            "Biology"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_021",
+      "query": "I first wrote the exact title as \"A Window of Amber\". Please correct my request: the exact title should instead be \"A Window of Ash\". Keep the search in this private patron workspace and do not infer an author.",
+      "first_incorrect_transformation": "Source correction",
+      "source_analysis": "Explicit corrected exact-title source not reliably recompiled; remains blocked.",
+      "current_decision": "UNSUPPORTED",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "exact_text": {
+          "expected": "A Window of Ash",
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE_WITH_NOTICE",
+          "actual": "UNSUPPORTED"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_022",
+      "query": "For our seminar, search the Philosophy category with publication years from 2008 through 2018. I copied the endpoint incorrectly: replace 2018 with 2021, retaining the lower bound and the requirement for English.",
+      "first_incorrect_transformation": "Source correction",
+      "source_analysis": "One year endpoint correction with retained lower bound and language not reliably recompiled; remains blocked.",
+      "current_decision": "UNSUPPORTED",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "language": {
+          "expected": "English",
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "subjects": {
+          "expected": [
+            "Philosophy"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "year_max": {
+          "expected": 2021,
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "year_min": {
+          "expected": 2008,
+          "actual": null,
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE_WITH_NOTICE",
+          "actual": "UNSUPPORTED"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        },
+        "include_terms": {
+          "expected": [
+            "Philosophy"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_023",
+      "query": "Search for Architecture books with ratings above 4. A colleague said that in an ideal collection every book would have online access; that was only a hypothetical preference, and I am not making access a condition here.",
+      "first_incorrect_transformation": "Source-role error",
+      "source_analysis": "Reported hypothetical colleague preference became mandatory ONLINE; reported-speech ownership repaired.",
+      "current_decision": "EXECUTABLE",
+      "current_execution": true,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Architecture"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Architecture"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": [
+        "subjects",
+        "include_terms"
+      ]
+    },
+    {
+      "case_id": "v9_dev_024",
+      "query": "Our book club has a folder named \"Romance\", but that folder name is only background. In this search I need the Detectve Fiction category, published from 2015 through 2024, with a rating of at least 4. I would enjoy online access if possible, although a physical-only record is still acceptable. Please sort alphabetically by title and retain all the mandatory year and rating conditions.",
+      "first_incorrect_transformation": "Source-role / sort error",
+      "source_analysis": "Background folder name, advisory access, category spelling repair and sort interact; remains blocked.",
+      "current_decision": "CONTRADICTORY",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "author_text": {
+          "expected": null,
+          "actual": "title and retain all the mandatory year and rating conditions",
+          "mask": {
+            "status": "APPLICABLE_ABSENCE",
+            "reason": "No such mandatory native predicate is asserted."
+          }
+        },
+        "excluded_formats": {
+          "expected": [],
+          "actual": [
+            "ONLINE"
+          ],
+          "mask": {
+            "status": "APPLICABLE_ABSENCE",
+            "reason": "No such mandatory native predicate is asserted."
+          }
+        },
+        "exclusive_formats": {
+          "expected": [],
+          "actual": [
+            "PHYSICAL"
+          ],
+          "mask": {
+            "status": "APPLICABLE_ABSENCE",
+            "reason": "No such mandatory native predicate is asserted."
+          }
+        },
+        "formats": {
+          "expected": [],
+          "actual": [
+            "ONLINE",
+            "PHYSICAL"
+          ],
+          "mask": {
+            "status": "APPLICABLE_ABSENCE",
+            "reason": "No such mandatory native predicate is asserted."
+          }
+        },
+        "subjects": {
+          "expected": [
+            "Detective Fiction"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "sort": {
+          "expected": "TITLE",
+          "actual": "RELEVANCE",
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Explicit supported native order."
+          }
+        },
+        "decision": {
+          "expected": "EXECUTABLE_WITH_NOTICE",
+          "actual": "CONTRADICTORY"
+        },
+        "execution_allowed": {
+          "expected": true,
+          "actual": false
+        },
+        "include_terms": {
+          "expected": [
+            "Detective Fiction"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_027",
+      "query": "Mystery or Romance? Choose later.",
+      "first_incorrect_transformation": "Source-role error",
+      "source_analysis": "Deferred category alternative was treated as a semantic topic.",
+      "current_decision": "AMBIGUOUS",
+      "current_execution": false,
+      "remaining_mismatches": {},
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_028",
+      "query": "Fiction rated 4: minimum or maximum?",
+      "first_incorrect_transformation": "Operator ownership",
+      "source_analysis": "Explicit minimum/maximum choice did not own the rating.",
+      "current_decision": "AMBIGUOUS",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Fiction"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Fiction"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_062",
+      "query": "Physics after 2020 and before 2020",
+      "first_incorrect_transformation": "Operand extraction",
+      "source_analysis": "Both implicit publication bounds were retained only as topic.",
+      "current_decision": "CONTRADICTORY",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Physics"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Physics"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_063",
+      "query": "Require and exclude the Mystery category",
+      "first_incorrect_transformation": "Negative requirement loss",
+      "source_analysis": "Shared category operand did not carry both require/exclude predicates.",
+      "current_decision": "CONTRADICTORY",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Mystery"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Mystery"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    },
+    {
+      "case_id": "v9_dev_070",
+      "query": "For the Neural Networks shelf I need each book to offer both online and physical access. Separately, no returned record may offer physical access. I mean these as simultaneous requirements, not as alternatives or optional preferences.",
+      "first_incorrect_transformation": "Modality error",
+      "source_analysis": "No record may offer physical access was softened by modal may.",
+      "current_decision": "CONTRADICTORY",
+      "current_execution": false,
+      "remaining_mismatches": {
+        "subjects": {
+          "expected": [
+            "Neural Networks"
+          ],
+          "actual": [],
+          "mask": {
+            "status": "APPLICABLE",
+            "reason": "Resolved source-owned native predicate."
+          }
+        },
+        "include_terms": {
+          "expected": [
+            "Neural Networks"
+          ],
+          "actual": []
+        }
+      },
+      "critical_executed_fields": []
+    }
+  ],
+  "original_false": {
+    "numerator": 5,
+    "denominator": 48,
+    "population": "V9 dev72 expected nonexecuting",
+    "status": "MEASURED",
+    "evidence": "EXPOSED_DEVELOPMENT"
+  },
+  "current_false": {
+    "numerator": 0,
+    "denominator": 48,
+    "percent": 0.0,
+    "status": "MEASURED"
+  },
+  "original_missed": {
+    "numerator": 11,
+    "denominator": 24,
+    "population": "V9 dev72 expected executing",
+    "status": "MEASURED",
+    "evidence": "EXPOSED_DEVELOPMENT"
+  },
+  "current_missed": {
+    "numerator": 11,
+    "denominator": 24,
+    "percent": 45.833333333333336,
+    "status": "MEASURED"
+  },
+  "raw_comparison_limit": "Six current mismatch cases concern old subject/include_terms hard-category expectations versus semantic retention. One concerns ONLY-derived opposite-format exclusion required by native matches. Raw scores are retained; no oracle migration or score credit claimed.",
+  "remaining_blockers": [
+    "Source corrections and multi-field noun phrases",
+    "Explicit category semantics versus descriptive semantic topics need reviewed masks",
+    "Varied long requests still miss valid execution"
+  ],
+  "generalized_repairs": [
+    "Deferred alternatives",
+    "Publication boundary ownership with topical-date protection",
+    "Shared contradictory operand",
+    "Negative modal access",
+    "Reported hypothetical source role",
+    "Complete rating range ownership",
+    "Physical requestability projection",
+    "Bounded language-label repair",
+    "ONLY format native complement"
+  ]
+}

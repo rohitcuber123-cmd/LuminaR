@@ -1,0 +1,112 @@
+{
+  "qualification": "Actual native child experiments in authenticated disposable DB only.",
+  "cases": [
+    {
+      "name": "return_idle",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 88.4986772000002,
+      "evidence": "institution_v2l_native_supplement_return_idle.json"
+    },
+    {
+      "name": "idle_crash",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 3.439504500000112,
+      "evidence": "institution_v2l_native_supplement_idle_crash.json"
+    },
+    {
+      "name": "idle_restart",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 6.111068399999567,
+      "evidence": "institution_v2l_native_supplement_idle_restart.json"
+    },
+    {
+      "name": "last_good_before_pointer",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 8.060259200000473,
+      "evidence": "institution_v2l_native_supplement_last_good_before_pointer.json"
+    },
+    {
+      "name": "last_good_before_pointer_restart",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 5.8964538000000175,
+      "evidence": "institution_v2l_native_supplement_last_good_before_pointer_restart.json"
+    },
+    {
+      "name": "last_good_before_pointer_explicit_recovery",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 2.582561100000021,
+      "evidence": "institution_v2l_native_supplement_last_good_before_pointer_explicit_recovery.json"
+    },
+    {
+      "name": "abc_after_pointer",
+      "exit": 77,
+      "expected": 77,
+      "seconds": 31.243105999999898,
+      "evidence": "institution_v2l_native_supplement_abc_after_pointer.json"
+    },
+    {
+      "name": "abc_after_pointer_restart",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 27.872816899999634,
+      "evidence": "institution_v2l_native_supplement_abc_after_pointer_restart.json"
+    },
+    {
+      "name": "abc_after_pointer_explicit_recovery",
+      "exit": 0,
+      "expected": 0,
+      "seconds": 2.6251409999995303,
+      "evidence": "institution_v2l_native_supplement_abc_after_pointer_explicit_recovery.json"
+    }
+  ],
+  "recovery": [
+    {
+      "case": "last_good_before_pointer",
+      "before_restart": "VALIDATING",
+      "old_job_unchanged_by_restart": true,
+      "last_good_bytes_retained": true,
+      "explicit_native_recovery_http": 200,
+      "explicit_native_recovered_state": "FAILED",
+      "lease_expiry": "Injected only into this disposable native job after restart; source lease90s/renewal10s unchanged."
+    },
+    {
+      "case": "abc_after_pointer",
+      "before_restart": "PUBLISHING",
+      "old_job_unchanged_by_restart": true,
+      "last_good_bytes_retained": true,
+      "explicit_native_recovery_http": 200,
+      "explicit_native_recovered_state": "SUCCEEDED",
+      "lease_expiry": "Injected only into this disposable native job after restart; source lease90s/renewal10s unchanged.",
+      "library_a": {
+        "library_id": "c66e0c89-07a7-4403-8bb6-bffaf306c920",
+        "job_id": "97a06ec6-dc1c-4140-8e90-a4b4e138e4cb",
+        "state": "SUCCEEDED"
+      },
+      "library_b": "d91f5fa5-113b-4361-9703-53c175eff278",
+      "library_c": {
+        "library_id": "9ee3dd3b-0487-472e-96fd-ee75e049cec9",
+        "job_id": "7b191c17-2be5-4d95-a060-cfcb478af3f0"
+      },
+      "library_c_before": "QUEUED",
+      "library_c_after_restart": "SUCCEEDED",
+      "no_cross_library_output": true
+    }
+  ],
+  "return_to_idle": {
+    "lifecycle": "IDLE",
+    "current_job": null,
+    "pulse_seq": 7
+  },
+  "idle_crash": {
+    "genuine_exit": 77,
+    "new_instance": true,
+    "stale_with_logical_31s_observer": "STALE"
+  },
+  "owned_fixture_removed": true
+}

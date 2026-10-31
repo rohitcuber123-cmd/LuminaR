@@ -1,0 +1,438 @@
+{
+  "scenario": "benchmark",
+  "enabled": true,
+  "fault": "",
+  "actual_native_resident_worker": true,
+  "authentication": "Actual existing JWT decoder and current DB identity; no dependency override.",
+  "stages": [
+    "DATASET_SNAPSHOT",
+    "EMBEDDING_CACHE",
+    "EMBEDDING_BATCH",
+    "FAISS_BUILD",
+    "FAISS_SERIALIZATION",
+    "CHECKSUM",
+    "MANIFEST_WRITE",
+    "VALIDATION",
+    "SERIALIZATION_ACK",
+    "HEARTBEAT",
+    "PUBLISH",
+    "ACKNOWLEDGEMENT_LOSS",
+    "KG_NODES",
+    "KG_EDGES",
+    "KG_SERIALIZATION"
+  ],
+  "events": [
+    {
+      "at": "2026-10-29 20:30:39.123197+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 3,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        3,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:41.100642+00:00",
+      "state": "RUNNING",
+      "stage": "DATASET",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": "2026-10-29 20:30:41.038000",
+      "pulse_seq": 3,
+      "progress_seq": 0,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "DATASET",
+        0,
+        0,
+        "2026-10-29 20:30:41.038000",
+        3,
+        0
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:43.874535+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-29 20:30:41.038000",
+      "pulse_seq": 3,
+      "progress_seq": 1,
+      "progress": [
+        {
+          "job_id": "16f0c617-4663-4772-a648-75a3def994fc",
+          "stage": "DATASET",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:30:41.133000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-29 20:30:41.038000",
+        3,
+        1
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:43.988479+00:00",
+      "state": "RUNNING",
+      "stage": "EMBEDDING",
+      "current": 0,
+      "total": 10,
+      "heartbeat_at": "2026-10-29 20:30:41.038000",
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "16f0c617-4663-4772-a648-75a3def994fc",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:30:43.875000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "RUNNING",
+        "EMBEDDING",
+        0,
+        10,
+        "2026-10-29 20:30:41.038000",
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:44.208633+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-29 20:30:41.038000",
+      "pulse_seq": 3,
+      "progress_seq": 2,
+      "progress": [
+        {
+          "job_id": "16f0c617-4663-4772-a648-75a3def994fc",
+          "stage": "EMBEDDING",
+          "state": "RUNNING",
+          "progress_current": 0,
+          "last_progress_observed_at": "2026-10-29 20:30:43.875000",
+          "publication": "NOT_COMPLETE"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-29 20:30:41.038000",
+        3,
+        2
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:44.977337+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 10,
+      "total": 10,
+      "heartbeat_at": "2026-10-29 20:30:41.038000",
+      "pulse_seq": 3,
+      "progress_seq": 3,
+      "progress": [
+        {
+          "job_id": "16f0c617-4663-4772-a648-75a3def994fc",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 10,
+          "last_progress_observed_at": "2026-10-29 20:30:44.884000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        10,
+        10,
+        "2026-10-29 20:30:41.038000",
+        3,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:45.526228+00:00",
+      "state": "QUEUED",
+      "stage": "QUEUED",
+      "current": 0,
+      "total": 0,
+      "heartbeat_at": null,
+      "pulse_seq": 3,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "QUEUED",
+        "QUEUED",
+        0,
+        0,
+        null,
+        3,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:46.291040+00:00",
+      "state": "RUNNING",
+      "stage": "KG_METADATA",
+      "current": 0,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:30:46.183000",
+      "pulse_seq": 3,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "RUNNING",
+        "KG_METADATA",
+        0,
+        101,
+        "2026-10-29 20:30:46.183000",
+        3,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:46.398460+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:30:46.183000",
+      "pulse_seq": 3,
+      "progress_seq": 3,
+      "progress": [],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-29 20:30:46.183000",
+        3,
+        3
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:46.944334+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:30:46.183000",
+      "pulse_seq": 3,
+      "progress_seq": 4,
+      "progress": [
+        {
+          "job_id": "bd33f659-125d-4870-85cd-ca356c549b7e",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-29 20:30:46.917000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-29 20:30:46.183000",
+        3,
+        4
+      ]
+    },
+    {
+      "at": "2026-10-29 20:30:47.931423+00:00",
+      "state": "SUCCEEDED",
+      "stage": "COMPLETE",
+      "current": 101,
+      "total": 101,
+      "heartbeat_at": "2026-10-29 20:30:46.183000",
+      "pulse_seq": 4,
+      "progress_seq": 4,
+      "progress": [
+        {
+          "job_id": "bd33f659-125d-4870-85cd-ca356c549b7e",
+          "stage": "COMPLETE",
+          "state": "SUCCEEDED",
+          "progress_current": 101,
+          "last_progress_observed_at": "2026-10-29 20:30:46.917000",
+          "publication": "ACKNOWLEDGED_POINTER_MATCH"
+        }
+      ],
+      "key": [
+        "SUCCEEDED",
+        "COMPLETE",
+        101,
+        101,
+        "2026-10-29 20:30:46.183000",
+        4,
+        4
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "target": "SEARCH_INDEX",
+      "library_id": "1bcdfe4d-6b0c-495c-8320-330eef0ede97",
+      "job_id": "16f0c617-4663-4772-a648-75a3def994fc",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 6414.917999994941,
+      "native_build_ms": 3127.0,
+      "cpu_ms": 953.125,
+      "rss_increase_bytes": 94384128,
+      "pointer_ack_match": true
+    },
+    {
+      "target": "KNOWLEDGE_GRAPH",
+      "library_id": "a48ad908-6e4d-4e01-9972-a2b038a7ed6f",
+      "job_id": "bd33f659-125d-4870-85cd-ca356c549b7e",
+      "state": "SUCCEEDED",
+      "error_code": null,
+      "submit_to_observed_ms": 2179.169200004253,
+      "native_build_ms": 192.0,
+      "cpu_ms": 156.25,
+      "rss_increase_bytes": 348160,
+      "pointer_ack_match": true
+    }
+  ],
+  "security": [],
+  "model": {
+    "name": "all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "offline": true,
+    "device": "cpu",
+    "load_ms": 347.3420000009355
+  },
+  "idle": {
+    "seconds": 22.001588599996467,
+    "cpu_ms": 125.0,
+    "rss_increase_bytes": 61440,
+    "pulse_seq": 3,
+    "lifecycle": "IDLE"
+  },
+  "current_library": "a48ad908-6e4d-4e01-9972-a2b038a7ed6f",
+  "native_serial": true,
+  "telemetry_metrics": {
+    "boot_read": 1,
+    "boot_write": 1,
+    "pulse_write": 4,
+    "job_read": 4,
+    "progress_read": 4,
+    "progress_write": 4,
+    "pointer_read": 2
+  },
+  "latencies": [
+    {
+      "kind": "boot_read",
+      "ms": 0.8353999946848489
+    },
+    {
+      "kind": "boot_write",
+      "ms": 2.694299997529015
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 1.6703000001143664
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 3.427499999816064
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 2.3780999981681816
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.7621000006329268
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.0359000007156283
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.255300001706928
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.9603000037022866
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.9116999935940839
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.1945000044070184
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.7271000033360906
+    },
+    {
+      "kind": "progress_read",
+      "ms": 0.9490000011282973
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 0.8458999946014956
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.1542000031331554
+    },
+    {
+      "kind": "job_read",
+      "ms": 1.9047000023419969
+    },
+    {
+      "kind": "progress_read",
+      "ms": 1.1566999964998104
+    },
+    {
+      "kind": "pointer_read",
+      "ms": 1.3469000041368417
+    },
+    {
+      "kind": "progress_write",
+      "ms": 2.3099999962141737
+    },
+    {
+      "kind": "pulse_write",
+      "ms": 3.1696000005467795
+    }
+  ],
+  "instance_ref": "ddeadc0ea45d4d4d4e8895f20a043ed7ade93e78989905c12b444079659145f7",
+  "agent_errors": {},
+  "shutdown_lifecycle": "STOPPED",
+  "worker_thread_ended": true
+}

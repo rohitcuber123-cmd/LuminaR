@@ -1,0 +1,7 @@
+# Network exposure evidence
+
+host_audit.json/boundary.json: configured loopback bind, Mongo responds locally, authorization absent, anonymous tenant read allowed; Windows Domain/Private/Public firewall profiles enabled. extended_audit.json adds bounded interface/listener/process/potential-tunnel classification, Mongo-named firewall-rule evidence and child ACLs. Provider empty/inaccessible results are NOT_VERIFIED, not evidence of stopped services or absence of forwarding. An initial expensive firewall provider call timed out; the subsequent bounded named-rule audit completed without changing policy.
+
+NETWORK_EXPOSURE UNKNOWN. Local anonymous read does not establish public access. Effective Any/program/service/inherited firewall rules, router/NAT, tunnels and off-host reachability are not fully qualified. No remote scan, firewall rule modification or network change occurred.
+
+Authorized network operator procedure: confirm actual mongod config/service PID/listener matches approved host/DB; enumerate effective inbound rules for that executable/service and port including Any/profile inheritance/address filters; inspect approved proxies/tunnels/NAT; from an approved outside host attempt only TCP connection and anonymous denial to the approved endpoint, recording source/destination/time and effective rule; compare approved network boundary and close unapproved exposure through a separately approved change. Do not infer internet safety from enabled firewall profiles alone.
