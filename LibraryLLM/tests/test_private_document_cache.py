@@ -85,6 +85,26 @@ def test_ocr_metadata_survives_encrypted_cache_without_repreparing(env,monkeypat
     assert not env.service.directory(restored['document_id']).exists()
 
 
+def test_restored_partial_document_does_not_lose_extraction_warning(env, monkeypatch):
+    from rag.services import private_document_ocr
+    monkeypatch.setattr(private_document_ocr, 'capability', lambda: {'available': False})
+    pdf = fitz.open()
+    page = pdf.new_page()
+    page.insert_text((50, 50), 'Synthetic extraction report contains enough readable words for native preparation.')
+    page = pdf.new_page()
+    page.draw_rect(fitz.Rect(40, 40, 100, 100))
+    content = pdf.tobytes()
+    pdf.close()
+    original = env.service.ingest(content, 'partial.pdf', env.a)
+    assert original['ocr']['failed_pages'] == 1 and original['warnings']
+    blob, _ = env.service.export(original['document_id'], env.a)
+    restored = env.service.restore(blob, env.a2)
+    assert restored['warnings']
+    assert '1 page' in restored['warnings'][0]
+    # The old bundle has no per-page failure/blank ledger; do not invent one.
+    assert 'ocr' not in restored
+
+
 def test_cross_account_descriptor_and_bundle_rejected(env):
     for action in [lambda: env.cache.inspect('2', env.metadata['encrypted_descriptor']), lambda: env.service.restore(env.blob, env.b)]:
         with pytest.raises(HTTPException) as exc: action()

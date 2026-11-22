@@ -1,0 +1,781 @@
+{
+  "stage": "post_fix_verification",
+  "router_mode": "existing_qwen",
+  "model_id": "Qwen/Qwen2.5-3B-Instruct",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "is_loaded_in_4bit": true,
+  "probes": [
+    {
+      "id": "show_reading_list",
+      "message": "Show my reading list",
+      "expected_intent": "USER_READING_LIST",
+      "http_status": 200,
+      "observed_intent": "USER_READING_LIST",
+      "matched": true,
+      "latency_ms": 3562.9,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"list\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_READING_LIST",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/reading-list/my"
+        },
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000001W"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": 1
+    },
+    {
+      "id": "open_saved_books",
+      "message": "Open my saved books",
+      "expected_intent": "USER_READING_LIST",
+      "http_status": 200,
+      "observed_intent": "USER_READING_LIST",
+      "matched": true,
+      "latency_ms": 2890.9,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"list\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_READING_LIST",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/reading-list/my"
+        },
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000001W"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": 1
+    },
+    {
+      "id": "which_saved",
+      "message": "Which books have I saved?",
+      "expected_intent": "USER_READING_LIST",
+      "http_status": 200,
+      "observed_intent": "USER_READING_LIST",
+      "matched": true,
+      "latency_ms": 2766.9,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"list\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_READING_LIST",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/reading-list/my"
+        },
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000001W"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": 1
+    },
+    {
+      "id": "display_reading_list",
+      "message": "Display the books in my reading list",
+      "expected_intent": "USER_READING_LIST",
+      "http_status": 200,
+      "observed_intent": "USER_READING_LIST",
+      "matched": true,
+      "latency_ms": 2785.8,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"list\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_READING_LIST",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/reading-list/my"
+        },
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000001W"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": 1
+    },
+    {
+      "id": "want_to_read",
+      "message": "Show the books I want to read",
+      "expected_intent": "USER_READING_LIST",
+      "http_status": 200,
+      "observed_intent": "USER_READING_LIST",
+      "matched": true,
+      "latency_ms": 2598.1,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"list\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_READING_LIST",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/reading-list/my"
+        },
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000001W"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": 1
+    },
+    {
+      "id": "add_to_reading_list",
+      "message": "Add this book to my reading list",
+      "expected_intent": "ADD_TO_READING_LIST",
+      "http_status": 200,
+      "observed_intent": "ADD_TO_READING_LIST",
+      "matched": true,
+      "latency_ms": 3655.6,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "ContextualSchema",
+          "raw_output": "{\"i\":\"add_list\",\"c\":1,\"s\":\"explicit\",\"t\":[\"Python Basics\"],\"g\":\"action\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "ADD_TO_READING_LIST",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [
+          "Python Basics"
+        ],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "EXPLICIT_BOOK",
+        "reference_position": null,
+        "goal": "ACTION",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000002W"
+        },
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000002W"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": true,
+      "reading_list_len": null
+    },
+    {
+      "id": "remove_from_reading_list",
+      "message": "Remove Synthetic Astronomy from my reading list",
+      "expected_intent": "REMOVE_FROM_READING_LIST",
+      "http_status": 200,
+      "observed_intent": "REMOVE_FROM_READING_LIST",
+      "matched": true,
+      "latency_ms": 3648.1,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"remove_list\",\"c\":1,\"s\":\"explicit\",\"t\":[\"Synthetic Astronomy\"],\"g\":\"action\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "REMOVE_FROM_READING_LIST",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [
+          "Synthetic Astronomy"
+        ],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "EXPLICIT_BOOK",
+        "reference_position": null,
+        "goal": "ACTION",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "POST",
+          "path": "/assistant/catalogue/resolve"
+        },
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000001W"
+        },
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/books/OL910000001W"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": true,
+      "reading_list_len": null
+    },
+    {
+      "id": "show_borrowed_books",
+      "message": "Show my borrowed books",
+      "expected_intent": "USER_LOANS",
+      "http_status": 200,
+      "observed_intent": "USER_LOANS",
+      "matched": true,
+      "latency_ms": 2769.2,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"loans\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_LOANS",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/issues/my"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": null
+    },
+    {
+      "id": "what_on_loan",
+      "message": "What books do I currently have on loan?",
+      "expected_intent": "USER_LOANS",
+      "http_status": 200,
+      "observed_intent": "USER_LOANS",
+      "matched": true,
+      "latency_ms": 2682.7,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"loans\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_LOANS",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/issues/my"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": null
+    },
+    {
+      "id": "show_borrowing_history",
+      "message": "Show my borrowing history",
+      "expected_intent": "USER_HISTORY",
+      "http_status": 200,
+      "observed_intent": "USER_HISTORY",
+      "matched": true,
+      "latency_ms": 2571.0,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"history\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_HISTORY",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/issues/my"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": null
+    },
+    {
+      "id": "which_must_return",
+      "message": "Which books must I return?",
+      "expected_intent": "USER_LOANS",
+      "http_status": 200,
+      "observed_intent": "USER_LOANS",
+      "matched": true,
+      "latency_ms": 2742.2,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"loans\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_LOANS",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/issues/my"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": null
+    },
+    {
+      "id": "show_reservations",
+      "message": "Show my reservations",
+      "expected_intent": "USER_RESERVATIONS",
+      "http_status": 200,
+      "observed_intent": "USER_RESERVATIONS",
+      "matched": true,
+      "latency_ms": 2653.6,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"reservations\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_RESERVATIONS",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/reservations/my"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": null
+    },
+    {
+      "id": "show_fees",
+      "message": "Show my unpaid fees",
+      "expected_intent": "USER_FEES",
+      "http_status": 200,
+      "observed_intent": "USER_FEES",
+      "matched": true,
+      "latency_ms": 3175.5,
+      "generations": [
+        {
+          "stage": "intent",
+          "schema": "CompactAssistantDecodingSchema",
+          "raw_output": "{\"i\":\"fees\",\"c\":1,\"s\":\"account\",\"g\":\"account\"}"
+        }
+      ],
+      "parsed_decision": {
+        "intent": "USER_FEES",
+        "confidence": 1.0,
+        "query": null,
+        "mentioned_titles": [],
+        "mentioned_authors": [],
+        "resolved_work_ids": [],
+        "requested_result_count": 10,
+        "filters": {
+          "available_only": false,
+          "author": null,
+          "subject": null,
+          "exclude_seed_authors": false,
+          "sort_preference": "relevance"
+        },
+        "comparison_fields": [],
+        "ordinal_references": [],
+        "reference": "none",
+        "requires_confirmation": false,
+        "clarification_needed": false,
+        "unsupported_filters": [],
+        "reference_scope": "ACCOUNT",
+        "reference_position": null,
+        "goal": "ACCOUNT_QUERY",
+        "criterion": null,
+        "clarification_type": null,
+        "context_operation": "NONE"
+      },
+      "tool_calls": [
+        {
+          "service": "core",
+          "method": "GET",
+          "path": "/fines/my"
+        }
+      ],
+      "reading_list_count_before": 1,
+      "reading_list_count_after": 1,
+      "mutated": false,
+      "has_pending_action": false,
+      "reading_list_len": null
+    }
+  ]
+}

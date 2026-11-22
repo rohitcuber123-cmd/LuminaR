@@ -1,0 +1,523 @@
+{
+  "test_id": "M15-V3-P3-RAG-RETRIEVAL",
+  "executed_at_utc": "2026-11-10T10:33:10.623156+00:00",
+  "execution_type": "native_cuda_pipeline",
+  "pipeline_stages_executed": [
+    "PDF ingestion (PrivateDocuments.ingest)",
+    "PyMuPDF text extraction",
+    "Chunking (CHUNK_SIZE=3000, OVERLAP=400)",
+    "MiniLM embedding",
+    "FAISS IndexFlatIP retrieval",
+    "CrossEncoder reranking",
+    "Context selection (select_diverse_context)",
+    "Qwen intent/validation/generation",
+    "citation_boundary.validate_page_claims",
+    "Citation assembly"
+  ],
+  "sample_size": 32,
+  "queries_with_gold_pages": 21,
+  "mean_retrieval_recall_at_k": 1.0,
+  "full_gold_page_retrieval_rate": 1.0,
+  "latency_ms": {
+    "sample_size": 32,
+    "mean": 20000.74,
+    "p50": 17671.35,
+    "p95": 32446.57,
+    "max": 49028.0
+  },
+  "outcome": "PASS",
+  "per_case": [
+    {
+      "id": "RAG-01",
+      "category": "factual",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 18638.4
+    },
+    {
+      "id": "RAG-02",
+      "category": "factual",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 17983.1
+    },
+    {
+      "id": "RAG-03",
+      "category": "factual",
+      "gold_pages": [
+        2
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 17047.5
+    },
+    {
+      "id": "RAG-04",
+      "category": "factual",
+      "gold_pages": [
+        2
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 18876.5
+    },
+    {
+      "id": "RAG-05",
+      "category": "factual",
+      "gold_pages": [
+        3
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 19625.1
+    },
+    {
+      "id": "RAG-06",
+      "category": "factual",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 16566.9
+    },
+    {
+      "id": "RAG-07",
+      "category": "factual",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        1,
+        2
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 18913.8
+    },
+    {
+      "id": "RAG-08",
+      "category": "factual",
+      "gold_pages": [
+        2
+      ],
+      "retrieved_pages": [
+        1,
+        2
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 16643.4
+    },
+    {
+      "id": "RAG-09",
+      "category": "definition",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 17359.6
+    },
+    {
+      "id": "RAG-10",
+      "category": "definition",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 23364.8
+    },
+    {
+      "id": "RAG-11",
+      "category": "definition",
+      "gold_pages": [
+        1
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 17127.8
+    },
+    {
+      "id": "RAG-12",
+      "category": "multi_paragraph",
+      "gold_pages": [
+        2
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 49028.0
+    },
+    {
+      "id": "RAG-13",
+      "category": "multi_paragraph",
+      "gold_pages": [
+        2
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 21409.6
+    },
+    {
+      "id": "RAG-14",
+      "category": "two_passages",
+      "gold_pages": [
+        1,
+        3
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 35877.2
+    },
+    {
+      "id": "RAG-15",
+      "category": "two_passages",
+      "gold_pages": [
+        2,
+        3
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 29132.2
+    },
+    {
+      "id": "RAG-16",
+      "category": "two_passages",
+      "gold_pages": [
+        2,
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 25402.8
+    },
+    {
+      "id": "RAG-17",
+      "category": "missing_answer",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 15652.1
+    },
+    {
+      "id": "RAG-18",
+      "category": "missing_answer",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 15472.4
+    },
+    {
+      "id": "RAG-19",
+      "category": "missing_answer",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 14254.9
+    },
+    {
+      "id": "RAG-20",
+      "category": "missing_answer",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 14372.6
+    },
+    {
+      "id": "RAG-21",
+      "category": "contradictory_passages",
+      "gold_pages": [
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 29639.7
+    },
+    {
+      "id": "RAG-22",
+      "category": "contradictory_passages",
+      "gold_pages": [
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 19284.7
+    },
+    {
+      "id": "RAG-23",
+      "category": "ambiguous_reference",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 12034.3
+    },
+    {
+      "id": "RAG-24",
+      "category": "ambiguous_reference",
+      "gold_pages": [
+        1,
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 13259.8
+    },
+    {
+      "id": "RAG-25",
+      "category": "unrelated_question",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 14410.6
+    },
+    {
+      "id": "RAG-26",
+      "category": "unrelated_question",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 15163.1
+    },
+    {
+      "id": "RAG-27",
+      "category": "cross_doc_confusion",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 15473.7
+    },
+    {
+      "id": "RAG-28",
+      "category": "cross_doc_confusion",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 16875.0
+    },
+    {
+      "id": "RAG-29",
+      "category": "cross_doc_confusion",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 14167.2
+    },
+    {
+      "id": "RAG-30",
+      "category": "nonexistent_page",
+      "gold_pages": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": null,
+      "latency_ms": 22709.7
+    },
+    {
+      "id": "RAG-31",
+      "category": "page_location",
+      "gold_pages": [
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 22715.3
+    },
+    {
+      "id": "RAG-32",
+      "category": "long_context_deep",
+      "gold_pages": [
+        5
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "retrieval_recall_at_k": 1.0,
+      "latency_ms": 21542.0
+    }
+  ]
+}

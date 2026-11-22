@@ -1,0 +1,53 @@
+{
+  "result": "PASS",
+  "baseline_backend": {
+    "passed": 2917,
+    "failed": 0,
+    "skipped": 20
+  },
+  "actual_backend": {
+    "passed": 2997,
+    "failed": 0,
+    "skipped": 20
+  },
+  "baseline_frontend": {
+    "passed": 988,
+    "failed": 0,
+    "skipped": 0
+  },
+  "actual_frontend": {
+    "passed": 1012,
+    "failed": 0,
+    "skipped": 0
+  },
+  "new_regressions": 0,
+  "existing_skips_unchanged": true,
+  "production_build": "PASS",
+  "lint": "PASS",
+  "baseline_lint_warnings": 16,
+  "final_lint_warnings": 16,
+  "new_lint_warnings": [],
+  "browser_checks": 28,
+  "browser_result": "PASS",
+  "authenticated_fixture_checks": 16,
+  "frozen_tests_disabled": false,
+  "new_hash_exceptions": false,
+  "recorded_errors": [
+    {
+      "evidence": "institution_v2p1_initial_report_lint_findings.json",
+      "kind": "test scaffolding",
+      "finding": "Full-suite lint passed but introduced four unused-helper/import warnings in the new test. Removed only unused scaffolding, reran all24 recipient tests and lint. Final16 warnings match baseline; full1012-case result uses unchanged final application code."
+    },
+    {
+      "evidence": "institution_v2p1_browser_initial_failure.json",
+      "kind": "fixture",
+      "finding": "A librarian was opened on a member-only URL; existing routing correctly chose the staff overview. Corrected nonselected actor to a separate GENERAL_USER. Failed log and JSON retained."
+    },
+    {
+      "evidence": "institution_v2p1_browser_switcher_failure.json",
+      "kind": "harness",
+      "finding": "A desktop staff switcher locator was used at375px, where existing responsive navigation hides it. Rechecked at1440px and exercised the actual switcher; mobile picker widths remain verified."
+    }
+  ],
+  "note": "Only final executed current-tree results determine PASS. Initial focused logs retain React test scheduling warnings; new helper waits for existing event options and uses act for timer waits. No test assertions suppressed."
+}

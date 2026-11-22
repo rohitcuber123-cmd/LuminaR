@@ -1,5 +1,6 @@
+import {useInstitutionStore} from '../store/useInstitutionStore'
 import { useProductContext } from '../hooks/useProductContext'
-import { productBookPath } from '../lib/productContext'
+import { productBookPath,productLibraryId } from '../lib/productContext'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { MessageCircle, Search, Send, Sparkles, X, BookOpen } from 'lucide-react'
@@ -28,18 +29,36 @@ export function SelectedBooksTray({ onSend, busy }: { onSend: (message: string, 
 
 export function AIChatWidget() {
   const product=useProductContext()
+  const institution=useInstitutionStore()
+  const activeScopeId=product.libraryId||product.staffLibraryId
+  const authToken=useAuthStore(s=>s.token)
+  const scopeLibrary=institution.session===authToken?institution.libraries.find(l=>l.library_id===activeScopeId&&l.membership?.status==='ACTIVE'):undefined
   const state = useAssistantStore()
   const authenticated = useAuthStore(s => s.isAuthenticated)
   const { pathname, search } = useLocation()
   const navigate = useNavigate()
   const [input, setInput] = useState('')
   const [now, setNow] = useState(() => Date.now())
+  const previousAccess=useRef<{id:string;role:string;token:string|null}|null>(null)
+  const scopeRole=scopeLibrary?.membership?.role
+  useEffect(()=>{
+    if(institution.loading)return
+    const next=activeScopeId&&scopeRole?{id:activeScopeId,role:scopeRole,token:authToken}:null
+    const prior=previousAccess.current
+    if(prior&&(!next||prior.id!==next.id||prior.role!==next.role||prior.token!==next.token)){
+      setInput('')
+      if(next&&prior.id===next.id&&(prior.role!==next.role||prior.token!==next.token))useAssistantStore.getState().invalidateScope()
+    }
+    previousAccess.current=next
+  },[activeScopeId,scopeRole,authToken,institution.loading])
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const launcherRef = useRef<HTMLButtonElement>(null)
   const historyRef = useRef<HTMLDivElement>(null)
   const shortcutsRef = useRef<HTMLDetailsElement>(null)
   const closeShortcuts = () => shortcutsRef.current?.removeAttribute('open')
+  useEffect(()=>{if(state.libraryScope!=='GLOBAL'&&!scopeLibrary&&!institution.loading)useAssistantStore.getState().setPageContext('/catalog',{})},[scopeLibrary,institution.loading,state.libraryScope])
   const pathKey = pathname + search
+  useEffect(()=>{const assistant=useAssistantStore.getState();if(assistant.libraryScope!==(activeScopeId||'GLOBAL'))assistant.setPageContext(pathKey,{})},[pathKey,activeScopeId])
   const [controlsVisible, setControlsVisible] = useState(false)
   const [launcherLift,setLauncherLift]=useState(0),liftRef=useRef(0)
   useEffect(() => {
@@ -99,7 +118,7 @@ export function AIChatWidget() {
     return () => window.clearInterval(timer)
   }, [state.open])
   const close = () => { state.setOpen(false); window.setTimeout(() => launcherRef.current?.focus(), 0) }
-  const send = (message: string, options?: SendOptions) => { if (!state.busy && authenticated) { setInput(''); void state.send(message, context, {...options,...(product.libraryId ? {lending_context:{library_id:product.libraryId}} : {})}) } }
+  const send = (message: string, options?: SendOptions) => { if (!state.busy && authenticated) { setInput(''); void state.send(message, context, {...options,page_path:pathKey,...(product.libraryId ? {lending_context:{library_id:product.libraryId}} : {})}) } }
   const onAction = (action: AssistantAction, book?: AssistantBook) => {
     const id = action.work_id || book?.work_id
     switch (action.type) {
@@ -150,7 +169,10 @@ export function AIChatWidget() {
     }
   }
 
-  const lastMessage = state.messages.at(-1)
+  const viewScope=productLibraryId(pathname,search)||'GLOBAL'
+  const scopeVerified=state.libraryScope===viewScope&&(viewScope==='GLOBAL'||scopeLibrary?.library_id===viewScope)
+  const visibleMessages=scopeVerified?state.messages:[]
+  const lastMessage = visibleMessages.at(-1)
   return <>
     {state.open && <div role="dialog" aria-modal="false" aria-labelledby="luminar-ai-title" className="assistant-drawer" onKeyDown={event => { if (event.key === 'Escape') { event.stopPropagation(); close() } }}>
       <div className="h-[3px] shrink-0 bg-brand" />
@@ -159,10 +181,10 @@ export function AIChatWidget() {
           <h2 id="luminar-ai-title" className="font-display text-sm">Lumina<span className="text-brand">R</span> AI</h2></div>
         <div className="flex items-center gap-1"><button className="assistant-button" disabled={state.busy} onClick={state.resetConversation}>New chat</button><button className="assistant-icon-button" aria-label="Close LuminaR AI" onClick={close}><X size={18} /></button></div>
       </header>
-      <div ref={historyRef} role="log" aria-label="Assistant conversation" aria-live="polite" aria-relevant="additions" className="assistant-history min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4">
-        {!state.messages.length && <div><p className="text-sm leading-relaxed">Welcome to LuminaR. Discover books, compare your selections, check availability, or ask about your library account.</p>
+      <p className="px-4 text-xs text-ink-soft" role="status">Searching {scopeLibrary?.name||(productLibraryId(pathname,search)?'Library access unavailable':'Global Library')}</p><div ref={historyRef} role="log" aria-label="Assistant conversation" aria-live="polite" aria-relevant="additions" className="assistant-history min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain p-4">
+        {!visibleMessages.length && <div><p className="text-sm leading-relaxed">Welcome to LuminaR. Discover books, compare your selections, check availability, or ask about your library account.</p>
           <p className="mt-2 text-xs text-ink-soft">Select up to four books anywhere in the catalogue to use them as context.</p></div>}
-        {state.messages.map((message, index) => <div key={message.id} data-assistant-intent={message.kind === 'ASSISTANT_RESPONSE' ? message.response.intent : undefined} data-recommendation-mode={message.kind === 'ASSISTANT_RESPONSE' ? message.response.recommendation_mode ?? undefined : undefined} data-response-latency-ms={message.kind === 'ASSISTANT_RESPONSE' ? message.latencyMs : undefined} className={message.kind === 'USER_TEXT' ? 'ml-8 border border-line bg-panel p-3 text-sm' : 'border-l-2 border-brand/30 pl-3'}>
+        {visibleMessages.map((message, index) => <div key={message.id} data-assistant-intent={message.kind === 'ASSISTANT_RESPONSE' ? message.response.intent : undefined} data-recommendation-mode={message.kind === 'ASSISTANT_RESPONSE' ? message.response.recommendation_mode ?? undefined : undefined} data-response-latency-ms={message.kind === 'ASSISTANT_RESPONSE' ? message.latencyMs : undefined} className={message.kind === 'USER_TEXT' ? 'ml-8 border border-line bg-panel p-3 text-sm' : 'border-l-2 border-brand/30 pl-3'}>
           {message.kind === 'ASSISTANT_RESPONSE' ? <AssistantTurn response={message.response} busy={state.busy} pendingActive={lastMessage?.id === message.id} now={now} onAction={onAction} onChoice={book => {
             // Retry the original task with the user's explicit canonical choice.
             let original = ''
@@ -174,7 +196,7 @@ export function AIChatWidget() {
           <p className="mt-2 text-xs text-ink-soft">{state.startedAt && now - state.startedAt >= 15000 ? 'This can take a little while on the local AI model.' : 'You can keep browsing while LuminaR responds.'}</p></div>}
       </div>
       <div className="assistant-composer shrink-0 border-t border-line bg-paper px-3 py-2">
-        <SelectedBooksTray busy={state.busy || !authenticated} onSend={send} />
+        {scopeVerified&&<SelectedBooksTray busy={state.busy || !authenticated} onSend={send} />}
         <div className="mb-2 flex min-w-0 items-center gap-2">
           <details ref={shortcutsRef} className="relative shrink-0" aria-label="Quick actions"><summary className="cursor-pointer text-xs text-ink-soft">Quick actions</summary>
             <div className="absolute bottom-full left-0 z-10 mb-2 flex w-52 flex-col gap-1 rounded-sm border border-line bg-paper p-2 shadow-lg">

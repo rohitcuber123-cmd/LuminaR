@@ -43,6 +43,7 @@ import { KnowledgeGraphPage } from '@/pages/KnowledgeGraphPage'
 import { EventsPage } from '@/pages/EventsPage'
 import { EventDetailPage } from '@/pages/EventDetailPage'
 import { ManageEventsPage } from '@/pages/ManageEventsPage'
+import { LibraryAnnouncementsPage } from '@/pages/LibraryAnnouncements'
 import { EventEditorPage } from '@/pages/EventEditorPage'
 import { EventMonitor } from '@/components/events/EventMonitor'
 import { ExploreLibrariesPage, RegisterLibraryPage, PendingInvitationsPage, InvitationPage } from '@/pages/Institutions'
@@ -104,6 +105,8 @@ function DashboardLayout() {
             <Route path="resources/:assetId" element={<LibraryAssetDetailPage />} />
             <Route path="events" element={<EventsPage />} />
             <Route path="events/:eventId" element={<EventDetailPage />} />
+            <Route path="announcements" element={<LibraryAnnouncementsPage />} />
+            <Route path="announcements/:announcementId" element={<LibraryAnnouncementsPage />} />
           </Route>
           <Route path="/staff/libraries/:libraryId" element={<ProtectedRoute><WorkspaceRoute staff><StaffLibraryShell /></WorkspaceRoute></ProtectedRoute>}>
             <Route index element={<StaffOverviewPage />} />
@@ -119,6 +122,8 @@ function DashboardLayout() {
             <Route path="events/new" element={<EventEditorPage />} />
             <Route path="events/:eventId" element={<EventDetailPage staff />} />
             <Route path="events/:eventId/edit" element={<EventEditorPage />} />
+            <Route path="announcements" element={<LibraryAnnouncementsPage staff />} />
+            <Route path="announcements/:announcementId" element={<LibraryAnnouncementsPage staff />} />
             <Route path="analytics" element={<LibraryAnalyticsPage />} />
             <Route path="intelligence" element={<LibraryIntelligencePage />} />
             <Route path="assets" element={<LibraryAssetsPage staff />} />

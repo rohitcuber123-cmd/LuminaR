@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="9" skipped="0" tests="12" time="18.871" timestamp="2026-11-05T22:18:52.684019+05:30" hostname="Rohit-pc"><testcase classname="tests.test_lexical_api_fallback" name="test_search_route_works_with_failed_lexical_and_keeps_public_schema" time="17.091" /><testcase classname="tests.test_lexical_api_fallback" name="test_structured_provider_error_keeps_canonical_constraints[EXACT--exact]" time="0.051"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x00000162990BC450&gt;
+mode = 'EXACT', author = '', failed_lookup = 'exact'
+
+    @pytest.mark.parametrize('mode,author,failed_lookup', [
+        ('EXACT', '', 'exact'),
+        ('TITLE_AUTHOR', '', 'exact'),
+        ('TITLE_AUTHOR', '', 'fuzzy'),
+        ('SMART', 'Author', 'exact'),
+    ])
+    def test_structured_provider_error_keeps_canonical_constraints(isolated_search, monkeypatch, mode, author, failed_lookup):
+        _, client, engine, _ = isolated_search
+        class Cursor(list):
+            def sort(self, *_): return self
+            def limit(self, _): return self
+            def max_time_ms(self, _): return self
+    
+        books = Mock(spec=['find'])
+        books.find.return_value = Cursor([
+            {'work_id': 'A', 'title': 'Current title', 'authors': 'Author'},
+            {'work_id': 'B', 'title': 'Other book', 'authors': 'Someone Else'},
+        ])
+        engine.books_collection = books
+        lexical = Mock()
+        lexical.exact.return_value = []
+        getattr(lexical, failed_lookup).side_effect = sqlite3.OperationalError('sidecar unavailable')
+        engine.lexical_store = lexical
+        engine.search = Mock(side_effect=AssertionError('Structured fallback must not use semantic ranking'))
+        capabilities = types.ModuleType('backend.services.book_capability_service')
+        capabilities.with_capabilities = lambda rows: rows
+        monkeypatch.setitem(sys.modules, capabilities.__name__, capabilities)
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'}, json={
+            'query': '' if author else 'Current title', 'mode': mode, 'author': author, 'save_history': False})
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:107: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_structured_provider_error_keeps_canonical_constraints[TITLE_AUTHOR--exact]" time="0.052"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001629B9B2E50&gt;
+mode = 'TITLE_AUTHOR', author = '', failed_lookup = 'exact'
+
+    @pytest.mark.parametrize('mode,author,failed_lookup', [
+        ('EXACT', '', 'exact'),
+        ('TITLE_AUTHOR', '', 'exact'),
+        ('TITLE_AUTHOR', '', 'fuzzy'),
+        ('SMART', 'Author', 'exact'),
+    ])
+    def test_structured_provider_error_keeps_canonical_constraints(isolated_search, monkeypatch, mode, author, failed_lookup):
+        _, client, engine, _ = isolated_search
+        class Cursor(list):
+            def sort(self, *_): return self
+            def limit(self, _): return self
+            def max_time_ms(self, _): return self
+    
+        books = Mock(spec=['find'])
+        books.find.return_value = Cursor([
+            {'work_id': 'A', 'title': 'Current title', 'authors': 'Author'},
+            {'work_id': 'B', 'title': 'Other book', 'authors': 'Someone Else'},
+        ])
+        engine.books_collection = books
+        lexical = Mock()
+        lexical.exact.return_value = []
+        getattr(lexical, failed_lookup).side_effect = sqlite3.OperationalError('sidecar unavailable')
+        engine.lexical_store = lexical
+        engine.search = Mock(side_effect=AssertionError('Structured fallback must not use semantic ranking'))
+        capabilities = types.ModuleType('backend.services.book_capability_service')
+        capabilities.with_capabilities = lambda rows: rows
+        monkeypatch.setitem(sys.modules, capabilities.__name__, capabilities)
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'}, json={
+            'query': '' if author else 'Current title', 'mode': mode, 'author': author, 'save_history': False})
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:107: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_structured_provider_error_keeps_canonical_constraints[TITLE_AUTHOR--fuzzy]" time="0.055"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001629CCDA1D0&gt;
+mode = 'TITLE_AUTHOR', author = '', failed_lookup = 'fuzzy'
+
+    @pytest.mark.parametrize('mode,author,failed_lookup', [
+        ('EXACT', '', 'exact'),
+        ('TITLE_AUTHOR', '', 'exact'),
+        ('TITLE_AUTHOR', '', 'fuzzy'),
+        ('SMART', 'Author', 'exact'),
+    ])
+    def test_structured_provider_error_keeps_canonical_constraints(isolated_search, monkeypatch, mode, author, failed_lookup):
+        _, client, engine, _ = isolated_search
+        class Cursor(list):
+            def sort(self, *_): return self
+            def limit(self, _): return self
+            def max_time_ms(self, _): return self
+    
+        books = Mock(spec=['find'])
+        books.find.return_value = Cursor([
+            {'work_id': 'A', 'title': 'Current title', 'authors': 'Author'},
+            {'work_id': 'B', 'title': 'Other book', 'authors': 'Someone Else'},
+        ])
+        engine.books_collection = books
+        lexical = Mock()
+        lexical.exact.return_value = []
+        getattr(lexical, failed_lookup).side_effect = sqlite3.OperationalError('sidecar unavailable')
+        engine.lexical_store = lexical
+        engine.search = Mock(side_effect=AssertionError('Structured fallback must not use semantic ranking'))
+        capabilities = types.ModuleType('backend.services.book_capability_service')
+        capabilities.with_capabilities = lambda rows: rows
+        monkeypatch.setitem(sys.modules, capabilities.__name__, capabilities)
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'}, json={
+            'query': '' if author else 'Current title', 'mode': mode, 'author': author, 'save_history': False})
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:107: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_structured_provider_error_keeps_canonical_constraints[SMART-Author-exact]" time="0.052"><failure message="assert 500 == 200&#10; +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001629CD5F5D0&gt;
+mode = 'SMART', author = 'Author', failed_lookup = 'exact'
+
+    @pytest.mark.parametrize('mode,author,failed_lookup', [
+        ('EXACT', '', 'exact'),
+        ('TITLE_AUTHOR', '', 'exact'),
+        ('TITLE_AUTHOR', '', 'fuzzy'),
+        ('SMART', 'Author', 'exact'),
+    ])
+    def test_structured_provider_error_keeps_canonical_constraints(isolated_search, monkeypatch, mode, author, failed_lookup):
+        _, client, engine, _ = isolated_search
+        class Cursor(list):
+            def sort(self, *_): return self
+            def limit(self, _): return self
+            def max_time_ms(self, _): return self
+    
+        books = Mock(spec=['find'])
+        books.find.return_value = Cursor([
+            {'work_id': 'A', 'title': 'Current title', 'authors': 'Author'},
+            {'work_id': 'B', 'title': 'Other book', 'authors': 'Someone Else'},
+        ])
+        engine.books_collection = books
+        lexical = Mock()
+        lexical.exact.return_value = []
+        getattr(lexical, failed_lookup).side_effect = sqlite3.OperationalError('sidecar unavailable')
+        engine.lexical_store = lexical
+        engine.search = Mock(side_effect=AssertionError('Structured fallback must not use semantic ranking'))
+        capabilities = types.ModuleType('backend.services.book_capability_service')
+        capabilities.with_capabilities = lambda rows: rows
+        monkeypatch.setitem(sys.modules, capabilities.__name__, capabilities)
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'}, json={
+            'query': '' if author else 'Current title', 'mode': mode, 'author': author, 'save_history': False})
+&gt;       assert response.status_code == 200
+E       assert 500 == 200
+E        +  where 500 = &lt;Response [500 Internal Server Error]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:107: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_structured_provider_authorization_error_does_not_fallback" time="0.052" /><testcase classname="tests.test_lexical_api_fallback" name="test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch[MACHINE-overrides0]" time="0.070"><failure message="assert 200 == 422&#10; +  where 200 = &lt;Response [200 OK]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+contract = 'MACHINE'
+overrides = {'library_id': '94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}
+
+    @pytest.mark.parametrize('contract,overrides', [
+        ('MACHINE', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'library_id':'LIB001','available_at_library':True}),
+        ('HUMAN', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'rating_min':0}),
+        ('MACHINE', {'format':'ONLINE'}),
+    ])
+    def test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch(isolated_search, contract, overrides):
+        api, client, _, _ = isolated_search
+        api.ranked_search.search = Mock(return_value={'results':[]})
+        api.human_search.search = Mock(return_value={'results':[]})
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'},
+            json={'query':'topic','query_contract':contract,'save_history':False,**overrides})
+&gt;       assert response.status_code == 422
+E       assert 200 == 422
+E        +  where 200 = &lt;Response [200 OK]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:136: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch[MACHINE-overrides1]" time="0.069"><failure message="assert 200 == 422&#10; +  where 200 = &lt;Response [200 OK]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+contract = 'MACHINE'
+overrides = {'library_id': 'LIB001', 'available_at_library': True}
+
+    @pytest.mark.parametrize('contract,overrides', [
+        ('MACHINE', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'library_id':'LIB001','available_at_library':True}),
+        ('HUMAN', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'rating_min':0}),
+        ('MACHINE', {'format':'ONLINE'}),
+    ])
+    def test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch(isolated_search, contract, overrides):
+        api, client, _, _ = isolated_search
+        api.ranked_search.search = Mock(return_value={'results':[]})
+        api.human_search.search = Mock(return_value={'results':[]})
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'},
+            json={'query':'topic','query_contract':contract,'save_history':False,**overrides})
+&gt;       assert response.status_code == 422
+E       assert 200 == 422
+E        +  where 200 = &lt;Response [200 OK]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:136: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch[HUMAN-overrides2]" time="0.061"><failure message="assert 200 == 422&#10; +  where 200 = &lt;Response [200 OK]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+contract = 'HUMAN'
+overrides = {'library_id': '94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}
+
+    @pytest.mark.parametrize('contract,overrides', [
+        ('MACHINE', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'library_id':'LIB001','available_at_library':True}),
+        ('HUMAN', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'rating_min':0}),
+        ('MACHINE', {'format':'ONLINE'}),
+    ])
+    def test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch(isolated_search, contract, overrides):
+        api, client, _, _ = isolated_search
+        api.ranked_search.search = Mock(return_value={'results':[]})
+        api.human_search.search = Mock(return_value={'results':[]})
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'},
+            json={'query':'topic','query_contract':contract,'save_history':False,**overrides})
+&gt;       assert response.status_code == 422
+E       assert 200 == 422
+E        +  where 200 = &lt;Response [200 OK]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:136: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch[MACHINE-overrides3]" time="0.049"><failure message="assert 200 == 422&#10; +  where 200 = &lt;Response [200 OK]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+contract = 'MACHINE', overrides = {'rating_min': 0}
+
+    @pytest.mark.parametrize('contract,overrides', [
+        ('MACHINE', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'library_id':'LIB001','available_at_library':True}),
+        ('HUMAN', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'rating_min':0}),
+        ('MACHINE', {'format':'ONLINE'}),
+    ])
+    def test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch(isolated_search, contract, overrides):
+        api, client, _, _ = isolated_search
+        api.ranked_search.search = Mock(return_value={'results':[]})
+        api.human_search.search = Mock(return_value={'results':[]})
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'},
+            json={'query':'topic','query_contract':contract,'save_history':False,**overrides})
+&gt;       assert response.status_code == 422
+E       assert 200 == 422
+E        +  where 200 = &lt;Response [200 OK]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:136: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch[MACHINE-overrides4]" time="0.049"><failure message="assert 200 == 422&#10; +  where 200 = &lt;Response [200 OK]&gt;.status_code">isolated_search = (&lt;module 'isolated_search_api' from 'D:\\SDC\\LibraryLLM\\search\\api.py'&gt;, &lt;starlette.testclient.TestClient object at...'A': {'work_id': 'A', 'title': 'Current title', 'authors': 'Author', 'description': 'Current Mongo description', ...}})
+contract = 'MACHINE', overrides = {'format': 'ONLINE'}
+
+    @pytest.mark.parametrize('contract,overrides', [
+        ('MACHINE', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'library_id':'LIB001','available_at_library':True}),
+        ('HUMAN', {'library_id':'94fc6761-a5b8-4cff-b2d0-29f4768a28ac'}),
+        ('MACHINE', {'rating_min':0}),
+        ('MACHINE', {'format':'ONLINE'}),
+    ])
+    def test_global_route_rejects_unsupported_scope_or_constraint_before_dispatch(isolated_search, contract, overrides):
+        api, client, _, _ = isolated_search
+        api.ranked_search.search = Mock(return_value={'results':[]})
+        api.human_search.search = Mock(return_value={'results':[]})
+        response = client.post('/search', headers={'Authorization':'Bearer isolated-test'},
+            json={'query':'topic','query_contract':contract,'save_history':False,**overrides})
+&gt;       assert response.status_code == 422
+E       assert 200 == 422
+E        +  where 200 = &lt;Response [200 OK]&gt;.status_code
+
+tests\test_lexical_api_fallback.py:136: AssertionError</failure></testcase><testcase classname="tests.test_lexical_api_fallback" name="test_global_route_preserves_human_placeholder_and_unscoped_machine" time="0.055" /></testsuite></testsuites>

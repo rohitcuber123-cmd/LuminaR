@@ -1,0 +1,23 @@
+{
+  "test_id": "M15-V3-P7-TIMEOUT-RECOVERY",
+  "executed_at_utc": "2026-11-10T12:17:36.571212+00:00",
+  "execution_type": "native_cuda_bounded_gateway_timeout",
+  "model_reload_count": 0,
+  "gateway_timeout_test": {
+    "timeout_configured_seconds": 0.15,
+    "timeout_raised": true,
+    "timeout_error_message": "Assistant Qwen service unavailable. Please retry shortly.",
+    "timeout_elapsed_ms": 166.22,
+    "busy_slot_rejected_during_background_work": true,
+    "busy_error_message": "Assistant reasoning is busy right now. Try again in a moment.",
+    "background_work_continued_after_timeout": true,
+    "time_until_slot_available_ms": 11336.26,
+    "recovery_request_succeeded": true,
+    "recovery_request_intent": "USER_READING_LIST",
+    "recovery_request_ms": 2430.84
+  },
+  "subsequent_http_rag_status": 200,
+  "subsequent_http_rag_ms": 13955.45,
+  "outcome": "PASS",
+  "note": "Tested with real CUDA generation against a 0.15s QwenGateway timeout while sharing engine.llm and engine.inference_lock."
+}

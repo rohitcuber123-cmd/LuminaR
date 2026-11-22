@@ -1,0 +1,237 @@
+{
+  "cases": [
+    {
+      "case": "AUTHORIZED_METADATA_A",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 50.653,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "AUTHORIZED_METADATA_B",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 28.85,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "A_ONLY_TO_B",
+      "http": 404,
+      "expected": [
+        401,
+        403,
+        404
+      ],
+      "elapsed_ms": 65312.315,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "B_ONLY_TO_A",
+      "http": 404,
+      "expected": [
+        401,
+        403,
+        404
+      ],
+      "elapsed_ms": 36.113,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "OUTSIDER",
+      "http": 404,
+      "expected": [
+        401,
+        403,
+        404
+      ],
+      "elapsed_ms": 37.982,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "ANONYMOUS",
+      "http": 401,
+      "expected": [
+        401,
+        403,
+        404
+      ],
+      "elapsed_ms": 5.988,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "INVALID_ASSET",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 38.431,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "INVALID_DOCUMENT",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 21.13,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "FOREIGN_SOURCE_ID",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 195.481,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "NEW_CONVERSATION_GLOBAL",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 337.395,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "NEW_CONVERSATION_A",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 1196.552,
+      "private_model_calls": 0,
+      "pass": true,
+      "all_books_current_library": true
+    },
+    {
+      "case": "OLD_CONVERSATION_DENIED_A",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 132.53,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "NEW_CONVERSATION_B",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 1235.356,
+      "private_model_calls": 0,
+      "pass": true,
+      "all_books_current_library": true
+    },
+    {
+      "case": "OLD_CONVERSATION_DENIED_B",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 96.957,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "NEW_CONVERSATION_GLOBAL_RETURN",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 355.191,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "OLD_CONVERSATION_DENIED_GLOBAL_RETURN",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 15.445,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "REVOKE_OWNED_FIXTURE_MEMBER",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 29.639,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "REVOKED_ASSET_DENIED",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 4577.379,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "FOR_YOU_A",
+      "http": 200,
+      "pass": true,
+      "library": "A",
+      "source": {
+        "library_id": "5bb493e4-8aaa-4999-b570-38bb35087b6a",
+        "library_name": "Q1D A",
+        "catalogue_source": "LIBRARY_LOCAL",
+        "local_book_count": 10,
+        "capabilities": {
+          "physical_actions": true,
+          "reservations": true,
+          "local_search": true,
+          "global_discovery": false
+        },
+        "circulation_state": "CANONICAL",
+        "discovery_notice": null
+      }
+    },
+    {
+      "case": "FOR_YOU_B",
+      "http": 200,
+      "pass": true,
+      "library": "B",
+      "source": {
+        "library_id": "558d1679-a0d4-4bd3-aba7-9ec69cc1c913",
+        "library_name": "Q1D B",
+        "catalogue_source": "LIBRARY_LOCAL",
+        "local_book_count": 10,
+        "capabilities": {
+          "physical_actions": true,
+          "reservations": true,
+          "local_search": true,
+          "global_discovery": false
+        },
+        "circulation_state": "CANONICAL",
+        "discovery_notice": null
+      }
+    }
+  ],
+  "passed": 20,
+  "failed": 0,
+  "original_method_errors_preserved": "institution_v2q1d_security.json and .log; corrected POST-only recommendation checks run separately"
+}

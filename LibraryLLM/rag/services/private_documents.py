@@ -194,7 +194,12 @@ class PrivateDocuments:
         if existing:
             return {**self.public(existing), 'already_active': True}
         meta = self.begin(user, manifest['filename'], manifest['document_sha256'], manifest['pages'], len(chunks), header['cache_id'])
-        if any(c.get('extraction_method')=='OCR' for c in chunks):
+        uncovered_pages = manifest['pages'] - len({c['page'] for c in chunks})
+        if uncovered_pages:
+            # Existing bundles retain chunks, not the original failed/blank
+            # page ledger. Preserve uncertainty rather than reporting success.
+            meta['warnings'] = [f'Extraction coverage is unavailable for {uncovered_pages} page(s) in this restored document.']
+        if not uncovered_pages and any(c.get('extraction_method')=='OCR' for c in chunks):
             ocr_pages={c['page'] for c in chunks if c.get('extraction_method')=='OCR'}
             native_pages={c['page'] for c in chunks if c.get('extraction_method')=='NATIVE'}
             meta['ocr']={'native_pages':len(native_pages),'ocr_pages':len(ocr_pages),'failed_pages':0,'restored':True}

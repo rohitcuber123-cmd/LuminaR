@@ -1,0 +1,450 @@
+{
+  "root_cause": "CONFIRMED: Qwen chose empty SELECTED_BOOKS despite ten recent results; selected-pair prompt demonstrations were inconsistent with current empty tray.",
+  "before_actual_trace_count": 12,
+  "before_examples": [
+    {
+      "library": "GLOBAL",
+      "model_wire_fields": {
+        "g": "status",
+        "s": "selected",
+        "i": "availability",
+        "c": 1
+      },
+      "parsed": {
+        "intent": "CHECK_AVAILABILITY",
+        "confidence": 1.0,
+        "ordinal_references": [],
+        "reference": "none",
+        "clarification_needed": false,
+        "reference_scope": "SELECTED_BOOKS",
+        "reference_position": "FIRST",
+        "goal": "CHECK_STATUS",
+        "context_operation": "NONE"
+      },
+      "model_context_counts": {
+        "selected": 0,
+        "page": 0,
+        "recent": 10
+      },
+      "response": {
+        "intent": "CLARIFICATION",
+        "books": [],
+        "clarification_type": "REFERENCE_AMBIGUITY",
+        "error_codes": []
+      },
+      "trace_id": "143178079c0d487db4114538f7d30ca2"
+    },
+    {
+      "library": "GLOBAL",
+      "model_wire_fields": {
+        "g": "status",
+        "s": "selected",
+        "i": "availability",
+        "c": 1
+      },
+      "parsed": {
+        "intent": "CHECK_AVAILABILITY",
+        "confidence": 1.0,
+        "ordinal_references": [],
+        "reference": "none",
+        "clarification_needed": false,
+        "reference_scope": "SELECTED_BOOKS",
+        "reference_position": "SECOND",
+        "goal": "CHECK_STATUS",
+        "context_operation": "NONE"
+      },
+      "model_context_counts": {
+        "selected": 0,
+        "page": 0,
+        "recent": 10
+      },
+      "response": {
+        "intent": "CLARIFICATION",
+        "books": [],
+        "clarification_type": "REFERENCE_AMBIGUITY",
+        "error_codes": []
+      },
+      "trace_id": "bb39c50965e84bdcaa5c3a380f211b31"
+    },
+    {
+      "library": "GLOBAL",
+      "model_wire_fields": {
+        "g": "status",
+        "s": "selected",
+        "i": "availability",
+        "c": 1
+      },
+      "parsed": {
+        "intent": "CHECK_AVAILABILITY",
+        "confidence": 1.0,
+        "ordinal_references": [],
+        "reference": "none",
+        "clarification_needed": false,
+        "reference_scope": "SELECTED_BOOKS",
+        "reference_position": "THIRD",
+        "goal": "CHECK_STATUS",
+        "context_operation": "NONE"
+      },
+      "model_context_counts": {
+        "selected": 0,
+        "page": 0,
+        "recent": 10
+      },
+      "response": {
+        "intent": "CLARIFICATION",
+        "books": [],
+        "clarification_type": "REFERENCE_AMBIGUITY",
+        "error_codes": []
+      },
+      "trace_id": "621853b860064db8b7c6a0f867ae6c81"
+    },
+    {
+      "library": "GLOBAL",
+      "model_wire_fields": {
+        "g": "detail",
+        "s": "selected",
+        "i": "compare",
+        "c": 1
+      },
+      "parsed": {
+        "intent": "COMPARE_BOOKS",
+        "confidence": 1.0,
+        "ordinal_references": [],
+        "reference": "none",
+        "clarification_needed": false,
+        "reference_scope": "SELECTED_BOOKS",
+        "reference_position": "FIRST",
+        "goal": "DETAIL",
+        "context_operation": "NONE"
+      },
+      "model_context_counts": {
+        "selected": 0,
+        "page": 0,
+        "recent": 10
+      },
+      "response": {
+        "intent": "CLARIFICATION",
+        "books": [],
+        "clarification_type": "REFERENCE_AMBIGUITY",
+        "error_codes": []
+      },
+      "trace_id": "773cc291c38547d2969895f42abdb5a6"
+    }
+  ],
+  "after_scope_controls": {
+    "passed": 12,
+    "failed": 0,
+    "cases": [
+      {
+        "id": "GLOBAL-SELECTED",
+        "http": 200,
+        "intent": "CHECK_AVAILABILITY",
+        "pass": true,
+        "elapsed_ms": 4835.501,
+        "returned_count": 1,
+        "availability_count": 1,
+        "clarified": false,
+        "errors": []
+      },
+      {
+        "id": "GLOBAL-PAGE",
+        "http": 200,
+        "intent": "CHECK_AVAILABILITY",
+        "pass": true,
+        "elapsed_ms": 4386.501,
+        "returned_count": 1,
+        "availability_count": 1,
+        "clarified": false,
+        "errors": []
+      },
+      {
+        "id": "GLOBAL-MISSING",
+        "http": 200,
+        "intent": "CLARIFICATION",
+        "pass": true,
+        "elapsed_ms": 4383.075,
+        "returned_count": 0,
+        "availability_count": 0,
+        "clarified": true,
+        "errors": []
+      },
+      {
+        "id": "GLOBAL-TOPIC",
+        "http": 200,
+        "intent": "SEARCH_BOOKS",
+        "pass": true,
+        "elapsed_ms": 5586.826,
+        "returned_count": 10,
+        "availability_count": 10,
+        "clarified": false,
+        "errors": []
+      },
+      {
+        "id": "A-SELECTED",
+        "http": 200,
+        "intent": "CHECK_AVAILABILITY",
+        "pass": true,
+        "elapsed_ms": 5270.103,
+        "returned_count": 1,
+        "availability_count": 1,
+        "clarified": false,
+        "errors": []
+      },
+      {
+        "id": "A-PAGE",
+        "http": 200,
+        "intent": "CHECK_AVAILABILITY",
+        "pass": true,
+        "elapsed_ms": 5184.461,
+        "returned_count": 1,
+        "availability_count": 1,
+        "clarified": false,
+        "errors": []
+      },
+      {
+        "id": "A-MISSING",
+        "http": 200,
+        "intent": "CLARIFICATION",
+        "pass": true,
+        "elapsed_ms": 4675.654,
+        "returned_count": 0,
+        "availability_count": 0,
+        "clarified": true,
+        "errors": []
+      },
+      {
+        "id": "A-TOPIC",
+        "http": 200,
+        "intent": "SEARCH_BOOKS",
+        "pass": true,
+        "elapsed_ms": 5268.753,
+        "returned_count": 5,
+        "availability_count": 5,
+        "clarified": false,
+        "errors": []
+      },
+      {
+        "id": "I-SELECTED",
+        "http": 200,
+        "intent": "CHECK_AVAILABILITY",
+        "pass": true,
+        "elapsed_ms": 5292.856,
+        "returned_count": 1,
+        "availability_count": 1,
+        "clarified": false,
+        "errors": []
+      },
+      {
+        "id": "I-PAGE",
+        "http": 200,
+        "intent": "CHECK_AVAILABILITY",
+        "pass": true,
+        "elapsed_ms": 4351.411,
+        "returned_count": 1,
+        "availability_count": 1,
+        "clarified": false,
+        "errors": []
+      },
+      {
+        "id": "I-MISSING",
+        "http": 200,
+        "intent": "CLARIFICATION",
+        "pass": true,
+        "elapsed_ms": 4240.988,
+        "returned_count": 0,
+        "availability_count": 0,
+        "clarified": true,
+        "errors": []
+      },
+      {
+        "id": "I-TOPIC",
+        "http": 200,
+        "intent": "SEARCH_BOOKS",
+        "pass": true,
+        "elapsed_ms": 5054.102,
+        "returned_count": 5,
+        "availability_count": 5,
+        "clarified": false,
+        "errors": []
+      }
+    ]
+  },
+  "after_positional_availability": {
+    "cases": [
+      {
+        "id": "GLOBAL-RECENT-1",
+        "query": "Is the first one available?",
+        "http": 200,
+        "elapsed_ms": 4350.299,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "G-book-01"
+        ],
+        "availability": [
+          {
+            "book": "G-book-01",
+            "available": 2
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      },
+      {
+        "id": "GLOBAL-RECENT-2",
+        "query": "Is the second one available?",
+        "http": 200,
+        "elapsed_ms": 4420.661,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "G-book-02"
+        ],
+        "availability": [
+          {
+            "book": "G-book-02",
+            "available": 1
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      },
+      {
+        "id": "GLOBAL-RECENT-3",
+        "query": "Is the third one available?",
+        "http": 200,
+        "elapsed_ms": 5795.483,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "G-book-03"
+        ],
+        "availability": [
+          {
+            "book": "G-book-03",
+            "available": 2
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      },
+      {
+        "id": "A-RECENT-1",
+        "query": "Is the first one available?",
+        "http": 200,
+        "elapsed_ms": 4163.358,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "A-book-10"
+        ],
+        "availability": [
+          {
+            "book": "A-book-10",
+            "available": 0
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      },
+      {
+        "id": "A-RECENT-2",
+        "query": "Is the second one available?",
+        "http": 200,
+        "elapsed_ms": 4374.834,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "A-book-09"
+        ],
+        "availability": [
+          {
+            "book": "A-book-09",
+            "available": 1
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      },
+      {
+        "id": "A-RECENT-3",
+        "query": "Is the third one available?",
+        "http": 200,
+        "elapsed_ms": 4293.751,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "A-book-08"
+        ],
+        "availability": [
+          {
+            "book": "A-book-08",
+            "available": 1
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      },
+      {
+        "id": "I-RECENT-1",
+        "query": "Is the first one available?",
+        "http": 200,
+        "elapsed_ms": 4337.045,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "I-book-10"
+        ],
+        "availability": [
+          {
+            "book": "I-book-10",
+            "available": 0
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      },
+      {
+        "id": "I-RECENT-2",
+        "query": "Is the second one available?",
+        "http": 200,
+        "elapsed_ms": 4328.065,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "I-book-09"
+        ],
+        "availability": [
+          {
+            "book": "I-book-09",
+            "available": 1
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      },
+      {
+        "id": "I-RECENT-3",
+        "query": "Is the third one available?",
+        "http": 200,
+        "elapsed_ms": 4398.748,
+        "intent": "CHECK_AVAILABILITY",
+        "books": [
+          "I-book-08"
+        ],
+        "availability": [
+          {
+            "book": "I-book-08",
+            "available": 1
+          }
+        ],
+        "clarification": null,
+        "errors": []
+      }
+    ],
+    "passed": 9,
+    "total": 9
+  },
+  "broader_followups": "PARTIAL; pair comparison, ambiguous focus and similar-last requests are not all successful. No fallback, entity invention or resolver/authorization change was applied.",
+  "experiments_retained": [
+    "ordinal_before",
+    "ordinal_after",
+    "ordinal_final.log",
+    "ordinal_closure",
+    "ordinal_independent",
+    "ordinal_independent2"
+  ],
+  "test_design_limits": "Sequential successful availability changes authoritative active results to one book. Independent run seeds a new ten-book conversation per query. Cancelled prior request briefly held Qwen busy; separate failed busy run retained. Global retrieval/recommendation provider is controlled; private/public tenant metadata and holdings are actual owned fixtures."
+}

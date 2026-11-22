@@ -1,0 +1,143 @@
+{
+  "subsystems": [
+    {
+      "name": "Qwen",
+      "cpu_historical": "SOURCE_IMPLEMENTED",
+      "gpu_previous": "GPU_MODEL_VERIFIED",
+      "current_source": "SOURCE_IMPLEMENTED",
+      "evidence_level": "direct model",
+      "needs_execution": false,
+      "evidence": "../module15_gpu_verification/qwen_inference.json",
+      "qualification": "local direct inference only"
+    },
+    {
+      "name": "Assistant routing",
+      "cpu_historical": "SOURCE_IMPLEMENTED",
+      "gpu_previous": "DIRECT_GATEWAY_VERIFIED",
+      "current_source": "SOURCE_IMPLEMENTED",
+      "evidence_level": "direct gateway",
+      "needs_execution": true,
+      "evidence": "../module15_gpu_verification/native_probe.json",
+      "qualification": "prior direct gateway only"
+    },
+    {
+      "name": "grounding contract",
+      "cpu_historical": "SOURCE_IMPLEMENTED",
+      "gpu_previous": "SYNTHETIC_VERIFIED",
+      "current_source": "SOURCE_IMPLEMENTED",
+      "evidence_level": "isolated unit",
+      "needs_execution": true,
+      "evidence": "../module15_gpu_verification/grounding_contract_regression.json",
+      "qualification": "contract only"
+    },
+    {
+      "name": "document RAG",
+      "cpu_historical": "SOURCE_IMPLEMENTED",
+      "gpu_previous": "NOT_MEASURED",
+      "current_source": "SOURCE_IMPLEMENTED",
+      "evidence_level": "source only",
+      "needs_execution": true,
+      "evidence": "15_technical_evidence.md",
+      "qualification": "live grounding unknown"
+    },
+    {
+      "name": "tenant authorization",
+      "cpu_historical": "SOURCE_IMPLEMENTED",
+      "gpu_previous": "NOT_MEASURED",
+      "current_source": "SOURCE_IMPLEMENTED",
+      "evidence_level": "source only",
+      "needs_execution": true,
+      "evidence": "15_open_questions.md",
+      "qualification": "live security unknown"
+    },
+    {
+      "name": "knowledge tools",
+      "cpu_historical": "SOURCE_IMPLEMENTED",
+      "gpu_previous": "NOT_MEASURED",
+      "current_source": "SOURCE_IMPLEMENTED",
+      "evidence_level": "source only",
+      "needs_execution": true,
+      "evidence": "15_technical_evidence.md",
+      "qualification": "runtime and UI unknown"
+    }
+  ],
+  "source_comparison": {
+    "requirements.txt": {
+      "snapshot_sha256": "a86fe31f1f2c4200199a1d9f0d926a5bf8587124d5721e032b8388447575c2a7",
+      "current_sha256": "853441f22a3e34023340d7a86dd658fc3678392c592bba35b5664bd8ee285f9c",
+      "same": false
+    },
+    "requirements-local.txt": {
+      "snapshot_sha256": "47dfb1edaa3dd7bb2230ace99735763854e231e7812c2677924b6130902cd1c0",
+      "current_sha256": "47dfb1edaa3dd7bb2230ace99735763854e231e7812c2677924b6130902cd1c0",
+      "same": true
+    },
+    "frontend/package-lock.json": {
+      "snapshot_sha256": "0ceb0bcb8f5479cd4538aa4dcc473811e1261cd8920a9360299804b2243079e7",
+      "current_sha256": "0ceb0bcb8f5479cd4538aa4dcc473811e1261cd8920a9360299804b2243079e7",
+      "same": true
+    },
+    "assistant/api.py": {
+      "snapshot_sha256": "a80defd7c83e808e93a025a3ba765adbd279da708d591625d9030e093c3bb665",
+      "current_sha256": "a80defd7c83e808e93a025a3ba765adbd279da708d591625d9030e093c3bb665",
+      "same": true
+    },
+    "assistant/qwen.py": {
+      "snapshot_sha256": "eb22edb9e57c943682006f82f489f6d6ef81836091312a28c9c2effe243d5b63",
+      "current_sha256": "15b153cd6616ca95ef3c62b8416ab37f04be60a224205b1aadfcc30d9155b30d",
+      "same": false
+    },
+    "assistant/orchestrator.py": {
+      "snapshot_sha256": "f32592d5a5151dc1e6dbf491f9476675298203c14abbadda9186f29ed6e1c1b9",
+      "current_sha256": "3e3e50b38028b48e84792d612cee6ca0327ee420368ab28acd21bf627fad8167",
+      "same": false
+    },
+    "assistant/ROUTER_FREEZE.md": {
+      "snapshot_sha256": "71f03a6c09be29d25082b3ffe4043d6b76c71acdfa6e27d3b7e581278041448e",
+      "current_sha256": "530e847aa8dd2a5ab68c14aad30ebcdc650fb21b6b6d869f4c98c464d0bce78d",
+      "same": false
+    },
+    "rag/api.py": {
+      "snapshot_sha256": "2ed6d5c2fa1d9e989cceafe443f293e2f5362db9bc804b46e8b8c6b8c514cd84",
+      "current_sha256": "4c53b0271bf7846dc51066a5c154871725c97d360c7cd507c286f9671da45364",
+      "same": false
+    },
+    "rag/llm.py": {
+      "snapshot_sha256": "d3fd788dc284cb9654c219d480fa521a775a95324c4b85ac3f1f24bbfcda8bc1",
+      "current_sha256": "d369e26fcbe458964bf642a057ca79212a63f48a6acf2b1c0a12590003f5cc1b",
+      "same": false
+    },
+    "rag/qa.py": {
+      "snapshot_sha256": "746652b2c1a4541fc1ddbb639d6151d8041ac2317096765d2a1c75e2660f39e8",
+      "current_sha256": "4a1141649a4ce9b4bce6413627c27557f5817bb8718a4e842a4d12021bd89de3",
+      "same": false
+    },
+    "rag/document_grounding.py": {
+      "snapshot_sha256": "65a2b7fc81535161e8b2e69e376fb52ebae37ac5e28c4e47ae7c61129910d0f4",
+      "current_sha256": "61f809fdd8ca7b5b42aceead9ea07fd0602f780695f5f41d8d3779674fc1a180",
+      "same": false
+    },
+    "rag/services/knowledge_encoder.py": {
+      "snapshot_sha256": "c8a98e9f865f237fd32e7c12bb6554171eeaba8e05928217264f7371e14ec53d",
+      "current_sha256": "e2ce13b0c33778bd1b1a1a171efa27a0b963e7330883372194d39aacc453bdee",
+      "same": false
+    },
+    "rag/services/knowledge_quiz.py": {
+      "snapshot_sha256": "2ea7a561fb3b1edc5f4eb7c267e14c985fd8273d306954d4c63e73f405a6f421",
+      "current_sha256": "2ea7a561fb3b1edc5f4eb7c267e14c985fd8273d306954d4c63e73f405a6f421",
+      "same": true
+    },
+    "search/luminar_search.py": {
+      "snapshot_sha256": "d7eb1cd4b4bb2a13b60bb009f7d1e55abcff4b151bc93a4ea0fedaec16a4ecdd",
+      "current_sha256": "d7eb1cd4b4bb2a13b60bb009f7d1e55abcff4b151bc93a4ea0fedaec16a4ecdd",
+      "same": true
+    },
+    "tests/contracts/rag_grounding_v2o2.py": {
+      "snapshot_sha256": "966841216c41f64feb7da38a5cc7e9107a1f6b4a3eafbede75fcc39f119ed38b",
+      "current_sha256": "966841216c41f64feb7da38a5cc7e9107a1f6b4a3eafbede75fcc39f119ed38b",
+      "same": true
+    }
+  },
+  "hardware_difference": "CPU snapshot reports no CUDA execution; GPU probe uses RTX 5060 CUDA 12.8. No comparable CPU model latency measured.",
+  "source_change_causation": "Not established by hashes alone."
+}

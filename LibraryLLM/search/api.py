@@ -289,6 +289,22 @@ def search(
             )
         )
 
+    # LIB001 is the historical Global HUMAN client placeholder. Canonical
+    # tenant searches must use the membership-checked catalogue endpoint.
+    if request.library_id is not None and (
+        request.query_contract == 'MACHINE' or request.library_id != 'LIB001'
+    ):
+        raise HTTPException(422, 'Use the library catalogue endpoint for scoped search.')
+
+    if request.query_contract == 'MACHINE' and (
+        request.mode != 'SMART' or request.sort != 'RELEVANCE'
+        or request.rating_min is not None or request.rating_max is not None
+        or request.year_min is not None or request.year_max is not None
+        or request.format or request.availability or request.language
+        or request.omit or request.session_id or request.personalized
+    ):
+        raise HTTPException(422, 'This search constraint requires the HUMAN query contract.')
+
     try:
 
         if request.query_contract == 'HUMAN':

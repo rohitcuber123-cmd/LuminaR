@@ -1,8 +1,10 @@
 """Shared human-query execution over accepted catalogue providers."""
 from dataclasses import asdict
 import re
+import sqlite3
 from time import perf_counter
 from fastapi import HTTPException
+from pymongo.errors import ExecutionTimeout
 from search.query_plan import parse_query, matches, normalize, sort_books, primary_match
 from search.query_expansion import global_expansion,tenant_expansion,apply_expansion,expansion_query
 from search.catalogue import current_books
@@ -12,6 +14,8 @@ from search.query_session import active
 from search.query_confidence import executable
 
 STRUCTURED_LIMIT = 1000
+LEXICAL_READ_ERRORS = (OSError, sqlite3.Error)
+TENANT_FALLBACK_FILLER = frozenset({'a', 'an', 'for', 'in', 'of', 'on', 'the', 'to', 'with'})
 
 
 def interpretation(plan, notice=''):
@@ -77,7 +81,7 @@ class GlobalQuerySearch:
         def canonical(book):
             return dict(book,has_online=book.get('work_id') in online,has_physical=False)
         def accepted(book):return (runtime.matches if runtime else matches)(plan,canonical(book))
-        provider='STRUCTURED_METADATA';hnsw=False;reranked=False;count=0;retrieval_diagnostics={}
+        provider='STRUCTURED_METADATA';hnsw=False;reranked=False;count=0;retrieval_diagnostics={};lexical_fallback=False
         if plan.semantic_text and not plan.unknown_subject:
             constrained=bool(plan.subjects or plan.author_text or plan.rating_min is not None or plan.rating_max is not None or plan.year_min is not None or plan.year_max is not None or plan.formats or plan.availability or plan.language or plan.exclude_terms or plan.exclude_subjects)
             if runtime is not None:constrained=runtime.has_hard(plan)
@@ -113,15 +117,22 @@ class GlobalQuerySearch:
             if plan.author_text and lexical:
                 # Existing AUTHOR sidecar provides indexed IDs. Hydration and
                 # the canonical predicate still verify the author's current text.
-                author_ids=[wid for _,wid in lexical.exact('AUTHOR',plan.author_text,limit=100)]
-                if not author_ids:
+                try:
+                    author_ids=[wid for _,wid in lexical.exact('AUTHOR',plan.author_text,limit=100)]
+                except LEXICAL_READ_ERRORS:
+                    author_ids=[];lexical_fallback=True
+                if not author_ids and not lexical_fallback:
                     try:
                         first=next(iter(engine.books_collection.find({'authors':{'$regex':re.escape(plan.author_text),'$options':'i'}},{'_id':0,'authors':1}).sort('book_id',1).limit(1).max_time_ms(1500)),None)
-                        if first:
-                            from search.query_plan import values
+                    except ExecutionTimeout:
+                        first=None
+                    if first:
+                        from search.query_plan import values
+                        try:
                             for author in values(first.get('authors'),';'):
                                 if normalize(plan.author_text) in normalize(author):author_ids.extend(wid for _,wid in lexical.exact('AUTHOR',author,limit=100))
-                    except Exception:pass
+                        except LEXICAL_READ_ERRORS:
+                            author_ids=[];lexical_fallback=True
                 if author_ids:predicates.append({'work_id':{'$in':list(dict.fromkeys(author_ids))}})
             for subject in plan.subjects:
                 predicates.append({'subjects':{'$regex':r'(^|\|)\s*'+re.escape(subject)+r'\s*(\||$)','$options':'i'}})
@@ -136,15 +147,23 @@ class GlobalQuerySearch:
             if plan.title_text or plan.exact_text:
                 ids=[];text=plan.exact_text or plan.title_text
                 if lexical:
-                    for kind in ('TITLE',) if plan.exact_text else ('TITLE','AUTHOR'):
-                        found=lexical.exact(kind,text,limit=50)
-                        ids.extend(wid for _,wid in found)
-                        if not found and not plan.exact_text:
-                            result=lexical.fuzzy(kind,text)
-                            match=result.get('match')
-                            if match:
-                                ids.extend(result.get('work_ids',[]));plan.corrections.append({'from':text,'to':match['value'],'kind':'title_author_typo'})
-                                plan.title_text=match['value']
+                    corrections=[]
+                    try:
+                        for kind in ('TITLE',) if plan.exact_text else ('TITLE','AUTHOR'):
+                            found=lexical.exact(kind,text,limit=50)
+                            ids.extend(wid for _,wid in found)
+                            if not found and not plan.exact_text:
+                                result=lexical.fuzzy(kind,text)
+                                match=result.get('match')
+                                if match:
+                                    ids.extend(result.get('work_ids',[]))
+                                    corrections.append({'from':text,'to':match['value'],'kind':'title_author_typo'})
+                    except LEXICAL_READ_ERRORS:
+                        ids=[];lexical_fallback=True
+                    else:
+                        if corrections:
+                            plan.corrections.extend(corrections)
+                            plan.title_text=corrections[-1]['to']
                 if plan.exact_text and re.fullmatch(r'OL\d+W',plan.exact_text,re.I):ids.append(plan.exact_text.upper())
                 if ids:predicates.append({'work_id':{'$in':list(dict.fromkeys(ids))}})
                 elif plan.exact_text:
@@ -177,7 +196,7 @@ class GlobalQuerySearch:
                   'total_ranked_candidates':total,'has_more':offset+limit<total,'next_offset':offset+limit if offset+limit<total else None,
                   'interpretation':{**interpretation(plan,' '.join(notices)),'session':session,'personalized':personalized,'clarification':interaction},
                   'timing_ms':{'total':round((perf_counter()-start)*1000,2)}}
-        if diagnostics:response['diagnostics']={'plan':asdict(plan),'provider':provider,'hnsw_used':hnsw,'kg_used':plan.kg_expansion_used,'kg':expansion,'reranker_used':reranked,'candidate_count':count,'strict_filters':True,'fallback_used':False,'candidate_bound':STRUCTURED_LIMIT,'final_count':len(result),'expansion_added_candidates':retrieval_diagnostics.get('expansion_added_candidates',0),'expansion_reranked_count':retrieval_diagnostics.get('expansion_reranked_count',0),'hnsw_generation':getattr(getattr(getattr(engine,'index_manager',None),'snapshot',None),'manifest',None)}
+        if diagnostics:response['diagnostics']={'plan':asdict(plan),'provider':provider,'hnsw_used':hnsw,'kg_used':plan.kg_expansion_used,'kg':expansion,'reranker_used':reranked,'candidate_count':count,'strict_filters':True,'fallback_used':lexical_fallback,'candidate_bound':STRUCTURED_LIMIT,'final_count':len(result),'expansion_added_candidates':retrieval_diagnostics.get('expansion_added_candidates',0),'expansion_reranked_count':retrieval_diagnostics.get('expansion_reranked_count',0),'hnsw_generation':getattr(getattr(getattr(engine,'index_manager',None),'snapshot',None),'manifest',None)}
         if diagnostics:response['diagnostics'].update(personalization=ranking_diagnostics,profile=profile_diagnostics)
         return response
 
@@ -219,6 +238,7 @@ def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',fil
     expansion=tenant_expansion(plan,library_id,actor,staff) if kg_enabled and plan.semantic_text else {'status':'NOT_USED','concepts':[],'generation':None,'elapsed_ms':0}
     apply_expansion(plan,expansion)
     provider='STRUCTURED_METADATA';hnsw=False;reranked=False;fallback=False;scores={};ids=None;generation=None;extra_ids=set()
+    ranking_degraded = False
     if plan.semantic_text:
         if status['status']=='READY':
             try:
@@ -243,7 +263,13 @@ def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',fil
                     candidates.extend(extra);extra_ids={i for i,_ in extra}
                 ids=[i for i,_ in candidates];scores=dict(candidates);generation=status['active_generation_id']
                 hnsw=True;provider='TENANT_SEMANTIC'
-            except (HTTPException,OSError,ValueError):fallback=True
+            except HTTPException as error:
+                if not (error.status_code == 503 or
+                        error.status_code == 409 and error.detail == 'ARTIFACT_CORRUPT'):
+                    raise
+                fallback = True
+            except (OSError, ValueError):
+                fallback = True
         else:fallback=True
         if fallback:provider='LOCAL_FALLBACK'
     with catalogue.read_context(library_id,actor,staff=staff) as (library,membership,canonical):
@@ -260,21 +286,45 @@ def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',fil
         rows=catalogue.hydrate(library_id,actor,raw,canonical,staff=staff)
         rows=[row for row in rows if (runtime.matches if runtime else matches)(plan,row) and (not filters or not filters.get('circulation_status') or row.get('circulation_status')==filters['circulation_status'])]
         if fallback and plan.semantic_text:
-            terms=normalize(plan.semantic_text).split()
-            rows=[row for row in rows if all(term in normalize(' '.join([row.get('title',''), ' '.join(row.get('authors',[])), ' '.join(row.get('subjects',[])),row.get('description') or ''])) for term in terms)]
+            terms = normalize(plan.semantic_text).split()
+            content_terms = [term for term in terms if term not in TENANT_FALLBACK_FILLER]
+            literal, relaxed = [], []
+            for row in rows:
+                text = normalize(' '.join([row['title'], ' '.join(row['authors']),
+                                          ' '.join(row['subjects']), row.get('description') or '']))
+                if all(term in text for term in terms):
+                    literal.append(row)
+                elif content_terms and all(term in text for term in content_terms):
+                    relaxed.append(row)
+            rows = literal or relaxed
         if hnsw:
             rows.sort(key=lambda row:-scores.get(row['library_book_id'],-1))
             depth=artifacts.PARAMETERS['reranking_count'];extra=[r for r in rows if r['library_book_id'] in extra_ids];reserve=min(depth//5,len(extra))
             rows=[r for r in rows if r['library_book_id'] not in extra_ids][:depth-reserve]+extra[:reserve]
             if service.reranker and rows:
-                with service.model_lock:ranked=service.reranker([[plan.ranking_query(),artifacts.embedding_text(r)] for r in rows])
-                if len(ranked)!=len(rows) or not np.isfinite(ranked).all():raise HTTPException(503,'Library ranking is temporarily unavailable.')
-                rows=[dict(row,_search_relevance=float(score)) for score,row in sorted(zip(ranked,rows),key=lambda pair:-float(pair[0]))];reranked=True
+                pairs = [[plan.ranking_query(), artifacts.embedding_text(row)] for row in rows]
+                try:
+                    with service.model_lock:
+                        ranked = np.asarray(service.reranker(pairs), dtype=float)
+                    if ranked.shape != (len(rows),) or not np.isfinite(ranked).all():
+                        raise ValueError('Invalid tenant ranking scores')
+                except HTTPException as error:
+                    if error.status_code != 503:
+                        raise
+                    ranking_degraded = True
+                except (OSError, RuntimeError, TypeError, ValueError):
+                    ranking_degraded = True
+                else:
+                    rows = [dict(row, _search_relevance=float(score))
+                            for score, row in sorted(zip(ranked, rows), key=lambda pair: -pair[0])]
+                    reranked = True
             if plan.kg_expansion_used:rows.sort(key=lambda row:not primary_match(plan,row))
         rows=sort_books(rows,plan)
         profile,profile_diagnostics=personalization.safe_profile(actor,store.books_collection,library_id=library_id,staff=staff,canonical=canonical) if personalized else (None,{'cache':'OFF','elapsed_ms':0})
         rows,ranking_diagnostics=personalization.rerank(rows,plan,profile,personalized)
         source.update(search_source='TENANT_SEMANTIC' if hnsw else 'LOCAL_FALLBACK' if fallback else 'STRUCTURED_METADATA',intelligence_status=status['status'])
+        if ranking_degraded:
+            source['ranking_degraded'] = True
         # A scoped Search never falls through to the global candidate universe,
         # including a public library whose collection is currently empty.
         source['catalogue_source']='LIBRARY_LOCAL'

@@ -1,0 +1,64 @@
+{
+  "test_id": "M15-V3-P6-CLARIFICATION-LIFECYCLE",
+  "executed_at_utc": "2026-11-10T12:12:21.243982+00:00",
+  "sample_size": 4,
+  "cases": [
+    {
+      "id": "reference_ambiguity_and_valid_continuation",
+      "turn1_intent": "CLARIFICATION",
+      "turn1_type": "REFERENCE_AMBIGUITY",
+      "turn2_intent": "CHECK_AVAILABILITY",
+      "turn2_books": [
+        "OL910000003W"
+      ],
+      "passed": true
+    },
+    {
+      "id": "criteria_ambiguity_and_valid_continuation",
+      "turn1_intent": "COMPARE_BOOKS",
+      "turn1_type": "CRITERIA_AMBIGUITY",
+      "turn2_intent": "CLARIFICATION",
+      "turn2_has_clarification": true,
+      "passed": false
+    },
+    {
+      "id": "invalid_and_expired_clarification_or_pending",
+      "invalid_confirm_intent": "CLARIFICATION",
+      "expired_confirm_intent": "CLARIFICATION",
+      "expired_message": "This action is invalid, expired or already consumed. Request it again.",
+      "passed": true
+    },
+    {
+      "id": "malformed_and_unknown_structured_intent_rejected",
+      "checks": [
+        {
+          "case": "malformed_json",
+          "rejected": true
+        },
+        {
+          "case": "unknown_intent_name",
+          "rejected": true
+        },
+        {
+          "case": "missing_intent_field",
+          "rejected": true
+        },
+        {
+          "case": "out_of_range_confidence",
+          "rejected": true
+        },
+        {
+          "case": "extra_field_rejected",
+          "rejected": true
+        },
+        {
+          "case": "confidence_required_by_decoding_schema",
+          "rejected": true,
+          "note": "AssistantIntent.confidence defaults to 0.0 in Pydantic (orchestrator.py treats <0.5 accordingly) while decoding schema requires i, c, s."
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "outcome": "FAIL"
+}

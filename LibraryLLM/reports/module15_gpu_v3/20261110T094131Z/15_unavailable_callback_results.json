@@ -1,0 +1,57 @@
+{
+  "test_id": "M15-V3-P6-UNAVAILABLE-CALLBACK",
+  "executed_at_utc": "2026-11-10T12:12:27.500692+00:00",
+  "execution_type": "native_cuda_authenticated_http",
+  "sample_size": 2,
+  "cases": [
+    {
+      "id": "document_question_reaches_unavailable_callback",
+      "http_status": 200,
+      "intent": "DOCUMENT_QUESTION",
+      "callback_invoked": true,
+      "callback_args": [
+        {
+          "query": "What does this uploaded document say about calibration?",
+          "work_id": null,
+          "document_id": "doc_0123456789abcdef0123456789abcdef",
+          "has_credentials": true
+        }
+      ],
+      "rag_payload": null,
+      "errors": [
+        {
+          "code": "HTTP_503",
+          "service": "rag",
+          "message": "RAG is unavailable."
+        }
+      ],
+      "message": "RAG is unavailable.",
+      "passed": true
+    },
+    {
+      "id": "book_content_question_reaches_unavailable_callback",
+      "http_status": 200,
+      "intent": "BOOK_CONTENT_QUESTION",
+      "callback_invoked": true,
+      "callback_args": [
+        {
+          "query": "Analyze the opening scene of Dracula",
+          "work_id": "OL910000003W",
+          "document_id": null,
+          "has_credentials": true
+        }
+      ],
+      "rag_payload": null,
+      "errors": [
+        {
+          "code": "HTTP_503",
+          "service": "rag",
+          "message": "RAG is unavailable."
+        }
+      ],
+      "message": "RAG is unavailable.",
+      "passed": true
+    }
+  ],
+  "outcome": "PASS"
+}

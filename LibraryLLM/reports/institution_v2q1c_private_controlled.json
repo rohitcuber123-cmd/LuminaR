@@ -1,0 +1,85 @@
+{
+  "started_at": "2026-11-01T19:35:43.515330+00:00",
+  "run_id": "8cf838365eaf44469184982bdc46cb52",
+  "environment": "task-owned isolated DB and HTTP host 18005",
+  "model": "Controlled generator; real cached CPU MiniLM and native FAISS/HNSW. NO QWEN.",
+  "cases": [
+    {
+      "id": "PRIVATE_CODE_WRONG",
+      "user_alias": "outsider",
+      "expected_http": [
+        403
+      ],
+      "http_status": 403,
+      "elapsed_ms": 135.55,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "NATIVE_SEARCH_A",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 313.139,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [
+        "A-book-01",
+        "A-book-02",
+        "A-book-06",
+        "A-book-09",
+        "A-book-10"
+      ],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": "STRUCTURED_METADATA",
+      "pass": true
+    }
+  ],
+  "setup": [
+    {
+      "asset_library": "A",
+      "linked": true,
+      "status": "READY"
+    },
+    {
+      "asset_library": "A",
+      "linked": false,
+      "status": "READY"
+    },
+    {
+      "asset_library": "B",
+      "linked": true,
+      "status": "READY"
+    },
+    {
+      "library": "A",
+      "explicit_initial_search_build": "READY"
+    },
+    {
+      "library": "B",
+      "explicit_initial_search_build": "READY"
+    },
+    {
+      "library": "I",
+      "explicit_initial_search_build": "READY"
+    }
+  ],
+  "limits": "External recommendation candidates and Global retrieval are controlled fixtures; no relevance or private Qwen-quality score is inferred.",
+  "execution_error": {
+    "type": "AssertionError",
+    "reason": "Initial native probe used an exact known subject, so the real planner correctly chose STRUCTURED_METADATA. Separate structured and semantic queries in the completed run."
+  },
+  "complete": false
+}

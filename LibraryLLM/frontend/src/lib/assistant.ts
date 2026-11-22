@@ -24,6 +24,11 @@ export function recentIds(books: AssistantBook[], previous: string[]) {
 export function assistantChat(payload: AssistantRequest, signal?: AbortSignal) {
   // Explicit fields prevent accidental identity or UI metadata from entering strict backend schema.
   const body: AssistantRequest = {
+    ...(payload.library_id ? {library_id:payload.library_id} : {}),
+    ...(payload.lending_context ? {lending_context:{library_id:payload.lending_context.library_id,
+      ...(payload.lending_context.library_book_id ? {library_book_id:payload.lending_context.library_book_id} : {}),
+      ...(payload.lending_context.loan_id ? {loan_id:payload.lending_context.loan_id} : {}),
+      ...(payload.lending_context.reservation_id ? {reservation_id:payload.lending_context.reservation_id} : {})}} : {}),
     message: payload.message.trim(), conversation_id: payload.conversation_id ?? null,
     selected_work_ids: uniqueIds(payload.selected_work_ids, 4), recent_work_ids: uniqueIds(payload.recent_work_ids, 20),
     ...(payload.action_work_ids?.length ? { action_work_ids: uniqueIds(payload.action_work_ids, 4) } : {}),

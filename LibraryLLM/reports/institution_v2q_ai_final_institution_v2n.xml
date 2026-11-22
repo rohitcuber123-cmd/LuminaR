@@ -1,0 +1,1057 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="24" failures="0" skipped="0" tests="26" time="6.468" timestamp="2026-10-31T19:40:37.294790+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_authenticated_mongo_connect" time="2.440"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_anonymous_mongo_denied" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_invalid_credential_denied" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_wrong_auth_source_denied" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_wrong_database_denied" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_application_runtime_permissions" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_worker_job_claim_permission" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_worker_lease_renewal_permission" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_worker_generation_publish_permission" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_telemetry_writer_restricted" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_operator_reader_read_only" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_operator_reader_cannot_write" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_no_unrestricted_fallback" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_no_credentials_in_logs" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_no_secrets_in_report" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_private_library_isolation" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_platform_role_no_tenant_bypass" time="0.590" /><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_unauthorized_collection_read_denied" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_auth_mode_missing_secret_fails_closed[change0]" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_auth_mode_missing_secret_fails_closed[change1]" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_auth_mode_missing_secret_fails_closed[change2]" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_authenticated_runtime_reconnect" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_authenticated_fixture_rollback" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_global_indexes_unchanged" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_valid_login_unrelated_role_fails_qualification" time="0.001"><error message="failed on setup with &quot;  File &quot;&lt;unknown&gt;&quot;, line 288&#10;    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},&#10;                                                                                 ^&#10;SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286&quot;">@pytest.fixture(scope='module')
+    def server():
+        with AuthMongo() as fixture:
+&gt;           seed_database(fixture); provision(fixture); provision_application(fixture)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\institution_v2n\test_mongo_authentication.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\institution_v2n_fixture.py:66: in provision_application
+    names, evidence = resources()
+                      ^^^^^^^^^^^
+scripts\institution_v2n_fixture.py:28: in resources
+    tree = ast.parse(path.read_text(encoding='utf-8-sig'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+source = '"""Membership-scoped catalogue discovery. All circulation commands stay in Part 2B/C."""\nfrom contextlib import cont...     return {\'library_id\':library_id,\'results\':[by_id[i] for i in ids if i in by_id],\'has_more\':len(saved)&gt;50}\n'
+filename = '&lt;unknown&gt;', mode = 'exec', type_comments = False
+feature_version = -1
+
+    def parse(source, filename='&lt;unknown&gt;', mode='exec', *,
+              type_comments=False, feature_version=None):
+        """
+        Parse the source into an AST node.
+        Equivalent to compile(source, filename, mode, PyCF_ONLY_AST).
+        Pass type_comments=True to get back type comments where the syntax allows.
+        """
+        flags = PyCF_ONLY_AST
+        if type_comments:
+            flags |= PyCF_TYPE_COMMENTS
+        if isinstance(feature_version, tuple):
+            major, minor = feature_version  # Should be a 2-tuple.
+            assert major == 3
+            feature_version = minor
+        elif feature_version is None:
+            feature_version = -1
+        # Else it should be an int giving the minor version for 3.x.
+&gt;       return compile(source, filename, mode, flags,
+                       _feature_version=feature_version)
+E         File "&lt;unknown&gt;", line 288
+E           {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]} } }},
+E                                                                                        ^
+E       SyntaxError: closing parenthesis '}' does not match opening parenthesis '[' on line 286
+
+C:\Program Files\Python311\Lib\ast.py:50: SyntaxError</error></testcase><testcase classname="tests.institution_v2n.test_mongo_authentication" name="test_auth_mode_rejects_server_without_authorization" time="1.408" /></testsuite></testsuites>

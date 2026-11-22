@@ -1,0 +1,114 @@
+--- a/assistant/qwen.py
++++ b/assistant/qwen.py
+@@ -354,6 +354,19 @@
+             'explicit_title_rule': 'A literally named title still uses explicit, never this contextual scope.',
+             'explicit_page_rule': 'A request explicitly about the open page uses page only when page_books exists.',
+             'empty_scope_rule': 'Never choose selected without selected_books, or page without page_books.'}
++        # Do not demonstrate positions which do not exist in this context.
++        # The resolver still rejects invalid positions; no decision is repaired
++        # or redirected to a different book after model generation.
++        for question, count in [
++            ('Is the second one available?', 2),
++            ('Tell me about the second one.', 2),
++            ('Tell me about the third one.', 3),
++        ]:
++            if len(work_ids) < count:
++                examples[question] = {'i':'clarify','c':1,'s':'ambiguous','d':'reference'}
++        if len(work_ids) == 1:
++            examples['Is this book available?'] = {
++                'i':'availability','c':1,'s':scope,'w':[work_ids[0]],'g':'status'}
+         if len(work_ids) >= 3:
+             examples['Compare the first and third.'] = {
+                 'i':'compare','c':1,'s':scope,'w':[work_ids[0],work_ids[2]],'g':'facts'}
+--- /dev/null
++++ b/tests/institution_v2q_ai/test_v2q2_reference_examples.py
+@@ -0,0 +1,36 @@
++"""Prompt examples must not teach nonexistent contextual book positions."""
++import pytest
++from assistant.qwen import QwenGateway
++
++
++@pytest.mark.parametrize('key', ['page_books','selected_books'])
++def test_single_book_examples_clarify_nonexistent_ordinals_and_bind_current_book(key):
++    wid='8f911a1c-1cb2-434a-bd13-b0a7959bec66'
++    examples=QwenGateway._reference_examples({key:[{'work_id':wid}]})
++    for text in ['Is the second one available?','Tell me about the second one.','Tell me about the third one.']:
++        assert examples[text]['i']=='clarify'
++        assert examples[text]['s']=='ambiguous'
++        assert 'e' not in examples[text] and 'w' not in examples[text]
++    assert examples['Is this book available?']['w']==[wid]
++    assert examples['Is this book available?']['s']==('page' if key=='page_books' else 'selected')
++
++
++def test_pair_does_not_demonstrate_a_third_book():
++    examples=QwenGateway._reference_examples({'active_result_context':{'work_ids':['OL1W','OL2W']}})
++    assert examples['Tell me about the second one.']['e']=='SECOND'
++    assert examples['Tell me about the third one.']['i']=='clarify'
++
++
++def test_three_book_context_retains_noncontiguous_comparison_and_overviews():
++    examples=QwenGateway._reference_examples({'active_result_context':{'work_ids':['OL1W','OL2W','OL3W']}})
++    assert examples['Compare the first and third.']['w']==['OL1W','OL3W']
++    assert examples['Tell me about the third one.']['e']=='THIRD'
++    assert examples['Tell me about the second one.']['i']=='details'
++
++
++def test_populated_list_prompt_examples_preserve_previous_revision_exactly():
++    import json
++    from pathlib import Path
++    snapshot=json.loads((Path(__file__).parent/'fixtures/v2q1d_three_book_examples.json').read_text())
++    for row in snapshot['rows']:
++        assert json.dumps(QwenGateway._reference_examples(row['context']))==row['serialized_examples']
+--- /dev/null
++++ b/tests/institution_v2q_ai/fixtures/v2q1d_three_book_examples.json
+@@ -0,0 +1,49 @@
++{
++  "source_sha256": "dd04a45c1d0a29d7a6963eae759044721ccf0207698d34387e8d9c5f342748f4",
++  "rows": [
++    {
++      "context": {
++        "selected_books": [
++          {
++            "work_id": "OL1W"
++          },
++          {
++            "work_id": "OL2W"
++          },
++          {
++            "work_id": "OL3W"
++          }
++        ]
++      },
++      "serialized_examples": "{\"populated_scope\": \"selected\", \"Is the second one available?\": {\"i\": \"availability\", \"c\": 1, \"s\": \"selected\", \"e\": \"SECOND\", \"g\": \"status\"}, \"Tell me about the second one.\": {\"i\": \"details\", \"c\": 1, \"s\": \"selected\", \"e\": \"SECOND\", \"g\": \"detail\"}, \"Tell me about the third one.\": {\"i\": \"details\", \"c\": 1, \"s\": \"selected\", \"e\": \"THIRD\", \"g\": \"detail\"}, \"explicit_title_rule\": \"A literally named title still uses explicit, never this contextual scope.\", \"explicit_page_rule\": \"A request explicitly about the open page uses page only when page_books exists.\", \"empty_scope_rule\": \"Never choose selected without selected_books, or page without page_books.\", \"Compare the first and third.\": {\"i\": \"compare\", \"c\": 1, \"s\": \"selected\", \"w\": [\"OL1W\", \"OL3W\"], \"g\": \"facts\"}, \"Find books about astronomy.\": {\"i\": \"search\", \"c\": 1, \"s\": \"none\", \"q\": \"astronomy\", \"g\": \"discover\"}, \"Which recommendation should I choose?\": {\"i\": \"compare\", \"c\": 1, \"s\": \"selected\", \"e\": \"ALL\", \"g\": \"preference\", \"d\": \"criteria\"}}"
++    },
++    {
++      "context": {
++        "page_books": [
++          {
++            "work_id": "OL1W"
++          },
++          {
++            "work_id": "OL2W"
++          },
++          {
++            "work_id": "OL3W"
++          }
++        ]
++      },
++      "serialized_examples": "{\"populated_scope\": \"page\", \"Is the second one available?\": {\"i\": \"availability\", \"c\": 1, \"s\": \"page\", \"e\": \"SECOND\", \"g\": \"status\"}, \"Tell me about the second one.\": {\"i\": \"details\", \"c\": 1, \"s\": \"page\", \"e\": \"SECOND\", \"g\": \"detail\"}, \"Tell me about the third one.\": {\"i\": \"details\", \"c\": 1, \"s\": \"page\", \"e\": \"THIRD\", \"g\": \"detail\"}, \"explicit_title_rule\": \"A literally named title still uses explicit, never this contextual scope.\", \"explicit_page_rule\": \"A request explicitly about the open page uses page only when page_books exists.\", \"empty_scope_rule\": \"Never choose selected without selected_books, or page without page_books.\", \"Compare the first and third.\": {\"i\": \"compare\", \"c\": 1, \"s\": \"page\", \"w\": [\"OL1W\", \"OL3W\"], \"g\": \"facts\"}, \"Find books about astronomy.\": {\"i\": \"search\", \"c\": 1, \"s\": \"none\", \"q\": \"astronomy\", \"g\": \"discover\"}, \"Which recommendation should I choose?\": {\"i\": \"compare\", \"c\": 1, \"s\": \"page\", \"e\": \"ALL\", \"g\": \"preference\", \"d\": \"criteria\"}}"
++    },
++    {
++      "context": {
++        "active_result_context": {
++          "work_ids": [
++            "OL1W",
++            "OL2W",
++            "OL3W"
++          ]
++        }
++      },
++      "serialized_examples": "{\"populated_scope\": \"recent\", \"Is the second one available?\": {\"i\": \"availability\", \"c\": 1, \"s\": \"recent\", \"e\": \"SECOND\", \"g\": \"status\"}, \"Tell me about the second one.\": {\"i\": \"details\", \"c\": 1, \"s\": \"recent\", \"e\": \"SECOND\", \"g\": \"detail\"}, \"Tell me about the third one.\": {\"i\": \"details\", \"c\": 1, \"s\": \"recent\", \"e\": \"THIRD\", \"g\": \"detail\"}, \"explicit_title_rule\": \"A literally named title still uses explicit, never this contextual scope.\", \"explicit_page_rule\": \"A request explicitly about the open page uses page only when page_books exists.\", \"empty_scope_rule\": \"Never choose selected without selected_books, or page without page_books.\", \"Compare the first and third.\": {\"i\": \"compare\", \"c\": 1, \"s\": \"recent\", \"w\": [\"OL1W\", \"OL3W\"], \"g\": \"facts\"}, \"Find books about astronomy.\": {\"i\": \"search\", \"c\": 1, \"s\": \"none\", \"q\": \"astronomy\", \"g\": \"discover\"}, \"Which recommendation should I choose?\": {\"i\": \"compare\", \"c\": 1, \"s\": \"recent\", \"e\": \"ALL\", \"g\": \"preference\", \"d\": \"criteria\"}}"
++    }
++  ]
++}
+\ No newline at end of file

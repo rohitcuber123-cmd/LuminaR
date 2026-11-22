@@ -132,4 +132,11 @@ def materialize(limit=100, *, stamp=None):
             except Exception:
                 pass
             result['failed'] += 1
+    # Extend the existing worker/store; the announcement document itself holds
+    # the atomic publication intent, snapshot and cursor. No second worker.
+    from backend.services.library_announcement_service import deliver_pending
+    announcements = deliver_pending(limit, stamp=stamp)
+    for key in ['scanned', 'delivered', 'failed']:
+        result[key] += announcements[key]
+    result['skipped'] += announcements['suppressed']
     return result

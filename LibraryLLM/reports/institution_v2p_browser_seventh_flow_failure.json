@@ -1,0 +1,1718 @@
+{
+  "layer": "Actual Chromium, production ASGI routes, actual JWT and isolated real standalone Mongo; in-process HTTP bridge",
+  "database": "luminar_institution_v2p_browser_fe51b60d20a84cd98215022d",
+  "checks": [
+    {
+      "check": "Staff Announcements entry, empty state and existing workspace",
+      "passed": true
+    },
+    {
+      "check": "Actual draft creation, priority and linked existing event persisted",
+      "passed": true
+    },
+    {
+      "check": "Member cannot see draft or staff controls",
+      "passed": true
+    },
+    {
+      "check": "Draft edit and preview; Escape closes shared dialog",
+      "passed": true
+    },
+    {
+      "check": "Explicit publication confirmation separates pending delivery from success",
+      "passed": true
+    },
+    {
+      "check": "Existing worker adapter materializes member A notification and unread badge",
+      "passed": true
+    },
+    {
+      "check": "Library B member receives no A copy; Admin B cannot mutate A",
+      "passed": true
+    },
+    {
+      "check": "Fresh notification action navigates to A; read receipt survives browser reload",
+      "passed": true
+    },
+    {
+      "check": "Linked event opens existing guarded event detail",
+      "passed": true
+    },
+    {
+      "check": "Librarian retains Events workspace but has no announcement publishing permission",
+      "passed": true
+    },
+    {
+      "check": "Unrelated outsider cannot list private-library announcements",
+      "passed": true
+    },
+    {
+      "check": "Library switch clears A content and shows canonical B messages",
+      "passed": true
+    },
+    {
+      "check": "Member responsive viewport 1440, no document overflow",
+      "passed": true
+    },
+    {
+      "check": "Member responsive viewport 1366, no document overflow",
+      "passed": true
+    },
+    {
+      "check": "Member responsive viewport 1024, no document overflow",
+      "passed": true
+    },
+    {
+      "check": "Member responsive viewport 768, no document overflow",
+      "passed": true
+    },
+    {
+      "check": "Member responsive viewport 390, no document overflow",
+      "passed": true
+    },
+    {
+      "check": "Member responsive viewport 375, no document overflow",
+      "passed": true
+    },
+    {
+      "check": "Mobile staff draft, focused axe scan, keyboard Escape and focus restoration",
+      "passed": true
+    },
+    {
+      "check": "Withdrawal removes member content, retains safe generic inbox tombstone",
+      "passed": true
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "requests": [
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/inventory/books?state=all&limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/lending/config",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/catalogue/source?staff=true",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/lending/borrow-requests?limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/loans?status=ACTIVE&limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/memberships?limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/events?status=PUBLISHED&page_size=50",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements",
+      "method": "POST",
+      "status": 201,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/events?status=PUBLISHED&page_size=50",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements/eeab0a54-063e-4166-ae32-4bedf5acb94f",
+      "method": "PATCH",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements/eeab0a54-063e-4166-ae32-4bedf5acb94f/publish",
+      "method": "POST",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications/d334683eef2e4bad942239d4492766dc/action",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications/d334683eef2e4bad942239d4492766dc/read",
+      "method": "PATCH",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements/eeab0a54-063e-4166-ae32-4bedf5acb94f",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements/eeab0a54-063e-4166-ae32-4bedf5acb94f",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/events/eca602ca-04d9-4983-8559-607c5da1dd46",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/events/eca602ca-04d9-4983-8559-607c5da1dd46",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/inventory/books?state=all&limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/lending/config",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/catalogue/source?staff=true",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/lending/borrow-requests?limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/loans?status=ACTIVE&limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/inventory/books?state=all&limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/lending/config",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/catalogue/source?staff=true",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/lending/borrow-requests?limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/loans?status=ACTIVE&limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/memberships?limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/events?status=PUBLISHED&page_size=50",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/inventory/books?state=all&limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/lending/config",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/catalogue/source?staff=true",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/lending/borrow-requests?limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/loans?status=ACTIVE&limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/memberships?limit=1",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements/eeab0a54-063e-4166-ae32-4bedf5acb94f/withdraw",
+      "method": "POST",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/staff/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 1
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/context",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/3783b2c8-09e7-4ae5-87b9-54fbf02d78b0/announcements?limit=20&offset=0",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 404,
+      "fixture_user": 2
+    },
+    {
+      "path": "/libraries/1519b0b4-d7ba-4357-9774-65fae011abe7/context",
+      "method": "GET",
+      "status": 404,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 3
+    }
+  ],
+  "screenshots": [
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_staff_draft.png",
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_staff_edit.png",
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_member_1440.png",
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_member_1366.png",
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_member_1024.png",
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_member_768.png",
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_member_390.png",
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_member_375.png",
+    "D:\\SDC\\LibraryLLM\\reports\\institution_v2p_staff_mobile_dialog.png"
+  ],
+  "unrelated_stubs": [],
+  "expected_denials": [
+    "Draft detail404 for member A",
+    "Other-library admin mutation404",
+    "Librarian create403",
+    "Private-library outsider404",
+    "Withdrawn announcement404"
+  ],
+  "chromium": "151.0.7922.34",
+  "axe": {
+    "scope": "visible announcement draft dialog, WCAG2A/AA +2.1AA",
+    "violations": []
+  },
+  "result": "FAIL",
+  "error": "AssertionError",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\SDC\\LibraryLLM\\scripts\\institution_v2p_browser.py\", line 184, in main\n    expect(member.get_by_role('heading',name='Unable to open this library',exact=True)).to_be_visible(timeout=30000)\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\sync_api\\_generated.py\", line 23332, in to_be_visible\n    self._sync(\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\_impl\\_assertions.py\", line 852, in to_be_visible\n    await self._expect_impl(\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\_impl\\_assertions.py\", line 128, in _expect_impl\n    _record_soft_or_raise(\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\_impl\\_assertions.py\", line 60, in _record_soft_or_raise\n    raise error\nAssertionError: Locator expected to be visible\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_be_visible\" with timeout 30000ms\n  - waiting for get_by_role(\"heading\", name=\"Unable to open this library\", exact=True)\n\nAria snapshot:\n- banner:\n  - link \"Skip to content\":\n    - /url: \"#main-content\"\n  - link \"LuminaR home\":\n    - /url: /libraries/1519b0b4-d7ba-4357-9774-65fae011abe7\n    - text: LuminaR\n  - button \"Notifications\"\n  - button \"Search the catalog\"\n  - button \"Open account menu for Part2P Browser 2\"\n  - button \"Toggle menu\"\n- main:\n  - alert:\n    - strong: Unable to open this library\n    - paragraph: Library resource not found.\n    - button \"Retry\"\n    - link \"My libraries\":\n      - /url: /account/libraries\n- button \"Ask LuminaR\"\n",
+  "owned_database_removed": true,
+  "owned_temporary_files_removed": true
+}

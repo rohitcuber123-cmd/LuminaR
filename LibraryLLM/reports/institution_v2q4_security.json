@@ -1,0 +1,546 @@
+{
+  "cases": [
+    {
+      "case": "AUTHORIZED_METADATA_A",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 36.996,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "AUTHORIZED_METADATA_B",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 30.12,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "A_ONLY_TO_B",
+      "http": 404,
+      "expected": [
+        401,
+        403,
+        404
+      ],
+      "elapsed_ms": 41.26,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "B_ONLY_TO_A",
+      "http": 404,
+      "expected": [
+        401,
+        403,
+        404
+      ],
+      "elapsed_ms": 45.919,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "OUTSIDER",
+      "http": 404,
+      "expected": [
+        401,
+        403,
+        404
+      ],
+      "elapsed_ms": 41.765,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "ANONYMOUS",
+      "http": 401,
+      "expected": [
+        401,
+        403,
+        404
+      ],
+      "elapsed_ms": 7.912,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "INVALID_ASSET",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 55.147,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "INVALID_DOCUMENT",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 21.786,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "FOREIGN_SOURCE_ID",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 61.704,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "NEW_CONVERSATION_GLOBAL",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 331.072,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "NEW_CONVERSATION_A",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 1462.904,
+      "private_model_calls": 0,
+      "pass": true,
+      "all_books_current_library": true
+    },
+    {
+      "case": "OLD_CONVERSATION_DENIED_A",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 105.638,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "NEW_CONVERSATION_B",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 1179.503,
+      "private_model_calls": 0,
+      "pass": true,
+      "all_books_current_library": true
+    },
+    {
+      "case": "OLD_CONVERSATION_DENIED_B",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 91.285,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "NEW_CONVERSATION_GLOBAL_RETURN",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 355.088,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "OLD_CONVERSATION_DENIED_GLOBAL_RETURN",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 11.798,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "REVOKE_OWNED_FIXTURE_MEMBER",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 23.75,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "REVOKED_ASSET_DENIED",
+      "http": 404,
+      "expected": [
+        404
+      ],
+      "elapsed_ms": 41.227,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "FOR_YOU_A",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 145.093,
+      "private_model_calls": 0,
+      "pass": true
+    },
+    {
+      "case": "FOR_YOU_B",
+      "http": 200,
+      "expected": [
+        200
+      ],
+      "elapsed_ms": 106.321,
+      "private_model_calls": 0,
+      "pass": true
+    }
+  ],
+  "recommendation_samples": [
+    {
+      "library": "A",
+      "source": {
+        "library_id": "f9a53101-5bb9-427c-af81-aae1e182c41b",
+        "library_name": "Q4 A",
+        "catalogue_source": "LIBRARY_LOCAL",
+        "local_book_count": 10,
+        "capabilities": {
+          "physical_actions": true,
+          "reservations": true,
+          "local_search": true,
+          "global_discovery": false
+        },
+        "circulation_state": "CANONICAL",
+        "discovery_notice": null
+      },
+      "rows": [
+        {
+          "rank": 1,
+          "book_id": "28bb5de8-0e31-4589-8901-d77118639a0b",
+          "title": "A Unavailable Network",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 2,
+          "book_id": "00d1521e-db77-45cc-8abb-8a0a605423c1",
+          "title": "A New Acquisition",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 3,
+          "book_id": "4ed208e8-770c-4de4-85a3-d707034c4562",
+          "title": "A Sparse Record",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Unclassified"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 4,
+          "book_id": "462c2b4e-aadd-43fb-b931-6d993b12f186",
+          "title": "A Duplicate Title",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Databases"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 5,
+          "book_id": "7e3a094f-7160-4375-8553-2b89270d50ac",
+          "title": "A Duplicate Title",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 6,
+          "book_id": "19a5aff3-8181-4ccf-8643-1c02f6bc4a28",
+          "title": "A Garden Notes",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Gardening"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 7,
+          "book_id": "55a447f3-e64a-4961-997d-2e5ebbf8aa8c",
+          "title": "A Database Advanced",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Databases",
+            "Research"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 8,
+          "book_id": "35c1eafb-0488-41fc-b22c-c38c35da5cc0",
+          "title": "A Database Foundations",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Databases",
+            "Technical education"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 9,
+          "book_id": "a3849821-a2e0-44e1-9ea1-2a5bf1e88c9c",
+          "title": "A Network Practice",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks",
+            "Technical education"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 10,
+          "book_id": "2473475d-9bd3-4a33-9b63-65970d689fda",
+          "title": "A Network Foundations",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks",
+            "Technical education"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        }
+      ],
+      "independent_labels": "UNASSIGNED"
+    },
+    {
+      "library": "B",
+      "source": {
+        "library_id": "51bcbae2-6476-44e3-8229-eec9f1bc7a93",
+        "library_name": "Q4 B",
+        "catalogue_source": "LIBRARY_LOCAL",
+        "local_book_count": 10,
+        "capabilities": {
+          "physical_actions": true,
+          "reservations": true,
+          "local_search": true,
+          "global_discovery": false
+        },
+        "circulation_state": "CANONICAL",
+        "discovery_notice": null
+      },
+      "rows": [
+        {
+          "rank": 1,
+          "book_id": "9f1fa050-3608-4415-b7b3-0bb97b59d46c",
+          "title": "B Unavailable Network",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 2,
+          "book_id": "ef0b5e41-8d35-41da-b0b0-eb38fe2954b6",
+          "title": "B New Acquisition",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 3,
+          "book_id": "4621a6f3-1b36-4bfe-95c9-244944c538cd",
+          "title": "B Sparse Record",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Unclassified"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 4,
+          "book_id": "9c129777-7b1d-4ed4-bb00-33304386c267",
+          "title": "B Duplicate Title",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Databases"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 5,
+          "book_id": "bf49d9f5-7ab3-4739-af76-e82c8cf5654a",
+          "title": "B Duplicate Title",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 6,
+          "book_id": "5ae2c9cc-4108-494d-bd84-d39a067a9c2f",
+          "title": "B Garden Notes",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Gardening"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 7,
+          "book_id": "3d5394ce-c1ed-4129-9698-7a1b616c8bc5",
+          "title": "B Database Advanced",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Databases",
+            "Research"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 8,
+          "book_id": "a158dbc4-bb5f-4145-a4b6-71d12b8b220d",
+          "title": "B Database Foundations",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Databases",
+            "Technical education"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 9,
+          "book_id": "ef4eb031-15a8-4c2d-b36a-2a95c43efd70",
+          "title": "B Network Practice",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks",
+            "Technical education"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        },
+        {
+          "rank": 10,
+          "book_id": "f0bd34a1-e5df-47aa-90e3-3ca208b453e8",
+          "title": "B Network Foundations",
+          "authors": [
+            "Disposable Author"
+          ],
+          "subjects": [
+            "Computer networks",
+            "Technical education"
+          ],
+          "relevance_grade": null,
+          "judge_identity": null,
+          "judgment_rationale": null
+        }
+      ],
+      "independent_labels": "UNASSIGNED"
+    }
+  ],
+  "controlled_external_provider": true,
+  "complete": true
+}

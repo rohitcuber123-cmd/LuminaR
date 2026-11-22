@@ -44,7 +44,7 @@ export function ComparisonView({ comparison, availability, onAction, busy }: {
 }) {
   // Discover supplied metadata; no fixed Pages/Year/Language/Difficulty columns.
   const missing = comparison.missing_fields
-  const fields = [...new Set(comparison.books.flatMap(book => Object.entries(book).filter(([key, value]) => key !== 'work_id' && key !== 'title' && value != null && value !== '').map(([key]) => key)))]
+  const fields = [...new Set(comparison.books.flatMap(book => Object.entries(book).filter(([key, value]) => !['work_id','title','library_id','library_book_id','global_work_id'].includes(key) && value != null && value !== '').map(([key]) => key)))]
   const value = (book: AssistantBook, field: string) => <LongValue field={field} value={(book as unknown as Record<string, unknown>)[field]} />
   return <section aria-label="Book comparison" className="assistant-comparison">
     <h3 className="font-display text-sm">Book comparison</h3>
@@ -85,9 +85,9 @@ function ReadingListView({ books, onAction, busy }: {
           <AvailabilityBadge book={book} />
         </div>
         <div className="flex shrink-0 gap-1">
-          <BookSelectButton book={book} />
-          <BookDiscoveryMenu workId={book.work_id} />
-          <Link className="assistant-button text-xs" to={context.personalPath(productBookPath(book.work_id,context.libraryId))}>View</Link>
+          <BookSelectButton book={{...book,work_id:book.library_id&&book.global_work_id&&/^OL\d+W$/.test(book.global_work_id)?book.global_work_id:book.work_id}} />
+          {book.library_id?<button className="assistant-button" disabled={busy} onClick={()=>onAction({type:'MORE_LIKE_THIS',work_id:book.work_id},book)}>More Like This</button>:<BookDiscoveryMenu workId={book.work_id} />}
+          <Link className="assistant-button text-xs" to={book.library_id && book.library_book_id ? `/${window.location.pathname.startsWith('/staff/')?'staff/':''}libraries/${book.library_id}/books/${book.library_book_id}` : context.personalPath(productBookPath(book.work_id,context.libraryId))}>View</Link>
           <button className="assistant-icon-button text-ink-soft" disabled={busy}
             aria-label={`Remove ${book.title || book.work_id} from reading list`}
             onClick={() => onAction({ type: 'REMOVE_FROM_READING_LIST', work_id: book.work_id }, book)}>
@@ -107,7 +107,7 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
   const context=useProductContext()
   const pending = response.pending_action
   const confirmationLabel = pending ? ({ BORROW_BOOK: 'borrowing', RESERVE_BOOK: 'reservation', RETURN_BOOK: 'return', ADD_TO_READING_LIST: 'add to reading list', REMOVE_FROM_READING_LIST: 'remove from reading list' } as Partial<Record<AssistantResponse['intent'], string>>)[pending.type] || 'action' : 'action'
-  const pendingExpired = pending ? Date.parse(pending.expires_at) <= now : false
+  const pendingExpired = pending ? !(Date.parse(pending.expires_at) > now) : false
   const bookTitle = (id: string) => response.books.find(book => book.work_id === id)?.title || id
 
   const renderCard = (book: AssistantBook, inReadingList?: boolean) => {
@@ -128,7 +128,7 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
         <div className="min-w-0 flex-1"><h4 className="break-words font-sans text-[0.95rem] font-semibold leading-snug">{book.title || book.work_id}</h4>
           {book.authors && <p className="mt-1 line-clamp-1 text-xs text-ink-soft" title={displayText(book.authors)}>{displayText(book.authors)}</p>}
           {book.average_rating != null && Number.isFinite(book.average_rating) && book.average_rating > 0 && <p className="mt-1 text-xs">★ {book.average_rating.toFixed(1)}</p>}
-          <AvailabilityBadge availability={avail} book={book} />
+          {!response.digital_availability?.length && <AvailabilityBadge availability={avail} book={book} />}
           {book.shelf_location && <p className="mt-1 text-xs text-ink-soft">Shelf: {book.shelf_location}</p>}
         </div>
       </div>
@@ -146,10 +146,10 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
 
       <div className="mt-2 flex flex-wrap items-center gap-1">
         {/* Select button */}
-        {primaryActions.some(a => ['SELECT_BOOK', 'UNSELECT_BOOK'].includes(a.type)) && <BookSelectButton book={book} compact />}
+        {primaryActions.some(a => ['SELECT_BOOK', 'UNSELECT_BOOK'].includes(a.type)) && <BookSelectButton book={{...book,work_id:book.library_id&&book.global_work_id&&/^OL\d+W$/.test(book.global_work_id)?book.global_work_id:book.work_id}} compact />}
         {/* View and Recommend Similar always visible */}
         {primaryActions.filter(a => ['VIEW_BOOK', 'RECOMMEND_SIMILAR'].includes(a.type)).map(action => action.type === 'VIEW_BOOK'
-          ? <Link key={action.type} className="assistant-button" aria-label="View book" to={context.personalPath(productBookPath(book.work_id,context.libraryId))}>View</Link>
+          ? <Link key={action.type} className="assistant-button" aria-label="View book" to={book.library_id && book.library_book_id ? `/${window.location.pathname.startsWith('/staff/')?'staff/':''}libraries/${book.library_id}/books/${book.library_book_id}` : context.personalPath(productBookPath(book.work_id,context.libraryId))}>View</Link>
           : <button key={action.type} className="assistant-button" aria-label={ACTION_LABELS[action.type]} title={ACTION_LABELS[action.type]} disabled={busy} onClick={() => onAction(action, book)}>Similar</button>)}
         {/* Reading list icon button */}
         {readingListActions.length > 0 && <button
@@ -183,6 +183,13 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
 
   return <div className="space-y-4 break-words">
     {!!response.message && <p className="whitespace-pre-wrap text-sm leading-relaxed">{response.message}</p>}
+    {!!response.digital_availability?.length && <section aria-label="Digital access" className="space-y-2">
+      {response.digital_availability.map(item => <div key={item.work_id} className="text-sm">
+        <p>{bookTitle(item.work_id)}: {item.status === 'AUTHORIZED' ? 'Authorized digital resource ready' : 'Digital access not verified'}</p>
+        {item.resources.map(resource => <Link key={resource.href} className="assistant-button inline-block mt-2"
+          to={resource.href}>Open {resource.asset_type === 'TEXT' ? 'digital text' : resource.asset_type}</Link>)}
+      </div>)}
+    </section>}
     {response.recommendation_mode && <div><h3 className="font-display text-sm">{recommendationHeading[response.recommendation_mode]}</h3>
       {!!response.seed_work_ids.length && <p className="mt-1 text-xs text-ink-soft">{response.seed_work_ids.length} {response.seed_work_ids.length === 1 ? 'book' : 'books'} used as context</p>}
       {!response.books.length && !response.errors.some(error => error.service === 'recommendation') && <p className="mt-2 text-xs text-ink-soft">{response.recommendation_mode === 'PERSONALIZED_EXISTING_FORMULA' ? 'No personalized recommendations are available yet.' : 'No similar recommendations are available right now.'}</p>}
@@ -249,7 +256,7 @@ export function AssistantTurn({ response, busy, pendingActive, now, onAction, on
         : `${label(pending.type.replace('_BOOK', '').toLowerCase())} ${bookTitle(pending.work_id)}?`}</h3>
       {!pending.enabled && <p className="mt-2 text-xs">Library actions are currently disabled.</p>}
       <p className="mt-2 text-xs text-ink-soft">{!pendingActive ? 'This confirmation is no longer active.' : pendingExpired ? 'This confirmation expired. Ask again to create a new one.' : `Confirm by ${new Date(pending.expires_at).toLocaleTimeString()}.`}</p>
-      <div className="mt-3 flex gap-2"><button className="assistant-button" disabled={busy || !pendingActive || pendingExpired} onClick={() => onAction({ type: 'CONFIRM_ACTION', action_id: pending.action_id })}>Confirm {confirmationLabel}</button>
+      <div className="mt-3 flex gap-2"><button className="assistant-button" disabled={busy || !pendingActive || pendingExpired || pending.enabled !== true} onClick={() => onAction({ type: 'CONFIRM_ACTION', action_id: pending.action_id })}>Confirm {confirmationLabel}</button>
         <button className="assistant-button" disabled={busy || !pendingActive || pendingExpired} onClick={() => onAction({ type: 'CANCEL_ACTION', action_id: pending.action_id })}>Cancel</button></div>
     </section>}
     {response.actions.filter(action => !action.work_id && !['CONFIRM_ACTION', 'CANCEL_ACTION', 'SHOW_MORE'].includes(action.type)).map((action, index) => <button key={index} disabled={busy} className="assistant-button" onClick={() => onAction(action)}>{ACTION_LABELS[action.type]}</button>)}

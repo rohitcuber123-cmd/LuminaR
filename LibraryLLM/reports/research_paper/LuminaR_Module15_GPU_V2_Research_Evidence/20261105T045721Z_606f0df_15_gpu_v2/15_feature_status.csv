@@ -1,0 +1,25 @@
+feature,status,evidence_type_and_pointer,last_verification_date,blocker
+Qwen local model loading,RUNTIME_VERIFIED,prior GPU native_probe.json,2026-11-05,local process only
+CUDA quantization,RUNTIME_VERIFIED,prior GPU gpu_model_load.json,2026-11-05,deployment unknown
+Direct generation,RUNTIME_VERIFIED,prior GPU qwen_inference.json,2026-11-05,one factual prompt
+Shared Assistant/RAG engine,RUNTIME_VERIFIED,GPU V2 shared_inference_runtime.json,2026-11-05,identity only; contention unmeasured
+Assistant intent routing,OBSERVED_FAILURE,GPU V2 assistant_routing.json,2026-11-05,one Reading List collision
+Reading List routing,OBSERVED_FAILURE,GPU V2 assistant_routing.json,2026-11-05,USER_LOANS for tested request
+Global Search fixture integration,RUNTIME_VERIFIED,GPU V2 assistant_live_api.json,2026-11-05,"fixture, not production index"
+Authenticated Assistant HTTP requests,RUNTIME_VERIFIED,GPU V2 assistant_live_api.json,2026-11-05,isolated assembly
+Missing authentication,RUNTIME_VERIFIED,GPU V2 assistant_live_api.json,2026-11-05,one HTTP 401 case
+Clarification,RUNTIME_VERIFIED,GPU V2 assistant_clarification.json,2026-11-05,full lifecycle not tested
+Document RAG preparation,IMPLEMENTED_NOT_VERIFIED,source rag/services/document_service.py,2026-10-31,no live pipeline
+Evidence grounding,IMPLEMENTED_NOT_VERIFIED,source rag/qa.py; prior grounding_contract_regression.json,2026-11-05,live support unmeasured
+Citation accuracy,NOT_MEASURED,GPU V2 citation_support.json,2026-11-05,no gold spans
+Private tenant authorization,NOT_MEASURED,GPU V2 tenant_authorization.json,2026-11-05,no live matrix
+Prompt injection,NOT_MEASURED,GPU V2 prompt_injection.json,2026-11-05,no attack tested
+GPU concurrency,NOT_MEASURED,GPU V2 concurrency.json,2026-11-05,no contention experiment
+Timeout recovery,NOT_MEASURED,GPU V2 timeout_recovery.json,2026-11-05,not exercised
+Knowledge tool generation,IMPLEMENTED_NOT_VERIFIED,source rag/services/knowledge_quiz.py,2026-10-31,native workflow untested
+Existing router default,RUNTIME_VERIFIED,GPU V2 lab/live_results.json; source assistant/api.py,2026-11-05,isolated runtime only
+Experimental router freeze,IMPLEMENTED_NOT_VERIFIED,source assistant/ROUTER_FREEZE.md,2026-10-31,deployment unobserved
+Grounding source contract,RUNTIME_VERIFIED,GPU V2 grounding_contract_crosscheck.json,2026-11-05,not live accuracy
+Production Mongo authentication,NOT_MEASURED,GPU V2 final_qa.json,2026-11-05,NOT QUALIFIED
+Index integrity,NOT_MEASURED,GPU V2 preservation.json,2026-11-05,NOT QUALIFIED
+Chromium acceptance,NOT_MEASURED,GPU V2 browser_acceptance.json,2026-11-05,not run

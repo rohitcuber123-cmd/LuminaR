@@ -16,7 +16,7 @@ from assistant.api import install_assistant
 from assistant.orchestrator import AssistantOrchestrator, merge_ranks
 from assistant.qwen import AssistantDecodingSchema, QwenGateway, QwenUnavailable
 from assistant.schemas import (AssistantIntent, AssistantRequest, Book, Filters, Intent,
-                               RecommendationMode)
+                               AssistantIntentDecision, RecommendationMode, ReferenceScope)
 from assistant.state import ConversationStore
 from assistant.tools import AssistantTools, ServiceTransport, ToolFailure
 from backend.dependencies import get_current_user
@@ -96,6 +96,67 @@ def chat(orchestrator, tools, message=None, **kwargs):
                    Intent.RETURN_BOOK: 'Return the selected book', Intent.RESERVE_BOOK: 'Reserve the selected book',
                    Intent.BOOK_CONTENT_QUESTION: 'What happens in this book?'}.get(orchestrator.qwen.intent.intent, 'Recommend')
     return run(orchestrator.chat(AssistantRequest(message=message, **kwargs), '17', tools))
+
+
+@pytest.mark.parametrize('topic', [
+    'database textbooks', 'database management systems books', 'relational databases books',
+    'SQL fundamentals books', 'computer networks books', 'Java programming books',
+    'operating systems books', 'machine learning books',
+])
+def test_topic_recommendation_passes_literal_topic_to_search(topic):
+    orch, tools = setup(Intent.RECOMMEND_BOOKS, query='unrelated model query')
+    response = chat(orch, tools, f'Recommend {topic}.')
+    assert response.intent == Intent.SEARCH_BOOKS
+    tools.search.search.assert_awaited_once_with(topic, 50)
+    assert tools.calls == []
+
+
+def test_pick_one_preserves_rank_and_binds_followup_without_writing():
+    orch, tools = setup()
+    picked = chat(orch, tools, 'Pick a book for me.')
+    assert [book.work_id for book in picked.books] == ['OL4W']
+    assert 'I picked' in picked.message
+    assert not picked.has_more and not picked.pending_action
+    assert not any(action.type == 'SHOW_MORE' for action in picked.actions)
+    orch.qwen.intent = AssistantIntentDecision(intent=Intent.BORROW_BOOK, confidence=1,
+        reference_scope=ReferenceScope.PREVIOUS_RECOMMENDATIONS, reference_position='FOCUS')
+    followup = chat(orch, tools, 'Borrow the one you picked.', conversation_id=picked.conversation_id)
+    assert followup.pending_action and followup.pending_action.work_id == 'OL4W'
+    tools.loans.borrow.assert_not_awaited()
+
+
+def test_pick_one_returns_no_pick_from_empty_candidates():
+    orch, tools = setup()
+    tools.recommendation.recommend = AsyncMock(return_value=[])
+    response = chat(orch, tools, 'Pick a book for me.')
+    assert not response.books and not response.pending_action
+    assert 'no matching books' in response.message
+
+
+def test_page_similarity_repairs_comparison_route_after_content_limitation():
+    orch, tools = setup(Intent.BOOK_CONTENT_QUESTION)
+    page = {'work_id': 'OL1W'}
+    first = chat(orch, tools, 'Tell me about this book.', page_context=page)
+    orch.qwen.intent = AssistantIntentDecision(intent=Intent.COMPARE_BOOKS, confidence=1,
+        reference_scope=ReferenceScope.CURRENT_PAGE_BOOK)
+    response = chat(orch, tools, 'Do you have similar books?', page_context=page,
+                    conversation_id=first.conversation_id)
+    assert response.seed_work_ids == ['OL1W']
+    assert [book.work_id for book in response.books] == ['OL3W', 'OL2W']
+    assert response.comparison is None
+
+
+@pytest.mark.parametrize('pair', [['OL1W', 'OL3W'], ['OL2W', 'OL4W']])
+def test_plural_suitability_followup_keeps_canonical_pair(pair):
+    orch, tools = setup(Intent.COMPARE_BOOKS)
+    first = chat(orch, tools, 'Compare these books.', selected_work_ids=pair)
+    assert [book.work_id for book in first.comparison.books] == pair
+    orch.qwen.intent = AssistantIntentDecision(intent=Intent.COMPARE_BOOKS, confidence=1,
+        reference_scope=ReferenceScope.PREVIOUS_COMPARISON, resolved_work_ids=[pair[0]])
+    result = chat(orch, tools, 'Which of those two is more introductory?',
+                  conversation_id=first.conversation_id)
+    assert [book.work_id for book in result.comparison.books] == pair
+    assert 'cannot establish' in result.message
 
 
 @pytest.mark.parametrize('intent', [Intent.SEARCH_BOOKS, Intent.COMPARE_BOOKS, Intent.CHECK_AVAILABILITY, Intent.RECOMMEND_BOOKS])
@@ -462,16 +523,11 @@ def test_protected_rag_files_match_original_hashes():
     import hashlib
     import json
     assert hashlib.sha256((ROOT/'reports/assistant_backend_baseline/hashes.json').read_bytes()).hexdigest()=='aee62fd1da1a6110c05b738081199f47642585bb4720f066c34524b859818f9f'
+    assert hashlib.sha256((ROOT/'tests/contracts/rag_grounding_v2o2.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='0f2e567796978ada7ee066fb417d72d74ada76b92f7119244702f9b63c3611b5'
+    assert hashlib.sha256((ROOT/'tests/contracts/rag_grounding_v2q.py').read_bytes()).hexdigest()=='5935d7210a62506973b3014f28609c30cbc30c2984d8ad2bbb55b7cc346e979d'
+    from tests.contracts.rag_grounding_v2q import assert_reviewed_rag_tree
     rows = json.loads((ROOT / 'reports/assistant_backend_baseline/hashes.json').read_text(encoding='utf-8-sig'))
-    for row in rows:
-        if Path(row['Path']).name != 'api.py':
-            relative = Path(row['Path']).relative_to(Path(rows[0]['Path']).parents[1])
-            payload = (ROOT / relative).read_bytes()
-            if relative.as_posix() == 'rag/qa.py':
-                assert hashlib.sha256((ROOT/'tests/contracts/rag_grounding_v2o2.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='0f2e567796978ada7ee066fb417d72d74ada76b92f7119244702f9b63c3611b5'
-                from tests.contracts.rag_grounding_v2o2 import reviewed_rag_payload
-                payload = reviewed_rag_payload(payload)
-            assert hashlib.sha256(payload).hexdigest().upper() == row['Hash']
+    assert_reviewed_rag_tree(ROOT, rows)
 
 
 def test_confirmation_cannot_move_between_users():

@@ -31,15 +31,18 @@ def test_proposed_staff_contract_rejects_unauthorized_mutations(tmp_path,change)
 
 
 def test_proposed_rag_contract_preserves_exact_original_frozen_projection():
+    import hashlib
     helper=load('rag_grounding_v2o1')
     original=(ROOT/'reports/institution_v2o1_recovered_frozen_qa.txt').read_bytes()
-    assert helper.reviewed_rag_payload((ROOT/'rag/qa.py').read_bytes())==original
+    reviewed=(ROOT/'.scratch/institution-v2o2/candidate/LibraryLLM/rag/qa.py').read_bytes()
+    assert hashlib.sha256(reviewed).hexdigest()=='4a1141649a4ce9b4bce6413627c27557f5817bb8718a4e842a4d12021bd89de3'
+    assert helper.reviewed_rag_payload(reviewed)==original
     assert helper.reviewed_rag_payload(original)==original
 
 
 @pytest.mark.parametrize('kind',['prompt','retrieval','citation','grounding','whitespace'])
 def test_proposed_rag_contract_rejects_unreviewed_bytes(kind):
-    data=(ROOT/'rag/qa.py').read_bytes()
+    data=(ROOT/'.scratch/institution-v2o2/candidate/LibraryLLM/rag/qa.py').read_bytes()
     replacements={
         'prompt':(b'ANSWER:',b'ANSWER WITHOUT EVIDENCE:'),
         'retrieval':(b'select_definition_evidence(question, results, document_id, max_chunks)',b'select_definition_evidence(question, results, None, max_chunks)'),

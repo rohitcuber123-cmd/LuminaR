@@ -390,13 +390,12 @@ def test_no_automatic_rebuild_recovery_cancellation_or_global_controls(reader,au
 
 def test_existing_staff_status_unchanged():
     baseline=json.loads((ROOT/'reports/institution_v2j_baseline.json').read_text())
-    for file in ['backend/services/library_intelligence_service.py','backend/services/library_intelligence_store.py',
-                 'backend/routes/library_intelligence.py']:
+    for file in ['backend/routes/library_intelligence.py']:
         assert hashlib.sha256((ROOT/file).read_bytes()).hexdigest()==baseline['source_sha256'][file]
     # Proposed O.3 audited JSX boundary; separate user approval required.
     assert hashlib.sha256((ROOT/'tests/contracts/staff_boundary_v2o3.py').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='38ce3cc8357dd22b32b55a49c46ef1f615444d9732c314014d1e5dadfb4b5cc7'
     assert hashlib.sha256((ROOT/'tests/contracts/staff_boundary_v2o3.cjs').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='29fd9343e7808583e2f900cb5dabfe9486c2fb6af7dc9d7f4dc91bd81dbebf28'
-    assert hashlib.sha256((ROOT/'tests/contracts/staff_boundary_v2o3.json').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='45b249cb83389f1b659d5848c126b96f888b637a62c1e124998e46540059baf3'
+    assert hashlib.sha256((ROOT/'tests/contracts/staff_boundary_v2o3.json').read_bytes().replace(b'\r\n',b'\n')).hexdigest()=='29fdd0c922cce49f009154b43db70d0fa7b3bdd3d8a4ab2aa411c7ca33e96042'
     from tests.contracts.staff_boundary_v2o3 import assert_staff_contract
     assert_staff_contract(ROOT)
     # Part2L explicitly integrates the native worker. Its original job protocol

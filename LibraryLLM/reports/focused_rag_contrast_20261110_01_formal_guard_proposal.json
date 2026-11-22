@@ -1,0 +1,48 @@
+{
+  "status": "REVIEW_REQUIRED_NOT_APPLIED",
+  "source_authorization": "Latest focused repair request explicitly names rag/llm.py and rag/fast_filter.py; rag/qa.py remains prohibited",
+  "final_source_patch_sha256": "1b7f6644700ef7fa89138f978b58833d89837663c7d91ad09d5c647329a551e6",
+  "new_exact_source_pins": {
+    "rag/llm.py": "6f35a4034ae0acff78596b8cc81ed9c355a055f6560cf8dd703d907c02aab2da",
+    "rag/fast_filter.py": "f500e3d32286e2d560512db2293615f0ea0a035c12b410fa03e71e3541d8d6fe",
+    "rag/factual_evidence.py": "aec553cd0799bb2e5cfcfb8ab2f1136c51e9b5bc06d2f09800b7c96b9c898d0a"
+  },
+  "preserved_guard_manifests": {
+    "reports/assistant_backend_baseline/hashes.json": "aee62fd1da1a6110c05b738081199f47642585bb4720f066c34524b859818f9f",
+    "reports/document_rag_latency_baseline/manifest.json": "885660e7518f567212c8915d3b60e71d754e310f3b3d62de553cb8d3e440085d",
+    "tests/contracts/rag_grounding_v2o2.py": "966841216c41f64feb7da38a5cc7e9107a1f6b4a3eafbede75fcc39f119ed38b",
+    "tests/contracts/staff_boundary_v2o3.json": "d22a4a075f2ce7649797707cfb9e00008a8a0edb5b467321cb112ef7bc1ee245"
+  },
+  "requirements": [
+    "Review exact patch before changing guard pins.",
+    "Pin new factual_evidence.py transitively alongside llm.py and fast_filter.py.",
+    "Retain qa.py exact historical projection, all authority/source fences and negative mutations.",
+    "Do not accept wildcard hashes or arbitrary third versions."
+  ],
+  "failed_assertions": [
+    {
+      "classname": "tests.test_assistant_backend",
+      "name": "test_protected_rag_files_match_original_hashes"
+    },
+    {
+      "classname": "tests.test_document_rag_latency",
+      "name": "test_document_auth_retrieval_validation_verdict_and_sources_code_preserved"
+    },
+    {
+      "classname": "tests.institution_v2o2.test_grounding_boundary",
+      "name": "test_document_definition_passes_real_fast_filter_to_original_validator[SUPPORTED]"
+    },
+    {
+      "classname": "tests.institution_v2o2.test_grounding_boundary",
+      "name": "test_document_definition_passes_real_fast_filter_to_original_validator[NOT_SUPPORTED]"
+    },
+    {
+      "classname": "tests.institution_v2o3_closure.test_actual_contracts",
+      "name": "test_proposed_RAG_guard_accepts_only_reviewed_versions[reviewed_committed]"
+    },
+    {
+      "classname": "tests.institution_v2o3_closure.test_actual_contracts",
+      "name": "test_proposed_RAG_guard_accepts_only_reviewed_versions[original_frozen]"
+    }
+  ]
+}

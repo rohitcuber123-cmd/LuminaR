@@ -7,6 +7,31 @@ from fastapi import HTTPException
 MAX_TEXT_BYTES = 8 * 1024 * 1024
 MAX_TEXT_CHARS = 2_000_000
 
+
+def docx_body_text(tree, ns):
+    # Read displayed run text, not XML indentation, field instructions or
+    # deleted/moved-from revisions. Preserve source word/line boundaries.
+    parts = []
+    stack = [(tree, False)]
+    while stack:
+        node, closing = stack.pop()
+        if closing:
+            parts.append('\n')
+        elif node.tag in {ns + 'del', ns + 'moveFrom'}:
+            continue
+        elif node.tag == ns + 't':
+            parts.append(node.text or '')
+        elif node.tag == ns + 'tab':
+            parts.append('\t')
+        elif node.tag in {ns + 'br', ns + 'cr'}:
+            parts.append('\n')
+        else:
+            if node.tag == ns + 'p':
+                stack.append((node, True))
+            stack.extend((child, False) for child in reversed(node))
+    return ''.join(parts).removesuffix('\n')
+
+
 def extract_text(content, kind):
     try:
         if kind == 'TXT':
@@ -31,7 +56,7 @@ def extract_text(content, kind):
                     raise ValueError('DOCX declarations are unsupported.')
                 tree = ET.fromstring(xml)
                 ns = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
-                text = '\n'.join(''.join(node.itertext()) for node in tree.iter(ns + 'p'))
+                text = docx_body_text(tree, ns)
         else:
             raise ValueError('Unsupported text document.')
         if not text.strip() or len(text) > MAX_TEXT_CHARS:

@@ -1,0 +1,9 @@
+# Part2P improvement review
+
+The audit retained editable Events and the single shared inbox/worker. It introduced only the missing immutable announcement aggregate. Explicit announcement links on existing Events pages and role-correct notification navigation keep the experience connected. New library ADMIN authority reuses canonical memberships; librarian rights are not broadened.
+
+Testing corrected timestamp precision/idempotency, preserved the existing Events→Analytics navigation order, and eliminated stale preview immediately after save. Focus refresh keeps interaction targets stable while command/filter/page changes invalidate data. Member/proof and linked-event lookups are batched, and measured inbox command counts remain constant over20/200/2000-recipient fixtures.
+
+Final new regressions: backend0, frontend0. Existing20 skipped IDs and 16 lint warnings are compared explicitly. Fallback test isolation was tightened. Concurrent live announcement/copies, a valid SYSTEM reminder and a journal-backed request expiry were retained; original record preservation is qualified and proven in concurrent_activity.json. All initial errors and final reruns remain recorded in regression.json and raw artifacts. The accepted protected helper/manifest/source pins were not changed or broadly rebaselined.
+
+Limits:20,000 active membership-record publication ceiling; at most100 recipients per tenant slice; bounded worker scans and ten persisted failure attempts; generic inbox copies; first50 published events in the editor picker; focused finite browser/accessibility corpus; local concurrent-load measurements are not production SLAs. Membership changes serialize with a delivery slice. Unknown-outcome domain locks require the existing operator reconciliation process. No external messaging, scheduler, RSVP, preferences, engagement analytics or emergency infrastructure was introduced.

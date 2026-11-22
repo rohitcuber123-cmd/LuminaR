@@ -1,0 +1,218 @@
+{
+  "recorded_at": "2026-10-31T19:01:56.024865+00:00",
+  "revision": "606f0dfce3970bea8e6fc2b62d243433d1a66b8a",
+  "provenance": "Actual signed-in browser; existing resident API and services. No token or private data captured. Model/tool calls not independently instrumented.",
+  "observations": [
+    {
+      "id": "UI001",
+      "context": "GLOBAL",
+      "query": "Books for learning Python from scratch.",
+      "expected": "discover relevant books",
+      "observed": "Which books are you referring to? Select a book or give its title or catalogue work_id.",
+      "classification": "INTENT_ROUTING_ERROR or reference resolution error; cause unconfirmed",
+      "evidence": "REAL_MODEL_REAL_RETRIEVAL not established: no result or model trace observed"
+    },
+    {
+      "id": "UI002",
+      "context": "GLOBAL",
+      "query": "Find books about operating systems.",
+      "expected": "discover operating-system books",
+      "observed": "I found 10 matching books.",
+      "result_ids": [
+        "OL5090784W",
+        "OL4300014W",
+        "OL5275261W",
+        "OL13307998W",
+        "OL8020242W",
+        "OL15077255W",
+        "OL24991214W",
+        "OL7524040W",
+        "OL4064356W",
+        "OL4971248W"
+      ],
+      "relevance": "titles appear topically relevant, provisional, no independent review",
+      "evidence": "real running assistant; exact retrieval path not instrumented"
+    },
+    {
+      "id": "UI003",
+      "context": "GLOBAL",
+      "query": "Is the second one available?",
+      "expected": "resolve OL4300014W and show current availability",
+      "observed": "That position is not in the current book list.",
+      "classification": "FOLLOW_UP_REFERENCE_ERROR; parsed scope and cause unconfirmed",
+      "evidence": "real running assistant, existing conversation",
+      "repeat": {
+        "fresh_conversation": true,
+        "same_query": true,
+        "result": "That position is not in the current book list.",
+        "http_status": 200,
+        "response_intent": "CLARIFICATION",
+        "request_had_conversation_id": true,
+        "request_recent_result_count": 10,
+        "request_selected_count": 0,
+        "request_page_context_empty": true,
+        "model_reference_scope": "not observed"
+      }
+    },
+    {
+      "id": "UI004",
+      "context": "authorized public TEST library",
+      "query": "Find TEST Campus Network Practice Workbook.",
+      "expected": "find the displayed local book",
+      "observed": "Choose an authorized document from this library.",
+      "classification": "TOOL_SELECTION_ERROR or intent routing error; cause unconfirmed",
+      "evidence": "real running assistant, browser UI"
+    },
+    {
+      "id": "UI005",
+      "context": "authorized public TEST library",
+      "query": "Show me books about networking.",
+      "expected": "tenant discovery",
+      "observed": "The server could not complete this request. Please try again shortly.",
+      "classification": "SCOPING_ERROR or TIMEOUT_OR_PERFORMANCE; root cause unconfirmed",
+      "evidence": "real running assistant, browser UI",
+      "repeat": {
+        "fresh_conversation": true,
+        "http_status": 503,
+        "response_detail": "Library resource unavailable.",
+        "source": "browser CDP response body; no credentials captured"
+      },
+      "retry_after_services_ready": {
+        "fresh_conversation": true,
+        "http_status": 503,
+        "response_detail": "Library resource unavailable.",
+        "browser_response_ms": 6514.595,
+        "observed_before_or_after_tool_execution": "unknown"
+      }
+    },
+    {
+      "id": "UI006",
+      "timestamp": "2026-10-31T19:07:52.897669+00:00",
+      "context": "GLOBAL",
+      "query": "Find books by Bram Stoker.",
+      "expected": "book author includes Bram Stoker",
+      "http_status": 200,
+      "response_intent": "SEARCH_BOOKS",
+      "observed": "I found 10 matching books.",
+      "result_ids": [
+        "OL85887W",
+        "OL85871W",
+        "OL17433244W",
+        "OL14956527W",
+        "OL85872W",
+        "OL85883W",
+        "OL25677459W",
+        "OL14956388W",
+        "OL85867W",
+        "OL85885W"
+      ],
+      "reported_authors_all_match": true,
+      "sample_size": 1,
+      "judgment": "provisional: matches returned metadata, not independently verified authorship",
+      "evidence": "real browser and running assistant; exact retrieval path and model call count not instrumented"
+    },
+    {
+      "id": "UI007",
+      "timestamp": "2026-10-31T19:09:25.128853+00:00",
+      "context": "authorized public TEST library after Global",
+      "query": "Is the second one available?",
+      "expected": "prior Global context must not resolve in tenant",
+      "observed": "That position is not in the current book list.",
+      "http_status": 200,
+      "response_intent": "CLARIFICATION",
+      "returned_book_count": 0,
+      "provisional_security_result": "No foreign book returned in this one case",
+      "evidence": "real signed-in browser; not a complete isolation audit"
+    },
+    {
+      "id": "UI008",
+      "timestamp": "2026-10-31T19:12:41.521680+00:00",
+      "context": "GLOBAL",
+      "query": "Recommend beginner-friendly database textbooks.",
+      "expected": "relevant beginner database books, or disclose unsupported difficulty",
+      "http_status": 200,
+      "response_intent": "RECOMMEND_BOOKS",
+      "observed": "Here are your recommendations.",
+      "result_count": 10,
+      "metadata_check": "0 of 10 returned titles and subject fields contained the literal term database; relevance and difficulty not independently judged.",
+      "result_ids": "OMITTED: personalized output from signed-in user",
+      "elapsed_ms_browser": 5094.827,
+      "classification": "RECOMMENDATION_COVERAGE_ERROR or INTENT_FIELD_PROPAGATION_ERROR; actual parsed model fields not observed",
+      "source_trace": "No-seed RECOMMEND_BOOKS constructs ResultContext without parsed.query; result_page calls personalized recommendation provider. This alone does not prove the model emitted a query.",
+      "evidence": "real running assistant; no model call count or underlying recommendation trace captured"
+    },
+    {
+      "id": "UI009",
+      "timestamp": "2026-10-31T19:13:31.102694+00:00",
+      "context": "GLOBAL",
+      "query": "Do you have the book Dune?",
+      "expected": "resolve title or clarify ambiguous matches",
+      "http_status": 200,
+      "response_intent": "CLARIFICATION",
+      "observed": "Which catalogue title did you mean?",
+      "choices": [
+        "OL20832265W",
+        "OL8383298W",
+        "OL16050419W",
+        "OL3242651W",
+        "OL16482778W",
+        "OL26403544W"
+      ],
+      "elapsed_ms_browser": 11577.281,
+      "judgment": "Clarification returned for multiple same-title candidates; candidate coverage not independently judged.",
+      "evidence": "real running assistant, signed-in browser"
+    },
+    {
+      "id": "UI010",
+      "timestamp": "2026-10-31T19:15:52.573294+00:00",
+      "context": "authorized public isolation A library",
+      "query": "Show me books about networking.",
+      "expected": "tenant discovery",
+      "http_status": 503,
+      "response_detail": "Library resource unavailable.",
+      "elapsed_ms_browser": 6455.574,
+      "classification": "SCOPING_ERROR or TIMEOUT_OR_PERFORMANCE; source cause unconfirmed",
+      "evidence": "real running assistant and signed-in browser"
+    },
+    {
+      "id": "UI011",
+      "timestamp": "2026-10-31T19:15:52.573294+00:00",
+      "context": "GLOBAL",
+      "query": "Find a book about quazzleflorp thermodynamic aardvarks.",
+      "expected": "no reliable match or clarification; no invented availability",
+      "http_status": 200,
+      "response_intent": "CLARIFICATION",
+      "observed": "Several catalogue titles may match. Which title did you mean?",
+      "book_count": 0,
+      "choice_count": 6,
+      "choice_observation": "Choices concern thermodynamics; none contained the invented term.",
+      "elapsed_ms_browser": 30232.623,
+      "judgment": "provisional; exhaustive global no-match ground truth unavailable",
+      "evidence": "real running assistant and signed-in browser"
+    },
+    {
+      "id": "UI012",
+      "timestamp": "2026-10-31T19:17:44.878992+00:00",
+      "context": "authorized public isolation A library",
+      "query": "Recommend (structured quick action)",
+      "expected": "tenant-owned recommendations from existing candidate intersection",
+      "observed": "The server could not complete this request. Please try again shortly.",
+      "http_status": 503,
+      "response_detail": "Library resource unavailable.",
+      "elapsed_ms_browser": 553.142,
+      "classification": "SCOPING_ERROR or service failure; initial vs postvalidation not instrumented",
+      "evidence": "structured UI action, no Qwen inference claimed; real running services"
+    },
+    {
+      "id": "UI013",
+      "timestamp": "2026-10-31T19:29:01.633886+00:00",
+      "context": "GLOBAL",
+      "query": "books about machine learning",
+      "expected": "actual Global Search retrieval without recording user history",
+      "observed": "three HTTP 401 responses after the browser session expired",
+      "http_status": 401,
+      "execution_classification": "NOT_EXECUTED: authentication failed before retrieval",
+      "privacy_controls": "Intercepted request bodies set save_history=false, personalized=false, and omitted session_id; interception cleared. No authorization change or credential captured."
+    }
+  ]
+}

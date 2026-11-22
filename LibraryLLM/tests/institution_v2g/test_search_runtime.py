@@ -9,12 +9,13 @@ from types import SimpleNamespace
 import json
 import numpy as np
 import pytest
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from backend.dependencies import get_current_user
 from backend.services import library_intelligence_store as store, library_intelligence_service as service
 from backend.services import library_catalogue_experience as catalogue
 from search.library_intelligence import TenantIntelligence
 from search.library_intelligence_api import install
+from search.query_execution import tenant_search
 from fastapi.testclient import TestClient
 from test_intelligence import encoder, book, build
 
@@ -24,6 +25,132 @@ def ready(client, library, title='Mobility and transport for elderly and handica
     worker=TenantIntelligence(encoder,reranker,model_version='all-MiniLM-L6-v2:unit')
     job,_=build(lid,worker=worker)
     return lid,record,job,worker,reranker
+
+
+@pytest.mark.parametrize('state', ['NOT_BUILT', 'STALE', 'FAILED', 'RECOVERY_REQUIRED'])
+def test_tenant_search_filler_words_do_not_hide_owned_match(client, library, state):
+    library_id = library(private=True)
+    owned = book(client, library_id)
+    book(client, library(name='Foreign library'))
+    if state != 'NOT_BUILT':
+        store.collection('intelligence_targets').insert_one(
+            {'library_id': library_id, 'target': 'SEARCH_INDEX', 'state': state})
+    model = Mock(side_effect=AssertionError('Fallback must not invoke a model'))
+    worker = TenantIntelligence(model, model)
+    result = tenant_search(worker, library_id, {'sub':'1'}, 'computer networks with the',
+                           staff=True, kg_enabled=False, diagnostics=True)
+    assert result['source']['intelligence_status'] == state
+    assert result['source']['search_source'] == 'LOCAL_FALLBACK'
+    assert result['source']['catalogue_source'] == 'LIBRARY_LOCAL'
+    assert [row['library_book_id'] for row in result['results']] == [owned['library_book_id']]
+    assert result['diagnostics']['candidate_count'] == 1
+    model.assert_not_called()
+
+
+@pytest.mark.parametrize('query,filters', [
+    ('quantum networks with the', None),
+    ('computer networks with the', {'author':'Different author'}),
+    ('with the', None),
+])
+def test_tenant_filler_fallback_does_not_relax_content_or_hard_filters(client, library, query, filters):
+    library_id = library()
+    book(client, library_id)
+    result = tenant_search(TenantIntelligence(encoder), library_id, {'sub':'1'}, query,
+                           staff=True, kg_enabled=False, filters=filters)
+    assert result['results'] == []
+
+
+@pytest.mark.parametrize('failure', [RuntimeError, TimeoutError, 'bad_shape', 'nonfinite'])
+def test_tenant_optional_reranker_failure_keeps_authorized_native_order(client, library, failure):
+    library_id, owned, job, worker, reranker = ready(client, library)
+    book(client, library(name='Foreign library'))
+    baseline = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                             staff=True, kg_enabled=False, diagnostics=True)
+    assert [row['library_book_id'] for row in baseline['results']] == [owned['library_book_id']]
+    if isinstance(failure, type):
+        reranker.side_effect = failure('Injected optional ranking failure')
+    else:
+        reranker.side_effect = None
+        reranker.return_value = [[1.0]] if failure == 'bad_shape' else [float('nan')]
+    result = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                           staff=True, kg_enabled=False, diagnostics=True)
+    assert [row['library_book_id'] for row in result['results']] == [owned['library_book_id']]
+    assert result['source']['catalogue_source'] == 'LIBRARY_LOCAL'
+    assert result['source']['search_source'] == 'TENANT_SEMANTIC'
+    assert result['source']['ranking_degraded'] is True
+    assert not result['diagnostics']['reranker_used']
+    assert result['diagnostics']['generation'] == job['artifact_generation_id']
+
+
+@pytest.mark.parametrize('stage', ['cache', 'reranker', 'hydrate'])
+def test_tenant_search_authority_failure_never_becomes_fallback(client, library, monkeypatch, stage):
+    library_id, _, _, worker, reranker = ready(client, library)
+    denied = Mock(side_effect=HTTPException(403, 'Fixture authority denied'))
+    if stage == 'cache':
+        monkeypatch.setattr(worker.cache, 'load', denied)
+    elif stage == 'reranker':
+        reranker.side_effect = denied
+    else:
+        monkeypatch.setattr(catalogue, 'hydrate', denied)
+    with pytest.raises(HTTPException) as error:
+        tenant_search(worker, library_id, {'sub':'1'}, 'mobility', staff=True, kg_enabled=False)
+    assert error.value.status_code == 403
+    denied.assert_called_once()
+
+
+@pytest.mark.parametrize('damage', ['missing_index', 'invalid_manifest'])
+def test_tenant_search_uses_current_local_metadata_when_artifact_is_invalid(client, library, damage):
+    library_id, owned, job, worker, reranker = ready(client, library)
+    folder = store.directory(library_id, 'search', job['artifact_generation_id'])
+    if damage == 'missing_index':
+        (folder / 'index.faiss').unlink()
+    else:
+        (folder / 'manifest.json').write_text('{}', encoding='utf8')
+    result = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                           staff=True, kg_enabled=False, diagnostics=True)
+    assert [row['library_book_id'] for row in result['results']] == [owned['library_book_id']]
+    assert result['source']['intelligence_status'] == 'RECOVERY_REQUIRED'
+    assert result['source']['search_source'] == 'LOCAL_FALLBACK'
+    assert not result['diagnostics']['hnsw_used']
+    reranker.assert_not_called()
+    assert service.target_status(library_id, 'SEARCH_INDEX')['active_generation_id'] == job['artifact_generation_id']
+
+
+def test_tenant_search_rechecks_fingerprint_after_encoding(client, library):
+    library_id, owned, job, worker, reranker = ready(client, library)
+
+    def encode_after_change(texts):
+        store.collection('library_books').update_one({'library_id':library_id,
+            'library_book_id':owned['library_book_id']}, {'$set':{'title':'Revised mobility handbook'}})
+        return encoder(texts)
+
+    worker.encoder = encode_after_change
+    result = tenant_search(worker, library_id, {'sub':'1'}, 'revised mobility',
+                           staff=True, kg_enabled=False, diagnostics=True)
+    assert [row['title'] for row in result['results']] == ['Revised mobility handbook']
+    assert result['source']['search_source'] == 'LOCAL_FALLBACK'
+    assert not result['diagnostics']['hnsw_used']
+    reranker.assert_not_called()
+    current = service.target_status(library_id, 'SEARCH_INDEX')
+    assert current['status'] == 'STALE' and current['active_generation_id'] == job['artifact_generation_id']
+
+
+def test_tenant_search_rechecks_membership_after_encoding(client, library):
+    library_id, _, _, worker, reranker = ready(client, library)
+    memberships = store.collection('memberships')
+    memberships.insert_one({'library_id':library_id, 'user_id':2, 'membership_id':str(uuid4()),
+                            'role':'LIBRARIAN', 'status':'ACTIVE'})
+    book(client, library(name='Other library'))
+
+    def encode_after_revocation(texts):
+        memberships.update_one({'library_id':library_id,'user_id':2}, {'$set':{'status':'REVOKED'}})
+        return encoder(texts)
+
+    worker.encoder = encode_after_revocation
+    with pytest.raises(HTTPException) as error:
+        tenant_search(worker, library_id, {'sub':'2'}, 'mobility', staff=True, kg_enabled=False)
+    assert error.value.status_code == 404
+    reranker.assert_not_called()
 
 def test_tenant_ready_uses_tenant_hnsw(client,library):
     lid,row,job,worker,reranker=ready(client,library)

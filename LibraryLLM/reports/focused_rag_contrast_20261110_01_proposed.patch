@@ -1,0 +1,73 @@
+--- a/rag/llm.py
++++ b/rag/llm.py
+@@ -6,6 +6,7 @@
+ from threading import RLock
+ from rag.telemetry import stage, record_generation
+ from rag.query_types import ordinary_book_intent
++from rag.factual_evidence import literal_factual_intent, assess_factual_evidence
+ from rag.decoding import AnswerRepetitionControl
+ 
+ import torch
+@@ -471,6 +472,9 @@
+         key = ' '.join(question.lower().split()).rstrip('?.!')
+         generic = ordinary_book_intent(question)
+         if generic is None:
++            literal = literal_factual_intent(question)
++            if literal is not None:
++                return literal
+             return self._analyze_intent_uncached(question)
+         if generic.get('target') is not None or generic.get('question_focus') == 'definition':
+             # Topic/noun phrases can contain personal information. Classify
+@@ -668,6 +672,17 @@
+             top_chunk = used_items[0]
+             context_text = top_chunk.get("text", "")
+ 
++        # Explicit factual relationships are checked before any model verdict.
++        # Ambiguity maps to the existing conservative public decision schema.
++        if informational_category is None:
++            selected = used_items[:3] if mode == "top-3-comb" else used_items[:1]
++            factual = assess_factual_evidence(question, intent_data, selected)
++            if factual is not None:
++                supported = factual.verdict == "SUPPORTED"
++                return {"verdict": "SUPPORTED" if supported else "NOT_SUPPORTED",
++                        "details": {"supported": supported, "confidence": 1.0 if supported else 0.0},
++                        "factual_status": factual.verdict, "reason": factual.reason}
++
+         if MOCK_MODE:
+             # Mock behavior for regression tests
+             low_q = question.lower()
+--- a/rag/fast_filter.py
++++ b/rag/fast_filter.py
+@@ -659,6 +659,17 @@
+ 
+     # Make decision
+     decision = fast_filter_decision(signals)
++    if intent_data.get("intent", "FACTUAL") == "FACTUAL" and not intent_data.get("question_focus"):
++        from rag.factual_evidence import assess_factual_evidence
++        selected = evidence_items[:3] if mode == "combined" else evidence_items[:1]
++        factual = assess_factual_evidence(question, intent_data, selected)
++        if factual is not None:
++            decision = "FAST_ACCEPT" if factual.verdict == "SUPPORTED" else "FAST_REJECT"
++            signals.reasons.append(factual.reason)
++        elif decision == "FAST_ACCEPT":
++            # Co-occurrence cannot establish an unverified factual proposition.
++            decision = "NEEDS_LLM_VALIDATION"
++            signals.reasons.append("factual relationship requires semantic validation")
+ 
+     return {
+         "decision": decision,
+--- a/frontend/src/components/BookCover.tsx
++++ b/frontend/src/components/BookCover.tsx
+@@ -63,10 +63,10 @@
+       )}
+ 
+       <div className="book-cover-content relative flex h-full flex-col justify-between p-[9%]">
+-        <span className="book-cover-brand font-display w-fit text-[0.6rem] leading-none opacity-70">LuminaR</span>
++        <span className="book-cover-brand font-display w-fit text-[0.6rem] leading-none">LuminaR</span>
+         <div className="book-cover-copy">
+           <p className="book-cover-title font-display" title={title}>{title}</p>
+-          {author && <p className="book-cover-author mt-1.5 uppercase tracking-wide opacity-75" title={author}>{author}</p>}
++          {author && <p className="book-cover-author mt-1.5 uppercase tracking-wide" title={author}>{author}</p>}
+         </div>
+       </div>
+     </div>

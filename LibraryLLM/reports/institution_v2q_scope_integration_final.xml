@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="12" time="18.714" timestamp="2026-10-31T19:34:57.638256+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2q_ai.test_integration" name="test_real_tenant_search_and_local_ids[0]" time="6.558" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_real_tenant_search_and_local_ids[1]" time="1.091" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_real_for_you_local_supplement[0]" time="1.074" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_real_for_you_local_supplement[1]" time="1.123" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_http_conversation_cross_scope_denied[foreign]" time="1.239" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_http_conversation_cross_scope_denied[global]" time="0.977" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_revocation_denies_existing_conversation" time="1.044" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_foreign_book_reference_cannot_load_metadata" time="0.962" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_forged_circulation_context_rejected" time="1.040" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_followup_uses_current_library_result_mapping" time="1.219"><failure message="IndexError: list index out of range">fixture = (&lt;starlette.testclient.TestClient object at 0x0000018A11687610&gt;, ['c5b0c361-a312-49a2-918d-7b8e68fb8854', '27ef6666-de...5b0c361-a312-49a2-918d-7b8e68fb8854/catalogue/source', '/libraries/c5b0c361-a312-49a2-918d-7b8e68fb8854/context', ...])
+
+    def test_followup_uses_current_library_result_mapping(fixture):
+        first=chat(fixture,fixture[1][0]);assert first.status_code==200
+        second=chat(fixture,fixture[1][0],message='Is the first book available?',conversation_id=first.json()['conversation_id'])
+        assert second.status_code==200,second.text
+        data=second.json();assert not data['errors'],data
+&gt;       assert data['availability'][0]['work_id']==fixture[2][0]
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests\institution_v2q_ai\test_integration.py:92: IndexError</failure></testcase><testcase classname="tests.institution_v2q_ai.test_integration" name="test_foreign_asset_is_denied_before_rag_callback" time="1.073"><failure message="assert False&#10; +  where False = any(&lt;generator object test_foreign_asset_is_denied_before_rag_callback.&lt;locals&gt;.&lt;genexpr&gt; at 0x0000018A1168ADC0&gt;)">fixture = (&lt;starlette.testclient.TestClient object at 0x0000018A0FBACD50&gt;, ['fc5fd164-dfda-4236-9cb5-edf908160c90', '6d8826f9-b3...ies/fc5fd164-dfda-4236-9cb5-edf908160c90/catalogue/source', '/libraries/fc5fd164-dfda-4236-9cb5-edf908160c90/context'])
+
+    def test_foreign_asset_is_denied_before_rag_callback(fixture):
+        response=chat(fixture,fixture[1][0],action='DOCUMENT_QUESTION',page_context={'document_id':f'library:{fixture[1][1]}:asset:{uuid4()}'})
+        assert response.status_code==200,response.text
+&gt;       assert any(e['code']=='SCOPED_DOCUMENT_REQUIRED' for e in response.json()['errors'])
+E       assert False
+E        +  where False = any(&lt;generator object test_foreign_asset_is_denied_before_rag_callback.&lt;locals&gt;.&lt;genexpr&gt; at 0x0000018A1168ADC0&gt;)
+
+tests\institution_v2q_ai\test_integration.py:98: AssertionError</failure></testcase><testcase classname="tests.institution_v2q_ai.test_integration" name="test_revocation_during_model_routing_cannot_release_results" time="1.085" /></testsuite></testsuites>

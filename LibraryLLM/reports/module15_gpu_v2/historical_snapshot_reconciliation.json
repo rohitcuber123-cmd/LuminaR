@@ -1,0 +1,102 @@
+{
+  "snapshot": {
+    "id": "20261031T140041Z_606f0df_15",
+    "captured_utc": "2026-10-31T14:00:41.9021742Z",
+    "branch": "main",
+    "head": "606f0dfce3970bea8e6fc2b62d243433d1a66b8a",
+    "pre_write_working_tree": [
+      "modified scripts/start_local.py",
+      "untracked reports/research_paper/",
+      "untracked document outside repository root"
+    ],
+    "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+    "installed_venv_versions": {
+      "pytest": "9.1.1",
+      "fastapi": "0.143.0",
+      "pydantic": "2.14.1",
+      "torch": "2.14.1",
+      "transformers": "4.57.6",
+      "sentence-transformers": "5.7.0",
+      "faiss-cpu": "1.15.1",
+      "numpy": "2.5.4",
+      "bitsandbytes": "NOT INSTALLED"
+    },
+    "source_and_dependency_sha256": {
+      "requirements.txt": "a86fe31f1f2c4200199a1d9f0d926a5bf8587124d5721e032b8388447575c2a7",
+      "requirements-local.txt": "47dfb1edaa3dd7bb2230ace99735763854e231e7812c2677924b6130902cd1c0",
+      "frontend/package-lock.json": "0ceb0bcb8f5479cd4538aa4dcc473811e1261cd8920a9360299804b2243079e7",
+      "assistant/api.py": "a80defd7c83e808e93a025a3ba765adbd279da708d591625d9030e093c3bb665",
+      "assistant/qwen.py": "eb22edb9e57c943682006f82f489f6d6ef81836091312a28c9c2effe243d5b63",
+      "assistant/orchestrator.py": "f32592d5a5151dc1e6dbf491f9476675298203c14abbadda9186f29ed6e1c1b9",
+      "assistant/ROUTER_FREEZE.md": "71f03a6c09be29d25082b3ffe4043d6b76c71acdfa6e27d3b7e581278041448e",
+      "rag/api.py": "2ed6d5c2fa1d9e989cceafe443f293e2f5362db9bc804b46e8b8c6b8c514cd84",
+      "rag/llm.py": "d3fd788dc284cb9654c219d480fa521a775a95324c4b85ac3f1f24bbfcda8bc1",
+      "rag/qa.py": "746652b2c1a4541fc1ddbb639d6151d8041ac2317096765d2a1c75e2660f39e8",
+      "rag/document_grounding.py": "65a2b7fc81535161e8b2e69e376fb52ebae37ac5e28c4e47ae7c61129910d0f4",
+      "rag/services/knowledge_encoder.py": "c8a98e9f865f237fd32e7c12bb6554171eeaba8e05928217264f7371e14ec53d",
+      "rag/services/knowledge_quiz.py": "2ea7a561fb3b1edc5f4eb7c267e14c985fd8273d306954d4c63e73f405a6f421",
+      "search/luminar_search.py": "d7eb1cd4b4bb2a13b60bb009f7d1e55abcff4b151bc93a4ea0fedaec16a4ecdd",
+      "tests/contracts/rag_grounding_v2o2.py": "966841216c41f64feb7da38a5cc7e9107a1f6b4a3eafbede75fcc39f119ed38b"
+    },
+    "dependency_note": "requirements mostly ranges; local installations and lock hashes do not establish deployed versions or model weights",
+    "production_mongodb_authentication": "NOT QUALIFIED"
+  },
+  "five_historical_checks": {
+    "date": "2026-10-31",
+    "method": "native Python isolated pure document_grounding functions; synthetic inputs; no app, model, database, GPU or network",
+    "checks": [
+      {
+        "name": "explicit definition accepted",
+        "passed": true
+      },
+      {
+        "name": "heading alone rejected",
+        "passed": true
+      },
+      {
+        "name": "negative definition rejected",
+        "passed": true
+      },
+      {
+        "name": "foreign document excluded",
+        "passed": true
+      },
+      {
+        "name": "compound question not classified as definition",
+        "passed": true
+      }
+    ]
+  },
+  "gpu_prior_contract": {
+    "status": "PASS",
+    "fresh_runs": [
+      {
+        "scope": "tests/test_assistant_backend.py tests/test_assistant_semantic_router.py tests/institution_v2o2/test_grounding_boundary.py",
+        "result": "110 passed, 1 warning in 36.97s",
+        "isolation": "mock Qwen/tools and synthetic grounding fixtures"
+      },
+      {
+        "scope": "tests/institution_v2o2/test_contract_mutations.py",
+        "result": "54 passed in 31.39s"
+      }
+    ],
+    "direct_contract": "reviewed_rag_payload(current bytes) returned exact legacy hash",
+    "actual_sha256": "4a1141649a4ce9b4bce6413627c27557f5817bb8718a4e842a4d12021bd89de3",
+    "legacy_projection_sha256": "0e78a7c780f691b14c8e3a3337f62054e4c117f0c2df7828099d80da90a793c6",
+    "cause": "Current bytes are exact reviewed SHA; contract removes specifically enumerated grounding changes and restores one prior line to obtain frozen hash. Mixed CRLF/LF (1130 CRLF, 1275 LF); current Git blob matches HEAD after Git normalization. Newline conversion alone is not established as full cause; historical snapshot 746652... differs from current raw bytes.",
+    "historical": "2026-10-31 five helper checks are historical and excluded from fresh totals"
+  },
+  "archive_docs_read": [
+    "15_evaluation_plan.md",
+    "15_feature_status.csv",
+    "15_figures_spec.md",
+    "15_open_questions.md",
+    "15_paper_ready_facts.md",
+    "15_research_methods.md",
+    "15_snapshot.json",
+    "15_technical_evidence.md",
+    "15_test_results.json"
+  ],
+  "match_known_baseline": true,
+  "no_archive_code_executed": true
+}

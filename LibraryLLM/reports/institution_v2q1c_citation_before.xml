@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="2" time="1.423" timestamp="2026-11-02T00:32:22.094176+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2q_ai.test_v2q1c_citations" name="test_recorded_unsupported_page_is_contained_at_http_boundary" time="0.778"><failure message="AssertionError: assert 'SUPPORTED' == 'NOT_SUPPORTED'&#10;  &#10;  - NOT_SUPPORTED&#10;  ? ----&#10;  + SUPPORTED">def test_recorded_unsupported_page_is_contained_at_http_boundary():
+        raw=json.loads((ROOT/'reports/institution_v2q1_public_rag_resumed.json').read_text(encoding='utf8'))
+        original=next(row['response'] for row in raw['queries'] if row['id']=='RAG027')
+        assert original['answer']=='Page 15' and all(row.get('page') is None for row in original['sources'])
+        result=adapted(original)
+&gt;       assert result['verdict']=='NOT_SUPPORTED'
+E       AssertionError: assert 'SUPPORTED' == 'NOT_SUPPORTED'
+E         
+E         - NOT_SUPPORTED
+E         ? ----
+E         + SUPPORTED
+
+tests\institution_v2q_ai\test_v2q1c_citations.py:33: AssertionError</failure></testcase><testcase classname="tests.institution_v2q_ai.test_v2q1c_citations" name="test_supported_page_and_grounded_answer_are_preserved" time="0.024" /></testsuite></testsuites>

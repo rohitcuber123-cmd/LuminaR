@@ -29,15 +29,17 @@ def ensure_indexes():
 @contextmanager
 def read_context(library_id, actor, *, patron=True, staff=False):
     guard = require_library_staff if staff else require_library_patron if patron else require_library_membership
-    # Verify eligibility/scope before locking or running canonical maintenance.
-    library, membership = guard(library_id, actor)
+    # Canonical reads wait for the authority barrier before checking scope.
+    # An unlocked precheck would reject ordinary overlapping reads immediately.
     canonical = lending.journal.state(library_id) == 'CANONICAL'
     if canonical:
         with library_mutation(library_id, wait_seconds=30, durable=True):
+            library, membership = guard(library_id, actor, locked=True)
             lending.access_locked(library_id, actor, patron=patron and not staff, staff=staff)
             library, membership = guard(library_id, actor, locked=True)
             yield library, membership, canonical
     else:
+        library, membership = guard(library_id, actor)
         yield library, membership, canonical
         require_readable(library_id)
 
@@ -218,22 +220,22 @@ def home(library_id, actor):
         return payload
 
 
-def recommendations(library_id, actor, work_ids=(), limit=10):
+def recommendations(library_id, actor, work_ids=(), limit=10, *, staff=False):
     """Scope existing global candidates; fill only from usable canonical local records."""
-    with read_context(library_id, actor) as (library, membership, canonical):
-        descriptor = source_locked(library_id, library, membership, canonical)
+    with read_context(library_id, actor, patron=not staff, staff=staff) as (library, membership, canonical):
+        descriptor = source_locked(library_id, library, membership, canonical, staff=staff)
         if descriptor['catalogue_source'] == 'GLOBAL_FALLBACK':
             return {'source': descriptor, 'results': [], 'ranking': 'GLOBAL_FALLBACK'}
         candidates = list(dict.fromkeys(work_ids))[:200]
-        matches = list(collection('library_books').aggregate([*usable(library_id),
+        matches = list(collection('library_books').aggregate([*usable(library_id, staff=staff),
             {'$match': {'global_work_id': {'$in': candidates}}},
             {'$set': {'recommendation_rank': {'$indexOfArray': [candidates, '$global_work_id']}}},
             {'$sort': {'recommendation_rank': 1, 'library_book_id': 1}}, {'$limit': limit}])) if candidates else []
         # Deterministic recent-acquisition discovery, with no dependency on a global work ID.
-        fallback = list(collection('library_books').aggregate([*usable(library_id),
+        fallback = list(collection('library_books').aggregate([*usable(library_id, staff=staff),
             {'$match': {'library_book_id': {'$nin': [r['library_book_id'] for r in matches]}}},
             *arrival_sort(), {'$limit': limit - len(matches)}])) if len(matches) < limit else []
-        return {'source': descriptor, 'results': hydrate(library_id, actor, [*matches, *fallback], canonical),
+        return {'source': descriptor, 'results': hydrate(library_id, actor, [*matches, *fallback], canonical, staff=staff),
             'ranking': 'GLOBAL_INTERSECTION_AND_LOCAL_DISCOVERY', 'intersection_count': len(matches)}
 
 
@@ -269,8 +271,27 @@ def detail(library_id, book_id, actor, *, staff=False):
         return {'source': source_locked(library_id, library, membership, canonical, staff=staff), 'book': hydrate(library_id, actor, rows, canonical, staff=staff)[0]}
 
 
-def global_context(library_id, work_id, actor):
-    with read_context(library_id, actor) as (library, membership, canonical):
-        rows = list(collection('library_books').aggregate([*usable(library_id), {'$match': {'global_work_id': work_id}}, *arrival_sort(), {'$limit': 1}]))
-        return {'source': source_locked(library_id, library, membership, canonical),
-            'book': hydrate(library_id, actor, rows, canonical)[0] if rows else None}
+def global_context(library_id, work_id, actor, *, staff=False):
+    with read_context(library_id, actor, patron=not staff, staff=staff) as (library, membership, canonical):
+        rows = list(collection('library_books').aggregate([*usable(library_id, staff=staff), {'$match': {'global_work_id': work_id}}, *arrival_sort(), {'$limit': 1}]))
+        return {'source': source_locked(library_id, library, membership, canonical, staff=staff),
+            'book': hydrate(library_id, actor, rows, canonical, staff=staff)[0] if rows else None}
+
+
+def assistant_reading_list(library_id, actor, *, staff=False):
+    """Bounded own saved targets intersected with current canonical holdings."""
+    from backend.database.mongodb import reading_list_collection
+    with read_context(library_id, actor, patron=not staff, staff=staff) as (_, _, canonical):
+        saved=list(reading_list_collection.aggregate([
+            {'$match':{'user_id':actor_id(actor)}},
+            {'$lookup':{'from':'institution_library_books','let':{'work':'$work_id','bid':'$library_book_id','lib':'$library_id','kind':'$target_type'},'pipeline':[
+                {'$match':{'library_id':library_id,'status':'ACTIVE','$expr':{'$or':[
+                    {'$and':[{'$ne':['$$kind','LIBRARY_BOOK']},{'$eq':['$global_work_id','$$work']}]},
+                    {'$and':[{'$eq':['$$lib',library_id]},{'$eq':['$library_book_id','$$bid']}]}]}}},
+                {'$limit':1},{'$project':{'_id':0,'library_book_id':1}}],'as':'local'}},
+            {'$unwind':'$local'},{'$sort':{'added_at':-1,'work_id':1}},{'$limit':51},
+            {'$project':{'_id':0,'library_book_id':'$local.library_book_id'}}]))
+        ids=[r['library_book_id'] for r in saved[:50]]
+        rows=list(collection('library_books').aggregate([*usable(library_id,staff=staff),{'$match':{'library_book_id':{'$in':ids}}},{'$limit':50}])) if ids else []
+        by_id={r['library_book_id']:r for r in hydrate(library_id,actor,rows,canonical,staff=staff)}
+        return {'library_id':library_id,'results':[by_id[i] for i in ids if i in by_id],'has_more':len(saved)>50}

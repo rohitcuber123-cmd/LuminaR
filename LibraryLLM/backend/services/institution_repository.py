@@ -52,22 +52,30 @@ def ensure_indexes():
 
 
 @contextmanager
-def library_mutation(library_id, *, wait_seconds=3, durable=False):
+def library_mutation(library_id, *, wait_seconds=3, durable=False, intelligence_job_id=None, intelligence_target=None):
     """Cross-worker serialization on standalone Mongo.
 
     A crashed holder is NEVER timed out/replaced automatically: a stale writer
     cannot race a successor. Reads fail closed while this lock exists. Operators
     must stop API workers and reconcile interrupted mutations before removing it.
     """
+    from uuid import UUID
     locks = collection('locks')
     if durable:
         from pymongo.write_concern import WriteConcern
         locks = locks.with_options(write_concern=WriteConcern(w=1, j=True))
     holder = str(uuid4())
+    doc = {'_id': library_id, 'holder': holder, 'created_at': now()}
+    if intelligence_job_id is not None:
+        doc['intelligence_job_id'] = str(UUID(str(intelligence_job_id)))
+        if intelligence_target is not None:
+            if intelligence_target not in ('SEARCH_INDEX', 'KNOWLEDGE_GRAPH'):
+                raise ValueError('Invalid intelligence lock target.')
+            doc['intelligence_target'] = intelligence_target
     deadline = monotonic() + wait_seconds
     while True:
         try:
-            locks.insert_one({'_id': library_id, 'holder': holder, 'created_at': now()})
+            locks.insert_one(doc)
             break
         except DuplicateKeyError:
             if monotonic() >= deadline:

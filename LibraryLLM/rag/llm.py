@@ -6,6 +6,7 @@ from copy import deepcopy
 from threading import RLock
 from rag.telemetry import stage, record_generation
 from rag.query_types import ordinary_book_intent
+from rag.factual_evidence import literal_factual_intent, assess_factual_evidence
 from rag.decoding import AnswerRepetitionControl
 
 import torch
@@ -471,6 +472,9 @@ class LuminaRLLM:
         key = ' '.join(question.lower().split()).rstrip('?.!')
         generic = ordinary_book_intent(question)
         if generic is None:
+            literal = literal_factual_intent(question)
+            if literal is not None:
+                return literal
             return self._analyze_intent_uncached(question)
         if generic.get('target') is not None or generic.get('question_focus') == 'definition':
             # Topic/noun phrases can contain personal information. Classify
@@ -667,6 +671,17 @@ class LuminaRLLM:
         else:
             top_chunk = used_items[0]
             context_text = top_chunk.get("text", "")
+
+        # Explicit factual relationships are checked before any model verdict.
+        # Ambiguity maps to the existing conservative public decision schema.
+        if informational_category is None:
+            selected = used_items[:3] if mode == "top-3-comb" else used_items[:1]
+            factual = assess_factual_evidence(question, intent_data, selected)
+            if factual is not None:
+                supported = factual.verdict == "SUPPORTED"
+                return {"verdict": "SUPPORTED" if supported else "NOT_SUPPORTED",
+                        "details": {"supported": supported, "confidence": 1.0 if supported else 0.0},
+                        "factual_status": factual.verdict, "reason": factual.reason}
 
         if MOCK_MODE:
             # Mock behavior for regression tests

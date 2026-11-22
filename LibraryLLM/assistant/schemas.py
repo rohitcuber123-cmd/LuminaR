@@ -176,6 +176,7 @@ class AssistantRequest(StrictModel):
     page_context: PageContext = Field(default_factory=PageContext)
     pending_action_id: str | None = Field(default=None, min_length=1, max_length=64)
     lending_context: LendingContext | None = None
+    library_id: UUID | None = None
     action: Literal['CONFIRM_ACTION', 'CANCEL_ACTION', 'COMPARE', 'RECOMMEND',
                     'RECOMMEND_SIMILAR', 'MORE_LIKE_THIS', 'RECOMMEND_FROM_SELECTION', 'CHECK_AVAILABILITY',
                     'AVAILABLE_NOW', 'USER_LOANS', 'USER_FEES', 'USER_RESERVATIONS',
@@ -188,6 +189,9 @@ class AssistantRequest(StrictModel):
 
 
 class Book(BaseModel):
+    library_id: str | None = None
+    library_book_id: str | None = None
+    global_work_id: str | None = None
     """Only fields returned by the catalogue, with absent values kept null."""
     work_id: WorkID
     title: str | None = None
@@ -206,6 +210,41 @@ class Availability(StrictModel):
     available: bool | None = None
     available_copies: int | None = None
     total_copies: int | None = None
+
+
+class DigitalResource(StrictModel):
+    kind: Literal['LIBRARY_DOCUMENT','GLOBAL_TEXT']
+    asset_type: Literal['PDF','TXT','DOCX','TEXT']
+    asset_id: UUID | None = None
+    href: str = Field(max_length=250)
+
+
+class DigitalAvailability(StrictModel):
+    work_id: WorkID
+    library_id: UUID | None = None
+    catalogue_present: bool
+    resource_link_present: bool
+    asset_present: bool | None
+    access_authorized: bool | None
+    full_text_accessible: bool | None
+    status: Literal['AUTHORIZED','UNKNOWN']
+    resources: list[DigitalResource] = Field(default_factory=list,max_length=10)
+
+    @model_validator(mode='after')
+    def evidence(self):
+        if self.status=='UNKNOWN':
+            if self.resources or self.resource_link_present or any(x is not None for x in
+                    [self.asset_present,self.access_authorized,self.full_text_accessible]):
+                raise ValueError('Unknown access must not expose asset hints')
+        elif not (self.catalogue_present and self.resource_link_present and self.asset_present is True
+                  and self.access_authorized is True and self.full_text_accessible is True and self.resources):
+            raise ValueError('Digital access requires canonical evidence')
+        for resource in self.resources:
+            expected=(f'/libraries/{self.library_id}/resources/{resource.asset_id}' if self.library_id and resource.asset_id
+                      and resource.kind=='LIBRARY_DOCUMENT' else f'/book/{self.work_id}/read' if not self.library_id
+                      and resource.kind=='GLOBAL_TEXT' and resource.asset_id is None else None)
+            if resource.href!=expected or expected is None:raise ValueError('Unrecognized resource target')
+        return self
 
 
 class Action(StrictModel):
@@ -258,6 +297,7 @@ class AssistantResponse(StrictModel):
     recommendation_mode: RecommendationMode | None = None
     seed_work_ids: list[WorkID] = Field(default_factory=list)
     availability: list[Availability] = Field(default_factory=list)
+    digital_availability: list[DigitalAvailability] = Field(default_factory=list)
     actions: list[Action] = Field(default_factory=list)
     clarification: Clarification | None = None
     pending_action: PendingAction | None = None

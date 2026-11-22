@@ -263,7 +263,8 @@ def ask(
             ):
                 result["verdict"] = "NOT_SUPPORTED"
 
-        return result
+        from rag.citation_boundary import validate_page_claims
+        return validate_page_claims(result)
 
     except HTTPException:
         raise

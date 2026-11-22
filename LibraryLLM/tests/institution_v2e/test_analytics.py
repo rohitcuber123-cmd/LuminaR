@@ -347,6 +347,17 @@ def test_event_exact_counts(client, known, key, expected):
     assert payload(client, known)['events'][key] == expected
 
 
+@pytest.mark.parametrize('dates', [{}, {'start_at': None, 'end_at': None}])
+def test_undated_publication_is_not_a_completed_event(client, known, database, dates):
+    database.events.insert_one({'library_id': known[0], 'scope': 'LIBRARY',
+        'event_id': str(uuid4()), 'status': 'PUBLISHED', 'published_at': RECENT,
+        'created_at': RECENT, 'updated_at': RECENT, 'revision': 1, **dates})
+    events = payload(client, known)['events']
+    assert events['completed'] == 1
+    assert events['upcoming'] == 1
+    assert events['published_in_range'] == 4
+
+
 def test_event_global_and_other_library_excluded(client, known, database):
     database.events.insert_one({'scope': 'GLOBAL', 'event_id': str(uuid4()), 'status': 'PUBLISHED',
                                'start_at': STAMP + timedelta(days=2), 'published_at': RECENT})
@@ -541,3 +552,65 @@ def test_source_metric_reports_from_exact_fixture(client, known):
             'source': 'canonical selected library UUID only', 'fixture_data': True, 'metrics': metrics,
             'privacy': 'aggregate counts only; no member identities/activity ranking/private content'}
         (REPORTS / f'institution_v2e_{name}.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
+
+
+@pytest.mark.parametrize('mutation', ['fee_adjust', 'fee_waive', 'fee_partial_payment', 'loan_renew', 'stock_update'])
+def test_mid_read_canonical_fee_loan_and_stock_mutations_rejected(client, library, database, monkeypatch, mutation):
+    from backend.services import library_catalogue_experience as catalogue
+    from backend.services.library_lending_journal import ensure_indexes as ensure_lending
+    from backend.services.library_reservation_service import ensure_indexes as ensure_res
+    ensure_lending()
+    ensure_res()
+    lib = library(owner=1, private=False)
+    assert client.post(f'/libraries/{lib}/join', headers={'x-test-user': '2'}, json={}).status_code == 200
+    call_cmd = lambda **f: {'idempotency_key': str(uuid4()), **f}
+    book_resp = client.post(f'/libraries/{lib}/inventory/books', headers={'x-test-user': '1'},
+                            json={'title': 'Canonical Analytics Book', 'authors': ['Ada'], 'subjects': ['Systems'], 'copies': 2, **call_cmd()})
+    assert book_resp.status_code == 201, book_resp.text
+    bid = book_resp.json()['library_book_id']
+
+    borrow = client.post(f'/libraries/{lib}/lending/borrow-requests', headers={'x-test-user': '2'}, json=call_cmd(library_book_id=bid))
+    assert borrow.status_code == 201
+    approved = client.post(f'/libraries/{lib}/staff/lending/borrow-requests/{borrow.json()["lending_request_id"]}/approve',
+                           headers={'x-test-user': '1'}, json=call_cmd())
+    assert approved.status_code == 200
+    loan = approved.json()['loan']
+
+    fee_id = None
+    if mutation.startswith('fee_'):
+        database.institution_loans.update_one({'loan_id': loan['loan_id']}, {'$set': {'due_at': analytics.now() - timedelta(days=3)}})
+        ret_req = client.post(f'/libraries/{lib}/loans/{loan["loan_id"]}/return-request', headers={'x-test-user': '2'}, json=call_cmd())
+        assert ret_req.status_code == 201
+        conf = client.post(f'/libraries/{lib}/staff/lending/return-requests/{ret_req.json()["lending_request_id"]}/confirm',
+                           headers={'x-test-user': '1'}, json=call_cmd())
+        assert conf.status_code == 200
+        fees = client.get(f'/libraries/{lib}/staff/fees', headers={'x-test-user': '1'}).json()['results']
+        fee_id = fees[0]['fee_id']
+
+    original_fee_metrics = analytics.fee_metrics
+    triggered = {'done': False}
+    def inject_mid_read(library_id, window, enabled, admin):
+        res = original_fee_metrics(library_id, window, enabled, admin)
+        if not triggered['done']:
+            triggered['done'] = True
+            if mutation == 'fee_adjust':
+                r = client.post(f'/libraries/{lib}/staff/fees/{fee_id}/adjust', headers={'x-test-user': '1'},
+                                json=call_cmd(amount_minor=100, direction='CHARGE', reason='Mid read adjustment'))
+            elif mutation == 'fee_waive':
+                r = client.post(f'/libraries/{lib}/staff/fees/{fee_id}/waive', headers={'x-test-user': '1'},
+                                json=call_cmd(reason='Mid read waiver'))
+            elif mutation == 'fee_partial_payment':
+                r = client.post(f'/libraries/{lib}/staff/fees/{fee_id}/payments', headers={'x-test-user': '1'},
+                                json=call_cmd(amount_minor=200, method='CASH'))
+            elif mutation == 'loan_renew':
+                r = client.post(f'/libraries/{lib}/loans/{loan["loan_id"]}/renew', headers={'x-test-user': '2'},
+                                json=call_cmd(expected_due_at=loan['due_at']))
+            else:
+                r = client.put(f'/libraries/{lib}/staff/lending/books/{bid}/stock', headers={'x-test-user': '1'},
+                               json=call_cmd(total_copies=3))
+            assert r.status_code == 200, r.text
+        return res
+
+    monkeypatch.setattr(analytics, 'fee_metrics', inject_mid_read)
+    resp = scoped_get(client, lib, user=1)
+    assert resp.status_code == 503 and triggered['done']

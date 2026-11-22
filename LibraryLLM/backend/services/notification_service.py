@@ -61,13 +61,13 @@ def recipients(ids, emails):
 
 
 def insert_notice(user_id, kind, title, message, key, source='SYSTEM', source_ref=None, sender=None, now=None,
-                  *, scope='GLOBAL', library_id=None, audience=None, source_type=None, source_id=None, action_route=None):
+                  *, scope='GLOBAL', library_id=None, audience=None, source_type=None, source_id=None, action_route=None, priority='NORMAL'):
     tenancy = NotificationScope(user_id=user_id, scope=scope, library_id=library_id)
     notice = {'notification_id': uuid4().hex, 'user_id': user_id, 'type': kind,
               'title': title, 'message': message, 'created_at': now or datetime.now(timezone.utc),
               'read_at': None, 'resolved_at': None, 'resolution_reason': None,
               'source': source, 'source_ref': source_ref or {},
-              'priority': 'NORMAL', 'dedupe_key': key, 'created_by_user_id': sender,
+              'priority': priority, 'dedupe_key': key, 'created_by_user_id': sender,
               'scope': scope, 'library_id': str(tenancy.library_id) if tenancy.library_id else None,
               'audience': audience, 'source_type': source_type, 'source_id': source_id, 'action_route': action_route}
     try:
@@ -96,8 +96,13 @@ def send_admin(actor, ids, emails, title, message, request_id):
     return {'deliveries': delivered, 'recipient_count': len(delivered)}
 
 
+def own_query(user_id, **fields):
+    from backend.services.announcement_notification_access import visible_query
+    return visible_query(db, user_id, {'user_id':user_id, **fields})
+
+
 def list_own(user_id, limit=20, offset=0):
-    query = {'user_id': user_id}
+    query = own_query(user_id)
     current = {**query, 'resolved_at': None}
     current_count = notifications.count_documents(current)
     order = [('created_at', -1), ('notification_id', -1)]
@@ -111,11 +116,11 @@ def list_own(user_id, limit=20, offset=0):
 
 
 def unread(user_id):
-    return notifications.count_documents({'user_id': user_id, 'read_at': None, 'resolved_at': None})
+    return notifications.count_documents(own_query(user_id, read_at=None, resolved_at=None))
 
 
 def mark_read(user_id, notification_id):
-    query = {'notification_id': notification_id, 'user_id': user_id}
+    query = own_query(user_id, notification_id=notification_id)
     if not notifications.find_one(query, {'_id': 1}):
         raise LookupError('Notification not found.')
     notifications.update_one({**query, 'read_at': None}, {'$set': {'read_at': datetime.now(timezone.utc)}})
@@ -136,9 +141,17 @@ def present_own(rows, user_id):
     allowed = {ALIASES.get(kind, kind): (audience, page) for kind, (audience, _, _, page) in KINDS.items()}
     states = {}
     output = []
+    announcement_rows=[row for row in rows if row.get('type')=='ANNOUNCEMENT_PUBLISHED']
+    if announcement_rows:
+        from backend.services.announcement_notification_access import presentation_context
+        announcement_context=presentation_context(db,announcement_rows,user_id)
     for original in rows:
         row = dict(original)
         row['action_route'] = None
+        if row.get('type') == 'ANNOUNCEMENT_PUBLISHED':
+            from backend.services.announcement_notification_access import present
+            output.append(present(db, row, user_id,announcement_context))
+            continue
         if not row.get('scope'):
             row['scope'] = 'PLATFORM' if row.get('source') == 'ADMIN' and not row.get('library_id') else 'LEGACY_AMBIGUOUS'
         if row['scope'] == 'LIBRARY':
@@ -175,6 +188,8 @@ def get_own(user_id, notification_id, library_id=None):
     query = {'user_id': user_id, 'notification_id': notification_id}
     if library_id:
         query.update(library_id=library_id, scope='LIBRARY')
+    from backend.services.announcement_notification_access import visible_query
+    query = visible_query(db, user_id, query)
     row = notifications.find_one(query, PUBLIC_FIELDS)
     if not row:
         raise LookupError('Notification not found.')
@@ -184,7 +199,7 @@ def get_own(user_id, notification_id, library_id=None):
 def read_all(user_id):
     # Timestamp cutoff prevents a concurrent newly-arrived message being silently marked read.
     now = datetime.now(timezone.utc)
-    result = notifications.update_many({'user_id': user_id, 'read_at': None, 'created_at': {'$lte': now}},
+    result = notifications.update_many(own_query(user_id, read_at=None, created_at={'$lte': now}),
                                        {'$set': {'read_at': now}})
     return {'marked': result.modified_count}
 

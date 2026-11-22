@@ -1,0 +1,261 @@
+--- a/assistant/qwen.py
++++ b/assistant/qwen.py
+@@ -4,6 +4,7 @@
+ import json
+ import logging
+ import os
++import re
+ from threading import BoundedSemaphore
+ from time import perf_counter
+ from contextvars import copy_context
+@@ -86,6 +87,74 @@
+         schema = super().model_json_schema()
+         schema['required'] = ['i', 'c', 's', 'g']
+         return schema
++
++
++def contextual_decoding_schema(base, message, context):
++    """Bound ID decoding to existing context/literal IDs; authority stays in the resolver."""
++    from assistant.semantic import literal_ids
++    ids = []
++    for key in ('selected_books', 'page_books', 'previous_comparison'):
++        ids.extend(book['work_id'] for book in context.get(key, []) if book.get('work_id'))
++    for key in ('active_result_context', 'previous_recommendations'):
++        ids.extend(context.get(key, {}).get('work_ids', []))
++    ids.extend(context.get('last_referenced_work_ids', []))
++    ids.extend(sorted(value for value in literal_ids(message) if re.fullmatch(
++        r'OL\d+W|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}', value)))
++    ids = list(dict.fromkeys(ids))
++    if not ids or len(ids) > 64:
++        return base
++
++    class ContextualSchema:
++        @classmethod
++        def model_json_schema(cls):
++            schema = base.model_json_schema()
++            # An explicit finite choice avoids the installed enforcer's long
++            # free-form ID parsing path. Every other schema constraint remains.
++            schema['properties']['w']['items'] = {'type':'string', 'enum':ids}
++            return schema
++    return ContextualSchema
++
++
++def ambiguous_deictic_reference(message, context, decision):
++    """Reject an ungrounded singular referent, without choosing another book."""
++    if not re.search(r'\b(?:this|that)\s+(?:book|one)\b', message, re.I):
++        return False
++    if (decision.reference_scope == ReferenceScope.NONE
++            and decision.intent in {Intent.SEARCH_BOOKS, Intent.RECOMMEND_BOOKS}):
++        return False
++    if (decision.reference_scope in {ReferenceScope.EXPLICIT_BOOK, ReferenceScope.ACCOUNT}
++            or re.search(r'\b(?:first|second|third|fourth|last|[1-4](?:st|nd|rd|th))\b', message, re.I)):
++        return False
++    pools = {
++        ReferenceScope.SELECTED_BOOKS: [b['work_id'] for b in context.get('selected_books', [])],
++        ReferenceScope.CURRENT_PAGE_BOOK: [b['work_id'] for b in context.get('page_books', [])],
++        ReferenceScope.PREVIOUS_COMPARISON: [b['work_id'] for b in context.get('previous_comparison', [])],
++        ReferenceScope.PREVIOUS_RECOMMENDATIONS: context.get('previous_recommendations', {}).get('work_ids', []),
++        ReferenceScope.RECENT_RESULTS: context.get('active_result_context', {}).get('work_ids', []),
++    }
++    pools[ReferenceScope.NONE] = (pools[ReferenceScope.SELECTED_BOOKS]
++        or pools[ReferenceScope.RECENT_RESULTS] or pools[ReferenceScope.CURRENT_PAGE_BOOK]
++        or context.get('last_referenced_work_ids', []))
++    pool = pools.get(decision.reference_scope, [])
++    if pools[ReferenceScope.SELECTED_BOOKS] and decision.reference_scope in {
++            ReferenceScope.CURRENT_PAGE_BOOK, ReferenceScope.RECENT_RESULTS,
++            ReferenceScope.PREVIOUS_COMPARISON, ReferenceScope.PREVIOUS_RECOMMENDATIONS}:
++        pool = pools[ReferenceScope.SELECTED_BOOKS]
++    from assistant.semantic import literal_ids
++    if len(decision.resolved_work_ids) == 1 and decision.resolved_work_ids[0] in literal_ids(message):
++        return False
++    if len(pool) == 1:
++        return False
++    focus = [wid for wid in context.get('last_referenced_work_ids', []) if wid in pool]
++    if len(focus) != 1:
++        return True
++    if decision.resolved_work_ids:
++        return decision.resolved_work_ids != focus
++    if decision.reference_position == 'FOCUS':
++        return False
++    positions = {'FIRST':0,'SECOND':1,'THIRD':2,'FOURTH':3,'LAST':-1}
++    index = positions.get(decision.reference_position)
++    return index is None or not -len(pool) <= index < len(pool) or pool[index] != focus[0]
+ 
+ 
+ def validated_intent(raw):
+@@ -192,7 +261,10 @@
+             'selected if there are selected_books, then comparison/recommendations/recent, then page, then none. '
+             'Own existing borrowing records use loans/account; an instruction to borrow uses borrow/action. '
+             'Topic discovery unrelated to a seed uses search/none,q. Never use selected when selection is absent. '
+-            't and w contain only entities literally supplied in CURRENT REQUEST, never copied from selected context. '
++            't contains only titles literally supplied in CURRENT REQUEST. '
++            'w contains literal IDs or exact canonical work_ids copied from the chosen populated context for the referenced books. '
++            'For multiple positions such as first and third, copy those exact IDs in order into w and omit e. '
++            'Never invent IDs or copy an ID from a different reference scope. '
+             'Current selection is explicit user-provided book context, in supplied order. '
+             'A free-form explanation about current books uses help/selected/explain, including one selected work. '
+             'Relationship explanations need no choice criterion and discover no other books. '
+@@ -244,10 +316,14 @@
+         # Exactly one routing generation. Invalid schema never triggers another
+         # model pass or opportunistic catalogue lookup.
+         schema = SelectedContextDecodingSchema if context.get('current_selection_exists') else CompactAssistantDecodingSchema
++        schema = contextual_decoding_schema(schema, message, context)
+         raw = await self.generate(prompt, schema, 'intent')
+         try:
+             with timed('intent_json_validation'):
+-                return validated_intent(raw.strip())
++                decision = validated_intent(raw.strip())
++                if ambiguous_deictic_reference(message, context, decision):
++                    raise ValueError('A singular book reference is not established by the current context.')
++                return decision
+         except (ValueError, TypeError):
+             LOG.info('semantic_intent_validation_failed')
+             from assistant.schemas import ReferenceScope, ClarificationType
+@@ -261,19 +337,36 @@
+         # and position; no selected/page/explicit decision is rewritten here.
+         if context.get('selected_books'):
+             scope = 'selected'
++            work_ids = [book['work_id'] for book in context['selected_books']]
+         elif context.get('active_result_context', {}).get('work_ids'):
+             scope = 'recent'
++            work_ids = context['active_result_context']['work_ids']
+         elif context.get('page_books'):
+             scope = 'page'
++            work_ids = [book['work_id'] for book in context['page_books']]
+         else:
+             return {'Find books about astronomy': {'i':'search','c':1,'s':'none','g':'discover','q':'astronomy'},
+                 'Is the second one available?': {'i':'clarify','c':1,'s':'ambiguous','d':'reference'}}
+-        return {'populated_scope': scope,
++        examples = {'populated_scope': scope,
+             'Is the second one available?': {'i':'availability','c':1,'s':scope,'e':'SECOND','g':'status'},
++            'Tell me about the second one.': {'i':'details','c':1,'s':scope,'e':'SECOND','g':'detail'},
+             'Tell me about the third one.': {'i':'details','c':1,'s':scope,'e':'THIRD','g':'detail'},
+             'explicit_title_rule': 'A literally named title still uses explicit, never this contextual scope.',
+             'explicit_page_rule': 'A request explicitly about the open page uses page only when page_books exists.',
+             'empty_scope_rule': 'Never choose selected without selected_books, or page without page_books.'}
++        if len(work_ids) >= 3:
++            examples['Compare the first and third.'] = {
++                'i':'compare','c':1,'s':scope,'w':[work_ids[0],work_ids[2]],'g':'facts'}
++        examples['Find books about astronomy.'] = {
++            'i':'search','c':1,'s':'none','q':'astronomy','g':'discover'}
++        if len(work_ids) > 1:
++            examples['Which recommendation should I choose?'] = {
++                'i':'compare','c':1,'s':scope,'e':'ALL','g':'preference','d':'criteria'}
++        if work_ids and re.fullmatch(
++                r'[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}', work_ids[-1]):
++            examples['Show books similar to the last one.'] = {
++                'i':'seed_recommend','c':1,'s':scope,'e':'LAST','g':'discover'}
++        return examples
+ 
+     async def respond(self, message, response):
+         if response.intent == Intent.GENERAL_LIBRARY_HELP and response.books:
+--- /dev/null
++++ b/tests/institution_v2q_ai/test_v2q1d_context_pairs.py
+@@ -0,0 +1,107 @@
++"""Canonical contextual pairs remain bound to one existing authorized pool."""
++import asyncio,json
++from types import SimpleNamespace
++import pytest
++from assistant.qwen import QwenGateway,validated_intent
++from assistant.schemas import AssistantRequest
++from assistant.semantic import contextual_ids
++
++def test_recent_pair_demonstration_copies_only_ordered_context_ids():
++ context={'active_result_context':{'work_ids':['OL1W','OL2W','OL3W']}}
++ examples=QwenGateway._reference_examples(context)
++ assert examples['Compare the first and third.']['w']==['OL1W','OL3W']
++ assert examples['Compare the first and third.']['s']=='recent'
++ assert 'e' not in examples['Compare the first and third.']
++
++@pytest.mark.parametrize('ids,accepted',[(['OL1W','OL3W'],True),(['OL999W','OL3W'],False)])
++def test_canonical_pair_still_enforces_the_original_pool(ids,accepted):
++ request=AssistantRequest(message='Compare the first and third.',recent_work_ids=['OL1W','OL2W','OL3W'])
++ state=SimpleNamespace(active_result_work_ids=None,recent_result_work_ids=[],last_comparison_work_ids=[],last_recommendation_work_ids=[],last_referenced_work_ids=[],awaiting_criteria=False)
++ decision=validated_intent(json.dumps({'i':'compare','c':1,'s':'recent','w':ids,'g':'facts'}))
++ if accepted:assert contextual_ids(request,decision,state)==ids
++ else:
++  with pytest.raises(ValueError):contextual_ids(request,decision,state)
++
++
++def test_id_decoding_is_finite_without_weakening_full_validation():
++    from assistant.qwen import CompactAssistantDecodingSchema,contextual_decoding_schema
++    context={'active_result_context':{'work_ids':['OL1W','OL2W','OL3W']}}
++    schema=contextual_decoding_schema(CompactAssistantDecodingSchema,'Compare these with OL9W',context).model_json_schema()
++    assert set(schema['properties']['w']['items']['enum'])=={'OL1W','OL2W','OL3W','OL9W'}
++    assert schema['properties']['w']['maxItems']==4
++    assert 'o' not in schema['properties']
++    assert 'pattern' in CompactAssistantDecodingSchema.model_json_schema()['properties']['w']['items']
++    with pytest.raises(ValueError):validated_intent('{"i":"compare","c":1,"s":"recent","w":["bad id"]}')
++
++
++def test_empty_context_keeps_existing_literal_title_resolution_schema():
++    from assistant.qwen import CompactAssistantDecodingSchema,contextual_decoding_schema
++    assert contextual_decoding_schema(CompactAssistantDecodingSchema,'Tell me about a named title',{}) is CompactAssistantDecodingSchema
++
++
++def test_unbound_pronoun_is_rejected_after_one_model_call():
++    from assistant.schemas import Intent
++    gateway=object.__new__(QwenGateway);calls=[]
++    async def generate(*args,**kwargs):
++        calls.append(args)
++        return '{"i":"availability","s":"recent","c":1,"e":"THIRD"}'
++    gateway.generate=generate
++    result=asyncio.run(gateway.parse('Is that book available?',{'active_result_context':{'work_ids':['OL1W','OL2W','OL3W']}}))
++    assert result.intent==Intent.CLARIFICATION
++    assert result.reference_scope.value=='AMBIGUOUS'
++    assert len(calls)==1
++
++
++def test_local_seed_discovery_and_unspecified_choice_use_existing_routes():
++    ids=['11111111-1111-4111-8111-111111111111','22222222-2222-4222-8222-222222222222']
++    context={'active_result_context':{'work_ids':ids}}
++    examples=QwenGateway._reference_examples(context)
++    assert examples['Show books similar to the last one.']=={'i':'seed_recommend','c':1,'s':'recent','e':'LAST','g':'discover'}
++    assert examples['Which recommendation should I choose?']['d']=='criteria'
++    assert examples['Which recommendation should I choose?']['g']=='preference'
++
++
++@pytest.mark.parametrize('focus,position,blocked',[
++    ([], 'THIRD', True),(['OL2W'],'THIRD',True),(['OL2W'],'SECOND',False),(['OL2W'],'FOCUS',False)])
++def test_deictic_binding_cannot_invent_a_position(focus,position,blocked):
++    from assistant.qwen import ambiguous_deictic_reference
++    context={'active_result_context':{'work_ids':['OL1W','OL2W','OL3W']},'last_referenced_work_ids':focus}
++    decision=validated_intent(json.dumps({'i':'availability','s':'recent','c':1,'e':position,'g':'status'}))
++    assert ambiguous_deictic_reference('Is that book available?',context,decision) is blocked
++    assert not ambiguous_deictic_reference('Is that book, the third one, available?',context,decision)
++
++
++def test_deictic_single_page_and_explicit_title_remain_supported():
++    from assistant.qwen import ambiguous_deictic_reference
++    decision=validated_intent('{"i":"availability","s":"page","c":1,"e":"ALL"}')
++    assert not ambiguous_deictic_reference('Is this book available?',{'page_books':[{'work_id':'OL1W'}]},decision)
++    decision=validated_intent('{"i":"availability","s":"explicit","c":1,"t":["Dune"]}')
++    assert not ambiguous_deictic_reference('Is that book Dune available?',{},decision)
++
++
++def test_literal_id_remains_explicit_even_when_model_uses_recent_scope():
++    from assistant.qwen import ambiguous_deictic_reference
++    context={'active_result_context':{'work_ids':['OL1W','OL2W','OL3W']}}
++    decision=validated_intent('{"i":"availability","s":"recent","c":1,"w":["OL2W"]}')
++    assert not ambiguous_deictic_reference('Is that book OL2W available?',context,decision)
++    assert ambiguous_deictic_reference('Is that book available?',context,decision)
++
++
++def test_unseeded_topic_discovery_is_not_a_singular_book_binding():
++    from assistant.qwen import ambiguous_deictic_reference
++    decision=validated_intent('{"i":"search","s":"none","c":1,"q":"algorithms","g":"discover"}')
++    assert not ambiguous_deictic_reference('Show books about this one algorithm',{},decision)
++
++
++def test_existing_none_scope_single_book_fallback_is_not_rejected():
++    from assistant.qwen import ambiguous_deictic_reference
++    decision=validated_intent('{"i":"availability","s":"none","c":1,"e":"FIRST"}')
++    assert not ambiguous_deictic_reference('Is that book available?',{'active_result_context':{'work_ids':['OL1W']}},decision)
++    assert ambiguous_deictic_reference('Is that book available?',{'active_result_context':{'work_ids':['OL1W','OL2W']}},decision)
++
++
++def test_deictic_safety_uses_the_resolvers_existing_selection_precedence():
++    from assistant.qwen import ambiguous_deictic_reference
++    decision=validated_intent('{"i":"availability","s":"page","c":1,"e":"ALL"}')
++    context={'selected_books':[{'work_id':'OL1W'},{'work_id':'OL2W'}],'page_books':[{'work_id':'OL3W'}]}
++    assert ambiguous_deictic_reference('Is this book available?',context,decision)

@@ -1,0 +1,11 @@
+--- a/rag/llm.py
++++ b/rag/llm.py
+@@ -715,6 +715,8 @@
+                 f"Evidence Text:\n{context_text}\n\n"
+                 "Rules:\n"
+                 "- For unsupported premises, prefer false over speculative inference.\n"
++                "- Treat a question asking for a stated field value as a request, not as an asserted value to prove. A directly stated matching field and value can fully answer such a question.\n"
++                "- Never accept a different field, a mismatched entity, an absent value, an unsupported premise, or a negated or conflicting condition.\n"
+                 "- supported=true requires evidence to fully answer the query, accounting for any negations or specific conditions.\n\n"
+                 "Does the provided evidence support the structured query? Respond ONLY with a valid JSON object matching the requested schema."
+             )

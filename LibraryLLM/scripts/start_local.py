@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT))
 from dotenv import load_dotenv
 load_dotenv(ROOT/'.env')
 from scripts.local_seed import local_guard
+from scripts.local_service_identity import matches_service
 local_guard()
 
 parser = argparse.ArgumentParser()
@@ -35,7 +36,12 @@ def listening(port):
 
 def launch(name, port, command, cwd=ROOT):
     if listening(port):
-        print(f'{name}: port {port} already in use; keeping the existing service.', flush=True)
+        if name == 'mongodb':
+            raise RuntimeError(f'{name}: port {port} became occupied before launch.')
+        if not matches_service(name, port):
+            raise RuntimeError(f'{name}: port {port} is occupied; expected service identity could not be verified.')
+        print(f'{name}: port {port} matches the expected public fingerprint; '
+              'checkout, readiness and process ownership are unverified. Leaving the listener running.', flush=True)
         return
     handle = (logs/f'{name}.log').open('a', encoding='utf-8')
     handles.append(handle)
@@ -57,6 +63,8 @@ try:
             if listening(27017):break
             time.sleep(.5)
         if not listening(27017):raise RuntimeError('MongoDB did not start; inspect its log.')
+    else:
+        print('mongodb: port 27017 is occupied; listener identity and ownership are unverified.', flush=True)
     for name,module,port in [('core','backend.main',8002),('search','search.api',8003),
                              ('recommendation','recommendation.api',8004),('rag','rag.api',8005)]:
         launch(name,port,[sys.executable,'-m','uvicorn',module+':app','--host','127.0.0.1','--port',str(port)])

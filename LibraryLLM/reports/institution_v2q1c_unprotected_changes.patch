@@ -1,0 +1,247 @@
+--- a/assistant/qwen.py
++++ b/assistant/qwen.py
+@@ -215,7 +215,7 @@
+             '"introduce my selection" -> {"g":"detail","s":"selected","e":"ALL","i":"details","c":1}; '
+             '"analyze the opening scene" -> {"g":"content","s":"selected","e":"FIRST","i":"book_question","c":1}; '
+             '"discover astronomy books for a novice" -> {"i":"search","c":1,"s":"none","q":"astronomy for beginners","g":"discover"}; '
+-            '"availability of item two" -> {"i":"availability","c":1,"s":"selected","e":"SECOND","g":"status"}; '
++            'For stock ordinals, use the actual populated source, not the selection assumed by other examples. '
+             '"list the volumes checked out on my account" -> {"g":"account","s":"account","i":"loans","c":1}; '
+             '"contrast the metadata" -> {"i":"compare","c":1,"s":"selected","e":"ALL","g":"facts"}; '
+             '"help me pick a reading choice" -> {"i":"compare","c":1,"s":"selected","e":"ALL","g":"preference","d":"criteria"}; '
+@@ -229,8 +229,18 @@
+             'A literally named title outside the current selection must use s=explicit,t=that title; never substitute the first selected book. '
+             'Output only relevant keys.\nCONTEXT: ' +
+             json.dumps(context, ensure_ascii=False, separators=(',', ':')) +
++            '\nREFERENCE EXAMPLES FOR THIS CONTEXT: ' + json.dumps(
++                self._reference_examples(context), separators=(',', ':')) +
+             '\nCURRENT REQUEST: ' + json.dumps(message, ensure_ascii=False)
+         )
++        if not context.get('selected_books') and (context.get('active_result_context', {}).get('work_ids') or context.get('page_books')):
++            # Selected-pair demonstrations are misleading when the tray is
++            # empty. Replace only demonstrations, never the model decision.
++            start = prompt.index('Examples (with a selected pair unless stated otherwise): ')
++            end = prompt.index('Other keys:', start)
++            prompt = (prompt[:start] + 'Examples for the actual populated context: ' +
++                json.dumps(self._reference_examples(context), separators=(',', ':')) +
++                '. ' + prompt[end:])
+         # Exactly one routing generation. Invalid schema never triggers another
+         # model pass or opportunistic catalogue lookup.
+         schema = SelectedContextDecodingSchema if context.get('current_selection_exists') else CompactAssistantDecodingSchema
+@@ -244,6 +254,26 @@
+             return AssistantIntentDecision(intent=Intent.CLARIFICATION,
+                 reference_scope=ReferenceScope.AMBIGUOUS, clarification_needed=True,
+                 clarification_type=ClarificationType.REFERENCE_AMBIGUITY)
++
++    @staticmethod
++    def _reference_examples(context):
++        # Prompt guidance only. The resolver still validates every model scope
++        # and position; no selected/page/explicit decision is rewritten here.
++        if context.get('selected_books'):
++            scope = 'selected'
++        elif context.get('active_result_context', {}).get('work_ids'):
++            scope = 'recent'
++        elif context.get('page_books'):
++            scope = 'page'
++        else:
++            return {'Find books about astronomy': {'i':'search','c':1,'s':'none','g':'discover','q':'astronomy'},
++                'Is the second one available?': {'i':'clarify','c':1,'s':'ambiguous','d':'reference'}}
++        return {'populated_scope': scope,
++            'Is the second one available?': {'i':'availability','c':1,'s':scope,'e':'SECOND','g':'status'},
++            'Tell me about the third one.': {'i':'details','c':1,'s':scope,'e':'THIRD','g':'detail'},
++            'explicit_title_rule': 'A literally named title still uses explicit, never this contextual scope.',
++            'explicit_page_rule': 'A request explicitly about the open page uses page only when page_books exists.',
++            'empty_scope_rule': 'Never choose selected without selected_books, or page without page_books.'}
+ 
+     async def respond(self, message, response):
+         if response.intent == Intent.GENERAL_LIBRARY_HELP and response.books:
+--- a/rag/api.py
++++ b/rag/api.py
+@@ -263,7 +263,8 @@
+             ):
+                 result["verdict"] = "NOT_SUPPORTED"
+ 
+-        return result
++        from rag.citation_boundary import validate_page_claims
++        return validate_page_claims(result)
+ 
+     except HTTPException:
+         raise
+--- a/rag/services/library_asset_pipeline.py
++++ b/rag/services/library_asset_pipeline.py
+@@ -305,7 +305,8 @@
+                     if source.get('chunk_id') not in valid_ids:
+                         raise HTTPException(409, 'Document source identity could not be verified.')
+                     source.update(library_id=library_id, asset_id=asset_id)
+-                return {**result, 'library_id': library_id, 'asset_id': asset_id}
++                from rag.citation_boundary import validate_page_claims
++                return validate_page_claims({**result, 'library_id': library_id, 'asset_id': asset_id})
+             finally:
+                 self.clear_runtime()
+ 
+--- /dev/null
++++ b/rag/citation_boundary.py
+@@ -0,0 +1,49 @@
++"""Contain unsupported numeric page citations at the HTTP integration boundary.
++
++Evidence-stage verdicts are not final-answer validators. This check only
++downgrades a generated page attribution unsupported by returned page metadata;
++it does not reinterpret an ordinary abstention or validate the answer's facts.
++"""
++import re
++
++PAGE_REFERENCE=re.compile(
++    r'\b(?:pages?|pp?\.|pgs?\.)\s*(?:(?:number|no\.)\s*)?[:#]?\s*'
++    r'(?P<locations>-?\d{1,9}(?:(?:\s*[-–—,]\s*|\s+and\s+)-?\d{1,9})*)\b',re.I)
++
++def _supported_locations(locations,pages):
++    for part in re.split(r'\s*(?:,|\band\b)\s*',locations,flags=re.I):
++        span=re.fullmatch(r'(-?\d+)\s*[-–—]\s*(-?\d+)',part)
++        if span:
++            first,last=map(int,span.groups())
++            if first<1 or last<first or last-first>1000:return False
++            if any(page not in pages for page in range(first,last+1)):return False
++        elif int(part) not in pages:return False
++    return True
++
++def validate_page_claims(result):
++    """Keep valid responses byte-for-field equivalent; never mutate inputs."""
++    answer=result.get('answer')
++    if not isinstance(answer,str):return result
++    pages=set()
++    for source in result.get('sources') or []:
++        if not isinstance(source,dict):continue
++        page=source.get('page')
++        if type(page) is int and page>0:pages.add(page)
++        elif isinstance(page,str) and re.fullmatch(r'[1-9]\d*',page.strip()):pages.add(int(page))
++    claims=[match['locations'] for match in PAGE_REFERENCE.finditer(answer)]
++    # A bare number is a page attribution only for a page-location question,
++    # not a page-count, stock-count, date or other numeric answer.
++    question=str(result.get('question') or '')
++    location_question=bool(re.search(
++        r'\b(?:which|what)\s+page\b|\b(?:exact\s+page|page\s+(?:number|location))\b',question,re.I)) and not bool(re.search(
++        r'\bpage\s*count\b|\bnumber of pages\b|\bhow many pages\b',question,re.I))
++    if location_question and not pages:
++        return {**result,'answer':'An exact source page for this answer is not established by the supplied source metadata.',
++                'verdict':'NOT_SUPPORTED'}
++    if (not claims and re.fullmatch(r'\s*\d{1,9}[.!]?\s*',answer)
++            and re.search(r'\bpage\b',question,re.I)
++            and not re.search(r'page\s*count|number of pages|how many pages',question,re.I)):
++        claims=[re.search(r'\d+',answer).group()]
++    if not claims or all(_supported_locations(claim,pages) for claim in claims):return result
++    return {**result,'answer':'An exact source page for this answer is not established by the supplied source metadata.',
++            'verdict':'NOT_SUPPORTED'}
+--- /dev/null
++++ b/tests/institution_v2q_ai/test_v2q1c_citations.py
+@@ -0,0 +1,82 @@
++"""Exercise the real unprotected HTTP adapter without loading another model."""
++import ast
++import contextlib
++import copy
++import json
++import pytest
++from pathlib import Path
++from threading import RLock
++from types import SimpleNamespace
++from fastapi import FastAPI,Depends,HTTPException
++from fastapi.security import HTTPBearer,HTTPAuthorizationCredentials
++from pydantic import BaseModel,model_validator
++
++ROOT=Path(__file__).resolve().parents[2]
++
++def adapted(payload,question='Give the exact page number of the first mention of Jonathan Harker.'):
++    tree=ast.parse((ROOT/'rag/api.py').read_text(encoding='utf8'))
++    module=ast.Module(body=[node for node in tree.body if isinstance(node,(ast.ClassDef,ast.FunctionDef)) and node.name in {'RAGRequest','ask'}],type_ignores=[])
++    namespace={'app':FastAPI(),'BaseModel':BaseModel,'model_validator':model_validator,'Depends':Depends,
++        'HTTPException':HTTPException,'HTTPAuthorizationCredentials':HTTPAuthorizationCredentials,
++        'optional_auth':HTTPBearer(auto_error=False),'contextlib':contextlib,
++        'engine':SimpleNamespace(inference_lock=RLock(),ask=lambda **kwargs:copy.deepcopy(payload)),
++        'private_documents':SimpleNamespace(clear_runtime=lambda:None),
++        'valid_work_id':lambda value:False,'authorize_selection':lambda *args:None,
++        'book_runtime':SimpleNamespace(refresh=lambda:None)}
++    exec(compile(module,'rag/api.py','exec'),namespace)
++    return namespace['ask'](namespace['RAGRequest'](query=question),None)
++
++def test_recorded_unsupported_page_is_contained_at_http_boundary():
++    raw=json.loads((ROOT/'reports/institution_v2q1_public_rag_resumed.json').read_text(encoding='utf8'))
++    original=next(row['response'] for row in raw['queries'] if row['id']=='RAG027')
++    assert original['answer']=='Page 15' and all(row.get('page') is None for row in original['sources'])
++    result=adapted(original)
++    assert result['verdict']=='NOT_SUPPORTED'
++    assert '15' not in result['answer']
++    assert result['sources']==original['sources']
++
++def test_supported_page_and_grounded_answer_are_preserved():
++    payload={'question':'On which page is calibration described?','answer':'Calibration is described on page 7.',
++             'verdict':'SUPPORTED','sources':[{'page':7,'chunk_id':'owned-fixture'}]}
++    assert adapted(payload,payload['question'])==payload
++
++@pytest.mark.parametrize('answer,pages',[
++    ('Page 15',[None]),('page 8',[7]),('pp. 3–5',[3,5]),('pages 1 and 15',[1]),
++    ('page number: 15',[]),('p. 0',[1]),('pages 1-999999999',[1]),
++    ('15',[]),('The answer is on pg. 8.',[7]),
++])
++def test_unsupported_page_formats_are_contained(answer,pages):
++    from rag.citation_boundary import validate_page_claims
++    original={'question':'Which page gives the result?','answer':answer,'verdict':'SUPPORTED',
++              'sources':[{'page':page} for page in pages]}
++    before=copy.deepcopy(original);result=validate_page_claims(original)
++    assert result['verdict']=='NOT_SUPPORTED' and original==before
++
++@pytest.mark.parametrize('answer,pages,question',[
++    ('Page 7',[7],'Which page?'),('pp. 3–5',[3,4,5],'Which pages?'),
++    ('pages 1 and 15',[1,15],'Which pages?'),('7',['7'],'Which page?'),
++    ('The book has 15 pages.',[],'How many pages?'),('15',[],'What is the page count?'),
++    ('There are 12 available copies.',[],'How many copies?'),
++    ('The supplied passages do not establish this.',[],'What evidence exists?'),
++])
++def test_valid_pages_and_non_citation_facts_are_preserved(answer,pages,question):
++    from rag.citation_boundary import validate_page_claims
++    payload={'answer':answer,'question':question,'sources':[{'page':p} for p in pages],'verdict':'SUPPORTED'}
++    assert validate_page_claims(payload)==payload
++
++def test_null_boolean_and_negative_metadata_cannot_authorize_a_citation():
++    from rag.citation_boundary import validate_page_claims
++    assert validate_page_claims({'answer':'Page 1','sources':[{'page':True},{'page':-1},{'page':None}]})['verdict']=='NOT_SUPPORTED'
++
++@pytest.mark.parametrize('answer',['Fifteen.','15, according to the book.','It is near the beginning.'])
++def test_page_location_question_without_metadata_cannot_escape_by_rewording(answer):
++    from rag.citation_boundary import validate_page_claims
++    result=validate_page_claims({'question':'Give the exact page number of the first mention.',
++        'answer':answer,'sources':[{'page':None}],'verdict':'SUPPORTED'})
++    assert result['verdict']=='NOT_SUPPORTED' and 'source metadata' in result['answer']
++
++
++def test_what_page_count_is_not_a_page_location_request():
++    from rag.citation_boundary import validate_page_claims
++    original={'question':'What page count is recorded?','answer':'321','verdict':'SUPPORTED','sources':[]}
++    assert validate_page_claims(original) is original
+--- /dev/null
++++ b/tests/institution_v2q_ai/test_v2q1c_reference_prompt.py
+@@ -0,0 +1,26 @@
++"""Prompt/context isolation without changing semantic validation or adding model retries."""
++import asyncio
++import pytest
++from assistant.qwen import QwenGateway
++
++@pytest.mark.parametrize('context,scope',[
++ ({'selected_books':[{'work_id':'OL1W'}],'active_result_context':{'work_ids':['OL2W']}},'selected'),
++ ({'active_result_context':{'work_ids':['OL2W']}},'recent'),
++ ({'page_books':[{'work_id':'OL3W'}]},'page'),
++ ({},'ambiguous'),
++])
++def test_actual_context_examples_and_single_call(context,scope):
++ gateway=object.__new__(QwenGateway);calls=[]
++ async def generate(prompt,*args,**kwargs):
++  calls.append(prompt)
++  # Deliberately emit a scope inconsistent with the prompt. Parse must not
++  # rewrite it or invoke a second generation to make the assertion pass.
++  return '{"i":"availability","c":1,"s":"page","e":"SECOND","g":"status"}'
++ gateway.generate=generate
++ decision=asyncio.run(gateway.parse('Is the second one available?',context))
++ assert len(calls)==1
++ assert decision.reference_scope.value=='CURRENT_PAGE_BOOK'
++ if not context.get('selected_books') and scope!='ambiguous':
++  assert 'Examples (with a selected pair' not in calls[0]
++ if scope!='ambiguous':assert '"populated_scope":"'+scope+'"' in calls[0]
++ else:assert 'Find books about astronomy' in calls[0]

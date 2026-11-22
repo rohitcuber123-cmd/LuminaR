@@ -27,6 +27,13 @@ router = APIRouter(
 )
 
 
+@router.get('/{work_id}/digital-availability')
+def digital_availability(work_id:str, current_user=Depends(get_current_user)):
+    from fastapi.responses import JSONResponse
+    from backend.services.book_digital_availability import global_status
+    return JSONResponse(global_status(work_id,current_user),headers={'Cache-Control':'private, no-store'})
+
+
 class BookCreateRequest(BaseModel):
     work_id: str
     title: str

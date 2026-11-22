@@ -1,0 +1,55 @@
+[
+  {
+    "case": "authenticated_read",
+    "result": "PASS",
+    "observed": [
+      {
+        "job_id": "synthetic-only",
+        "state": "QUEUED"
+      }
+    ]
+  },
+  {
+    "case": "reader_cannot_write",
+    "result": "PASS",
+    "observed": {
+      "mongo_unauthorized": true
+    }
+  },
+  {
+    "case": "row_limit_201",
+    "result": "PASS",
+    "observed": "INVALID_LIMIT"
+  },
+  {
+    "case": "broad_writer_refused_as_reader",
+    "result": "PASS",
+    "observed": "OPERATOR_READ_PRINCIPAL_REQUIRED"
+  },
+  {
+    "case": "restricted_telemetry_boot",
+    "result": "PASS",
+    "observed": {
+      "epoch": 1
+    }
+  },
+  {
+    "case": "telemetry_cannot_mutate_job",
+    "result": "PASS",
+    "observed": {
+      "mongo_unauthorized": true
+    }
+  },
+  {
+    "case": "telemetry_cannot_provision",
+    "result": "PASS",
+    "observed": {
+      "mongo_unauthorized": true
+    }
+  },
+  {
+    "case": "native_job_unchanged",
+    "result": "PASS",
+    "observed": "QUEUED"
+  }
+]

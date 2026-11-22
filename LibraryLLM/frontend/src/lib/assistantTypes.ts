@@ -5,6 +5,7 @@ export type AssistantActionType = 'MORE_LIKE_THIS' | 'VIEW_BOOK' | 'SELECT_BOOK'
 export type AssistantRequestAction = 'MORE_LIKE_THIS' | 'CONFIRM_ACTION' | 'CANCEL_ACTION' | 'COMPARE' | 'RECOMMEND' | 'RECOMMEND_SIMILAR' | 'RECOMMEND_FROM_SELECTION' | 'CHECK_AVAILABILITY' | 'AVAILABLE_NOW' | 'USER_LOANS' | 'USER_FEES' | 'USER_RESERVATIONS' | 'BOOK_CONTENT_QUESTION' | 'DOCUMENT_QUESTION' | 'USER_READING_LIST' | 'ADD_TO_READING_LIST' | 'REMOVE_FROM_READING_LIST' | 'CLEAR_READING_LIST' | 'RECOMMEND_AVAILABLE_SIMILAR' | 'EXPLAIN_RECOMMENDATION' | 'EXPLAIN_COMPARISON' | 'SHOW_MORE' | 'REQUEST_BOOK' | 'REQUEST_RETURN' | 'RESERVE_LIBRARY_BOOK' | 'CANCEL_LIBRARY_RESERVATION'
 export interface AssistantPageContext { work_id?: string | null; work_ids?: string[]; document_id?: string | null }
 export interface AssistantRequest {
+  library_id?: string | null
   lending_context?: { library_id: string; library_book_id?: string; loan_id?: string; reservation_id?: string }
   message: string
   conversation_id?: string | null
@@ -17,6 +18,7 @@ export interface AssistantRequest {
   result_offset?: number
 }
 export interface AssistantBook {
+  library_id?:string|null; library_book_id?:string|null; global_work_id?:string|null
   rating_count?: number | null
   work_id: string
   title?: string | null
@@ -29,6 +31,12 @@ export interface AssistantBook {
   shelf_location?: string | null
 }
 export interface AssistantAvailability { work_id: string; available: boolean | null; available_copies: number | null; total_copies: number | null }
+export interface AssistantDigitalAvailability {
+  work_id: string; library_id: string | null; catalogue_present: boolean
+  resource_link_present: boolean; asset_present: boolean | null; access_authorized: boolean | null
+  full_text_accessible: boolean | null; status: 'AUTHORIZED' | 'UNKNOWN'
+  resources: Array<{kind:'LIBRARY_DOCUMENT'|'GLOBAL_TEXT';asset_type:'PDF'|'TXT'|'DOCX'|'TEXT';asset_id:string|null;href:string}>
+}
 export interface AssistantComparison { books: AssistantBook[]; requested_fields: string[]; missing_fields: string[] }
 export interface AssistantAction { type: AssistantActionType; work_id?: string | null; action_id?: string | null }
 export interface AssistantClarification { reason: string; choices: AssistantBook[] }
@@ -50,6 +58,7 @@ export interface AssistantRAGResult {
   [field: string]: unknown
 }
 export interface AssistantResponse {
+  digital_availability?: AssistantDigitalAvailability[]
   conversation_id: string; intent: AssistantIntent; message: string; books: AssistantBook[]
   comparison: AssistantComparison | null; recommendation_mode: RecommendationMode | null; seed_work_ids: string[]
   availability: AssistantAvailability[]; actions: AssistantAction[]; clarification: AssistantClarification | null

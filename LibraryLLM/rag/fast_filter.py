@@ -659,6 +659,40 @@ def run_fast_filter(
 
     # Make decision
     decision = fast_filter_decision(signals)
+    # A document definition is still judged by the existing semantic validator.
+    # The factual assignment parser cannot establish the quality of a definition.
+    from rag.document_grounding import document_definition_topic, normalize_document_query
+    selected = evidence_items[:3] if mode == "combined" else evidence_items[:1]
+    document_ids = {item.get("document_id") for item in selected}
+    topic = document_definition_topic(question)
+    is_document_definition = False
+    if len(document_ids) == 1 and None not in document_ids and topic:
+        for item in selected:
+            for sentence in re.split(r"(?<=[.!?])\s+|\n+", item.get("text", "")):
+                normalized = normalize_document_query(sentence)
+                match = re.search(
+                    rf"\b{re.escape(topic)}\s+(?:is|are|means|refers to|is defined as)\s+(.+)",
+                    normalized,
+                )
+                if match and len(match[1].split()) >= 6 and not match[1].startswith(("not ", "never ", "no ")):
+                    is_document_definition = True
+                    break
+            if is_document_definition:
+                break
+    if is_document_definition:
+        decision = "NEEDS_LLM_VALIDATION"
+        signals.reasons.append("document definition requires semantic validation")
+    if (not is_document_definition and intent_data.get("intent", "FACTUAL") == "FACTUAL"
+            and not intent_data.get("question_focus")):
+        from rag.factual_evidence import assess_factual_evidence
+        factual = assess_factual_evidence(question, intent_data, selected)
+        if factual is not None:
+            decision = "FAST_ACCEPT" if factual.verdict == "SUPPORTED" else "FAST_REJECT"
+            signals.reasons.append(factual.reason)
+        elif decision == "FAST_ACCEPT":
+            # Co-occurrence cannot establish an unverified factual proposition.
+            decision = "NEEDS_LLM_VALIDATION"
+            signals.reasons.append("factual relationship requires semantic validation")
 
     return {
         "decision": decision,

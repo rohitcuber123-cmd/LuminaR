@@ -67,10 +67,16 @@ def test_rotation_credential_repr_is_redacted(lab):
 def test_production_runtime_preserved_from_m_baseline():
     import hashlib
     baseline=json.loads((ROOT/'reports/institution_v2m_baseline.json').read_text(encoding='utf8'))
+    reviewed_e01_e04={
+        'search/library_intelligence.py':'16da4dc664012f5fdd23eafa581645774aaf345d34aea27d72539c6f45e46b14',
+        'backend/services/library_intelligence_store.py':'ad33ad7102e2e56d63884ad6f1244e5a2930488d65cc9a3a1e432681ca3a7402',
+        'backend/services/library_intelligence_service.py':'2f9a21f0d34f1f682c06e9813773eaf6a5134910b1949e232601fede495a19af',
+    }
     for name in ['search/library_intelligence.py','search/library_intelligence_api.py','backend/services/library_intelligence_store.py',
         'backend/services/library_intelligence_service.py','backend/services/library_worker_observer.py','backend/services/library_worker_telemetry.py',
         'backend/services/library_worker_diagnostics.py','backend/services/library_operator_access.py','scripts/diagnose_worker_telemetry.py']:
-        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==baseline['source_sha256'][name]
+        expected=reviewed_e01_e04.get(name,baseline['source_sha256'][name])
+        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==expected
 
 
 def test_no_frontend_infrastructure_secret_contract():

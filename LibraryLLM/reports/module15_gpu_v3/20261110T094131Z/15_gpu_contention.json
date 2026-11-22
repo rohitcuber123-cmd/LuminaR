@@ -1,0 +1,187 @@
+{
+  "test_id": "M15-V3-P7-GPU-CONTENTION",
+  "executed_at_utc": "2026-11-10T12:17:08.678580+00:00",
+  "execution_type": "native_cuda_bounded_concurrency",
+  "same_model_id_maintained": true,
+  "model_reload_count": 0,
+  "process_rss_bytes": 2108551168,
+  "cold_observations": {
+    "assistant": {
+      "kind": "assistant",
+      "http": 200,
+      "latency_ms": 2806.63,
+      "intent": "USER_READING_LIST",
+      "errors": []
+    },
+    "rag": {
+      "kind": "rag",
+      "http": 200,
+      "latency_ms": 13836.15,
+      "verdict": "SUPPORTED",
+      "timing_ms": {
+        "response": 0.03,
+        "intent_analysis": 9160.21,
+        "retrieval": 81.14,
+        "fast_filter": 1.07,
+        "validation": 1857.79,
+        "generation": 2698.74,
+        "total": 13801.74
+      }
+    }
+  },
+  "warm_assistant_only": {
+    "sample_size": 5,
+    "completed": 5,
+    "latencies_ms": [
+      3566.79,
+      3257.06,
+      2653.53,
+      2668.75,
+      2684.15
+    ],
+    "mean_ms": 2966.06,
+    "p50_ms": 2684.15,
+    "p95_ms": 3504.84
+  },
+  "warm_rag_only": {
+    "sample_size": 5,
+    "completed": 5,
+    "latencies_ms": [
+      17171.74,
+      15441.53,
+      12497.6,
+      14979.52,
+      13114.58
+    ],
+    "mean_ms": 14640.99,
+    "p50_ms": 14979.52,
+    "p95_ms": 16825.7
+  },
+  "concurrent_2way_assistant_plus_rag": {
+    "sample_size": 2,
+    "completed": 2,
+    "results": [
+      {
+        "kind": "assistant",
+        "http": 200,
+        "latency_ms": 16106.31,
+        "intent": "USER_READING_LIST",
+        "errors": []
+      },
+      {
+        "kind": "rag",
+        "http": 200,
+        "latency_ms": 13621.47,
+        "verdict": "SUPPORTED",
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 9001.49,
+          "retrieval": 59.27,
+          "fast_filter": 0.94,
+          "validation": 1852.7,
+          "generation": 2688.94,
+          "total": 13604.13
+        }
+      }
+    ],
+    "lock_acquire_waits_ms": [
+      0.0,
+      0.0,
+      13609.04
+    ],
+    "peak_cuda_allocated_bytes": 2528740352
+  },
+  "concurrent_4way_assistant_plus_rag": {
+    "sample_size": 4,
+    "completed": 3,
+    "results": [
+      {
+        "kind": "assistant",
+        "http": 200,
+        "latency_ms": 2489.13,
+        "intent": "USER_READING_LIST",
+        "errors": []
+      },
+      {
+        "kind": "assistant",
+        "http": 200,
+        "latency_ms": 22.44,
+        "intent": "UNKNOWN",
+        "errors": [
+          "QWEN_UNAVAILABLE"
+        ]
+      },
+      {
+        "kind": "rag",
+        "http": 200,
+        "latency_ms": 20317.43,
+        "verdict": "SUPPORTED",
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 10184.38,
+          "retrieval": 68.28,
+          "fast_filter": 0.12,
+          "validation": 3370.91,
+          "generation": 4203.34,
+          "total": 17827.96
+        }
+      },
+      {
+        "kind": "rag",
+        "http": 200,
+        "latency_ms": 33234.76,
+        "verdict": "SUPPORTED",
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 8509.27,
+          "retrieval": 53.07,
+          "fast_filter": 0.7,
+          "validation": 2004.15,
+          "generation": 2343.82,
+          "total": 12911.92
+        }
+      }
+    ],
+    "lock_acquire_waits_ms": [
+      0.0,
+      2452.4,
+      0.0,
+      20298.49,
+      0.0,
+      29926.44
+    ],
+    "peak_cuda_allocated_bytes": 2505083904
+  },
+  "concurrent_asset_ingest_plus_assistant_plus_rag": {
+    "ingest_completed": true,
+    "assistant_result": {
+      "kind": "assistant",
+      "http": 200,
+      "latency_ms": 12756.45,
+      "intent": "USER_HISTORY",
+      "errors": []
+    },
+    "rag_result": {
+      "kind": "rag",
+      "http": 200,
+      "latency_ms": 10283.14,
+      "verdict": "SUPPORTED",
+      "timing_ms": {
+        "response": 0.02,
+        "intent_analysis": 8220.46,
+        "retrieval": 63.75,
+        "fast_filter": 0.37,
+        "validation": 0.0,
+        "generation": 1969.94,
+        "total": 10256.37
+      }
+    },
+    "lock_acquire_waits_ms": [
+      0.0,
+      0.0,
+      10259.97,
+      12631.36
+    ]
+  },
+  "outcome": "PASS"
+}

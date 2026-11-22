@@ -1,0 +1,340 @@
+{
+  "result": "PARTIAL",
+  "environment": "Owned disposable DB and HTTP18005/Vite18017, stable Chromium session",
+  "cases": [
+    {
+      "case": "Global catalogue/chatbot",
+      "result": "PASS",
+      "evidence": "Global_catalogue_ForYou, Global_return, Global_digital_answer; real Qwen UNKNOWN response"
+    },
+    {
+      "case": "Global For You",
+      "result": "PASS",
+      "evidence": "Global_catalogue_ForYou; controlled Global candidate provider"
+    },
+    {
+      "case": "Private A catalogue",
+      "result": "PASS",
+      "evidence": "A_no_match, A_local_book_relogin"
+    },
+    {
+      "case": "Private A chatbot",
+      "result": "PASS",
+      "evidence": "A_digital_complete; real Qwen and authorized canonical PDF"
+    },
+    {
+      "case": "Private A For You",
+      "result": "PARTIAL",
+      "evidence": "A_ForYou and sequential API repeat pass; intermittent 503 retained"
+    },
+    {
+      "case": "Private B catalogue",
+      "result": "PASS",
+      "evidence": "B_catalogue, B_local_book"
+    },
+    {
+      "case": "Private B chatbot",
+      "result": "PASS",
+      "evidence": "B_digital_answer, B_physical_followup; real Qwen"
+    },
+    {
+      "case": "Private B For You",
+      "result": "PARTIAL",
+      "evidence": "B_ForYou, 84/84 B book links; intermittent 503 followed by 200 retained"
+    },
+    {
+      "case": "Physical availability",
+      "result": "PASS",
+      "evidence": "B_physical_followup: 2 available / 2 total"
+    },
+    {
+      "case": "Digital availability",
+      "result": "PASS",
+      "evidence": "A_digital_complete, B_digital_answer, B_PDF_open_complete, Global_digital_answer"
+    },
+    {
+      "case": "Local-only navigation",
+      "result": "PASS",
+      "evidence": "A_local_book_relogin, B_local_book use canonical local IDs"
+    },
+    {
+      "case": "Conversation follow-up",
+      "result": "PASS",
+      "evidence": "B PDF question followed by physical availability, same book"
+    },
+    {
+      "case": "Global -> A -> B -> Global",
+      "result": "PASS",
+      "evidence": "Global_catalogue_ForYou, A_ForYou, B_ForYou, Global_return"
+    },
+    {
+      "case": "Stale request cancellation",
+      "result": "PASS",
+      "evidence": "browser_cancellation.json, browser_cancel_events.json: held HTTP200, matching ERR_ABORTED, clean B conversation; controlled transport"
+    },
+    {
+      "case": "Unauthorized asset denial",
+      "result": "PASS",
+      "evidence": "outsider_denial: private library/resource not found"
+    },
+    {
+      "case": "Revoked membership",
+      "result": "PASS",
+      "evidence": "revoked_denial: removed member cannot open A resource"
+    },
+    {
+      "case": "No-match Search",
+      "result": "PASS",
+      "evidence": "A_no_match: no local matches, separate explicit Global discovery link"
+    },
+    {
+      "case": "Logout/relogin",
+      "result": "PASS",
+      "evidence": "Member -> outsider -> revoked -> member, verified current identity and access"
+    },
+    {
+      "case": "Mobile target390",
+      "result": "PARTIAL",
+      "evidence": "Requested390x844; actual inner487/client469/scroll469; no exact 390 claim"
+    },
+    {
+      "case": "Keyboard accessibility",
+      "result": "PARTIAL",
+      "evidence": "Tab reaches Skip to content; Enter focuses MAIN#main-content. Existing structural axe tests pass; no exhaustive keyboard audit"
+    },
+    {
+      "case": "Console/API errors",
+      "result": "PARTIAL",
+      "evidence": "Last console sample empty; network retains503, expected404 denials, two502 during owned lab restart; event buffer truncated in5batches"
+    }
+  ],
+  "actual_model": "Qwen2.5-3B NF4 CUDA unchanged, genuine A/B/Global book questions",
+  "controlled_parts": "Synthetic books/assets; controlled Global candidate metadata; cancellation holds real completed explicit RECOMMEND response, without Qwen intent inference",
+  "network_errors": [
+    {
+      "url": "http://127.0.0.1:18017/api/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9/catalogue/recommendations",
+      "status": 503
+    },
+    {
+      "url": "http://127.0.0.1:18017/api/events/unseen",
+      "status": 502
+    },
+    {
+      "url": "http://127.0.0.1:18017/api/notifications?limit=20",
+      "status": 502
+    },
+    {
+      "url": "http://127.0.0.1:18017/api/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/context",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:18017/api/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/context",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:18017/api/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9/context",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:18017/api/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9/context",
+      "status": 404
+    },
+    {
+      "url": "http://127.0.0.1:18017/api/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/catalogue/recommendations",
+      "status": 503
+    }
+  ],
+  "truncated_network_batches": 5,
+  "console_sample": [],
+  "observations": [
+    {
+      "case": "login_A",
+      "url": "http://127.0.0.1:18017/account/libraries",
+      "at": "2026-11-04T16:07:04.434Z"
+    },
+    {
+      "case": "Global_catalogue_ForYou",
+      "url": "http://127.0.0.1:18017/catalog",
+      "at": "2026-11-04T16:07:40.383Z"
+    },
+    {
+      "case": "A_ForYou",
+      "url": "http://127.0.0.1:18017/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9",
+      "at": "2026-11-04T16:08:35.007Z"
+    },
+    {
+      "case": "B_ForYou",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429",
+      "at": "2026-11-04T16:12:56.848Z"
+    },
+    {
+      "case": "B_link_ownership",
+      "count": 84,
+      "all_B": true
+    },
+    {
+      "case": "B_local_book",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/books/c695e4a5-f357-4067-aafa-443b9dc87ea0",
+      "at": "2026-11-04T16:14:34.462Z"
+    },
+    {
+      "case": "B_digital_answer",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/books/c695e4a5-f357-4067-aafa-443b9dc87ea0",
+      "at": "2026-11-04T16:15:57.602Z"
+    },
+    {
+      "case": "B_PDF_open",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/resources/ed90c868-b035-424a-a9f9-f8723542a82f",
+      "at": "2026-11-04T16:17:34.260Z"
+    },
+    {
+      "case": "B_PDF_open_complete",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/resources/ed90c868-b035-424a-a9f9-f8723542a82f",
+      "at": "2026-11-04T16:18:33.906Z"
+    },
+    {
+      "case": "B_physical_followup",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/books/c695e4a5-f357-4067-aafa-443b9dc87ea0",
+      "at": "2026-11-04T16:22:05.477Z"
+    },
+    {
+      "case": "mobile",
+      "requested": {
+        "width": 390,
+        "height": 844
+      },
+      "observed": {
+        "client": 469,
+        "inner": 487,
+        "scroll": 469
+      }
+    },
+    {
+      "case": "keyboard_Tab",
+      "focus": {
+        "tag": "BODY",
+        "text": "\n    Skip to contentLuminaRGraph LabBrowse BooksNew ArrivalsEventsAboutKnow MoreMy LibrarySearchDisp"
+      }
+    },
+    {
+      "case": "mobile_keyboard",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/books/c695e4a5-f357-4067-aafa-443b9dc87ea0",
+      "at": "2026-11-04T16:22:17.741Z"
+    },
+    {
+      "case": "keyboard_next_Tab",
+      "focus": {
+        "tag": "A",
+        "text": "Skip to content"
+      }
+    },
+    {
+      "case": "outsider_denial",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/resources/ed90c868-b035-424a-a9f9-f8723542a82f",
+      "at": "2026-11-04T16:26:37.404Z"
+    },
+    {
+      "case": "revoked_denial",
+      "url": "http://127.0.0.1:18017/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9/resources/9bb076fa-854a-48df-ba88-01c99bdfb327",
+      "at": "2026-11-04T16:29:50.628Z"
+    },
+    {
+      "case": "A_local_book_relogin",
+      "url": "http://127.0.0.1:18017/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9/books/8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+      "at": "2026-11-04T16:30:19.487Z"
+    },
+    {
+      "case": "A_digital_answer",
+      "url": "http://127.0.0.1:18017/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9/books/8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+      "at": "2026-11-04T16:30:39.650Z"
+    },
+    {
+      "case": "A_digital_complete",
+      "url": "http://127.0.0.1:18017/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9/books/8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+      "at": "2026-11-04T16:30:50.328Z"
+    },
+    {
+      "case": "A_no_match",
+      "url": "http://127.0.0.1:18017/libraries/0b1263a6-0afc-46a0-97af-28c4c3dcb4f9/catalogue?mode=TITLE_AUTHOR&search=zzzz-no-such-title-q3",
+      "at": "2026-11-04T16:31:34.826Z"
+    },
+    {
+      "case": "B_stale_cancellation",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429",
+      "at": "2026-11-04T16:32:23.270Z"
+    },
+    {
+      "case": "Global_return",
+      "url": "http://127.0.0.1:18017/",
+      "at": "2026-11-04T16:32:57.806Z"
+    },
+    {
+      "case": "Global_digital_answer",
+      "url": "http://127.0.0.1:18017/book/OL910000001W",
+      "at": "2026-11-04T16:33:52.038Z"
+    },
+    {
+      "case": "B_catalogue",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/catalogue",
+      "at": "2026-11-04T16:34:50.454Z"
+    },
+    {
+      "case": "keyboard_skip_Enter",
+      "focus": {
+        "id": "main-content",
+        "tag": "MAIN",
+        "text": "Q3 BMember \u00b7 Private institutionMy LibraryReservationsFeesResourcesAnnouncementsQ3 BGlobal"
+      }
+    },
+    {
+      "case": "keyboard_skip_complete",
+      "url": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/catalogue#main-content",
+      "at": "2026-11-04T16:34:57.165Z"
+    }
+  ],
+  "cancellation": {
+    "held_status": 200,
+    "held_network_id": "6088.1501",
+    "continue_result": "Error: Invalid InterceptionId.",
+    "network": [
+      {
+        "error": "net::ERR_ABORTED",
+        "canceled": true,
+        "requestId": "6088.1501"
+      }
+    ],
+    "scope": "http://127.0.0.1:18017/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429",
+    "no_A_response": true,
+    "canceled": true
+  },
+  "api_error_interpretation": "404 private context denials expected.502 events/notifications correspond to Vite ECONNREFUSED during owned lab reload.503 catalogue recommendations also occurred during ordinary read/switch concurrency; retry200, cause not fully attributed; no guard weakened.",
+  "proof_image": "reports/institution_v2q3_browser_B_digital.png",
+  "cleanup": {
+    "stopped_owned_pids": [
+      32096,
+      32112,
+      4996
+    ],
+    "listening_after_cleanup": {
+      "18005": false,
+      "18017": false,
+      "8002": false,
+      "8003": false,
+      "8004": false,
+      "8005": false,
+      "5173": false
+    },
+    "regular_services_initially_off": true,
+    "regular_service_started_or_stopped_by_Q3": false,
+    "only_task_owned_listeners_stopped": true
+  },
+  "fixture_cleanup": {
+    "database": "luminar_v2q3_ec69209e37cf484bb01c",
+    "database_removed": true,
+    "owned_lab_path_removed": true,
+    "owned_frontend_config_removed": true,
+    "preserved_before_source_snapshot": ".scratch/institution-v2q/digital-review/before/assistant/qwen.py",
+    "no_live_database_cleanup": true
+  },
+  "limits": "Not a production-data or5M retrieval benchmark. Browser errors, bounded keyboard coverage and observed viewport prevent full PASS."
+}

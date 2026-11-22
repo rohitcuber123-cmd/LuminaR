@@ -1,0 +1,177 @@
+[
+  {
+    "id": "F01",
+    "input": "Is the second one available?",
+    "effective_library": "public isolation A; historical Global also failed",
+    "conversation_scope": "public isolation A; historical Global also failed",
+    "actual_model_tool_execution": "NOT_INDEPENDENTLY_TRACED",
+    "actual_output": "That position is not in the current book list.",
+    "expected_invariant": "Bind the second item in the actual intended valid context, then read current holdings.",
+    "evidence": [
+      "institution_v2q1_resumed_browser.json:RESUME_UI004/005"
+    ],
+    "suspected_cause": "Empty selected/page scope or lost server context",
+    "proven_cause": "Same conversation and ten recent IDs were supplied; actual parsed scope still unknown.",
+    "possible_repair": "Trace raw enum fields and validated decision in the isolated one-Qwen lab before changing anything.",
+    "security_impact": "No arbitrary cross-scope fallback is safe.",
+    "safe_unprotected_repair": "CONDITIONAL_ON_TRACE"
+  },
+  {
+    "id": "F02",
+    "input": "Ordinal/selected/page references",
+    "effective_library": "Global and scoped conversations",
+    "conversation_scope": "Global and scoped conversations",
+    "actual_model_tool_execution": "DETERMINISTIC_FIXTURE only for counterfactual binding",
+    "actual_output": "Scope choice not captured in prior runs",
+    "expected_invariant": "Selected, page, recent, literal IDs, explicit titles and document scopes remain distinct.",
+    "evidence": [
+      "institution_v2q1_resumed_summary.json:reference_diagnostic"
+    ],
+    "suspected_cause": "Selected-pair prompt example may bias an empty-scope choice",
+    "proven_cause": "Controlled RECENT_RESULTS/NONE binds SECOND; empty SELECTED_BOOKS/PAGE gives the observed error. This is not the actual model decision.",
+    "possible_repair": "A prompt/context repair may be appropriate after real decision tracing; retain scope validation.",
+    "security_impact": "Blindly replacing an explicit valid scope can disclose unrelated records.",
+    "safe_unprotected_repair": "UNKNOWN"
+  },
+  {
+    "id": "F03",
+    "input": "Give the exact page number of the first mention of Jonathan Harker.",
+    "effective_library": "public RAG corpus",
+    "conversation_scope": "public RAG corpus",
+    "actual_model_tool_execution": "REAL_MODEL_REAL_RETRIEVAL; adapter replay is DETERMINISTIC_FIXTURE",
+    "actual_output": "Page 15; SUPPORTED; four null source pages",
+    "expected_invariant": "Do not present exact page attribution without trustworthy page evidence.",
+    "evidence": [
+      "institution_v2q1_public_rag_resumed.json:RAG027",
+      "institution_v2q1c_citation_before.log",
+      "institution_v2q1c_citation_final.log"
+    ],
+    "suspected_cause": "Question intent lost pagination focus; evidence validator accepted character relevance.",
+    "proven_cause": "All four matched public chunks have null pages; context headers include page only when metadata exists; the number appears in generation, not citation formatting.",
+    "possible_repair": "Applied numeric-page validation at unprotected API and authorized library-asset response boundaries.",
+    "security_impact": "Only downgrades unsupported output; leaves ownership, source selection and protected generation intact.",
+    "safe_unprotected_repair": "APPLIED_AND_TARGETED_TESTED"
+  },
+  {
+    "id": "F04",
+    "input": "Machine-learning evidence / Dracula mirrors",
+    "effective_library": "public RAG corpus",
+    "conversation_scope": "public RAG corpus",
+    "actual_model_tool_execution": "REAL_MODEL_REAL_RETRIEVAL",
+    "actual_output": "Abstaining answers with SUPPORTED evidence verdicts",
+    "expected_invariant": "Define whether a label grades retrieved evidence or final generated claims before declaring contradiction.",
+    "evidence": [
+      "institution_v2q1_public_rag_results.json:RAG001",
+      "institution_v2q1_public_rag_resumed.json:RAG013"
+    ],
+    "suspected_cause": "Evidence validator false positives or final generation declining despite relevant evidence",
+    "proven_cause": "verdict is assigned before answer generation. Both cases used LLM evidence validation, not FAST_ACCEPT.",
+    "possible_repair": "Review evidence/validator decisions separately; do not flip all abstention verdicts by text matching.",
+    "security_impact": "A broad rewrite can destroy legitimate evidence semantics and valid grounded responses.",
+    "safe_unprotected_repair": "NO_GENERIC_REWRITE_JUSTIFIED"
+  },
+  {
+    "id": "F05",
+    "input": "Recommend similar books to the local-only network workbook",
+    "effective_library": "public TEST",
+    "conversation_scope": "public TEST",
+    "actual_model_tool_execution": "CONTROLLED_MODEL_REAL_RETRIEVAL; no Qwen on structured action",
+    "actual_output": "Computing/business networks/mathematics mix",
+    "expected_invariant": "Scoped ownership is mandatory; relevance requires judged evidence.",
+    "evidence": [
+      "institution_v2q1_resumed_browser.json:RESUME_UI003"
+    ],
+    "suspected_cause": "Broad subject tags, semantic candidates, reranking or fallback",
+    "proven_cause": "Seed has no global ID; code routes this branch to subject-based local Search. The actual native/fallback provider was not recorded.",
+    "possible_repair": "Collect scored metadata and independent judgments before considering ranking changes.",
+    "security_impact": "Never fill a private recommendation with unowned global books.",
+    "safe_unprotected_repair": "NOT_BEFORE_JUDGMENT"
+  },
+  {
+    "id": "F06",
+    "input": "Private-library discovery and Select For You",
+    "effective_library": "private A/B",
+    "conversation_scope": "private A/B",
+    "actual_model_tool_execution": "Historical deterministic tests; new no-model authenticated smoke",
+    "actual_output": "Not executed live in earlier work",
+    "expected_invariant": "Use real JWT, current membership, local IDs and holdings on task-owned private libraries.",
+    "evidence": [
+      "institution_v2q1_completion.md:J/O/U"
+    ],
+    "suspected_cause": "Missing controlled runtime environment",
+    "proven_cause": "Missing evidence, not a proven implementation defect.",
+    "possible_repair": "Prepared isolated three-library/six-user fixture and actual authenticated Core smoke.",
+    "security_impact": "Never probe real member records or infer private authorization from public abstention.",
+    "safe_unprotected_repair": "EVALUATION_REQUIRED"
+  },
+  {
+    "id": "F07",
+    "input": "Stratified relevance sample",
+    "effective_library": "Global/public TEST",
+    "conversation_scope": "Global/public TEST",
+    "actual_model_tool_execution": "Actual result sets, unjudged",
+    "actual_output": "160 inventory rows unjudged, not 160 executions",
+    "expected_invariant": "Do not invent ground truth or precision/recall/MRR/nDCG.",
+    "evidence": [
+      "institution_v2q1_query_inventory.json",
+      "institution_v2q1_global_search_probe.json"
+    ],
+    "suspected_cause": "No independent reviewer labels",
+    "proven_cause": "No independent labels exist in the recorded artifacts.",
+    "possible_repair": "Prepare query/rank/ID/metadata/rationale review rows; leave human grades unassigned.",
+    "security_impact": "Use only public metadata and disposable fixtures; no private history export.",
+    "safe_unprotected_repair": "REPORTING_ONLY"
+  },
+  {
+    "id": "F08",
+    "input": "Foreign/revoked private-asset requests",
+    "effective_library": "disposable private A/B",
+    "conversation_scope": "disposable private A/B",
+    "actual_model_tool_execution": "NOT_INDEPENDENTLY_TRACED",
+    "actual_output": "Live private-asset matrix previously missing",
+    "expected_invariant": "Authorization precedes private retrieval/model context and is rechecked.",
+    "evidence": [
+      "institution_v2q1_completion.md:U/Z"
+    ],
+    "suspected_cause": "Missing controlled live matrix",
+    "proven_cause": "Public RAG030 abstention is not private authorization evidence.",
+    "possible_repair": "Use task-owned PDFs, outsiders, second-library member and revoked member in isolated DB.",
+    "security_impact": "No real private content or credentials in diagnostics.",
+    "safe_unprotected_repair": "EVALUATION_REQUIRED"
+  },
+  {
+    "id": "F09",
+    "input": "Fresh uncached Global MACHINE Search",
+    "effective_library": "Global catalogue",
+    "conversation_scope": "Global catalogue",
+    "actual_model_tool_execution": "CONTROLLED_MODEL_REAL_RETRIEVAL; actual native HNSW verified",
+    "actual_output": "HTTP 200; HNSW 613.67ms; 101 candidates; generation 30",
+    "expected_invariant": "Observe native execution without rebuilding or forcing health flags.",
+    "evidence": [
+      "institution_v2q1c_global_native_probe.json"
+    ],
+    "suspected_cause": "Earlier response lacked a native trace",
+    "proven_cause": "Existing machine endpoint returns a cache miss, native-stage timing, candidate/rerank counts and generation.",
+    "possible_repair": "No source repair required. Keep prior HUMAN-path inference distinct.",
+    "security_impact": "History/personalization disabled; no global writes/rebuild requested.",
+    "safe_unprotected_repair": "NO_REPAIR_NEEDED"
+  },
+  {
+    "id": "F10",
+    "input": "Global/tenant/private browser sequence matrix",
+    "effective_library": "multiple scopes",
+    "conversation_scope": "multiple scopes",
+    "actual_model_tool_execution": "NOT_INDEPENDENTLY_TRACED",
+    "actual_output": "Public subset executed; private/revocation/mobile coverage incomplete",
+    "expected_invariant": "Library indicator, selected books, conversation and returned facts stay in the same active scope.",
+    "evidence": [
+      "institution_v2q1_live_browser_observations.json",
+      "institution_v2q1_resumed_browser.json"
+    ],
+    "suspected_cause": "Incomplete executed coverage",
+    "proven_cause": "Earlier browser evidence explicitly marked PARTIAL.",
+    "possible_repair": "Use existing frontend against the isolated task proxy, with actual authenticated flows.",
+    "security_impact": "No unexpected JS/API errors, stale private responses or foreign document context.",
+    "safe_unprotected_repair": "EVALUATION_REQUIRED"
+  }
+]

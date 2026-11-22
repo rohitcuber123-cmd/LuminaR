@@ -1,6 +1,9 @@
 """Actual isolated Mongo authorization; never connects to the existing endpoint."""
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 from urllib.parse import quote
 
 import pytest
@@ -32,6 +35,84 @@ def denied(call):
 def test_authenticated_mongo_connect(server):
     with connect(configuration(server)) as client:
         assert client[server.database].command('connectionStatus')['authInfo']['authenticatedUsers'][0]['user'] == 'fixture_application'
+
+
+def run_core_probe(server, script, *, uri=None):
+    env = dict(os.environ, MONGO_URI=uri or server.app_uri, MONGO_DB_NAME=server.database,
+               LUMINAR_MONGO_MODE='AUTHENTICATED',
+               LUMINAR_SESSION_DB=str(server.root / 'core-startup-sessions.sqlite'),
+               JWT_SECRET_KEY='owned-core-startup-test-only',
+               NOTIFICATION_DUE_WORKER_ENABLED='0', NOTIFICATION_OUTBOX_WORKER_ENABLED='0')
+    result = subprocess.run([sys.executable, '-c', script], env=env, capture_output=True,
+                            text=True, timeout=90)
+    assert server.app_password not in result.stdout + result.stderr
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_core_lifespan_initializes_intelligence_before_serving(server):
+    run_core_probe(server, """
+import asyncio
+from fastapi.testclient import TestClient
+from backend import main
+from backend.database.mongodb import db
+
+sequences = db.institution_intelligence_sequences
+assert 'library_id_1' not in sequences.index_information()
+initialize = main.initialize_library_intelligence
+calls = []
+
+def observed():
+    calls.append('initialize')
+    initialize()
+
+main.initialize_library_intelligence = observed
+for _ in range(2):
+    with TestClient(main.app) as client:
+        assert client.get('/health').status_code == 200
+        assert sequences.index_information()['library_id_1']['unique']
+        jobs = db.institution_intelligence_jobs.index_information()
+        assert jobs['library_id_1_target_1']['partialFilterExpression'] == {'effective_active': True}
+assert calls == ['initialize', 'initialize']
+
+async def startup_once():
+    async with main.app.router.lifespan_context(main.app):
+        assert sequences.index_information()['library_id_1']['unique']
+
+async def parallel():
+    await asyncio.gather(startup_once(), startup_once())
+
+asyncio.run(parallel())
+assert len(calls) == 4
+
+def fail():
+    raise RuntimeError('fixture-intelligence-index-failed')
+
+def worker_must_not_start():
+    raise AssertionError('workers started after failed initialization')
+
+main.initialize_library_intelligence = fail
+main.DueWorker = main.TenantNotificationWorker = worker_must_not_start
+try:
+    with TestClient(main.app):
+        raise AssertionError('Core served after failed initialization')
+except RuntimeError as error:
+    assert str(error) == 'fixture-intelligence-index-failed'
+""")
+
+
+def test_core_import_rejects_invalid_credentials_before_database_side_effects(server):
+    uri = server.app_uri.replace(quote(server.app_password), 'invalid-fixture-secret')
+    before = server.db.reading_list.index_information()
+    run_core_probe(server, """
+from backend.database.mongo_configuration import MongoConfigurationError
+try:
+    from backend import main
+except MongoConfigurationError as error:
+    assert str(error) == 'MONGO_AUTH_CONNECTION_NOT_QUALIFIED'
+else:
+    raise AssertionError('Core imported with invalid credentials')
+""", uri=uri)
+    assert server.db.reading_list.index_information() == before
 
 
 def test_anonymous_mongo_denied(server):

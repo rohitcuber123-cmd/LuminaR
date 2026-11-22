@@ -1,0 +1,121 @@
+{
+  "cases": [
+    {
+      "case": "LOGIN_AND_PRIVATE_A",
+      "url": "http://127.0.0.1:18017/libraries/5bb493e4-8aaa-4999-b570-38bb35087b6a",
+      "forYou": true,
+      "localOnlyCard": true,
+      "privateLibrary": true
+    },
+    {
+      "case": "PRIVATE_B_FOR_YOU",
+      "forYou": true,
+      "localOnlyCard": true,
+      "bookLinks": 84,
+      "allBooksInB": true
+    },
+    {
+      "case": "MOBILE_B",
+      "scrollWidth": 469,
+      "width": 469,
+      "noHorizontalPageOverflow": true
+    },
+    {
+      "case": "KEYBOARD_TAB",
+      "focus": {
+        "label": null,
+        "role": null,
+        "tag": "A",
+        "text": "LuminaRB Network Foundations"
+      },
+      "focusedElementPresent": true
+    },
+    {
+      "case": "RETURN_GLOBAL",
+      "url": "http://127.0.0.1:18017/",
+      "globalCatalogue": true,
+      "noForeignLibraryTitle": true,
+      "forYou": true
+    },
+    {
+      "case": "GLOBAL_QUICK_ACTION_CHAT",
+      "modelExecution": "DETERMINISTIC_ACTION_WITH_CONTROLLED_CANDIDATE_PROVIDER",
+      "hasResult": true,
+      "stillGlobal": true
+    },
+    {
+      "case": "GLOBAL_REAL_QWEN_SEARCH",
+      "hasResults": true,
+      "execution": "REAL_QWEN_ROUTING_CONTROLLED_GLOBAL_RETRIEVAL"
+    },
+    {
+      "case": "GLOBAL_REAL_FOLLOWUP",
+      "newChatEnabled": true,
+      "latestResponseEvidence": "Backend trace: BOOK_DETAILS, canonical G-book-02; completed UI snapshot retained",
+      "execution": "REAL_QWEN"
+    },
+    {
+      "case": "STALE_GLOBAL_TO_A",
+      "responseDelayFixture": true,
+      "switchTimeMs": 1793611246454,
+      "heldResponses": 1,
+      "workingStateObserved": true,
+      "currentLibraryA": true,
+      "foreignQueryAbsent": true,
+      "failedRequests": [
+        {
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        },
+        {
+          "error": "net::ERR_ABORTED",
+          "canceled": true
+        }
+      ],
+      "foreignQueryAbsentAfterRelease": true
+    },
+    {
+      "case": "PRIVATE_A_REAL_SEARCH",
+      "execution": "REAL_QWEN_REAL_TENANT_SEARCH",
+      "hasDatabaseResults": true,
+      "noBResults": true
+    },
+    {
+      "case": "PRIVATE_A_REAL_FOLLOWUP",
+      "execution": "REAL_QWEN",
+      "detailsShown": true,
+      "expectedSecondBook": "A Database Advanced"
+    }
+  ],
+  "result": "PARTIAL",
+  "environment": {
+    "chrome": "UNAVAILABLE through connected tool",
+    "tabLosses": 2,
+    "latestError": "Marked tab no longer part of browser session before B-chat action; prior recovery preserved actual session and required Retry Connection after owned backend restart."
+  },
+  "completed": [
+    "actual owner/member login",
+    "owner logout",
+    "Global catalogue and For You fixture display",
+    "private A and B For You ownership",
+    "Global real Qwen Search and details follow-up",
+    "private A real Qwen Search and details follow-up",
+    "Global-A-B-Global navigation",
+    "controlled delayed old-response cancellation",
+    "mobile layout at observed CSS width469; requested override390",
+    "keyboard focus",
+    "initial22 API responses without errors",
+    "initial console error count0"
+  ],
+  "blocked": [
+    "private B real-Qwen browser chatbot",
+    "complete document/revocation browser path",
+    "no-match browser path",
+    "full switch-during-generation and switch-during-recommendation browser matrix"
+  ],
+  "limits": "Backend security and model tests are separate; no browser PASS inferred from them. Global recommendation/retrieval provider controlled; private tenant execution actual."
+}

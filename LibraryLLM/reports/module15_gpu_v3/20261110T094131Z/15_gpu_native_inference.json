@@ -1,0 +1,63 @@
+{
+  "test_id": "M15-V3-P2-NATIVE-INFERENCE",
+  "research_question": "Does the existing LuminaRLLM loader perform real deterministic 4-bit NF4 Qwen2.5-3B-Instruct inference on CUDA with mock mode disabled?",
+  "executed_at_utc": "2026-11-10T12:03:58.017246+00:00",
+  "execution_type": "native_cuda",
+  "sample_size": 5,
+  "outcome": "PASS",
+  "model_name": "Qwen/Qwen2.5-3B-Instruct",
+  "model_commit_hash": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "device": "cuda:0",
+  "probes": [
+    {
+      "probe_id": "native_factual_1",
+      "max_new_tokens": 32,
+      "input_tokens": 84,
+      "output_tokens": 10,
+      "latency_ms": 1528.99,
+      "peak_cuda_allocated_bytes": 2268302336,
+      "not_mocked": true,
+      "output": "The chemical symbol for water is H\u2082O."
+    },
+    {
+      "probe_id": "native_factual_2",
+      "max_new_tokens": 24,
+      "input_tokens": 93,
+      "output_tokens": 3,
+      "latency_ms": 503.16,
+      "peak_cuda_allocated_bytes": 2270303744,
+      "not_mocked": true,
+      "output": "68 twice"
+    },
+    {
+      "probe_id": "native_abstain_prompt",
+      "max_new_tokens": 40,
+      "input_tokens": 101,
+      "output_tokens": 1,
+      "latency_ms": 328.36,
+      "peak_cuda_allocated_bytes": 2317674496,
+      "not_mocked": true,
+      "output": "unknown"
+    },
+    {
+      "probe_id": "native_json_like",
+      "max_new_tokens": 48,
+      "input_tokens": 95,
+      "output_tokens": 17,
+      "latency_ms": 2074.36,
+      "peak_cuda_allocated_bytes": 2270463488,
+      "not_mocked": true,
+      "output": "{\n  \"topic\": \"astronomy\",\n  \"count\": 3\n}"
+    },
+    {
+      "probe_id": "native_summary",
+      "max_new_tokens": 48,
+      "input_tokens": 96,
+      "output_tokens": 21,
+      "latency_ms": 2439.86,
+      "peak_cuda_allocated_bytes": 2270542848,
+      "not_mocked": true,
+      "output": "The Aurora-M4 is an IP67-rated device that operates on 12V DC power."
+    }
+  ]
+}

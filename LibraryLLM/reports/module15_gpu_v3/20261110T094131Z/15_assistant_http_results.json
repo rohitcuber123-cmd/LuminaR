@@ -1,0 +1,41 @@
+{
+  "test_id": "M15-V3-P1-HTTP-ASSISTANT",
+  "executed_at_utc": "2026-11-10T12:12:00.740570+00:00",
+  "execution_type": "native_cuda_authenticated_http",
+  "login_status": 200,
+  "cases": [
+    {
+      "id": "missing_auth",
+      "http": 401,
+      "expected_http": 401,
+      "passed": true
+    },
+    {
+      "id": "original_v2_failure_show_reading_list",
+      "http": 200,
+      "intent": "USER_READING_LIST",
+      "reading_list_ids": [
+        "OL910000001W"
+      ],
+      "message": "Your reading list has 1 book.",
+      "passed": true
+    },
+    {
+      "id": "reading_list_mutation_confirmation_lifecycle",
+      "proposed_add_intent": "ADD_TO_READING_LIST",
+      "count_after_add_confirm": 2,
+      "count_after_remove_cancel": 2,
+      "count_after_remove_confirm": 1,
+      "passed": true
+    },
+    {
+      "id": "unsupported_actions_zero_mutation",
+      "renew_intent": "CLARIFICATION",
+      "delete_intent": "CLARIFICATION",
+      "users_unchanged": true,
+      "issues_unchanged": true,
+      "passed": true
+    }
+  ],
+  "outcome": "PASS"
+}

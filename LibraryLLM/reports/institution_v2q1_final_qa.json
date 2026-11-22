@@ -1,0 +1,546 @@
+{
+  "PART_2Q1_RESULT": "PARTIAL",
+  "REAL_QWEN_EXECUTED": "YES",
+  "REAL_MINILM_EXECUTED": "YES",
+  "REAL_FAISS_SEARCH": "YES",
+  "GLOBAL_RETRIEVAL_QUALITY": "PARTIAL",
+  "TENANT_RETRIEVAL_QUALITY": "PARTIAL",
+  "INTENT_QUALITY": "PARTIAL",
+  "RELEVANCE_JUDGMENTS": "PROVISIONAL",
+  "GLOBAL_CHATBOT_PRESERVED": "NO",
+  "PRIVATE_CHATBOT_PRESERVED": "NO",
+  "PRIVATE_SELECT_FOR_YOU": "PARTIAL",
+  "SMALL_LIBRARY_RECOMMENDATIONS": "PARTIAL",
+  "LOCAL_ONLY_BOOKS": "PASS",
+  "SIMILAR_BOOK_QUALITY": "PARTIAL",
+  "FOLLOW_UP_CONTEXT": "FAIL",
+  "HALLUCINATION_EVALUATION": "PARTIAL",
+  "TENANT_OWNERSHIP_CORRECTNESS": 100.0,
+  "UNAUTHORIZED_PRIVATE_DATA_LEAKS": 0,
+  "QWEN_LATENCY": "Separate public RAG samples: initial n=4 median 20.827s; extended n=5 range 15.837\u201320.860s; restarted n=21 median 17.338s, range 11.861\u201324.003s. Do not pool runs or infer a production SLO.",
+  "SEARCH_LATENCY": "Global Search: one query, three duplicate UI requests 1569.508\u20131626.913 ms. Tenant Search: one query 854.362 ms, TENANT_SEMANTIC/READY. RAG FAISS stage 0.63\u20131.23 ms, n=4. No p95 estimate.",
+  "QUALITY_FIXES_IMPLEMENTED": 1,
+  "QUALITY_IMPROVEMENT_SUPPORTED": "YES",
+  "BACKEND_TESTS": {
+    "passed": 3053,
+    "failed": 0,
+    "skipped": 20,
+    "complete": true
+  },
+  "FRONTEND_TESTS": {
+    "passed": 1028,
+    "failed": 0,
+    "skipped": 0
+  },
+  "REAL_BROWSER_QA": "PARTIAL",
+  "PRODUCTION_BUILD": "PASS",
+  "LINT": "PASS",
+  "LINT_WARNINGS": 16,
+  "LINT_WARNINGS_MATCH_PRIOR": true,
+  "NEW_BACKEND_REGRESSIONS": 0,
+  "NEW_FRONTEND_REGRESSIONS": 0,
+  "GLOBAL_HNSW_REBUILT": "NO",
+  "GLOBAL_KG_REBUILT": "NO",
+  "TENANT_AUTO_REBUILD": "NO",
+  "PROTECTED_RAG_CHANGED": "NO",
+  "PRODUCTION_AUTH_CHANGED": "NO",
+  "PRODUCTION_TELEMETRY_ENABLED": "NO",
+  "DEPLOYED": "NO",
+  "COMMITTED": "NO",
+  "NEXT_RECOMMENDED_SCOPE": "Continue Part 2Q.1 only: inspect actual parsed reference decisions using authorized non-production diagnostics; complete independent relevance and live private-library/asset evaluation; propose a separately reviewed protected-RAG repair for observed grounding defects. Do not alter the protected implementation or weaken scope binding automatically.",
+  "LIVE_PUBLIC_RAG_QUERIES": 30,
+  "SERVICE_AVAILABILITY_BEFORE_USER_RESTART": {
+    "captured_at": "2026-11-01T15:05:07.283168+00:00",
+    "service_checks": {
+      "core": {
+        "reachable": false,
+        "error": "URLError"
+      },
+      "search": {
+        "reachable": false,
+        "error": "URLError"
+      },
+      "rag": {
+        "reachable": false,
+        "error": "URLError"
+      },
+      "frontend": {
+        "reachable": false,
+        "error": "URLError"
+      }
+    },
+    "action": "read-only health checks; no startup or restart performed"
+  },
+  "SERVICE_HEALTH_AFTER_USER_RESTART": {
+    "core": {
+      "status": "healthy",
+      "system": "LuminaR"
+    },
+    "search": {
+      "status": "degraded",
+      "system": "LuminaR",
+      "device": "cuda"
+    },
+    "rag": {
+      "status": "healthy",
+      "system": "LuminaR",
+      "module": "RAG",
+      "llm": "Qwen2.5-3B-Instruct",
+      "device": "cuda:0",
+      "vectors": 3959,
+      "model_loading_ms": 48504.34
+    }
+  },
+  "RESUMED_BROWSER_CASES": [
+    {
+      "id": "RESUME_UI001",
+      "library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+      "query": "Recommend",
+      "action": "RECOMMEND",
+      "evidence_type": "CONTROLLED_MODEL_REAL_RETRIEVAL",
+      "recorded_at": "2026-11-01T15:25:48.088Z",
+      "browser_elapsed_ms": 13366.293,
+      "http_status": 200,
+      "intent": "RECOMMEND_BOOKS",
+      "message": "Here are your recommendations.",
+      "errors": [],
+      "book_ids": [
+        "e5ad68eb-efc2-446f-8132-ab2db9ce12bd",
+        "a8a04662-23be-45ea-bb20-0f0b86bcfa12",
+        "9a122a7b-0a76-4d4f-bacf-a4daf32851de",
+        "13eb8778-53c7-4cbb-8617-87e9ad89a808",
+        "7141195c-2b1b-43ea-9b64-3bb393fa0e44",
+        "946772b1-4be4-4a32-8435-525e2749ba0f",
+        "ee0c88cf-fe76-4239-bfc2-aad6be9e43f8",
+        "c1a01aea-ea88-416a-9f79-8601f59dc03f",
+        "152035e0-c67e-4f26-be5a-c697c305730e",
+        "bc737ffd-1a20-467b-ac69-07e83c1f79d6"
+      ]
+    },
+    {
+      "id": "RESUME_UI002",
+      "library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+      "query": "Show me books available now.",
+      "action": "AVAILABLE_NOW",
+      "evidence_type": "CONTROLLED_MODEL_REAL_RETRIEVAL",
+      "recorded_at": null,
+      "browser_elapsed_ms": 12448.67,
+      "http_status": 200,
+      "intent": "SEARCH_BOOKS",
+      "message": "I found 10 matching books.",
+      "errors": [],
+      "qualification": "Lists available books; this is not an individual selected-book availability question.",
+      "book_ids": [
+        "3deb40a3-a3de-407d-973c-a9c6aae919b2",
+        "1a333939-825d-4c16-b944-bf59392561b8",
+        "b9d0420e-41b3-4e25-b13b-ce882d34ca42",
+        "5f7d5aff-683b-4071-8b11-af079a5f9467",
+        "10c1e8bb-dac3-4662-9e9c-16f7fa4ccebd",
+        "de1a3e7e-3bd3-40d4-ae75-bf08593058f3",
+        "8bfba0bf-641d-4a00-8c30-b0612c6baa93",
+        "c8522948-4cc5-4262-b6a1-6f76ff585539",
+        "21c2ae7e-3416-43b2-8f88-0fc6aaa5509a",
+        "a6fb1132-d012-4657-a4ae-b6728f55bc3b"
+      ],
+      "reported_available_copies_in_result_order": [
+        3,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "RESUME_UI003",
+      "library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+      "query": "Recommend",
+      "action": "RECOMMEND_SIMILAR",
+      "evidence_type": "CONTROLLED_MODEL_REAL_RETRIEVAL",
+      "recorded_at": null,
+      "browser_elapsed_ms": 10086.738,
+      "http_status": 200,
+      "intent": "RECOMMEND_FROM_BOOK",
+      "message": "Here are books related to your selected book.",
+      "errors": [],
+      "seed_library_book_id": "a8a04662-23be-45ea-bb20-0f0b86bcfa12",
+      "seed_global_work_id": null,
+      "qualification": "Read-only canonical record independently confirmed ACTIVE, no global work ID, subjects Computer networks and Technical education. Seed excluded; broad returned topics require relevance review.",
+      "book_ids": [
+        "0936a594-01fe-49cc-9d6d-d774e996735b",
+        "7f3b40c3-77ba-4514-9615-a7cf4cd60675",
+        "09d37da6-4c77-4ee6-805c-f3f92acd32ce",
+        "d6c08a19-e890-41b0-bda9-4175861b37cb",
+        "e38b53f3-516c-4b58-92d0-97bf0142f5fb",
+        "efc2b35b-148f-4d84-98d5-701d9eff4896",
+        "6a7af155-84c1-4192-a9ef-c9e269bfc90f",
+        "673b8bdd-4f11-4525-a604-c0b3e22ce920",
+        "32a2c4bb-3c73-4d10-8f7f-4d8981da527e",
+        "6293b7c3-e267-4130-9813-bf286737f5ef"
+      ]
+    },
+    {
+      "id": "RESUME_UI004",
+      "library_id": "8efa6277-40e6-48c8-943e-191170e43f5f",
+      "query": "Find books about networking.",
+      "action": null,
+      "evidence_type": "LIVE_ASSISTANT_MODEL_TRACE_NOT_EXPOSED",
+      "recorded_at": "2026-11-01T15:32:04.340Z",
+      "browser_elapsed_ms": 5376.891,
+      "http_status": 200,
+      "intent": "SEARCH_BOOKS",
+      "message": "I found 10 matching books.",
+      "errors": [],
+      "request_selected_ids": [],
+      "request_recent_ids": [],
+      "prior_scope_selection_and_transcript_cleared": true,
+      "book_ids": [
+        "62cfce5e-8ebc-4d26-bc88-e0eaf7a0ad38",
+        "7cc2be30-b7f7-4fd7-b4bb-5c3938471959",
+        "b5677113-d038-411a-b878-553c3fd7470f",
+        "697bdbc2-38e2-4113-a14c-39323fe41de8",
+        "bc5d21ca-997a-4cfa-bfe2-95f12f6928ce",
+        "134d5971-db66-4ad5-8558-2c9d67288a36",
+        "3f62a5d2-573c-4989-a7d2-c15f6d52c792",
+        "015da572-2d75-44f0-acf1-47321576390f",
+        "0ccee7d7-8aad-45ce-a831-59cb2b22ac7a",
+        "a9da2c38-ddbc-478c-a24a-29ce53a10448"
+      ]
+    },
+    {
+      "id": "RESUME_UI005",
+      "library_id": "8efa6277-40e6-48c8-943e-191170e43f5f",
+      "query": "Is the second one available?",
+      "action": null,
+      "evidence_type": "LIVE_ASSISTANT_MODEL_TRACE_NOT_EXPOSED",
+      "recorded_at": "2026-11-01T15:32:58.939Z",
+      "browser_elapsed_ms": 4281.286,
+      "http_status": 200,
+      "intent": "CLARIFICATION",
+      "message": "That position is not in the current book list.",
+      "errors": [],
+      "clarification_type": "REFERENCE_AMBIGUITY",
+      "request_selected_ids": [],
+      "request_recent_ids_match_previous_ten_results": true,
+      "request_conversation_id_matches_previous_response": true,
+      "expected_library_book_id": "7cc2be30-b7f7-4fd7-b4bb-5c3938471959",
+      "availability": [],
+      "book_ids": [],
+      "classification": "REFERENCE_RESOLUTION_ERROR; exact parsed model scope unobserved; no scope guard was weakened"
+    },
+    {
+      "id": "RESUME_UI006",
+      "library_id": "e6d1e5b4-c48f-4b47-b96a-656a676fb8ae",
+      "query": "Find books about networking.",
+      "action": null,
+      "evidence_type": "LIVE_ASSISTANT_MODEL_TRACE_NOT_EXPOSED",
+      "recorded_at": "2026-11-01T15:36:40.924Z",
+      "browser_elapsed_ms": 11882.672,
+      "http_status": 200,
+      "intent": "SEARCH_BOOKS",
+      "message": "I found 10 matching books.",
+      "errors": [],
+      "request_selected_ids": [],
+      "request_recent_ids": [],
+      "book_ids": [
+        "6a7af155-84c1-4192-a9ef-c9e269bfc90f",
+        "a8a04662-23be-45ea-bb20-0f0b86bcfa12",
+        "44a651d4-2ed9-4b96-a90d-2f51e20f991c",
+        "a6fb1132-d012-4657-a4ae-b6728f55bc3b",
+        "7f3b40c3-77ba-4514-9615-a7cf4cd60675",
+        "0936a594-01fe-49cc-9d6d-d774e996735b",
+        "c6961a91-76fe-4805-9f59-9d004cde1ab6",
+        "4f892b9c-2b91-4630-be38-8a0ab28ec6bb",
+        "2e01f96c-529a-41ae-9e59-1182651784b3",
+        "be187397-2c7b-4ddd-b60b-8ddf23b9e26b"
+      ]
+    }
+  ],
+  "RESUMED_OWNERSHIP_CHECKS": [
+    {
+      "case": "RESUME_UI001",
+      "returned": 10,
+      "active_canonical_books": 10,
+      "canonical_holdings": 9,
+      "missing_holdings_ids": [
+        "e5ad68eb-efc2-446f-8132-ab2db9ce12bd"
+      ],
+      "all_owned": true,
+      "all_have_holdings": false
+    },
+    {
+      "case": "RESUME_UI002",
+      "returned": 10,
+      "active_canonical_books": 10,
+      "canonical_holdings": 10,
+      "missing_holdings_ids": [],
+      "all_owned": true,
+      "all_have_holdings": true
+    },
+    {
+      "case": "RESUME_UI003",
+      "returned": 10,
+      "active_canonical_books": 10,
+      "canonical_holdings": 10,
+      "missing_holdings_ids": [],
+      "all_owned": true,
+      "all_have_holdings": true
+    },
+    {
+      "case": "RESUME_UI004",
+      "returned": 10,
+      "active_canonical_books": 10,
+      "canonical_holdings": 10,
+      "missing_holdings_ids": [],
+      "all_owned": true,
+      "all_have_holdings": true
+    },
+    {
+      "case": "RESUME_UI006",
+      "returned": 10,
+      "active_canonical_books": 10,
+      "canonical_holdings": 10,
+      "missing_holdings_ids": [],
+      "all_owned": true,
+      "all_have_holdings": true
+    }
+  ],
+  "GROUNDING_FINDINGS": [
+    {
+      "id": "RAG013",
+      "classification": "VERDICT_ABSTENTION_MISMATCH",
+      "answer": "The provided context does not contain enough information to answer this reliably.",
+      "verdict": "SUPPORTED"
+    },
+    {
+      "id": "RAG027",
+      "classification": "UNSUPPORTED_PAGINATION_CLAIM",
+      "answer": "Page 15",
+      "verdict": "SUPPORTED",
+      "returned_source_page_values": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "matched_public_chunks": 4,
+      "public_chunk_page_values": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "source_file": "rag/book_chunks/OL85892W.json",
+      "source_sha256": "8096cc0204df7f4b9a28e5f2607f3f05aecd721e2c0897cc622e4faab882c475",
+      "qualification": "Agent source audit, not independent human adjudication; no source was modified."
+    },
+    {
+      "id": "RAG019",
+      "classification": "POSSIBLE_CROSS_EVENT_CONFLATION",
+      "qualification": "Answer combines first-journey question with distant-past speculation from an epilogue chunk. Independent adjudication remains needed."
+    }
+  ],
+  "LIVE_SEARCH_EVIDENCE": {
+    "global": {
+      "recorded_at": "2026-10-31T19:31:20.181332+00:00",
+      "revision": "606f0dfce3970bea8e6fc2b62d243433d1a66b8a",
+      "evidence_type": "CONTROLLED_MODEL_REAL_RETRIEVAL",
+      "qualification": "Real running Search service via authenticated UI. Qwen not invoked. Native Global HNSW path was not independently instrumented; evidence is real service output, not proof of FAISS use. Query and response fields transcribed from CDP output.",
+      "query": "introductory machine learning for beginners",
+      "request_controls": {
+        "save_history": false,
+        "personalized": false,
+        "session_id": "omitted"
+      },
+      "duplicate_requests": 3,
+      "http_statuses": [
+        200,
+        200,
+        200
+      ],
+      "browser_elapsed_ms": [
+        1569.508,
+        1597.762,
+        1626.913
+      ],
+      "server_elapsed_ms_sample": 1517.05,
+      "returned": 10,
+      "ranked_candidate_count": 50,
+      "interpretation": {
+        "mode": "SMART",
+        "intent": "LEARN",
+        "preference": "Introductory / beginner (preference)"
+      },
+      "results": [
+        {
+          "work_id": "OL19542893W",
+          "title": "Hands-On Automated Machine Learning: A beginner's guide to building automated machine learning systems using AutoML and Python"
+        },
+        {
+          "work_id": "OL19543238W",
+          "title": "Introduction to Machine Learning with R: Rigorous Mathematical Analysis"
+        },
+        {
+          "work_id": "OL25227435W",
+          "title": "Concise Introduction to Machine Learning"
+        },
+        {
+          "work_id": "OL19543070W",
+          "title": "Machine Learning: a Concise Introduction (Wiley Series in Probability and Statistics)"
+        },
+        {
+          "work_id": "OL19543610W",
+          "title": "An Introduction to Machine Learning"
+        },
+        {
+          "work_id": "OL25591389W",
+          "title": "Introduction to Machine Learning"
+        },
+        {
+          "work_id": "OL2248893W",
+          "title": "Introduction to machine learning"
+        },
+        {
+          "work_id": "OL17366306W",
+          "title": "Introduction to Machine Learning"
+        },
+        {
+          "work_id": "OL25242642W",
+          "title": "Machine Learning with Scikit-Learn Quick Start Guide"
+        },
+        {
+          "work_id": "OL20794000W",
+          "title": "Machine Learning For Absolute Beginners"
+        }
+      ],
+      "provisional_observations": [
+        "10 of 10 titles contain the phrase machine learning.",
+        "A title advertises rigorous mathematical analysis; beginner suitability requires independent review.",
+        "One query and three concurrent duplicate requests do not support aggregate relevance metrics or p95."
+      ]
+    },
+    "tenant": {
+      "captured_at": "2026-10-31T19:32:42.850952+00:00",
+      "query": "networking",
+      "context": "authorized public TEST library",
+      "evidence_type": "CONTROLLED_MODEL_REAL_RETRIEVAL",
+      "qualification": "Actual tenant Search service and published generation; Qwen not invoked. Request session_id omitted and personalization disabled. Results transcribed from response; no private user data exported.",
+      "source": {
+        "search_source": "TENANT_SEMANTIC",
+        "intelligence_status": "READY",
+        "catalogue_source": "LIBRARY_LOCAL",
+        "local_book_count": 151
+      },
+      "http_status": 200,
+      "browser_elapsed_ms": 854.362,
+      "service_elapsed_ms": 830.46,
+      "total_candidates": 60,
+      "result_count": 20,
+      "results": [
+        {
+          "library_book_id": "6a7af155-84c1-4192-a9ef-c9e269bfc90f",
+          "title": "Innovation and Entrepreneurial Networks in Europe"
+        },
+        {
+          "library_book_id": "a8a04662-23be-45ea-bb20-0f0b86bcfa12",
+          "title": "TEST Campus Network Practice Workbook"
+        },
+        {
+          "library_book_id": "44a651d4-2ed9-4b96-a90d-2f51e20f991c",
+          "title": "The Political Economy of Wasta"
+        },
+        {
+          "library_book_id": "a6fb1132-d012-4657-a4ae-b6728f55bc3b",
+          "title": "Embedded enterprise and social capital"
+        },
+        {
+          "library_book_id": "7f3b40c3-77ba-4514-9615-a7cf4cd60675",
+          "title": "Head first C"
+        },
+        {
+          "library_book_id": "0936a594-01fe-49cc-9d6d-d774e996735b",
+          "title": "Applying computational intelligence"
+        },
+        {
+          "library_book_id": "c6961a91-76fe-4805-9f59-9d004cde1ab6",
+          "title": "Naked Conversations"
+        },
+        {
+          "library_book_id": "4f892b9c-2b91-4630-be38-8a0ab28ec6bb",
+          "title": "College business communications"
+        },
+        {
+          "library_book_id": "2e01f96c-529a-41ae-9e59-1182651784b3",
+          "title": "Institutions, communication and values"
+        },
+        {
+          "library_book_id": "be187397-2c7b-4ddd-b60b-8ddf23b9e26b",
+          "title": "Observation of the Earth and Its Environment"
+        },
+        {
+          "library_book_id": "e38b53f3-516c-4b58-92d0-97bf0142f5fb",
+          "title": "Learn Java for Android Development"
+        },
+        {
+          "library_book_id": "09d37da6-4c77-4ee6-805c-f3f92acd32ce",
+          "title": "CODES 2002"
+        },
+        {
+          "library_book_id": "673b8bdd-4f11-4525-a604-c0b3e22ce920",
+          "title": "Practical Microsoft Azure IaaS"
+        },
+        {
+          "library_book_id": "d1ba4b29-1524-4090-9a4d-ecc6b19a6fcf",
+          "title": "Multimedia dan Islam"
+        },
+        {
+          "library_book_id": "2185fc23-8dba-4140-bf64-440537e4c70b",
+          "title": "Sex at work"
+        },
+        {
+          "library_book_id": "6b17f646-6eea-4885-9c9b-47064139fb48",
+          "title": "Dynamics of dissipation"
+        },
+        {
+          "library_book_id": "403cdc26-2bd4-4228-9b01-210addf828b2",
+          "title": "Bringing down the mouse"
+        },
+        {
+          "library_book_id": "ae87d7f4-2c48-4908-8572-e3fad00c9a05",
+          "title": "Innovation in Energy Law and Technology"
+        },
+        {
+          "library_book_id": "946772b1-4be4-4a32-8435-525e2749ba0f",
+          "title": "Mobility and transport for elderly and handicapped persons"
+        },
+        {
+          "library_book_id": "fe31feeb-fc0c-42f0-ba4d-8319f8034523",
+          "title": "Imperfect unions"
+        }
+      ],
+      "ownership_check": {
+        "method": "read-only Mongo query for active canonical records in selected library",
+        "matched": 20,
+        "requested": 20,
+        "percentage": 100.0
+      },
+      "judgment": "UNJUDGED: networking is ambiguous between social/business and computer networks; do not infer precision from titles alone."
+    }
+  },
+  "EVIDENCE_QUALIFICATIONS": {
+    "REAL_MINILM_EXECUTED": "YES, public RAG; tenant semantic path observed",
+    "REAL_FAISS_SEARCH": "YES, public 3,959-vector RAG index; global HNSW execution not verified",
+    "GLOBAL_CHATBOT_PRESERVED": "NO: observed follow-up failure",
+    "PRIVATE_CHATBOT_PRESERVED": "NO: private-library live coverage incomplete",
+    "LOCAL_ONLY_BOOKS": "PASS in isolated tests and one live public local-only seed case; no generalized relevance claim",
+    "QUALITY_IMPROVEMENT_SUPPORTED": "YES for the narrow hydration defect: same-fixture controlled comparison plus successful live recommendations/Search after the user restarted services. Other quality defects remain.",
+    "FOLLOW_UP_CONTEXT": "FAIL in Global and resumed public isolation-library cases",
+    "REAL_BROWSER_QA": "PARTIAL: actual browser; functional failures observed",
+    "TENANT_OWNERSHIP_CORRECTNESS": "100% of 50 resumed returned book instances matched active records in the selected public library; 49/50 had holdings. Prior direct Search sample separately matched 20/20 holdings.",
+    "UNAUTHORIZED_PRIVATE_DATA_LEAKS": "0 observed in one cross-scope UI case; not a complete security audit"
+  }
+}

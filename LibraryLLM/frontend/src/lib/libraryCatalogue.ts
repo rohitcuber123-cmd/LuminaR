@@ -134,7 +134,7 @@ export async function loadCatalogue(operation: CatalogueOperation, id: string, f
     checkSource(page.source, id,staff)
     rememberSearch({libraryId:id,staff},page.interpretation?.session)
     if(staff)return page
-    if (page.source.catalogue_source !== 'LIBRARY_LOCAL') return globalPage(id, page.source, params, signal)
+    if (page.source.catalogue_source !== 'LIBRARY_LOCAL') return params.get('view')==='for-you'&&!discoveryQuery ? {...page,results:[],total:0,has_more:false} : globalPage(id, page.source, params, signal)
     // A submitted catalogue query is discovery even when entered from For You.
     // Unqueried recommendations retain their existing provider and ranking.
     if (params.get('view') !== 'for-you' || discoveryQuery) return page

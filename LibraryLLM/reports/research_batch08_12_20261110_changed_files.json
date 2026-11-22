@@ -1,0 +1,974 @@
+{
+  "application_and_test_changes": {
+    "backend/services/library_asset_text.py": {
+      "before": "52ad051a4f60175cf98c1aeaa0b69360e359dbd08ae52ac40f407306c5c035c8",
+      "after": "bd2a7d47374d70c3d2658fe1b19b81430e272d61e3a87610adb9690bc1b40b04"
+    },
+    "rag/services/private_documents.py": {
+      "before": "f325d19018907000656e0403c9a33ed4b85ff9950af72b53d85a9c8ae0fb31f6",
+      "after": "45b5edcda8eecab9b15a1cdb074f31d64d396991d0cc9aa6e2eb453076410ee5"
+    },
+    "tests/institution_v2f/test_text_assets.py": {
+      "before": "8b2ab0008c1dbd9f08a31a17eb64e381dc138e61256efdb8823ded93f7f458c0",
+      "after": "e40163c4d7460a9b01a2ab8fa37fe6ded94aea55009819d850821b15d527bc10"
+    },
+    "tests/test_private_document_cache.py": {
+      "before": "6170cc1b2954700ca538b53d03920eca98c94eb68e020a623414a93b0b0541f6",
+      "after": "f6660a407396f13a2b7b9bee0deb392dd8aca7974c601c068c380b785df26427"
+    }
+  },
+  "preflight": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_preflight.json",
+  "note": "Includes task evidence, retained failed attempts and harnesses. Manifest excludes itself.",
+  "files": [
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\backend.py",
+      "sha256": "e27ca1c6cc4e95f72779e1bbfc5c890a355fdf5133c875e60966d1e87959f79e",
+      "bytes": 3889
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\controlled.py",
+      "sha256": "a161a3e16c2d3e17b61a8b10502b943650c9491de471c47f028d205c228c4f0a",
+      "bytes": 11800
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\finish.py",
+      "sha256": "1f8895dc4baa013aa0e034f4af36952cc147760e0f4b7ea14fb9dedaff01009b",
+      "bytes": 10573
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\graph_sizes.py",
+      "sha256": "5dae57de564522b951f4023a6b651d4df178b60eb0697f22c89c565634332185",
+      "bytes": 5389
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\integration.py",
+      "sha256": "535ff7daa5890c8eb5931e66d306979e9f4a5a8c1e9d55451cff7f68baa5cb19",
+      "bytes": 10454
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\native.py",
+      "sha256": "81329a34e4a14638eb2037d3b46af632902877d0719124cf67619a7081a99985",
+      "bytes": 38128
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\preflight.py",
+      "sha256": "321b149f3b3922054e5e6cf2467b84609ab431faaddd2874e2ca0081017eec64",
+      "bytes": 2651
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\prepare_preservation.py",
+      "sha256": "2cc3babad3e7c7412ba4c67c4ab4deb0c5dae5e141c5f86397970cfcfc37068d",
+      "bytes": 1376
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\prepare_recovery.py",
+      "sha256": "a0c29178d4455691422fc7c2c206fdb8363712edc3db61427a5ef1fa50fcae47",
+      "bytes": 3220
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\preservation.py",
+      "sha256": "4993cd07ec1d16f62e1f9895d29cee563871a9538f33db3e516b2d4f9efa4d67",
+      "bytes": 3185
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\reconcile.py",
+      "sha256": "a043fa76abb6065398f027b68f4c535aa5973599830a916f13ec0e110627fbd3",
+      "bytes": 4015
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\recovery.py",
+      "sha256": "667038a611ccf8793e5f88bd4084182daf1a82e8605b45e525a6d2e913a0e1d4",
+      "bytes": 14448
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\recovery_runs.py",
+      "sha256": "a509b2cf6e4dd41883926dc3a9333f145e4e3476f3318f3c3823252c0137d73a",
+      "bytes": 929
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\report.md",
+      "sha256": "a7e487915a1868003f527de21e5fe2fd8a376d2340c0c52f758a46465e554b60",
+      "bytes": 29831
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\.scratch\\research-batch08-12\\sitecustomize.py",
+      "sha256": "386e789eee36e72480969b80f599c83eea6294ece6681da6aabe97230d8e32e8",
+      "bytes": 597
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_assistant.log",
+      "sha256": "f24a1c718cb049a02054fb30884164155d04c2f1c6200dc71a5db54af002dd9c",
+      "bytes": 1058
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_assistant.xml",
+      "sha256": "c2746717791149dcd036106cf915c0d3a9c68c9b645fdf6f3533037070f22aac",
+      "bytes": 62703
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_backend.json",
+      "sha256": "1727cecd4025b6712896f6863186e87d5208fe5368294e9ec0146590eba39c59",
+      "bytes": 10041
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_catalogue_experience.log",
+      "sha256": "feeec54cf99a7db7710bde02bd6553d8c6e17901061a650c336df3e665189ece",
+      "bytes": 652
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_catalogue_experience.xml",
+      "sha256": "a3b398cf890a5479fc31cce1a6d86935229468595b205e93d2fec02fc99ed52b",
+      "bytes": 13010
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_circulation.log",
+      "sha256": "3b5780367c67f857b8cd41644c1a4a9c5f6bd7e30fea65d97bda5c0828ae5a52",
+      "bytes": 570
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_circulation.xml",
+      "sha256": "22aa78d648493a0d1ea41f5778c9f7af82346a867009327dcad1d98d9a7a5afa",
+      "bytes": 1958
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_current_product_extensions.log",
+      "sha256": "206fe1577bb78fb9d10a938c9ec6a977a40772699d6900dddd63a300d53c6c51",
+      "bytes": 102
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_current_product_extensions.xml",
+      "sha256": "48761b0f99e32227a08ccfd7b86b5af1def6cf2ac45a608efb723d7314e8f1d8",
+      "bytes": 3880
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_dashboard_authority.log",
+      "sha256": "ba9ae71c3cf6065a6063caf121e01c4d68afeb3ea70efd8185c306a8b88ffdb9",
+      "bytes": 652
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_dashboard_authority.xml",
+      "sha256": "bb03b90d1a27273e1b5d93c21f8450cc848ddebfdf621e107011ac642def2c96",
+      "bytes": 12561
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_events.log",
+      "sha256": "343d68763b4fb13de180b796074a022f2b84aab66a1289a40b20c8ba65d0bfdd",
+      "bytes": 876
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_events.xml",
+      "sha256": "c458f33c1eb25d56a10f92f523aa5db71d06b0dc2d18603bddb79c2d54953b92",
+      "bytes": 9591
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_front_build.log",
+      "sha256": "741348b1a9be847c39250b53c556dc9e4614f4cbea7abeb12eb04d8b8d4c3850",
+      "bytes": 4977
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_front_frontend.json",
+      "sha256": "6d794391df7c5f33154200c40f86c952e87e9b249dab7c99344b61b3ab5c0bd3",
+      "bytes": 382
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_front_frontend.log",
+      "sha256": "5f8909731e3f371055532e6cd5d1d58b054d940d319303ee66a976ef77e0c794",
+      "bytes": 111208
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_front_lint.log",
+      "sha256": "a38d028c4b63e35031dc41911adf1747c8589f931c1b385db1c430b58886a7e9",
+      "bytes": 5089
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_generated_institution_v2e_backend_benchmark.json",
+      "sha256": "edd258030e3d6ee52b689fb8925665f6e252c0a46457aa64396aa5e2a66db69c",
+      "bytes": 6962
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v1.log",
+      "sha256": "e65a7b7698719b325e67d5aa8d52c92f62154ae05ff4ee58a52b6f044f706414",
+      "bytes": 571
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v1.xml",
+      "sha256": "ab737c58a71bba7278f1313c50aa7c0b57c21dc0655b7f5c11ee4228e1a1d84d",
+      "bytes": 8451
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2a.log",
+      "sha256": "2300b976d088da5c0fc0590207f32130b95425022f772ebff21cef36579c1d75",
+      "bytes": 652
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2a.xml",
+      "sha256": "dbc1ff8efe40c8a1a74cd8b0f9b2779cb194088d34467f5ad70083ea05ba95eb",
+      "bytes": 14648
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2b.log",
+      "sha256": "890a3e415e7f889dd92b4ef00a0c91492e162f5a3104ffb80b10b3f39ced2d5b",
+      "bytes": 571
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2b.xml",
+      "sha256": "b67e0aded0584bbed6826a260c879b8732098fa807ace73caa512884c17c851a",
+      "bytes": 8032
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2c.log",
+      "sha256": "4f0b533f72749c47ef157e1f24cb96cd6eefe145e99797dd46bd7071851085e8",
+      "bytes": 581
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2c.xml",
+      "sha256": "624995d44b7d0422b465689215fcacafd95a3f53f8add5779be620b478c3673f",
+      "bytes": 8700
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2d.log",
+      "sha256": "940309403e4b6a55d671c5995bc7e4aafada1a9e53a971e26d0c58af95710377",
+      "bytes": 571
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2d.xml",
+      "sha256": "39ed3087a8b3046bb462938041db51192062e83a4686dc958f69163e585c8bf7",
+      "bytes": 6775
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2e.log",
+      "sha256": "1fba491d343577a969bcdd975254198faabad3797a863fc4c4bd26e72a6c45bd",
+      "bytes": 653
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2e.xml",
+      "sha256": "3e773e32fd076b51960f9ae253b373456037a09ac01bc30bafff7b35213b26e3",
+      "bytes": 14031
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2f.log",
+      "sha256": "1f6191744c9877a99e74d6ff8a7f4cfde912e7591e03e55e8e07d03ead773a74",
+      "bytes": 1978
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2f.xml",
+      "sha256": "27548ef039a4107617d3d0cba9c102d94aa5ad74fb8678d80c6a85e8960cf3de",
+      "bytes": 26341
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2g.log",
+      "sha256": "9dd4d8680a7b285d45601710c3ef7d21f113a739d118b7b8693cc6534cea6e21",
+      "bytes": 744
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2g.xml",
+      "sha256": "ea5f733bfaf889189c45425be7784a5e34d50ebdd23332af502bfb0d215bc294",
+      "bytes": 21185
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2h.log",
+      "sha256": "92eb4d54c1df29cbbb94a767a5a6b8e442000335d42d78d0279178c6dab69b07",
+      "bytes": 570
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2h.xml",
+      "sha256": "03476ed8eb4463e7874f89e9418a0e3c71525464863eb009857be47cdeee8716",
+      "bytes": 4266
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2i.log",
+      "sha256": "16f581ff9ad0dcadd20ccb18ba3606f84d3164a9bdea932084694aea4c5a5d90",
+      "bytes": 571
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2i.xml",
+      "sha256": "da5fac4743e8079143069a9df7f4473fe74fcd40239f2347c8fe90afbf67ff58",
+      "bytes": 9301
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2j.log",
+      "sha256": "60de993c08c3bf1440617299237a8200e87f1503a68a312cc53fb535013d0c5e",
+      "bytes": 101
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2j.xml",
+      "sha256": "3285a6929c664421e4bdeb38313c3c1871d6868ddb0c5ae69b1adb4052b68597",
+      "bytes": 7008
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2k.log",
+      "sha256": "8579f787ec32b1619cd92cbdbd218b6b2ac15017a9df35775fdedb55a6f36e60",
+      "bytes": 101
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2k.xml",
+      "sha256": "54f0df685899bcff4639c0560950a919a4f41c9f036d01921bed32e99a315b1e",
+      "bytes": 7417
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2l.log",
+      "sha256": "5ae892b2a92fa78e304a6f9b9576d2ea0dc0cb0462fdc11bfd4cff30350379fb",
+      "bytes": 102
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2l.xml",
+      "sha256": "23bf711c7aa56cd6837f1381391b826b4a56b41004534528726abbff97058db8",
+      "bytes": 9673
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2m.log",
+      "sha256": "caf488618001220bca381d75ce47fe800bc439d8f5f0276d723cf9754b35c4be",
+      "bytes": 102
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2m.xml",
+      "sha256": "9d0bffcf2bcfd3d77fc79e8c622155b79280f3a1a8010c142c2f4d2b1b4bd68a",
+      "bytes": 7098
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2n.log",
+      "sha256": "24e62bd069821439aca1c88130814cc8b5137fd9cac31b7dd10365a6e7f7a4fa",
+      "bytes": 606
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2n.xml",
+      "sha256": "e0458057434668f01f4715159ecbadfd98e65701b60e46acbd0c0216abe691c1",
+      "bytes": 5175
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o.log",
+      "sha256": "2df35cf0e54bd678dc683135622710b1d4fd70b16108fa024f8770b3fb7e0783",
+      "bytes": 600
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o.xml",
+      "sha256": "0678f1350116fec0969d43667c37999c12215b51aed954a6fd7dafb10504f9b9",
+      "bytes": 4276
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o1.log",
+      "sha256": "4178aad43da9439bb3ae9cc12544daa064d46cb4a1b0319a5ebea2ee50dd0e32",
+      "bytes": 102
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o1.xml",
+      "sha256": "7aa78975b20ecc79f3247e8dfd3d06d0e910aa2b1c6ccb6b41ce43258e46caea",
+      "bytes": 3363
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o2.log",
+      "sha256": "9a2a5c4183cb1b95c8509032c0f5c42c5c6b2cf12152fe0ae5be3bd6936712ff",
+      "bytes": 112
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o2.xml",
+      "sha256": "592caa07dd799b572525d5e7d38947541c20e65558627c25675d9448b608f837",
+      "bytes": 11034
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o3.log",
+      "sha256": "34d1b73e58e437e6b3be78b4c720c1df04690c8cfbdfc123f81653ece8af98a0",
+      "bytes": 112
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o3.xml",
+      "sha256": "fec34ccdc9bac37cd562a09244b18f3dbcabc84dbe5a46bd3a5200eeeb383e89",
+      "bytes": 10864
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o3_closure.log",
+      "sha256": "38afb7641d6e208fc7969207fc9a4818a0c34f368444f5350f0ed8d93def1181",
+      "bytes": 193
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2o3_closure.xml",
+      "sha256": "fd2b0fdcf92e2de7e8361308d13459ed858c7705bb7d5b42777de1a8453c51dd",
+      "bytes": 12826
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2p.log",
+      "sha256": "1f817be5a3b8599bf228383818c207e38d4d630abccf611c29c0636581d9399b",
+      "bytes": 652
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2p.xml",
+      "sha256": "58a1c267aaa884f776953f739a61660e1c2679e2624d02ba3d5dacafa8d90040",
+      "bytes": 17477
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2p1.log",
+      "sha256": "5d42e17d808c57349e817506f6c3857728a59db053fbe5929b8efefdbb8ec0f2",
+      "bytes": 652
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2p1.xml",
+      "sha256": "8c5d639e18a885ea07ff889f7e967c66e55d860645efd3534e2fb622d9847a22",
+      "bytes": 11260
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2q_ai.log",
+      "sha256": "5b7bb62548d9618ce696e02052abae6955da8ad9014981283969fbca531fc112",
+      "bytes": 663
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_institution_v2q_ai.xml",
+      "sha256": "f1cc5a2775cfff0543cd8d686d08af7d5f4fd02c1ba60ca13ecbbf80b56c3623",
+      "bytes": 22220
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_kg.log",
+      "sha256": "44af58b08a236417edca2d232a153d4f554cc9589a31f096b204d79d1336523f",
+      "bytes": 570
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_kg.xml",
+      "sha256": "ad7c61549efabe8b5bbd38448ddc491196c509df10d39ff10b45202bbb9d5dba",
+      "bytes": 3657
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_notifications.log",
+      "sha256": "1409a905db13d42e051b9116a3832dbb59f7683ce6e5d79573cd17cbcdc90b1c",
+      "bytes": 571
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_notifications.xml",
+      "sha256": "ace637305650762a9930dbb5c5bde31a740024b27df474ae820bc14d37be1414",
+      "bytes": 7798
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_private_knowledge_ocr.log",
+      "sha256": "01841e36d0fb36958a3ba04f5ba52e4a0259d72da681d274823eee39ce8994e1",
+      "bytes": 2704
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_private_knowledge_ocr.xml",
+      "sha256": "2444ef73990fc617c2e60abba95ab2daea2e28c6ce59589870c9e4965fadbf38",
+      "bytes": 35960
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_product_consistency.log",
+      "sha256": "81bffc47f669cda2d6fb551d0339020015a945d7fb41e3096ba9b97baac3a83b",
+      "bytes": 570
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_product_consistency.xml",
+      "sha256": "075a9548523c31a4386b570bb91e65c251d02739030a4180957a93b5cb976206",
+      "bytes": 3644
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_search.log",
+      "sha256": "7bbed2d1b4b94c38259687b4aa07204f50f473639f3d645a3e3fecc46bf3c292",
+      "bytes": 1904
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_search.xml",
+      "sha256": "7f8dab9019d4f56c0e46b7b599188a1fdb8cb1f63088604e6b39ed5b001e9295",
+      "bytes": 20893
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_security.log",
+      "sha256": "65aae62e0dc3b1a27c077505841b18c39890de6cabf839338b6fead2ff0ba0ba",
+      "bytes": 2337
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_security.xml",
+      "sha256": "d980f4be6fde8720d3077677b57628a9c9bc93fe86d66175b4c5a2b9ede9eace",
+      "bytes": 20296
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_staff.log",
+      "sha256": "e9032714310c867d7897bc7120dfb87670274c00fe949bd37fe63af79508e982",
+      "bytes": 652
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_staff.xml",
+      "sha256": "5067a5ef067e2250f8d13dcd48003e40b71dff303397119a042e8973df215491",
+      "bytes": 9693
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_test_isolation.json",
+      "sha256": "7492f8e841c0dff25d068720dd845ecbceb8433f076e0801beedbe4f7a9feeae",
+      "bytes": 327
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_unit.log",
+      "sha256": "7958503beb0d57bd308914fb571811e4839539ccab784f6ca0185f2e65c70879",
+      "bytes": 570
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_unit.xml",
+      "sha256": "bb6cf020e3dd25025a157fa6061e0ee89df448342e37b5b7819a360c33ebc19e",
+      "bytes": 5361
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_workspace_authorization.log",
+      "sha256": "d76f782c48819116df58885e821e9a9350df79836c2dbed4c4c7fec45d62b06a",
+      "bytes": 570
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\institution_v2q_research_batch08_12_20261110_workspace_authorization.xml",
+      "sha256": "71060b9772e5a270fc2ec0f8f862421fc043a875bf0b4c8981b01923fc352441",
+      "bytes": 2255
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_backend.log",
+      "sha256": "49315e6c66fd80d7fdd14e03e82315a36b46698d7e77793b91325af7e8f787bc",
+      "bytes": 4740
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_backend_isolation.json",
+      "sha256": "c115247d8c877aa36761cea9c7242332dea0ba18baa1d81d4e334b13e36c0905",
+      "bytes": 231
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_backend_stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_completion.md",
+      "sha256": "e722f9b5abe228686d64e68df974a7b45de7a1ed4896618dadfc34a485773292",
+      "bytes": 36672
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_controlled.json",
+      "sha256": "1f0686c56119368bcf5d30cc7e5674236335da06c5a0b48ee716bea467810018",
+      "bytes": 214891
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_controlled.log",
+      "sha256": "538c3660a03fc3a264c2817f97ed84ae1aed6cce8874fbc5ed4bf5458a8290da",
+      "bytes": 605
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_controlled_backend_isolation.json",
+      "sha256": "4a69e679b793efea7ef7f2dd105b4fde377299bbd6e9e36d5352cfcbeb7cc6ab",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_controlled_stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_docx_after.xml",
+      "sha256": "105c5e11a0dffe0a776e5726080fee641821c6ec08f129227501360f032adf13",
+      "bytes": 1539
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_docx_before.xml",
+      "sha256": "4c3f0f8f976907ba53da2427c670da1fd43398b83ab8bf353aff319ede0b21aa",
+      "bytes": 4393
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_kg.log",
+      "sha256": "a84c26f26895880d9e58620a33eb7d91968e41f6769e4bf525ddb9360e25f0ee",
+      "bytes": 104
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_kg_AFTER_SUCCESS_9f2ffb30-f337-4b59-aa20-65897a29ab6f.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_kg_backend_isolation.json",
+      "sha256": "ac96889bb70d72a16c32b8a62333b8a063f85be2c1a3172b7ad85273a5580e96",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_kg_scenarios.jsonl",
+      "sha256": "786a3028f8b1bdd687bc4951c09f203edcaf2f9657740d9c38b3787bce45ead7",
+      "bytes": 8343
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_kg_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_search.log",
+      "sha256": "bb88839161458ff14cb8b6de197199776ac755a3c569193718c2f6ffd81589ba",
+      "bytes": 104
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_search_AFTER_SUCCESS_7f898fa1-2e42-4b21-8c83-6ee7402348e6.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_search_backend_isolation.json",
+      "sha256": "f76b911d151741da99306d32efc985e8aef688900ec1e2952ef03e76ec596351",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_search_scenarios.jsonl",
+      "sha256": "fe77fb09358f8fc410ef878748beccde37d052be4121f65cf950c8df156f05da",
+      "bytes": 8345
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e01_search_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_kg.log",
+      "sha256": "d8518dca32b9feaaebc3632fab4144f00caec3fa1f3be3af4916111909af8abd",
+      "bytes": 113
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_kg_backend_isolation.json",
+      "sha256": "0530a4f6ed4455c6679eecfaeed0dc230810861a199573aa20206a3f7c6beac2",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_kg_PUBLISH_525e7e83-48f0-43c1-b5d0-ada5262dfbbf.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_kg_RECOVERY_TARGET_FENCED_525e7e83-48f0-43c1-b5d0-ada5262dfbbf.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_kg_scenarios.jsonl",
+      "sha256": "02b11f90977e936d0d94ce84842a4ce14717876ee9b518ab0138c581bd0fa61b",
+      "bytes": 6532
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_kg_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_search.log",
+      "sha256": "1f733376c6eb0313ed191c0a81a84dc7107fa79fb4ada10d7bee02099374a4e9",
+      "bytes": 113
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_search_backend_isolation.json",
+      "sha256": "d631b6bdb1593dc81c0bb7d4fa17c7fa9ed37ffbfa89529ced974ef3949d41ea",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_search_PUBLISH_8c2f2727-a726-4abd-ba05-841ae1833f01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_search_RECOVERY_TARGET_FENCED_8c2f2727-a726-4abd-ba05-841ae1833f01.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_search_scenarios.jsonl",
+      "sha256": "bd609ea526ac0c743c57f130d92903895da3ba3a128a01f489a41ea627a8ce34",
+      "bytes": 6512
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e02_search_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e03_kg.log",
+      "sha256": "482d8f29c6d09f7a6fa09d46ea340b18f6dbd3c127bcd90da8388c8a7bc8d68c",
+      "bytes": 107
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e03_kg_backend_isolation.json",
+      "sha256": "b4bce1f65b93d9c85ce372b1afc5009fce1fe5583b38a9fdbbc624ab80aa9a69",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e03_kg_scenarios.jsonl",
+      "sha256": "da2e02be2b62d43fc21d7b70996f1b8037463ac13a7f8f1b2b483963d2c99cd6",
+      "bytes": 3929
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e03_kg_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e03_search.log",
+      "sha256": "95b8d9146b8a67b220e7076a9ad303857b82c71bc05ddc0d4b6f5ba9ed702fcd",
+      "bytes": 107
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e03_search_backend_isolation.json",
+      "sha256": "77571e6e3762a22c4ab7a75aa4a04029cd6accda21b11680417045937e0f382a",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e03_search_scenarios.jsonl",
+      "sha256": "21d23a3281bf6874d69d5557e09a3b0492e03c2d07918475da94a933e629cbf2",
+      "bytes": 3926
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e03_search_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_kg.log",
+      "sha256": "911098f5050727419bb0cd6cbc6a7d4b374fd760570acd9e8162ab9022c8b9bb",
+      "bytes": 107
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_kg_backend_isolation.json",
+      "sha256": "bddab25e945b9e4e445e07a3c75c6617eaafd24a89d3047516435cc14d101bc3",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_kg_scenarios.jsonl",
+      "sha256": "84c064ca934acf2e684b0f919cbb7aed4f68e202237e5a6b6db099f58fd7f754",
+      "bytes": 7559
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_kg_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_kg_UNTAGGED_BARRIER_6b37404d-86a7-44ba-8a04-0158495bbc87.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_search.log",
+      "sha256": "360224dea14dce89d39a295c1d3ba08e0b071784649cedd938ecfde00c30e41c",
+      "bytes": 107
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_search_backend_isolation.json",
+      "sha256": "27351b0cde19aa1376dcaf25990b9f5e688cb646797f7d1b7ae43b9d4e7cb015",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_search_scenarios.jsonl",
+      "sha256": "4bf4f4f8fa1c985e8ddcf1711a4f79698e1e133c9208d844bcfc88f30e009b12",
+      "bytes": 7561
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_search_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_e04_search_UNTAGGED_BARRIER_e1d09631-a854-4c8a-b5e7-f012b7ef2732.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_front.log",
+      "sha256": "55276ff50adae202eb6ed2a91bc7ea1d83307e77e5c62f580defba30e2ad392f",
+      "bytes": 29
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_front_stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_global_kg_metadata.json",
+      "sha256": "ba9ba6d5b008194b6f0c00ec30fe7aa61bbc08b8d117463420fc656e966de188",
+      "bytes": 1441
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_hardware.json",
+      "sha256": "8c69007bcd53019a12c1ec639550a585d081afb7dd6c83d718a5f349b4a1504d",
+      "bytes": 599
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_01.log",
+      "sha256": "ba573efd219df16cf39455ceedf818b6da8632da857fcfd3c91e3b985f0eb001",
+      "bytes": 184
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_01_backend_isolation.json",
+      "sha256": "7076b7ad0cfae5056c7599c58540aed899a753c5b2319088b3f2cc93e3ebdeca",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_01_integration.json",
+      "sha256": "98ef620597adaee035e797e97f056f8b8f3ef4747da18903f1b99e41fbc43b49",
+      "bytes": 1988
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_01_stderr.log",
+      "sha256": "ebc17ade7fd4b8a423b737cdac72e1c84d0d81ad6384b992e9b21a33d06d31cb",
+      "bytes": 955
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_02.log",
+      "sha256": "1ef72f82aad1feb3104af01d3ee0c05764b85c20925a46dc2f7e48dbe4b31da9",
+      "bytes": 184
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_02_backend_isolation.json",
+      "sha256": "36a66c64b503cf11b6d4b456f24aa67bffa7ba41e90d398a6d7ed297d0f63154",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_02_integration.json",
+      "sha256": "cbc52e110d3260fe2ac0e28b4f84b7574126929788a6cf53acfb58dd3307d156",
+      "bytes": 14704
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_02_stderr.log",
+      "sha256": "7eb791b41a6f2a4092424c431d27923b4be98cd07503d4a8ecfba372d4a1cc45",
+      "bytes": 957
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_03.log",
+      "sha256": "e6eb5e8b2c097737190ca07f2ae6b49db44d97f1b6fd86493e5cf4ae69ffa51f",
+      "bytes": 506
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_03_backend_isolation.json",
+      "sha256": "0c8c747a1ddb11c25560fcaf4f76d47bd95a41997d0016c36f8c89c833c7ba62",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_03_integration.json",
+      "sha256": "e6827d167036ce0a7de36627661eeb8584eb32b70cb20b3a31ec77240d3e5eeb",
+      "bytes": 23354
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_03_integration_summary.json",
+      "sha256": "66313cb891f3baa7f802e8e43745b4dbe70dba120e479f892dfd5acf1c817543",
+      "bytes": 561
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_integration_03_stderr.log",
+      "sha256": "13a12e49cd4ea07b2826e8c2ca6387d2f9598d9ed1630dc96e6db7add547a17d",
+      "bytes": 249
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_native.log",
+      "sha256": "c1f4da01ccb06c73409e77e1c0d3f4d62d92875e9c03657b85941fa63a076313",
+      "bytes": 108
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_native_backend_isolation.json",
+      "sha256": "5fba445a5b1c71d8cfce5d0302c412ea0d5d4a556b23b0e999824f74ecacaba6",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_native_scenarios.jsonl",
+      "sha256": "7bfe67c58756b7419cf93c17986c01184f1952ea90f291f11fef35ceb3c56a75",
+      "bytes": 8207
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_native_stderr.log",
+      "sha256": "ff829294c71d7f69c67aee38918b44fdf7ebdcf1beb279bce06c7efecca1af08",
+      "bytes": 377
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_preflight.json",
+      "sha256": "1d27cd1e7e31f7b823062276edfb2459425677d246e79a96056e10efb3088c97",
+      "bytes": 346382
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_preservation.json",
+      "sha256": "57bcb945116b39a51c1cb3cb8f1158e24e7dd44e13dfc2c68d984ce7e2fb376f",
+      "bytes": 3545
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_qa.json",
+      "sha256": "b6c433ab5f2994b4edb47948f64d6f995d33c4d766c54fad552ce8003e1674be",
+      "bytes": 2758
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_reconciliation.json",
+      "sha256": "7466f7ba0e7257f78fee4b5f0f6e12669481460e7ae82f2b20217fee9082da2d",
+      "bytes": 48951
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_recovery.log",
+      "sha256": "f553bebc90ce3931048596a729a2a9fe31c824ed1da8b853d9c01f35b7c56078",
+      "bytes": 152
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_recovery_runs.json",
+      "sha256": "9fea44d6f2e4310ff639780441a0fa8f46e415010f3a1f440e3eca607d4a930e",
+      "bytes": 972
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_recovery_stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_recovery_summary.json",
+      "sha256": "bc7dad96e44af2d1cf90dd5492983541a741d29888efc6082dcafc30d9c35ca4",
+      "bytes": 4611
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_regression.json",
+      "sha256": "9634be860bd4833056e4c79cf90462052daf1c58dea633ef70aa26b6fc1de103",
+      "bytes": 20413
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_restore_after.xml",
+      "sha256": "3d09cd12878b051fc10f4513518d0cf3dd9f9ceaa6ac6852f1d967331271800a",
+      "bytes": 528
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_restore_before.xml",
+      "sha256": "da6a44032cc35b51b4fe63f5540755b8242abdb8d58601602e863c67730dc7ed",
+      "bytes": 1783
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_restore_final.xml",
+      "sha256": "b1bc0c169a4ba4b0bcb37b07f4ea6bb75b6303f8c3b4de604ec79a9ce4403d9b",
+      "bytes": 528
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_service_observation.json",
+      "sha256": "5ca549599b4b8c157f62a0ed04054c31cfaf5048fd93a3a7a8ed731af0e350c0",
+      "bytes": 480
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_sizes.log",
+      "sha256": "ca5c0acaff1bc09e52f982a79baaa1271befcf689242099be9c80381b413a15e",
+      "bytes": 2078
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_sizes_backend_isolation.json",
+      "sha256": "c35e25b8448d25d509c179d38f95abceab7e4749571e43f2def4454452dd37e1",
+      "bytes": 267
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_sizes_ocr.json",
+      "sha256": "812f6ce5a414a9847701520ab6c37c22baf4437e0b498325f61e06f511b4e5a0",
+      "bytes": 10263
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_sizes_stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_targeted.log",
+      "sha256": "51dfd89d04a1aab22a18535a6bc001b1711cbc6583250a690cab1895758feaea",
+      "bytes": 3304
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_targeted.xml",
+      "sha256": "38fcd752d67df67e36faf78f02d4ffd82d09fb6365f70c343bdba79780282f2b",
+      "bytes": 34458
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_targeted_backend_isolation.json",
+      "sha256": "11f08fdba6dd8f8afed5c7c054774591b37d827b7bcbcf89a1baeaeb241e0868",
+      "bytes": 231
+    },
+    {
+      "path": "D:\\SDC\\LibraryLLM\\reports\\research_batch08_12_20261110_targeted_stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

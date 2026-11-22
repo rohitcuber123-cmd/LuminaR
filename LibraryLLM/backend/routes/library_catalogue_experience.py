@@ -53,9 +53,9 @@ class RecommendationCandidates(BaseModel):
 
 
 @router.post('/recommendations')
-def recommendations(library_id: UUID, body: RecommendationCandidates, actor=Depends(get_current_user)):
+def recommendations(library_id: UUID, body: RecommendationCandidates, staff:bool=False, actor=Depends(get_current_user)):
     # Read-only candidate scoping. No recommendation training, feedback or global writes.
-    return service.recommendations(str(library_id), actor, body.work_ids, body.limit)
+    return service.recommendations(str(library_id), actor, body.work_ids, body.limit, staff=staff)
 
 
 @router.get('/books')
@@ -77,6 +77,18 @@ def detail(library_id: UUID, library_book_id: UUID, staff: bool = False, actor=D
     return service.detail(str(library_id), str(library_book_id), actor, staff=staff)
 
 
+@router.get('/books/{library_book_id}/digital-availability')
+def digital_availability(library_id:UUID,library_book_id:UUID,response:Response,staff:bool=False,actor=Depends(get_current_user)):
+    from backend.services.book_digital_availability import library_status
+    response.headers['Cache-Control']='private, no-store'
+    return library_status(str(library_id),str(library_book_id),actor,staff=staff)
+
+
 @router.get('/global-books/{work_id}')
-def global_context(library_id: UUID, work_id: str = Path(pattern=r'^OL\d+W$', max_length=100), actor=Depends(get_current_user)):
-    return service.global_context(str(library_id), work_id, actor)
+def global_context(library_id: UUID, work_id: str = Path(pattern=r'^OL\d+W$', max_length=100), staff:bool=False, actor=Depends(get_current_user)):
+    return service.global_context(str(library_id), work_id, actor, staff=staff)
+
+
+@router.get('/assistant-reading-list')
+def assistant_reading_list(library_id:UUID,staff:bool=False,actor=Depends(get_current_user)):
+    return service.assistant_reading_list(str(library_id),actor,staff=staff)

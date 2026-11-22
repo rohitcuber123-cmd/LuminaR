@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "artifact": "reports/institution_v2q2_protected_validator_proposal.patch",
+      "variant": "original_CRLF",
+      "sha256": "53a4bbd40eb950622b28a7e5b2b2c0daf9390d1f9dc5d16c5de3ed5031a31c92",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "error: patch failed: LibraryLLM/rag/llm.py:715\nerror: LibraryLLM/rag/llm.py: patch does not apply\n"
+    },
+    {
+      "artifact": "reports/institution_v2q2_protected_validator_proposal_lf.patch",
+      "variant": "review_format_LF",
+      "sha256": "ea745e68ab582b252ee9e358a6bb1fbfbf7f75f0f6f57babdc0ed37b9854904f",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "explanation": "The historical artifact uses CRLF context while protected llm.py uses LF. Original bytes and SHA retained. Separate LF review-format artifact preserves identical source delta and applies cleanly in check-only mode; neither artifact is applied or recommended after adverse safety results. No guard/source hash exception added.",
+  "source_sha256": "d369e26fcbe458964bf642a057ca79212a63f48a6acf2b1c0a12590003f5cc1b",
+  "approved": false
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="4.111" timestamp="2026-11-01T00:52:06.954764+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2q_ai.test_v2q1_parallel_core" name="test_canonical_library_recommendations_survive_parallel_book_reads" time="3.473"><failure message="AssertionError: {&quot;detail&quot;:&quot;Library resource unavailable.&quot;}&#10;assert 503 == 200&#10; +  where 503 = &lt;Response [503 Service Unavailable]&gt;.status_code">fixture = (&lt;starlette.testclient.TestClient object at 0x000001FDFD2EFE10&gt;, ['c50100aa-0f5b-4671-9277-9c2205e70ca4', 'a9ea357c-6a...3757210', '/libraries/c50100aa-0f5b-4671-9277-9c2205e70ca4/catalogue/books/dc811073-9e50-49b9-a13f-94213d2de9ac', ...])
+client = &lt;starlette.testclient.TestClient object at 0x000001FDFC97EC90&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001FDFD52AF50&gt;
+
+    def test_canonical_library_recommendations_survive_parallel_book_reads(fixture,client,monkeypatch):
+        lib=fixture[1][0]
+        for number in range(1,12):
+            result=client.post(f'/libraries/{lib}/inventory/books',json={
+                'title':f'A owned Python acquisition {number}','authors':['Ada'],
+                'subjects':['Python'],'copies':2,'idempotency_key':str(uuid4())})
+            assert result.status_code==201,result.text
+        if journal.state(lib)!='CANONICAL':
+            activated=client.post(f'/libraries/{lib}/staff/lending/activate',json={'idempotency_key':str(uuid4())})
+            assert activated.status_code==200,activated.text
+        original_hydrate=catalogue.hydrate
+        def slower_real_hydrate(*args,**kwargs):
+            # Exercise contention during ordinary current-holdings reads.
+            time.sleep(.08)
+            return original_hydrate(*args,**kwargs)
+        monkeypatch.setattr(catalogue,'hydrate',slower_real_hydrate)
+        transport=fixture[0].app.state.assistant_http_client._transport
+        original_handler=transport.handler
+        async def concurrently_forward(request):
+            return await asyncio.to_thread(original_handler,request)
+        fixture[0].app.state.assistant_http_client._transport=httpx.MockTransport(concurrently_forward)
+        response=chat(fixture,lib,action='RECOMMEND')
+&gt;       assert response.status_code==200,response.text
+E       AssertionError: {"detail":"Library resource unavailable."}
+E       assert 503 == 200
+E        +  where 503 = &lt;Response [503 Service Unavailable]&gt;.status_code
+
+tests\institution_v2q_ai\test_v2q1_parallel_core.py:34: AssertionError</failure></testcase></testsuite></testsuites>

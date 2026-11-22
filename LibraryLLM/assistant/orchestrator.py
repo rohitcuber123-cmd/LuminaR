@@ -2,8 +2,9 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 import logging
 import os
+import re
 from time import monotonic
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from assistant.qwen import QwenUnavailable
 from assistant.schemas import (Action, AssistantAction, AssistantError, AssistantResponse,
@@ -19,6 +20,7 @@ from assistant.schemas import AssistantIntent, Filters
 from assistant.contextual import generic_title, normalize
 from assistant.semantic import router_context, contextual_ids, as_decision, literal_ids, bind_position
 from assistant.schemas import ReferenceScope, SemanticGoal, ClarificationType
+from assistant.digital_availability import digital_question, lookup as digital_lookup, render as render_digital
 
 LOG = logging.getLogger('luminar.assistant')
 RECOMMEND = {Intent.RECOMMEND_BOOKS, Intent.RECOMMEND_FROM_BOOK, Intent.RECOMMEND_FROM_SELECTION,
@@ -31,6 +33,70 @@ READING_LIST_WRITE = {Intent.ADD_TO_READING_LIST, Intent.REMOVE_FROM_READING_LIS
 READING_LIST_PENDING = READING_LIST_WRITE - {Intent.CLEAR_READING_LIST}
 # Default initial page size; show-more continues from offset.
 DEFAULT_PAGE_SIZE = 10
+
+
+def borrowing_information(message):
+    """A model action label alone is not consent to propose circulation."""
+    value = message.casefold().strip()
+    if not re.search(r'\b(?:borrow\w*|loan|issue|reserv\w*|available|copies|how long can i keep)\b', value):
+        return False
+    return bool(re.match(r"(?:can|could|may|am|is|are|does|do|how|which|whether)\b", value)
+                or re.search(r"\b(?:don't|do not|just tell me|only tell me)\b", value))
+
+
+def wants_one_book(message):
+    return bool(re.fullmatch(
+        r'(?:please )?(?:(?:pick|select) (?:a|one|a single) book(?: for me)?'
+        r'|(?:recommend|suggest) (?:me )?(?:one|a single) (?:[\w-]+ ){0,5}(?:book|title)'
+        r'(?: (?:for|about|on) .+)?)',
+        message.strip().rstrip('.?!'), re.IGNORECASE))
+
+
+def bind_explicit_discovery(request, parsed, state):
+    """Preserve explicit discovery wording that an otherwise valid intent can lose."""
+    if request.action or request.action_work_ids:
+        return parsed
+    message = request.message.strip().rstrip('.?!')
+    if parsed.intent in RECOMMEND and not request.selected_work_ids:
+        topic = re.fullmatch(r'(?:please )?(?:recommend|suggest)(?: me)? (.+? (?:textbooks?|books?))', message, re.IGNORECASE)
+        about = re.fullmatch(r'(?:please )?(?:recommend|suggest) (?:me )?(?:one|a single) (?:[\w-]+ ){0,5}(?:book|title) (?:about|on) (.+)', message, re.IGNORECASE)
+        query = about[1] if about else topic[1] if topic else ''
+        if (query and not re.match(r'^\d+\s', query)
+                and not re.search(r'\b(?:these|those|this|that|similar|other|my|your|some|any|several|few|one|two|three|four|five|single|good|great|more)\b', query, re.IGNORECASE)):
+            return parsed.model_copy(update={'intent': Intent.SEARCH_BOOKS, 'query': query,
+                                             'context_operation': 'NONE'})
+
+    if parsed.intent in RECOMMEND | {Intent.COMPARE_BOOKS, Intent.MORE_LIKE_THIS, Intent.CLARIFICATION}:
+        page_ids = set(request.page_context.work_ids)
+        if request.page_context.work_id:
+            page_ids.add(request.page_context.work_id)
+        if (len(page_ids) == 1 and not request.page_context.document_id
+                and set(request.selected_work_ids) <= page_ids
+                and re.fullmatch(r'(?:please )?(?:show me|find|recommend|suggest|do you have) (?:some |any )?similar books', message, re.IGNORECASE)):
+            return parsed.model_copy(update={
+                'intent': Intent.RECOMMEND_FROM_BOOK, 'reference_scope': ReferenceScope.CURRENT_PAGE_BOOK,
+                'resolved_work_ids': [], 'ordinal_references': [], 'reference_position': 'ALL',
+                'clarification_needed': False, 'clarification_type': None, 'goal': SemanticGoal.DISCOVER,
+                'context_operation': 'NONE',
+            })
+
+    preference = re.fullmatch(
+        r'which of (those two|these two|the two|these|those) is ((?:more|most|better|best) .+)',
+        message, re.IGNORECASE)
+    if preference and parsed.intent in {Intent.COMPARE_BOOKS, Intent.CLARIFICATION}:
+        pair = state.last_comparison_work_ids
+        if (preference[1].casefold().endswith(' two') and state.last_result_type == 'comparison'
+                and len(pair) == 2 and (not request.selected_work_ids or set(request.selected_work_ids) == set(pair))):
+            return parsed.model_copy(update={
+                'intent': Intent.COMPARE_BOOKS, 'goal': SemanticGoal.PREFERENCE_COMPARE,
+                'criterion': preference[2], 'reference_scope': ReferenceScope.PREVIOUS_COMPARISON,
+                'resolved_work_ids': list(pair), 'ordinal_references': [], 'reference_position': 'ALL',
+                'clarification_needed': False, 'clarification_type': None, 'context_operation': 'NONE',
+            })
+        if parsed.intent == Intent.COMPARE_BOOKS:
+            return parsed.model_copy(update={'goal': SemanticGoal.PREFERENCE_COMPARE,
+                                             'criterion': preference[2], 'clarification_type': None})
+    return parsed
 
 
 def enabled(name, default=False):
@@ -61,7 +127,39 @@ class AssistantOrchestrator:
         self.qwen, self.store = qwen, store
 
     async def chat(self, request, owner, tools):
-        state = self.store.get(request.conversation_id, owner)
+        from fastapi import HTTPException
+        from assistant.library_scope import bind_library, LibraryTransport
+        library_id=str(request.library_id) if request.library_id else None
+        confirming=request.action in {'CONFIRM_ACTION','CANCEL_ACTION'}
+        if not request.library_id and confirming and request.conversation_id:
+            # A confirmation cannot redirect the server-owned proposal using
+            # replacement client circulation arguments.
+            known=self.store.entries.get(request.conversation_id)
+            if known is None or known.owner!=owner:
+                raise HTTPException(404,'Conversation not found or expired.')
+            library_id=known.library_scope.removeprefix('LIBRARY:') if known.library_scope.startswith('LIBRARY:') else None
+        elif not library_id and request.lending_context:
+            library_id=str(request.lending_context.library_id)
+        if not library_id:
+            if getattr(tools,'effective_scope','GLOBAL')!='GLOBAL':
+                raise HTTPException(404,'Conversation scope changed.')
+            return await self._chat(request,owner,tools)
+        if not confirming and request.lending_context and str(request.lending_context.library_id)!=library_id:
+            raise HTTPException(404,'Library resource not found.')
+        raw=getattr(tools,'transport',None) or getattr(getattr(tools,'loans',None),'transport',None)
+        if isinstance(raw,LibraryTransport):raw=raw.raw
+        if raw is None:raise HTTPException(503,'Library context validation unavailable.')
+        await bind_library(tools,None,None,library_id,transport=raw)
+        original_role=tools.library_role
+        result=await self._chat(request,owner,tools)
+        if not confirming:
+            await bind_library(tools,None,None,library_id,transport=raw)
+            if tools.library_role!=original_role:
+                raise HTTPException(404,'Library resource unavailable.')
+        return result
+
+    async def _chat(self, request, owner, tools):
+        state = self.store.get(request.conversation_id, owner, getattr(tools, 'effective_scope', 'GLOBAL'))
         async with state.lock:
             state.touched = monotonic()
             response = AssistantResponse(conversation_id=state.conversation_id)
@@ -122,10 +220,11 @@ class AssistantOrchestrator:
                     with timed('router_context'):
                         context = await router_context(request, state, tools, book_cache)
                     parsed = as_decision(await self.qwen.parse(request.message, context))
+                    parsed = bind_explicit_discovery(request, parsed, state)
                 # Literal entities supplied by the semantic decision take
                 # precedence over its contextual scope. Reuse the existing
                 # provenance guard; this does not classify user language.
-                if not request.action and parsed.intent in ENTITY | {Intent.GENERAL_LIBRARY_HELP}:
+                if not request.action and parsed.intent in ENTITY | READING_LIST_PENDING | {Intent.GENERAL_LIBRARY_HELP}:
                     literal_titles = [title for title in parsed.mentioned_titles
                                       if not generic_title(title) and normalize(title) in normalize(request.message)]
                     if literal_titles:
@@ -156,7 +255,18 @@ class AssistantOrchestrator:
                           and (len(request.selected_work_ids) == 1 or parsed.reference_position in
                                {'FIRST', 'SECOND', 'THIRD', 'FOURTH', 'LAST', 'FOCUS', 'OTHER'})):
                         parsed = parsed.model_copy(update={'intent': Intent.MORE_LIKE_THIS})
+                if (not request.action and parsed.intent in {Intent.BORROW_BOOK, Intent.RESERVE_BOOK}
+                        and borrowing_information(request.message)):
+                    if re.search(r'\b(?:how long|membership|eligible|eligibility)\b', request.message.casefold()):
+                        raise NeedsClarification('I cannot verify your borrowing eligibility or loan period from copy availability. Check your library account or ask library staff; no loan has been requested.')
+                    # Preserve canonical scope/positions and resolve through the
+                    # ordinary read authority; never manufacture a pending action.
+                    parsed = parsed.model_copy(update={'intent': Intent.CHECK_AVAILABILITY,
+                        'goal': SemanticGoal.DETAIL})
                 selected_question = is_selected_context_question(request, parsed)
+                digital = request.action in (None,'CHECK_AVAILABILITY') and digital_question(request.message)
+                if digital:
+                    selected_question = False
                 if profile is not None:
                     profile.update(reference_scope=parsed.reference_scope.value, semantic_goal=parsed.goal.value,
                                    reference_position=parsed.reference_position, has_criterion=bool(parsed.criterion),
@@ -201,11 +311,31 @@ class AssistantOrchestrator:
                 if parsed.confidence < .5 and parsed.reference_scope in {ReferenceScope.AMBIGUOUS, ReferenceScope.EXPLICIT_BOOK}:
                     raise NeedsClarification('Which books are you referring to?')
                 with timed('tool_execution'):
-                    if selected_question:
+                    if digital:
+                        # Preserve the parsed scope/positions and original resolver.
+                        # Even an LLM stock/content intent cannot turn digital access
+                        # into a physical count or an unrequested RAG generation.
+                        books = await self.resolve(request, parsed, state, tools)
+                        results = [await digital_lookup(tools,book) for book in books]
+                        response.intent = Intent.CHECK_AVAILABILITY
+                        response.books = books
+                        response.digital_availability = results
+                        response.actions = [Action(type=AssistantAction.VIEW_BOOK,work_id=b.work_id) for b in books]
+                        state.last_referenced_work_ids = [b.work_id for b in books]
+                    elif selected_question:
                         await self.bind_selected_question(request, parsed, state, tools, response, book_cache)
                     else:
                         await self.route(routing_request, parsed, state, tools, response)
-                if not response.rag and needs_prose(request, response.intent, parsed):
+                if (not request.action and wants_one_book(request.message)
+                        and response.intent in RECOMMEND | {Intent.SEARCH_BOOKS}):
+                    response.has_more = False
+                    response.actions = [action for action in response.actions if action.type != AssistantAction.SHOW_MORE]
+                    state.result_context = None
+                    if response.books:
+                        book = response.books[0]
+                        state.last_referenced_work_ids = [book.work_id]
+                        response.message = f'I picked {book.title or book.work_id}.'
+                if not response.digital_availability and not response.rag and needs_prose(request, response.intent, parsed):
                     try:
                         response.message = await self.qwen.respond(request.message, response)
                     except QwenUnavailable as exc:
@@ -483,7 +613,9 @@ class AssistantOrchestrator:
 
     @staticmethod
     def ground_operational_message(response):
-        if response.pending_action:
+        if response.digital_availability:
+            response.message = render_digital(response)
+        elif response.pending_action:
             pending = response.pending_action
             if pending.library_id:
                 return
@@ -700,7 +832,8 @@ class AssistantOrchestrator:
         intent = parsed.intent
         # ── Show-more pagination (Phase 10) ──────────────────────────────────
         # offset is extracted from the validated request schema.
-        page_size = parsed.requested_result_count
+        singular = not request.action and wants_one_book(request.message)
+        page_size = 1 if singular and intent in RECOMMEND | {Intent.SEARCH_BOOKS} else parsed.requested_result_count
         offset = getattr(request, 'result_offset', 0)
 
         if intent == Intent.MORE_LIKE_THIS:
@@ -771,6 +904,15 @@ class AssistantOrchestrator:
             elif intent in MUTATING:
                 if len(books) != 1:
                     raise NeedsClarification('Choose one book for this action.', books)
+                context = request.lending_context
+                book = books[0]
+                if context and book.library_id == str(context.library_id) and book.library_book_id:
+                    if context.library_book_id and str(context.library_book_id) != book.library_book_id:
+                        raise NeedsClarification('The selected book differs from the lending record. Choose one book for this action.', books)
+                    # Scoped catalogue resolution already supplied the local record.
+                    # The lending adapter still verifies that record with Core.
+                    context = context.model_copy(update={'library_book_id': UUID(book.library_book_id)})
+                    request = request.model_copy(update={'lending_context': context})
                 if request.lending_context and intent == Intent.RESERVE_BOOK and (await tools.reservations.library_config(str(request.lending_context.library_id)))['state'] == 'CANONICAL':
                     from assistant.reservation_boundary import propose
                     await propose(request, state, tools, response, work_id=books[0].work_id, enabled=enabled('ASSISTANT_MUTATING_ACTIONS_ENABLED'))

@@ -1,0 +1,34 @@
+{
+  "status": "REVIEW_REQUIRED_NOT_APPLIED",
+  "reviewed_patch": "reports/focused_rag_contrast_20261110_01_final.patch",
+  "reviewed_patch_sha256": "1b7f6644700ef7fa89138f978b58833d89837663c7d91ad09d5c647329a551e6",
+  "proposed_exact_dependencies": {
+    "rag/llm.py": {
+      "old": "d369e26fcbe458964bf642a057ca79212a63f48a6acf2b1c0a12590003f5cc1b",
+      "new": "6f35a4034ae0acff78596b8cc81ed9c355a055f6560cf8dd703d907c02aab2da",
+      "reason": "approved explicit-fact intent and evidence validation repair"
+    },
+    "rag/fast_filter.py": {
+      "old": "1da09b70cd1ed73a45b5d3362149e7e19118dc1d7ffadd76853ca813e1578c5f",
+      "prior_focused_patch": "f500e3d32286e2d560512db2293615f0ea0a035c12b410fa03e71e3541d8d6fe",
+      "new": "c76962d3427d0d14a70731bee43ddffdbbdb4b426ffe5e715bb3121d2fa5aaff",
+      "reason": "explicit-fact repair plus restoration of semantic review for substantive document definitions"
+    },
+    "rag/factual_evidence.py": {
+      "old": null,
+      "new": "aec553cd0799bb2e5cfcfb8ab2f1136c51e9b5bc06d2f09800b7c96b9c898d0a",
+      "reason": "new transitive deterministic factual-assignment helper"
+    },
+    "rag/document_grounding.py": {
+      "old": null,
+      "new": "61f809fdd8ca7b5b42aceead9ea07fd0602f780695f5f41d8d3779674fc1a180",
+      "reason": "existing reviewed definition parser now also called transitively by fast_filter"
+    }
+  },
+  "unchanged_frozen_boundary": {
+    "rag/qa.py": "4a1141649a4ce9b4bce6413627c27557f5817bb8718a4e842a4d12021bd89de3",
+    "tests/contracts/rag_grounding_v2o2.py": "966841216c41f64feb7da38a5cc7e9107a1f6b4a3eafbede75fcc39f119ed38b"
+  },
+  "required_review": "Separate explicit approval by the repository's protected-contract owner to revise exact accepted source pins and guard helper dependencies. Preserve the original frozen hashes, exact qa.py projection, negative mutation checks, and rejection of arbitrary third source versions. A separate exact QA integration review and approval is required before connecting post-generation verification to citation output.",
+  "applied": false
+}

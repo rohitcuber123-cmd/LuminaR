@@ -1,0 +1,163 @@
+{
+  "authorization": "Prior explicit local development RAG switch-and-restore authorization; Part2Q.2 requires no concurrent model process.",
+  "original_processes": [
+    {
+      "pid": 31584,
+      "started": 1793629643.4173698,
+      "args": [
+        "uvicorn",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    },
+    {
+      "pid": 30000,
+      "started": 1793629643.4547067,
+      "args": [
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\python.exe",
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\uvicorn.exe",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    },
+    {
+      "pid": 31820,
+      "started": 1793629643.4867463,
+      "args": [
+        "C:\\Program Files\\Python311\\python.exe",
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\uvicorn.exe",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    }
+  ],
+  "restored": true,
+  "restoration": "Agent restored exact original uvicorn application/host/port after owned process stopped.",
+  "regular_process_tree": [
+    {
+      "pid": 52108,
+      "parent": 55924,
+      "args": [
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\uvicorn.exe",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    },
+    {
+      "pid": 55568,
+      "parent": 52108,
+      "args": [
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\python.exe",
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\uvicorn.exe",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    },
+    {
+      "pid": 55820,
+      "parent": 55568,
+      "args": [
+        "C:\\Program Files\\Python311\\python.exe",
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\uvicorn.exe",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    }
+  ],
+  "final_services": {
+    "core": {
+      "http": 200,
+      "body": {
+        "status": "healthy",
+        "system": "LuminaR",
+        "service": "core",
+        "port": 8002
+      }
+    },
+    "search": {
+      "http": 200,
+      "body": {
+        "status": "degraded",
+        "index_status": "STALE",
+        "retry_attempts": 0,
+        "retry_at": 0.0,
+        "active_vectors": 5000000,
+        "deleted_vectors": 16,
+        "mapping_count": 5000016,
+        "mutation_count_since_rebuild": 29,
+        "last_full_rebuild": null,
+        "index_size_bytes": 9040742251,
+        "baseline_verified": false,
+        "index_version": "48febcfde9924d818fdfe2d3c759fae9",
+        "semantic_generation": 30,
+        "pending": false,
+        "system": "LuminaR",
+        "device": "cuda",
+        "hnsw_vectors": 5000000,
+        "lexical": {
+          "lexical_enabled": true,
+          "lexical_available": true,
+          "lexical_version": "431a7a84921b408bb8cde14957e72166",
+          "lexical_generation": 1,
+          "lexical_schema_version": 2,
+          "lexical_file_size": 1270255616,
+          "lexical_last_build": "2026-09-25T07:45:55.822448+00:00",
+          "lexical_last_sync": null,
+          "lexical_pending": false,
+          "lexical_last_error": null,
+          "lexical_base_version": "431a7a84921b408bb8cde14957e72166",
+          "lexical_base_generation": 1,
+          "lexical_base_size": 1270255616,
+          "lexical_worker_configured": false,
+          "lexical_worker_enabled": false,
+          "lexical_ranking_enabled": false,
+          "lexical_delta_generation": 1,
+          "lexical_source_event_checkpoint": 30,
+          "lexical_retry_attempts": 0,
+          "lexical_retry_at": 0.0,
+          "lexical_delta_version": 1,
+          "lexical_delta_size": 32768
+        }
+      }
+    },
+    "rag": {
+      "http": 200,
+      "body": {
+        "status": "healthy",
+        "system": "LuminaR",
+        "module": "RAG",
+        "model_loading_ms": 32179.92,
+        "llm": "Qwen2.5-3B-Instruct",
+        "retrieval": "MiniLM + FAISS",
+        "reranker": "CrossEncoder",
+        "device": "cuda:0",
+        "vectors": 3959,
+        "private_document_cache_enabled": true
+      }
+    },
+    "frontend": {
+      "http": 200
+    },
+    "recommendation_listener": true
+  },
+  "owned_ports_closed": true,
+  "runtime_logs": "Task scratch regular-service directory; ongoing service logs excluded from immutable report hashes."
+}

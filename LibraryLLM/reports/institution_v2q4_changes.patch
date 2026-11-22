@@ -1,0 +1,478 @@
+--- a/assistant/orchestrator.py
++++ b/assistant/orchestrator.py
+@@ -2,6 +2,7 @@
+ from datetime import datetime, timedelta, timezone
+ import logging
+ import os
++import re
+ from time import monotonic
+ from uuid import uuid4
+ 
+@@ -32,6 +33,15 @@
+ READING_LIST_PENDING = READING_LIST_WRITE - {Intent.CLEAR_READING_LIST}
+ # Default initial page size; show-more continues from offset.
+ DEFAULT_PAGE_SIZE = 10
++
++
++def borrowing_information(message):
++    """A model action label alone is not consent to propose circulation."""
++    value = message.casefold().strip()
++    if not re.search(r'\b(?:borrow\w*|loan|issue|reserv\w*|available|copies)\b', value):
++        return False
++    return bool(re.match(r"(?:can|could|may|am|is|are|does|do|how|which|whether)\b", value)
++                or re.search(r"\b(?:don't|do not|just tell me|only tell me)\b", value))
+ 
+ 
+ def enabled(name, default=False):
+@@ -189,6 +199,14 @@
+                           and (len(request.selected_work_ids) == 1 or parsed.reference_position in
+                                {'FIRST', 'SECOND', 'THIRD', 'FOURTH', 'LAST', 'FOCUS', 'OTHER'})):
+                         parsed = parsed.model_copy(update={'intent': Intent.MORE_LIKE_THIS})
++                if (not request.action and parsed.intent in {Intent.BORROW_BOOK, Intent.RESERVE_BOOK}
++                        and borrowing_information(request.message)):
++                    if re.search(r'\b(?:how long|membership|eligible|eligibility)\b', request.message.casefold()):
++                        raise NeedsClarification('I cannot verify your borrowing eligibility or loan period from copy availability. Check your library account or ask library staff; no loan has been requested.')
++                    # Preserve canonical scope/positions and resolve through the
++                    # ordinary read authority; never manufacture a pending action.
++                    parsed = parsed.model_copy(update={'intent': Intent.CHECK_AVAILABILITY,
++                        'goal': SemanticGoal.DETAIL})
+                 selected_question = is_selected_context_question(request, parsed)
+                 digital = request.action in (None,'CHECK_AVAILABILITY') and digital_question(request.message)
+                 if digital:
+--- a/backend/services/library_catalogue_experience.py
++++ b/backend/services/library_catalogue_experience.py
+@@ -29,15 +29,17 @@
+ @contextmanager
+ def read_context(library_id, actor, *, patron=True, staff=False):
+     guard = require_library_staff if staff else require_library_patron if patron else require_library_membership
+-    # Verify eligibility/scope before locking or running canonical maintenance.
+-    library, membership = guard(library_id, actor)
++    # Canonical reads wait for the authority barrier before checking scope.
++    # An unlocked precheck would reject ordinary overlapping reads immediately.
+     canonical = lending.journal.state(library_id) == 'CANONICAL'
+     if canonical:
+         with library_mutation(library_id, wait_seconds=30, durable=True):
++            library, membership = guard(library_id, actor, locked=True)
+             lending.access_locked(library_id, actor, patron=patron and not staff, staff=staff)
+             library, membership = guard(library_id, actor, locked=True)
+             yield library, membership, canonical
+     else:
++        library, membership = guard(library_id, actor)
+         yield library, membership, canonical
+         require_readable(library_id)
+ 
+--- a/frontend/src/components/ForYou.tsx
++++ b/frontend/src/components/ForYou.tsx
+@@ -49,7 +49,8 @@
+   const scope=`${token}:${context?.data.source.library_id || 'GLOBAL'}`
+   const [page, setPage] = useState({ scope, offset: 0 })
+   const offset = page.scope === scope ? page.offset : 0
+-  const [tenantPage,setTenantPage]=useState<{scope:string;offset:number;rows:DisplayBook[];hasMore:boolean}|null>(null)
++  const [tenantPage,setTenantPage]=useState<{scope:string;offset:number;rows:DisplayBook[];hasMore:boolean;failed?:boolean}|null>(null)
++  const [retry, setRetry] = useState(0)
+   const [books, setBooks] = useState<BackendBook[]>([])
+   const [loading, setLoading] = useState(true)
+   const [error, setError] = useState(false)
+@@ -61,7 +62,7 @@
+       const controller=new AbortController()
+       void libraryRecommendationPage(context.data.source.library_id,controller.signal,offset,RECOMMENDATION_LIMIT)
+         .then(result=>{if(!controller.signal.aborted){setError(false);setTenantPage({scope,offset,rows:result.results,hasMore:result.has_more})}})
+-        .catch(()=>{if(!controller.signal.aborted){setError(true);setTenantPage({scope,offset,rows:[],hasMore:false})}})
++        .catch(()=>{if(!controller.signal.aborted){setError(true);setTenantPage({scope,offset,rows:[],hasMore:false,failed:true})}})
+       return ()=>controller.abort()
+     }
+     let cancelled = false
+@@ -86,7 +87,7 @@
+     }
+     void load()
+     return () => { cancelled = true }
+-  }, [token, offset, context,scope])
++  }, [token, offset, context,scope,retry])
+   function goToPage(next: number) {
+     setPage({ scope, offset: next })
+     requestAnimationFrame(() => scrollToContentAnchor('#for-you-results'))
+@@ -95,6 +96,8 @@
+   const localRows=context && tenantPage?.scope===scope && tenantPage.offset===offset ? tenantPage.rows : context && offset===0 ? context.data.for_you || [] : []
+   const visibleBooks = context ? localRows.map(displayToHomeBook) : books
+   const pageHasMore=context ? tenantPage?.scope===scope && tenantPage.offset===offset && tenantPage.hasMore : hasMore
++  const tenantFailed = !!(context && tenantPage?.scope===scope && tenantPage.offset===offset && tenantPage.failed)
++  const visibleError = context ? tenantFailed : error
+   const visibleLoading = context ? false : loading
+   if (visibleLoading) {
+     return (
+@@ -147,12 +150,13 @@
+         </div>
+ 
+         <div className="mb-6 flex flex-wrap items-center justify-between gap-4 text-xs text-ink-soft">
+-          <p>{context ? context.data.source.catalogue_source === 'LIBRARY_LOCAL' ? 'Recommendations from your library’s collection' : 'Global Catalogue discoveries' : popular ? 'Popular books' : books.length ? `Recommendations ${offset + 1}–${offset + books.length}` : error ? 'Recommendations could not be loaded. Try Previous.' : 'No further recommendations.'}</p>
++          <p>{tenantFailed ? 'Recommendations could not be loaded. Retry to check this library again.' : context ? context.data.source.catalogue_source === 'LIBRARY_LOCAL' ? 'Recommendations from your library’s collection' : 'Global Catalogue discoveries' : popular ? 'Popular books' : books.length ? `Recommendations ${offset + 1}–${offset + books.length}` : error ? 'Recommendations could not be loaded. Try Previous.' : 'No further recommendations.'}</p>
+           {(context || !popular) && <nav aria-label="Recommendation pagination" className="flex flex-wrap gap-3">
+             <button className="assistant-button disabled:opacity-40" disabled={offset === 0} onClick={() => goToPage(Math.max(0, offset - RECOMMENDATION_LIMIT))}>Previous Recommendations</button>
+-            <button className="assistant-button disabled:opacity-40" disabled={!pageHasMore || error} onClick={() => goToPage(offset + RECOMMENDATION_LIMIT)}>Next Recommendations</button>
++            <button className="assistant-button disabled:opacity-40" disabled={!pageHasMore || visibleError} onClick={() => goToPage(offset + RECOMMENDATION_LIMIT)}>Next Recommendations</button>
+           </nav>}
+         </div>
++        {tenantFailed && <button className="assistant-button" onClick={() => setRetry(value => value + 1)}>Retry recommendations</button>}
+         <BookCarousel key={`${scope}:${offset}`}>
+           {visibleBooks.map((book, i) => (
+             <BookCard key={book.work_id} book={context ? localRows[i] : globalBookPresentation(book)} changed={context?.changed} rail />
+--- a/frontend/tests/recommendation-runtime.test.tsx
++++ b/frontend/tests/recommendation-runtime.test.tsx
+@@ -35,6 +35,18 @@
+  }
+ })
+ afterEach(()=>{cleanup();globalThis.fetch=original})
++
++test('tenant failure provides an explicit bounded manual retry',async()=>{
++ const fallback=globalThis.fetch;let broken=true
++ globalThis.fetch=async(input,init)=>String(input).includes('/catalogue/recommendations')&&broken?Response.json({detail:'Library update in progress'},{status:503}):fallback(input,init)
++ renderRail();await screen.findByRole('button',{name:'Retry recommendations'},{timeout:5000})
++ assert.equal(screen.queryByText('A Local 0'),null)
++ const before=calls.length;broken=false
++ fireEvent.click(screen.getByRole('button',{name:'Retry recommendations'}))
++ await screen.findAllByText('A Local 0')
++ assert.equal(screen.queryByRole('button',{name:'Retry recommendations'}),null)
++ assert.ok(calls.length>before)
++})
+ test('test_tenant_recommendation_provider_traced',async()=>{
+  await libraryRecommendationPage(a,new AbortController().signal)
+  assert.equal(calls[0],'/recommendation-api/recommendations?limit=50&offset=0')
+--- a/tests/institution_v2q_ai/test_v2q1_parallel_core.py
++++ b/tests/institution_v2q_ai/test_v2q1_parallel_core.py
+@@ -1,120 +1,122 @@
+-"""Exercise real concurrent Core reads with disposable canonical-library data."""
+-import asyncio
+-import hashlib
+-import json
+-import time
+-from threading import Event, Lock
+-from uuid import uuid4
+-
+-import httpx
+-import pytest
+-from bson import json_util
+-from assistant.library_scope import LibraryCatalogue
+-from assistant.tools import ToolFailure
+-from backend.services import library_catalogue_experience as catalogue
+-from backend.services import library_lending_journal as journal
+-from backend.database.mongodb import db
+-from test_integration import fixture, chat  # noqa: F401 -- shared owned fixture
+-
+-
+-def test_canonical_library_recommendations_survive_parallel_book_reads(fixture,client,monkeypatch):
+-    lib=fixture[1][0]
+-    for number in range(1,12):
+-        result=client.post(f'/libraries/{lib}/inventory/books',json={
+-            'title':f'A owned Python acquisition {number}','authors':['Ada'],
+-            'subjects':['Python'],'copies':2,'idempotency_key':str(uuid4())})
+-        assert result.status_code==201,result.text
+-    if journal.state(lib)!='CANONICAL':
+-        activated=client.post(f'/libraries/{lib}/staff/lending/activate',json={'idempotency_key':str(uuid4())})
+-        assert activated.status_code==200,activated.text
+-    original_hydrate=catalogue.hydrate
+-    def slower_real_hydrate(*args,**kwargs):
+-        # Exercise contention during ordinary current-holdings reads.
+-        time.sleep(.08)
+-        return original_hydrate(*args,**kwargs)
+-    monkeypatch.setattr(catalogue,'hydrate',slower_real_hydrate)
+-    transport=fixture[0].app.state.assistant_http_client._transport
+-    original_handler=transport.handler
+-    statuses=[];finished=Event();guard=Lock();phase=['before']
+-    def forward(request):
+-        result=original_handler(request)
+-        if '/catalogue/books/' in request.url.path:
+-            with guard:
+-                statuses.append((phase[0],result.status_code))
+-                if sum(label=='before' for label,_ in statuses)>=12:finished.set()
+-        return result
+-    async def concurrently_forward(request):
+-        return await asyncio.to_thread(forward,request)
+-    fixture[0].app.state.assistant_http_client._transport=httpx.MockTransport(concurrently_forward)
+-    def snapshot():
+-        return {name:hashlib.sha256('\n'.join(sorted(json_util.dumps(row,sort_keys=True)
+-            for row in db[name].find({'library_id':lib}))).encode()).hexdigest()
+-            for name in ['institution_library_books','institution_holdings','institution_copies']}
+-    original_snapshot=snapshot()
+-    fixed_books=LibraryCatalogue.books
+-    async def prior_parallel_books(self,identities):
+-        return list(await asyncio.wait_for(asyncio.gather(*(self.book(identity) for identity in dict.fromkeys(identities))),40))
+-    monkeypatch.setattr(LibraryCatalogue,'books',prior_parallel_books)
+-    started=time.perf_counter()
+-    before=chat(fixture,lib,action='RECOMMEND')
+-    before_ms=(time.perf_counter()-started)*1000
+-    assert finished.wait(15),'Prior parallel requests did not finish'
+-    assert before.status_code==503 or (before.status_code==200 and before.json()['errors']),before.text
+-    assert any(label=='before' and status==503 for label,status in statuses),statuses
+-    assert snapshot()==original_snapshot
+-    phase[0]='after'
+-    monkeypatch.setattr(LibraryCatalogue,'books',fixed_books)
+-    started=time.perf_counter()
+-    response=chat(fixture,lib,action='RECOMMEND')
+-    after_ms=(time.perf_counter()-started)*1000
+-    assert response.status_code==200,response.text
+-    data=response.json()
+-    assert not data['errors'],data
+-    assert len(data['books'])==10,data
+-    assert all(row['library_id']==lib for row in data['books'])
+-    assert not any(label=='after' and status>=400 for label,status in statuses),statuses
+-    assert snapshot()==original_snapshot
+-    print('V2Q1_SAME_FIXTURE_COMPARISON='+json.dumps({'before_http_status':before.status_code,
+-        'before_ms':round(before_ms,2),'after_ms':round(after_ms,2),
+-        'before_core_statuses':[status for label,status in statuses if label=='before'],
+-        'after_http_status':response.status_code,'after_book_count':len(data['books']),
+-        'after_core_statuses':[status for label,status in statuses if label=='after'],
+-        'same_books_holdings_and_copies':True,'snapshot_sha256':original_snapshot,
+-        'parser':'deterministic; structured action uses no Qwen'}))
+-
+-
+-def test_failed_lookup_does_not_start_later_book_requests():
+-    calls=[]
+-    class FailingCatalogue(LibraryCatalogue):
+-        async def book(self,identity):
+-            calls.append(identity)
+-            raise ToolFailure('core','HTTP_503')
+-    async def run():
+-        with pytest.raises(ToolFailure):
+-            await FailingCatalogue(None,'test').books(['first','second'])
+-    asyncio.run(run())
+-    assert calls==['first']
+-
+-
+-def test_fifty_canonical_candidates_finish_within_existing_deadline(fixture,client):
+-    lib=fixture[1][0]
+-    for number in range(1,50):
+-        result=client.post(f'/libraries/{lib}/inventory/books',json={
+-            'title':f'A owned Python book {number}','subjects':['Python'],
+-            'copies':1,'idempotency_key':str(uuid4())})
+-        assert result.status_code==201,result.text
+-    if journal.state(lib)!='CANONICAL':
+-        activated=client.post(f'/libraries/{lib}/staff/lending/activate',json={'idempotency_key':str(uuid4())})
+-        assert activated.status_code==200,activated.text
+-    original=fixture[0].app.state.assistant_http_client._transport.handler
+-    async def forward(request):return await asyncio.to_thread(original,request)
+-    fixture[0].app.state.assistant_http_client._transport=httpx.MockTransport(forward)
+-    started=time.perf_counter()
+-    response=chat(fixture,lib,action='RECOMMEND')
+-    elapsed=(time.perf_counter()-started)*1000
+-    assert response.status_code==200,response.text
+-    data=response.json()
+-    assert not data['errors'] and len(data['books'])==10 and data['has_more'],data
+-    assert all(book['library_id']==lib for book in data['books'])
+-    print('V2Q1_FIFTY_CANDIDATES='+json.dumps({'elapsed_ms':round(elapsed,2),
+-        'candidates':50,'returned':len(data['books']),'evidence':'owned Core fixture; structured action, no Qwen'}))
++"""Exercise real concurrent Core reads with disposable canonical-library data."""
++import asyncio
++import hashlib
++import json
++import time
++from threading import Event, Lock
++from uuid import uuid4
++
++import httpx
++import pytest
++from bson import json_util
++from assistant.library_scope import LibraryCatalogue
++from assistant.tools import ToolFailure
++from backend.services import library_catalogue_experience as catalogue
++from backend.services import library_lending_journal as journal
++from backend.database.mongodb import db
++from test_integration import fixture, chat  # noqa: F401 -- shared owned fixture
++
++
++def test_canonical_library_recommendations_survive_parallel_book_reads(fixture,client,monkeypatch):
++    lib=fixture[1][0]
++    for number in range(1,12):
++        result=client.post(f'/libraries/{lib}/inventory/books',json={
++            'title':f'A owned Python acquisition {number}','authors':['Ada'],
++            'subjects':['Python'],'copies':2,'idempotency_key':str(uuid4())})
++        assert result.status_code==201,result.text
++    if journal.state(lib)!='CANONICAL':
++        activated=client.post(f'/libraries/{lib}/staff/lending/activate',json={'idempotency_key':str(uuid4())})
++        assert activated.status_code==200,activated.text
++    original_hydrate=catalogue.hydrate
++    def slower_real_hydrate(*args,**kwargs):
++        # Exercise contention during ordinary current-holdings reads.
++        time.sleep(.08)
++        return original_hydrate(*args,**kwargs)
++    monkeypatch.setattr(catalogue,'hydrate',slower_real_hydrate)
++    transport=fixture[0].app.state.assistant_http_client._transport
++    original_handler=transport.handler
++    statuses=[];finished=Event();guard=Lock();phase=['before']
++    def forward(request):
++        result=original_handler(request)
++        if '/catalogue/books/' in request.url.path:
++            with guard:
++                statuses.append((phase[0],result.status_code))
++                if sum(label=='before' for label,_ in statuses)>=12:finished.set()
++        return result
++    async def concurrently_forward(request):
++        return await asyncio.to_thread(forward,request)
++    fixture[0].app.state.assistant_http_client._transport=httpx.MockTransport(concurrently_forward)
++    def snapshot():
++        return {name:hashlib.sha256('\n'.join(sorted(json_util.dumps(row,sort_keys=True)
++            for row in db[name].find({'library_id':lib}))).encode()).hexdigest()
++            for name in ['institution_library_books','institution_holdings','institution_copies']}
++    original_snapshot=snapshot()
++    fixed_books=LibraryCatalogue.books
++    async def prior_parallel_books(self,identities):
++        return list(await asyncio.wait_for(asyncio.gather(*(self.book(identity) for identity in dict.fromkeys(identities))),40))
++    monkeypatch.setattr(LibraryCatalogue,'books',prior_parallel_books)
++    started=time.perf_counter()
++    before=chat(fixture,lib,action='RECOMMEND')
++    before_ms=(time.perf_counter()-started)*1000
++    assert finished.wait(15),'Prior parallel requests did not finish'
++    # Q4 fixes the Core authority precheck itself, so the historical parallel
++    # client must now succeed too. Keep both paths and the data snapshots.
++    assert before.status_code==200 and not before.json()['errors'],before.text
++    assert all(status==200 for label,status in statuses if label=='before'),statuses
++    assert snapshot()==original_snapshot
++    phase[0]='after'
++    monkeypatch.setattr(LibraryCatalogue,'books',fixed_books)
++    started=time.perf_counter()
++    response=chat(fixture,lib,action='RECOMMEND')
++    after_ms=(time.perf_counter()-started)*1000
++    assert response.status_code==200,response.text
++    data=response.json()
++    assert not data['errors'],data
++    assert len(data['books'])==10,data
++    assert all(row['library_id']==lib for row in data['books'])
++    assert not any(label=='after' and status>=400 for label,status in statuses),statuses
++    assert snapshot()==original_snapshot
++    print('V2Q1_SAME_FIXTURE_COMPARISON='+json.dumps({'before_http_status':before.status_code,
++        'before_ms':round(before_ms,2),'after_ms':round(after_ms,2),
++        'before_core_statuses':[status for label,status in statuses if label=='before'],
++        'after_http_status':response.status_code,'after_book_count':len(data['books']),
++        'after_core_statuses':[status for label,status in statuses if label=='after'],
++        'same_books_holdings_and_copies':True,'snapshot_sha256':original_snapshot,
++        'parser':'deterministic; structured action uses no Qwen'}))
++
++
++def test_failed_lookup_does_not_start_later_book_requests():
++    calls=[]
++    class FailingCatalogue(LibraryCatalogue):
++        async def book(self,identity):
++            calls.append(identity)
++            raise ToolFailure('core','HTTP_503')
++    async def run():
++        with pytest.raises(ToolFailure):
++            await FailingCatalogue(None,'test').books(['first','second'])
++    asyncio.run(run())
++    assert calls==['first']
++
++
++def test_fifty_canonical_candidates_finish_within_existing_deadline(fixture,client):
++    lib=fixture[1][0]
++    for number in range(1,50):
++        result=client.post(f'/libraries/{lib}/inventory/books',json={
++            'title':f'A owned Python book {number}','subjects':['Python'],
++            'copies':1,'idempotency_key':str(uuid4())})
++        assert result.status_code==201,result.text
++    if journal.state(lib)!='CANONICAL':
++        activated=client.post(f'/libraries/{lib}/staff/lending/activate',json={'idempotency_key':str(uuid4())})
++        assert activated.status_code==200,activated.text
++    original=fixture[0].app.state.assistant_http_client._transport.handler
++    async def forward(request):return await asyncio.to_thread(original,request)
++    fixture[0].app.state.assistant_http_client._transport=httpx.MockTransport(forward)
++    started=time.perf_counter()
++    response=chat(fixture,lib,action='RECOMMEND')
++    elapsed=(time.perf_counter()-started)*1000
++    assert response.status_code==200,response.text
++    data=response.json()
++    assert not data['errors'] and len(data['books'])==10 and data['has_more'],data
++    assert all(book['library_id']==lib for book in data['books'])
++    print('V2Q1_FIFTY_CANDIDATES='+json.dumps({'elapsed_ms':round(elapsed,2),
++        'candidates':50,'returned':len(data['books']),'evidence':'owned Core fixture; structured action, no Qwen'}))
+--- /dev/null
++++ b/tests/institution_v2q_ai/test_borrowing_information_q4.py
+@@ -0,0 +1,38 @@
++"""A model circulation label does not turn a question into consent."""
++import pytest
++from assistant.schemas import AssistantIntentDecision, Intent, ReferenceScope
++from tests.institution_v2q_ai.test_integration import fixture, chat
++
++
++class BorrowParser:
++    async def parse(self, message, context):
++        return AssistantIntentDecision(intent=Intent.BORROW_BOOK, confidence=1,
++            reference_scope=ReferenceScope.CURRENT_PAGE_BOOK, reference_position='ALL')
++    async def respond(self, *args):
++        return 'Controlled explanation.'
++
++
++@pytest.mark.parametrize('message', ['Can I borrow this?', 'Is this available to borrow?',
++    'Which one can I borrow physically?', "Don't borrow it, just tell me whether it is available."])
++def test_information_never_proposes_loan(client, fixture, message):
++    api, libs, books, _ = fixture
++    api.app.state.assistant.qwen = BorrowParser()
++    response = chat(fixture, libs[0], message=message, page_context={'work_id': books[0]}).json()
++    assert response['intent'] == 'CHECK_AVAILABILITY', response
++    assert response['pending_action'] is None and response['availability']
++    assert response['books'][0]['work_id'] == books[0]
++
++
++def test_explicit_borrow_keeps_confirmation(client, fixture):
++    api, libs, books, _ = fixture
++    api.app.state.assistant.qwen = BorrowParser()
++    response = chat(fixture, libs[0], message='Borrow this for me.', page_context={'work_id': books[0]}).json()
++    assert response['pending_action'] is not None, response
++
++
++def test_digital_question_retains_authoritative_unknown(client, fixture):
++    api, libs, books, _ = fixture
++    api.app.state.assistant.qwen = BorrowParser()
++    response = chat(fixture, libs[0], message='Can I read it digitally instead?', page_context={'work_id': books[0]}).json()
++    assert response['pending_action'] is None
++    assert response['digital_availability'][0]['status'] == 'UNKNOWN'
+--- /dev/null
++++ b/tests/institution_v2q_ai/test_recommendation_concurrency_q4.py
+@@ -0,0 +1,50 @@
++"""Real Mongo library gate contention, not a simulated dependency error."""
++from concurrent.futures import ThreadPoolExecutor, TimeoutError
++from backend.services.institution_repository import library_mutation
++from tests.institution_v2q_ai.test_integration import fixture
++from backend.database.mongodb import db
++
++
++def test_recommendation_waits_for_short_authority_lock(client, fixture):
++    _, libs, books, _ = fixture
++    with ThreadPoolExecutor(max_workers=1) as pool:
++        with library_mutation(libs[0]):
++            future = pool.submit(client.post, f'/libraries/{libs[0]}/catalogue/recommendations',
++                headers={'x-test-user':'2'}, json={'work_ids': [], 'limit':10})
++            try:
++                premature = future.result(timeout=0.3)
++            except TimeoutError:
++                premature = None
++        response = premature or future.result(timeout=35)
++    assert response.status_code == 200, response.text
++    assert {x['library_book_id'] for x in response.json()['results']} == {books[0]}
++
++
++def test_revocation_during_wait_is_denied(client, fixture):
++    _, libs, _, _ = fixture
++    with ThreadPoolExecutor(max_workers=1) as pool:
++        with library_mutation(libs[0]):
++            future = pool.submit(client.post, f'/libraries/{libs[0]}/catalogue/recommendations',
++                headers={'x-test-user':'2'}, json={'work_ids': [], 'limit':10})
++            try:
++                early = future.result(timeout=0.2)
++            except TimeoutError:
++                early = None
++            db.institution_memberships.update_one({'library_id':libs[0],'user_id':2}, {'$set':{'status':'REMOVED'}})
++        response = early or future.result(timeout=35)
++    assert response.status_code == 404
++
++
++def test_overlapping_recommendations_keep_tenant_ownership(client, fixture):
++    _, libs, books, _ = fixture
++    attempted = 0
++    with ThreadPoolExecutor(max_workers=4) as pool:
++        for _ in range(2):
++            calls = [(i, pool.submit(client.post, f'/libraries/{libs[i]}/catalogue/recommendations',
++                headers={'x-test-user':'2'}, json={'work_ids':['OL999W'], 'limit':10})) for i in [0,1,0,1]]
++            for i, future in calls:
++                response = future.result(timeout=35)
++                attempted += 1
++                assert response.status_code == 200, response.text
++                assert {x['library_book_id'] for x in response.json()['results']} == {books[i]}
++    assert attempted == 8

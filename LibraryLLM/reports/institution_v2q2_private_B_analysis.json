@@ -1,0 +1,4322 @@
+{
+  "root_cause": "Evidence-stage false negative: expected B fact retained in prepared chunks/retrieval/reranking/context/validator input, then original NOT_SUPPORTED. Judge internal rationale not exposed.",
+  "AB": {
+    "original": {
+      "A": {
+        "owner_runs": 3,
+        "correct_fact_answers": 3,
+        "outsider_denials": 3,
+        "owner_median_ms": 18965.67
+      },
+      "B": {
+        "owner_runs": 3,
+        "correct_fact_answers": 0,
+        "outsider_denials": 3,
+        "owner_median_ms": 18770.119
+      }
+    },
+    "candidate": {
+      "A": {
+        "owner_runs": 3,
+        "correct_fact_answers": 3,
+        "outsider_denials": 3,
+        "owner_median_ms": 15039.376
+      },
+      "B": {
+        "owner_runs": 3,
+        "correct_fact_answers": 3,
+        "outsider_denials": 3,
+        "owner_median_ms": 16931.032
+      }
+    }
+  },
+  "stages": [
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 8.668,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 8.693,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 8.711
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 15.751,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 16.856,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 47.058,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "6744c469f718863f803c6c0754612c137d948a3af407e7c092498f33aab51cad",
+          "chunk_hashes": [
+            "d6e33142cc75fcc7e60b9544acd70c614d1d105c977a67a6c3aee879cde03e3d"
+          ],
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.656,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 14268.274,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 14282.539,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 31.879,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "embedding": 30.39,
+            "faiss": 1.38,
+            "total": 31.77
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 83.837,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "candidate_merge": 0.0027999994927085936,
+            "preprocessing": 0.010400000974186696,
+            "embedding": 30.39,
+            "faiss": 1.38,
+            "reranking": 42.96,
+            "evidence": 8.33,
+            "total": 83.06
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.818,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "after_facts": {
+            "A_fact": true,
+            "B_fact": false
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.139,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6429285407066345,
+              "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+              "document_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 2.158370018005371,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6429285407066345,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 143,
+          "chunks": 1,
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.216,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2358.007,
+          "prompt_chars": 796,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "a2e4178541d883a2fc98695f5d89746f21627522f1d2d40287ebfab23bc14cff"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2359.083,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.097,
+          "chars": 3087,
+          "sha256": "3ef2bed64718e9dc8daaa1ae24cd2be2c89839e13e46f027e97fe18f39dad6c2",
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 2142.428,
+          "prompt_chars": 3087,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 19.003,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.567,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is ALPHA-SEVEN.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+            "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+            "title": null,
+            "author": null,
+            "rerank_score": 2.158370018005371,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "7cf448b3-9934-4f55-a4c7-f555e87460c1",
+            "asset_id": "b48330dd-3a81-4456-b81a-e4d56d037bae"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": true,
+          "B_fact": false
+        },
+        "answer_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 14248.514400000204,
+              "tokens_per_second": 3.64950327733811
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 12,
+              "max_new_tokens": 160,
+              "generation_ms": 2354.4861000009405,
+              "tokens_per_second": 5.096653575485201
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 2133.408199999394,
+              "tokens_per_second": 5.156069054203093
+            }
+          ],
+          "queue_ms": 0.010400000974186696,
+          "structured_tokenizer_setup_ms": 3.288300000349409,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 14280.925899998692,
+          "intent_calls": 1,
+          "context_ms": 0.1233000002685003,
+          "context_calls": 1,
+          "validator_ms": 2359.076000000641,
+          "validator_calls": 1,
+          "prompt_ms": 0.036499999623629265,
+          "prompt_calls": 1,
+          "total_ms": 18872.064799999862
+        },
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 14282.65,
+          "retrieval": 83.92,
+          "fast_filter": 0.27,
+          "validation": 2359.24,
+          "generation": 2142.49,
+          "total": 18871.99
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 18954.136
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 8.568,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 8.591,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 8.612
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.356,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.716,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 38.406,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "02663a250a22b88fa175463d6b2290c69fd439d9c1a363dfc78b29c52ddeb6f6",
+          "chunk_hashes": [
+            "bce520f5cc88f11198f577b050614c3e871ba6f356b520b102b51b346ca3dc0f"
+          ],
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.368,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 14518.133,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 14527.676,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 19.767,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "embedding": 19.59,
+            "faiss": 0.04,
+            "total": 19.64
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 40.935,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "candidate_merge": 0.002300001142430119,
+            "preprocessing": 0.005599998985417187,
+            "embedding": 19.59,
+            "faiss": 0.04,
+            "reranking": 19.72,
+            "evidence": 1.35,
+            "total": 40.7
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.019,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "after_facts": {
+            "A_fact": false,
+            "B_fact": true
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.034,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6112593412399292,
+              "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+              "document_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 1.8258382081985474,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6112593412399292,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 142,
+          "chunks": 1,
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.099,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 3706.104,
+          "prompt_chars": 795,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "6f6bd950706b51aedca1a55e1eb92424bb077daba9fddce1de1622c25df7d3ca"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 3707.438,
+          "verdict": "NOT_SUPPORTED",
+          "validator_details": {
+            "supported": false,
+            "confidence": 0.85
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.107,
+          "chars": 3086,
+          "sha256": "0a8a523f067daf25d324396541d72d324be26537eabf42eea53c8a548a9874a7",
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 2539.738,
+          "prompt_chars": 644,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "9fb92a4054b87a104dd6a8f90fc88db0f903700318b1b231880c0f4e4450ae88"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 15.519,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.048,
+          "input_verdict": "NOT_SUPPORTED",
+          "output_verdict": "NOT_SUPPORTED",
+          "source_count": 0
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The checked passages do not provide the specific calibration code recorded.",
+        "synthetic_sources": [],
+        "verdict": "NOT_SUPPORTED",
+        "sources": 0,
+        "answer_facts": {
+          "A_fact": false,
+          "B_fact": false
+        },
+        "answer_sha256": "9fb92a4054b87a104dd6a8f90fc88db0f903700318b1b231880c0f4e4450ae88",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 14514.691700000185,
+              "tokens_per_second": 3.5825769554581264
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 15,
+              "max_new_tokens": 160,
+              "generation_ms": 3702.8123999989475,
+              "tokens_per_second": 4.050974875206819
+            },
+            {
+              "input_tokens": 193,
+              "generated_tokens": 13,
+              "max_new_tokens": 320,
+              "generation_ms": 2535.9847999989142,
+              "tokens_per_second": 5.126213690241978
+            }
+          ],
+          "queue_ms": 0.0032999996619764715,
+          "structured_tokenizer_setup_ms": 3.9172000015241792,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 14527.611400000751,
+          "intent_calls": 1,
+          "context_ms": 0.030300001526484266,
+          "context_calls": 1,
+          "validator_ms": 3707.4302999990323,
+          "validator_calls": 1,
+          "prompt_ms": 0.03950000063923653,
+          "prompt_calls": 1,
+          "total_ms": 20816.480299999967
+        },
+        "timing_ms": {
+          "response": 0.01,
+          "intent_analysis": 14527.72,
+          "retrieval": 40.95,
+          "fast_filter": 0.14,
+          "validation": 3707.53,
+          "generation": 2539.78,
+          "total": 20816.45
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 20884.563
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 5.706,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 5.726,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 5.741
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 16.369,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 28.973,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 49.877,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "6744c469f718863f803c6c0754612c137d948a3af407e7c092498f33aab51cad",
+          "chunk_hashes": [
+            "d6e33142cc75fcc7e60b9544acd70c614d1d105c977a67a6c3aee879cde03e3d"
+          ],
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 17.264,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 14725.597,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 14737.733,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 16.431,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "embedding": 16.31,
+            "faiss": 0.05,
+            "total": 16.36
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 34.226,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "candidate_merge": 0.00270000055024866,
+            "preprocessing": 0.003499999365885742,
+            "embedding": 16.31,
+            "faiss": 0.05,
+            "reranking": 16.8,
+            "evidence": 0.9,
+            "total": 34.06
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.031,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "after_facts": {
+            "A_fact": true,
+            "B_fact": false
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.05,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6429285407066345,
+              "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+              "document_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 2.158370018005371,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6429285407066345,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 143,
+          "chunks": 1,
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.149,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2281.548,
+          "prompt_chars": 796,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "a2e4178541d883a2fc98695f5d89746f21627522f1d2d40287ebfab23bc14cff"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2283.062,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.092,
+          "chars": 3087,
+          "sha256": "3ef2bed64718e9dc8daaa1ae24cd2be2c89839e13e46f027e97fe18f39dad6c2",
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 2055.094,
+          "prompt_chars": 3087,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.366,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.047,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is ALPHA-SEVEN.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+            "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+            "title": null,
+            "author": null,
+            "rerank_score": 2.158370018005371,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "7cf448b3-9934-4f55-a4c7-f555e87460c1",
+            "asset_id": "b48330dd-3a81-4456-b81a-e4d56d037bae"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": true,
+          "B_fact": false
+        },
+        "answer_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 14720.580699999118,
+              "tokens_per_second": 3.5324693406968053
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 12,
+              "max_new_tokens": 160,
+              "generation_ms": 2278.44819999882,
+              "tokens_per_second": 5.266742513613526
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 2050.0030999992305,
+              "tokens_per_second": 5.365845544333142
+            }
+          ],
+          "queue_ms": 0.003700000888784416,
+          "structured_tokenizer_setup_ms": 4.227800001899595,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 14737.680599999294,
+          "intent_calls": 1,
+          "context_ms": 0.04459999945538584,
+          "context_calls": 1,
+          "validator_ms": 2283.054900000934,
+          "validator_calls": 1,
+          "prompt_ms": 0.0335000004270114,
+          "prompt_calls": 1,
+          "total_ms": 19111.036699998294
+        },
+        "timing_ms": {
+          "response": 0.04,
+          "intent_analysis": 14737.77,
+          "retrieval": 34.25,
+          "fast_filter": 0.21,
+          "validation": 2283.15,
+          "generation": 2055.17,
+          "total": 19110.98
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 19193.697
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 5.368,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 5.382,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 5.396
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.271,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 11.785,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 28.272,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "02663a250a22b88fa175463d6b2290c69fd439d9c1a363dfc78b29c52ddeb6f6",
+          "chunk_hashes": [
+            "bce520f5cc88f11198f577b050614c3e871ba6f356b520b102b51b346ca3dc0f"
+          ],
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 14.155,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 13437.876,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 13448.475,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 19.009,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "embedding": 18.89,
+            "faiss": 0.05,
+            "total": 18.94
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 34.54,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "candidate_merge": 0.0018000009731622413,
+            "preprocessing": 0.00650000038149301,
+            "embedding": 18.89,
+            "faiss": 0.05,
+            "reranking": 14.64,
+            "evidence": 0.8,
+            "total": 34.39
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.024,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "after_facts": {
+            "A_fact": false,
+            "B_fact": true
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.044,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6112593412399292,
+              "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+              "document_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 1.8258382081985474,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6112593412399292,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 142,
+          "chunks": 1,
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.124,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2840.868,
+          "prompt_chars": 795,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "6f6bd950706b51aedca1a55e1eb92424bb077daba9fddce1de1622c25df7d3ca"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2842.226,
+          "verdict": "NOT_SUPPORTED",
+          "validator_details": {
+            "supported": false,
+            "confidence": 0.85
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.11,
+          "chars": 3086,
+          "sha256": "0a8a523f067daf25d324396541d72d324be26537eabf42eea53c8a548a9874a7",
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 2370.929,
+          "prompt_chars": 644,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "9fb92a4054b87a104dd6a8f90fc88db0f903700318b1b231880c0f4e4450ae88"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 15.844,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.069,
+          "input_verdict": "NOT_SUPPORTED",
+          "output_verdict": "NOT_SUPPORTED",
+          "source_count": 0
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The checked passages do not provide the specific calibration code recorded.",
+        "synthetic_sources": [],
+        "verdict": "NOT_SUPPORTED",
+        "sources": 0,
+        "answer_facts": {
+          "A_fact": false,
+          "B_fact": false
+        },
+        "answer_sha256": "9fb92a4054b87a104dd6a8f90fc88db0f903700318b1b231880c0f4e4450ae88",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 13434.044699999504,
+              "tokens_per_second": 3.8707627643967806
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 15,
+              "max_new_tokens": 160,
+              "generation_ms": 2838.4101999999984,
+              "tokens_per_second": 5.284648427489447
+            },
+            {
+              "input_tokens": 193,
+              "generated_tokens": 13,
+              "max_new_tokens": 320,
+              "generation_ms": 2367.3781999987114,
+              "tokens_per_second": 5.491306796694789
+            }
+          ],
+          "queue_ms": 0.003499999365885742,
+          "structured_tokenizer_setup_ms": 3.8842999983899062,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 13448.399799999606,
+          "intent_calls": 1,
+          "context_ms": 0.03999999898951501,
+          "context_calls": 1,
+          "validator_ms": 2842.2170000012557,
+          "validator_calls": 1,
+          "prompt_ms": 0.03999999898951501,
+          "prompt_calls": 1,
+          "total_ms": 18697.028599999612
+        },
+        "timing_ms": {
+          "response": 0.01,
+          "intent_analysis": 13448.56,
+          "retrieval": 34.57,
+          "fast_filter": 0.17,
+          "validation": 2842.31,
+          "generation": 2370.99,
+          "total": 18696.98
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 18757.349
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 11.165,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 11.182,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 11.199
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 11.534,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.484,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 29.39,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "6744c469f718863f803c6c0754612c137d948a3af407e7c092498f33aab51cad",
+          "chunk_hashes": [
+            "d6e33142cc75fcc7e60b9544acd70c614d1d105c977a67a6c3aee879cde03e3d"
+          ],
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 14.573,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 13024.65,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 13035.37,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 16.363,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "embedding": 16.26,
+            "faiss": 0.04,
+            "total": 16.3
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 35.351,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "candidate_merge": 0.0016000012692529708,
+            "preprocessing": 0.0039000005926936865,
+            "embedding": 16.26,
+            "faiss": 0.04,
+            "reranking": 18.17,
+            "evidence": 0.75,
+            "total": 35.21
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.017,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "after_facts": {
+            "A_fact": true,
+            "B_fact": false
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.033,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6429285407066345,
+              "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+              "document_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 2.158370018005371,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6429285407066345,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 143,
+          "chunks": 1,
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.105,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2321.014,
+          "prompt_chars": 796,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "a2e4178541d883a2fc98695f5d89746f21627522f1d2d40287ebfab23bc14cff"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2322.003,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.084,
+          "chars": 3087,
+          "sha256": "3ef2bed64718e9dc8daaa1ae24cd2be2c89839e13e46f027e97fe18f39dad6c2",
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 1651.603,
+          "prompt_chars": 3087,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 16.469,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.088,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is ALPHA-SEVEN.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+            "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+            "title": null,
+            "author": null,
+            "rerank_score": 2.158370018005371,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "7cf448b3-9934-4f55-a4c7-f555e87460c1",
+            "asset_id": "b48330dd-3a81-4456-b81a-e4d56d037bae"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": true,
+          "B_fact": false
+        },
+        "answer_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 13021.346499999709,
+              "tokens_per_second": 3.993442613634555
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 12,
+              "max_new_tokens": 160,
+              "generation_ms": 2318.2462000004307,
+              "tokens_per_second": 5.176326828443748
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 1645.9927999985666,
+              "tokens_per_second": 6.682896790319848
+            }
+          ],
+          "queue_ms": 0.0026999987312592566,
+          "structured_tokenizer_setup_ms": 2.394099999946775,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 13035.304000000906,
+          "intent_calls": 1,
+          "context_ms": 0.02930000118794851,
+          "context_calls": 1,
+          "validator_ms": 2321.998400000666,
+          "validator_calls": 1,
+          "prompt_ms": 0.02479999966453761,
+          "prompt_calls": 1,
+          "total_ms": 17045.032600000923
+        },
+        "timing_ms": {
+          "response": 0.04,
+          "intent_analysis": 13035.43,
+          "retrieval": 35.37,
+          "fast_filter": 0.14,
+          "validation": 2322.07,
+          "generation": 1651.65,
+          "total": 17044.99
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 17107.757
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 8.255,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 8.271,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 8.284
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.688,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 15.413,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 32.489,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "02663a250a22b88fa175463d6b2290c69fd439d9c1a363dfc78b29c52ddeb6f6",
+          "chunk_hashes": [
+            "bce520f5cc88f11198f577b050614c3e871ba6f356b520b102b51b346ca3dc0f"
+          ],
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.404,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 12322.742,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 12332.008,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 13.162,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "embedding": 12.99,
+            "faiss": 0.07,
+            "total": 13.06
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 27.187,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "candidate_merge": 0.0021999985619913787,
+            "preprocessing": 0.0068999997893115506,
+            "embedding": 12.99,
+            "faiss": 0.07,
+            "reranking": 13.4,
+            "evidence": 0.54,
+            "total": 27.0
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.014,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "after_facts": {
+            "A_fact": false,
+            "B_fact": true
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.029,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6112593412399292,
+              "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+              "document_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 1.8258382081985474,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6112593412399292,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 142,
+          "chunks": 1,
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.091,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2362.825,
+          "prompt_chars": 795,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "6f6bd950706b51aedca1a55e1eb92424bb077daba9fddce1de1622c25df7d3ca"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2364.072,
+          "verdict": "NOT_SUPPORTED",
+          "validator_details": {
+            "supported": false,
+            "confidence": 0.85
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.092,
+          "chars": 3086,
+          "sha256": "0a8a523f067daf25d324396541d72d324be26537eabf42eea53c8a548a9874a7",
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 2178.23,
+          "prompt_chars": 644,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "9fb92a4054b87a104dd6a8f90fc88db0f903700318b1b231880c0f4e4450ae88"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.857,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.044,
+          "input_verdict": "NOT_SUPPORTED",
+          "output_verdict": "NOT_SUPPORTED",
+          "source_count": 0
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The checked passages do not provide the specific calibration code recorded.",
+        "synthetic_sources": [],
+        "verdict": "NOT_SUPPORTED",
+        "sources": 0,
+        "answer_facts": {
+          "A_fact": false,
+          "B_fact": false
+        },
+        "answer_sha256": "9fb92a4054b87a104dd6a8f90fc88db0f903700318b1b231880c0f4e4450ae88",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 12317.919699999038,
+              "tokens_per_second": 4.221492043011456
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 15,
+              "max_new_tokens": 160,
+              "generation_ms": 2359.5967999990535,
+              "tokens_per_second": 6.3570182838042575
+            },
+            {
+              "input_tokens": 193,
+              "generated_tokens": 13,
+              "max_new_tokens": 320,
+              "generation_ms": 2175.50300000039,
+              "tokens_per_second": 5.975629544062992
+            }
+          ],
+          "queue_ms": 0.005300000339047983,
+          "structured_tokenizer_setup_ms": 3.403600001547602,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 12331.937400000243,
+          "intent_calls": 1,
+          "context_ms": 0.02499999936844688,
+          "context_calls": 1,
+          "validator_ms": 2364.0661999997974,
+          "validator_calls": 1,
+          "prompt_ms": 0.03400000059627928,
+          "prompt_calls": 1,
+          "total_ms": 16902.30469999915
+        },
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 12332.09,
+          "retrieval": 27.21,
+          "fast_filter": 0.13,
+          "validation": 2364.15,
+          "generation": 2178.35,
+          "total": 16902.22
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 16964.103
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 8.387,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 8.431,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 8.451
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 14.28,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.692,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 31.633,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "6744c469f718863f803c6c0754612c137d948a3af407e7c092498f33aab51cad",
+          "chunk_hashes": [
+            "d6e33142cc75fcc7e60b9544acd70c614d1d105c977a67a6c3aee879cde03e3d"
+          ],
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.774,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 11892.673,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 11899.134,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 19.513,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "embedding": 19.4,
+            "faiss": 0.05,
+            "total": 19.45
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 37.669,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "candidate_merge": 0.0017000002117129043,
+            "preprocessing": 0.005099998816149309,
+            "embedding": 19.4,
+            "faiss": 0.05,
+            "reranking": 17.15,
+            "evidence": 0.91,
+            "total": 37.51
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.027,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "after_facts": {
+            "A_fact": true,
+            "B_fact": false
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.049,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6429285407066345,
+              "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+              "document_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 2.158370018005371,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6429285407066345,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 143,
+          "chunks": 1,
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.15,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2640.358,
+          "prompt_chars": 1108,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "d2b67eab2be87cbb442c5be9cebee161a4279c18d8c1c5bd4dfa55c56a22e6b0"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2641.934,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1.0
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.19,
+          "chars": 3087,
+          "sha256": "3ef2bed64718e9dc8daaa1ae24cd2be2c89839e13e46f027e97fe18f39dad6c2",
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 2172.374,
+          "prompt_chars": 3087,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.079,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.043,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is ALPHA-SEVEN.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+            "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+            "title": null,
+            "author": null,
+            "rerank_score": 2.158370018005371,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "7cf448b3-9934-4f55-a4c7-f555e87460c1",
+            "asset_id": "b48330dd-3a81-4456-b81a-e4d56d037bae"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": true,
+          "B_fact": false
+        },
+        "answer_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 11887.962799999514,
+              "tokens_per_second": 4.374172503299062
+            },
+            {
+              "input_tokens": 300,
+              "generated_tokens": 14,
+              "max_new_tokens": 160,
+              "generation_ms": 2635.6207000008,
+              "tokens_per_second": 5.311841722898804
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 2166.909499999747,
+              "tokens_per_second": 5.076354134771796
+            }
+          ],
+          "queue_ms": 0.0029000002541579306,
+          "structured_tokenizer_setup_ms": 2.7324000002408866,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 11899.094000000332,
+          "intent_calls": 1,
+          "context_ms": 0.04309999894758221,
+          "context_calls": 1,
+          "validator_ms": 2641.919899999266,
+          "validator_calls": 1,
+          "prompt_ms": 0.05439999949885532,
+          "prompt_calls": 1,
+          "total_ms": 16752.209599999333
+        },
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 11899.18,
+          "retrieval": 37.7,
+          "fast_filter": 0.22,
+          "validation": 2642.15,
+          "generation": 2172.43,
+          "total": 16752.18
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 16810.8
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 5.085,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 5.1,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 5.111
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.863,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 13.782,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 31.289,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "02663a250a22b88fa175463d6b2290c69fd439d9c1a363dfc78b29c52ddeb6f6",
+          "chunk_hashes": [
+            "bce520f5cc88f11198f577b050614c3e871ba6f356b520b102b51b346ca3dc0f"
+          ],
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.208,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 12582.571,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 12594.337,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 13.366,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "embedding": 13.26,
+            "faiss": 0.04,
+            "total": 13.31
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 31.803,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "candidate_merge": 0.0018000009731622413,
+            "preprocessing": 0.003499999365885742,
+            "embedding": 13.26,
+            "faiss": 0.04,
+            "reranking": 17.42,
+            "evidence": 0.94,
+            "total": 31.66
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.023,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "after_facts": {
+            "A_fact": false,
+            "B_fact": true
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.032,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6112593412399292,
+              "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+              "document_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 1.8258382081985474,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6112593412399292,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 142,
+          "chunks": 1,
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.099,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2727.161,
+          "prompt_chars": 1107,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "d2b67eab2be87cbb442c5be9cebee161a4279c18d8c1c5bd4dfa55c56a22e6b0"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2728.037,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1.0
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.093,
+          "chars": 3086,
+          "sha256": "0a8a523f067daf25d324396541d72d324be26537eabf42eea53c8a548a9874a7",
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 1732.191,
+          "prompt_chars": 3086,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_sha256": "2f91b983ed78b817d58ef9bc57f9413c5c8c121d2f38156bd4007d4fdff1d3fb"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.144,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.029,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is BRAVO-NINE.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+            "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+            "title": null,
+            "author": null,
+            "rerank_score": 1.8258382081985474,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "d1de0058-b68e-4193-a8ca-a3caaa5299a7",
+            "asset_id": "78056e6e-bc56-4a59-9f4f-92275868e0b6"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": false,
+          "B_fact": true
+        },
+        "answer_sha256": "2f91b983ed78b817d58ef9bc57f9413c5c8c121d2f38156bd4007d4fdff1d3fb",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 12576.5175000015,
+              "tokens_per_second": 4.134689909189392
+            },
+            {
+              "input_tokens": 300,
+              "generated_tokens": 14,
+              "max_new_tokens": 160,
+              "generation_ms": 2724.5170999995025,
+              "tokens_per_second": 5.138525282150939
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 1726.9674999988638,
+              "tokens_per_second": 6.369546618571129
+            }
+          ],
+          "queue_ms": 0.004600000465870835,
+          "structured_tokenizer_setup_ms": 2.6703000003180932,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 12594.256700000187,
+          "intent_calls": 1,
+          "context_ms": 0.02789999962260481,
+          "context_calls": 1,
+          "validator_ms": 2728.0311999984406,
+          "validator_calls": 1,
+          "prompt_ms": 0.0335000004270114,
+          "prompt_calls": 1,
+          "total_ms": 17087.049100000513
+        },
+        "timing_ms": {
+          "response": 0.01,
+          "intent_analysis": 12594.38,
+          "retrieval": 31.82,
+          "fast_filter": 0.14,
+          "validation": 2728.12,
+          "generation": 1732.23,
+          "total": 17087.01
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 17144.887
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 6.549,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 6.564,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 6.579
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 10.041,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.125,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 24.434,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "6744c469f718863f803c6c0754612c137d948a3af407e7c092498f33aab51cad",
+          "chunk_hashes": [
+            "d6e33142cc75fcc7e60b9544acd70c614d1d105c977a67a6c3aee879cde03e3d"
+          ],
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.531,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 10975.87,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 10986.567,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 16.034,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "embedding": 15.92,
+            "faiss": 0.05,
+            "total": 15.97
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 36.422,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "candidate_merge": 0.002300001142430119,
+            "preprocessing": 0.004399998942972161,
+            "embedding": 15.92,
+            "faiss": 0.05,
+            "reranking": 18.8,
+            "evidence": 1.48,
+            "total": 36.25
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.016,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "after_facts": {
+            "A_fact": true,
+            "B_fact": false
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.027,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6429285407066345,
+              "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+              "document_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 2.158370018005371,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6429285407066345,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 143,
+          "chunks": 1,
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.089,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2371.22,
+          "prompt_chars": 1108,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "d2b67eab2be87cbb442c5be9cebee161a4279c18d8c1c5bd4dfa55c56a22e6b0"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2372.142,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1.0
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.133,
+          "chars": 3087,
+          "sha256": "3ef2bed64718e9dc8daaa1ae24cd2be2c89839e13e46f027e97fe18f39dad6c2",
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 1585.752,
+          "prompt_chars": 3087,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 11.023,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.028,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is ALPHA-SEVEN.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+            "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+            "title": null,
+            "author": null,
+            "rerank_score": 2.158370018005371,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "7cf448b3-9934-4f55-a4c7-f555e87460c1",
+            "asset_id": "b48330dd-3a81-4456-b81a-e4d56d037bae"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": true,
+          "B_fact": false
+        },
+        "answer_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 10972.084200000609,
+              "tokens_per_second": 4.739300123124932
+            },
+            {
+              "input_tokens": 300,
+              "generated_tokens": 14,
+              "max_new_tokens": 160,
+              "generation_ms": 2369.1205000013724,
+              "tokens_per_second": 5.909365944025173
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 1578.93729999887,
+              "tokens_per_second": 6.966711091066043
+            }
+          ],
+          "queue_ms": 0.01920000067912042,
+          "structured_tokenizer_setup_ms": 3.2171000002563233,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 10986.388899998929,
+          "intent_calls": 1,
+          "context_ms": 0.024199998733820394,
+          "context_calls": 1,
+          "validator_ms": 2372.1347999999125,
+          "validator_calls": 1,
+          "prompt_ms": 0.0366000003850786,
+          "prompt_calls": 1,
+          "total_ms": 14981.728699998712
+        },
+        "timing_ms": {
+          "response": 0.04,
+          "intent_analysis": 10986.63,
+          "retrieval": 36.44,
+          "fast_filter": 0.12,
+          "validation": 2372.22,
+          "generation": 1585.83,
+          "total": 14981.6
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 15031.359
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 6.151,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 6.184,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 6.203
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.153,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 10.564,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 26.372,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "02663a250a22b88fa175463d6b2290c69fd439d9c1a363dfc78b29c52ddeb6f6",
+          "chunk_hashes": [
+            "bce520f5cc88f11198f577b050614c3e871ba6f356b520b102b51b346ca3dc0f"
+          ],
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 11.707,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 11019.34,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 11029.731,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 20.641,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "embedding": 20.45,
+            "faiss": 0.1,
+            "total": 20.55
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 43.025,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "candidate_merge": 0.002200000380980782,
+            "preprocessing": 0.004300000000512227,
+            "embedding": 20.45,
+            "faiss": 0.1,
+            "reranking": 21.52,
+            "evidence": 0.76,
+            "total": 42.83
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.026,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "after_facts": {
+            "A_fact": false,
+            "B_fact": true
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.04,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6112593412399292,
+              "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+              "document_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 1.8258382081985474,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6112593412399292,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 142,
+          "chunks": 1,
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.151,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2547.421,
+          "prompt_chars": 1107,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "d2b67eab2be87cbb442c5be9cebee161a4279c18d8c1c5bd4dfa55c56a22e6b0"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2549.25,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1.0
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.06,
+          "chars": 3086,
+          "sha256": "0a8a523f067daf25d324396541d72d324be26537eabf42eea53c8a548a9874a7",
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 1843.707,
+          "prompt_chars": 3086,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_sha256": "2f91b983ed78b817d58ef9bc57f9413c5c8c121d2f38156bd4007d4fdff1d3fb"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 15.983,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.032,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is BRAVO-NINE.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+            "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+            "title": null,
+            "author": null,
+            "rerank_score": 1.8258382081985474,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "d1de0058-b68e-4193-a8ca-a3caaa5299a7",
+            "asset_id": "78056e6e-bc56-4a59-9f4f-92275868e0b6"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": false,
+          "B_fact": true
+        },
+        "answer_sha256": "2f91b983ed78b817d58ef9bc57f9413c5c8c121d2f38156bd4007d4fdff1d3fb",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 11016.289099999995,
+              "tokens_per_second": 4.7202828037619335
+            },
+            {
+              "input_tokens": 300,
+              "generated_tokens": 14,
+              "max_new_tokens": 160,
+              "generation_ms": 2544.8364000003494,
+              "tokens_per_second": 5.501335960141908
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 1839.3452000000252,
+              "tokens_per_second": 5.980389108036843
+            }
+          ],
+          "queue_ms": 0.0027999994927085936,
+          "structured_tokenizer_setup_ms": 3.458600000158185,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 11029.677600001378,
+          "intent_calls": 1,
+          "context_ms": 0.03409999953873921,
+          "context_calls": 1,
+          "validator_ms": 2549.2439000008744,
+          "validator_calls": 1,
+          "prompt_ms": 0.02370000038354192,
+          "prompt_calls": 1,
+          "total_ms": 15466.476700001294
+        },
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 11029.79,
+          "retrieval": 43.05,
+          "fast_filter": 0.2,
+          "validation": 2549.31,
+          "generation": 1843.75,
+          "total": 15466.44
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 15522.378
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 8.676,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 8.709,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 8.729
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 11.935,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 10.143,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 25.015,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "6744c469f718863f803c6c0754612c137d948a3af407e7c092498f33aab51cad",
+          "chunk_hashes": [
+            "d6e33142cc75fcc7e60b9544acd70c614d1d105c977a67a6c3aee879cde03e3d"
+          ],
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 11.877,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 10651.073,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 10659.596,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 16.087,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "embedding": 15.92,
+            "faiss": 0.08,
+            "total": 16.01
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 31.387,
+          "count": 1,
+          "A_fact": true,
+          "B_fact": false,
+          "timing_ms": {
+            "candidate_merge": 0.0014999986888142303,
+            "preprocessing": 0.0030000010156072676,
+            "embedding": 15.92,
+            "faiss": 0.08,
+            "reranking": 14.34,
+            "evidence": 0.87,
+            "total": 31.22
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.019,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "after_facts": {
+            "A_fact": true,
+            "B_fact": false
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.035,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6429285407066345,
+              "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+              "document_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private A sensor manual.\nThe calibration code is ALPHA-SEVEN.\nRoutine checks take 12 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 2.158370018005371,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6429285407066345,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 143,
+          "chunks": 1,
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.119,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2036.595,
+          "prompt_chars": 1108,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "d2b67eab2be87cbb442c5be9cebee161a4279c18d8c1c5bd4dfa55c56a22e6b0"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2037.707,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1.0
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.057,
+          "chars": 3087,
+          "sha256": "3ef2bed64718e9dc8daaa1ae24cd2be2c89839e13e46f027e97fe18f39dad6c2",
+          "A_fact": true,
+          "B_fact": false
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 1506.421,
+          "prompt_chars": 3087,
+          "prompt_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": true,
+            "B_fact": false
+          },
+          "output_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 12.109,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.04,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is ALPHA-SEVEN.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2_000001",
+            "work_id": "library:7cf448b3-9934-4f55-a4c7-f555e87460c1:asset:b48330dd-3a81-4456-b81a-e4d56d037bae:generation:ad40d21d-0ab3-4dd2-8c98-eac94e8cb4c2",
+            "title": null,
+            "author": null,
+            "rerank_score": 2.158370018005371,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "7cf448b3-9934-4f55-a4c7-f555e87460c1",
+            "asset_id": "b48330dd-3a81-4456-b81a-e4d56d037bae"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": true,
+          "B_fact": false
+        },
+        "answer_sha256": "b0d0f3d29d62ada1e7f04d52a820bcf974faceb9ae2bcc4c4c153e42158b3bdc",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 10648.124299999836,
+              "tokens_per_second": 4.883489198186839
+            },
+            {
+              "input_tokens": 300,
+              "generated_tokens": 14,
+              "max_new_tokens": 160,
+              "generation_ms": 2033.49850000086,
+              "tokens_per_second": 6.884686661924795
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 1503.1543000004604,
+              "tokens_per_second": 7.317944671413062
+            }
+          ],
+          "queue_ms": 0.0039000005926936865,
+          "structured_tokenizer_setup_ms": 3.2534000001760432,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 10659.552499999336,
+          "intent_calls": 1,
+          "context_ms": 0.031100000342121348,
+          "context_calls": 1,
+          "validator_ms": 2037.7021999993303,
+          "validator_calls": 1,
+          "prompt_ms": 0.022000000171829015,
+          "prompt_calls": 1,
+          "total_ms": 14235.74219999864
+        },
+        "timing_ms": {
+          "response": 0.01,
+          "intent_analysis": 10659.63,
+          "retrieval": 31.41,
+          "fast_filter": 0.16,
+          "validation": 2037.77,
+          "generation": 1506.46,
+          "total": 14235.71
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 14286.375
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 5.889,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 5.909,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 5.921
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": true,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 9.661,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 10.946,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 22.817,
+          "chunks": 1,
+          "pages": [
+            1
+          ],
+          "generation_hash": "02663a250a22b88fa175463d6b2290c69fd439d9c1a363dfc78b29c52ddeb6f6",
+          "chunk_hashes": [
+            "bce520f5cc88f11198f577b050614c3e871ba6f356b520b102b51b346ca3dc0f"
+          ],
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 9.944,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "qwen_intent",
+          "elapsed_ms": 12344.895,
+          "prompt_chars": 1509,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "f25d7e80f6cb637ddfd71c40ad50d8a0867a72ed179f1dc9a60a35b87451cc26"
+        },
+        {
+          "stage": "intent",
+          "elapsed_ms": 12353.89,
+          "verdict": null,
+          "validator_details": null,
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": null,
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "query_type": null
+        },
+        {
+          "stage": "embedding_faiss_candidates",
+          "elapsed_ms": 19.002,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "embedding": 18.88,
+            "faiss": 0.05,
+            "total": 18.93
+          }
+        },
+        {
+          "stage": "reranking_and_evidence_scores",
+          "elapsed_ms": 37.875,
+          "count": 1,
+          "A_fact": false,
+          "B_fact": true,
+          "timing_ms": {
+            "candidate_merge": 0.0026999987312592566,
+            "preprocessing": 0.004300000000512227,
+            "embedding": 18.88,
+            "faiss": 0.05,
+            "reranking": 17.92,
+            "evidence": 0.87,
+            "total": 37.71
+          }
+        },
+        {
+          "stage": "document_evidence_selection",
+          "elapsed_ms": 0.017,
+          "before_count": 1,
+          "after_count": 1,
+          "before_facts": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "after_facts": {
+            "A_fact": false,
+            "B_fact": true
+          }
+        },
+        {
+          "stage": "chunk_context_selection",
+          "elapsed_ms": 0.028,
+          "synthetic_context": "[Source 1]\nPage: 1\nFile: fixture.pdf\n\nDisposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.\n",
+          "synthetic_selected_chunks": [
+            {
+              "rank": 1,
+              "score": 0.6112593412399292,
+              "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+              "document_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+              "filename": "fixture.pdf",
+              "page": 1,
+              "title": null,
+              "author": null,
+              "chapter": null,
+              "chunk_index": null,
+              "text": "Disposable private B sensor manual.\nThe calibration code is BRAVO-NINE.\nRoutine checks take 47 minutes.",
+              "matched_queries": [
+                "What calibration code is recorded?"
+              ],
+              "rerank_score": 1.8258382081985474,
+              "normalized_rerank_score": 0.5,
+              "evidence_score": 0.24166666666666664,
+              "evidence_signals": [
+                "term overlap: calibration, code",
+                "phrase match: \"calibration code\""
+              ],
+              "actor_alignment": 0.0,
+              "event_alignment": 1.0,
+              "local_causal_score": 0.0,
+              "speaker_score": 0.0,
+              "first_person_narrative": 0.0,
+              "motivation_strength": 0.0,
+              "consequence_strength": 0.0,
+              "motivation_priority": 0.0,
+              "directional_subject_alignment": 0.5,
+              "temporal_phase_alignment": 0.5,
+              "polarity_alignment": 1.0,
+              "faiss_score": 0.6112593412399292,
+              "faiss_norm": 0.5,
+              "final_score": 0.35791666666666666,
+              "redundancy_penalty": 0.0,
+              "final_context_score": 0.35791666666666666
+            }
+          ],
+          "context_chars": 142,
+          "chunks": 1,
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "fast_grounding_gate",
+          "elapsed_ms": 0.093,
+          "decision": "NEEDS_LLM_VALIDATION",
+          "reason_hashes": [
+            "401a5e63a4f0cc2a3801eb31dc670d2de1ebf8753ec9c771955d883562a84d23",
+            "cbcb9f9ac7c8a5d08098d9b115aaab224ca57b4584e2dace9d42d25ca7442a47",
+            "977caf6d7c29befeb0c5cedd2c9ea094c5de70b8a7afcc29c8dc13595b425389"
+          ]
+        },
+        {
+          "stage": "qwen_grounding",
+          "elapsed_ms": 2562.213,
+          "prompt_chars": 1107,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": false
+          },
+          "output_sha256": "d2b67eab2be87cbb442c5be9cebee161a4279c18d8c1c5bd4dfa55c56a22e6b0"
+        },
+        {
+          "stage": "grounding",
+          "elapsed_ms": 2564.011,
+          "verdict": "SUPPORTED",
+          "validator_details": {
+            "supported": true,
+            "confidence": 1.0
+          },
+          "synthetic_question": "What calibration code is recorded?",
+          "synthetic_intent": {
+            "intent": "FACTUAL",
+            "actor": "unknown",
+            "action": "record",
+            "target": "calibration code",
+            "polarity": "positive",
+            "temporal_relation": null,
+            "question_focus": null,
+            "tier_used": "Tier 2"
+          },
+          "input_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "query_type": null
+        },
+        {
+          "stage": "prompt_construction",
+          "elapsed_ms": 0.165,
+          "chars": 3086,
+          "sha256": "0a8a523f067daf25d324396541d72d324be26537eabf42eea53c8a548a9874a7",
+          "A_fact": false,
+          "B_fact": true
+        },
+        {
+          "stage": "qwen_answer",
+          "elapsed_ms": 1916.198,
+          "prompt_chars": 3086,
+          "prompt_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_fact_presence": {
+            "A_fact": false,
+            "B_fact": true
+          },
+          "output_sha256": "2f91b983ed78b817d58ef9bc57f9413c5c8c121d2f38156bd4007d4fdff1d3fb"
+        },
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 14.154,
+          "allowed": true,
+          "ready_required": true
+        },
+        {
+          "stage": "citation_validation",
+          "elapsed_ms": 0.047,
+          "input_verdict": "SUPPORTED",
+          "output_verdict": "SUPPORTED",
+          "source_count": 1
+        }
+      ],
+      "final": {
+        "synthetic_answer": "The calibration code recorded is BRAVO-NINE.",
+        "synthetic_sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e_000001",
+            "work_id": "library:d1de0058-b68e-4193-a8ca-a3caaa5299a7:asset:78056e6e-bc56-4a59-9f4f-92275868e0b6:generation:4a02bbd0-1813-4ce6-a64d-56179c4e7f5e",
+            "title": null,
+            "author": null,
+            "rerank_score": 1.8258382081985474,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "d1de0058-b68e-4193-a8ca-a3caaa5299a7",
+            "asset_id": "78056e6e-bc56-4a59-9f4f-92275868e0b6"
+          }
+        ],
+        "verdict": "SUPPORTED",
+        "sources": 1,
+        "answer_facts": {
+          "A_fact": false,
+          "B_fact": true
+        },
+        "answer_sha256": "2f91b983ed78b817d58ef9bc57f9413c5c8c121d2f38156bd4007d4fdff1d3fb",
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 12342.555399998673,
+              "tokens_per_second": 4.2130659587726536
+            },
+            {
+              "input_tokens": 300,
+              "generated_tokens": 14,
+              "max_new_tokens": 160,
+              "generation_ms": 2558.937899999364,
+              "tokens_per_second": 5.471019832096542
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 1912.4091000012413,
+              "tokens_per_second": 5.751907371698273
+            }
+          ],
+          "queue_ms": 0.002300001142430119,
+          "structured_tokenizer_setup_ms": 2.8043000002071494,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 12353.850399998919,
+          "intent_calls": 1,
+          "context_ms": 0.02469999890308827,
+          "context_calls": 1,
+          "validator_ms": 2564.0021999988676,
+          "validator_calls": 1,
+          "prompt_ms": 0.0714999987394549,
+          "prompt_calls": 1,
+          "total_ms": 16872.77119999999
+        },
+        "timing_ms": {
+          "response": 0.01,
+          "intent_analysis": 12353.94,
+          "retrieval": 37.9,
+          "fast_filter": 0.14,
+          "validation": 2564.15,
+          "generation": 1916.25,
+          "total": 16872.74
+        },
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION"
+      },
+      "total_ms": 16921.588
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "B",
+      "asset_hash": "8b2e2ab52eceabf670e7e6e1fcea8c88a0fe65ce889444a86142180dc2c384ad",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 6.159,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 6.182,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 1243.141
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 6.866,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 6.883,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 3031.349
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 6.821,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 6.839,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 2826.559
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "dd098ce6b89ca4389d3aa6cb214871d281f9031c87d60871d64e1eaf233ad21f",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 11.212,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 11.248,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 3019.164
+    },
+    {
+      "variant": "baseline",
+      "validator_proposal_only_in_owned_process": false,
+      "library": "A",
+      "asset_hash": "333ee4cd6ebb175e014044a30129224d458848ae6706a178793db495372ff3cb",
+      "query_hash": "0a26f2890ff87e02279bd235abf1c4fa13d6b5ba02f4526d8cf035faa73148f7",
+      "stages": [
+        {
+          "stage": "membership_document_authorization",
+          "elapsed_ms": 8.392,
+          "error_type": "HTTPException"
+        },
+        {
+          "stage": "artifact_identity_extraction_chunks",
+          "elapsed_ms": 8.41,
+          "error_type": "HTTPException"
+        }
+      ],
+      "total_ms": 1747.006
+    }
+  ],
+  "protected_implementation_fixed": false,
+  "candidate_recommended": false
+}

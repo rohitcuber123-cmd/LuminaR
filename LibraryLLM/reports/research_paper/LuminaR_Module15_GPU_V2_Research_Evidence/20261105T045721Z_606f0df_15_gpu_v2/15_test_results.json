@@ -1,0 +1,252 @@
+{
+  "snapshot": "20261105T045721Z_606f0df_15_gpu_v2",
+  "overall_v2": "FAIL",
+  "explanation": "One observed Reading List misroute; substantial coverage incomplete.",
+  "historical_cpu_checks": [
+    {
+      "name": "explicit definition accepted",
+      "environment": "alternate CPU",
+      "execution_type": "synthetic pure function",
+      "expected": "expected helper behavior",
+      "actual": "passed",
+      "result": "PASS",
+      "evidence": "original ZIP: 15_test_results.json",
+      "scope": "definition helper",
+      "limitation": "No model, service, index or database"
+    },
+    {
+      "name": "heading alone rejected",
+      "environment": "alternate CPU",
+      "execution_type": "synthetic pure function",
+      "expected": "expected helper behavior",
+      "actual": "passed",
+      "result": "PASS",
+      "evidence": "original ZIP: 15_test_results.json",
+      "scope": "definition helper",
+      "limitation": "No model, service, index or database"
+    },
+    {
+      "name": "negative definition rejected",
+      "environment": "alternate CPU",
+      "execution_type": "synthetic pure function",
+      "expected": "expected helper behavior",
+      "actual": "passed",
+      "result": "PASS",
+      "evidence": "original ZIP: 15_test_results.json",
+      "scope": "definition helper",
+      "limitation": "No model, service, index or database"
+    },
+    {
+      "name": "foreign document excluded",
+      "environment": "alternate CPU",
+      "execution_type": "synthetic pure function",
+      "expected": "expected helper behavior",
+      "actual": "passed",
+      "result": "PASS",
+      "evidence": "original ZIP: 15_test_results.json",
+      "scope": "definition helper",
+      "limitation": "No model, service, index or database"
+    },
+    {
+      "name": "compound question not classified as definition",
+      "environment": "alternate CPU",
+      "execution_type": "synthetic pure function",
+      "expected": "expected helper behavior",
+      "actual": "passed",
+      "result": "PASS",
+      "evidence": "original ZIP: 15_test_results.json",
+      "scope": "definition helper",
+      "limitation": "No model, service, index or database"
+    }
+  ],
+  "prior_gpu_checks": [
+    {
+      "name": "Qwen CUDA factual generation",
+      "environment": "GPU project venv",
+      "execution_type": "direct model",
+      "expected": "correct factual answer",
+      "actual": "correct, cuda:0",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_verification/qwen_inference.json",
+      "scope": "one prompt",
+      "limitation": "Not safety evaluation"
+    },
+    {
+      "name": "NF4 configuration",
+      "environment": "GPU project venv",
+      "execution_type": "loaded model inspection",
+      "expected": "NF4 double quantization float16 compute",
+      "actual": "reported in model config",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_verification/native_probe.json",
+      "scope": "one model instance",
+      "limitation": "Tokenizer commit unknown"
+    },
+    {
+      "name": "Gateway search intent",
+      "environment": "GPU project venv",
+      "execution_type": "direct gateway",
+      "expected": "SEARCH_BOOKS",
+      "actual": "SEARCH_BOOKS",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_verification/native_probe.json",
+      "scope": "one synthetic request",
+      "limitation": "No authenticated tools"
+    },
+    {
+      "name": "Gateway ambiguous availability",
+      "environment": "GPU project venv",
+      "execution_type": "direct gateway",
+      "expected": "clarification",
+      "actual": "REFERENCE_AMBIGUITY",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_verification/native_probe.json",
+      "scope": "one request",
+      "limitation": "No clarification lifecycle"
+    },
+    {
+      "name": "Assistant and grounding regression",
+      "environment": "GPU project venv",
+      "execution_type": "controlled regression",
+      "expected": "pass",
+      "actual": "110 passed, one warning",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_verification/grounding_contract_regression.json",
+      "scope": "three suites",
+      "limitation": "Fakes and synthetic fixtures"
+    },
+    {
+      "name": "Grounding contract mutations",
+      "environment": "GPU project venv",
+      "execution_type": "controlled regression",
+      "expected": "pass",
+      "actual": "54 passed",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_verification/grounding_contract_regression.json",
+      "scope": "mutation suite",
+      "limitation": "Not live RAG"
+    }
+  ],
+  "gpu_v2_live_checks": [
+    {
+      "name": "application login",
+      "environment": "isolated CUDA HTTP assembly",
+      "execution_type": "authenticated HTTP",
+      "expected": "200",
+      "actual": "200",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_v2/assistant_live_api.json",
+      "scope": "synthetic user",
+      "limitation": "Local Mongo development mode"
+    },
+    {
+      "name": "missing authentication",
+      "environment": "isolated CUDA HTTP assembly",
+      "execution_type": "HTTP",
+      "expected": "401",
+      "actual": "401",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_v2/assistant_live_api.json",
+      "scope": "Assistant endpoint",
+      "limitation": "One case"
+    },
+    {
+      "name": "fixture search",
+      "environment": "isolated CUDA HTTP assembly",
+      "execution_type": "authenticated HTTP",
+      "expected": "search and item",
+      "actual": "SEARCH_BOOKS, one item",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_v2/assistant_live_api.json",
+      "scope": "fixture",
+      "limitation": "No production Search acceptance or per-tool trace"
+    },
+    {
+      "name": "ambiguous availability",
+      "environment": "isolated CUDA HTTP assembly",
+      "execution_type": "authenticated HTTP",
+      "expected": "clarification",
+      "actual": "REFERENCE_AMBIGUITY",
+      "result": "PASS",
+      "evidence": "reports/module15_gpu_v2/assistant_clarification.json",
+      "scope": "initial response",
+      "limitation": "Continuation not evaluated"
+    },
+    {
+      "name": "reading list routing",
+      "environment": "isolated CUDA HTTP assembly",
+      "execution_type": "authenticated HTTP",
+      "expected": "Reading List operation",
+      "actual": "USER_LOANS",
+      "result": "FAIL",
+      "evidence": "reports/module15_gpu_v2/assistant_routing.json",
+      "scope": "one request",
+      "limitation": "Cause and prevalence unknown"
+    },
+    {
+      "name": "unsupported request",
+      "environment": "isolated CUDA HTTP assembly",
+      "execution_type": "authenticated HTTP",
+      "expected": "no unauthorized action",
+      "actual": "clarification; no claimed success",
+      "result": "NOT_MEASURED",
+      "evidence": "reports/module15_gpu_v2/assistant_live_api.json",
+      "scope": "one request",
+      "limitation": "State not independently verified"
+    },
+    {
+      "name": "unavailable document callback",
+      "environment": "isolated CUDA HTTP assembly",
+      "execution_type": "authenticated HTTP",
+      "expected": "safe unavailable response",
+      "actual": "general help; callback not reached",
+      "result": "NOT_MEASURED",
+      "evidence": "reports/module15_gpu_v2/assistant_live_api.json",
+      "scope": "one request",
+      "limitation": "Callback not exercised"
+    }
+  ],
+  "unexecuted_test_areas": [
+    {
+      "area": "document RAG",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "citation support",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "tenant privacy",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "prompt injection",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "GPU contention",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "timeout recovery",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "knowledge workflows",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "Chromium",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "production Mongo qualification",
+      "result": "NOT_RUN"
+    },
+    {
+      "area": "index integrity",
+      "result": "NOT_RUN"
+    }
+  ],
+  "population_note": "The five helper checks, 110-test and 54-test populations and V2 HTTP observations are separate and must not be summed."
+}

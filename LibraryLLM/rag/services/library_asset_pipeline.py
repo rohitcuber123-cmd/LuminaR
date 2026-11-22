@@ -305,7 +305,8 @@ class LibraryAssetPipeline:
                     if source.get('chunk_id') not in valid_ids:
                         raise HTTPException(409, 'Document source identity could not be verified.')
                     source.update(library_id=library_id, asset_id=asset_id)
-                return {**result, 'library_id': library_id, 'asset_id': asset_id}
+                from rag.citation_boundary import validate_page_claims
+                return validate_page_claims({**result, 'library_id': library_id, 'asset_id': asset_id})
             finally:
                 self.clear_runtime()
 

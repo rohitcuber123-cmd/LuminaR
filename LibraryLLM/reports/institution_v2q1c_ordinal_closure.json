@@ -1,0 +1,149 @@
+{
+  "started_at": "2026-11-02T06:40:00.485843+00:00",
+  "mode": "REAL_QWEN; controlled Global retrieval; real tenant native retrieval",
+  "cases": [
+    {
+      "id": "GLOBAL-RECENT-1",
+      "query": "Is the first one available?",
+      "http": 200,
+      "elapsed_ms": 3919.892,
+      "intent": "CHECK_AVAILABILITY",
+      "books": [
+        "G-book-01"
+      ],
+      "availability": [
+        {
+          "book": "G-book-01",
+          "available": 2
+        }
+      ],
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-2",
+      "query": "Is the second one available?",
+      "http": 200,
+      "elapsed_ms": 4121.103,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "clarification": {
+        "reason": "That position is not in the current book list.",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-3",
+      "query": "Is the third one available?",
+      "http": 200,
+      "elapsed_ms": 3795.006,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "clarification": {
+        "reason": "That position is not in the current book list.",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-4",
+      "query": "Compare the first two.",
+      "http": 200,
+      "elapsed_ms": 5882.732,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "clarification": {
+        "reason": "Select one more book and I can compare them.",
+        "choices": [],
+        "type": "INSUFFICIENT_SELECTION"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-5",
+      "query": "Which of these is best for beginners?",
+      "http": 200,
+      "elapsed_ms": 5579.215,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "clarification": {
+        "reason": "That position is not in the current book list.",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-6",
+      "query": "Tell me about that book.",
+      "http": 200,
+      "elapsed_ms": 3856.814,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "clarification": {
+        "reason": "That position is not in the current book list.",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-7",
+      "query": "Find books similar to the last one.",
+      "http": 200,
+      "elapsed_ms": 4128.75,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "clarification": {
+        "reason": "Select one more book and I can compare them.",
+        "choices": [],
+        "type": "INSUFFICIENT_SELECTION"
+      },
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-1",
+      "query": "Is the first one available?",
+      "http": 200,
+      "elapsed_ms": 4084.72,
+      "intent": "CHECK_AVAILABILITY",
+      "books": [
+        "A-book-10"
+      ],
+      "availability": [
+        {
+          "book": "A-book-10",
+          "available": 0
+        }
+      ],
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-2",
+      "query": "Is the second one available?",
+      "http": 200,
+      "elapsed_ms": 3832.88,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "clarification": {
+        "reason": "That position is not in the current book list.",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    }
+  ],
+  "complete": false,
+  "scope_note": "Sequential follow-ups change the authoritative active result list after successful availability. Independently seed ten results for each positional assertion; retain this sequence as separate clarification evidence."
+}

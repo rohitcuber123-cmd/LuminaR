@@ -30,6 +30,7 @@ class ResultContext:
 class Conversation:
     conversation_id: str
     owner: str
+    library_scope: str = 'GLOBAL'
     touched: float = field(default_factory=monotonic)
     lock: asyncio.Lock = field(default_factory=asyncio.Lock)
     recent_result_work_ids: list[str] = field(default_factory=list)
@@ -61,14 +62,14 @@ class ConversationStore:
         self.ttl, self.max_entries = ttl, max_entries
         self.entries: dict[str, Conversation] = {}
 
-    def get(self, conversation_id, owner):
+    def get(self, conversation_id, owner, library_scope='GLOBAL'):
         now = monotonic()
         for key, value in list(self.entries.items()):
             if not value.lock.locked() and now - value.touched > self.ttl:
                 del self.entries[key]
         if conversation_id:
             state = self.entries.get(conversation_id)
-            if state is None or state.owner != owner:
+            if state is None or state.owner != owner or state.library_scope != library_scope:
                 raise HTTPException(404, 'Conversation not found or expired.')
         else:
             if len(self.entries) >= self.max_entries:
@@ -76,7 +77,7 @@ class ConversationStore:
                 if not idle:
                     raise HTTPException(503, 'Assistant conversations are busy.')
                 del self.entries[min(idle, key=lambda s: s.touched).conversation_id]
-            state = Conversation(uuid4().hex, owner)
+            state = Conversation(uuid4().hex, owner, library_scope=library_scope)
             self.entries[state.conversation_id] = state
         state.touched = now
         return state

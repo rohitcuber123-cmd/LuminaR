@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="1.529" timestamp="2026-11-10T10:25:29.759054+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2f.test_text_assets" name="test_docx_preserves_visible_run_separators_and_paragraphs" time="0.948"><failure message="AssertionError: assert 'Capacity25Op...xt paragraph.' == 'Capacity\t25...xt paragraph.'&#10;  &#10;  + Capacity25OpenMonday&#10;  - Capacity&#09;25&#10;  - Open&#10;  - Monday&#10;    Next paragraph.">def test_docx_preserves_visible_run_separators_and_paragraphs():
+        content = docx_xml('&lt;w:p&gt;&lt;w:r&gt;&lt;w:t&gt;Capacity&lt;/w:t&gt;&lt;w:tab/&gt;&lt;w:t&gt;25&lt;/w:t&gt;&lt;w:br/&gt;&lt;w:t&gt;Open&lt;/w:t&gt;&lt;w:cr/&gt;&lt;w:t&gt;Monday&lt;/w:t&gt;&lt;/w:r&gt;&lt;/w:p&gt;&lt;w:p&gt;&lt;w:r&gt;&lt;w:t&gt;Next paragraph.&lt;/w:t&gt;&lt;/w:r&gt;&lt;/w:p&gt;')
+&gt;       assert extract_text(content, 'DOCX') == 'Capacity\t25\nOpen\nMonday\nNext paragraph.'
+E       AssertionError: assert 'Capacity25Op...xt paragraph.' == 'Capacity\t25...xt paragraph.'
+E         
+E         + Capacity25OpenMonday
+E         - Capacity	25
+E         - Open
+E         - Monday
+E           Next paragraph.
+
+tests\institution_v2f\test_text_assets.py:65: AssertionError</failure></testcase><testcase classname="tests.institution_v2f.test_text_assets" name="test_docx_excludes_deleted_moved_and_field_instruction_text" time="0.025"><failure message="AssertionError: assert 'Capacity 900...eCapacity 25.' == 'Capacity 25.'&#10;  &#10;  - Capacity 25.&#10;  + Capacity 900.Capacity 800.INCLUDETEXT external-fileCapacity 25.">def test_docx_excludes_deleted_moved_and_field_instruction_text():
+        content = docx_xml('&lt;w:p&gt;&lt;w:del&gt;&lt;w:r&gt;&lt;w:delText&gt;Capacity 900.&lt;/w:delText&gt;&lt;/w:r&gt;&lt;/w:del&gt;&lt;w:moveFrom&gt;&lt;w:r&gt;&lt;w:t&gt;Capacity 800.&lt;/w:t&gt;&lt;/w:r&gt;&lt;/w:moveFrom&gt;&lt;w:r&gt;&lt;w:instrText&gt;INCLUDETEXT external-file&lt;/w:instrText&gt;&lt;/w:r&gt;&lt;w:ins&gt;&lt;w:r&gt;&lt;w:t&gt;Capacity 25.&lt;/w:t&gt;&lt;/w:r&gt;&lt;/w:ins&gt;&lt;/w:p&gt;')
+&gt;       assert extract_text(content, 'DOCX') == 'Capacity 25.'
+E       AssertionError: assert 'Capacity 900...eCapacity 25.' == 'Capacity 25.'
+E         
+E         - Capacity 25.
+E         + Capacity 900.Capacity 800.INCLUDETEXT external-fileCapacity 25.
+
+tests\institution_v2f\test_text_assets.py:70: AssertionError</failure></testcase><testcase classname="tests.institution_v2f.test_text_assets" name="test_docx_deleted_only_document_has_no_readable_source" time="0.026"><failure message="Failed: DID NOT RAISE HTTPException">def test_docx_deleted_only_document_has_no_readable_source():
+&gt;       with pytest.raises(HTTPException) as error:
+E       Failed: DID NOT RAISE HTTPException
+
+tests\institution_v2f\test_text_assets.py:74: Failed</failure></testcase><testcase classname="tests.institution_v2f.test_text_assets" name="test_docx_hyperlinks_field_results_and_table_paragraphs_are_visible" time="0.033"><failure message="AssertionError: assert '\n Visible l....\nCell text.' == 'Visible link....\nCell text.'&#10;  &#10;  + &#10;  - Visible link.Visible result.&#10;  +  Visible link.REF bookmarkVisible result.&#10;  ? +             ++++++++++++&#10;    Cell text.">def test_docx_hyperlinks_field_results_and_table_paragraphs_are_visible():
+        content = docx_xml('&lt;w:p&gt;\n &lt;w:hyperlink&gt;&lt;w:r&gt;&lt;w:t&gt;Visible link.&lt;/w:t&gt;&lt;/w:r&gt;&lt;/w:hyperlink&gt;&lt;w:r&gt;&lt;w:instrText&gt;REF bookmark&lt;/w:instrText&gt;&lt;/w:r&gt;&lt;w:r&gt;&lt;w:t&gt;Visible result.&lt;/w:t&gt;&lt;/w:r&gt;&lt;/w:p&gt;&lt;w:tbl&gt;&lt;w:tr&gt;&lt;w:tc&gt;&lt;w:p&gt;&lt;w:r&gt;&lt;w:t&gt;Cell text.&lt;/w:t&gt;&lt;/w:r&gt;&lt;/w:p&gt;&lt;/w:tc&gt;&lt;/w:tr&gt;&lt;/w:tbl&gt;')
+&gt;       assert extract_text(content, 'DOCX') == 'Visible link.Visible result.\nCell text.'
+E       AssertionError: assert '\n Visible l....\nCell text.' == 'Visible link....\nCell text.'
+E         
+E         + 
+E         - Visible link.Visible result.
+E         +  Visible link.REF bookmarkVisible result.
+E         ? +             ++++++++++++
+E           Cell text.
+
+tests\institution_v2f\test_text_assets.py:81: AssertionError</failure></testcase></testsuite></testsuites>

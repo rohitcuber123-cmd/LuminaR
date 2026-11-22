@@ -98,4 +98,15 @@ test('test_analytics_context_response_mismatch_fails_closed', async () => { resp
 test('test_unknown_canonical_source_is_unavailable_not_fake_zero', async () => { response = fixture(); response.overview.active_loans = null; response.overview.open_fee_balance_minor = null; response.circulation.available = false; response.circulation.unavailable_reason = 'Canonical lending has not been activated.'; response.fees.available = false; response.fees.unavailable_reason = 'Fee source requires review.'; response.trends[0].loans_issued = null; response.trends[0].fees_assessed_minor = null; mount(); await ready(); assert.equal(metric('Current snapshot', 'Active loans'), 'Unavailable'); assert.equal(metric('Current snapshot', 'Open fee balance'), 'Unavailable'); assert.ok(screen.getByText('Unavailable · Canonical lending has not been activated.')); assert.ok(screen.getByText('Unavailable · Fee source requires review.')); assert.equal(section('Circulation').queryByText('0'), null); assert.equal(section('Activity over time').queryByRole('table'), null); chooseSelect(screen.getByRole('combobox', { name: 'Activity metric' }),'fees_assessed_minor',fireEvent); assert.ok(section('Activity over time').getByText('Unavailable · Canonical records for this activity are not available.')); assert.equal(section('Activity over time').queryByRole('table'), null) })
 test('test_analytics_read_only_transport', async () => { mount(); await ready(); fireEvent.click(screen.getByRole('button', { name: 'Refresh analytics' })); await ready(); assert.ok(calls.length >= 1); assert.ok(calls.every(call => call.method === 'GET')); assert.equal(screen.queryByRole('button', { name: /Export|Save|Approve|Waive|Publish/ }), null) })
 test('test_analytics_responsive', async () => { mount(); await ready(); const css = readFileSync(new URL('../src/pages/LibraryAnalytics.css', import.meta.url), 'utf8'); assert.match(css, /grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/); assert.match(css, /@media\(max-width:767px\)/); assert.match(css, /table-layout:fixed/); assert.match(css, /overflow-wrap:anywhere/); assert.match(css, /min-height:44px/); assert.equal(screen.getAllByRole('table').every(table => table.querySelectorAll('thead th').length === 2), true) })
+
+test('test_analytics_automated_accessibility_structure', async () => {
+  mount(); await ready()
+  const { default: axe } = await import('axe-core')
+  const result = await axe.run(document.querySelector('.library-analytics')!, {
+    runOnly: ['wcag2a', 'wcag2aa', 'wcag21aa'],
+    // JSDOM has no visual layout/color computation; browser contrast is separate.
+    rules: { 'color-contrast': { enabled: false } },
+  })
+  assert.deepEqual(result.violations.map(item => ({ id: item.id, targets: item.nodes.map(node => node.target) })), [])
+})
 test('test_analytics_accessible_semantics', async () => { const result = mount(); await ready(); const axe = await import('axe-core'); const audit = await axe.default.run(result.container, { rules: { 'color-contrast': { enabled: false }, 'region': { enabled: false } } }); assert.deepEqual(audit.violations.map(item => ({ id: item.id, description: item.description })), []) })

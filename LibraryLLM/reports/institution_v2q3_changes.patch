@@ -1,0 +1,489 @@
+--- a/assistant/qwen.py
++++ b/assistant/qwen.py
+@@ -317,6 +317,12 @@
+         # model pass or opportunistic catalogue lookup.
+         schema = SelectedContextDecodingSchema if context.get('current_selection_exists') else CompactAssistantDecodingSchema
+         schema = contextual_decoding_schema(schema, message, context)
++        from assistant.digital_availability import digital_question
++        if digital_question(message):
++            prompt += ('\nThis asks about digital access to the referenced books. Use availability/status; '
++                'retain their actual canonical scope and reference. An it/that-one follow-up after a '
++                'single book uses the last focus, not another position. Online access is checked by Core, '
++                'never inferred from physical copies. No document content generation is needed.')
+         raw = await self.generate(prompt, schema, 'intent')
+         try:
+             with timed('intent_json_validation'):
+--- a/assistant/orchestrator.py
++++ b/assistant/orchestrator.py
+@@ -19,6 +19,7 @@
+ from assistant.contextual import generic_title, normalize
+ from assistant.semantic import router_context, contextual_ids, as_decision, literal_ids, bind_position
+ from assistant.schemas import ReferenceScope, SemanticGoal, ClarificationType
++from assistant.digital_availability import digital_question, lookup as digital_lookup, render as render_digital
+ 
+ LOG = logging.getLogger('luminar.assistant')
+ RECOMMEND = {Intent.RECOMMEND_BOOKS, Intent.RECOMMEND_FROM_BOOK, Intent.RECOMMEND_FROM_SELECTION,
+@@ -189,6 +190,9 @@
+                                {'FIRST', 'SECOND', 'THIRD', 'FOURTH', 'LAST', 'FOCUS', 'OTHER'})):
+                         parsed = parsed.model_copy(update={'intent': Intent.MORE_LIKE_THIS})
+                 selected_question = is_selected_context_question(request, parsed)
++                digital = request.action in (None,'CHECK_AVAILABILITY') and digital_question(request.message)
++                if digital:
++                    selected_question = False
+                 if profile is not None:
+                     profile.update(reference_scope=parsed.reference_scope.value, semantic_goal=parsed.goal.value,
+                                    reference_position=parsed.reference_position, has_criterion=bool(parsed.criterion),
+@@ -233,11 +237,22 @@
+                 if parsed.confidence < .5 and parsed.reference_scope in {ReferenceScope.AMBIGUOUS, ReferenceScope.EXPLICIT_BOOK}:
+                     raise NeedsClarification('Which books are you referring to?')
+                 with timed('tool_execution'):
+-                    if selected_question:
++                    if digital:
++                        # Preserve the parsed scope/positions and original resolver.
++                        # Even an LLM stock/content intent cannot turn digital access
++                        # into a physical count or an unrequested RAG generation.
++                        books = await self.resolve(request, parsed, state, tools)
++                        results = [await digital_lookup(tools,book) for book in books]
++                        response.intent = Intent.CHECK_AVAILABILITY
++                        response.books = books
++                        response.digital_availability = results
++                        response.actions = [Action(type=AssistantAction.VIEW_BOOK,work_id=b.work_id) for b in books]
++                        state.last_referenced_work_ids = [b.work_id for b in books]
++                    elif selected_question:
+                         await self.bind_selected_question(request, parsed, state, tools, response, book_cache)
+                     else:
+                         await self.route(routing_request, parsed, state, tools, response)
+-                if not response.rag and needs_prose(request, response.intent, parsed):
++                if not response.digital_availability and not response.rag and needs_prose(request, response.intent, parsed):
+                     try:
+                         response.message = await self.qwen.respond(request.message, response)
+                     except QwenUnavailable as exc:
+@@ -515,7 +530,9 @@
+ 
+     @staticmethod
+     def ground_operational_message(response):
+-        if response.pending_action:
++        if response.digital_availability:
++            response.message = render_digital(response)
++        elif response.pending_action:
+             pending = response.pending_action
+             if pending.library_id:
+                 return
+--- a/assistant/schemas.py
++++ b/assistant/schemas.py
+@@ -212,6 +212,41 @@
+     total_copies: int | None = None
+ 
+ 
++class DigitalResource(StrictModel):
++    kind: Literal['LIBRARY_DOCUMENT','GLOBAL_TEXT']
++    asset_type: Literal['PDF','TXT','DOCX','TEXT']
++    asset_id: UUID | None = None
++    href: str = Field(max_length=250)
++
++
++class DigitalAvailability(StrictModel):
++    work_id: WorkID
++    library_id: UUID | None = None
++    catalogue_present: bool
++    resource_link_present: bool
++    asset_present: bool | None
++    access_authorized: bool | None
++    full_text_accessible: bool | None
++    status: Literal['AUTHORIZED','UNKNOWN']
++    resources: list[DigitalResource] = Field(default_factory=list,max_length=10)
++
++    @model_validator(mode='after')
++    def evidence(self):
++        if self.status=='UNKNOWN':
++            if self.resources or self.resource_link_present or any(x is not None for x in
++                    [self.asset_present,self.access_authorized,self.full_text_accessible]):
++                raise ValueError('Unknown access must not expose asset hints')
++        elif not (self.catalogue_present and self.resource_link_present and self.asset_present is True
++                  and self.access_authorized is True and self.full_text_accessible is True and self.resources):
++            raise ValueError('Digital access requires canonical evidence')
++        for resource in self.resources:
++            expected=(f'/libraries/{self.library_id}/resources/{resource.asset_id}' if self.library_id and resource.asset_id
++                      and resource.kind=='LIBRARY_DOCUMENT' else f'/book/{self.work_id}/read' if not self.library_id
++                      and resource.kind=='GLOBAL_TEXT' and resource.asset_id is None else None)
++            if resource.href!=expected or expected is None:raise ValueError('Unrecognized resource target')
++        return self
++
++
+ class Action(StrictModel):
+     type: AssistantAction
+     work_id: WorkID | None = None
+@@ -262,6 +297,7 @@
+     recommendation_mode: RecommendationMode | None = None
+     seed_work_ids: list[WorkID] = Field(default_factory=list)
+     availability: list[Availability] = Field(default_factory=list)
++    digital_availability: list[DigitalAvailability] = Field(default_factory=list)
+     actions: list[Action] = Field(default_factory=list)
+     clarification: Clarification | None = None
+     pending_action: PendingAction | None = None
+--- /dev/null
++++ b/assistant/digital_availability.py
+@@ -0,0 +1,45 @@
++"""Digital-access facts are fresh Core evidence, never physical-stock inference."""
++import re
++from assistant.schemas import DigitalAvailability
++from assistant.tools import ToolFailure
++
++
++def digital_question(message):
++    # A modality safety boundary on the user's request only, not a book resolver.
++    # Reference identity and scope always come from the existing Qwen/resolver.
++    text=message.casefold()
++    format_term=r'(?:digital\s+(?:version|copy|edition|resource|access)|e[ -]?books?|pdf)'
++    exists=rf'\b(?:has|have|there(?: is)?)\s+(?:(?:a|an|the|any|accessible|authorized)\s+)*{format_term}\b'
++    access=r'\b(?:read|access|open|download|available|availability|accessible)\b'
++    medium=rf'\b(?:{format_term}|online|digitally)\b'
++    return bool(re.search(exists,text) or
++        (re.search(access,text) and re.search(medium,text)) or
++        re.search(r'\b(?:is|are)\b.{0,60}\bonline\s*\??$',text))
++
++
++async def lookup(tools, book):
++    catalogue=tools.catalogue
++    library_id=getattr(catalogue,'library_id',None)
++    path=(f'/libraries/{library_id}/catalogue/books/{book.work_id}/digital-availability'
++          if library_id else f'/books/{book.work_id}/digital-availability')
++    raw=await catalogue.transport.call('core','GET',path)
++    try:
++        result=DigitalAvailability.model_validate(raw)
++        if result.work_id!=book.work_id or (str(result.library_id) if result.library_id else None)!=library_id:
++            raise ValueError('Foreign digital evidence')
++        return result
++    except (ValueError,TypeError) as error:
++        raise ToolFailure('core','INVALID_DIGITAL_EVIDENCE','Digital access could not be verified.') from error
++
++
++def render(response):
++    titles={b.work_id:b.title or b.work_id for b in response.books}
++    statements=[]
++    for item in response.digital_availability:
++        title=titles[item.work_id]
++        if item.status=='AUTHORIZED':
++            kinds=', '.join(dict.fromkeys(r.asset_type for r in item.resources))
++            statements.append(f'{title}: an authorized digital resource ({kinds}) is ready to open. Access is checked again when you open it.')
++        else:
++            statements.append(f'{title}: digital access cannot be verified for your account. A catalogue entry or physical copy does not establish online reading access.')
++    return ' '.join(statements)
+--- a/backend/routes/books.py
++++ b/backend/routes/books.py
+@@ -25,6 +25,13 @@
+     prefix="/books",
+     tags=["Books"]
+ )
++
++
++@router.get('/{work_id}/digital-availability')
++def digital_availability(work_id:str, current_user=Depends(get_current_user)):
++    from fastapi.responses import JSONResponse
++    from backend.services.book_digital_availability import global_status
++    return JSONResponse(global_status(work_id,current_user),headers={'Cache-Control':'private, no-store'})
+ 
+ 
+ class BookCreateRequest(BaseModel):
+--- a/backend/routes/library_catalogue_experience.py
++++ b/backend/routes/library_catalogue_experience.py
+@@ -77,6 +77,13 @@
+     return service.detail(str(library_id), str(library_book_id), actor, staff=staff)
+ 
+ 
++@router.get('/books/{library_book_id}/digital-availability')
++def digital_availability(library_id:UUID,library_book_id:UUID,response:Response,staff:bool=False,actor=Depends(get_current_user)):
++    from backend.services.book_digital_availability import library_status
++    response.headers['Cache-Control']='private, no-store'
++    return library_status(str(library_id),str(library_book_id),actor,staff=staff)
++
++
+ @router.get('/global-books/{work_id}')
+ def global_context(library_id: UUID, work_id: str = Path(pattern=r'^OL\d+W$', max_length=100), staff:bool=False, actor=Depends(get_current_user)):
+     return service.global_context(str(library_id), work_id, actor, staff=staff)
+--- /dev/null
++++ b/backend/services/book_digital_availability.py
+@@ -0,0 +1,70 @@
++"""Fresh evidence for reading access; inventory counts never imply digital rights."""
++from fastapi import HTTPException
++from contextlib import contextmanager
++from backend.services import library_catalogue_experience as catalogue
++from backend.services import library_asset_service as assets
++from backend.services.institution_repository import collection
++
++
++@contextmanager
++def authority(library_id,actor,staff):
++    with catalogue.read_context(library_id,actor,staff=staff) as state:
++        if state[2]:
++            yield
++        else:
++            with catalogue.library_mutation(library_id,wait_seconds=30,durable=True):
++                assets.fresh_guard(library_id,actor,staff=staff,locked=True)
++                yield
++
++
++def unknown(work_id, library_id=None):
++    # None hides inaccessible/nonpublic asset existence as well as absent evidence.
++    return dict(work_id=work_id, library_id=library_id, catalogue_present=True,
++        resource_link_present=False, asset_present=None, access_authorized=None,
++        full_text_accessible=None, status='UNKNOWN', resources=[])
++
++
++def library_status(library_id, book_id, actor, *, staff=False):
++    with authority(library_id,actor,staff):
++        books=list(collection('library_books').aggregate([*catalogue.usable(library_id,staff=staff),
++            {'$match':{'library_book_id':book_id}}, {'$limit':1}]))
++        if not books:raise HTTPException(404,'Book not found in this library.')
++        result=unknown(book_id,library_id)
++        query={'library_id':library_id,'library_book_id':book_id,'status':'READY'}
++        if not staff:query['visibility']='MEMBERS'
++        # Bounded, visible, canonical linked assets only. No global-ID fallback.
++        for row in collection(assets.ASSETS).find(query,{'asset_id':1}).limit(10):
++            try:
++                asset=assets.authorize_asset(library_id,row['asset_id'],actor,staff=staff,ready=True,locked=True)
++            except HTTPException as error:
++                if error.status_code in (404,409):continue
++                raise
++            if asset.get('library_book_id')!=book_id:continue
++            result['resources'].append({'kind':'LIBRARY_DOCUMENT','asset_type':asset['asset_type'],
++                'asset_id':asset['asset_id'],
++                'href':f"/libraries/{library_id}/resources/{asset['asset_id']}"})
++        # Recheck current membership while still under the authority barrier.
++        assets.fresh_guard(library_id,actor,staff=staff,locked=True)
++        if result['resources']:
++            result.update(status='AUTHORIZED',resource_link_present=True,asset_present=True,
++                          access_authorized=True,full_text_accessible=True)
++        return result
++
++
++def global_status(work_id, actor):
++    from backend.services.book_capability_service import books_collection, authorize_reader
++    from backend.institution_dependencies import actor_id
++    from rag.book_assets import valid_work_id, readable_path
++    if not valid_work_id(work_id) or not books_collection.find_one({'work_id':work_id},{'_id':1}):
++        raise HTTPException(404,'Book not found.')
++    result=unknown(work_id)
++    try:
++        authorize_reader(actor_id(actor),work_id)
++    except HTTPException as error:
++        if error.status_code in (403,404):return result
++        raise
++    if readable_path(work_id) is not None:
++        result.update(status='AUTHORIZED',resource_link_present=True,asset_present=True,
++            access_authorized=True,full_text_accessible=True,
++            resources=[{'kind':'GLOBAL_TEXT','asset_type':'TEXT','asset_id':None,'href':f'/book/{work_id}/read'}])
++    return result
+--- a/frontend/src/lib/assistantTypes.ts
++++ b/frontend/src/lib/assistantTypes.ts
+@@ -31,6 +31,12 @@
+   shelf_location?: string | null
+ }
+ export interface AssistantAvailability { work_id: string; available: boolean | null; available_copies: number | null; total_copies: number | null }
++export interface AssistantDigitalAvailability {
++  work_id: string; library_id: string | null; catalogue_present: boolean
++  resource_link_present: boolean; asset_present: boolean | null; access_authorized: boolean | null
++  full_text_accessible: boolean | null; status: 'AUTHORIZED' | 'UNKNOWN'
++  resources: Array<{kind:'LIBRARY_DOCUMENT'|'GLOBAL_TEXT';asset_type:'PDF'|'TXT'|'DOCX'|'TEXT';asset_id:string|null;href:string}>
++}
+ export interface AssistantComparison { books: AssistantBook[]; requested_fields: string[]; missing_fields: string[] }
+ export interface AssistantAction { type: AssistantActionType; work_id?: string | null; action_id?: string | null }
+ export interface AssistantClarification { reason: string; choices: AssistantBook[] }
+@@ -52,6 +58,7 @@
+   [field: string]: unknown
+ }
+ export interface AssistantResponse {
++  digital_availability?: AssistantDigitalAvailability[]
+   conversation_id: string; intent: AssistantIntent; message: string; books: AssistantBook[]
+   comparison: AssistantComparison | null; recommendation_mode: RecommendationMode | null; seed_work_ids: string[]
+   availability: AssistantAvailability[]; actions: AssistantAction[]; clarification: AssistantClarification | null
+--- a/frontend/src/components/assistant/AssistantTurn.tsx
++++ b/frontend/src/components/assistant/AssistantTurn.tsx
+@@ -128,7 +128,7 @@
+         <div className="min-w-0 flex-1"><h4 className="break-words font-sans text-[0.95rem] font-semibold leading-snug">{book.title || book.work_id}</h4>
+           {book.authors && <p className="mt-1 line-clamp-1 text-xs text-ink-soft" title={displayText(book.authors)}>{displayText(book.authors)}</p>}
+           {book.average_rating != null && Number.isFinite(book.average_rating) && book.average_rating > 0 && <p className="mt-1 text-xs">★ {book.average_rating.toFixed(1)}</p>}
+-          <AvailabilityBadge availability={avail} book={book} />
++          {!response.digital_availability?.length && <AvailabilityBadge availability={avail} book={book} />}
+           {book.shelf_location && <p className="mt-1 text-xs text-ink-soft">Shelf: {book.shelf_location}</p>}
+         </div>
+       </div>
+@@ -183,6 +183,13 @@
+ 
+   return <div className="space-y-4 break-words">
+     {!!response.message && <p className="whitespace-pre-wrap text-sm leading-relaxed">{response.message}</p>}
++    {!!response.digital_availability?.length && <section aria-label="Digital access" className="space-y-2">
++      {response.digital_availability.map(item => <div key={item.work_id} className="text-sm">
++        <p>{bookTitle(item.work_id)}: {item.status === 'AUTHORIZED' ? 'Authorized digital resource ready' : 'Digital access not verified'}</p>
++        {item.resources.map(resource => <Link key={resource.href} className="assistant-button inline-block mt-2"
++          to={resource.href}>Open {resource.asset_type === 'TEXT' ? 'digital text' : resource.asset_type}</Link>)}
++      </div>)}
++    </section>}
+     {response.recommendation_mode && <div><h3 className="font-display text-sm">{recommendationHeading[response.recommendation_mode]}</h3>
+       {!!response.seed_work_ids.length && <p className="mt-1 text-xs text-ink-soft">{response.seed_work_ids.length} {response.seed_work_ids.length === 1 ? 'book' : 'books'} used as context</p>}
+       {!response.books.length && !response.errors.some(error => error.service === 'recommendation') && <p className="mt-2 text-xs text-ink-soft">{response.recommendation_mode === 'PERSONALIZED_EXISTING_FORMULA' ? 'No personalized recommendations are available yet.' : 'No similar recommendations are available right now.'}</p>}
+--- a/frontend/tests/assistant-library-scope.test.tsx
++++ b/frontend/tests/assistant-library-scope.test.tsx
+@@ -18,6 +18,30 @@
+ const response={conversation_id:'scope-test',intent:'SEARCH_BOOKS',message:'Scoped fixture',books:[],comparison:null,recommendation_mode:null,seed_work_ids:[],availability:[],actions:[],clarification:null,pending_action:null,account:null,reading_list:null,rag:null,errors:[],has_more:false,result_offset:0,explanation_available:false}
+ beforeEach(()=>{window.history.replaceState({},'','/catalog');localStorage.clear();sessionStorage.clear();localStorage.setItem('luminar_token','scope-session');localStorage.setItem('luminar_user',JSON.stringify({email:'scope@example.com'}));auth.setState({token:'scope-session',isAuthenticated:true,user:{user_id:1,email:'scope@example.com',role:'GENERAL_USER'} as any});institutions.setState({session:'scope-session',loading:false,activeId:a,libraries:[a,b].map(library_id=>({library_id,name:'Scope Library',membership:{library_id,role:'GENERAL_USER',status:'ACTIVE'}})) as any});store.setState({owner:'scope@example.com',sessionToken:'scope-session',libraryScope:'GLOBAL',pagePath:'',pageContext:{},messages:[],recent:[],selected:[],conversationId:null,busy:false});bodies=[];globalThis.fetch=async(_url,options)=>{bodies.push(JSON.parse(String(options?.body)));return Response.json(response)}})
+ afterEach(()=>{cleanup();globalThis.fetch=original})
++
++test('digital result renders canonical PDF link without physical stock badge',async()=>{
++  const {AssistantTurn}=await import('../src/components/assistant/AssistantTurn')
++  const data={...response,intent:'CHECK_AVAILABILITY',message:'Authorized digital resource ready.',
++    books:[{work_id:id,library_id:a,library_book_id:id,title:'Local PDF',available_copies:99,total_copies:100}],
++    digital_availability:[{work_id:id,library_id:a,status:'AUTHORIZED',catalogue_present:true,resource_link_present:true,
++      asset_present:true,access_authorized:true,full_text_accessible:true,
++      resources:[{kind:'LIBRARY_DOCUMENT',asset_type:'PDF',asset_id:b,href:`/libraries/${a}/resources/${b}`}]}]}
++  render(<MemoryRouter><AssistantTurn response={data as any} busy={false} pendingActive={false} now={0} onAction={()=>{}} onChoice={()=>{}}/></MemoryRouter>)
++  assert.equal(screen.getByRole('link',{name:'Open PDF'}).getAttribute('href'),`/libraries/${a}/resources/${b}`)
++  assert.equal(screen.queryByText(/99 copies/),null)
++})
++
++test('unknown digital access does not invent a download or physical availability',async()=>{
++  const {AssistantTurn}=await import('../src/components/assistant/AssistantTurn')
++  const data={...response,intent:'CHECK_AVAILABILITY',message:'Digital access cannot be verified.',
++    books:[{work_id:id,title:'Physical only',available_copies:99}],
++    digital_availability:[{work_id:id,library_id:a,status:'UNKNOWN',catalogue_present:true,resource_link_present:false,
++      asset_present:null,access_authorized:null,full_text_accessible:null,resources:[]}]}
++  render(<MemoryRouter><AssistantTurn response={data as any} busy={false} pendingActive={false} now={0} onAction={()=>{}} onChoice={()=>{}}/></MemoryRouter>)
++  assert.equal(screen.queryByRole('link',{name:/Open PDF/}),null)
++  assert.ok(screen.getByText(/Digital access not verified/))
++  assert.equal(screen.queryByText(/99 copies/),null)
++})
+ test('transport keeps legitimate circulation and effective scope fields',async()=>{await assistantChat({message:'Request this book',library_id:a,lending_context:{library_id:a,library_book_id:id,loan_id:id,reservation_id:id},selected_work_ids:[],recent_work_ids:[],page_context:{}});assert.equal(bodies[0].library_id,a);assert.deepEqual(bodies[0].lending_context,{library_id:a,library_book_id:id,loan_id:id,reservation_id:id})})
+ test('transport explicitly discards unrelated client fields',async()=>{await assistantChat({message:'Hello',selected_work_ids:[],recent_work_ids:[],page_context:{},user_id:999,role:'ADMIN'} as any);assert.equal(bodies[0].user_id,undefined);assert.equal(bodies[0].role,undefined)})
+ for(const [from,to] of [['GLOBAL',a],[a,b],[b,'GLOBAL'],[a,'GLOBAL']])test(`scope switch ${from} to ${to} clears references`,()=>{store.setState({libraryScope:from,conversationId:'foreign',selected:[{work_id:id,title:'Private'}],recent:[id],messages:[{id:1,kind:'SYSTEM_NOTICE',text:'Private history'}]});store.getState().setPageContext(to==='GLOBAL'?'/catalog':`/libraries/${to}/catalogue`,{});assert.equal(store.getState().conversationId,null);assert.deepEqual(store.getState().selected,[]);assert.deepEqual(store.getState().recent,[]);assert.deepEqual(store.getState().messages,[]);assert.equal(JSON.parse(sessionStorage.getItem('luminar_assistant_session')!).libraryScope,to)})
+--- /dev/null
++++ b/tests/institution_v2q_ai/test_digital_availability.py
+@@ -0,0 +1,129 @@
++"""Fresh Core access evidence and production Assistant with a controlled parser."""
++from uuid import uuid4
++from types import SimpleNamespace
++import asyncio
++import pytest
++from backend.database.mongodb import db
++from backend.services import library_asset_service as assets
++from assistant.schemas import AssistantIntentDecision,Intent,ReferenceScope
++from tests.institution_v2q_ai.test_integration import fixture,chat
++
++
++def ready_asset(client,lib,book,tmp_path,monkeypatch,visibility='MEMBERS'):
++    monkeypatch.setenv('LIBRARY_ASSET_ROOT',str(tmp_path))
++    import pymupdf
++    doc=pymupdf.open();page=doc.new_page();page.insert_text((50,50),'Synthetic authorized text.');pdf=doc.tobytes();doc.close()
++    r=client.post(f'/libraries/{lib}/assets',headers={'X-Luminar-Upload':str(uuid4())},
++        data={'title':'Private synthetic manual','visibility':visibility,'library_book_id':book},files={'file':('fixture.pdf',pdf,'application/pdf')})
++    assert r.status_code==202,r.text
++    asset=r.json().get('asset',r.json());identity=asset['asset_id'];generation=str(uuid4())
++    db.institution_library_assets.update_one({'asset_id':identity},{'$set':{'status':'READY','active_generation_id':generation}})
++    row=db.institution_library_assets.find_one({'asset_id':identity});directory=assets.artifacts_path(row);directory.mkdir(parents=True)
++    for name in assets.ARTIFACT_FILES:(directory/name).write_bytes(b'{}')
++    return identity,row
++
++
++class DigitalParser:
++    async def parse(self,message,context):
++        return AssistantIntentDecision(intent=Intent.CHECK_AVAILABILITY,confidence=1,
++            reference_scope=ReferenceScope.CURRENT_PAGE_BOOK,reference_position='ALL')
++    async def respond(self,*args):raise AssertionError('Digital facts must not be paraphrased by Qwen')
++
++
++@pytest.mark.parametrize('query',['Is there a digital version?','Can I read this online?','Does this book have a PDF?',
++    'Can I access the ebook?','Is it available digitally?','Which one has an accessible PDF?'])
++def test_authorized_local_pdf_is_not_physical_stock(client,fixture,tmp_path,monkeypatch,query):
++    api,libs,books,_=fixture;api.app.state.assistant.qwen=DigitalParser()
++    asset,_=ready_asset(client,libs[0],books[0],tmp_path,monkeypatch)
++    response=chat(fixture,libs[0],message=query,page_context={'work_id':books[0]}).json()
++    assert not response['errors'] and response['availability']==[],response
++    digital=response['digital_availability'][0]
++    assert digital['status']=='AUTHORIZED' and digital['access_authorized'] and digital['full_text_accessible']
++    assert digital['resources'][0]['asset_id']==asset
++    assert 'available copies' not in response['message'] and 'PDF' in response['message']
++    assert client.get(f'/libraries/{libs[0]}/assets/{asset}/file',headers={'x-test-user':'2'}).status_code==200
++
++
++@pytest.mark.parametrize('kind',['absent','restricted','foreign','missing_source','processing','external_link'])
++def test_unknown_hides_inaccessible_or_unverified_assets(client,fixture,tmp_path,monkeypatch,kind):
++    api,libs,books,_=fixture;api.app.state.assistant.qwen=DigitalParser()
++    if kind in ['restricted','foreign','missing_source','processing']:
++        asset,row=ready_asset(client,libs[1] if kind=='foreign' else libs[0],books[1] if kind=='foreign' else books[0],tmp_path,monkeypatch,'STAFF_ONLY' if kind=='restricted' else 'MEMBERS')
++        if kind=='missing_source':assets.source_path(row).unlink()
++        if kind=='processing':db.institution_library_assets.update_one({'asset_id':asset},{'$set':{'status':'PROCESSING'}})
++    if kind=='external_link':db.institution_library_books.update_one({'library_book_id':books[0]},{'$set':{'online_url':'https://example.com/preview.pdf'}})
++    r=chat(fixture,libs[0],message='Can I read this online?',page_context={'work_id':books[0]}).json()
++    assert not r['errors'],r
++    d=r['digital_availability'][0];assert d['status']=='UNKNOWN' and d['resources']==[]
++    assert d['asset_present'] is None and d['access_authorized'] is None
++    assert 'cannot be verified' in r['message'] and 'available copies' not in r['message']
++
++
++def test_no_stock_does_not_cancel_authorized_digital_access(client,fixture,tmp_path,monkeypatch):
++    api,libs,books,_=fixture;api.app.state.assistant.qwen=DigitalParser()
++    ready_asset(client,libs[0],books[0],tmp_path,monkeypatch)
++    db.institution_copies.update_many({'library_book_id':books[0]},{'$set':{'status':'ON_LOAN'}})
++    result=chat(fixture,libs[0],message='Does it have a digital version?',page_context={'work_id':books[0]}).json()
++    assert result['digital_availability'][0]['status']=='AUTHORIZED'
++
++
++def test_digital_only_local_creation_without_holdings(client,fixture,tmp_path,monkeypatch):
++    _,libs,_,_=fixture
++    r=client.post(f'/libraries/{libs[0]}/inventory/books',json={'title':'Local digital only','subjects':['Technical education'],'create_physical_holding':False,'copies':0,'idempotency_key':str(uuid4())})
++    assert r.status_code==201,r.text
++    book=r.json()['library_book_id'];ready_asset(client,libs[0],book,tmp_path,monkeypatch)
++    result=client.get(f'/libraries/{libs[0]}/catalogue/books/{book}/digital-availability',headers={'x-test-user':'2'})
++    assert result.status_code==200 and result.json()['status']=='AUTHORIZED'
++    assert db.institution_holdings.count_documents({'library_book_id':book})==0
++
++
++def test_foreign_book_and_revoked_member_denied(client,fixture):
++    api,libs,books,_=fixture
++    assert client.get(f'/libraries/{libs[0]}/catalogue/books/{books[1]}/digital-availability',headers={'x-test-user':'2'}).status_code==404
++    db.institution_memberships.update_one({'library_id':libs[0],'user_id':2},{'$set':{'status':'REMOVED'}})
++    assert client.get(f'/libraries/{libs[0]}/catalogue/books/{books[0]}/digital-availability',headers={'x-test-user':'2'}).status_code==404
++
++
++def test_membership_proof_forged_scope_and_changed_visibility(client,fixture,tmp_path,monkeypatch):
++    api,libs,books,_=fixture;api.app.state.assistant.qwen=DigitalParser()
++    asset,_=ready_asset(client,libs[0],books[0],tmp_path,monkeypatch)
++    path=f'/libraries/{libs[0]}/catalogue/books/{books[0]}/digital-availability'
++    assert client.get(path,headers={'x-test-user':'3'}).status_code==404
++    assert client.get(path.replace(libs[0],str(uuid4())),headers={'x-test-user':'2'}).status_code==404
++    first=chat(fixture,libs[0],message='Does it have a PDF?',page_context={'work_id':books[0]}).json()
++    assert first['digital_availability'][0]['status']=='AUTHORIZED'
++    db.institution_library_assets.update_one({'asset_id':asset},{'$set':{'visibility':'STAFF_ONLY'}})
++    next_turn=chat(fixture,libs[0],message='Can I read this online?',conversation_id=first['conversation_id'],page_context={'work_id':books[0]}).json()
++    assert next_turn['digital_availability'][0]['status']=='UNKNOWN'
++    assert asset not in str(next_turn)
++
++
++def test_global_record_cannot_grant_tenant_document_access(client,fixture,tmp_path,monkeypatch):
++    _,libs,books,_=fixture
++    ready_asset(client,libs[0],books[0],tmp_path,monkeypatch)
++    db.books.insert_one({'work_id':'OL999123W','title':'Same title','available_copies':99})
++    db.institution_library_books.update_one({'library_book_id':books[0]},{'$set':{'global_work_id':'OL999123W'}})
++    response=client.get('/books/OL999123W/digital-availability',headers={'x-test-user':'2'})
++    assert response.status_code==200 and response.json()['status']=='UNKNOWN'
++    assert response.json()['resources']==[]
++
++
++def test_tool_rejects_cross_library_and_injected_link():
++    from assistant.digital_availability import lookup
++    from assistant.schemas import Book
++    from assistant.tools import ToolFailure
++    lib=str(uuid4());bid=str(uuid4())
++    async def call(*args,**kwargs):
++        return {'work_id':bid,'library_id':str(uuid4()),'catalogue_present':True,'status':'UNKNOWN',
++            'asset_present':None,'access_authorized':None,'full_text_accessible':None,'resource_link_present':False,'resources':[]}
++    tool=SimpleNamespace(catalogue=SimpleNamespace(library_id=lib,transport=SimpleNamespace(call=call)))
++    with pytest.raises(ToolFailure):asyncio.run(lookup(tool,Book(work_id=bid)))
++    from assistant.schemas import DigitalAvailability
++    with pytest.raises(ValueError):DigitalAvailability.model_validate({'work_id':bid,'library_id':lib,'catalogue_present':True,'status':'AUTHORIZED','asset_present':True,'access_authorized':True,'full_text_accessible':True,'resource_link_present':True,'resources':[{'kind':'LIBRARY_DOCUMENT','asset_type':'PDF','asset_id':str(uuid4()),'href':'javascript:alert(1)'}]})
++
++
++@pytest.mark.parametrize('query',['Does this book explain digital networks?','Is this book about online fraud?',
++    'Which book can I borrow physically?','Is the second book available?'])
++def test_topic_words_and_physical_questions_do_not_become_digital_queries(query):
++    from assistant.digital_availability import digital_question
++    assert not digital_question(query)

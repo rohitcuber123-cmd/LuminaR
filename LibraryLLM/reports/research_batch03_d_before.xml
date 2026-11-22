@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="9" skipped="0" tests="44" time="17.983" timestamp="2026-11-05T22:44:55.226132+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_search_filler_words_do_not_hide_owned_match[NOT_BUILT]" time="1.495"><failure message="AssertionError: assert [] == ['e7578c96-fb...8dfce1c0fe91']&#10;  &#10;  Right contains one more item: 'e7578c96-fbbe-47ab-a9d8-8dfce1c0fe91'&#10;  Use -v to get more diff">client = &lt;starlette.testclient.TestClient object at 0x000001B8E5CD4A90&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B8869747C0&gt;
+state = 'NOT_BUILT'
+
+    @pytest.mark.parametrize('state', ['NOT_BUILT', 'STALE', 'FAILED', 'RECOVERY_REQUIRED'])
+    def test_tenant_search_filler_words_do_not_hide_owned_match(client, library, state):
+        library_id = library(private=True)
+        owned = book(client, library_id)
+        book(client, library(name='Foreign library'))
+        if state != 'NOT_BUILT':
+            store.collection('intelligence_targets').insert_one(
+                {'library_id': library_id, 'target': 'SEARCH_INDEX', 'state': state})
+        model = Mock(side_effect=AssertionError('Fallback must not invoke a model'))
+        worker = TenantIntelligence(model, model)
+        result = tenant_search(worker, library_id, {'sub':'1'}, 'computer networks with the',
+                               staff=True, kg_enabled=False, diagnostics=True)
+        assert result['source']['intelligence_status'] == state
+        assert result['source']['search_source'] == 'LOCAL_FALLBACK'
+        assert result['source']['catalogue_source'] == 'LIBRARY_LOCAL'
+&gt;       assert [row['library_book_id'] for row in result['results']] == [owned['library_book_id']]
+E       AssertionError: assert [] == ['e7578c96-fb...8dfce1c0fe91']
+E         
+E         Right contains one more item: 'e7578c96-fbbe-47ab-a9d8-8dfce1c0fe91'
+E         Use -v to get more diff
+
+tests\institution_v2g\test_search_runtime.py:45: AssertionError</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_search_filler_words_do_not_hide_owned_match[STALE]" time="0.322"><failure message="AssertionError: assert [] == ['89314878-0c...bb97f09bd76a']&#10;  &#10;  Right contains one more item: '89314878-0c4a-4fe6-9dd6-bb97f09bd76a'&#10;  Use -v to get more diff">client = &lt;starlette.testclient.TestClient object at 0x000001B8FE10C3D0&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B886C6C9A0&gt;
+state = 'STALE'
+
+    @pytest.mark.parametrize('state', ['NOT_BUILT', 'STALE', 'FAILED', 'RECOVERY_REQUIRED'])
+    def test_tenant_search_filler_words_do_not_hide_owned_match(client, library, state):
+        library_id = library(private=True)
+        owned = book(client, library_id)
+        book(client, library(name='Foreign library'))
+        if state != 'NOT_BUILT':
+            store.collection('intelligence_targets').insert_one(
+                {'library_id': library_id, 'target': 'SEARCH_INDEX', 'state': state})
+        model = Mock(side_effect=AssertionError('Fallback must not invoke a model'))
+        worker = TenantIntelligence(model, model)
+        result = tenant_search(worker, library_id, {'sub':'1'}, 'computer networks with the',
+                               staff=True, kg_enabled=False, diagnostics=True)
+        assert result['source']['intelligence_status'] == state
+        assert result['source']['search_source'] == 'LOCAL_FALLBACK'
+        assert result['source']['catalogue_source'] == 'LIBRARY_LOCAL'
+&gt;       assert [row['library_book_id'] for row in result['results']] == [owned['library_book_id']]
+E       AssertionError: assert [] == ['89314878-0c...bb97f09bd76a']
+E         
+E         Right contains one more item: '89314878-0c4a-4fe6-9dd6-bb97f09bd76a'
+E         Use -v to get more diff
+
+tests\institution_v2g\test_search_runtime.py:45: AssertionError</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_search_filler_words_do_not_hide_owned_match[FAILED]" time="0.345"><failure message="AssertionError: assert [] == ['817e92e2-e2...7d68c0614421']&#10;  &#10;  Right contains one more item: '817e92e2-e2f4-40c6-a47d-7d68c0614421'&#10;  Use -v to get more diff">client = &lt;starlette.testclient.TestClient object at 0x000001B886B4B6D0&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B886C6CD60&gt;
+state = 'FAILED'
+
+    @pytest.mark.parametrize('state', ['NOT_BUILT', 'STALE', 'FAILED', 'RECOVERY_REQUIRED'])
+    def test_tenant_search_filler_words_do_not_hide_owned_match(client, library, state):
+        library_id = library(private=True)
+        owned = book(client, library_id)
+        book(client, library(name='Foreign library'))
+        if state != 'NOT_BUILT':
+            store.collection('intelligence_targets').insert_one(
+                {'library_id': library_id, 'target': 'SEARCH_INDEX', 'state': state})
+        model = Mock(side_effect=AssertionError('Fallback must not invoke a model'))
+        worker = TenantIntelligence(model, model)
+        result = tenant_search(worker, library_id, {'sub':'1'}, 'computer networks with the',
+                               staff=True, kg_enabled=False, diagnostics=True)
+        assert result['source']['intelligence_status'] == state
+        assert result['source']['search_source'] == 'LOCAL_FALLBACK'
+        assert result['source']['catalogue_source'] == 'LIBRARY_LOCAL'
+&gt;       assert [row['library_book_id'] for row in result['results']] == [owned['library_book_id']]
+E       AssertionError: assert [] == ['817e92e2-e2...7d68c0614421']
+E         
+E         Right contains one more item: '817e92e2-e2f4-40c6-a47d-7d68c0614421'
+E         Use -v to get more diff
+
+tests\institution_v2g\test_search_runtime.py:45: AssertionError</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_search_filler_words_do_not_hide_owned_match[RECOVERY_REQUIRED]" time="0.363"><failure message="AssertionError: assert [] == ['fddfb2ea-58...d426ff845e62']&#10;  &#10;  Right contains one more item: 'fddfb2ea-58bb-47db-b5cb-d426ff845e62'&#10;  Use -v to get more diff">client = &lt;starlette.testclient.TestClient object at 0x000001B886B88E50&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B886C6D300&gt;
+state = 'RECOVERY_REQUIRED'
+
+    @pytest.mark.parametrize('state', ['NOT_BUILT', 'STALE', 'FAILED', 'RECOVERY_REQUIRED'])
+    def test_tenant_search_filler_words_do_not_hide_owned_match(client, library, state):
+        library_id = library(private=True)
+        owned = book(client, library_id)
+        book(client, library(name='Foreign library'))
+        if state != 'NOT_BUILT':
+            store.collection('intelligence_targets').insert_one(
+                {'library_id': library_id, 'target': 'SEARCH_INDEX', 'state': state})
+        model = Mock(side_effect=AssertionError('Fallback must not invoke a model'))
+        worker = TenantIntelligence(model, model)
+        result = tenant_search(worker, library_id, {'sub':'1'}, 'computer networks with the',
+                               staff=True, kg_enabled=False, diagnostics=True)
+        assert result['source']['intelligence_status'] == state
+        assert result['source']['search_source'] == 'LOCAL_FALLBACK'
+        assert result['source']['catalogue_source'] == 'LIBRARY_LOCAL'
+&gt;       assert [row['library_book_id'] for row in result['results']] == [owned['library_book_id']]
+E       AssertionError: assert [] == ['fddfb2ea-58...d426ff845e62']
+E         
+E         Right contains one more item: 'fddfb2ea-58bb-47db-b5cb-d426ff845e62'
+E         Use -v to get more diff
+
+tests\institution_v2g\test_search_runtime.py:45: AssertionError</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_filler_fallback_does_not_relax_content_or_hard_filters[quantum networks with the-None]" time="0.169" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_filler_fallback_does_not_relax_content_or_hard_filters[computer networks with the-filters1]" time="0.167" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_filler_fallback_does_not_relax_content_or_hard_filters[with the-None]" time="0.147" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_optional_reranker_failure_keeps_authorized_native_order[RuntimeError]" time="0.655"><failure message="RuntimeError: Injected optional ranking failure">client = &lt;starlette.testclient.TestClient object at 0x000001B886A7B310&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B886C6E7A0&gt;
+failure = &lt;class 'RuntimeError'&gt;
+
+    @pytest.mark.parametrize('failure', [RuntimeError, TimeoutError, 'bad_shape', 'nonfinite'])
+    def test_tenant_optional_reranker_failure_keeps_authorized_native_order(client, library, failure):
+        library_id, owned, job, worker, reranker = ready(client, library)
+        book(client, library(name='Foreign library'))
+        baseline = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                                 staff=True, kg_enabled=False, diagnostics=True)
+        assert [row['library_book_id'] for row in baseline['results']] == [owned['library_book_id']]
+        if isinstance(failure, type):
+            reranker.side_effect = failure('Injected optional ranking failure')
+        else:
+            reranker.side_effect = None
+            reranker.return_value = [[1.0]] if failure == 'bad_shape' else [float('nan')]
+&gt;       result = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                               staff=True, kg_enabled=False, diagnostics=True)
+
+tests\institution_v2g\test_search_runtime.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+search\query_execution.py:212: in tenant_search
+    return _tenant_search(service,library_id,actor,query,**options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+search\query_execution.py:288: in _tenant_search
+    with service.model_lock:ranked=service.reranker([[plan.ranking_query(),artifacts.embedding_text(r)] for r in rows])
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\unittest\mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\unittest\mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;Mock id='1892046192400'&gt;
+args = ([['mobility', 'Title: Mobility and transport for elderly and handicapped persons Authors: Ada Reader Subjects: Computer networks; Technology Description: Beginner networking guide First published:']],)
+kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+&gt;               raise effect
+E               RuntimeError: Injected optional ranking failure
+
+C:\Program Files\Python311\Lib\unittest\mock.py:1183: RuntimeError</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_optional_reranker_failure_keeps_authorized_native_order[TimeoutError]" time="0.496"><failure message="TimeoutError: Injected optional ranking failure">client = &lt;starlette.testclient.TestClient object at 0x000001B8D7287790&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B8D73602C0&gt;
+failure = &lt;class 'TimeoutError'&gt;
+
+    @pytest.mark.parametrize('failure', [RuntimeError, TimeoutError, 'bad_shape', 'nonfinite'])
+    def test_tenant_optional_reranker_failure_keeps_authorized_native_order(client, library, failure):
+        library_id, owned, job, worker, reranker = ready(client, library)
+        book(client, library(name='Foreign library'))
+        baseline = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                                 staff=True, kg_enabled=False, diagnostics=True)
+        assert [row['library_book_id'] for row in baseline['results']] == [owned['library_book_id']]
+        if isinstance(failure, type):
+            reranker.side_effect = failure('Injected optional ranking failure')
+        else:
+            reranker.side_effect = None
+            reranker.return_value = [[1.0]] if failure == 'bad_shape' else [float('nan')]
+&gt;       result = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                               staff=True, kg_enabled=False, diagnostics=True)
+
+tests\institution_v2g\test_search_runtime.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+search\query_execution.py:212: in tenant_search
+    return _tenant_search(service,library_id,actor,query,**options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+search\query_execution.py:288: in _tenant_search
+    with service.model_lock:ranked=service.reranker([[plan.ranking_query(),artifacts.embedding_text(r)] for r in rows])
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\unittest\mock.py:1124: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Program Files\Python311\Lib\unittest\mock.py:1128: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;Mock id='1893395362000'&gt;
+args = ([['mobility', 'Title: Mobility and transport for elderly and handicapped persons Authors: Ada Reader Subjects: Computer networks; Technology Description: Beginner networking guide First published:']],)
+kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+&gt;               raise effect
+E               TimeoutError: Injected optional ranking failure
+
+C:\Program Files\Python311\Lib\unittest\mock.py:1183: TimeoutError</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_optional_reranker_failure_keeps_authorized_native_order[bad_shape]" time="0.550"><failure message="TypeError: float() argument must be a string or a real number, not 'list'">client = &lt;starlette.testclient.TestClient object at 0x000001B886B15350&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B8D7361080&gt;
+failure = 'bad_shape'
+
+    @pytest.mark.parametrize('failure', [RuntimeError, TimeoutError, 'bad_shape', 'nonfinite'])
+    def test_tenant_optional_reranker_failure_keeps_authorized_native_order(client, library, failure):
+        library_id, owned, job, worker, reranker = ready(client, library)
+        book(client, library(name='Foreign library'))
+        baseline = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                                 staff=True, kg_enabled=False, diagnostics=True)
+        assert [row['library_book_id'] for row in baseline['results']] == [owned['library_book_id']]
+        if isinstance(failure, type):
+            reranker.side_effect = failure('Injected optional ranking failure')
+        else:
+            reranker.side_effect = None
+            reranker.return_value = [[1.0]] if failure == 'bad_shape' else [float('nan')]
+&gt;       result = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                               staff=True, kg_enabled=False, diagnostics=True)
+
+tests\institution_v2g\test_search_runtime.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+search\query_execution.py:212: in tenant_search
+    return _tenant_search(service,library_id,actor,query,**options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+search\query_execution.py:290: in _tenant_search
+    rows=[dict(row,_search_relevance=float(score)) for score,row in sorted(zip(ranked,rows),key=lambda pair:-float(pair[0]))];reranked=True
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+pair = ([1.0], {'display_id': '28428a8f-4499-4548-98af-f25d7be7d0dc', 'library_id': '64ddf3ab-1785-43b0-bf3d-333f65b053f6', 'library_book_id': '28428a8f-4499-4548-98af-f25d7be7d0dc', 'book_format': 'PHYSICAL_ONLY', ...})
+
+&gt;   rows=[dict(row,_search_relevance=float(score)) for score,row in sorted(zip(ranked,rows),key=lambda pair:-float(pair[0]))];reranked=True
+                                                                                                             ^^^^^^^^^^^^^^
+E   TypeError: float() argument must be a string or a real number, not 'list'
+
+search\query_execution.py:290: TypeError</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_optional_reranker_failure_keeps_authorized_native_order[nonfinite]" time="0.509"><failure message="fastapi.exceptions.HTTPException: 503: Library ranking is temporarily unavailable.">client = &lt;starlette.testclient.TestClient object at 0x000001B8FFBF8090&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B886E24D60&gt;
+failure = 'nonfinite'
+
+    @pytest.mark.parametrize('failure', [RuntimeError, TimeoutError, 'bad_shape', 'nonfinite'])
+    def test_tenant_optional_reranker_failure_keeps_authorized_native_order(client, library, failure):
+        library_id, owned, job, worker, reranker = ready(client, library)
+        book(client, library(name='Foreign library'))
+        baseline = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                                 staff=True, kg_enabled=False, diagnostics=True)
+        assert [row['library_book_id'] for row in baseline['results']] == [owned['library_book_id']]
+        if isinstance(failure, type):
+            reranker.side_effect = failure('Injected optional ranking failure')
+        else:
+            reranker.side_effect = None
+            reranker.return_value = [[1.0]] if failure == 'bad_shape' else [float('nan')]
+&gt;       result = tenant_search(worker, library_id, {'sub':'1'}, 'mobility',
+                               staff=True, kg_enabled=False, diagnostics=True)
+
+tests\institution_v2g\test_search_runtime.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+search\query_execution.py:212: in tenant_search
+    return _tenant_search(service,library_id,actor,query,**options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+service = &lt;search.library_intelligence.TenantIntelligence object at 0x000001B8D721FE50&gt;
+library_id = 'b88da85b-0073-4c76-a7cf-5baed3e3718c', actor = {'sub': '1'}
+query = 'mobility', staff = True, mode = 'SMART', filters = None, omit = ()
+offset = 0, limit = 20, diagnostics = True, kg_enabled = False
+session_id = None, personalized = False, resolution = None, runtime = None
+
+    def _tenant_search(service,library_id,actor,query,*,staff=False,mode='SMART',filters=None,omit=(),offset=0,limit=20,diagnostics=False,kg_enabled=True,session_id=None,personalized=False,resolution=None,runtime=None):
+        from backend.services import library_catalogue_experience as catalogue
+        from backend.services import library_intelligence_store as store, library_intelligence_artifacts as artifacts
+        from backend.services.library_intelligence_service import target_status
+        start=perf_counter()
+        # Authority precedes every facet lookup, cache/index access and hydration.
+        with catalogue.read_context(library_id,actor,staff=staff) as (library,membership,canonical):
+            facets=catalogue.subject_rows(library_id,limit=2048,staff=staff)
+            capabilities={'rating':True,'year':True,'language':True,'availability':True,'formats':['ONLINE','PHYSICAL','BOTH']}
+            plan,session=(runtime.resolve if runtime else resolve_session)(query,actor,[r['subject'] for r in facets['results']],mode=mode,filters=filters,omit=omit,session_id=session_id,library_id=library_id,staff=staff,capabilities=capabilities,**(resolution or {}))
+            interaction=interaction_for(plan,session,actor,query=query,mode=mode,filters=filters,omit=omit,session_id=session_id,capabilities=capabilities,library_id=library_id,staff=staff) if not resolution and runtime is None else None
+            status=target_status(library_id,'SEARCH_INDEX')
+            source=catalogue.source_locked(library_id,library,membership,canonical,staff=staff)
+            if not executable(plan):
+                response=guarded_response(query,plan,session,personalized,offset,limit,start,source,diagnostics)
+                response['interpretation']['clarification']=interaction
+                return response
+        expansion=tenant_expansion(plan,library_id,actor,staff) if kg_enabled and plan.semantic_text else {'status':'NOT_USED','concepts':[],'generation':None,'elapsed_ms':0}
+        apply_expansion(plan,expansion)
+        provider='STRUCTURED_METADATA';hnsw=False;reranked=False;fallback=False;scores={};ids=None;generation=None;extra_ids=set()
+        if plan.semantic_text:
+            if status['status']=='READY':
+                try:
+                    manifest,records,index=service.cache.load(library_id,'SEARCH_INDEX',status['active_generation_id'],status['manifest_checksum'])
+                    if manifest['model_version']!=service.model_version:raise ValueError('Model version changed')
+                    import numpy as np
+                    with service.model_lock:
+                        vector=np.asarray(service.encoder([runtime.semantic_query(plan) if runtime else plan.semantic_text]),dtype=np.float32)
+                        if vector.shape!=(1,384) or not np.isfinite(vector).all() or np.linalg.norm(vector)&lt;1e-8:raise ValueError('Invalid query vector')
+                        vector/=np.linalg.norm(vector,axis=1,keepdims=True)
+                        constrained=bool(plan.subjects or plan.author_text or plan.rating_min is not None or plan.rating_max is not None or plan.year_min is not None or plan.year_max is not None or plan.formats or plan.availability or plan.language or plan.exclude_terms or plan.exclude_subjects)
+                        values,labels=index.search(vector,min(1000 if constrained else artifacts.PARAMETERS['candidate_count'],len(records)))
+                    candidates=[(records[int(label)]['library_book_id'],float(value)) for label,value in zip(labels[0],values[0]) if 0&lt;=label&lt;len(records)]
+                    if plan.kg_expansion_used:
+                        with service.model_lock:
+                            vector=np.asarray(service.encoder([expansion_query(plan)]),dtype=np.float32)
+                            if vector.shape!=(1,384) or not np.isfinite(vector).all() or np.linalg.norm(vector)&lt;1e-8:raise ValueError('Invalid expansion vector')
+                            vector/=np.linalg.norm(vector,axis=1,keepdims=True)
+                            extra_values,extra_labels=index.search(vector,min(60,len(records)))
+                        primary_ids={i for i,_ in candidates}
+                        extra=[(records[int(label)]['library_book_id'],float(value)) for label,value in zip(extra_labels[0],extra_values[0]) if 0&lt;=label&lt;len(records) and records[int(label)]['library_book_id'] not in primary_ids]
+                        candidates.extend(extra);extra_ids={i for i,_ in extra}
+                    ids=[i for i,_ in candidates];scores=dict(candidates);generation=status['active_generation_id']
+                    hnsw=True;provider='TENANT_SEMANTIC'
+                except (HTTPException,OSError,ValueError):fallback=True
+            else:fallback=True
+            if fallback:provider='LOCAL_FALLBACK'
+        with catalogue.read_context(library_id,actor,staff=staff) as (library,membership,canonical):
+            if hnsw and store.fingerprint(store.source_records(library_id))!=manifest['source_fingerprint']:
+                hnsw=False;fallback=True;ids=None;provider='LOCAL_FALLBACK'
+            if not hnsw:plan.kg_expansion_used=False;plan.expanded_subjects=[];plan.kg_generation=None
+            pipeline=catalogue.usable(library_id,staff=staff)
+            if ids is not None:pipeline.append({'$match':{'library_book_id':{'$in':ids}}})
+            if plan.subjects:pipeline.append({'$match':{'subjects':{'$all':plan.subjects}}})
+            if runtime is not None:
+                pipeline.extend(runtime.pushdown(plan))
+                raw=runtime.collect(store.collection('library_books'),pipeline)
+            else:raw=list(store.collection('library_books').aggregate([*pipeline,{'$limit':STRUCTURED_LIMIT}]))
+            rows=catalogue.hydrate(library_id,actor,raw,canonical,staff=staff)
+            rows=[row for row in rows if (runtime.matches if runtime else matches)(plan,row) and (not filters or not filters.get('circulation_status') or row.get('circulation_status')==filters['circulation_status'])]
+            if fallback and plan.semantic_text:
+                terms=normalize(plan.semantic_text).split()
+                rows=[row for row in rows if all(term in normalize(' '.join([row.get('title',''), ' '.join(row.get('authors',[])), ' '.join(row.get('subjects',[])),row.get('description') or ''])) for term in terms)]
+            if hnsw:
+                rows.sort(key=lambda row:-scores.get(row['library_book_id'],-1))
+                depth=artifacts.PARAMETERS['reranking_count'];extra=[r for r in rows if r['library_book_id'] in extra_ids];reserve=min(depth//5,len(extra))
+                rows=[r for r in rows if r['library_book_id'] not in extra_ids][:depth-reserve]+extra[:reserve]
+                if service.reranker and rows:
+                    with service.model_lock:ranked=service.reranker([[plan.ranking_query(),artifacts.embedding_text(r)] for r in rows])
+&gt;                   if len(ranked)!=len(rows) or not np.isfinite(ranked).all():raise HTTPException(503,'Library ranking is temporarily unavailable.')
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   fastapi.exceptions.HTTPException: 503: Library ranking is temporarily unavailable.
+
+search\query_execution.py:289: HTTPException</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_search_authority_failure_never_becomes_fallback[cache]" time="0.361"><failure message="Failed: DID NOT RAISE HTTPException">client = &lt;starlette.testclient.TestClient object at 0x000001B8D73967D0&gt;
+library = &lt;function library.&lt;locals&gt;.create at 0x000001B886C8C220&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x000001B8D7395290&gt;
+stage = 'cache'
+
+    @pytest.mark.parametrize('stage', ['cache', 'reranker', 'hydrate'])
+    def test_tenant_search_authority_failure_never_becomes_fallback(client, library, monkeypatch, stage):
+        library_id, _, _, worker, reranker = ready(client, library)
+        denied = Mock(side_effect=HTTPException(403, 'Fixture authority denied'))
+        if stage == 'cache':
+            monkeypatch.setattr(worker.cache, 'load', denied)
+        elif stage == 'reranker':
+            reranker.side_effect = denied
+        else:
+            monkeypatch.setattr(catalogue, 'hydrate', denied)
+&gt;       with pytest.raises(HTTPException) as error:
+E       Failed: DID NOT RAISE HTTPException
+
+tests\institution_v2g\test_search_runtime.py:95: Failed</failure></testcase><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_search_authority_failure_never_becomes_fallback[reranker]" time="0.417" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_search_authority_failure_never_becomes_fallback[hydrate]" time="0.347" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_ready_uses_tenant_hnsw" time="0.353" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_fallback_states[test_tenant_not_built_uses_local_fallback]" time="0.131" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_fallback_states[test_tenant_building_uses_local_fallback]" time="0.162" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_fallback_states[test_tenant_failed_uses_local_fallback]" time="0.182" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_fallback_states[test_tenant_stale_safe_behavior]" time="0.148" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_hnsw_generation_matches_selected_library" time="0.429" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_hnsw_no_global_filler" time="0.449" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_hnsw_no_cross_library_results" time="0.462" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_semantic_nonliteral_query" time="0.434" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_semantic_result_not_dependent_on_exact_keyword" time="0.368" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_hnsw_candidates_are_reranked" time="0.379" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_final_results_are_canonical_hydrated" time="0.375" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_archived_record_removed_after_hydration" time="0.333" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_stale_excludes_now_ineligible[delete]" time="0.349" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_stale_excludes_now_ineligible[foreign]" time="0.322" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_stale_excludes_now_ineligible[no_format]" time="0.346" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_hnsw_ready_kg_unavailable_search_still_works[NOT_BUILT]" time="0.410" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_hnsw_ready_kg_unavailable_search_still_works[FAILED]" time="0.396" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_search_kg_usage_classified" time="0.357" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_search_does_not_require_kg" time="0.398" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_catalogue_exact_title_still_works" time="0.408" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_catalogue_subject_filter_still_works" time="0.444" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_inventory_deterministic_lookup[accession_number]" time="1.143" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_inventory_deterministic_lookup[isbn_13]" time="0.198" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_inventory_deterministic_lookup[shelf_location]" time="0.241" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_inventory_deterministic_lookup[barcode]" time="0.239" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_tenant_real_http_route_selects_semantic" time="0.458" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_inventory_barcode_lookup_is_tenant_scoped" time="0.197" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_inventory_current_shelf_not_stale_search_text" time="0.134" /><testcase classname="tests.institution_v2g.test_search_runtime" name="test_global_discovery_uses_global_semantic_provider" time="0.040" /></testsuite></testsuites>

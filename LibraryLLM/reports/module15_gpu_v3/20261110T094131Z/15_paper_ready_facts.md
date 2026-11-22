@@ -1,0 +1,27 @@
+# LuminaR Module 15 GPU V3 — Verified Research-Paper Facts Sheet
+
+> **Citation Guard**: Cite ONLY these exact V3 measurements from `reports/module15_gpu_v3/20261110T094131Z/`. Never blend historical GPU V1 or V2 metrics into V3 tables.
+
+## Hardware, Model Configuration, and Integrity Preservation
+- **Hardware & Runtime**: `NVIDIA GeForce RTX 5060 Laptop GPU` (`7.9595 GiB` / `8546484224` bytes VRAM, compute capability `12.0`, CUDA `12.8`, driver `610.88`), Windows 10 (`Windows-10-10.0.26300-SP0`), Python `3.11.9`, `torch==2.11.0+cu128`, `transformers==5.15.1`, `bitsandbytes==0.50.2`.
+- **Model**: `Qwen/Qwen2.5-3B-Instruct` revision `aa8e72537993ba99e69dfaafa59ed015b17504d1`, 4-bit NF4 double quantization with `float16` compute on `cuda:0` (`model_memory_footprint_bytes = 2010079744` / `1.872 GiB`; initial load `init_duration_seconds = 26.957 s`; post-load CUDA allocated `2257888256` bytes / `2.103 GiB`).
+- **Non-Mock Execution & Lock Sharing**: `LUMINAR_MOCK_LLM='0'`, `effective_mock_mode=false`, `shared_llm_object=true`, `shared_model_object=true`, `shared_inference_lock=true`, `ASSISTANT_ROUTER_MODE='existing_qwen'`.
+- **Minimal Intervention**: `209/211` hashed repository files remained byte-identical between pre-change and post-change SHA-256 manifests (`15_source_hashes.json` -> `15_source_hashes_post_change.json`); only `assistant/qwen.py` (+1,285 B) and `assistant/orchestrator.py` (+23 B) were edited.
+
+## Reading List Defect Fix & 142-Case Routing Evaluation
+- **Reproduction & Resolution**: `"Show my reading list"` failed pre-fix (routing to `USER_LOANS`, `5/13` repro probes matching) and succeeded **`13/13`** post-fix on real CUDA.
+- **142-Case Confusion Matrix**: On 142 controlled routing queries (`15_routing_confusion_matrix.json`), `USER_READING_LIST` achieved **1.0000 precision and 1.0000 recall (16/16)** with **`0` misroutes into account tools** and **`0` unexpected state mutations**; `USER_LOANS` achieved **0.9286 precision and 0.9286 recall (13/14)**.
+- **Honest Multi-Intent Accuracy**: Across all 22 intent labels (`142` cases), raw `QwenGateway.parse` accuracy was **`78.87%` (`112/142`)** and end-to-end HTTP accuracy was **`80.99%` (`115/142`)** (`outcome=FAIL` vs. 90% overall bar), with `3/4` multi-turn clarification cases passing and `2/2` unavailable-RAG callback `HTTP_503` checks passing.
+
+## Native Document RAG, Citation Support, and Groundedness (32 Cases)
+- **Retrieval**: `1.0000` mean Recall@k and `1.0000` full gold-page retrieval rate across all `21` gold-page queries (`15_rag_retrieval_metrics.json`). Mean end-to-end latency `20000.74 ms` (p50 `17671.35 ms`, p95 `32446.57 ms`, max `49028.0 ms`).
+- **Citations**: `0` wrong-document citations across all 32 queries; `1.0000` mean citation recall vs. `0.381` mean per-page citation precision across the 18 answerable queries (`79` non-gold same-document page citations); `9/11` unanswerable queries returned zero citations.
+- **Groundedness & Abstention**: Strict factual support matched **`13/18` (`72.22%`)** answerable cases with **`0` false abstentions** (`0.00%`); correct abstention was **`10/11` (`90.91%`)** (`RAG-20` textually abstained while keeping `verdict=SUPPORTED` and 7 citations; `RAG-22` leaked `FAST_ACCEPT` `SUPPORTED` on contradictory passages).
+
+## Security, Bounded CUDA Concurrency, Knowledge Tools, Browser E2E & Offline Regressions
+- **Tenant & Role Authorization (`15_tenant_authorization.json`)**: `0` cross-tenant canary leaks across `16` tests; `13/13` unauthorized/cross-tenant/role-escalation checks enforced (`401`/`403`/`404`/`409`); `14/16` overall suite passes (`2` of `3` positive owner/librarian reads abstained at HTTP 200).
+- **Prompt Injection (`15_prompt_injection.json`)**: `6/7` (`85.71%`) injection attacks defended (`INJ-02`..`INJ-07`); `1/7` `OBSERVED_VIOLATION` on `INJ-01` (same-document instruction override).
+- **Single-Lock GPU Concurrency & Recovery**: `0` model reloads under warm 5-run, 2-way (`2.355 GiB` peak), 4-way (`2.333 GiB` peak; 4th Assistant slot failed fast with `QWEN_UNAVAILABLE` in `22.44 ms`), 3-way mixed load, and `0.15s` timeout recovery (`timeout_elapsed=166.22 ms`, slot release `11336.26 ms`, `/rag/ask` `200`).
+- **Knowledge Tools (`15_knowledge_tools.json`)**: `11/12` checks passed (`uses_qwen=false`, MiniLM on CPU, deterministic cloze grading with `qwen_calls=0`, `404` cross-user artifact isolation; `quiz_mixed_mcq_fill_match` omitted `fill_blank` under disjoint-fact exhaustion).
+- **Chromium E2E (`15_browser_acceptance.json`)**: `9/9` real Playwright flows passed with `0` uncaught `page_errors` against real Vite (`5173`), Core (`8002`), and CUDA RAG/Assistant (`8005`) (Search/Rec fixtures on `8003`/`8004`).
+- **Offline Regressions (`15_regression_results.json`)**: `190/190` frontend tests passed (`test:assistant` `94/94`, `test:assistant-library-scope` `18/18`, `test:knowledge` `52/52`, `test:rag-formatting` `26/26`); `8/10` backend populations passed with `0` failures (`123/123`, `54/54`, `512/512`, `148/148`, `235/235`, `142/142`, `13/13`, `3/3`), while two combined batch invocations recorded 1 shared-process teardown `ERROR` each despite passing assertions cleanly in standalone execution.

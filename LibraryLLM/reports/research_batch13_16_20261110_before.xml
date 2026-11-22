@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="2.136" timestamp="2026-11-10T10:59:21.123789+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2e.test_analytics" name="test_undated_publication_is_not_a_completed_event[dates0]" time="1.397"><failure message="assert 2 == 1">client = &lt;starlette.testclient.TestClient object at 0x0000025D219D5BD0&gt;
+known = ('97e464c4-1518-47f2-b8b2-6858713a156f', 'c1ec7833-e847-40a6-9e3d-ed9e5fe052e2', 'd5bd37a9-834f-46fb-8102-5ce406e95b9a')
+database = Database(MongoClient(host=['127.0.0.1:61365'], document_class=dict, tz_aware=False, connect=True), 'luminar_institution_v2e_test_d4813537101e41189ff79f18fa801338')
+dates = {}
+
+    @pytest.mark.parametrize('dates', [{}, {'start_at': None, 'end_at': None}])
+    def test_undated_publication_is_not_a_completed_event(client, known, database, dates):
+        database.events.insert_one({'library_id': known[0], 'scope': 'LIBRARY',
+            'event_id': str(uuid4()), 'status': 'PUBLISHED', 'published_at': RECENT,
+            'created_at': RECENT, 'updated_at': RECENT, 'revision': 1, **dates})
+        events = payload(client, known)['events']
+&gt;       assert events['completed'] == 1
+E       assert 2 == 1
+
+tests\institution_v2e\test_analytics.py:356: AssertionError</failure></testcase><testcase classname="tests.institution_v2e.test_analytics" name="test_undated_publication_is_not_a_completed_event[dates1]" time="0.200"><failure message="assert 2 == 1">client = &lt;starlette.testclient.TestClient object at 0x0000025D21A7D450&gt;
+known = ('995341b9-6785-4635-ba2d-b1e49b23a322', 'ce936c9c-2dee-4577-a25b-347b25d20fd2', 'ac43dac3-b922-4d41-97b7-fd4ec39b1bf2')
+database = Database(MongoClient(host=['127.0.0.1:61365'], document_class=dict, tz_aware=False, connect=True), 'luminar_institution_v2e_test_d4813537101e41189ff79f18fa801338')
+dates = {'start_at': None, 'end_at': None}
+
+    @pytest.mark.parametrize('dates', [{}, {'start_at': None, 'end_at': None}])
+    def test_undated_publication_is_not_a_completed_event(client, known, database, dates):
+        database.events.insert_one({'library_id': known[0], 'scope': 'LIBRARY',
+            'event_id': str(uuid4()), 'status': 'PUBLISHED', 'published_at': RECENT,
+            'created_at': RECENT, 'updated_at': RECENT, 'revision': 1, **dates})
+        events = payload(client, known)['events']
+&gt;       assert events['completed'] == 1
+E       assert 2 == 1
+
+tests\institution_v2e\test_analytics.py:356: AssertionError</failure></testcase></testsuite></testsuites>

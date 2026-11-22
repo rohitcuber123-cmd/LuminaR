@@ -1,0 +1,510 @@
+{
+  "started_at": "2026-11-02T09:47:56.367900+00:00",
+  "mode": "REAL_QWEN; controlled Global retrieval; real tenant native retrieval",
+  "cases": [
+    {
+      "id": "GLOBAL-RECENT-1",
+      "query": "Show database books.",
+      "http": 200,
+      "elapsed_ms": 8056.181,
+      "intent": "SEARCH_BOOKS",
+      "books": [
+        "G-book-01",
+        "G-book-02",
+        "G-book-03",
+        "G-book-04",
+        "G-book-05",
+        "G-book-06",
+        "G-book-07",
+        "G-book-08",
+        "G-book-09",
+        "G-book-10"
+      ],
+      "availability": [
+        {
+          "book": "G-book-01",
+          "available": 2
+        },
+        {
+          "book": "G-book-02",
+          "available": 1
+        },
+        {
+          "book": "G-book-03",
+          "available": 2
+        },
+        {
+          "book": "G-book-04",
+          "available": 1
+        },
+        {
+          "book": "G-book-05",
+          "available": 1
+        },
+        {
+          "book": "G-book-06",
+          "available": 1
+        },
+        {
+          "book": "G-book-07",
+          "available": 1
+        },
+        {
+          "book": "G-book-08",
+          "available": 1
+        },
+        {
+          "book": "G-book-09",
+          "available": 1
+        },
+        {
+          "book": "G-book-10",
+          "available": 0
+        }
+      ],
+      "response_text": "I found 10 matching books.",
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-2",
+      "query": "Tell me about the second one.",
+      "http": 200,
+      "elapsed_ms": 4394.342,
+      "intent": "BOOK_DETAILS",
+      "books": [
+        "G-book-02"
+      ],
+      "availability": [
+        {
+          "book": "G-book-02",
+          "available": 1
+        }
+      ],
+      "response_text": "Verified book details are shown below.",
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-3",
+      "query": "Compare the first and third.",
+      "http": 200,
+      "elapsed_ms": 11357.438,
+      "intent": "COMPARE_BOOKS",
+      "books": [
+        "G-book-01",
+        "G-book-03"
+      ],
+      "availability": [
+        {
+          "book": "G-book-01",
+          "available": 2
+        },
+        {
+          "book": "G-book-03",
+          "available": 2
+        }
+      ],
+      "response_text": "Compare the verified catalogue metadata and availability below.",
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-4",
+      "query": "Which is easier for beginners?",
+      "http": 200,
+      "elapsed_ms": 8229.078,
+      "intent": "COMPARE_BOOKS",
+      "books": [
+        "G-book-01",
+        "G-book-02",
+        "G-book-03",
+        "G-book-04"
+      ],
+      "availability": [
+        {
+          "book": "G-book-01",
+          "available": 2
+        },
+        {
+          "book": "G-book-02",
+          "available": 1
+        },
+        {
+          "book": "G-book-03",
+          "available": 2
+        },
+        {
+          "book": "G-book-04",
+          "available": 1
+        }
+      ],
+      "response_text": "What matters most to you \u2014 subject coverage, rating, availability, or your reading goal?",
+      "clarification": {
+        "reason": "What matters most to you \u2014 subject coverage, rating, availability, or your reading goal?",
+        "choices": [],
+        "type": "CRITERIA_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-5",
+      "query": "Show books similar to the last one.",
+      "http": 200,
+      "elapsed_ms": 4261.359,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "response_text": "Select one more book and I can compare them.",
+      "clarification": {
+        "reason": "Select one more book and I can compare them.",
+        "choices": [],
+        "type": "INSUFFICIENT_SELECTION"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-6",
+      "query": "Is that book available?",
+      "http": 200,
+      "elapsed_ms": 4451.951,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "response_text": "Which books are you referring to?",
+      "clarification": {
+        "reason": "Which books are you referring to?",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-7",
+      "query": "Does the first have a digital version?",
+      "http": 200,
+      "elapsed_ms": 4649.268,
+      "intent": "CHECK_AVAILABILITY",
+      "books": [
+        "G-book-01"
+      ],
+      "availability": [
+        {
+          "book": "G-book-01",
+          "available": 2
+        }
+      ],
+      "response_text": "Network Foundations: available (2 available copies, 2 total).",
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-8",
+      "query": "Which recommendation should I choose?",
+      "http": 200,
+      "elapsed_ms": 7508.808,
+      "intent": "COMPARE_BOOKS",
+      "books": [
+        "G-book-01",
+        "G-book-02",
+        "G-book-03",
+        "G-book-04"
+      ],
+      "availability": [
+        {
+          "book": "G-book-01",
+          "available": 2
+        },
+        {
+          "book": "G-book-02",
+          "available": 1
+        },
+        {
+          "book": "G-book-03",
+          "available": 2
+        },
+        {
+          "book": "G-book-04",
+          "available": 1
+        }
+      ],
+      "response_text": "What matters most to you \u2014 subject coverage, rating, availability, or your reading goal?",
+      "clarification": {
+        "reason": "What matters most to you \u2014 subject coverage, rating, availability, or your reading goal?",
+        "choices": [],
+        "type": "CRITERIA_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "GLOBAL-RECENT-9",
+      "query": "Compare the selected book with the current page book.",
+      "http": 200,
+      "elapsed_ms": 5856.602,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "response_text": "That position is not in the current book list.",
+      "clarification": {
+        "reason": "That position is not in the current book list.",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-1",
+      "query": "Show database books.",
+      "http": 200,
+      "elapsed_ms": 4972.06,
+      "intent": "SEARCH_BOOKS",
+      "books": [
+        "A-book-03",
+        "A-book-04",
+        "A-book-07"
+      ],
+      "availability": [
+        {
+          "book": "A-book-03",
+          "available": 2
+        },
+        {
+          "book": "A-book-04",
+          "available": 1
+        },
+        {
+          "book": "A-book-07",
+          "available": 1
+        }
+      ],
+      "response_text": "I found 3 matching books.",
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-2",
+      "query": "Tell me about the second one.",
+      "http": 200,
+      "elapsed_ms": 4896.384,
+      "intent": "BOOK_CONTENT_QUESTION",
+      "books": [],
+      "availability": [],
+      "response_text": "Choose an authorized document from this library.",
+      "clarification": null,
+      "errors": [
+        "SCOPED_DOCUMENT_REQUIRED"
+      ]
+    },
+    {
+      "id": "A-RECENT-3",
+      "query": "Compare the first and third.",
+      "http": 200,
+      "elapsed_ms": 15252.47,
+      "intent": "COMPARE_BOOKS",
+      "books": [
+        "A-book-10",
+        "A-book-08"
+      ],
+      "availability": [
+        {
+          "book": "A-book-10",
+          "available": 0
+        },
+        {
+          "book": "A-book-08",
+          "available": 1
+        }
+      ],
+      "response_text": "Compare the verified catalogue metadata and availability below.",
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-4",
+      "query": "Which is easier for beginners?",
+      "http": 200,
+      "elapsed_ms": 8971.18,
+      "intent": "COMPARE_BOOKS",
+      "books": [
+        "A-book-10",
+        "A-book-09",
+        "A-book-08",
+        "A-book-07"
+      ],
+      "availability": [
+        {
+          "book": "A-book-10",
+          "available": 0
+        },
+        {
+          "book": "A-book-09",
+          "available": 1
+        },
+        {
+          "book": "A-book-08",
+          "available": 1
+        },
+        {
+          "book": "A-book-07",
+          "available": 1
+        }
+      ],
+      "response_text": "What matters most to you \u2014 subject coverage, rating, availability, or your reading goal?",
+      "clarification": {
+        "reason": "What matters most to you \u2014 subject coverage, rating, availability, or your reading goal?",
+        "choices": [],
+        "type": "CRITERIA_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-5",
+      "query": "Show books similar to the last one.",
+      "http": 200,
+      "elapsed_ms": 7497.126,
+      "intent": "RECOMMEND_FROM_BOOK",
+      "books": [
+        "A-book-02",
+        "A-book-09",
+        "A-book-10",
+        "A-book-06",
+        "A-book-03",
+        "A-book-07",
+        "A-book-08",
+        "A-book-05",
+        "A-book-04"
+      ],
+      "availability": [
+        {
+          "book": "A-book-02",
+          "available": 1
+        },
+        {
+          "book": "A-book-09",
+          "available": 1
+        },
+        {
+          "book": "A-book-10",
+          "available": 0
+        },
+        {
+          "book": "A-book-06",
+          "available": 1
+        },
+        {
+          "book": "A-book-03",
+          "available": 2
+        },
+        {
+          "book": "A-book-07",
+          "available": 1
+        },
+        {
+          "book": "A-book-08",
+          "available": 1
+        },
+        {
+          "book": "A-book-05",
+          "available": 1
+        },
+        {
+          "book": "A-book-04",
+          "available": 1
+        }
+      ],
+      "response_text": "Here are books related to your selected book.",
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-6",
+      "query": "Is that book available?",
+      "http": 200,
+      "elapsed_ms": 5158.389,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "response_text": "Which books are you referring to?",
+      "clarification": {
+        "reason": "Which books are you referring to?",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-7",
+      "query": "Does the first have a digital version?",
+      "http": 200,
+      "elapsed_ms": 4914.687,
+      "intent": "CHECK_AVAILABILITY",
+      "books": [
+        "A-book-10"
+      ],
+      "availability": [
+        {
+          "book": "A-book-10",
+          "available": 0
+        }
+      ],
+      "response_text": "A Unavailable Network: unavailable (0 available copies, 1 total).",
+      "clarification": null,
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-8",
+      "query": "Which recommendation should I choose?",
+      "http": 200,
+      "elapsed_ms": 5879.238,
+      "intent": "COMPARE_BOOKS",
+      "books": [
+        "A-book-10",
+        "A-book-09",
+        "A-book-08",
+        "A-book-07"
+      ],
+      "availability": [
+        {
+          "book": "A-book-10",
+          "available": 0
+        },
+        {
+          "book": "A-book-09",
+          "available": 1
+        },
+        {
+          "book": "A-book-08",
+          "available": 1
+        },
+        {
+          "book": "A-book-07",
+          "available": 1
+        }
+      ],
+      "response_text": "What matters most to you \u2014 subject coverage, rating, availability, or your reading goal?",
+      "clarification": {
+        "reason": "What matters most to you \u2014 subject coverage, rating, availability, or your reading goal?",
+        "choices": [],
+        "type": "CRITERIA_AMBIGUITY"
+      },
+      "errors": []
+    },
+    {
+      "id": "A-RECENT-9",
+      "query": "Compare the selected book with the current page book.",
+      "http": 200,
+      "elapsed_ms": 6101.488,
+      "intent": "CLARIFICATION",
+      "books": [],
+      "availability": [],
+      "response_text": "That position is not in the current book list.",
+      "clarification": {
+        "reason": "That position is not in the current book list.",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "errors": []
+    }
+  ],
+  "completion_note": "Preserved intermediate runtime observations; final source SHA-verified runtime and final observations are separate."
+}

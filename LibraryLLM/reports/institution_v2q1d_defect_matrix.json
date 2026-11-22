@@ -1,0 +1,107 @@
+[
+  {
+    "id": "B_VALIDATION",
+    "classification": "CONFIRMED_VALIDATION_STAGE_DEFECT",
+    "input": "What calibration code is recorded?",
+    "observed": "A3/3 supported; B3/3 unsupported despite fact at validator input.",
+    "status": "UNRESOLVED_IN_APPLICATION; protected proposal not applied",
+    "evidence": [
+      "institution_v2q1d_private_B_analysis.json",
+      "institution_v2q1d_private_stages.jsonl",
+      "institution_v2q1d_protected_validator_proposal.json"
+    ]
+  },
+  {
+    "id": "PAIR_REFERENCE",
+    "classification": "CONFIRMED_REPRESENTATION_AND_DECODING_DEFECT",
+    "input": "Compare the first and third.",
+    "observed": "Contextual canonical IDs were discouraged; private UUID decoding stalled.",
+    "status": "REPAIRED_IN_MEASURED_GLOBAL_A_B_CASES",
+    "evidence": [
+      "institution_v2q1d_ordinal_finite_ids.json",
+      "institution_v2q1d_thread_stacks.log",
+      "institution_v2q1d_finite_decoder_corrected_tests.log"
+    ]
+  },
+  {
+    "id": "SINGULAR_REFERENCE",
+    "classification": "CONFIRMED_UNGROUNDED_REFERENCE",
+    "input": "Is that book available?",
+    "observed": "Model selected THIRD from ten results without one identified focus.",
+    "status": "REJECTED_WITH_CLARIFICATION; no alternate book substituted",
+    "evidence": [
+      "institution_v2q1d_ordinal_closure_guarded.json",
+      "tests/institution_v2q_ai/test_v2q1d_context_pairs.py",
+      "institution_v2q1d_closure_focused.log"
+    ]
+  },
+  {
+    "id": "PLAIN_OVERVIEW",
+    "classification": "CONFIRMED_INTERMEDIATE_ROUTING_REGRESSION",
+    "input": "Tell me about the second one.",
+    "observed": "A/B changed from catalogue details to reading-proof request during prompt development.",
+    "status": "REPAIRED;6/6 final second-item and third-item introduction cases returned BOOK_DETAILS",
+    "evidence": [
+      "institution_v2q1d_ordinal_overviews.json"
+    ]
+  },
+  {
+    "id": "MAIN_TOPIC",
+    "classification": "REPRODUCIBLE_QUALITY_LIMITATION",
+    "input": "What is the main topic of the first book?",
+    "observed": "Related overview phrasing still clarified or requested content.",
+    "status": "REMAINS_LIMITED; not promoted to PASS",
+    "evidence": [
+      "institution_v2q1d_ordinal_overviews.json"
+    ]
+  },
+  {
+    "id": "MIXED_PAGE_SELECTION",
+    "classification": "EXPECTED_CLARIFICATION_UNSUPPORTED_COMPOSITION",
+    "input": "Compare the selected book with the current page book.",
+    "observed": "Existing selection precedence/single-scope contract preserved; no arbitrary scope union.",
+    "status": "CLARIFICATION; no new composite reference feature",
+    "evidence": [
+      "institution_v2q1d_ordinal_final_acceptance.json"
+    ]
+  },
+  {
+    "id": "SIMILAR_AND_PREFERENCES",
+    "classification": "MIXED_SUPPORTED_BEHAVIOR_AND_MODEL_ROUTING_LIMITATIONS",
+    "input": "Show books similar to the last one; Which recommendation should I choose?",
+    "observed": "Local seed/choice guidance improved private cases; Global fixture related-book and broad preference quality remain incomplete.",
+    "status": "PARTIAL; ownership is separate from relevance",
+    "evidence": [
+      "institution_v2q1d_ordinal_final_acceptance.json",
+      "institution_v2q1d_recommendations.json"
+    ]
+  },
+  {
+    "id": "BROWSER",
+    "classification": "ENVIRONMENT_BLOCKER",
+    "observed": "Chrome unavailable through connected API; marked in-app tabs twice disappeared.",
+    "status": "PARTIAL; remaining B chat/document/revocation/no-match checks not run",
+    "evidence": [
+      "institution_v2q1d_browser_observations.json"
+    ]
+  },
+  {
+    "id": "LIVE_METADATA",
+    "classification": "OBSERVED_DRIFT_WITH_UNVERIFIED_ATTRIBUTION",
+    "observed": "Audit+5, membership+1 and security digest changed; no owned fixture IDs found in these live collections.",
+    "status": "NOT_REVERTED_OR_REBASELINED",
+    "evidence": [
+      "institution_v2q1d_preservation_drift.json"
+    ]
+  },
+  {
+    "id": "INDEPENDENT_RELEVANCE",
+    "classification": "UNAVAILABLE_INDEPENDENT_LABELS",
+    "observed": "70 review-ready rows;0 human labels.",
+    "status": "UNASSIGNED; no relevance metrics",
+    "evidence": [
+      "institution_v2q1d_relevance_review.json",
+      "institution_v2q1d_relevance_review.md"
+    ]
+  }
+]

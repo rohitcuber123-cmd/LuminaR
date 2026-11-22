@@ -1,0 +1,132 @@
+{
+  "historical_cpu": {
+    "date": "2026-10-31",
+    "method": "native Python isolated pure document_grounding functions; synthetic inputs; no app, model, database, GPU or network",
+    "checks": [
+      {
+        "name": "explicit definition accepted",
+        "passed": true
+      },
+      {
+        "name": "heading alone rejected",
+        "passed": true
+      },
+      {
+        "name": "negative definition rejected",
+        "passed": true
+      },
+      {
+        "name": "foreign document excluded",
+        "passed": true
+      },
+      {
+        "name": "compound question not classified as definition",
+        "passed": true
+      }
+    ]
+  },
+  "prior_gpu_regressions": {
+    "status": "PASS",
+    "freshness": "carried forward, not rerun",
+    "prior": {
+      "status": "PASS",
+      "fresh_runs": [
+        {
+          "scope": "tests/test_assistant_backend.py tests/test_assistant_semantic_router.py tests/institution_v2o2/test_grounding_boundary.py",
+          "result": "110 passed, 1 warning in 36.97s",
+          "isolation": "mock Qwen/tools and synthetic grounding fixtures"
+        },
+        {
+          "scope": "tests/institution_v2o2/test_contract_mutations.py",
+          "result": "54 passed in 31.39s"
+        }
+      ],
+      "direct_contract": "reviewed_rag_payload(current bytes) returned exact legacy hash",
+      "actual_sha256": "4a1141649a4ce9b4bce6413627c27557f5817bb8718a4e842a4d12021bd89de3",
+      "legacy_projection_sha256": "0e78a7c780f691b14c8e3a3337f62054e4c117f0c2df7828099d80da90a793c6",
+      "cause": "Current bytes are exact reviewed SHA; contract removes specifically enumerated grounding changes and restores one prior line to obtain frozen hash. Mixed CRLF/LF (1130 CRLF, 1275 LF); current Git blob matches HEAD after Git normalization. Newline conversion alone is not established as full cause; historical snapshot 746652... differs from current raw bytes.",
+      "historical": "2026-10-31 five helper checks are historical and excluded from fresh totals"
+    },
+    "scope": "Controlled model and synthetic fixtures, not live service."
+  },
+  "new_live": {
+    "isolation": "separate Mongo server 127.0.0.1:29037 and database; synthetic users; real application login and Assistant HTTP handler; Qwen resident; controlled synthetic Global Search provider; real core handlers; document callback deliberately unavailable",
+    "model_id": "Qwen/Qwen2.5-3B-Instruct",
+    "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "is_loaded_in_4bit": true,
+    "router": "existing_qwen",
+    "shared_gateway_identity": true,
+    "cases": [
+      {
+        "id": "missing_auth",
+        "http": 401,
+        "latency_ms": 188.4,
+        "intent": null,
+        "clarification": null,
+        "error_codes": [],
+        "book_count": 0,
+        "message": null
+      },
+      {
+        "id": "search",
+        "http": 200,
+        "latency_ms": 5529.6,
+        "intent": "SEARCH_BOOKS",
+        "clarification": null,
+        "error_codes": [],
+        "book_count": 1,
+        "message": null
+      },
+      {
+        "id": "clarify",
+        "http": 200,
+        "latency_ms": 2973.9,
+        "intent": "CLARIFICATION",
+        "clarification": {
+          "reason": "Which books are you referring to? Select a book or give its title or catalogue work_id.",
+          "choices": [],
+          "type": "REFERENCE_AMBIGUITY"
+        },
+        "error_codes": [],
+        "book_count": 0,
+        "message": null
+      },
+      {
+        "id": "reading_list",
+        "http": 200,
+        "latency_ms": 3104.7,
+        "intent": "USER_LOANS",
+        "clarification": null,
+        "error_codes": [],
+        "book_count": 0,
+        "message": null
+      },
+      {
+        "id": "unsupported",
+        "http": 200,
+        "latency_ms": 3571.4,
+        "intent": "CLARIFICATION",
+        "clarification": {
+          "reason": "Which books are you referring to?",
+          "choices": [],
+          "type": "REFERENCE_AMBIGUITY"
+        },
+        "error_codes": [],
+        "book_count": 0,
+        "message": "Which books are you referring to?"
+      },
+      {
+        "id": "document_unavailable",
+        "http": 200,
+        "latency_ms": 9148.9,
+        "intent": "GENERAL_LIBRARY_HELP",
+        "clarification": null,
+        "error_codes": [],
+        "book_count": 0,
+        "message": null
+      }
+    ],
+    "login_status": 200
+  },
+  "note": "Different populations; no aggregate or performance comparison."
+}

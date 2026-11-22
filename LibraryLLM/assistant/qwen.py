@@ -4,6 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 import json
 import logging
 import os
+import re
 from threading import BoundedSemaphore
 from time import perf_counter
 from contextvars import copy_context
@@ -86,6 +87,74 @@ class SelectedContextDecodingSchema(CompactAssistantDecodingSchema):
         schema = super().model_json_schema()
         schema['required'] = ['i', 'c', 's', 'g']
         return schema
+
+
+def contextual_decoding_schema(base, message, context):
+    """Bound ID decoding to existing context/literal IDs; authority stays in the resolver."""
+    from assistant.semantic import literal_ids
+    ids = []
+    for key in ('selected_books', 'page_books', 'previous_comparison'):
+        ids.extend(book['work_id'] for book in context.get(key, []) if book.get('work_id'))
+    for key in ('active_result_context', 'previous_recommendations'):
+        ids.extend(context.get(key, {}).get('work_ids', []))
+    ids.extend(context.get('last_referenced_work_ids', []))
+    ids.extend(sorted(value for value in literal_ids(message) if re.fullmatch(
+        r'OL\d+W|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}', value)))
+    ids = list(dict.fromkeys(ids))
+    if not ids or len(ids) > 64:
+        return base
+
+    class ContextualSchema:
+        @classmethod
+        def model_json_schema(cls):
+            schema = base.model_json_schema()
+            # An explicit finite choice avoids the installed enforcer's long
+            # free-form ID parsing path. Every other schema constraint remains.
+            schema['properties']['w']['items'] = {'type':'string', 'enum':ids}
+            return schema
+    return ContextualSchema
+
+
+def ambiguous_deictic_reference(message, context, decision):
+    """Reject an ungrounded singular referent, without choosing another book."""
+    if not re.search(r'\b(?:this|that)\s+(?:book|one)\b', message, re.I):
+        return False
+    if (decision.reference_scope == ReferenceScope.NONE
+            and decision.intent in {Intent.SEARCH_BOOKS, Intent.RECOMMEND_BOOKS}):
+        return False
+    if (decision.reference_scope in {ReferenceScope.EXPLICIT_BOOK, ReferenceScope.ACCOUNT}
+            or re.search(r'\b(?:first|second|third|fourth|last|[1-4](?:st|nd|rd|th))\b', message, re.I)):
+        return False
+    pools = {
+        ReferenceScope.SELECTED_BOOKS: [b['work_id'] for b in context.get('selected_books', [])],
+        ReferenceScope.CURRENT_PAGE_BOOK: [b['work_id'] for b in context.get('page_books', [])],
+        ReferenceScope.PREVIOUS_COMPARISON: [b['work_id'] for b in context.get('previous_comparison', [])],
+        ReferenceScope.PREVIOUS_RECOMMENDATIONS: context.get('previous_recommendations', {}).get('work_ids', []),
+        ReferenceScope.RECENT_RESULTS: context.get('active_result_context', {}).get('work_ids', []),
+    }
+    pools[ReferenceScope.NONE] = (pools[ReferenceScope.SELECTED_BOOKS]
+        or pools[ReferenceScope.RECENT_RESULTS] or pools[ReferenceScope.CURRENT_PAGE_BOOK]
+        or context.get('last_referenced_work_ids', []))
+    pool = pools.get(decision.reference_scope, [])
+    if pools[ReferenceScope.SELECTED_BOOKS] and decision.reference_scope in {
+            ReferenceScope.CURRENT_PAGE_BOOK, ReferenceScope.RECENT_RESULTS,
+            ReferenceScope.PREVIOUS_COMPARISON, ReferenceScope.PREVIOUS_RECOMMENDATIONS}:
+        pool = pools[ReferenceScope.SELECTED_BOOKS]
+    from assistant.semantic import literal_ids
+    if len(decision.resolved_work_ids) == 1 and decision.resolved_work_ids[0] in literal_ids(message):
+        return False
+    if len(pool) == 1:
+        return False
+    focus = [wid for wid in context.get('last_referenced_work_ids', []) if wid in pool]
+    if len(focus) != 1:
+        return True
+    if decision.resolved_work_ids:
+        return decision.resolved_work_ids != focus
+    if decision.reference_position == 'FOCUS':
+        return False
+    positions = {'FIRST':0,'SECOND':1,'THIRD':2,'FOURTH':3,'LAST':-1}
+    index = positions.get(decision.reference_position)
+    return index is None or not -len(pool) <= index < len(pool) or pool[index] != focus[0]
 
 
 def validated_intent(raw):
@@ -184,15 +253,22 @@ class QwenGateway:
             'selected=recommend from selected seeds; seed_recommend=explicit recommendations using one seed; '
             'graph=discover OTHER catalogue books related to ONE book; compare=facts/field/preference; '
             'availability=stock/copies/borrowability; details=detail; '
-            'borrow/return/reserve=explicit proposed transactions; loans/reservations/history/fees/list=own account; '
-            'add_list/remove_list/clear_list=reading list edits; alternatives=available related books; '
+            'borrow/return/reserve=explicit proposed transactions; '
+            'loans=active borrowed checkouts and due dates; reservations=active holds; '
+            'history=past borrowing history; fees=unpaid fines/balance; '
+            'list=view saved reading list/want-to-read books; '
+            'add_list/remove_list/clear_list=add/remove/clear saved reading list items; alternatives=available related books; '
             'help=explain or general library help; book_question=content; '
-            'document_question=uploaded-source question; clarify=missing referent; unknown=unsupported request. '
-            's: explicit for literally named books (t titles,a authors,w literal IDs); otherwise '
+            'document_question=uploaded-source question; clarify=missing referent; unknown=unsupported (e.g. loan renewal, admin). '
+            's: explicit for literally named books (t titles,a authors,w literal IDs); account for own loans/reservations/history/fees/list; otherwise '
             'selected if there are selected_books, then comparison/recommendations/recent, then page, then none. '
-            'Own existing borrowing records use loans/account; an instruction to borrow uses borrow/action. '
+            'For s=account use distinct i: active checkouts=loans, past loans=history, holds=reservations, fines=fees, saved/reading list/want-to-read=list; never map reading list, history, holds or fees to loans. '
+            'Topic search (s=none,i=search) and s=account never emit e or d. '
             'Topic discovery unrelated to a seed uses search/none,q. Never use selected when selection is absent. '
-            't and w contain only entities literally supplied in CURRENT REQUEST, never copied from selected context. '
+            't contains only titles literally supplied in CURRENT REQUEST. '
+            'w contains literal IDs or exact canonical work_ids copied from the chosen populated context for the referenced books. '
+            'For multiple positions such as first and third, copy those exact IDs in order into w and omit e. '
+            'Never invent IDs or copy an ID from a different reference scope. '
             'Current selection is explicit user-provided book context, in supplied order. '
             'A free-form explanation about current books uses help/selected/explain, including one selected work. '
             'Relationship explanations need no choice criterion and discover no other books. '
@@ -209,14 +285,22 @@ class QwenGateway:
             'Missing books: clarify,s=ambiguous,d=reference. Comparison with one book: d=selection. '
             'Generic recommendations do not need criteria. '
             'An elliptical follow-up inherits last_intent and resolves its reference. '
+            'Account/upload/unsupported examples (independent of selected_books): '
+            '"view my saved reading list" -> {"i":"list","c":1,"s":"account","g":"account"}; '
+            '"which books have I saved" -> {"i":"list","c":1,"s":"account","g":"account"}; '
+            '"view my borrowing history" -> {"i":"history","c":1,"s":"account","g":"account"}; '
+            '"check my unpaid fines" -> {"i":"fees","c":1,"s":"account","g":"account"}; '
+            '"remove Dune from my reading list" -> {"i":"remove_list","c":1,"s":"explicit","t":["Dune"],"g":"action"}; '
+            '"renew my current loan" -> {"i":"unknown","c":1,"s":"none","g":"none"}; '
+            '"what does this uploaded document say" (when document_id is in CONTEXT) -> {"i":"document_question","c":1,"s":"page","g":"content"}. '
             'Examples (with a selected pair unless stated otherwise): '
             '"explain the thematic link among my selections" -> {"g":"explain","s":"selected","e":"ALL","i":"help","c":1}; '
             '"give me an introduction to Dune" -> {"g":"detail","s":"explicit","i":"details","c":1,"t":["Dune"]}; '
             '"introduce my selection" -> {"g":"detail","s":"selected","e":"ALL","i":"details","c":1}; '
             '"analyze the opening scene" -> {"g":"content","s":"selected","e":"FIRST","i":"book_question","c":1}; '
             '"discover astronomy books for a novice" -> {"i":"search","c":1,"s":"none","q":"astronomy for beginners","g":"discover"}; '
-            '"availability of item two" -> {"i":"availability","c":1,"s":"selected","e":"SECOND","g":"status"}; '
-            '"list the volumes checked out on my account" -> {"g":"account","s":"account","i":"loans","c":1}; '
+            'For stock ordinals, use the actual populated source, not the selection assumed by other examples. '
+            '"show the volumes checked out on my account" -> {"i":"loans","c":1,"s":"account","g":"account"}; '
             '"contrast the metadata" -> {"i":"compare","c":1,"s":"selected","e":"ALL","g":"facts"}; '
             '"help me pick a reading choice" -> {"i":"compare","c":1,"s":"selected","e":"ALL","g":"preference","d":"criteria"}; '
             '"best for improving consistency" -> {"g":"preference","s":"selected","e":"ALL","i":"compare","c":1,"p":"improving consistency"}; '
@@ -229,21 +313,91 @@ class QwenGateway:
             'A literally named title outside the current selection must use s=explicit,t=that title; never substitute the first selected book. '
             'Output only relevant keys.\nCONTEXT: ' +
             json.dumps(context, ensure_ascii=False, separators=(',', ':')) +
+            '\nREFERENCE EXAMPLES FOR THIS CONTEXT: ' + json.dumps(
+                self._reference_examples(context), separators=(',', ':')) +
             '\nCURRENT REQUEST: ' + json.dumps(message, ensure_ascii=False)
         )
+        if not context.get('selected_books') and (context.get('active_result_context', {}).get('work_ids') or context.get('page_books')):
+            # Selected-pair demonstrations are misleading when the tray is
+            # empty. Replace only demonstrations, never the model decision.
+            start = prompt.index('Examples (with a selected pair unless stated otherwise): ')
+            end = prompt.index('Other keys:', start)
+            prompt = (prompt[:start] + 'Examples for the actual populated context: ' +
+                json.dumps(self._reference_examples(context), separators=(',', ':')) +
+                '. ' + prompt[end:])
         # Exactly one routing generation. Invalid schema never triggers another
         # model pass or opportunistic catalogue lookup.
         schema = SelectedContextDecodingSchema if context.get('current_selection_exists') else CompactAssistantDecodingSchema
+        schema = contextual_decoding_schema(schema, message, context)
+        from assistant.digital_availability import digital_question
+        if digital_question(message):
+            prompt += ('\nThis asks about digital access to the referenced books. Use availability/status; '
+                'retain their actual canonical scope and reference. An it/that-one follow-up after a '
+                'single book uses the last focus, not another position. Online access is checked by Core, '
+                'never inferred from physical copies. No document content generation is needed.')
         raw = await self.generate(prompt, schema, 'intent')
         try:
             with timed('intent_json_validation'):
-                return validated_intent(raw.strip())
+                decision = validated_intent(raw.strip())
+                if ambiguous_deictic_reference(message, context, decision):
+                    raise ValueError('A singular book reference is not established by the current context.')
+                return decision
         except (ValueError, TypeError):
             LOG.info('semantic_intent_validation_failed')
             from assistant.schemas import ReferenceScope, ClarificationType
             return AssistantIntentDecision(intent=Intent.CLARIFICATION,
                 reference_scope=ReferenceScope.AMBIGUOUS, clarification_needed=True,
                 clarification_type=ClarificationType.REFERENCE_AMBIGUITY)
+
+    @staticmethod
+    def _reference_examples(context):
+        # Prompt guidance only. The resolver still validates every model scope
+        # and position; no selected/page/explicit decision is rewritten here.
+        if context.get('selected_books'):
+            scope = 'selected'
+            work_ids = [book['work_id'] for book in context['selected_books']]
+        elif context.get('active_result_context', {}).get('work_ids'):
+            scope = 'recent'
+            work_ids = context['active_result_context']['work_ids']
+        elif context.get('page_books'):
+            scope = 'page'
+            work_ids = [book['work_id'] for book in context['page_books']]
+        else:
+            return {'Find books about astronomy': {'i':'search','c':1,'s':'none','g':'discover','q':'astronomy'},
+                'Is the second one available?': {'i':'clarify','c':1,'s':'ambiguous','d':'reference'}}
+        examples = {'populated_scope': scope,
+            'Is the second one available?': {'i':'availability','c':1,'s':scope,'e':'SECOND','g':'status'},
+            'Tell me about the second one.': {'i':'details','c':1,'s':scope,'e':'SECOND','g':'detail'},
+            'Tell me about the third one.': {'i':'details','c':1,'s':scope,'e':'THIRD','g':'detail'},
+            'explicit_title_rule': 'A literally named title still uses explicit, never this contextual scope.',
+            'explicit_page_rule': 'A request explicitly about the open page uses page only when page_books exists.',
+            'empty_scope_rule': 'Never choose selected without selected_books, or page without page_books.'}
+        # Do not demonstrate positions which do not exist in this context.
+        # The resolver still rejects invalid positions; no decision is repaired
+        # or redirected to a different book after model generation.
+        for question, count in [
+            ('Is the second one available?', 2),
+            ('Tell me about the second one.', 2),
+            ('Tell me about the third one.', 3),
+        ]:
+            if len(work_ids) < count:
+                examples[question] = {'i':'clarify','c':1,'s':'ambiguous','d':'reference'}
+        if len(work_ids) == 1:
+            examples['Is this book available?'] = {
+                'i':'availability','c':1,'s':scope,'w':[work_ids[0]],'g':'status'}
+        if len(work_ids) >= 3:
+            examples['Compare the first and third.'] = {
+                'i':'compare','c':1,'s':scope,'w':[work_ids[0],work_ids[2]],'g':'facts'}
+        examples['Find books about astronomy.'] = {
+            'i':'search','c':1,'s':'none','q':'astronomy','g':'discover'}
+        if len(work_ids) > 1:
+            examples['Which recommendation should I choose?'] = {
+                'i':'compare','c':1,'s':scope,'e':'ALL','g':'preference','d':'criteria'}
+        if work_ids and re.fullmatch(
+                r'[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}', work_ids[-1]):
+            examples['Show books similar to the last one.'] = {
+                'i':'seed_recommend','c':1,'s':scope,'e':'LAST','g':'discover'}
+        return examples
 
     async def respond(self, message, response):
         if response.intent == Intent.GENERAL_LIBRARY_HELP and response.books:

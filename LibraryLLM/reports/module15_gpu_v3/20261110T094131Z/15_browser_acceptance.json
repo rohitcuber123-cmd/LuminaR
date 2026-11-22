@@ -1,0 +1,67 @@
+{
+  "test_id": "M15-V3-P9-BROWSER-ACCEPTANCE",
+  "executed_at_utc": "2026-11-10T12:33:45.532008+00:00",
+  "execution_type": "real_chromium_playwright_against_isolated_services",
+  "sample_size": 9,
+  "passed_count": 9,
+  "page_errors": [],
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+  ],
+  "screenshots": [
+    "assistant_reading_list_and_flows.png",
+    "document_rag_answer.png",
+    "study_tools_quiz_ui.png"
+  ],
+  "flows": [
+    {
+      "flow": "unauthenticated_redirect",
+      "url": "http://127.0.0.1:5173/login",
+      "passed": true
+    },
+    {
+      "flow": "ui_login",
+      "url": "http://127.0.0.1:5173/reading-list",
+      "passed": true
+    },
+    {
+      "flow": "search_page_results",
+      "passed": true
+    },
+    {
+      "flow": "assistant_search_reading_list_loans_clarify_continue",
+      "loading_state_observed": true,
+      "reading_list_has_saved_book": true,
+      "continuation_has_dracula": true,
+      "passed": true
+    },
+    {
+      "flow": "institution_switch_and_staff_block",
+      "final_url": "http://127.0.0.1:5173/libraries/176f08cb-3780-4ace-a63b-1ab0f4bea664",
+      "passed": true
+    },
+    {
+      "flow": "document_upload_rag_and_citation",
+      "passed": true
+    },
+    {
+      "flow": "unavailable_model_error_and_recovery",
+      "error_visible": true,
+      "recovered": true,
+      "passed": true
+    },
+    {
+      "flow": "document_study_tools_ui",
+      "passed": true
+    },
+    {
+      "flow": "ui_logout_and_post_logout_guard",
+      "url": "http://127.0.0.1:5173/login",
+      "passed": true
+    }
+  ],
+  "outcome": "PASS",
+  "note": "Controlled isolated Search/Recommendation fixtures used for 8003/8004; real Core (8002), real CUDA RAG/Assistant/Knowledge (8005), real Vite (5173), and ephemeral MongoDB."
+}

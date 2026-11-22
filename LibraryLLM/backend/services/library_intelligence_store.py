@@ -17,11 +17,10 @@ def intelligence_barrier(library_id,job=None):
 
     No canonical book/membership/holding mutation occurs in this barrier. Convert
     index-only errors into a handled outcome so the shared barrier is released.
-    The tag also permits explicit fenced recovery after a true worker crash.
+    Insertion-time ownership tagging prevents any pre-tag barrier gap.
     """
-    with library_mutation(library_id,wait_seconds=30,durable=True):
-        if job:
-            collection('locks').update_one({'_id':library_id},{'$set':{'intelligence_job_id':job['job_id']}})
+    options={'intelligence_job_id':canonical(job['job_id']),'intelligence_target':job['target']} if job else {}
+    with library_mutation(library_id,wait_seconds=30,durable=True,**options):
         try:yield
         except HTTPException:raise
         except Exception as error:raise HTTPException(409,'WORKER_CRASH') from error

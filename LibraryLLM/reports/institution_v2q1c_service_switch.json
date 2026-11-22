@@ -1,0 +1,81 @@
+{
+  "authorized": true,
+  "scope": "Stop local RAG8005, run isolated one-Qwen diagnostic, restore regular service",
+  "stopped": [
+    {
+      "pid": 28952,
+      "created": 1793561330.5058067,
+      "args": [
+        "C:\\Program Files\\Python311\\python.exe",
+        "scripts/institution_v2q1c_lab.py",
+        "serve-retrieval"
+      ]
+    },
+    {
+      "pid": 31556,
+      "created": 1793561330.4843159,
+      "args": [
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\python.exe",
+        "scripts/institution_v2q1c_lab.py",
+        "serve-retrieval"
+      ]
+    },
+    {
+      "pid": 21480,
+      "created": 1793559573.6192832,
+      "args": [
+        "C:\\Program Files\\Python311\\python.exe",
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\uvicorn.exe",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    },
+    {
+      "pid": 21276,
+      "created": 1793559573.57791,
+      "args": [
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\python.exe",
+        "D:\\SDC\\LibraryLLM\\.venv\\Scripts\\uvicorn.exe",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    },
+    {
+      "pid": 20372,
+      "created": 1793559573.5638802,
+      "args": [
+        "uvicorn",
+        "rag.api:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8005"
+      ]
+    }
+  ],
+  "restored": true,
+  "second_switch_observation": [
+    {
+      "pid": 33312,
+      "created": 1793601037.868494
+    },
+    {
+      "pid": 33384,
+      "created": 1793601037.8808897
+    },
+    {
+      "pid": 33408,
+      "created": 1793601037.896293
+    }
+  ],
+  "diagnostic_interruption": "Owned lab disappeared; regular RAG process was externally restarted; repeat authorized single-service switch.",
+  "restored_health_http": 200,
+  "restored_command": ".venv/Scripts/python.exe -m uvicorn rag.api:app --host 127.0.0.1 --port 8005",
+  "diagnostic_lab_stopped": true
+}

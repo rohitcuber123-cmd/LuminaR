@@ -1,0 +1,306 @@
+{
+  "module": 15,
+  "verification_version": "gpu_v3",
+  "generated_at_utc": "2026-11-10T12:49:41.200296+00:00",
+  "evidence_dir": "reports/module15_gpu_v3/20261110T094131Z",
+  "overall_verdict": "PARTIAL",
+  "historical_baseline_note": "Historical V1 (reports/module15_gpu_verification/) and V2 (reports/module15_gpu_v2/ = FAIL) are preserved separately and never merged with V3 counts.",
+  "environment": {
+    "os": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "gpu_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "gpu_memory_bytes": 8546484224,
+    "gpu_memory_gib": 7.9595,
+    "cuda_runtime": "12.8",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.15.1",
+    "bitsandbytes": "0.50.2",
+    "git_head": "606f0dfce3970bea8e6fc2b62d243433d1a66b8a",
+    "git_branch": "codex/search-v11-finalization",
+    "effective_LUMINAR_MOCK_LLM": "0",
+    "effective_mock_mode": false,
+    "router_mode": "existing_qwen"
+  },
+  "source_preservation": {
+    "pre_change_hashed_files": 211,
+    "unchanged_files": 209,
+    "modified_files": [
+      "assistant/orchestrator.py",
+      "assistant/qwen.py"
+    ],
+    "changed_details": {
+      "assistant/orchestrator.py": {
+        "pre_sha256": "c0be3c0fae83301496097043af4429ddd6a1c73c40839172241af461207b1730",
+        "post_sha256": "7b299d20ec86fe980ec9a37fe70bc749369237b6ef65d5a3054a384b852a023a",
+        "pre_size_bytes": 75141,
+        "post_size_bytes": 75164,
+        "lf_count": 0,
+        "crlf_count": 1121
+      },
+      "assistant/qwen.py": {
+        "pre_sha256": "15b153cd6616ca95ef3c62b8416ab37f04be60a224205b1aadfcc30d9155b30d",
+        "post_sha256": "ea7e2952eed6f0d9cd65b39472dd6d45daf1273a871a6cde89b7d76dca3d4eb2",
+        "pre_size_bytes": 28982,
+        "post_size_bytes": 30267,
+        "lf_count": 0,
+        "crlf_count": 448
+      }
+    },
+    "qa_source_contract_matches": true
+  },
+  "suites": {
+    "p1_reading_list_reproduction": {
+      "pre_fix_matched": 5,
+      "post_fix_matched": 13,
+      "sample_size": 13,
+      "show_my_reading_list_fixed": true,
+      "outcome": "PASS"
+    },
+    "p1_routing_regression_142": {
+      "sample_size": 142,
+      "parsed_correct": 112,
+      "parsed_accuracy": 0.7887,
+      "http_correct": 115,
+      "http_accuracy": 0.8099,
+      "reading_list_precision_http": 1.0,
+      "reading_list_recall_http": 1.0,
+      "user_loans_precision_http": 0.9286,
+      "user_loans_recall_http": 0.9286,
+      "reading_list_to_account_misroutes": 0,
+      "unexpected_state_mutations": 0,
+      "outcome": "FAIL"
+    },
+    "p1_http_smoke": {
+      "sample_size": 4,
+      "passed_count": 4,
+      "outcome": "PASS"
+    },
+    "p1_clarification_lifecycle": {
+      "sample_size": 4,
+      "passed_count": 3,
+      "outcome": "FAIL"
+    },
+    "p1_unavailable_callback_503": {
+      "sample_size": 2,
+      "passed_count": 2,
+      "outcome": "PASS"
+    },
+    "p2_model_identity_and_native_inference": {
+      "model": "Qwen/Qwen2.5-3B-Instruct",
+      "revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "quantization": {
+        "is_loaded_in_4bit": true,
+        "load_in_4bit": true,
+        "bnb_4bit_quant_type": "nf4",
+        "bnb_4bit_use_double_quant": true,
+        "bnb_4bit_compute_dtype": "torch.float16"
+      },
+      "device": "cuda:0",
+      "shared_model_object": true,
+      "shared_inference_lock": true,
+      "init_duration_seconds": 26.957,
+      "model_memory_footprint_bytes": 2010079744,
+      "post_load_cuda_allocated_bytes": 2257888256,
+      "native_probes_passed": 5,
+      "native_probes_total": 5,
+      "outcome": "PASS"
+    },
+    "p3_native_rag_benchmark": {
+      "sample_size": 32,
+      "queries_with_gold_pages": 21,
+      "mean_retrieval_recall_at_k": 1.0,
+      "full_gold_page_retrieval_rate": 1.0,
+      "latency_ms": {
+        "sample_size": 32,
+        "mean": 20000.74,
+        "p50": 17671.35,
+        "p95": 32446.57,
+        "max": 49028.0
+      },
+      "incorrect_document_citations": 0,
+      "mean_citation_precision_answerable": 0.381,
+      "mean_citation_recall_answerable": 1.0,
+      "incorrect_page_citation_count": 79,
+      "not_supported_citations_cleared_count": 9,
+      "answerable_count": 18,
+      "factual_match_count": 13,
+      "answer_factual_support_rate": 0.7222,
+      "false_abstention_count": 0,
+      "unanswerable_count": 11,
+      "correct_abstention_count": 10,
+      "correct_abstention_rate": 0.9091,
+      "adjudication_required_count": 3,
+      "outcome": "PARTIAL"
+    },
+    "p4_tenant_authorization": {
+      "sample_size": 16,
+      "passed_count": 14,
+      "negative_denials_passed": "13/13",
+      "positive_owner_reads_with_canary_echoed": "1/3",
+      "canary_leaks_observed": 0,
+      "outcome": "FAIL"
+    },
+    "p5_prompt_injection": {
+      "sample_size": 7,
+      "exercised_count": 7,
+      "successful_defense_count": 6,
+      "observed_violation_count": 1,
+      "outcome": "FAIL"
+    },
+    "p6_gpu_contention_and_timeout": {
+      "model_reload_count": 0,
+      "same_model_id_maintained": true,
+      "warm_assistant_mean_ms": 2966.06,
+      "warm_assistant_p95_ms": 3504.84,
+      "warm_rag_mean_ms": 14640.99,
+      "warm_rag_p95_ms": 16825.7,
+      "concurrent_2way_peak_cuda_bytes": 2528740352,
+      "concurrent_4way_peak_cuda_bytes": 2505083904,
+      "timeout_configured_seconds": 0.15,
+      "timeout_elapsed_ms": 166.22,
+      "time_until_slot_available_ms": 11336.26,
+      "recovery_request_intent": "USER_READING_LIST",
+      "subsequent_http_rag_status": 200,
+      "subsequent_http_rag_ms": 13955.45,
+      "outcome": "PASS"
+    },
+    "p7_knowledge_tools": {
+      "sample_size": 12,
+      "passed_count": 11,
+      "uses_qwen": false,
+      "outcome": "FAIL"
+    },
+    "p8_browser_acceptance": {
+      "sample_size": 9,
+      "passed_count": 9,
+      "page_errors_count": 0,
+      "screenshots": [
+        "assistant_reading_list_and_flows.png",
+        "document_rag_answer.png",
+        "study_tools_quiz_ui.png"
+      ],
+      "outcome": "PASS"
+    },
+    "p9_regressions_and_contracts": {
+      "total_collected_backend_test_nodes": 6962,
+      "backend_populations": [
+        {
+          "population": "v1_v2_baseline_110_rerun",
+          "exit_code": 0,
+          "tests": 123,
+          "passed": 123,
+          "failed": 0,
+          "tail_summary": "123 passed, 1 warning in 18.21s"
+        },
+        {
+          "population": "v2o2_contract_mutations_54_rerun",
+          "exit_code": 0,
+          "tests": 54,
+          "passed": 54,
+          "failed": 0,
+          "tail_summary": "54 passed in 50.96s"
+        },
+        {
+          "population": "assistant_and_routing_suite",
+          "exit_code": 0,
+          "tests": 512,
+          "passed": 512,
+          "failed": 0,
+          "tail_summary": "512 passed, 1 warning in 12.44s"
+        },
+        {
+          "population": "rag_grounding_and_citations",
+          "exit_code": 0,
+          "tests": 148,
+          "passed": 148,
+          "failed": 0,
+          "tail_summary": "148 passed, 6 warnings in 22.83s"
+        },
+        {
+          "population": "knowledge_tools_unit_suite",
+          "exit_code": 0,
+          "tests": 235,
+          "passed": 235,
+          "failed": 0,
+          "tail_summary": "235 passed, 201 warnings in 62.25s (0:01:02)"
+        },
+        {
+          "population": "authorization_and_institutional_docs",
+          "exit_code": 1,
+          "tests": 214,
+          "passed": 213,
+          "failed": 1,
+          "tail_summary": "214 passed, 201 warnings, 1 error in 105.23s (0:01:45)"
+        },
+        {
+          "population": "protected_contracts_v2o3",
+          "exit_code": 0,
+          "tests": 142,
+          "passed": 142,
+          "failed": 0,
+          "tail_summary": "142 passed in 135.98s (0:02:15)"
+        },
+        {
+          "population": "loan_renewal_suite",
+          "exit_code": 0,
+          "tests": 13,
+          "passed": 13,
+          "failed": 0,
+          "tail_summary": "13 passed, 1 warning in 1.63s"
+        },
+        {
+          "population": "loans_and_search_integration",
+          "exit_code": 1,
+          "tests": 84,
+          "passed": 83,
+          "failed": 1,
+          "tail_summary": "84 passed, 1 warning, 1 error in 47.68s"
+        },
+        {
+          "population": "q4_recommendation_concurrency_standalone",
+          "exit_code": 0,
+          "tests": 3,
+          "passed": 3,
+          "failed": 0,
+          "tail_summary": "3 passed, 1 warning in 4.83s"
+        }
+      ],
+      "frontend_suites": [
+        {
+          "script": "test:assistant",
+          "exit_code": 0,
+          "tests": 94,
+          "passed": 94,
+          "failed": 0,
+          "ok": true
+        },
+        {
+          "script": "test:assistant-library-scope",
+          "exit_code": 0,
+          "tests": 18,
+          "passed": 18,
+          "failed": 0,
+          "ok": true
+        },
+        {
+          "script": "test:knowledge",
+          "exit_code": 0,
+          "tests": 52,
+          "passed": 52,
+          "failed": 0,
+          "ok": true
+        },
+        {
+          "script": "test:rag-formatting",
+          "exit_code": 0,
+          "tests": 26,
+          "passed": 26,
+          "failed": 0,
+          "ok": true
+        }
+      ],
+      "frontend_total": "190/190 (failed=0)",
+      "outcome": "FAIL"
+    }
+  }
+}

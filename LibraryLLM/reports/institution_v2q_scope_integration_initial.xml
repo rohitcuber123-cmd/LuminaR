@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="9" time="27.655" timestamp="2026-10-31T19:26:41.836426+05:30" hostname="Rohit-pc"><testcase classname="tests.institution_v2q_ai.test_integration" name="test_real_tenant_search_and_local_ids[0]" time="16.440" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_real_tenant_search_and_local_ids[1]" time="1.785" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_real_for_you_local_supplement[0]" time="1.315"><failure message="AssertionError: {'conversation_id': '2448923d101a4595902e164dfb5b4df9', 'intent': 'RECOMMEND_BOOKS', 'message': 'Core cannot be loaded right now.', 'books': [], ...}&#10;assert ([])">fixture = (&lt;starlette.testclient.TestClient object at 0x000001D43E506A50&gt;, ['a93487a8-eef6-4a0f-bd33-8046253277e2', '6e03b03d-90...ies/a93487a8-eef6-4a0f-bd33-8046253277e2/catalogue/source', '/libraries/a93487a8-eef6-4a0f-bd33-8046253277e2/context'])
+index = 0
+
+    @pytest.mark.parametrize('index',[0,1])
+    def test_real_for_you_local_supplement(fixture,index):
+        response=chat(fixture,fixture[1][index],action='RECOMMEND');assert response.status_code==200,response.text
+&gt;       data=response.json();assert data['books'] and not data['errors'],data
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {'conversation_id': '2448923d101a4595902e164dfb5b4df9', 'intent': 'RECOMMEND_BOOKS', 'message': 'Core cannot be loaded right now.', 'books': [], ...}
+E       assert ([])
+
+tests\institution_v2q_ai\test_integration.py:59: AssertionError</failure></testcase><testcase classname="tests.institution_v2q_ai.test_integration" name="test_real_for_you_local_supplement[1]" time="1.195"><failure message="AssertionError: {'conversation_id': '2ac4f79100f944608ee26b6ad0dc7481', 'intent': 'RECOMMEND_BOOKS', 'message': 'Core cannot be loaded right now.', 'books': [], ...}&#10;assert ([])">fixture = (&lt;starlette.testclient.TestClient object at 0x000001D43E524A50&gt;, ['c9e144dc-3e61-45bc-8f21-22293fd36eb8', 'b8fb264e-42...ies/b8fb264e-429d-454a-b039-32dc802c5e5a/catalogue/source', '/libraries/b8fb264e-429d-454a-b039-32dc802c5e5a/context'])
+index = 1
+
+    @pytest.mark.parametrize('index',[0,1])
+    def test_real_for_you_local_supplement(fixture,index):
+        response=chat(fixture,fixture[1][index],action='RECOMMEND');assert response.status_code==200,response.text
+&gt;       data=response.json();assert data['books'] and not data['errors'],data
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: {'conversation_id': '2ac4f79100f944608ee26b6ad0dc7481', 'intent': 'RECOMMEND_BOOKS', 'message': 'Core cannot be loaded right now.', 'books': [], ...}
+E       assert ([])
+
+tests\institution_v2q_ai\test_integration.py:59: AssertionError</failure></testcase><testcase classname="tests.institution_v2q_ai.test_integration" name="test_http_conversation_cross_scope_denied[foreign]" time="1.392" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_http_conversation_cross_scope_denied[global]" time="1.324" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_revocation_denies_existing_conversation" time="1.443" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_foreign_book_reference_cannot_load_metadata" time="1.290" /><testcase classname="tests.institution_v2q_ai.test_integration" name="test_forged_circulation_context_rejected" time="1.165" /></testsuite></testsuites>

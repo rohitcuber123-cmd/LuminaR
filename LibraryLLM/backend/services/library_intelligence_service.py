@@ -9,11 +9,14 @@ def expired(row):
     deadline=row.get('lease_expires_at')
     return not deadline or deadline.replace(tzinfo=timezone.utc)<=store.now()
 def pointer_manifest(library_id,target,row):
+    import hashlib
     path=store.directory(library_id,'search' if target=='SEARCH_INDEX' else 'kg',row['active_generation_id'])
     file=path/'manifest.json'
-    if file.resolve()!=file or store.checksum(file)!=row.get('manifest_checksum'):raise HTTPException(409,'ARTIFACT_CORRUPT')
-    manifest=json.loads(file.read_text(encoding='utf8'))
-    if manifest.get('library_id')!=library_id or manifest.get('generation_id')!=row['active_generation_id'] or manifest.get('target')!=target or manifest.get('source_fingerprint')!=row['source_fingerprint'] or manifest.get('source_generation_id')!=row['source_generation_id']:raise HTTPException(409,'ARTIFACT_CORRUPT')
+    if file.resolve()!=file or file.is_symlink() or not file.is_file():raise HTTPException(409,'ARTIFACT_CORRUPT')
+    raw=file.read_bytes()
+    if hashlib.sha256(raw).hexdigest()!=row.get('manifest_checksum'):raise HTTPException(409,'ARTIFACT_CORRUPT')
+    manifest=json.loads(raw.decode('utf8'))
+    if manifest.get('library_id')!=library_id or manifest.get('generation_id')!=row['active_generation_id'] or manifest.get('target')!=target or manifest.get('source_fingerprint')!=row['source_fingerprint'] or manifest.get('source_generation_id')!=row['source_generation_id'] or (row.get('published_by_job_id') and manifest.get('job_id')!=row.get('published_by_job_id')):raise HTTPException(409,'ARTIFACT_CORRUPT')
     from backend.services.library_intelligence_artifacts import expected_files,MAX_ARTIFACT_BYTES
     if set(manifest['files'])!=expected_files(target,manifest):raise HTTPException(409,'ARTIFACT_CORRUPT')
     for name,digest in manifest['files'].items():
@@ -112,29 +115,122 @@ def reconcile(library_id,actor):
                 if not job or job['state'] not in {'SUCCEEDED','PUBLISHING','RECOVERY_REQUIRED'}:problems.append({'target':target,'code':'ORPHAN_FINAL_GENERATION','generation_id':gen})
         if targets[target]['status']=='STALE':problems.append({'target':target,'code':'SOURCE_FINGERPRINT_CHANGED'})
     return {'library_id':library_id,'dry_run':True,'problems':problems,'targets':targets,'destructive_actions':False}
+def _release_terminal_tagged_lock(library_id,job_id,lock,job):
+    if not job.get('completed_at') or not isinstance(job.get('fence_token'),str) or not job['fence_token']:
+        raise HTTPException(409,'Build ownership must be reconciled.')
+    def still_locked():return bool(store.collection('locks').find_one({'_id':library_id,'holder':lock['holder'],'intelligence_job_id':job_id}))
+    pointer=store.collection('intelligence_targets').find_one({'library_id':library_id,'target':job['target']})
+    if not pointer:
+        if not still_locked():return
+        raise HTTPException(409,'Publication ownership must be reconciled.')
+    if job['state']=='SUCCEEDED':
+        if pointer.get('published_by_job_id')!=job_id or pointer.get('active_generation_id')!=job.get('artifact_generation_id'):
+            if not still_locked():return
+            raise HTTPException(409,'Publication ownership must be reconciled.')
+        if pointer.get('active_job_id') is not None and (pointer.get('active_job_id')!=job_id or pointer.get('fence_token')!=job.get('fence_token')):
+            if not still_locked():return
+            raise HTTPException(409,'Publication ownership must be reconciled.')
+        from backend.services.library_intelligence_artifacts import validate
+        pointer_manifest(library_id,job['target'],pointer);validate(library_id,job['target'],job['artifact_generation_id'])
+        if pointer.get('active_job_id')==job_id:
+            res=store.collection('intelligence_targets').update_one({'library_id':library_id,'target':job['target'],'active_job_id':job_id,'fence_token':job.get('fence_token')},{'$unset':{'active_job_id':'','fence_token':''}})
+            if not res.matched_count and still_locked():
+                raise HTTPException(409,'Publication ownership must be reconciled.')
+        store.build_audit(job,'SUCCEEDED')
+    elif job['state']=='FAILED':
+        if pointer.get('published_by_job_id')==job_id or pointer.get('active_generation_id')==job.get('artifact_generation_id'):
+            if not still_locked():return
+            raise HTTPException(409,'Publication ownership must be reconciled.')
+        if pointer.get('active_job_id') is not None:
+            if pointer.get('active_job_id')!=job_id or pointer.get('fence_token')!=job.get('fence_token'):
+                if not still_locked():return
+                raise HTTPException(409,'Publication ownership must be reconciled.')
+            res=store.collection('intelligence_targets').update_one({'library_id':library_id,'target':job['target'],'active_job_id':job_id,'fence_token':job.get('fence_token')},{'$set':{'state':'FAILED'},'$unset':{'active_job_id':'','fence_token':''}})
+            if not res.matched_count and still_locked():
+                raise HTTPException(409,'Publication ownership must be reconciled.')
+        store.build_audit(job,'FAILED')
+    else:raise HTTPException(409,'Build ownership must be reconciled.')
+    store.collection('locks').delete_one({'_id':library_id,'holder':lock['holder'],'intelligence_job_id':job_id})
+def _fence_active_tagged_lock(library_id,job_id,lock,job):
+    from uuid import uuid4
+    from pymongo import ReturnDocument
+    holder=lock['holder'];intent=lock.get('recovery_intent')
+    if intent is None:
+        old=job.get('fence_token')
+        target=store.collection('intelligence_targets').find_one({'library_id':library_id,'target':job['target']})
+        if not target or target.get('active_job_id')!=job_id or target.get('fence_token')!=old:
+            latest_lock=store.collection('locks').find_one({'_id':library_id,'holder':holder,'intelligence_job_id':job_id})
+            if not latest_lock:return
+            if latest_lock.get('recovery_intent'):intent=latest_lock['recovery_intent']
+            else:raise HTTPException(409,'Publication ownership must be reconciled.')
+        if intent is None:
+            candidate={'job_id':job_id,'target':job['target'],'old_fence':old,'next_fence':str(uuid4())}
+            updated_lock=store.collection('locks').find_one_and_update(
+                {'_id':library_id,'holder':holder,'intelligence_job_id':job_id,'recovery_intent':{'$exists':False}},
+                {'$set':{'recovery_intent':candidate}},return_document=ReturnDocument.AFTER)
+            if not updated_lock:
+                updated_lock=store.collection('locks').find_one({'_id':library_id,'holder':holder,'intelligence_job_id':job_id})
+                if not updated_lock:return
+                if not updated_lock.get('recovery_intent'):raise HTTPException(409,'Publication ownership must be reconciled.')
+            intent=updated_lock['recovery_intent']
+    if (not isinstance(intent,dict) or intent.get('job_id')!=job_id or intent.get('target')!=job['target']
+            or not isinstance(intent.get('next_fence'),str) or not intent['next_fence'] or intent['next_fence']==intent.get('old_fence')):
+        raise HTTPException(409,'Publication ownership must be reconciled.')
+    old_fence=intent.get('old_fence');next_fence=intent['next_fence']
+    t_res=store.collection('intelligence_targets').update_one(
+        {'library_id':library_id,'target':job['target'],'active_job_id':job_id,'$or':[{'fence_token':old_fence},{'fence_token':next_fence}]},
+        {'$set':{'fence_token':next_fence,'state':'RECOVERY_REQUIRED'}})
+    if not t_res.matched_count:
+        if not store.collection('locks').find_one({'_id':library_id,'holder':holder,'intelligence_job_id':job_id}):return
+        raise HTTPException(409,'Publication ownership must be reconciled.')
+    j_res=store.collection('intelligence_jobs').update_one(
+        {'library_id':library_id,'job_id':job_id,'effective_active':True,'$or':[{'fence_token':old_fence},{'fence_token':next_fence}]},
+        {'$set':{'fence_token':next_fence,'state':'RECOVERY_REQUIRED'}})
+    if not j_res.matched_count:
+        if not store.collection('locks').find_one({'_id':library_id,'holder':holder,'intelligence_job_id':job_id}):return
+        raise HTTPException(409,'Build ownership must be reconciled.')
+    t_check=store.collection('intelligence_targets').find_one({'library_id':library_id,'target':job['target'],'active_job_id':job_id,'fence_token':next_fence,'state':'RECOVERY_REQUIRED'},{'_id':1})
+    j_check=store.collection('intelligence_jobs').find_one({'library_id':library_id,'job_id':job_id,'fence_token':next_fence,'state':'RECOVERY_REQUIRED','effective_active':True},{'_id':1})
+    if not t_check or not j_check:
+        if not store.collection('locks').find_one({'_id':library_id,'holder':holder,'intelligence_job_id':job_id}):return
+        raise HTTPException(409,'Build ownership must be reconciled.')
+    store.collection('locks').delete_one({'_id':library_id,'holder':holder,'intelligence_job_id':job_id})
 def recover(library_id,actor,job_id):
     library_id=store.canonical(library_id);job_id=store.canonical(job_id)
     # A true crashed intelligence worker can leave its short metadata barrier.
-    # Fence BOTH publication and job identity before releasing only that tagged
-    # barrier. Never remove a lending/authority/unknown untagged tenant lock.
+    # Fence BOTH publication and job identity (or verify terminal outcome)
+    # before releasing only that tagged barrier. Never remove an untagged lock.
     lock=store.collection('locks').find_one({'_id':library_id,'intelligence_job_id':job_id})
     if lock:
-        job=store.collection('intelligence_jobs').find_one({'library_id':library_id,'job_id':job_id,'effective_active':True})
-        if not job or not expired(job):raise HTTPException(409,'The build worker lease is still active.')
         store.build_guard(library_id,actor,locked=True)
-        token=str(__import__('uuid').uuid4())
-        old=job.get('fence_token')
-        if not store.collection('intelligence_targets').update_one({'library_id':library_id,'target':job['target'],'active_job_id':job_id,'fence_token':old},{'$set':{'fence_token':token,'state':'RECOVERY_REQUIRED'}}).matched_count:raise HTTPException(409,'Publication ownership must be reconciled.')
-        if not store.collection('intelligence_jobs').update_one({'library_id':library_id,'job_id':job_id,'fence_token':old,'effective_active':True},{'$set':{'fence_token':token,'state':'RECOVERY_REQUIRED'}}).matched_count:raise HTTPException(409,'Build ownership must be reconciled.')
-        store.collection('locks').delete_one({'_id':library_id,'holder':lock['holder'],'intelligence_job_id':job_id})
-    store.build_guard(library_id,actor)
+        job=store.collection('intelligence_jobs').find_one({'library_id':library_id,'job_id':job_id})
+        if not job:raise HTTPException(409,'Build ownership must be reconciled.')
+        if lock.get('intelligence_target') is not None and lock.get('intelligence_target')!=job.get('target'):
+            raise HTTPException(409,'Publication ownership must be reconciled.')
+        if not expired(job):raise HTTPException(409,'The build worker lease is still active.')
+        if job.get('effective_active') is False and job.get('state') in ('SUCCEEDED','FAILED'):
+            _release_terminal_tagged_lock(library_id,job_id,lock,job)
+            refreshed=store.collection('intelligence_jobs').find_one({'library_id':library_id,'job_id':job_id})
+            if not refreshed:raise HTTPException(404,'Build job not found.')
+            if not refreshed.get('effective_active'):return store.safe_job(refreshed)
+        elif job.get('effective_active') is True and job.get('state') in ('QUEUED','RUNNING','VALIDATING','PUBLISHING','RECOVERY_REQUIRED'):
+            _fence_active_tagged_lock(library_id,job_id,lock,job)
+        else:raise HTTPException(409,'Build ownership must be reconciled.')
+    else:
+        store.build_guard(library_id,actor)
     with store.library_mutation(library_id,wait_seconds=30,durable=True):
         store.build_guard(library_id,actor,True)
         job=store.collection('intelligence_jobs').find_one({'library_id':library_id,'job_id':job_id})
         if not job:raise HTTPException(404,'Build job not found.')
-        if not job.get('effective_active'):return store.safe_job(job)
+        if not job.get('effective_active'):
+            if job.get('state') not in ('SUCCEEDED','FAILED'):raise HTTPException(409,'Build ownership must be reconciled.')
+            return store.safe_job(job)
+        if job['state'] not in ('QUEUED','RUNNING','VALIDATING','PUBLISHING','RECOVERY_REQUIRED'):
+            raise HTTPException(409,'Build ownership must be reconciled.')
         if job['state']!='RECOVERY_REQUIRED' and not expired(job):raise HTTPException(409,'The build worker is still active.')
-        pointer=store.collection('intelligence_targets').find_one({'library_id':library_id,'target':job['target']}) or {}
+        pointer=store.collection('intelligence_targets').find_one({'library_id':library_id,'target':job['target']})
+        if not pointer:raise HTTPException(409,'Publication ownership must be reconciled.')
+        if pointer.get('active_job_id') not in (None,job_id):raise HTTPException(409,'Publication ownership must be reconciled.')
         succeeded=pointer.get('published_by_job_id')==job_id and pointer.get('active_generation_id')==job['artifact_generation_id']
         if succeeded:
             from backend.services.library_intelligence_artifacts import validate

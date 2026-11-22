@@ -9,6 +9,7 @@ from rag.fast_filter import run_fast_filter
 from rag.query_types import grounded_book_overview, grounded_book_author, ordinary_book_intent, is_informational_book_query
 from rag.book_assets import valid_work_id
 from rag.document_grounding import select_definition_evidence, definition_category
+from rag.generated_answer_verification import bounded_factual_scope, verify_generated_answer
 
 
 # ============================================================
@@ -850,6 +851,21 @@ LIMITATION: '''
             - generation_start
         )
 
+        # Evidence support precedes generation; citation entitlement must also
+        # agree with the final answer in the bounded explicit-fact scope.
+        suppress_sources = False
+        if verdict == "SUPPORTED" and bounded_factual_scope(question, used_items, q_category):
+            answer_check = verify_generated_answer(
+                question, used_items, answer,
+                cited_chunk_ids=tuple(item.get("chunk_id") for item in used_items),
+                selected_source_id=document_id or work_id,
+            )
+            if answer_check.status != "VERIFIED":
+                suppress_sources = True
+                verdict = "NOT_SUPPORTED"
+                if answer_check.status != "ABSTAINED":
+                    answer = "I cannot verify a reliable answer from the selected passages."
+
         # ----------------------------------------------------
         # SOURCES
         # ----------------------------------------------------
@@ -859,7 +875,7 @@ LIMITATION: '''
 
         seen = set()
 
-        for item in ([] if is_document and verdict == "NOT_SUPPORTED" else used_items):
+        for item in ([] if suppress_sources or (is_document and verdict == "NOT_SUPPORTED") else used_items):
 
             # ------------------------------------------------
             # Use chunk_id as primary deduplication key.

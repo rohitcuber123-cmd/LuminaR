@@ -1,0 +1,1113 @@
+{
+  "runtime": {
+    "variant": "final_digital_authority",
+    "pid": 32112,
+    "qwen_model": "Qwen2.5-3B-Instruct NF4 CUDA0; unchanged",
+    "validator_proposal_active": false,
+    "source_sha256": {
+      "assistant/qwen.py": "15b153cd6616ca95ef3c62b8416ab37f04be60a224205b1aadfcc30d9155b30d",
+      "assistant/orchestrator.py": "e22bf1721bfe45e3a645ea56af7919a26b0112fb13acb66a79f9af9cac8cfefe",
+      "assistant/digital_availability.py": "117279291775f5f503f978d4da18b9f97b87c29cf07026d9d8785554b05a89b8",
+      "assistant/schemas.py": "d538096974fccb7b59396c7fd7167a95acfc6b2dd848f257af75ec4e8425604f",
+      "backend/services/book_digital_availability.py": "f5a0c735459f8522474f4459737a4d13b2726b5a85692568a37a9b1b80f5bca4",
+      "rag/qa.py": "4a1141649a4ce9b4bce6413627c27557f5817bb8718a4e842a4d12021bd89de3",
+      "rag/llm.py": "d369e26fcbe458964bf642a057ca79212a63f48a6acf2b1c0a12590003f5cc1b",
+      "rag/citation_boundary.py": "5495a2deab7e240011b529045f53ab26893eb07f4aeefe9f14fb7d4188fadf8b"
+    },
+    "owned_database": "luminar_v2q3_ec69209e37cf484bb01c"
+  },
+  "cases": [
+    {
+      "library": "GLOBAL",
+      "question": "Does this book have a PDF?",
+      "http": 200,
+      "response": {
+        "conversation_id": "9f5306b0b8d045daacd376b4521e2dcc",
+        "intent": "CHECK_AVAILABILITY",
+        "message": "Network Foundations: digital access cannot be verified for your account. A catalogue entry or physical copy does not establish online reading access.",
+        "books": [
+          {
+            "library_id": null,
+            "library_book_id": null,
+            "global_work_id": null,
+            "work_id": "OL910000001W",
+            "title": "Network Foundations",
+            "authors": "Disposable Author",
+            "subjects": "Computer networks; Technical education",
+            "description": null,
+            "average_rating": null,
+            "rating_count": null,
+            "available_copies": 2,
+            "total_copies": 2,
+            "shelf_location": null
+          }
+        ],
+        "comparison": null,
+        "recommendation_mode": null,
+        "seed_work_ids": [],
+        "availability": [],
+        "digital_availability": [
+          {
+            "work_id": "OL910000001W",
+            "library_id": null,
+            "catalogue_present": true,
+            "resource_link_present": false,
+            "asset_present": null,
+            "access_authorized": null,
+            "full_text_accessible": null,
+            "status": "UNKNOWN",
+            "resources": []
+          }
+        ],
+        "actions": [
+          {
+            "type": "VIEW_BOOK",
+            "work_id": "OL910000001W",
+            "action_id": null
+          }
+        ],
+        "clarification": null,
+        "pending_action": null,
+        "account": null,
+        "reading_list": null,
+        "rag": null,
+        "errors": [],
+        "has_more": false,
+        "result_offset": 0,
+        "explanation_available": false,
+        "kg": null
+      },
+      "expected_id": "OL910000001W",
+      "elapsed_ms": 6520.099,
+      "pass": true
+    },
+    {
+      "library": "GLOBAL",
+      "question": "Is this book available?",
+      "http": 200,
+      "response": {
+        "conversation_id": "0805d4396ee443469cb5272a04bf5bc5",
+        "intent": "CHECK_AVAILABILITY",
+        "message": "Network Foundations: available (2 available copies, 2 total).",
+        "books": [
+          {
+            "library_id": null,
+            "library_book_id": null,
+            "global_work_id": null,
+            "work_id": "OL910000001W",
+            "title": "Network Foundations",
+            "authors": "Disposable Author",
+            "subjects": "Computer networks; Technical education",
+            "description": null,
+            "average_rating": null,
+            "rating_count": null,
+            "available_copies": 2,
+            "total_copies": 2,
+            "shelf_location": null
+          }
+        ],
+        "comparison": null,
+        "recommendation_mode": null,
+        "seed_work_ids": [],
+        "availability": [
+          {
+            "work_id": "OL910000001W",
+            "available": true,
+            "available_copies": 2,
+            "total_copies": 2
+          }
+        ],
+        "digital_availability": [],
+        "actions": [
+          {
+            "type": "VIEW_BOOK",
+            "work_id": "OL910000001W",
+            "action_id": null
+          },
+          {
+            "type": "SELECT_BOOK",
+            "work_id": "OL910000001W",
+            "action_id": null
+          },
+          {
+            "type": "RECOMMEND_SIMILAR",
+            "work_id": "OL910000001W",
+            "action_id": null
+          },
+          {
+            "type": "CHECK_AVAILABILITY",
+            "work_id": "OL910000001W",
+            "action_id": null
+          },
+          {
+            "type": "ADD_TO_READING_LIST",
+            "work_id": "OL910000001W",
+            "action_id": null
+          },
+          {
+            "type": "MORE_LIKE_THIS",
+            "work_id": "OL910000001W",
+            "action_id": null
+          }
+        ],
+        "clarification": null,
+        "pending_action": null,
+        "account": null,
+        "reading_list": null,
+        "rag": null,
+        "errors": [],
+        "has_more": false,
+        "result_offset": 0,
+        "explanation_available": false,
+        "kg": null
+      },
+      "expected_id": "OL910000001W",
+      "elapsed_ms": 6412.911,
+      "pass": true
+    },
+    {
+      "library": "A",
+      "question": "Does this book have a PDF?",
+      "http": 503,
+      "response": {
+        "detail": "Library resource unavailable."
+      },
+      "expected_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+      "elapsed_ms": 92.961,
+      "pass": false
+    },
+    {
+      "library": "A",
+      "question": "Is this book available?",
+      "http": 200,
+      "response": {
+        "conversation_id": "db6134f6472943ea9798aa9f740a10f7",
+        "intent": "CHECK_AVAILABILITY",
+        "message": "A Network Foundations: available (2 available copies, 2 total).",
+        "books": [
+          {
+            "library_id": "0b1263a6-0afc-46a0-97af-28c4c3dcb4f9",
+            "library_book_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "global_work_id": null,
+            "work_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "title": "A Network Foundations",
+            "authors": [
+              "Disposable Author"
+            ],
+            "subjects": [
+              "Computer networks",
+              "Technical education"
+            ],
+            "description": null,
+            "average_rating": null,
+            "rating_count": null,
+            "available_copies": 2,
+            "total_copies": 2,
+            "shelf_location": null
+          }
+        ],
+        "comparison": null,
+        "recommendation_mode": null,
+        "seed_work_ids": [],
+        "availability": [
+          {
+            "work_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "available": true,
+            "available_copies": 2,
+            "total_copies": 2
+          }
+        ],
+        "digital_availability": [],
+        "actions": [
+          {
+            "type": "VIEW_BOOK",
+            "work_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "action_id": null
+          },
+          {
+            "type": "SELECT_BOOK",
+            "work_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "action_id": null
+          },
+          {
+            "type": "RECOMMEND_SIMILAR",
+            "work_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "action_id": null
+          },
+          {
+            "type": "CHECK_AVAILABILITY",
+            "work_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "action_id": null
+          },
+          {
+            "type": "ADD_TO_READING_LIST",
+            "work_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "action_id": null
+          },
+          {
+            "type": "MORE_LIKE_THIS",
+            "work_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+            "action_id": null
+          }
+        ],
+        "clarification": null,
+        "pending_action": null,
+        "account": null,
+        "reading_list": null,
+        "rag": null,
+        "errors": [],
+        "has_more": false,
+        "result_offset": 0,
+        "explanation_available": false,
+        "kg": null
+      },
+      "expected_id": "8711baa3-82fb-4e39-8d84-b9d1a423fbe2",
+      "elapsed_ms": 11486.079,
+      "pass": true
+    },
+    {
+      "library": "B",
+      "question": "Does this book have a PDF?",
+      "http": 200,
+      "response": {
+        "conversation_id": "b7c4686200e74e5a879acc28658a2c89",
+        "intent": "CHECK_AVAILABILITY",
+        "message": "B Network Foundations: an authorized digital resource (PDF) is ready to open. Access is checked again when you open it.",
+        "books": [
+          {
+            "library_id": "8b0c8baa-193b-4fa3-87d4-ab343e857429",
+            "library_book_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "global_work_id": null,
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "title": "B Network Foundations",
+            "authors": [
+              "Disposable Author"
+            ],
+            "subjects": [
+              "Computer networks",
+              "Technical education"
+            ],
+            "description": null,
+            "average_rating": null,
+            "rating_count": null,
+            "available_copies": 2,
+            "total_copies": 2,
+            "shelf_location": null
+          }
+        ],
+        "comparison": null,
+        "recommendation_mode": null,
+        "seed_work_ids": [],
+        "availability": [],
+        "digital_availability": [
+          {
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "library_id": "8b0c8baa-193b-4fa3-87d4-ab343e857429",
+            "catalogue_present": true,
+            "resource_link_present": true,
+            "asset_present": true,
+            "access_authorized": true,
+            "full_text_accessible": true,
+            "status": "AUTHORIZED",
+            "resources": [
+              {
+                "kind": "LIBRARY_DOCUMENT",
+                "asset_type": "PDF",
+                "asset_id": "ed90c868-b035-424a-a9f9-f8723542a82f",
+                "href": "/libraries/8b0c8baa-193b-4fa3-87d4-ab343e857429/resources/ed90c868-b035-424a-a9f9-f8723542a82f"
+              }
+            ]
+          }
+        ],
+        "actions": [
+          {
+            "type": "VIEW_BOOK",
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "action_id": null
+          }
+        ],
+        "clarification": null,
+        "pending_action": null,
+        "account": null,
+        "reading_list": null,
+        "rag": null,
+        "errors": [],
+        "has_more": false,
+        "result_offset": 0,
+        "explanation_available": false,
+        "kg": null
+      },
+      "expected_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+      "elapsed_ms": 22949.569,
+      "pass": true
+    },
+    {
+      "library": "B",
+      "question": "Is this book available?",
+      "http": 200,
+      "response": {
+        "conversation_id": "6e44146fe5ff4300b7a62e3884504764",
+        "intent": "CHECK_AVAILABILITY",
+        "message": "B Network Foundations: available (2 available copies, 2 total).",
+        "books": [
+          {
+            "library_id": "8b0c8baa-193b-4fa3-87d4-ab343e857429",
+            "library_book_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "global_work_id": null,
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "title": "B Network Foundations",
+            "authors": [
+              "Disposable Author"
+            ],
+            "subjects": [
+              "Computer networks",
+              "Technical education"
+            ],
+            "description": null,
+            "average_rating": null,
+            "rating_count": null,
+            "available_copies": 2,
+            "total_copies": 2,
+            "shelf_location": null
+          }
+        ],
+        "comparison": null,
+        "recommendation_mode": null,
+        "seed_work_ids": [],
+        "availability": [
+          {
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "available": true,
+            "available_copies": 2,
+            "total_copies": 2
+          }
+        ],
+        "digital_availability": [],
+        "actions": [
+          {
+            "type": "VIEW_BOOK",
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "action_id": null
+          },
+          {
+            "type": "SELECT_BOOK",
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "action_id": null
+          },
+          {
+            "type": "RECOMMEND_SIMILAR",
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "action_id": null
+          },
+          {
+            "type": "CHECK_AVAILABILITY",
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "action_id": null
+          },
+          {
+            "type": "ADD_TO_READING_LIST",
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "action_id": null
+          },
+          {
+            "type": "MORE_LIKE_THIS",
+            "work_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+            "action_id": null
+          }
+        ],
+        "clarification": null,
+        "pending_action": null,
+        "account": null,
+        "reading_list": null,
+        "rag": null,
+        "errors": [],
+        "has_more": false,
+        "result_offset": 0,
+        "explanation_available": false,
+        "kg": null
+      },
+      "expected_id": "c695e4a5-f357-4067-aafa-443b9dc87ea0",
+      "elapsed_ms": 8052.576,
+      "pass": true
+    },
+    {
+      "library": "I",
+      "question": "Does this book have a PDF?",
+      "http": 200,
+      "response": {
+        "conversation_id": "ed5b00c8a5a9407bb31886cedc31954f",
+        "intent": "CHECK_AVAILABILITY",
+        "message": "I Network Foundations: digital access cannot be verified for your account. A catalogue entry or physical copy does not establish online reading access.",
+        "books": [
+          {
+            "library_id": "6a780b63-e6cc-49ff-b9b6-cbbeb34b53c1",
+            "library_book_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "global_work_id": null,
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "title": "I Network Foundations",
+            "authors": [
+              "Disposable Author"
+            ],
+            "subjects": [
+              "Computer networks",
+              "Technical education"
+            ],
+            "description": null,
+            "average_rating": null,
+            "rating_count": null,
+            "available_copies": 2,
+            "total_copies": 2,
+            "shelf_location": null
+          }
+        ],
+        "comparison": null,
+        "recommendation_mode": null,
+        "seed_work_ids": [],
+        "availability": [],
+        "digital_availability": [
+          {
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "library_id": "6a780b63-e6cc-49ff-b9b6-cbbeb34b53c1",
+            "catalogue_present": true,
+            "resource_link_present": false,
+            "asset_present": null,
+            "access_authorized": null,
+            "full_text_accessible": null,
+            "status": "UNKNOWN",
+            "resources": []
+          }
+        ],
+        "actions": [
+          {
+            "type": "VIEW_BOOK",
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "action_id": null
+          }
+        ],
+        "clarification": null,
+        "pending_action": null,
+        "account": null,
+        "reading_list": null,
+        "rag": null,
+        "errors": [],
+        "has_more": false,
+        "result_offset": 0,
+        "explanation_available": false,
+        "kg": null
+      },
+      "expected_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+      "elapsed_ms": 11858.036,
+      "pass": true
+    },
+    {
+      "library": "I",
+      "question": "Is this book available?",
+      "http": 200,
+      "response": {
+        "conversation_id": "9c7e31152d754606bb33b5991950f5b0",
+        "intent": "CHECK_AVAILABILITY",
+        "message": "I Network Foundations: available (2 available copies, 2 total).",
+        "books": [
+          {
+            "library_id": "6a780b63-e6cc-49ff-b9b6-cbbeb34b53c1",
+            "library_book_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "global_work_id": null,
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "title": "I Network Foundations",
+            "authors": [
+              "Disposable Author"
+            ],
+            "subjects": [
+              "Computer networks",
+              "Technical education"
+            ],
+            "description": null,
+            "average_rating": null,
+            "rating_count": null,
+            "available_copies": 2,
+            "total_copies": 2,
+            "shelf_location": null
+          }
+        ],
+        "comparison": null,
+        "recommendation_mode": null,
+        "seed_work_ids": [],
+        "availability": [
+          {
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "available": true,
+            "available_copies": 2,
+            "total_copies": 2
+          }
+        ],
+        "digital_availability": [],
+        "actions": [
+          {
+            "type": "VIEW_BOOK",
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "action_id": null
+          },
+          {
+            "type": "SELECT_BOOK",
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "action_id": null
+          },
+          {
+            "type": "RECOMMEND_SIMILAR",
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "action_id": null
+          },
+          {
+            "type": "CHECK_AVAILABILITY",
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "action_id": null
+          },
+          {
+            "type": "ADD_TO_READING_LIST",
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "action_id": null
+          },
+          {
+            "type": "MORE_LIKE_THIS",
+            "work_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+            "action_id": null
+          }
+        ],
+        "clarification": null,
+        "pending_action": null,
+        "account": null,
+        "reading_list": null,
+        "rag": null,
+        "errors": [],
+        "has_more": false,
+        "result_offset": 0,
+        "explanation_available": false,
+        "kg": null
+      },
+      "expected_id": "232a1b18-ec80-4368-965d-e3711718d0e8",
+      "elapsed_ms": 8455.089,
+      "pass": true
+    }
+  ],
+  "private_rag": [
+    {
+      "iteration": 1,
+      "library": "A",
+      "http": 200,
+      "question": "What calibration code is recorded?",
+      "response": {
+        "question": "What calibration code is recorded?",
+        "depth": "normal",
+        "work_id": "library:0b1263a6-0afc-46a0-97af-28c4c3dcb4f9:asset:9bb076fa-854a-48df-ba88-01c99bdfb327:generation:4b7e2590-727b-4a04-b980-aa34136d37bf",
+        "answer": "The calibration code recorded is ALPHA-SEVEN.",
+        "sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:0b1263a6-0afc-46a0-97af-28c4c3dcb4f9:asset:9bb076fa-854a-48df-ba88-01c99bdfb327:generation:4b7e2590-727b-4a04-b980-aa34136d37bf_000001",
+            "work_id": "library:0b1263a6-0afc-46a0-97af-28c4c3dcb4f9:asset:9bb076fa-854a-48df-ba88-01c99bdfb327:generation:4b7e2590-727b-4a04-b980-aa34136d37bf",
+            "title": null,
+            "author": null,
+            "rerank_score": 2.158370018005371,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "0b1263a6-0afc-46a0-97af-28c4c3dcb4f9",
+            "asset_id": "9bb076fa-854a-48df-ba88-01c99bdfb327"
+          }
+        ],
+        "intent_data": {
+          "intent": "FACTUAL",
+          "actor": "unknown",
+          "action": "record",
+          "target": "calibration code",
+          "polarity": "positive",
+          "temporal_relation": null,
+          "question_focus": null,
+          "tier_used": "Tier 2"
+        },
+        "verdict": "SUPPORTED",
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION",
+        "fast_filter_signals": {
+          "actor_score": 0.0,
+          "target_score": 1.0,
+          "event_score": 0.0,
+          "polarity_aligned": true,
+          "polarity_mismatch": false,
+          "temporal_aligned": true,
+          "temporal_conflict": false,
+          "relationship_check_passed": true,
+          "direction_inverted": false,
+          "actor_in_evidence": false,
+          "target_in_evidence": true,
+          "event_terms_found": 0,
+          "event_terms_total": 1,
+          "negation_in_query": false,
+          "negation_in_evidence": false,
+          "evidence_confirms_action": false,
+          "mere_lexical_cooccurrence": true
+        },
+        "fast_filter_reasons": [
+          "actor 'unknown' absent from evidence",
+          "action 'record' terms absent from evidence",
+          "NEEDS_LLM_VALIDATION: ambiguous signals"
+        ],
+        "retrieval": {
+          "stage_timing_ms": {
+            "candidate_merge": 0.0014999998256826075,
+            "preprocessing": 0.0033999999686784577,
+            "embedding": 83.85,
+            "faiss": 2.54,
+            "reranking": 42.75,
+            "evidence": 4.46,
+            "total": 133.6
+          },
+          "candidate_count": 1,
+          "context_count": 1,
+          "context_characters": 143
+        },
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 10361.46,
+          "retrieval": 133.8,
+          "fast_filter": 0.3,
+          "validation": 1703.52,
+          "generation": 1528.75,
+          "total": 13730.34
+        },
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 10347.38510000011,
+              "tokens_per_second": 5.025424249455976
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 12,
+              "max_new_tokens": 160,
+              "generation_ms": 1699.7696000000815,
+              "tokens_per_second": 7.059780337287727
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 1522.660999999971,
+              "tokens_per_second": 7.224195011233761
+            }
+          ],
+          "queue_ms": 0.0021999999262334313,
+          "structured_tokenizer_setup_ms": 2.3837999997340376,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 10359.965899999906,
+          "intent_calls": 1,
+          "context_ms": 0.03409999999348656,
+          "context_calls": 1,
+          "validator_ms": 1703.409400000055,
+          "validator_calls": 1,
+          "prompt_ms": 0.10939999992842786,
+          "prompt_calls": 1,
+          "total_ms": 13730.461600000126
+        },
+        "library_id": "0b1263a6-0afc-46a0-97af-28c4c3dcb4f9",
+        "asset_id": "9bb076fa-854a-48df-ba88-01c99bdfb327"
+      },
+      "elapsed_ms": 13800.732,
+      "protected_candidate_used": false
+    },
+    {
+      "iteration": 1,
+      "library": "B",
+      "http": 200,
+      "question": "What calibration code is recorded?",
+      "response": {
+        "question": "What calibration code is recorded?",
+        "depth": "normal",
+        "work_id": "library:8b0c8baa-193b-4fa3-87d4-ab343e857429:asset:ed90c868-b035-424a-a9f9-f8723542a82f:generation:091f4d07-90ea-4396-844f-3a110676abd7",
+        "answer": "The checked passages do not provide the specific calibration code recorded.",
+        "sources": [],
+        "intent_data": {
+          "intent": "FACTUAL",
+          "actor": "unknown",
+          "action": "record",
+          "target": "calibration code",
+          "polarity": "positive",
+          "temporal_relation": null,
+          "question_focus": null,
+          "tier_used": "Tier 2"
+        },
+        "verdict": "NOT_SUPPORTED",
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION",
+        "fast_filter_signals": {
+          "actor_score": 0.0,
+          "target_score": 1.0,
+          "event_score": 0.0,
+          "polarity_aligned": true,
+          "polarity_mismatch": false,
+          "temporal_aligned": true,
+          "temporal_conflict": false,
+          "relationship_check_passed": true,
+          "direction_inverted": false,
+          "actor_in_evidence": false,
+          "target_in_evidence": true,
+          "event_terms_found": 0,
+          "event_terms_total": 1,
+          "negation_in_query": false,
+          "negation_in_evidence": false,
+          "evidence_confirms_action": false,
+          "mere_lexical_cooccurrence": true
+        },
+        "fast_filter_reasons": [
+          "actor 'unknown' absent from evidence",
+          "action 'record' terms absent from evidence",
+          "NEEDS_LLM_VALIDATION: ambiguous signals"
+        ],
+        "retrieval": {
+          "stage_timing_ms": {
+            "candidate_merge": 0.0016999999843392288,
+            "preprocessing": 0.004499999931795173,
+            "embedding": 10.95,
+            "faiss": 0.04,
+            "reranking": 12.25,
+            "evidence": 1.18,
+            "total": 24.41
+          },
+          "candidate_count": 1,
+          "context_count": 1,
+          "context_characters": 142
+        },
+        "timing_ms": {
+          "response": 0.01,
+          "intent_analysis": 9723.56,
+          "retrieval": 24.55,
+          "fast_filter": 0.13,
+          "validation": 2336.33,
+          "generation": 1860.58,
+          "total": 13945.45
+        },
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 9713.625500000035,
+              "tokens_per_second": 5.353305004398184
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 15,
+              "max_new_tokens": 160,
+              "generation_ms": 2333.1625000000713,
+              "tokens_per_second": 6.429042126298336
+            },
+            {
+              "input_tokens": 193,
+              "generated_tokens": 13,
+              "max_new_tokens": 320,
+              "generation_ms": 1858.3584000000428,
+              "tokens_per_second": 6.9954213353030825
+            }
+          ],
+          "queue_ms": 0.0020999998469051206,
+          "structured_tokenizer_setup_ms": 2.369099999896207,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 9723.481799999945,
+          "intent_calls": 1,
+          "context_ms": 0.03040000001419685,
+          "context_calls": 1,
+          "validator_ms": 2336.242099999936,
+          "validator_calls": 1,
+          "prompt_ms": 0.02679999988686177,
+          "prompt_calls": 1,
+          "total_ms": 13945.48420000001
+        },
+        "library_id": "8b0c8baa-193b-4fa3-87d4-ab343e857429",
+        "asset_id": "ed90c868-b035-424a-a9f9-f8723542a82f"
+      },
+      "elapsed_ms": 14001.886,
+      "protected_candidate_used": false
+    },
+    {
+      "iteration": 2,
+      "library": "A",
+      "http": 200,
+      "question": "What calibration code is recorded?",
+      "response": {
+        "question": "What calibration code is recorded?",
+        "depth": "normal",
+        "work_id": "library:0b1263a6-0afc-46a0-97af-28c4c3dcb4f9:asset:9bb076fa-854a-48df-ba88-01c99bdfb327:generation:4b7e2590-727b-4a04-b980-aa34136d37bf",
+        "answer": "The calibration code recorded is ALPHA-SEVEN.",
+        "sources": [
+          {
+            "filename": "fixture.pdf",
+            "page": 1,
+            "chapter": null,
+            "chunk_id": "library:0b1263a6-0afc-46a0-97af-28c4c3dcb4f9:asset:9bb076fa-854a-48df-ba88-01c99bdfb327:generation:4b7e2590-727b-4a04-b980-aa34136d37bf_000001",
+            "work_id": "library:0b1263a6-0afc-46a0-97af-28c4c3dcb4f9:asset:9bb076fa-854a-48df-ba88-01c99bdfb327:generation:4b7e2590-727b-4a04-b980-aa34136d37bf",
+            "title": null,
+            "author": null,
+            "rerank_score": 2.158370018005371,
+            "rank": 1,
+            "normalized_rerank_score": 0.5,
+            "evidence_score": 0.24166666666666664,
+            "faiss_norm": 0.5,
+            "actor_alignment": 0.0,
+            "event_alignment": 1.0,
+            "local_causal_score": 0.0,
+            "speaker_score": 0.0,
+            "first_person_narrative": 0.0,
+            "directional_subject_alignment": 0.5,
+            "temporal_phase_alignment": 0.5,
+            "motivation_strength": 0.0,
+            "consequence_strength": 0.0,
+            "motivation_priority": 0.0,
+            "redundancy_penalty": 0.0,
+            "final_context_score": 0.35791666666666666,
+            "evidence_signals": [
+              "term overlap: calibration, code",
+              "phrase match: \"calibration code\""
+            ],
+            "library_id": "0b1263a6-0afc-46a0-97af-28c4c3dcb4f9",
+            "asset_id": "9bb076fa-854a-48df-ba88-01c99bdfb327"
+          }
+        ],
+        "intent_data": {
+          "intent": "FACTUAL",
+          "actor": "unknown",
+          "action": "record",
+          "target": "calibration code",
+          "polarity": "positive",
+          "temporal_relation": null,
+          "question_focus": null,
+          "tier_used": "Tier 2"
+        },
+        "verdict": "SUPPORTED",
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION",
+        "fast_filter_signals": {
+          "actor_score": 0.0,
+          "target_score": 1.0,
+          "event_score": 0.0,
+          "polarity_aligned": true,
+          "polarity_mismatch": false,
+          "temporal_aligned": true,
+          "temporal_conflict": false,
+          "relationship_check_passed": true,
+          "direction_inverted": false,
+          "actor_in_evidence": false,
+          "target_in_evidence": true,
+          "event_terms_found": 0,
+          "event_terms_total": 1,
+          "negation_in_query": false,
+          "negation_in_evidence": false,
+          "evidence_confirms_action": false,
+          "mere_lexical_cooccurrence": true
+        },
+        "fast_filter_reasons": [
+          "actor 'unknown' absent from evidence",
+          "action 'record' terms absent from evidence",
+          "NEEDS_LLM_VALIDATION: ambiguous signals"
+        ],
+        "retrieval": {
+          "stage_timing_ms": {
+            "candidate_merge": 0.0013999999737279722,
+            "preprocessing": 0.00389999991057266,
+            "embedding": 11.35,
+            "faiss": 0.04,
+            "reranking": 11.21,
+            "evidence": 0.53,
+            "total": 23.13
+          },
+          "candidate_count": 1,
+          "context_count": 1,
+          "context_characters": 143
+        },
+        "timing_ms": {
+          "response": 0.02,
+          "intent_analysis": 9275.5,
+          "retrieval": 23.26,
+          "fast_filter": 0.12,
+          "validation": 1483.98,
+          "generation": 1595.7,
+          "total": 12378.9
+        },
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 9266.093899999987,
+              "tokens_per_second": 5.611857656655095
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 12,
+              "max_new_tokens": 160,
+              "generation_ms": 1480.9172000000217,
+              "tokens_per_second": 8.1030863845729
+            },
+            {
+              "input_tokens": 740,
+              "generated_tokens": 11,
+              "max_new_tokens": 320,
+              "generation_ms": 1588.764699999956,
+              "tokens_per_second": 6.9236180788761885
+            }
+          ],
+          "queue_ms": 0.0032000000373955118,
+          "structured_tokenizer_setup_ms": 2.8213000000505417,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 9275.409599999875,
+          "intent_calls": 1,
+          "context_ms": 0.026700000034907134,
+          "context_calls": 1,
+          "validator_ms": 1483.7755999999445,
+          "validator_calls": 1,
+          "prompt_ms": 0.05080000005364127,
+          "prompt_calls": 1,
+          "total_ms": 12378.93269999995
+        },
+        "library_id": "0b1263a6-0afc-46a0-97af-28c4c3dcb4f9",
+        "asset_id": "9bb076fa-854a-48df-ba88-01c99bdfb327"
+      },
+      "elapsed_ms": 12441.356,
+      "protected_candidate_used": false
+    },
+    {
+      "iteration": 2,
+      "library": "B",
+      "http": 200,
+      "question": "What calibration code is recorded?",
+      "response": {
+        "question": "What calibration code is recorded?",
+        "depth": "normal",
+        "work_id": "library:8b0c8baa-193b-4fa3-87d4-ab343e857429:asset:ed90c868-b035-424a-a9f9-f8723542a82f:generation:091f4d07-90ea-4396-844f-3a110676abd7",
+        "answer": "The checked passages do not provide the specific calibration code recorded.",
+        "sources": [],
+        "intent_data": {
+          "intent": "FACTUAL",
+          "actor": "unknown",
+          "action": "record",
+          "target": "calibration code",
+          "polarity": "positive",
+          "temporal_relation": null,
+          "question_focus": null,
+          "tier_used": "Tier 2"
+        },
+        "verdict": "NOT_SUPPORTED",
+        "fast_filter_decision": "NEEDS_LLM_VALIDATION",
+        "fast_filter_signals": {
+          "actor_score": 0.0,
+          "target_score": 1.0,
+          "event_score": 0.0,
+          "polarity_aligned": true,
+          "polarity_mismatch": false,
+          "temporal_aligned": true,
+          "temporal_conflict": false,
+          "relationship_check_passed": true,
+          "direction_inverted": false,
+          "actor_in_evidence": false,
+          "target_in_evidence": true,
+          "event_terms_found": 0,
+          "event_terms_total": 1,
+          "negation_in_query": false,
+          "negation_in_evidence": false,
+          "evidence_confirms_action": false,
+          "mere_lexical_cooccurrence": true
+        },
+        "fast_filter_reasons": [
+          "actor 'unknown' absent from evidence",
+          "action 'record' terms absent from evidence",
+          "NEEDS_LLM_VALIDATION: ambiguous signals"
+        ],
+        "retrieval": {
+          "stage_timing_ms": {
+            "candidate_merge": 0.0018999999156221747,
+            "preprocessing": 0.004200000148557592,
+            "embedding": 16.2,
+            "faiss": 0.05,
+            "reranking": 14.39,
+            "evidence": 0.9,
+            "total": 31.55
+          },
+          "candidate_count": 1,
+          "context_count": 1,
+          "context_characters": 142
+        },
+        "timing_ms": {
+          "response": 0.01,
+          "intent_analysis": 10508.8,
+          "retrieval": 31.71,
+          "fast_filter": 0.12,
+          "validation": 2351.43,
+          "generation": 1967.21,
+          "total": 14859.58
+        },
+        "profile": {
+          "llm_calls": [
+            {
+              "input_tokens": 437,
+              "generated_tokens": 52,
+              "max_new_tokens": 400,
+              "generation_ms": 10499.03930000005,
+              "tokens_per_second": 4.952834113117355
+            },
+            {
+              "input_tokens": 236,
+              "generated_tokens": 15,
+              "max_new_tokens": 160,
+              "generation_ms": 2349.018699999988,
+              "tokens_per_second": 6.385645205804482
+            },
+            {
+              "input_tokens": 193,
+              "generated_tokens": 13,
+              "max_new_tokens": 320,
+              "generation_ms": 1964.9245999999039,
+              "tokens_per_second": 6.616029948426843
+            }
+          ],
+          "queue_ms": 0.0019999999949504854,
+          "structured_tokenizer_setup_ms": 2.0330999998350308,
+          "structured_tokenizer_setup_calls": 2,
+          "intent_ms": 10508.700800000042,
+          "intent_calls": 1,
+          "context_ms": 0.028400000019246363,
+          "context_calls": 1,
+          "validator_ms": 2351.341199999979,
+          "validator_calls": 1,
+          "prompt_ms": 0.03680000008898787,
+          "prompt_calls": 1,
+          "total_ms": 14859.617099999923
+        },
+        "library_id": "8b0c8baa-193b-4fa3-87d4-ab343e857429",
+        "asset_id": "ed90c868-b035-424a-a9f9-f8723542a82f"
+      },
+      "elapsed_ms": 14918.588,
+      "protected_candidate_used": false
+    }
+  ],
+  "complete": true
+}

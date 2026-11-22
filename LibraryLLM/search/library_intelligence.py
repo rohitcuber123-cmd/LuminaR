@@ -75,10 +75,16 @@ class TenantIntelligence:
                 'source_fingerprint':generation['source_fingerprint'],'target':job['target'],'schema_version':store.SCHEMA,'book_count':len(records),
                 'created_by_user_id':job['requested_by_user_id'],'job_id':job['job_id'],'built_at':store.now().isoformat(),'files':files,**details}
             self.fail('MANIFEST_WRITE');store.durable_json(temporary/'manifest.json',manifest)
+            validated_digest=store.checksum(temporary/'manifest.json')
             self._progress(job,'VALIDATION',len(records),len(records),'VALIDATING');self.fail('VALIDATION')
-            artifacts.validate(job['library_id'],job['target'],job['artifact_generation_id'],records,temporary)
-            self.fail('SERIALIZATION_ACK');os.replace(temporary,final)
-            digest=store.checksum(final/'manifest.json')
+            artifacts.validate(job['library_id'],job['target'],job['artifact_generation_id'],records,temporary,
+                expected_manifest_checksum=validated_digest,expected_source_generation_id=generation['generation_id'],
+                expected_source_fingerprint=generation['source_fingerprint'],expected_job_id=job['job_id'])
+            self.fail('SERIALIZATION_ACK')
+            artifacts.validate(job['library_id'],job['target'],job['artifact_generation_id'],records,temporary,
+                expected_manifest_checksum=validated_digest,expected_source_generation_id=generation['generation_id'],
+                expected_source_fingerprint=generation['source_fingerprint'],expected_job_id=job['job_id'])
+            os.replace(temporary,final)
             self.fail('HEARTBEAT')
             if lease_lost.is_set():raise HTTPException(409,'HEARTBEAT_LOSS')
             self._progress(job,'PUBLISH',len(records),len(records),'PUBLISHING')
@@ -86,16 +92,19 @@ class TenantIntelligence:
                 store.check_lease(job);store.build_guard(job['library_id'],{'sub':str(job['requested_by_user_id'])},True)
                 if store.fingerprint(store.source_records(job['library_id']))!=generation['source_fingerprint']:raise HTTPException(409,'SOURCE_CHANGED')
                 self.fail('PUBLISH')
+                artifacts.validate(job['library_id'],job['target'],job['artifact_generation_id'],records,final,
+                    expected_manifest_checksum=validated_digest,expected_source_generation_id=generation['generation_id'],
+                    expected_source_fingerprint=generation['source_fingerprint'],expected_job_id=job['job_id'])
                 previous=store.collection('intelligence_targets').find_one({'library_id':job['library_id'],'target':job['target']})
                 change={'active_generation_id':job['artifact_generation_id'],'source_generation_id':generation['generation_id'],'source_fingerprint':generation['source_fingerprint'],
-                    'manifest_checksum':digest,'record_count':len(records),'built_at':store.now(),'state':'EMPTY' if not records else 'READY','previous_generation_id':previous.get('active_generation_id'),
+                    'manifest_checksum':validated_digest,'record_count':len(records),'built_at':store.now(),'state':'EMPTY' if not records else 'READY','previous_generation_id':previous.get('active_generation_id'),
                     'published_by_job_id':job['job_id'],'node_count':details.get('node_count'),'edge_count':details.get('edge_count'),'artifact_bytes':sum(p.stat().st_size for p in final.iterdir()),'error_code':None}
                 result=store.collection('intelligence_targets').update_one({'library_id':job['library_id'],'target':job['target'],'active_job_id':job['job_id'],'fence_token':job['fence_token']},{'$set':change,'$unset':{'stale_since':''}})
                 if not result.matched_count:raise HTTPException(409,'WORKER_FENCED')
                 published=True;self.fail('ACKNOWLEDGEMENT_LOSS')
                 store.build_audit(job,'SUCCEEDED')
                 if not store.collection('intelligence_jobs').update_one(store.lease_query(job),{'$set':{'state':'SUCCEEDED','stage':'COMPLETE','effective_active':False,'completed_at':store.now()}}).matched_count:raise HTTPException(409,'WORKER_FENCED')
-                store.collection('intelligence_targets').update_one({'library_id':job['library_id'],'target':job['target'],'active_job_id':job['job_id']},{'$unset':{'active_job_id':'','fence_token':''}})
+                store.collection('intelligence_targets').update_one({'library_id':job['library_id'],'target':job['target'],'active_job_id':job['job_id'],'fence_token':job['fence_token']},{'$unset':{'active_job_id':'','fence_token':''}})
         except Exception as error:
             code=error.detail if isinstance(error,HTTPException) and isinstance(error.detail,str) and len(error.detail)<60 else 'BUILD_FAILED'
             unknown=published or code in ['WORKER_FENCED','WORKER_CRASH','HEARTBEAT_LOSS']

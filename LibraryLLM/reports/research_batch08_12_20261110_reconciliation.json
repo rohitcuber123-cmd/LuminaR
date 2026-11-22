@@ -1,0 +1,903 @@
+{
+  "files_read": 45,
+  "historical_features": [
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Institution asset ingestion and validation",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence": "source: backend/routes/library_assets.py:upload; backend/services/library_asset_service.py:upload,validate_pdf",
+        "last_verification_date": "2026-10-31",
+        "blocker": "none for source only"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Tenant isolation and authorization",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence": "source: authorize_asset; library_asset_pipeline.py:prepared,recheck,ask",
+        "last_verification_date": "2026-10-31",
+        "blocker": "No controlled adversarial integration run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Session private PDF ingestion",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence": "source: rag/services/private_document_routes.py:upload; private_documents.py",
+        "last_verification_date": "2026-10-31",
+        "blocker": "No isolated end-to-end run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Character chunking and overlap",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence": "source document_service.py:chunk_text; isolated native pure-function checks",
+        "last_verification_date": "2026-10-31",
+        "blocker": "No PDF extraction run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Selective OCR",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence": "source private_document_ocr.py:prepare",
+        "last_verification_date": "2026-10-31",
+        "blocker": "OCR runtime, packages and quality unknown"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Per-document FAISS flat index",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence": "source library_asset_pipeline.py:process_job,ask",
+        "last_verification_date": "2026-10-31",
+        "blocker": "No native FAISS run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Definition evidence filtering",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence": "source document_grounding.py; isolated pure-function checks",
+        "last_verification_date": "2026-10-31",
+        "blocker": "No model validation run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Protected QA exact projection",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence": "source tests/contracts/rag_grounding_v2o2.py; byte check",
+        "last_verification_date": "2026-10-31",
+        "blocker": "See check result; full suite not run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Device cache",
+        "status": "DISABLED_OR_GATED",
+        "evidence": "source local_document_cache.py:LocalDocumentCache.__init__",
+        "last_verification_date": "2026-10-31",
+        "blocker": "Default disabled; deployment configuration unknown"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Deployed model and production data protection",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence": "source architecture only",
+        "last_verification_date": "2026-10-31",
+        "blocker": "No operator-approved deployed observation"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Production MongoDB authentication",
+        "status": "NOT_FOUND",
+        "evidence": "No new operator-approved evidence",
+        "last_verification_date": "2026-10-31",
+        "blocker": "NOT QUALIFIED; NOT_FOUND applies to qualifying evidence, not database implementation"
+      },
+      "reconciliation_class": "RESEARCH_ONLY",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "Member announcements",
+        "status": "IN_PROGRESS",
+        "evidence": "User-provided roadmap statement",
+        "last_verification_date": "2026-10-31",
+        "blocker": "Independently scoped; not verified as implemented"
+      },
+      "reconciliation_class": "ALREADY_FIXED",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T064638Z_606f0df_08\\08_feature_status.csv",
+      "historical": {
+        "feature": "New citation and isolation benchmark",
+        "status": "PLANNED",
+        "evidence": "evaluation plan proposal",
+        "last_verification_date": "2026-10-31",
+        "blocker": "No authorized dataset or run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Source-based concept and flashcard generation",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence_type_and_pointer": "source document_knowledge.py:build,generate; 53-test synthetic fixture run",
+        "last_verification_date": "2026-10-31",
+        "blocker": "fixture evidence only"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "MCQ and matching generation",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence_type_and_pointer": "source knowledge_quiz.py, knowledge_mcq.py, knowledge_match.py; fixture tests",
+        "last_verification_date": "2026-10-31",
+        "blocker": "native encoder/deployment not evaluated"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Fill-in-the-blank generation and grading",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source knowledge_cloze.py, cloze_grading.py and route",
+        "last_verification_date": "2026-10-31",
+        "blocker": "not exercised end-to-end in selected run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Multiple quiz format checkboxes",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source KnowledgeTools.tsx:quizTypes,generate",
+        "last_verification_date": "2026-10-31",
+        "blocker": "frontend tests not run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "True/false generation in current format selector",
+        "status": "DEPRECATED",
+        "evidence_type_and_pointer": "source Quiz.tsx legacy renderer; knowledge_routes.py QuestionType",
+        "last_verification_date": "2026-10-31",
+        "blocker": "saved-item rendering exists; current generation selector excludes it"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Real CPU embedding model in study pipeline",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source knowledge_encoder.py and KnowledgeArtifacts._knowledge",
+        "last_verification_date": "2026-10-31",
+        "blocker": "real native model not loaded or benchmarked"
+      },
+      "reconciliation_class": "EXPECTED_DESIGN_BOUND",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Qwen-free quiz rendering",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence_type_and_pointer": "source knowledge_quiz.py:generate_from_knowledge; no-model fixture run",
+        "last_verification_date": "2026-10-31",
+        "blocker": "study path still uses MiniLM for production knowledge preparation"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Personal source and artifact access checks",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source knowledge_artifacts.py:_active,_source,source",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no controlled cross-user attack test"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Institution source and artifact access checks",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source library_asset_pipeline.py:prepared,recheck,generate",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no isolated revocation/race test"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Document-specific mind map",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence_type_and_pointer": "source document_knowledge.py:generate; test_map_limits_edges_and_hierarchy_without_embeddings",
+        "last_verification_date": "2026-10-31",
+        "blocker": "frontend not executed"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Durable scores and learner progress",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "source inspection Quiz.tsx and knowledge artifact schema",
+        "last_verification_date": "2026-10-31",
+        "blocker": "check other services and product owners before claiming global absence"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Map editing or export",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "source inspection KnowledgeMap.tsx",
+        "last_verification_date": "2026-10-31",
+        "blocker": "other surfaces not exhaustively excluded"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Spaced repetition and adaptive difficulty",
+        "status": "PLANNED",
+        "evidence_type_and_pointer": "proposal: roadmap in 09_open_questions.md",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no implementation established"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Production MongoDB authentication",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "no new operator-approved deployment evidence",
+        "last_verification_date": "2026-10-31",
+        "blocker": "NOT QUALIFIED; status refers to qualifying evidence"
+      },
+      "reconciliation_class": "RESEARCH_ONLY",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065026Z_606f0df_09\\09_feature_status.csv",
+      "historical": {
+        "feature": "Member announcements",
+        "status": "IN_PROGRESS",
+        "evidence_type_and_pointer": "prompt describes unrelated ongoing work",
+        "last_verification_date": "2026-10-31",
+        "blocker": "out of scope; not represented as implemented"
+      },
+      "reconciliation_class": "ALREADY_FIXED",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Global typed metadata graph and weighted paths",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence_type_and_pointer": "source core.py/build_catalogue_graph.py and disposable SQLite fixture tests",
+        "last_verification_date": "2026-10-31",
+        "blocker": "production snapshot not queried"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Global graph-backed related-book endpoint",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source routes/knowledge_graph.py and assistant/tools.py",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no running API or live eligibility test"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Description-topic enrichment",
+        "status": "PROTOTYPE_ONLY",
+        "evidence_type_and_pointer": "source build_kg_topics.py and topics.py policy",
+        "last_verification_date": "2026-10-31",
+        "blocker": "active snapshot enrichment unknown"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Tenant graph construction and validation",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source library_intelligence_artifacts.py:build_graph,validate",
+        "last_verification_date": "2026-10-31",
+        "blocker": "native tenant generation not run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Tenant fencing publication and recovery",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source TenantIntelligence.run_one; service.recover",
+        "last_verification_date": "2026-10-31",
+        "blocker": "Mongo failure/race tests not run"
+      },
+      "reconciliation_class": "PROTECTED_APPROVAL_REQUIRED",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Tenant authorization and graph filtering",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source service.graph and catalogue.read_context",
+        "last_verification_date": "2026-10-31",
+        "blocker": "foreign user and private tenant isolation not tested here"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Tenant previous generation pointer",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source TenantIntelligence.run_one",
+        "last_verification_date": "2026-10-31",
+        "blocker": "retained pointer is not a guarantee of stale serving"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Incremental tenant graph updates",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "source build_graph reconstructs entire snapshot; historical v2i review",
+        "last_verification_date": "2026-10-31",
+        "blocker": "need edge ownership and mutation implementation"
+      },
+      "reconciliation_class": "EXPECTED_DESIGN_BOUND",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Graph use by ordinary search",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "source TenantIntelligence.semantic uses SEARCH_INDEX; historical search audit",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no confirmed graph traversal in inspected search paths"
+      },
+      "reconciliation_class": "EXPECTED_DESIGN_BOUND",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Graph use by For You recommender",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "historical recommendation audit and examined discovery call path",
+        "last_verification_date": "2026-10-31",
+        "blocker": "verify wider current call graph before categorical publication"
+      },
+      "reconciliation_class": "EXPECTED_DESIGN_BOUND",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Graph-backed More Like This",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence_type_and_pointer": "source product route and assistant tool, fixture core tests",
+        "last_verification_date": "2026-10-31",
+        "blocker": "API deployment remains unverified"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Document study mind map",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source document_knowledge.py and KnowledgeMap.tsx",
+        "last_verification_date": "2026-10-31",
+        "blocker": "not a tenant/global catalogue KG"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Graph embeddings and cross-catalogue ontology",
+        "status": "PLANNED",
+        "evidence_type_and_pointer": "proposal: 10_open_questions.md",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no current implementation established"
+      },
+      "reconciliation_class": "EXPECTED_DESIGN_BOUND",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Production MongoDB authentication",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "no operator-approved deployment evidence",
+        "last_verification_date": "2026-10-31",
+        "blocker": "NOT QUALIFIED; refers to evidence"
+      },
+      "reconciliation_class": "RESEARCH_ONLY",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T065332Z_606f0df_10\\10_feature_status.csv",
+      "historical": {
+        "feature": "Member announcements",
+        "status": "IN_PROGRESS",
+        "evidence_type_and_pointer": "prompt-provided roadmap",
+        "last_verification_date": "2026-10-31",
+        "blocker": "unrelated; implementation not asserted"
+      },
+      "reconciliation_class": "ALREADY_FIXED",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Global personalized hybrid",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_reference": "source recommendation_service.py:get_recommendations and ranked_pages.py:page",
+        "last_verification_date": "2026-10-31",
+        "blocker": "native ranking and deployment not tested"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Tenant global intersection and acquisitions",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_reference": "source library_catalogue_experience.py:recommendations",
+        "last_verification_date": "2026-10-31",
+        "blocker": "Mongo fixture/role race tests not run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "More Like This metadata graph",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_reference": "source knowledge_graph/core.py and routes/knowledge_graph.py",
+        "last_verification_date": "2026-10-31",
+        "blocker": "active snapshot and quality unknown"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Seed recommender",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_reference": "source recommendation/api.py:recommendations_from_book",
+        "last_verification_date": "2026-10-31",
+        "blocker": "native search not run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Feedback ingestion and scoring",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_reference": "source recommendation/api.py:submit_feedback and calculate_feedback_score",
+        "last_verification_date": "2026-10-31",
+        "blocker": "delivery, usage and impacts unknown"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Diversity and fallback filling",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence_type_and_reference": "source apply_diversity_reranking and five synthetic pure-function checks",
+        "last_verification_date": "2026-10-31",
+        "blocker": "soft constraints and no utility benchmark"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Reading level comparison",
+        "status": "NOT_FOUND",
+        "evidence_type_and_reference": "source get_recommendations and search plan",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no explicit validated difficulty model found"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Tenant native HNSW as recommendation provider",
+        "status": "NOT_FOUND",
+        "evidence_type_and_reference": "source libraryCatalogue.ts and catalogue_experience.py:recommendations",
+        "last_verification_date": "2026-10-31",
+        "blocker": "absence scoped to traced path"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Explicit user-facing personalized controls",
+        "status": "NOT_FOUND",
+        "evidence_type_and_reference": "inspected recommendation UI and API",
+        "last_verification_date": "2026-10-31",
+        "blocker": "other surfaces not ruled out"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Production Mongo authentication",
+        "status": "NOT_FOUND",
+        "evidence_type_and_reference": "no operator-approved deployment evidence",
+        "last_verification_date": "2026-10-31",
+        "blocker": "NOT QUALIFIED"
+      },
+      "reconciliation_class": "RESEARCH_ONLY",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135146Z_606f0df_11\\11_feature_status.csv",
+      "historical": {
+        "feature": "Member announcements",
+        "status": "IN_PROGRESS",
+        "evidence_type_and_reference": "prompt roadmap context",
+        "last_verification_date": "2026-10-31",
+        "blocker": "separate scope"
+      },
+      "reconciliation_class": "ALREADY_FIXED",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Tenant notice category, editor and event publication",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source schemas/events.py; library_event_service.py; EventEditorPage.tsx",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no integration or browser test"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Tenant notice source schema validation",
+        "status": "IMPLEMENTED_VERIFIED",
+        "evidence_type_and_pointer": "native synthetic Pydantic schema checks",
+        "last_verification_date": "2026-10-31",
+        "blocker": "not an authorization test"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Announcement publication to every member inbox",
+        "status": "IN_PROGRESS",
+        "evidence_type_and_pointer": "source event_service.py:transition has no fan-out call; roadmap context",
+        "last_verification_date": "2026-10-31",
+        "blocker": "producer, recipient policy and controlled delivery evidence missing"
+      },
+      "reconciliation_class": "ALREADY_FIXED",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Tenant circulation notification outbox",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source tenant_notification_service.py:append_intents,materialize",
+        "last_verification_date": "2026-10-31",
+        "blocker": "Mongo and concurrency test not run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "In-app bell, unread and read actions",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source NotificationCenter.tsx and routes/notifications.py",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no browser or deployed observation"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Platform admin targeted in-app messages",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source notification_service.py:send_admin",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no controlled delivery run"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Global event seen receipt",
+        "status": "IMPLEMENTED_NOT_VERIFIED",
+        "evidence_type_and_pointer": "source event_service.py:recent,unseen,mark_seen",
+        "last_verification_date": "2026-10-31",
+        "blocker": "not tenant announcement tracking"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Email notification delivery",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "source notification_service.py documents in-app notices",
+        "last_verification_date": "2026-10-31",
+        "blocker": "other email infrastructure not ruled out"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Push or WebSocket notification delivery",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "inspected routes and notification worker",
+        "last_verification_date": "2026-10-31",
+        "blocker": "full product inventory not exhaustive"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Scheduled announcements and expiry",
+        "status": "PLANNED",
+        "evidence_type_and_pointer": "proposal; event dates do not schedule publication or change status",
+        "last_verification_date": "2026-10-31",
+        "blocker": "requirements and implementation needed"
+      },
+      "reconciliation_class": "ALREADY_FIXED",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Exactly-once delivery",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "source outbox uses separate upsert and state write",
+        "last_verification_date": "2026-10-31",
+        "blocker": "no end-to-end exactly-once proof"
+      },
+      "reconciliation_class": "MISSING_VALIDATION",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    },
+    {
+      "historical_file": "D:\\SDC\\LuminaR_research_documentation_20261031T141713Z\\research_paper\\20261031T135551Z_606f0df_12\\12_feature_status.csv",
+      "historical": {
+        "feature": "Production Mongo auth",
+        "status": "NOT_FOUND",
+        "evidence_type_and_pointer": "no operator-approved deployment evidence",
+        "last_verification_date": "2026-10-31",
+        "blocker": "NOT QUALIFIED"
+      },
+      "reconciliation_class": "RESEARCH_ONLY",
+      "qualification": "See consolidated report for the executed scoped evidence; historical status is not a current test result."
+    }
+  ],
+  "current_issue_register": [
+    {
+      "id": "08-DOCX",
+      "classification": "CONFIRMED_CURRENT_DEFECT",
+      "status": "FIXED",
+      "source": "backend/services/library_asset_text.py:extract_text",
+      "root": "itertext ingested deleted text/field instructions and dropped run separators"
+    },
+    {
+      "id": "08-RESTORE",
+      "classification": "CONFIRMED_CURRENT_DEFECT",
+      "status": "FIXED",
+      "source": "rag/services/private_documents.py:restore",
+      "root": "bundle lacks original failure ledger; restore omitted coverage warnings"
+    },
+    {
+      "id": "08-HASH",
+      "classification": "ALREADY_FIXED",
+      "status": "REVIEWED_BYTES_PRESERVED",
+      "root": "historical raw qa.py mismatch is absent from current approved bytes"
+    },
+    {
+      "id": "08-PRIVATE-B",
+      "classification": "MISSING_VALIDATION",
+      "status": "UNRESOLVED",
+      "root": "current real-Qwen paired validator input/decision unavailable; no prompt edits"
+    },
+    {
+      "id": "09-QUALITY",
+      "classification": "RESEARCH_ONLY",
+      "status": "PARTIAL",
+      "root": "source verifiers and controlled formats tested; no independent learning or factuality benchmark"
+    },
+    {
+      "id": "10-HOMONYM",
+      "classification": "EXPECTED_DESIGN_BOUND",
+      "status": "REPRODUCED",
+      "root": "equal author strings share a feature; absent person IDs"
+    },
+    {
+      "id": "10-SYNONYM",
+      "classification": "EXPECTED_DESIGN_BOUND",
+      "status": "REPRODUCED",
+      "root": "different canonical terms remain separate; no ontology"
+    },
+    {
+      "id": "10-INCREMENTAL",
+      "classification": "EXPECTED_DESIGN_BOUND",
+      "status": "NOT_IMPLEMENTED",
+      "root": "whole-generation builder retained"
+    },
+    {
+      "id": "E-01",
+      "classification": "PROTECTED_APPROVAL_REQUIRED",
+      "status": "APPROVAL_REQUIRED",
+      "root": "terminal success before tagged lock release"
+    },
+    {
+      "id": "E-02",
+      "classification": "PROTECTED_APPROVAL_REQUIRED",
+      "status": "APPROVAL_REQUIRED",
+      "root": "nonresumable target/job fence pair"
+    },
+    {
+      "id": "E-03",
+      "classification": "PROTECTED_APPROVAL_REQUIRED",
+      "status": "APPROVAL_REQUIRED",
+      "root": "post-validation manifest replaced before pointer CAS"
+    },
+    {
+      "id": "E-04",
+      "classification": "PROTECTED_APPROVAL_REQUIRED",
+      "status": "APPROVAL_REQUIRED",
+      "root": "generic barrier inserted before intelligence ownership tag"
+    },
+    {
+      "id": "11-QWEN",
+      "classification": "MISSING_VALIDATION",
+      "status": "NOT_RUN",
+      "root": "no resident listener; insufficient measured memory headroom for a safe new model"
+    },
+    {
+      "id": "11-LEVEL",
+      "classification": "UNSUPPORTED_POLICY",
+      "status": "NOT_ADDED",
+      "root": "no authoritative reading-level labels or calibrated suitability model"
+    },
+    {
+      "id": "12-ANNOUNCE",
+      "classification": "ALREADY_FIXED",
+      "status": "VERIFIED_IN_FIXTURES",
+      "root": "Parts 2P/2P.1 implemented scoped announcements and targeted inbox delivery"
+    },
+    {
+      "id": "12-SMTP",
+      "classification": "UNSUPPORTED_POLICY",
+      "status": "NOT_ADDED",
+      "root": "existing channel is in-app; no external-channel activation authorized"
+    },
+    {
+      "id": "PROD-MONGO",
+      "classification": "RESEARCH_ONLY",
+      "status": "NOT_QUALIFIED",
+      "root": "deployment qualification outside fixture tests"
+    }
+  ]
+}

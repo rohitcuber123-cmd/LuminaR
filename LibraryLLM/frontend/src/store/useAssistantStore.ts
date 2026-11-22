@@ -7,17 +7,21 @@ import { productLibraryId } from '../lib/productContext.ts'
 import { libraryRole } from '../lib/libraryWorkspace.ts'
 
 type SelectedBook = Pick<AssistantBook, 'work_id' | 'title' | 'authors'>
-interface SavedSession { owner: string | null; selected: SelectedBook[]; conversationId: string | null }
+interface SavedSession { libraryScope: string; owner: string | null; selected: SelectedBook[]; conversationId: string | null }
+const scopeForPath=(path:string)=>{const [pathname,search='']=path.split('?');return productLibraryId(pathname,search)||'GLOBAL'}
+const currentScope=()=>scopeForPath(window.location.pathname+window.location.search)
 const STORAGE = 'luminar_assistant_session'
 const currentOwner = (): string | null => {
   try { return getToken() ? JSON.parse(localStorage.getItem('luminar_user') || 'null')?.email ?? null : null } catch { return null }
 }
 function restore(): SavedSession {
-  const empty = { owner: currentOwner(), selected: [], conversationId: null }
+  const empty = { libraryScope: currentScope(), owner: currentOwner(), selected: [], conversationId: null }
   try {
+    // Private references are rebuilt after a fresh membership check on reload.
+    if(empty.libraryScope!=='GLOBAL')return empty
     const saved = JSON.parse(sessionStorage.getItem(STORAGE) || 'null')
-    if (!saved || saved.owner !== empty.owner) return empty
-    return { owner: empty.owner, conversationId: typeof saved.conversationId === 'string' && saved.conversationId.length <= 64 ? saved.conversationId : null,
+    if (!saved || saved.owner !== empty.owner || (saved.libraryScope||'GLOBAL')!==empty.libraryScope) return empty
+    return { libraryScope:empty.libraryScope, owner: empty.owner, conversationId: typeof saved.conversationId === 'string' && saved.conversationId.length <= 64 ? saved.conversationId : null,
       selected: Array.isArray(saved.selected) ? saved.selected.filter((book: SelectedBook) => typeof book?.work_id === 'string' && validWorkId(book.work_id)).filter((book: SelectedBook, i: number, all: SelectedBook[]) => all.findIndex(b => b.work_id === book.work_id) === i).slice(0, 4).map(minimalBook) : [] }
   } catch { return empty }
 }
@@ -28,11 +32,12 @@ const initial = restore()
 let sequence = 0
 let controller: AbortController | null = null
 let revision = 0
-export type SendOptions = Pick<AssistantRequest, 'action' | 'pending_action_id' | 'action_work_ids' | 'result_offset' | 'lending_context'>
+export type SendOptions = Pick<AssistantRequest, 'action' | 'pending_action_id' | 'action_work_ids' | 'result_offset' | 'lending_context'> & { page_path?:string }
 interface AssistantState extends SavedSession {
   sessionToken: string | null
   open: boolean; messages: AssistantChatMessage[]; recent: string[]; busy: boolean; startedAt: number | null; selectionNotice: string
   pagePath: string; pageContext: AssistantPageContext; pageDocumentTitle: string
+  invalidateScope: () => void
   setOpen: (open: boolean) => void
   select: (book: SelectedBook) => boolean; unselect: (id: string) => void; clearSelection: () => void
   syncOwner: (owner: string | null) => void; resetConversation: () => void
@@ -42,10 +47,11 @@ interface AssistantState extends SavedSession {
   send: (message: string, context: AssistantPageContext, options?: SendOptions) => Promise<void>
 }
 function persist(state: SavedSession) {
-  try { sessionStorage.setItem(STORAGE, JSON.stringify({ owner: state.owner, selected: state.selected.map(minimalBook), conversationId: state.conversationId })) } catch { /* Storage may be unavailable; memory still works. */ }
+  try { sessionStorage.setItem(STORAGE, JSON.stringify({ libraryScope:state.libraryScope, owner: state.owner, selected: state.selected.map(minimalBook), conversationId: state.conversationId })) } catch { /* Storage may be unavailable; memory still works. */ }
 }
 export const useAssistantStore = create<AssistantState>((set, get) => ({
   ...initial, sessionToken: getToken(), open: false, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pagePath: '', pageContext: {}, pageDocumentTitle: '',
+  invalidateScope:()=>{revision++;controller?.abort();controller=null;set({conversationId:null,messages:[],selected:[],recent:[],busy:false,startedAt:null,selectionNotice:'',pageContext:{},pageDocumentTitle:''});persist(get())},
   setOpen: open => set({ open }),
   select: book => {
     if (!validWorkId(book.work_id)) return false
@@ -58,12 +64,12 @@ export const useAssistantStore = create<AssistantState>((set, get) => ({
   syncOwner: owner => {
     if (get().owner === owner) return
     revision++; controller?.abort(); controller = null
-    set({ owner, selected: [], conversationId: null, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pageContext: {}, pageDocumentTitle: '', pagePath: '' }); persist(get())
+    set({ libraryScope:currentScope(), owner, selected: [], conversationId: null, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pageContext: {}, pageDocumentTitle: '', pagePath: '' }); persist(get())
   },
   syncSession: (owner, token) => {
     if (get().owner === owner && get().sessionToken === token) return
     revision++; controller?.abort(); controller = null
-    set({ owner, sessionToken: token, selected: [], conversationId: null, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pageContext: {}, pageDocumentTitle: '', pagePath: '' }); persist(get())
+    set({ libraryScope:currentScope(), owner, sessionToken: token, selected: [], conversationId: null, messages: [], recent: [], busy: false, startedAt: null, selectionNotice: '', pageContext: {}, pageDocumentTitle: '', pagePath: '' }); persist(get())
   },
   resetConversation: () => {
     if (get().busy) return
@@ -77,20 +83,34 @@ export const useAssistantStore = create<AssistantState>((set, get) => ({
     }
     set({pagePath: path, pageContext: {document_id: documentId}, pageDocumentTitle: title}); persist(get())
   },
-  setPageContext: (path, context) => set({ pagePath: path, pageContext: sanitizePageContext(context), pageDocumentTitle: '' }),
+  setPageContext: (path, context) => {
+    const scope=path?scopeForPath(path):get().libraryScope
+    if(scope!==get().libraryScope){revision++;controller?.abort();controller=null;set({libraryScope:scope,conversationId:null,messages:[],selected:[],recent:[],busy:false,startedAt:null});persist(get())}
+    set({pagePath:path,pageContext:sanitizePageContext(context),pageDocumentTitle:''})
+  },
   send: async (message, context, options = {}) => {
     message = message.trim()
     if (!message || message.length > 4000 || get().busy || !getToken()) return
     if (get().owner !== currentOwner() || get().sessionToken !== getToken()) {
       get().syncSession(currentOwner(), getToken())
     }
+    const effectivePath=options.page_path||get().pagePath||window.location.pathname+window.location.search
+    if(scopeForPath(effectivePath)!==get().libraryScope){get().setPageContext(effectivePath,{});context={}}
     const snapshot = get()
     const memberships = useInstitutionStore.getState()
-    const route = snapshot.pagePath || window.location.pathname + window.location.search
+    const route = effectivePath
     const [pathname, search = ''] = route.split('?')
     const libraryId = productLibraryId(pathname, search)
+    if (options.action === 'CONFIRM_ACTION') {
+      const latest = snapshot.messages.at(-1)
+      const proposal = latest?.kind === 'ASSISTANT_RESPONSE' ? latest.response.pending_action : null
+      if (!proposal || proposal.enabled !== true || proposal.action_id !== options.pending_action_id ||
+          !(Date.parse(proposal.expires_at) > Date.now()) ||
+          (proposal.library_id && proposal.library_id !== libraryId)) return
+    }
     const library = memberships.session === getToken() ? memberships.libraries.find(l => l.library_id === libraryId && libraryRole(l) === 'GENERAL_USER') : undefined
     const request: AssistantRequest = {
+      ...(libraryId?{library_id:libraryId}:{}),
       message, conversation_id: snapshot.conversationId, selected_work_ids: uniqueIds(snapshot.selected.map(b => b.work_id), 4),
       ...(options.action_work_ids?.length ? { action_work_ids: uniqueIds(options.action_work_ids, 4) } : {}),
       recent_work_ids: [...snapshot.recent], page_context: sanitizePageContext(context), action: options.action ?? (context.document_id?.startsWith('library:') ? 'DOCUMENT_QUESTION' : null), pending_action_id: options.pending_action_id ?? null,
@@ -111,6 +131,7 @@ export const useAssistantStore = create<AssistantState>((set, get) => ({
       if (options.action === 'CONFIRM_ACTION' && response.account && !response.errors.length) window.dispatchEvent(new Event(BORROW_STATE_CHANGED))
     } catch (error) {
       if (version !== revision || token !== getToken()) return
+      if(request.library_id && error instanceof ApiError && [401,403,404].includes(error.status)){set({conversationId:null,messages:[{id:++sequence,kind:'SYSTEM_NOTICE',text:'Library conversation unavailable. Recheck your membership and start a new chat.'}],recent:[],selected:[]});persist(get());return}
       const expired = error instanceof ApiError && error.status === 404 && Boolean(request.conversation_id)
       if (expired) { set({ conversationId: null, recent: [] }); persist(get()) }
       set({ messages: [...get().messages, { id: ++sequence, kind: expired ? 'SYSTEM_NOTICE' : 'ERROR',

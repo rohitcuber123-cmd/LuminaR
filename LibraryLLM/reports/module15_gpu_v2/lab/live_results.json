@@ -1,0 +1,79 @@
+{
+  "isolation": "separate Mongo server 127.0.0.1:29037 and database; synthetic users; real application login and Assistant HTTP handler; Qwen resident; controlled synthetic Global Search provider; real core handlers; document callback deliberately unavailable",
+  "model_id": "Qwen/Qwen2.5-3B-Instruct",
+  "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+  "is_loaded_in_4bit": true,
+  "router": "existing_qwen",
+  "shared_gateway_identity": true,
+  "cases": [
+    {
+      "id": "missing_auth",
+      "http": 401,
+      "latency_ms": 188.4,
+      "intent": null,
+      "clarification": null,
+      "error_codes": [],
+      "book_count": 0,
+      "message": null
+    },
+    {
+      "id": "search",
+      "http": 200,
+      "latency_ms": 5529.6,
+      "intent": "SEARCH_BOOKS",
+      "clarification": null,
+      "error_codes": [],
+      "book_count": 1,
+      "message": null
+    },
+    {
+      "id": "clarify",
+      "http": 200,
+      "latency_ms": 2973.9,
+      "intent": "CLARIFICATION",
+      "clarification": {
+        "reason": "Which books are you referring to? Select a book or give its title or catalogue work_id.",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "error_codes": [],
+      "book_count": 0,
+      "message": null
+    },
+    {
+      "id": "reading_list",
+      "http": 200,
+      "latency_ms": 3104.7,
+      "intent": "USER_LOANS",
+      "clarification": null,
+      "error_codes": [],
+      "book_count": 0,
+      "message": null
+    },
+    {
+      "id": "unsupported",
+      "http": 200,
+      "latency_ms": 3571.4,
+      "intent": "CLARIFICATION",
+      "clarification": {
+        "reason": "Which books are you referring to?",
+        "choices": [],
+        "type": "REFERENCE_AMBIGUITY"
+      },
+      "error_codes": [],
+      "book_count": 0,
+      "message": "Which books are you referring to?"
+    },
+    {
+      "id": "document_unavailable",
+      "http": 200,
+      "latency_ms": 9148.9,
+      "intent": "GENERAL_LIBRARY_HELP",
+      "clarification": null,
+      "error_codes": [],
+      "book_count": 0,
+      "message": null
+    }
+  ],
+  "login_status": 200
+}

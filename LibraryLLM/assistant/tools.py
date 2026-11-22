@@ -268,6 +268,7 @@ class AssistantRAGTool:
 class AssistantTools:
     def __init__(self, client, authorization, rag_callback):
         transport = ServiceTransport(client, authorization)
+        self.transport = transport
         self.search = AssistantSearchTool(transport)
         self.catalogue = AssistantCatalogueTool(transport)
         self.availability = AssistantAvailabilityTool()

@@ -243,3 +243,30 @@ def test_partial_plan_replay_restores_compound_fee_queue(client, setup, database
     assert call(client, lib, path, body=key)['status'] == 'COMPLETED'
     assert database.institution_fees.count_documents({}) == 1
     assert database.institution_lending_requests.count_documents({'request_type': 'BORROW', 'status': 'PENDING'}) == 1
+
+
+def test_fee_adjustment_replay_conflict_and_concurrent_return_confirm(client, setup, database):
+    lib, fee = fee_fixture(client, setup, database)
+    path = f'staff/fees/{fee["fee_id"]}/adjust'
+    charge_cmd = cmd(amount_minor=250, direction='CHARGE', reason='Verified damage charge')
+    first = call(client, lib, path, body=charge_cmd)
+    second = call(client, lib, path, body=charge_cmd)
+    assert first == second and first['current_amount_minor'] == 1750 and first['balance_minor'] == 1750
+    assert database.institution_fee_ledger.count_documents({'fee_id': fee['fee_id'], 'entry_type': 'CHARGE'}) == 2
+    call(client, lib, path, body={**charge_cmd, 'amount_minor': 300}, expected=409)
+    credit_cmd = cmd(amount_minor=150, direction='CREDIT', reason='Verified partial credit')
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        creplays = list(pool.map(lambda _: call(client, lib, path, body=credit_cmd), range(2)))
+    assert creplays[0] == creplays[1] and creplays[0]['current_amount_minor'] == 1600 and creplays[0]['balance_minor'] == 1600
+
+    # Concurrent return confirm race with two distinct keys on one pending return request
+    book = database.institution_library_books.find_one({'library_id': lib})['library_book_id']
+    loan2 = issue(client, lib, book, user=4)
+    req2 = call(client, lib, f'loans/{loan2["loan_id"]}/return-request', 4, cmd(), expected=201)
+    cpath = f'/libraries/{lib}/staff/lending/return-requests/{req2["lending_request_id"]}/confirm'
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        r1 = pool.submit(lambda: client.post(cpath, headers={'x-test-user': '1'}, json=cmd()))
+        r2 = pool.submit(lambda: client.post(cpath, headers={'x-test-user': '1'}, json=cmd()))
+        statuses = sorted([r1.result().status_code, r2.result().status_code])
+    assert statuses == [200, 409]
+    assert database.institution_loans.find_one({'loan_id': loan2['loan_id']})['status'] == 'RETURNED'

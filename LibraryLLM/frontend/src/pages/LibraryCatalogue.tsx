@@ -46,7 +46,7 @@ function StableLibraryCataloguePage({ arrivals = false, popular = false,staff=fa
   const {library,data,loading,error,retry}=useLibraryCatalogue<CataloguePage>('books',options.toString(),staff)
   const facets=useSearchFacets(library?.library_id || null,staff)
   const genres=useLibraryCatalogue<GenrePage>('genres','offset=0&limit=50',staff),recommended=!staff&&params.get('view')==='for-you'
-  useAssistantPageContext({work_ids:data?.results.map(b=>b.global_work_id || '').filter(Boolean).slice(0,4) || []})
+  useAssistantPageContext({work_ids:data?.results.map(b=>b.library_book_id || b.global_work_id || '').filter(Boolean).slice(0,4) || []})
   if(!library)return <StatePanel title="Loading library…" kind="loading" />
   const fallback=data?.source.catalogue_source==='GLOBAL_FALLBACK',limit=data?.limit || 20
   function update(name:string,value:string){const next=new URLSearchParams(params);if(value) next.set(name,value); else next.delete(name);if(name==='search'&&value!==search)['subject','author','rating_min','rating_max','year_min','year_max','format','availability','language','search_sort'].forEach(field=>next.delete(field));if(['search','mode'].includes(name))next.delete('omit');else if(name!=='omit')next.set('omit',(next.get('omit')||'').split(',').filter(v=>v&&v!==name&&!v.startsWith(name+'@')).join(','));next.delete('offset');setParams(next)}
@@ -77,7 +77,7 @@ export function LibraryCatalogueDetail({ global=false,staff=false }: {global?:bo
   const {bookId}=useParams(),[params]=useSearchParams(),location=useLocation(),authenticated=useAuthStore(s=>s.isAuthenticated)
   const {data,library,loading,error,retry}=useLibraryCatalogue<CatalogueDetail>(global ? 'global-detail' : 'detail',`id=${encodeURIComponent(bookId || '')}`,staff)
   const workId=data?.book.global_work_id || '',related=useMoreLikeThis(workId,params.get('related')==='1',authenticated)
-  useAssistantPageContext({work_id:workId})
+  useAssistantPageContext({work_id:data?.book.library_book_id||workId})
   if(loading)return <BookDetailSkeleton />
   if(error || !data)return <section className="mx-auto max-w-[90rem] px-6 py-16"><StatePanel title="Unable to load this book" kind="error" action={<button className="ui-button" onClick={retry}>Retry</button>}>{error}</StatePanel></section>
   const id=library?.library_id||'',state=location.state as {inventoryReturnTo?:string}|null,inventory=staffPath(id,'inventory'),returnTo=state?.inventoryReturnTo

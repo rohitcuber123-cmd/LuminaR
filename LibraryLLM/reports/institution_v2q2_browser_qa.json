@@ -1,0 +1,138 @@
+{
+  "status": "PARTIAL",
+  "browser": "One owned in-app browser session remained available; previous tab-loss cause not proven.",
+  "cleanup_timing": "Browser closed after screenshots and final answers; owned services and fixtures removed afterward.",
+  "executed": {
+    "login_logout_relogin": true,
+    "Global_ForYou": "Controlled provider omits metadata and produces Unknown Title cards.",
+    "Private_A_ForYou": "Actual tenant service; member-home evidence in logout_relogin.txt and browser_A.png. Initial owner A_ForYou snapshot shows staff overview and is not used as patron rail proof.",
+    "Private_B_ForYou": {
+      "observed_book_links": 84,
+      "unique_books": 10,
+      "all_in_B": true
+    },
+    "book_detail_navigation": true,
+    "genuine_qwen_browser_subset": {
+      "Global": true,
+      "A": true,
+      "B": true
+    },
+    "outsider_private_document_denied": true,
+    "revoked_member_document_denied": true,
+    "authorized_member_resource_visible": true,
+    "no_match_title_search": true,
+    "late_old_response": {
+      "case": "late_A_response_after_B_switch",
+      "held_http_status": 200,
+      "execution": "Controlled response-stage delay; genuine explicit-action response; no Qwen inference claimed",
+      "release_result": "Interception invalidated during navigation; network cancellation inspected",
+      "network_failures": [
+        {
+          "error": "net::ERR_ABORTED",
+          "canceled": true,
+          "requestId": "40824.1183"
+        },
+        {
+          "error": "net::ERR_ABORTED",
+          "canceled": true,
+          "requestId": "40824.1188"
+        },
+        {
+          "error": "net::ERR_ABORTED",
+          "canceled": true,
+          "requestId": "40824.1189"
+        }
+      ],
+      "old_A_titles_visible": false,
+      "current_url": "http://127.0.0.1:18017/libraries/d1de0058-b68e-4193-a8ca-a3caaa5299a7",
+      "held_network_request_id": "40824.1183",
+      "held_request_canceled": true
+    },
+    "keyboard_focus": "Skip to content",
+    "mobile": {
+      "case": "mobile_B_detail",
+      "requested_width": 390,
+      "actual": {
+        "client": 469,
+        "scroll": 469,
+        "width": 487
+      }
+    }
+  },
+  "semantic_defects": [
+    {
+      "case": "B digital-copy follow-up",
+      "observed": "Repeats physical stock counts instead of answering digital availability.",
+      "evidence": "institution_v2q2_browser_B_Qwen_digital_followup.txt",
+      "expected_resource_metadata": "B detail shows Physical + Online and online copy available."
+    }
+  ],
+  "console_entries_captured": 0,
+  "network_capture": {
+    "initial_entries": 84,
+    "final_entries": 177,
+    "final_buffer_truncated": true,
+    "final_has_more": false,
+    "limits": "Older CDP events were evicted; these captures do not establish exhaustive HTTP coverage."
+  },
+  "known_api_errors": [
+    {
+      "http": 404,
+      "route": "/search-api/facets",
+      "cause": "Diagnostic lab does not install complete Global facets route."
+    },
+    {
+      "http": 503,
+      "route": "Private B catalogue recommendations",
+      "response": "Library update in progress. Please retry.",
+      "context": "Concurrent owned fixture activity; later ownership/UI checks succeed."
+    },
+    {
+      "http": 502,
+      "route": "/rag-api/assistant/chat",
+      "context": "Intentional service reload overlapped first late-response attempt. That attempt is not counted as a successful-response isolation test."
+    }
+  ],
+  "automation_errors_retained": [
+    {
+      "error": "Uppercase login selector did not match DOM Title Case",
+      "resolution": "Inspected DOM; used actual labels."
+    },
+    {
+      "error": "Post-logout login wait expired before navigation settled",
+      "resolution": "Inspected eventual login page and completed relogin."
+    },
+    {
+      "error": "Playwright body.press(Tab) failed",
+      "resolution": "Native tab pressKey focused Skip to content."
+    },
+    {
+      "error": "View all matched two links",
+      "resolution": "Used observed visible catalogue href."
+    },
+    {
+      "error": "Mode-change navigation reset early no-match input",
+      "resolution": "Resubmitted after Title / Author mode settled; retained final empty-result state."
+    },
+    {
+      "error": "Invalid InterceptionId after navigation",
+      "resolution": "Exact held request was canceled; cleared interception and verified empty B conversation."
+    },
+    {
+      "error": "First report-generation attempt used Windows default cp1252 and raised UnicodeDecodeError",
+      "resolution": "Report reader now explicitly uses UTF-8; application and tests were unaffected."
+    }
+  ],
+  "remaining_limits": [
+    "Global provider/facets are controlled and incomplete.",
+    "Exact390px viewport was not honored; actual487inner/469client recorded.",
+    "Only one successful response-stage cancellation, not a universal generation timing matrix.",
+    "Digital-copy follow-up remains wrong.",
+    "Older network events were evicted."
+  ],
+  "instrumentation_cleanup": {
+    "fetch_patterns_cleared": true,
+    "viewport_reset": true,
+    "owned_tab_closed": true
+  }
+}

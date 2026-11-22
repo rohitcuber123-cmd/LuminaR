@@ -1,0 +1,49 @@
+{
+  "status": "USER_AUTHORIZED_EXACT_REVISION_APPLIED",
+  "independent_signature_or_owner_gate_found": false,
+  "historical_manifests_modified": false,
+  "historical_qa_projection_modified": false,
+  "installed_guard": "tests/contracts/rag_grounding_v2q.py",
+  "installed_guard_sha256": "5935d7210a62506973b3014f28609c30cbc30c2984d8ad2bbb55b7cc346e979d",
+  "reviewed_sources": {
+    "rag/qa.py": {
+      "previous_reviewed": "4a1141649a4ce9b4bce6413627c27557f5817bb8718a4e842a4d12021bd89de3",
+      "accepted_current": "ab7f3d2baa5e828a5c2eb5fe6e6e9ac8bdb6e596cb3fe70348edb7bde88f9830",
+      "delta": "after-generation bounded explicit-fact verification before source attachment; unverified claims abstain without citations"
+    },
+    "rag/llm.py": {
+      "historical": "d369e26fcbe458964bf642a057ca79212a63f48a6acf2b1c0a12590003f5cc1b",
+      "accepted_current": "6f35a4034ae0acff78596b8cc81ed9c355a055f6560cf8dd703d907c02aab2da",
+      "delta": "previously reviewed explicit-fact intent and evidence decision"
+    },
+    "rag/fast_filter.py": {
+      "historical": "1da09b70cd1ed73a45b5d3362149e7e19118dc1d7ffadd76853ca813e1578c5f",
+      "accepted_current": "c76962d3427d0d14a70731bee43ddffdbbdb4b426ffe5e715bb3121d2fa5aaff",
+      "delta": "previously reviewed false-accept repairs and document-definition semantic handoff"
+    },
+    "rag/factual_evidence.py": {
+      "historical": null,
+      "accepted_current": "aec553cd0799bb2e5cfcfb8ab2f1136c51e9b5bc06d2f09800b7c96b9c898d0a",
+      "delta": "bounded explicit factual assignment helper"
+    },
+    "rag/document_grounding.py": {
+      "historical": null,
+      "accepted_current": "61f809fdd8ca7b5b42aceead9ea07fd0602f780695f5f41d8d3779674fc1a180",
+      "delta": "existing selected-document definition helper called by qa and fast_filter"
+    },
+    "rag/generated_answer_verification.py": {
+      "historical": null,
+      "accepted_current": "c1e81fa77e7dd3139cc03ed13c095f12e1d6f576cac57349fa788260b9edbed9",
+      "delta": "production pure answer verifier shared with isolated pilot tests"
+    },
+    "rag/citation_boundary.py": {
+      "historical": null,
+      "accepted_current": "5495a2deab7e240011b529045f53ab26893eb07f4aeefe9f14fb7d4188fadf8b",
+      "delta": "unchanged HTTP page-attribution boundary pinned transitively"
+    }
+  },
+  "runtime_policy": "Only the exact reviewed current qa.py is accepted; historical QA bytes remain evidence but are rejected as a current runtime because they can cite a contradictory answer.",
+  "mutation_policy": "Every reviewed dependency and the guard helper have exact hashes; one-byte, unrelated-import, selected-source, return-value, and verifier-logic mutations are rejected.",
+  "additional_repository_approval_required": false,
+  "external_policy_limit": "No independent signer or contract-owner mechanism was found in the repository; any external organizational policy was not asserted by this artifact."
+}

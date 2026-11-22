@@ -193,10 +193,13 @@ def test_document_semantic_cache_is_bounded_scoped_and_returns_copies(monkeypatc
 
 def test_document_auth_retrieval_validation_verdict_and_sources_code_preserved():
     manifest=json.loads((ROOT/'reports/document_rag_latency_baseline/manifest.json').read_text())
+    assert hashlib.sha256((ROOT/'reports/document_rag_latency_baseline/manifest.json').read_bytes()).hexdigest()=='885660e7518f567212c8915d3b60e71d754e310f3b3d62de553cb8d3e440085d'
+    assert hashlib.sha256((ROOT/'tests/contracts/rag_grounding_v2q.py').read_bytes()).hexdigest()=='5935d7210a62506973b3014f28609c30cbc30c2984d8ad2bbb55b7cc346e979d'
+    from tests.contracts.rag_grounding_v2q import assert_reviewed_file
     for relative in ['rag/llm.py','rag/fast_filter.py','rag/evidence.py',
                      'rag/reranker.py','rag/retriever.py','rag/services/book_access.py',
                      'rag/services/document_service.py']:
-        assert hashlib.sha256((ROOT/relative).read_bytes()).hexdigest()==manifest[relative]['sha256']
+        assert_reviewed_file(ROOT, relative, manifest[relative]['sha256'])
     # Urgent document definition grounding is an intentional change to ask().
     # Freeze every other QA method, constant, and import against the baseline;
     # scoped ask/validation/citation behavior is covered by urgent RAG tests.
@@ -204,7 +207,7 @@ def test_document_auth_retrieval_validation_verdict_and_sources_code_preserved()
         tree = ast.parse(path.read_text())
         tree.body = [node for node in tree.body if not (
             isinstance(node, ast.ImportFrom) and node.module in
-            {'rag.document_grounding', 'rag.book_assets'})]
+            {'rag.document_grounding', 'rag.book_assets', 'rag.generated_answer_verification'})]
         for node in tree.body:
             if isinstance(node, ast.ClassDef) and node.name == 'LuminaRAG':
                 node.body = [method for method in node.body if not (

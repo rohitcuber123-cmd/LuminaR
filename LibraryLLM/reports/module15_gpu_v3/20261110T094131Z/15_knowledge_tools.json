@@ -1,0 +1,146 @@
+{
+  "test_id": "M15-V3-P8-KNOWLEDGE-TOOLS",
+  "executed_at_utc": "2026-11-10T12:19:48.558587+00:00",
+  "execution_type": "deterministic_plus_cpu_minilm_isolated_http",
+  "uses_qwen": false,
+  "encoder_component": "rag/services/knowledge_encoder.py (all-MiniLM-L6-v2 on CPU)",
+  "sample_size": 12,
+  "passed_count": 11,
+  "outcome": "FAIL",
+  "checks": [
+    {
+      "workflow": "summary",
+      "http": 200,
+      "artifact_type": "EXTRACTIVE_SUMMARY",
+      "source_chunk_count": 1,
+      "sources_scoped_to_doc": true,
+      "passed": true
+    },
+    {
+      "workflow": "key-concepts",
+      "http": 200,
+      "artifact_type": "KEY_CONCEPTS",
+      "source_chunk_count": 1,
+      "sources_scoped_to_doc": true,
+      "passed": true
+    },
+    {
+      "workflow": "flashcards",
+      "http": 200,
+      "artifact_type": "FLASHCARDS",
+      "source_chunk_count": 1,
+      "sources_scoped_to_doc": true,
+      "passed": true
+    },
+    {
+      "workflow": "mindmap",
+      "http": 200,
+      "artifact_type": "MIND_MAP",
+      "source_chunk_count": 1,
+      "sources_scoped_to_doc": true,
+      "passed": true
+    },
+    {
+      "workflow": "quiz_mcq_only",
+      "http": 200,
+      "requested_types": [
+        "mcq"
+      ],
+      "observed_types": [
+        "mcq"
+      ],
+      "question_count": 4,
+      "mcq_options_unique_and_valid": true,
+      "matching_pairs_valid": true,
+      "sources_scoped_to_doc": true,
+      "passed": true
+    },
+    {
+      "workflow": "quiz_fill_blank_only",
+      "http": 200,
+      "requested_types": [
+        "fill_blank"
+      ],
+      "observed_types": [
+        "fill_blank"
+      ],
+      "question_count": 6,
+      "mcq_options_unique_and_valid": true,
+      "matching_pairs_valid": true,
+      "sources_scoped_to_doc": true,
+      "passed": true
+    },
+    {
+      "workflow": "quiz_matching_only",
+      "http": 200,
+      "requested_types": [
+        "matching"
+      ],
+      "observed_types": [
+        "matching"
+      ],
+      "question_count": 1,
+      "mcq_options_unique_and_valid": true,
+      "matching_pairs_valid": true,
+      "sources_scoped_to_doc": true,
+      "passed": true
+    },
+    {
+      "workflow": "quiz_mixed_mcq_fill_match",
+      "http": 200,
+      "requested_types": [
+        "mcq",
+        "fill_blank",
+        "matching"
+      ],
+      "observed_types": [
+        "matching",
+        "mcq"
+      ],
+      "question_count": 5,
+      "mcq_options_unique_and_valid": true,
+      "matching_pairs_valid": true,
+      "sources_scoped_to_doc": true,
+      "passed": false
+    },
+    {
+      "workflow": "quiz_mixed_mcq_match",
+      "http": 200,
+      "requested_types": [
+        "mcq",
+        "matching"
+      ],
+      "observed_types": [
+        "matching",
+        "mcq"
+      ],
+      "question_count": 5,
+      "mcq_options_unique_and_valid": true,
+      "matching_pairs_valid": true,
+      "sources_scoped_to_doc": true,
+      "passed": true
+    },
+    {
+      "workflow": "cloze_answer_validation",
+      "correct_http": 200,
+      "correct_verdict": "CORRECT",
+      "correct_reason": "NORMALIZED_IDENTITY",
+      "qwen_calls": 0,
+      "wrong_http": 200,
+      "wrong_verdict": "INCORRECT",
+      "wrong_reason": "TERM_IDENTITY",
+      "passed": true
+    },
+    {
+      "workflow": "sparse_document_quiz_graceful",
+      "http": 200,
+      "question_count": 0,
+      "passed": true
+    },
+    {
+      "workflow": "cross_user_artifact_isolation",
+      "http": 404,
+      "passed": true
+    }
+  ]
+}

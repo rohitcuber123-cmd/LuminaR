@@ -11,6 +11,8 @@ from backend.routes.notifications import router as notification_router, admin_ro
 from backend.services.notification_service import ensure_indexes
 from backend.services.notification_worker import DueWorker
 from backend.routes.library_events import router as library_event_router
+from backend.routes.library_announcements import router as library_announcement_router
+from backend.services.library_announcement_service import ensure_indexes as ensure_announcement_indexes
 from backend.routes.library_analytics import router as library_analytics_router
 from backend.routes.library_assets import router as library_assets_router
 from backend.services.library_asset_service import ensure_indexes as ensure_asset_indexes
@@ -25,6 +27,7 @@ from backend.services.library_catalogue_repository import ensure_indexes as ensu
 from backend.services.inventory_upload_limit import InventoryUploadLimit
 from backend.routes.library_lending import router as library_lending_router
 from backend.services.library_lending_journal import ensure_indexes as ensure_lending_indexes, RecoveryRequired
+from backend.services.library_intelligence_store import initialize as initialize_library_intelligence
 from backend.routes.library_reservations_fees import router as library_v2c_router
 from backend.services.library_reservation_service import ensure_indexes as ensure_v2c_indexes
 from fastapi.exceptions import RequestValidationError
@@ -46,6 +49,8 @@ async def lifespan(app):
     await to_thread(ensure_event_indexes)
     await to_thread(ensure_library_event_indexes)
     await to_thread(ensure_tenant_notification_indexes)
+    await to_thread(ensure_announcement_indexes)
+    await to_thread(initialize_library_intelligence)
     worker = DueWorker()
     tenant_worker = TenantNotificationWorker()
     worker.start()
@@ -93,6 +98,7 @@ app.include_router(catalogue_experience_router)
 app.include_router(library_lending_router)
 app.include_router(library_v2c_router)
 app.include_router(library_event_router)
+app.include_router(library_announcement_router)
 app.include_router(library_analytics_router)
 app.include_router(library_assets_router)
 app.add_middleware(LibraryAssetUploadLimit)
@@ -170,9 +176,7 @@ app.include_router(know_more_router)
 app.include_router(assistant_catalogue_router)
 app.include_router(knowledge_graph_router)
 from backend.routes.library_intelligence import router as library_intelligence_router
-from backend.services.library_intelligence_store import initialize as initialize_library_intelligence
 app.include_router(library_intelligence_router)
-app.router.add_event_handler('startup',initialize_library_intelligence)
 app.include_router(related_books_router)
 
 app.include_router(

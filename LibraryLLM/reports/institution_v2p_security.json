@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "new_feature": {
+    "passed": 84,
+    "failed": 0,
+    "skipped": 0,
+    "failures": [],
+    "skips": [],
+    "evidence": "institution_v2p_final_clean_institution_v2p.xml"
+  },
+  "existing_contract_mutations": {
+    "passed": 75,
+    "failed": 0,
+    "skipped": 0,
+    "failures": [],
+    "skips": [],
+    "evidence": "institution_v2p_final_clean_institution_v2o3_closure.xml"
+  },
+  "authenticated_mongo": {
+    "result": "PASS",
+    "checks": 10,
+    "new_collection_authenticated_access": true,
+    "private_copy_revocation": true,
+    "staff_action_route": true,
+    "telemetry_write_denied": true,
+    "database_drop_denied": true,
+    "role_qualification": "Existing named-resource compatibility fixture envelope, not a production minimum-role claim",
+    "production_auth_changed": false,
+    "owned_server_and_data_removed": true
+  },
+  "boundaries": [
+    "real backend authority, not frontend hiding",
+    "ADMIN-only management; canonical owner role reused",
+    "librarian published-only Staff reader",
+    "current account, accepted invitation proof and membership",
+    "publication-time server snapshot; no arbitrary recipients",
+    "library/account/notification ownership; revocation hides new private copies",
+    "immutable publication and tenant/event identity",
+    "concurrent distinct admins and stale edit revisions",
+    "partial write/cursor-ack failure replay and ten-attempt exhaustion",
+    "plain text, enums, bounded input and pagination",
+    "fresh canonical notification routes; spoofed URLs rejected",
+    "original RAG manifest, exact qa.py and executable/transport guards retained"
+  ],
+  "limitations": [
+    "Finite test corpus is not a universal security proof.",
+    "No external push/email/rich text/scheduler added.",
+    "Plain-text checks cannot detect every human-written secret."
+  ]
+}

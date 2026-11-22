@@ -1,0 +1,1043 @@
+{
+  "started_at": "2026-11-01T19:40:05.175058+00:00",
+  "run_id": "5a7488e7aa4049d8b23d0cdd3b5af306",
+  "environment": "task-owned isolated DB and HTTP host 18005",
+  "model": "Controlled generator; real cached CPU MiniLM and native FAISS/HNSW. NO QWEN.",
+  "cases": [
+    {
+      "id": "PRIVATE_CODE_WRONG",
+      "user_alias": "outsider",
+      "expected_http": [
+        403
+      ],
+      "http_status": 403,
+      "elapsed_ms": 131.283,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "STRUCTURED_SUBJECT_SEARCH_A",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 90.89,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [
+        "A-book-01",
+        "A-book-02",
+        "A-book-06",
+        "A-book-09",
+        "A-book-10"
+      ],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": "STRUCTURED_METADATA",
+      "pass": true
+    },
+    {
+      "id": "NATIVE_SEARCH_A",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 336.364,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [
+        "A-book-10",
+        "A-book-02",
+        "A-book-01",
+        "A-book-03",
+        "A-book-04",
+        "A-book-08",
+        "A-book-09",
+        "A-book-07",
+        "A-book-05",
+        "A-book-06"
+      ],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": "TENANT_SEMANTIC",
+      "pass": true,
+      "native_semantic_observed": true
+    },
+    {
+      "id": "ASSISTANT_FOR_YOU_A",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 677.633,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": "RECOMMEND_BOOKS",
+      "returned_book_aliases": [
+        "A-book-10",
+        "A-book-09",
+        "A-book-08",
+        "A-book-07",
+        "A-book-06",
+        "A-book-05",
+        "A-book-04",
+        "A-book-03",
+        "A-book-02",
+        "A-book-01"
+      ],
+      "error_codes": [],
+      "availability": [
+        {
+          "book": "A-book-10",
+          "copies": 0
+        },
+        {
+          "book": "A-book-09",
+          "copies": 1
+        },
+        {
+          "book": "A-book-08",
+          "copies": 1
+        },
+        {
+          "book": "A-book-07",
+          "copies": 1
+        },
+        {
+          "book": "A-book-06",
+          "copies": 1
+        },
+        {
+          "book": "A-book-05",
+          "copies": 1
+        },
+        {
+          "book": "A-book-04",
+          "copies": 1
+        },
+        {
+          "book": "A-book-03",
+          "copies": 2
+        },
+        {
+          "book": "A-book-02",
+          "copies": 1
+        },
+        {
+          "book": "A-book-01",
+          "copies": 2
+        }
+      ],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "05c9f75939cd39e0"
+    },
+    {
+      "id": "STRUCTURED_SUBJECT_SEARCH_B",
+      "user_alias": "second",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 119.312,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [
+        "B-book-01",
+        "B-book-02",
+        "B-book-06",
+        "B-book-09",
+        "B-book-10"
+      ],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": "STRUCTURED_METADATA",
+      "pass": true
+    },
+    {
+      "id": "NATIVE_SEARCH_B",
+      "user_alias": "second",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 211.786,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [
+        "B-book-10",
+        "B-book-02",
+        "B-book-01",
+        "B-book-09",
+        "B-book-08",
+        "B-book-03",
+        "B-book-04",
+        "B-book-07",
+        "B-book-06",
+        "B-book-05"
+      ],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": "TENANT_SEMANTIC",
+      "pass": true,
+      "native_semantic_observed": true
+    },
+    {
+      "id": "ASSISTANT_FOR_YOU_B",
+      "user_alias": "second",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 706.617,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": "RECOMMEND_BOOKS",
+      "returned_book_aliases": [
+        "B-book-10",
+        "B-book-09",
+        "B-book-08",
+        "B-book-07",
+        "B-book-06",
+        "B-book-05",
+        "B-book-04",
+        "B-book-03",
+        "B-book-02",
+        "B-book-01"
+      ],
+      "error_codes": [],
+      "availability": [
+        {
+          "book": "B-book-10",
+          "copies": 0
+        },
+        {
+          "book": "B-book-09",
+          "copies": 1
+        },
+        {
+          "book": "B-book-08",
+          "copies": 1
+        },
+        {
+          "book": "B-book-07",
+          "copies": 1
+        },
+        {
+          "book": "B-book-06",
+          "copies": 1
+        },
+        {
+          "book": "B-book-05",
+          "copies": 1
+        },
+        {
+          "book": "B-book-04",
+          "copies": 1
+        },
+        {
+          "book": "B-book-03",
+          "copies": 2
+        },
+        {
+          "book": "B-book-02",
+          "copies": 1
+        },
+        {
+          "book": "B-book-01",
+          "copies": 2
+        }
+      ],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "eaf7e53509713f37"
+    },
+    {
+      "id": "STRUCTURED_SUBJECT_SEARCH_I",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 97.462,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [
+        "I-book-01",
+        "I-book-02",
+        "I-book-06",
+        "I-book-09",
+        "I-book-10"
+      ],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": "STRUCTURED_METADATA",
+      "pass": true
+    },
+    {
+      "id": "NATIVE_SEARCH_I",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 303.019,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [
+        "I-book-10",
+        "I-book-02",
+        "I-book-01",
+        "I-book-03",
+        "I-book-09",
+        "I-book-04",
+        "I-book-08",
+        "I-book-07",
+        "I-book-05",
+        "I-book-06"
+      ],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": "TENANT_SEMANTIC",
+      "pass": true,
+      "native_semantic_observed": true
+    },
+    {
+      "id": "ASSISTANT_FOR_YOU_I",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 672.274,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": "RECOMMEND_BOOKS",
+      "returned_book_aliases": [
+        "I-book-10",
+        "I-book-09",
+        "I-book-08",
+        "I-book-07",
+        "I-book-06",
+        "I-book-05",
+        "I-book-04",
+        "I-book-03",
+        "I-book-02",
+        "I-book-01"
+      ],
+      "error_codes": [],
+      "availability": [
+        {
+          "book": "I-book-10",
+          "copies": 0
+        },
+        {
+          "book": "I-book-09",
+          "copies": 1
+        },
+        {
+          "book": "I-book-08",
+          "copies": 1
+        },
+        {
+          "book": "I-book-07",
+          "copies": 1
+        },
+        {
+          "book": "I-book-06",
+          "copies": 1
+        },
+        {
+          "book": "I-book-05",
+          "copies": 1
+        },
+        {
+          "book": "I-book-04",
+          "copies": 1
+        },
+        {
+          "book": "I-book-03",
+          "copies": 2
+        },
+        {
+          "book": "I-book-02",
+          "copies": 1
+        },
+        {
+          "book": "I-book-01",
+          "copies": 2
+        }
+      ],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "10e6aa458ef76d46"
+    },
+    {
+      "id": "LOCAL_ONLY_SIMILAR",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 945.195,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": "RECOMMEND_FROM_BOOK",
+      "returned_book_aliases": [
+        "A-book-02",
+        "A-book-09",
+        "A-book-10",
+        "A-book-06",
+        "A-book-03",
+        "A-book-07",
+        "A-book-08",
+        "A-book-05",
+        "A-book-04"
+      ],
+      "error_codes": [],
+      "availability": [
+        {
+          "book": "A-book-02",
+          "copies": 1
+        },
+        {
+          "book": "A-book-09",
+          "copies": 1
+        },
+        {
+          "book": "A-book-10",
+          "copies": 0
+        },
+        {
+          "book": "A-book-06",
+          "copies": 1
+        },
+        {
+          "book": "A-book-03",
+          "copies": 2
+        },
+        {
+          "book": "A-book-07",
+          "copies": 1
+        },
+        {
+          "book": "A-book-08",
+          "copies": 1
+        },
+        {
+          "book": "A-book-05",
+          "copies": 1
+        },
+        {
+          "book": "A-book-04",
+          "copies": 1
+        }
+      ],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "8cfa3544dc6f5b2c"
+    },
+    {
+      "id": "UNAVAILABLE_LOCAL_HOLDING",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 134.752,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": "CHECK_AVAILABILITY",
+      "returned_book_aliases": [
+        "A-book-10"
+      ],
+      "error_codes": [],
+      "availability": [
+        {
+          "book": "A-book-10",
+          "copies": 0
+        }
+      ],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "49728e2f0438c5b5"
+    },
+    {
+      "id": "EXACT_NO_MATCH",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 124.434,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": "STRUCTURED_METADATA",
+      "pass": true
+    },
+    {
+      "id": "OWNER_A_CONVERSATION",
+      "user_alias": "owner",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 613.234,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": false,
+      "intent": "RECOMMEND_BOOKS",
+      "returned_book_aliases": [
+        "A-book-10",
+        "A-book-09",
+        "A-book-08",
+        "A-book-07",
+        "A-book-06",
+        "A-book-05",
+        "A-book-04",
+        "A-book-03",
+        "A-book-02",
+        "A-book-01"
+      ],
+      "error_codes": [],
+      "availability": [
+        {
+          "book": "A-book-10",
+          "copies": 0
+        },
+        {
+          "book": "A-book-09",
+          "copies": 1
+        },
+        {
+          "book": "A-book-08",
+          "copies": 1
+        },
+        {
+          "book": "A-book-07",
+          "copies": 1
+        },
+        {
+          "book": "A-book-06",
+          "copies": 1
+        },
+        {
+          "book": "A-book-05",
+          "copies": 1
+        },
+        {
+          "book": "A-book-04",
+          "copies": 1
+        },
+        {
+          "book": "A-book-03",
+          "copies": 2
+        },
+        {
+          "book": "A-book-02",
+          "copies": 1
+        },
+        {
+          "book": "A-book-01",
+          "copies": 2
+        }
+      ],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "10fa873a15782af2"
+    },
+    {
+      "id": "CROSS_SCOPE_B",
+      "user_alias": "owner",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 45.053,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "CROSS_SCOPE_GLOBAL",
+      "user_alias": "owner",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 7.692,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "STALE_CONVERSATION",
+      "user_alias": "member",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 42.974,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "FOREIGN_BOOK",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 119.45,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": "CHECK_AVAILABILITY",
+      "returned_book_aliases": [],
+      "error_codes": [
+        "HTTP_404"
+      ],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "7e733aa042e8b517"
+    },
+    {
+      "id": "ASSET_AUTHORIZED_member",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 110.921,
+      "generator_calls": 1,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [
+        "52144c1229e77f4d82c67e29ccecfc334eed6c121d102ae96a33b1030f6fb221"
+      ],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "ASSET_AUTHORIZED_librarian",
+      "user_alias": "librarian",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 80.64,
+      "generator_calls": 1,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [
+        "52144c1229e77f4d82c67e29ccecfc334eed6c121d102ae96a33b1030f6fb221"
+      ],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "ASSET_AUTHORIZED_owner",
+      "user_alias": "owner",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 72.094,
+      "generator_calls": 1,
+      "expected_generator_calls_zero": false,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [
+        "52144c1229e77f4d82c67e29ccecfc334eed6c121d102ae96a33b1030f6fb221"
+      ],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "ASSET_DENIED_outsider",
+      "user_alias": "outsider",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 12.246,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "ASSET_DENIED_second",
+      "user_alias": "second",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 14.04,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "ASSET_DENIED_None",
+      "user_alias": null,
+      "expected_http": [
+        401,
+        403
+      ],
+      "http_status": 401,
+      "elapsed_ms": 4.419,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "ASSET_FOREIGN",
+      "user_alias": "member",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 11.737,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "ASSET_FORGED_LIBRARY",
+      "user_alias": "member",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 11.467,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "ASSET_FORGED_ID",
+      "user_alias": "member",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 20.745,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "RAG_NO_PROOF",
+      "user_alias": null,
+      "expected_http": [
+        401
+      ],
+      "http_status": 401,
+      "elapsed_ms": 6.459,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "PUBLIC_BOOK_NO_READING_PROOF",
+      "user_alias": "member",
+      "expected_http": [
+        403,
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 554.872,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "DOCUMENT_SWITCH_True",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 147.113,
+      "generator_calls": 1,
+      "expected_generator_calls_zero": false,
+      "intent": "DOCUMENT_QUESTION",
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [
+        "52144c1229e77f4d82c67e29ccecfc334eed6c121d102ae96a33b1030f6fb221"
+      ],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "3421a2e1d8f41dd0"
+    },
+    {
+      "id": "DOCUMENT_SWITCH_False",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 179.09,
+      "generator_calls": 1,
+      "expected_generator_calls_zero": false,
+      "intent": "DOCUMENT_QUESTION",
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [
+        "f727eae6c8452af6c3fe239d6e4c78166470bbf3baef9f5679a2b99cfdc2240d"
+      ],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "3421a2e1d8f41dd0"
+    },
+    {
+      "id": "FOREIGN_DOCUMENT_CONTEXT",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 93.359,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": "DOCUMENT_QUESTION",
+      "returned_book_aliases": [],
+      "error_codes": [
+        "SCOPED_DOCUMENT_REQUIRED"
+      ],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "3421a2e1d8f41dd0"
+    },
+    {
+      "id": "INVALID_DOCUMENT_CONTEXT",
+      "user_alias": "member",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 92.849,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": "DOCUMENT_QUESTION",
+      "returned_book_aliases": [],
+      "error_codes": [
+        "SCOPED_DOCUMENT_REQUIRED"
+      ],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "1e7d32f17360fd61"
+    },
+    {
+      "id": "BEFORE_REVOCATION",
+      "user_alias": "revoked",
+      "expected_http": [
+        200
+      ],
+      "http_status": 200,
+      "elapsed_ms": 176.214,
+      "generator_calls": 1,
+      "expected_generator_calls_zero": false,
+      "intent": "DOCUMENT_QUESTION",
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [
+        "52144c1229e77f4d82c67e29ccecfc334eed6c121d102ae96a33b1030f6fb221"
+      ],
+      "search_source": null,
+      "pass": true,
+      "conversation_hash": "e4356f32f442e769"
+    },
+    {
+      "id": "AFTER_REVOCATION_CONVERSATION",
+      "user_alias": "revoked",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 20.966,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    },
+    {
+      "id": "AFTER_REVOCATION_ASSET",
+      "user_alias": "revoked",
+      "expected_http": [
+        404
+      ],
+      "http_status": 404,
+      "elapsed_ms": 16.306,
+      "generator_calls": 0,
+      "expected_generator_calls_zero": true,
+      "intent": null,
+      "returned_book_aliases": [],
+      "error_codes": [],
+      "availability": [],
+      "rag_source_scopes": [],
+      "search_source": null,
+      "pass": true
+    }
+  ],
+  "setup": [
+    {
+      "asset_library": "A",
+      "linked": true,
+      "status": "READY"
+    },
+    {
+      "asset_library": "A",
+      "linked": false,
+      "status": "READY"
+    },
+    {
+      "asset_library": "B",
+      "linked": true,
+      "status": "READY"
+    },
+    {
+      "library": "A",
+      "search_status": "READY",
+      "existing_fixture_generation_reused": true
+    },
+    {
+      "library": "B",
+      "search_status": "READY",
+      "existing_fixture_generation_reused": true
+    },
+    {
+      "library": "I",
+      "search_status": "READY",
+      "existing_fixture_generation_reused": true
+    }
+  ],
+  "limits": "External recommendation candidates and Global retrieval are controlled fixtures; no relevance or private Qwen-quality score is inferred.",
+  "totals": {
+    "passed": 36,
+    "failed": 0,
+    "real_qwen_calls": 0,
+    "controlled_generator_calls": 6
+  }
+}

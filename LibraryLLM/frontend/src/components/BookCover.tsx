@@ -63,10 +63,10 @@ export function BookCover({ title, author, paletteIndex, variant, className = ''
       )}
 
       <div className="book-cover-content relative flex h-full flex-col justify-between p-[9%]">
-        <span className="book-cover-brand font-display w-fit text-[0.6rem] leading-none opacity-70">LuminaR</span>
+        <span className="book-cover-brand font-display w-fit text-[0.6rem] leading-none">LuminaR</span>
         <div className="book-cover-copy">
           <p className="book-cover-title font-display" title={title}>{title}</p>
-          {author && <p className="book-cover-author mt-1.5 uppercase tracking-wide opacity-75" title={author}>{author}</p>}
+          {author && <p className="book-cover-author mt-1.5 uppercase tracking-wide" title={author}>{author}</p>}
         </div>
       </div>
     </div>

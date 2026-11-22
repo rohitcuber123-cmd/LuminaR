@@ -35,6 +35,18 @@ beforeEach(()=>{
  }
 })
 afterEach(()=>{cleanup();globalThis.fetch=original})
+
+test('tenant failure provides an explicit bounded manual retry',async()=>{
+ const fallback=globalThis.fetch;let broken=true
+ globalThis.fetch=async(input,init)=>String(input).includes('/catalogue/recommendations')&&broken?Response.json({detail:'Library update in progress'},{status:503}):fallback(input,init)
+ renderRail();await screen.findByRole('button',{name:'Retry recommendations'},{timeout:5000})
+ assert.equal(screen.queryByText('A Local 0'),null)
+ const before=calls.length;broken=false
+ fireEvent.click(screen.getByRole('button',{name:'Retry recommendations'}))
+ await screen.findAllByText('A Local 0')
+ assert.equal(screen.queryByRole('button',{name:'Retry recommendations'}),null)
+ assert.ok(calls.length>before)
+})
 test('test_tenant_recommendation_provider_traced',async()=>{
  await libraryRecommendationPage(a,new AbortController().signal)
  assert.equal(calls[0],'/recommendation-api/recommendations?limit=50&offset=0')

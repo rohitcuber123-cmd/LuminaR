@@ -1,0 +1,318 @@
+[
+  {
+    "scenario": "bounded_graph_size",
+    "size": 0,
+    "source_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "global_summary": {
+      "version": "kg1-2-metadata-cosine-v1",
+      "source": "Mongo books: projected public metadata only",
+      "source_count": 0,
+      "books": 0,
+      "edges": 0,
+      "features": {},
+      "missing_authors": 0,
+      "missing_subjects": 0,
+      "isolated_books": 0,
+      "skipped_books": 0,
+      "created_at": "2026-11-10T05:09:18.661783+00:00",
+      "catalogue_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "build_seconds": 0.009948500000064087,
+      "schema": {
+        "nodes": [
+          "Book",
+          "Author name",
+          "Subject label"
+        ],
+        "edges": [
+          "AUTHORED_BY",
+          "HAS_SUBJECT"
+        ]
+      },
+      "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+      "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+      "scope": "full catalogue"
+    },
+    "global_build_ms": 11.418,
+    "global_sqlite_bytes": 53248,
+    "query_ms": [],
+    "direct_overlap_control": true,
+    "tenant_counts": {
+      "node_count": 0,
+      "edge_count": 0,
+      "book_count": 0,
+      "deterministic": true
+    },
+    "tenant_build_ms": 1.597,
+    "tenant_graph_bytes": 23,
+    "tenant_connected_components": 0,
+    "result": "PASS",
+    "evidence_class": "CONTROLLED_TEST native SQLite and model-free tenant graph writer; not publication or relevance"
+  },
+  {
+    "scenario": "bounded_graph_size",
+    "size": 1,
+    "source_sha256": "7d86505075a1f60074274942c37329abed810b897253478de815719d38b5d7b3",
+    "global_summary": {
+      "version": "kg1-2-metadata-cosine-v1",
+      "source": "Mongo books: projected public metadata only",
+      "source_count": 1,
+      "books": 1,
+      "edges": 0,
+      "features": {},
+      "missing_authors": 1,
+      "missing_subjects": 1,
+      "isolated_books": 1,
+      "skipped_books": 0,
+      "created_at": "2026-11-10T05:09:18.689785+00:00",
+      "catalogue_hash": "4cc1c7dcf22e1ed441dafbde705dcaae83a492ec06e30e7717383db34737230b",
+      "build_seconds": 0.006547299999965617,
+      "schema": {
+        "nodes": [
+          "Book",
+          "Author name",
+          "Subject label"
+        ],
+        "edges": [
+          "AUTHORED_BY",
+          "HAS_SUBJECT"
+        ]
+      },
+      "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+      "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+      "scope": "full catalogue"
+    },
+    "global_build_ms": 7.981,
+    "global_sqlite_bytes": 53248,
+    "query_ms": [
+      2.789
+    ],
+    "direct_overlap_control": true,
+    "tenant_counts": {
+      "node_count": 2,
+      "edge_count": 1,
+      "book_count": 1,
+      "deterministic": true
+    },
+    "tenant_build_ms": 1.739,
+    "tenant_graph_bytes": 496,
+    "tenant_connected_components": 1,
+    "result": "PASS",
+    "evidence_class": "CONTROLLED_TEST native SQLite and model-free tenant graph writer; not publication or relevance"
+  },
+  {
+    "scenario": "bounded_graph_size",
+    "size": 16,
+    "source_sha256": "19654c5cf85f665837f2250a169b5952a4aa4f84860f5a32c9404fd629f38d1d",
+    "global_summary": {
+      "version": "kg1-2-metadata-cosine-v1",
+      "source": "Mongo books: projected public metadata only",
+      "source_count": 16,
+      "books": 16,
+      "edges": 30,
+      "features": {
+        "author": 15,
+        "subject": 15
+      },
+      "missing_authors": 1,
+      "missing_subjects": 1,
+      "isolated_books": 1,
+      "skipped_books": 0,
+      "created_at": "2026-11-10T05:09:18.716792+00:00",
+      "catalogue_hash": "2c53f2180dc989e8f47443af4bd86ad24632225a74b167e41e1147d9e8093775",
+      "build_seconds": 0.007474799999727111,
+      "schema": {
+        "nodes": [
+          "Book",
+          "Author name",
+          "Subject label"
+        ],
+        "edges": [
+          "AUTHORED_BY",
+          "HAS_SUBJECT"
+        ]
+      },
+      "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+      "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+      "scope": "full catalogue"
+    },
+    "global_build_ms": 9.213,
+    "global_sqlite_bytes": 53248,
+    "query_ms": [
+      3.459,
+      2.32,
+      2.279,
+      2.342,
+      2.921,
+      2.124,
+      2.226,
+      1.86
+    ],
+    "direct_overlap_control": true,
+    "tenant_counts": {
+      "node_count": 53,
+      "edge_count": 46,
+      "book_count": 16,
+      "deterministic": true
+    },
+    "tenant_build_ms": 2.722,
+    "tenant_graph_bytes": 15205,
+    "tenant_connected_components": 7,
+    "result": "PASS",
+    "evidence_class": "CONTROLLED_TEST native SQLite and model-free tenant graph writer; not publication or relevance"
+  },
+  {
+    "scenario": "bounded_graph_size",
+    "size": 128,
+    "source_sha256": "f39e097b15956f5b6c6565ae61294fa718461a0e93d65b60258eabddacbbb51f",
+    "global_summary": {
+      "version": "kg1-2-metadata-cosine-v1",
+      "source": "Mongo books: projected public metadata only",
+      "source_count": 128,
+      "books": 128,
+      "edges": 240,
+      "features": {
+        "author": 19,
+        "subject": 23
+      },
+      "missing_authors": 8,
+      "missing_subjects": 8,
+      "isolated_books": 8,
+      "skipped_books": 0,
+      "created_at": "2026-11-10T05:09:18.769904+00:00",
+      "catalogue_hash": "bd478dedbff9ae4e9e77813d8d48fbcabe36b2b3741f048ddbcc864fb624cb2f",
+      "build_seconds": 0.010995600000114791,
+      "schema": {
+        "nodes": [
+          "Book",
+          "Author name",
+          "Subject label"
+        ],
+        "edges": [
+          "AUTHORED_BY",
+          "HAS_SUBJECT"
+        ]
+      },
+      "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+      "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+      "scope": "full catalogue"
+    },
+    "global_build_ms": 12.684,
+    "global_sqlite_bytes": 106496,
+    "query_ms": [
+      3.344,
+      4.566,
+      3.606,
+      4.318,
+      3.563,
+      3.454,
+      3.673,
+      3.92
+    ],
+    "direct_overlap_control": true,
+    "tenant_counts": {
+      "node_count": 177,
+      "edge_count": 368,
+      "book_count": 128,
+      "deterministic": true
+    },
+    "tenant_build_ms": 5.949,
+    "tenant_graph_bytes": 90298,
+    "tenant_connected_components": 1,
+    "result": "PASS",
+    "evidence_class": "CONTROLLED_TEST native SQLite and model-free tenant graph writer; not publication or relevance"
+  },
+  {
+    "scenario": "bounded_graph_size",
+    "size": 512,
+    "source_sha256": "6c119017109a606aa4eb99d418c967e39679aaaac721963debee8524b4456a2b",
+    "global_summary": {
+      "version": "kg1-2-metadata-cosine-v1",
+      "source": "Mongo books: projected public metadata only",
+      "source_count": 512,
+      "books": 512,
+      "edges": 962,
+      "features": {
+        "author": 19,
+        "subject": 23
+      },
+      "missing_authors": 31,
+      "missing_subjects": 31,
+      "isolated_books": 31,
+      "skipped_books": 0,
+      "created_at": "2026-11-10T05:09:18.864679+00:00",
+      "catalogue_hash": "345224d4cf1d78809f058713cb655314ad3e55b8a357bd50dc5b38d82fc5613f",
+      "build_seconds": 0.027170899999873654,
+      "schema": {
+        "nodes": [
+          "Book",
+          "Author name",
+          "Subject label"
+        ],
+        "edges": [
+          "AUTHORED_BY",
+          "HAS_SUBJECT"
+        ]
+      },
+      "normalization": "NFKC, case-fold, whitespace; split only pipe delimiters. Names are metadata strings, not resolved human identities.",
+      "scoring": "Weighted cosine over shared typed features. weight=(2 for author else 1)*(1+ln((N+1)/(degree+1))). No embeddings, LLM, behavioral or availability score.",
+      "scope": "full catalogue"
+    },
+    "global_build_ms": 29.043,
+    "global_sqlite_bytes": 270336,
+    "query_ms": [
+      3.609,
+      7.045,
+      5.286,
+      4.408,
+      4.084,
+      6.773,
+      4.869,
+      5.034
+    ],
+    "direct_overlap_control": true,
+    "tenant_counts": {
+      "node_count": 561,
+      "edge_count": 1474,
+      "book_count": 512,
+      "deterministic": true
+    },
+    "tenant_build_ms": 21.706,
+    "tenant_graph_bytes": 343129,
+    "tenant_connected_components": 1,
+    "result": "PASS",
+    "evidence_class": "CONTROLLED_TEST native SQLite and model-free tenant graph writer; not publication or relevance"
+  },
+  {
+    "scenario": "bounded_64_page_pdf",
+    "pages": 64,
+    "chunks": 64,
+    "elapsed_ms": 43.667,
+    "result": "PASS"
+  },
+  {
+    "scenario": "pdf_exceed_64_mib",
+    "actual": 413,
+    "expected": 413,
+    "result": "PASS"
+  },
+  {
+    "scenario": "real_local_ocr",
+    "engine": "pymupdf-tesseract",
+    "stats": {
+      "native_pages": 0,
+      "ocr_pages": 1,
+      "ocr_attempts": 1,
+      "failed_pages": 0,
+      "blank_pages": 0,
+      "peak_raster_bytes": 3278550,
+      "page_limit": 80,
+      "dpi": 220,
+      "concurrent_pages": 1,
+      "preparation_ms": 1360.14
+    },
+    "text": "Calibration code is LIMA-TWENTY.\nThe synthetic room capacity is twenty five.",
+    "elapsed_ms": 1379.492,
+    "result": "PASS",
+    "evidence_class": "NATIVE_EXECUTED on generated synthetic raster; not an OCR benchmark"
+  }
+]

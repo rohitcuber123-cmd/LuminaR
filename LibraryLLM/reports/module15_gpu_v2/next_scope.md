@@ -1,0 +1,9 @@
+# Remaining verification
+
+- Isolated personal and tenant document preparation with gold page spans
+- Authenticated tenant membership and revoked-user matrix
+- Synthetic prompt-injection tests with retrieved attack evidence
+- Actual RAG/Assistant shared-lock contention and timeout recovery
+- Knowledge workflow acceptance
+- Chromium acceptance against isolated complete service
+- Production Mongo authentication qualification by operator

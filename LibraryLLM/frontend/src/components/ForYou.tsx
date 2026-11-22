@@ -49,7 +49,8 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
   const scope=`${token}:${context?.data.source.library_id || 'GLOBAL'}`
   const [page, setPage] = useState({ scope, offset: 0 })
   const offset = page.scope === scope ? page.offset : 0
-  const [tenantPage,setTenantPage]=useState<{scope:string;offset:number;rows:DisplayBook[];hasMore:boolean}|null>(null)
+  const [tenantPage,setTenantPage]=useState<{scope:string;offset:number;rows:DisplayBook[];hasMore:boolean;failed?:boolean}|null>(null)
+  const [retry, setRetry] = useState(0)
   const [books, setBooks] = useState<BackendBook[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
@@ -61,7 +62,7 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
       const controller=new AbortController()
       void libraryRecommendationPage(context.data.source.library_id,controller.signal,offset,RECOMMENDATION_LIMIT)
         .then(result=>{if(!controller.signal.aborted){setError(false);setTenantPage({scope,offset,rows:result.results,hasMore:result.has_more})}})
-        .catch(()=>{if(!controller.signal.aborted){setError(true);setTenantPage({scope,offset,rows:[],hasMore:false})}})
+        .catch(()=>{if(!controller.signal.aborted){setError(true);setTenantPage({scope,offset,rows:[],hasMore:false,failed:true})}})
       return ()=>controller.abort()
     }
     let cancelled = false
@@ -86,7 +87,7 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
     }
     void load()
     return () => { cancelled = true }
-  }, [token, offset, context,scope])
+  }, [token, offset, context,scope,retry])
   function goToPage(next: number) {
     setPage({ scope, offset: next })
     requestAnimationFrame(() => scrollToContentAnchor('#for-you-results'))
@@ -95,6 +96,8 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
   const localRows=context && tenantPage?.scope===scope && tenantPage.offset===offset ? tenantPage.rows : context && offset===0 ? context.data.for_you || [] : []
   const visibleBooks = context ? localRows.map(displayToHomeBook) : books
   const pageHasMore=context ? tenantPage?.scope===scope && tenantPage.offset===offset && tenantPage.hasMore : hasMore
+  const tenantFailed = !!(context && tenantPage?.scope===scope && tenantPage.offset===offset && tenantPage.failed)
+  const visibleError = context ? tenantFailed : error
   const visibleLoading = context ? false : loading
   if (visibleLoading) {
     return (
@@ -147,12 +150,13 @@ export function ForYou({ showViewAll = true }: { showViewAll?: boolean }) {
         </div>
 
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4 text-xs text-ink-soft">
-          <p>{context ? context.data.source.catalogue_source === 'LIBRARY_LOCAL' ? 'Recommendations from your library’s collection' : 'Global Catalogue discoveries' : popular ? 'Popular books' : books.length ? `Recommendations ${offset + 1}–${offset + books.length}` : error ? 'Recommendations could not be loaded. Try Previous.' : 'No further recommendations.'}</p>
+          <p>{tenantFailed ? 'Recommendations could not be loaded. Retry to check this library again.' : context ? context.data.source.catalogue_source === 'LIBRARY_LOCAL' ? 'Recommendations from your library’s collection' : 'Global Catalogue discoveries' : popular ? 'Popular books' : books.length ? `Recommendations ${offset + 1}–${offset + books.length}` : error ? 'Recommendations could not be loaded. Try Previous.' : 'No further recommendations.'}</p>
           {(context || !popular) && <nav aria-label="Recommendation pagination" className="flex flex-wrap gap-3">
             <button className="assistant-button disabled:opacity-40" disabled={offset === 0} onClick={() => goToPage(Math.max(0, offset - RECOMMENDATION_LIMIT))}>Previous Recommendations</button>
-            <button className="assistant-button disabled:opacity-40" disabled={!pageHasMore || error} onClick={() => goToPage(offset + RECOMMENDATION_LIMIT)}>Next Recommendations</button>
+            <button className="assistant-button disabled:opacity-40" disabled={!pageHasMore || visibleError} onClick={() => goToPage(offset + RECOMMENDATION_LIMIT)}>Next Recommendations</button>
           </nav>}
         </div>
+        {tenantFailed && <button className="assistant-button" onClick={() => setRetry(value => value + 1)}>Retry recommendations</button>}
         <BookCarousel key={`${scope}:${offset}`}>
           {visibleBooks.map((book, i) => (
             <BookCard key={book.work_id} book={context ? localRows[i] : globalBookPresentation(book)} changed={context?.changed} rail />

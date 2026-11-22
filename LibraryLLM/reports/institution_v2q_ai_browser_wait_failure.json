@@ -1,0 +1,126 @@
+{
+  "layer": "Actual Chromium, production ASGI routes, actual JWT and isolated real standalone Mongo; in-process HTTP bridge",
+  "database": "luminar_institution_v2q_ai_browser_9cbb38d4d9a74f36942fea27",
+  "checks": [],
+  "page_errors": [],
+  "console_errors": [],
+  "requests": [
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/books/categories",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/books/?limit=20&offset=0&sort=catalogue",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/platform-access",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/me/libraries?offset=0&limit=100",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/events/unseen",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/notifications?limit=20",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/books/categories",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/books/?limit=20&offset=0&sort=catalogue",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reading-list/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/issues/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/reservations/my",
+      "method": "GET",
+      "status": 200,
+      "fixture_user": 2
+    },
+    {
+      "path": "/assistant/chat",
+      "method": "POST",
+      "status": 200,
+      "fixture_user": 2
+    }
+  ],
+  "screenshots": [],
+  "unrelated_stubs": [
+    "/search-api/facets",
+    "/search-api/facets"
+  ],
+  "expected_denials": [],
+  "chromium": "151.0.7922.34",
+  "real_qwen_execution": false,
+  "real_native_search_execution": false,
+  "assistant_execution": "Production API/orchestrator/tools; deterministic intent and global candidate providers; real Core API/JWT/Mongo holdings",
+  "result": "FAIL",
+  "error": "AssertionError",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\SDC\\LibraryLLM\\scripts\\institution_v2q_ai_browser.py\", line 133, in main\n    ask('Find Python books')\n  File \"D:\\SDC\\LibraryLLM\\scripts\\institution_v2q_ai_browser.py\", line 131, in ask\n    expect(page.get_by_role('button',name='Send message',exact=True)).to_be_enabled(timeout=30000)\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\sync_api\\_generated.py\", line 23209, in to_be_enabled\n    self._sync(\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ^^^^^^^^^^^^^\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\_impl\\_assertions.py\", line 807, in to_be_enabled\n    await self._expect_impl(\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\_impl\\_assertions.py\", line 128, in _expect_impl\n    _record_soft_or_raise(\n  File \"D:\\SDC\\LibraryLLM\\.venv\\Lib\\site-packages\\playwright\\_impl\\_assertions.py\", line 60, in _record_soft_or_raise\n    raise error\nAssertionError: Locator expected to be enabled\nActual value: disabled \nCall log:\n  - Expect \"to_be_enabled\" with timeout 30000ms\n  - waiting for get_by_role(\"button\", name=\"Send message\", exact=True)\n    62 \u00d7 locator resolved to <button disabled type=\"submit\" aria-label=\"Send message\" class=\"assistant-icon-button absolute bottom-2 right-2 rounded-sm bg-brand text-paper disabled:opacity-40\">\u2026</button>\n       - unexpected value \"disabled\"\n\nAria snapshot:\n- button \"Send message\" [disabled]\n",
+  "owned_database_removed": true,
+  "owned_temporary_files_removed": true
+}

@@ -77,16 +77,25 @@ def build_graph(path,records,progress,fail):
     return {'node_count':len(nodes),'edge_count':len(edges),'book_count':len(records),'deterministic':True}
 def expected_files(target,manifest):
     return {'metadata.json'}|({'index.faiss','vectors.npy'} if target=='SEARCH_INDEX' and not manifest.get('empty') else {'graph.json'} if target=='KNOWLEDGE_GRAPH' else set())
-def validate(library_id,target,generation_id,dataset=None,path=None):
+def validate(library_id,target,generation_id,dataset=None,path=None,*,expected_manifest_checksum=None,expected_source_generation_id=None,expected_source_fingerprint=None,expected_job_id=None):
     path=path or store.directory(library_id,'search' if target=='SEARCH_INDEX' else 'kg',generation_id)
-    if path.resolve()!=path:raise HTTPException(409,'ARTIFACT_CORRUPT')
+    if path.resolve()!=path or path.is_symlink() or not path.is_dir():raise HTTPException(409,'ARTIFACT_CORRUPT')
     try:
-        manifest=json.loads((path/'manifest.json').read_text(encoding='utf8'))
+        manifest_file=path/'manifest.json'
+        if manifest_file.resolve()!=manifest_file or manifest_file.is_symlink() or not manifest_file.is_file() or manifest_file.stat().st_size>MAX_ARTIFACT_BYTES:raise ValueError()
+        manifest_bytes=manifest_file.read_bytes()
+        if expected_manifest_checksum is not None and hashlib.sha256(manifest_bytes).hexdigest()!=expected_manifest_checksum:raise ValueError()
+        manifest=json.loads(manifest_bytes.decode('utf8'))
         if manifest['library_id']!=store.canonical(library_id) or manifest['generation_id']!=store.canonical(generation_id) or manifest['target']!=target or manifest['schema_version']!=store.SCHEMA:raise ValueError()
+        if expected_source_generation_id is not None and manifest.get('source_generation_id')!=expected_source_generation_id:raise ValueError()
+        if expected_source_fingerprint is not None and manifest.get('source_fingerprint')!=expected_source_fingerprint:raise ValueError()
+        if expected_job_id is not None and manifest.get('job_id')!=expected_job_id:raise ValueError()
         if set(manifest['files'])!=expected_files(target,manifest):raise ValueError()
+        entries=list(path.iterdir())
+        if {p.name for p in entries}!=(set(manifest['files'])|{'manifest.json'}) or any(p.resolve()!=p or p.is_symlink() or not p.is_file() for p in entries):raise ValueError()
         for name,expected in manifest['files'].items():
             file=path/name
-            if file.resolve()!=file or not file.is_file() or file.stat().st_size>MAX_ARTIFACT_BYTES or store.checksum(file)!=expected:raise ValueError()
+            if file.resolve()!=file or file.is_symlink() or not file.is_file() or file.stat().st_size>MAX_ARTIFACT_BYTES or store.checksum(file)!=expected:raise ValueError()
         records=json.loads((path/'metadata.json').read_text(encoding='utf8'))
         if len(records)!=manifest['book_count'] or len({r['library_book_id'] for r in records})!=len(records) or any(r['library_id']!=library_id or r['status']!='ACTIVE' or set(r)!=set(store.SOURCE_FIELDS) for r in records):raise ValueError()
         if store.fingerprint(records)!=manifest['source_fingerprint']:raise ValueError()
@@ -145,7 +154,7 @@ class ArtifactCache:
                     if file.resolve()!=file or store.checksum(file)!=digest:
                         self.entries.pop(key);raise HTTPException(409,'ARTIFACT_CORRUPT')
                 self.entries.move_to_end(key);return value
-            value=validate(library_id,target,generation_id)
+            value=validate(library_id,target,generation_id,expected_manifest_checksum=manifest_checksum)
             # Bound retained Python metadata/graph objects as well as native
             # HNSW storage. Serialized JSON alone underestimates resident RAM.
             import sys
